@@ -1,3 +1,3 @@
-# aerial-predator
+# Aerial Predator
 
-# ignore the typo on the spelling of separate
+ignore the typo on the spelling of separate
