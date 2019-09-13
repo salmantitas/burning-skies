@@ -1,0 +1,13 @@
+Pause Menu:
+    Buttons:
+        Resume to return to game renderState
+        Main Menu to go to menu renderState
+        Quit to go to quit renderState
+
+    Going to menu renderState from pause menu should restart game
+
+Layout of the Main Menu:
+    Buttons:
+        Play to go to game renderState
+        High Score to go to high score renderState
+        Quit to go to quit renderState
