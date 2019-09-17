@@ -1,7 +1,10 @@
-package com.euhedral.game;
+package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.MobileEntity;
+import com.euhedral.game.ContactID;
+import com.euhedral.game.Entities.*;
+import com.euhedral.game.EntityID;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

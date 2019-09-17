@@ -1,7 +1,9 @@
-package com.euhedral.game;
+package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.MobileEntity;
+import com.euhedral.game.EntityID;
+import com.euhedral.game.PickupID;
 
 import java.awt.*;
 

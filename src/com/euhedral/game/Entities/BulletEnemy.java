@@ -1,4 +1,4 @@
-package com.euhedral.game;
+package com.euhedral.game.Entities;
 
 import java.awt.*;
 

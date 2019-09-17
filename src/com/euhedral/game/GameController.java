@@ -1,6 +1,7 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.*;
+import com.euhedral.game.Entities.Pickup;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -54,11 +55,8 @@ import java.util.Random;
     private static int level;
     private final int MAXLEVEL = 2;
 
-//    private EnemyBoss boss;
     private Flag flag;
 
-//    private LinkedList<Enemy> enemies = new LinkedList<>();
-//    private LinkedList<Bullet> bullets = new LinkedList<>();
     private LinkedList<Pickup> pickups = new LinkedList<>();
 
     private boolean levelSpawned = false;
@@ -181,27 +179,7 @@ import java.util.Random;
                 entityManager.updatePlayer();
                 flag.update();
                 entityManager.updateBullets();
-
-//                for (Bullet bullet : bullets) {
-//                    if (bullet.isActive())
-//                        bullet.update();
-//                }
-
-
-//                bullets.addAll(boss.getBullets());
-
-//                boss.clearBullets();
-
                 entityManager.updateEnemies();
-
-//                for (Enemy enemy : enemies) {
-//                    if(enemy.isActive()) {
-//                        enemy.update();
-//                        entityManager.addToBullets(enemy);
-////                        bullets.addAll(enemy.getBullets());
-//                        enemy.clearBullets();
-//                    }
-//                }
 
                 for (Pickup pickup : pickups) {
                     if (pickup.isActive()) {
@@ -453,7 +431,7 @@ import java.util.Random;
         levelSpawned = false;
         uiHandler.ground = false;
 
-//        testingCheat();
+        testingCheat();
     }
 
     public void checkButtonAction(int mx, int my) {
@@ -587,61 +565,9 @@ import java.util.Random;
             }
         }
 
-        // Player vs enemy collision
         entityManager.playerVsEnemyCollision();
-//        for (Enemy enemy : enemies) {
-//            if (enemy.getID() == ContactID.Air)
-//                if (enemy.inscreen && enemy.getBounds().intersects(entityManager.getPlayerBounds()) && enemy.isActive()) {
-//                    variableManager.increaseScore(enemy.getScore());
-////                    score += enemy.getScore();
-//                    variableManager.decreaseHealth(30);
-//                    destroy(enemy);
-//                } else if (enemy.getID() == ContactID.Boss) {
-//                    variableManager.decreaseHealth(10);
-//                }
-//        }
-
         entityManager.playerVsEnemyBulletCollision();
-
-        // Enemy vs player bullet collision
         entityManager.enemyVsPlayerBulletCollision();
-//        for (Enemy enemy : enemies) {
-//            if (enemy.inscreen && enemy.isActive()) {
-//                Bullet b = entityManager.checkPlayerCollision(enemy);
-//                if (b != null) {
-//                    if (enemy.getID() == ContactID.Boss) {
-//                        boss.damage();
-//                        healthBoss = boss.getHealth();
-//                        if (boss.getHealth() <= 0) {
-//                            destroyBoss();
-//                        }
-//                    } else {
-//                        enemy.damage();
-//                        if (enemy.getHealth() <= 0) {
-//                            destroy(enemy);
-//                            variableManager.increaseScore(enemy.getScore());
-////                            score += enemy.getScore();
-//                        }
-//                    }
-//                    destroy(b);
-//                }
-//            }
-//        }
-    }
-
-    private void destroy(Enemy enemy) {
-        enemy.disable();
-    }
-
-//    private void destroyBoss() {
-//        boss.setAlive(false);
-//        destroy(boss);
-//        variableManager.increaseScore(bossScore);
-////        score += bossScore;
-//    }
-
-    private void destroy(Bullet bullet) {
-        bullet.disable();
     }
 
     private void spawn() {
@@ -676,19 +602,9 @@ import java.util.Random;
         camera = new Camera(width, -750); // -700 = 2 fps;
     }
 
-    // Spawn Air Enemy Basic
-    public void spawnEnemy(int x, int y, ContactID contactId) {
-        if (contactId == ContactID.Air)
-            entityManager.addEnemy(x, y, EnemyID.Basic, contactId);
-//            enemies.add(new Enemy(x, y, EnemyID.Basic, contactId));
-        else entityManager.addEnemy(new EnemyGround(x,y));
-    }
-
-    // Spawn Air Enemy Basic
+    // Spawn Enemy
     public void spawnEnemy(int x, int y, EnemyID enemyID, ContactID contactId, Color color) {
-        if (contactId == ContactID.Air)
-            entityManager.addEnemy(x, y, enemyID, contactId, color);
-//            enemies.add(new Enemy(x, y, enemyID, contactId, color));
+        entityManager.spawnEnemy(x, y, enemyID, contactId, color);
     }
 
     // Spawn Pickups
@@ -699,19 +615,6 @@ import java.util.Random;
 
     public void spawnBoss(int width, int height) {
         entityManager.spawnBoss(level, width, height);
-//        if (level == 1) {
-//            entityManager.spawnBoss(new EnemyBoss1(width, height));
-////            boss = new EnemyBoss1(width, height);
-//        } else if (level == 2) {
-//            entityManager.spawnBoss(new EnemyBoss2(width, height));
-////            boss = new EnemyBoss2(width, height);
-//        }
-//        if (boss != null) {
-//            bossLives = true;
-//            enemies.add(boss);
-//            healthBossDef = boss.getHealth();
-//            healthBoss = healthBossDef;
-//        }
     }
 
     public void spawnFlag() {
@@ -731,14 +634,12 @@ import java.util.Random;
             level++;
             levelSpawned = false;
             variableManager.setBossLives(false);
-//            bossLives = false;
 
             if (level > MAXLEVEL) {
                 Engine.menuState(); // stub
                 resetGame();
             } else {
                 Engine.transitionState();
-//                spawn();
             }
         }
     }

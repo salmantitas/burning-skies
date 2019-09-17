@@ -1,6 +1,8 @@
-package com.euhedral.game;
+package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
+import com.euhedral.game.ContactID;
+import com.euhedral.game.EnemyID;
 
 import java.awt.*;
 

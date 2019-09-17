@@ -1,4 +1,6 @@
-package com.euhedral.game;
+package com.euhedral.game.Entities;
+
+import com.euhedral.game.ContactID;
 
 import java.awt.*;
 

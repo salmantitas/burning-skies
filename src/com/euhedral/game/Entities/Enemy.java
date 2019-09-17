@@ -1,7 +1,10 @@
-package com.euhedral.game;
+package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.MobileEntity;
+import com.euhedral.game.*;
+import com.euhedral.game.Entities.Bullet;
+import com.euhedral.game.Entities.BulletEnemy;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -86,29 +89,35 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void initialize() {
+        if (contactId == ContactID.Ground) {
+            width = Engine.intAtWidth640(32);
+            height = 2* width;
+            color = Color.pink;
+            r = new Random();
+            health = r.nextInt(3) + 2;
+            velY = 1.75f;
+        }
+
         if (enemyID == EnemyID.Basic) {
             power = 1;
             shootTimerDef = 250;
             velY = 1.8f;
             healthRange(4,6);
             score = 50;
-        }
-        if (enemyID == EnemyID.Fast) {
+        } else if (enemyID == EnemyID.Fast) {
             power = 2;
             shootTimerDef = 150;
             velY = 4f;
             healthRange(2,4);
             score = 100;
-        }
-        if (enemyID == EnemyID.Snake) {
+        } else if (enemyID == EnemyID.Snake) {
             shootTimerDef = 60;
             healthRange(6,10);
             score = 150;
             velX = velY;
             distance = width * 2;
             movementTimer = distance;
-        }
-        if (enemyID == EnemyID.Move) {
+        } else if (enemyID == EnemyID.Move) {
             width = Engine.intAtWidth640(48);
             shootTimerDef = 120;
             velY = 1.75f;

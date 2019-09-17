@@ -1,6 +1,7 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.Entity;
+import com.euhedral.game.Entities.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -160,16 +161,20 @@ public class EntityManager {
      * Enemy Functions *
      *******************/
 
-    public void addEnemy(Enemy enemy) {
+    public void spawnEnemy(int x, int y, EnemyID enemyID, ContactID contactId, Color color) {
+        addEnemy(x, y, enemyID, contactId, color);
+    }
+
+    private void addEnemy(Enemy enemy) {
         enemies.add(enemy);
     }
 
-    public void addEnemy(int x, int y, EnemyID eID, ContactID cID) {
+    private void addEnemy(int x, int y, EnemyID eID, ContactID cID) {
         Enemy enemy = new Enemy(x, y, eID, cID);
         enemies.add(enemy);
     }
 
-    public void addEnemy(int x, int y, EnemyID eID, ContactID cID, Color color) {
+    private void addEnemy(int x, int y, EnemyID eID, ContactID cID, Color color) {
         Enemy enemy = new Enemy(x, y, eID, cID, color);
         enemies.add(enemy);
     }
@@ -260,7 +265,7 @@ public class EntityManager {
     public void playerVsEnemyCollision() {
         for (Enemy enemy : enemies) {
             if (enemy.getID() == ContactID.Air)
-                if (enemy.inscreen && enemy.getBounds().intersects(player.getBounds()) && enemy.isActive()) {
+                if (enemy.isInscreen() && enemy.getBounds().intersects(player.getBounds()) && enemy.isActive()) {
                     variableManager.increaseScore(enemy.getScore());
                     variableManager.decreaseHealth(30);
                     destroy(enemy);
@@ -272,7 +277,7 @@ public class EntityManager {
 
     public void enemyVsPlayerBulletCollision() {
         for (Enemy enemy : enemies) {
-            if (enemy.inscreen && enemy.isActive()) {
+            if (enemy.isInscreen() && enemy.isActive()) {
                 Bullet b = player.checkCollision(enemy);
                 if (b != null) {
                     if (enemy.getID() == ContactID.Boss) {

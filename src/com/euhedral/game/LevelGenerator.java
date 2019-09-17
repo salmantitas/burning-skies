@@ -43,7 +43,7 @@ public class LevelGenerator {
                 // Ground Enemies
 
                 else if (r == 255 && g == 150 && b == 244)
-                    gameController.spawnEnemy(i*32, j*32, ContactID.Ground);
+                    gameController.spawnEnemy(i*32, j*32, EnemyID.Basic, ContactID.Ground, new Color(r,g,b));
 
                 // Pickups
 
