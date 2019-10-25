@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 public class EntityManager {
     private VariableManager variableManager;
-    public LinkedList<EntityActionTag> actions = new LinkedList<>();
+    private LinkedList<Pickup> pickups = new LinkedList<>(); // todo: Move to Entity Manager
 
     private LinkedList<Entity> entities;
 
@@ -40,7 +40,10 @@ public class EntityManager {
     }
 
     public void update() {
-
+        updatePlayer();
+        updateBullets();
+        updateEnemies();
+        updatePickup();
     }
 
     public void render(Graphics g) {
@@ -143,6 +146,30 @@ public class EntityManager {
             if (bullet.isActive())
                 bullet.render(g);
         }
+    }
+
+    /********************
+     * Pickup Functions *
+     ********************/
+
+    public void updatePickup() {
+        for (Pickup pickup : pickups) {
+            if (pickup.isActive()) {
+                pickup.update();
+            }
+        }
+    }
+
+    public void renderPickup(Graphics g) {
+        for (Pickup pickup: pickups) {
+            if (pickup.isActive())
+                pickup.render(g);
+        }
+    }
+
+    public void spawnPickup(int x, int y, PickupID id, Color color) {
+        pickups.add(new Pickup(x, y, id, color));
+//        System.out.println("Pickup spawned");
     }
 
     public void clearBullets() {
@@ -296,6 +323,18 @@ public class EntityManager {
                         }
                     }
                     destroy(b);
+                }
+            }
+        }
+    }
+
+    public void playerVsPickupCollision() {
+        // Player vs pickup collision
+        for (Pickup pickup: pickups) {
+            if (pickup.isActive()) {
+                if (pickup.getBounds().intersects(getPlayerBounds())) {
+                    variableManager.increaseHealth(25);
+                    pickup.disable();
                 }
             }
         }

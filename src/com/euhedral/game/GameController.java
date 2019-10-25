@@ -30,13 +30,15 @@ import java.util.Random;
     private boolean updateHighScore = false;
 
     // Objects
-
     private VariableManager variableManager;
     private EntityManager entityManager;
-//    private Player player = new Player(0, 0, 0);
 
     // Camera
     public static Camera camera;
+//    public int struct  {
+//        offsetVertical,
+//        offsetHorizontal
+//        };
     int offsetHorizontal;
     int offsetVertical;
 
@@ -55,9 +57,7 @@ import java.util.Random;
     private static int level;
     private final int MAXLEVEL = 2;
 
-    private Flag flag;
-
-    private LinkedList<Pickup> pickups = new LinkedList<>();
+    private Flag flag; // todo: Move to Entity Manager
 
     private boolean levelSpawned = false;
     private boolean ground = false; // true for testing, has to be false by default
@@ -86,9 +86,7 @@ import java.util.Random;
         gameHeight = Engine.HEIGHT;
         uiHandler = new UIHandler();
         initializeGame();
-//        entityManager.initializeGraphics();
         initializeGraphics();
-//        entityManager.initializeAnimations();
         initializeAnimations();
         initializeLevel();
     }
@@ -176,16 +174,9 @@ import java.util.Random;
 
             else {
 
-                entityManager.updatePlayer();
-                flag.update();
-                entityManager.updateBullets();
-                entityManager.updateEnemies();
+                entityManager.update();
 
-                for (Pickup pickup : pickups) {
-                    if (pickup.isActive()) {
-                        pickup.update();
-                    }
-                }
+                flag.update();
 
                 checkCollision();
 
@@ -254,12 +245,10 @@ import java.util.Random;
          * Game Code *
          *************/
 
+        // todo: put it all in EntityManager's render
         entityManager.renderBullets(g);
 
-        for (Pickup pickup: pickups) {
-            if (pickup.isActive())
-                pickup.render(g);
-        }
+        entityManager.renderPickup(g);
 
         entityManager.renderEnemies(g);
 
@@ -416,9 +405,6 @@ import java.util.Random;
         variableManager.resetScore();
         variableManager.resetPower();
         variableManager.resetHealth();
-//        score = 0;
-//        power = 1;
-//        health = healthDefault;
 
         /*************
          * Game Code *
@@ -555,16 +541,7 @@ import java.util.Random;
     }
 
     public void checkCollision() {
-        // Player vs pickup collision
-        for (Pickup pickup: pickups) {
-            if (pickup.isActive()) {
-                if (pickup.getBounds().intersects(entityManager.getPlayerBounds())) {
-                    variableManager.increaseHealth(25);
-                    pickup.disable();
-                }
-            }
-        }
-
+        entityManager.playerVsPickupCollision();
         entityManager.playerVsEnemyCollision();
         entityManager.playerVsEnemyBulletCollision();
         entityManager.enemyVsPlayerBulletCollision();
@@ -609,8 +586,7 @@ import java.util.Random;
 
     // Spawn Pickups
     public void spawnPickup(int x, int y, PickupID id, Color color) {
-        pickups.add(new Pickup(x, y, id, color));
-//        System.out.println("Pickup spawned");
+        entityManager.spawnPickup(x, y, id, color);
     }
 
     public void spawnBoss(int width, int height) {
