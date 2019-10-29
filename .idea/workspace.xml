@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EntityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EntityManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/VariableManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/VariableManager.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,8 +23,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/euhedral/game/GameController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="588" column="51" selection-start-line="588" selection-start-column="51" selection-end-line="588" selection-end-column="51" />
+            <state relative-caret-position="162">
+              <caret line="133" column="24" selection-start-line="133" selection-start-column="16" selection-end-line="133" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#16218#16219#0" expanded="true" />
@@ -32,11 +34,41 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/euhedral/game/EntityManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="172" column="5" lean-forward="true" selection-start-line="172" selection-start-column="5" selection-end-line="172" selection-end-column="5" />
+            <state relative-caret-position="77">
+              <caret line="169" column="28" selection-start-line="169" selection-start-column="28" selection-end-line="169" selection-end-column="28" />
+              <folding>
+                <element signature="e#1469#1470#0" expanded="true" />
+                <element signature="e#1500#1501#0" expanded="true" />
+                <element signature="e#4529#4530#0" expanded="true" />
+                <element signature="e#4560#4561#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="217">
+              <caret line="27" column="5" lean-forward="true" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/euhedral/game/VariableManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="213">
+              <caret line="62" column="33" selection-start-line="62" selection-start-column="33" selection-end-line="62" selection-end-column="33" />
+              <folding>
+                <element signature="e#3313#3314#0" expanded="true" />
+                <element signature="e#3343#3344#0" expanded="true" />
+                <element signature="e#3597#3598#0" expanded="true" />
+                <element signature="e#3633#3634#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -54,15 +86,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>contacti</find>
-      <find>inscreen</find>
-      <find>ground</find>
-      <find>testingcheat</find>
-      <find>spawn</find>
-      <find>spawnenem</find>
-      <find>spawnene</find>
-      <find>spawnenemy</find>
-      <find>enemy fu</find>
       <find>initia</find>
       <find>initialize</find>
       <find>enemy</find>
@@ -78,10 +101,21 @@
       <find>update</find>
       <find>pickup</find>
       <find>updatepi</find>
-      <find>pick</find>
       <find>collision</find>
       <find>* pi</find>
       <find>cheat</find>
+      <find>player</find>
+      <find>health</find>
+      <find>playervspic</find>
+      <find>increaseh</find>
+      <find>increas</find>
+      <find>level</find>
+      <find>restart</find>
+      <find>clear</find>
+      <find>update()</find>
+      <find>updatep</find>
+      <find>pick</find>
+      <find>system.out</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -91,12 +125,13 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/com/euhedral/game/Enemy.java" />
-        <option value="$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java" />
         <option value="$PROJECT_DIR$/src/com/euhedral/game/LevelGenerator.java" />
         <option value="$PROJECT_DIR$/src/com/euhedral/game/Entities/EnemyGround.java" />
         <option value="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy.java" />
+        <option value="$PROJECT_DIR$/src/com/euhedral/game/VariableManager.java" />
         <option value="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" />
         <option value="$PROJECT_DIR$/src/com/euhedral/game/EntityManager.java" />
+        <option value="$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java" />
       </list>
     </option>
   </component>
@@ -110,6 +145,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -146,7 +182,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -206,7 +241,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13020134" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13154362" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -248,12 +283,6 @@
           <line>31</line>
           <properties />
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/game/GameController.java</url>
-          <line>588</line>
-          <properties />
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -322,13 +351,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -358,10 +380,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/euhedral/game/VariableManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="62" column="33" selection-start-line="62" selection-start-column="33" selection-end-line="62" selection-end-column="33" />
+          <folding>
+            <element signature="e#3313#3314#0" expanded="true" />
+            <element signature="e#3343#3344#0" expanded="true" />
+            <element signature="e#3597#3598#0" expanded="true" />
+            <element signature="e#3633#3634#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/euhedral/game/GameController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="588" column="51" selection-start-line="588" selection-start-column="51" selection-end-line="588" selection-end-column="51" />
+        <state relative-caret-position="162">
+          <caret line="133" column="24" selection-start-line="133" selection-start-column="16" selection-end-line="133" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#16218#16219#0" expanded="true" />
@@ -372,8 +407,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/euhedral/game/EntityManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="172" column="5" lean-forward="true" selection-start-line="172" selection-start-column="5" selection-end-line="172" selection-end-column="5" />
+        <state relative-caret-position="77">
+          <caret line="169" column="28" selection-start-line="169" selection-start-column="28" selection-end-line="169" selection-end-column="28" />
+          <folding>
+            <element signature="e#1469#1470#0" expanded="true" />
+            <element signature="e#1500#1501#0" expanded="true" />
+            <element signature="e#4529#4530#0" expanded="true" />
+            <element signature="e#4560#4561#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="27" column="5" lean-forward="true" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
         </state>
       </provider>
     </entry>

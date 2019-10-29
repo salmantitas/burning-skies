@@ -9,13 +9,13 @@ import java.util.LinkedList;
 
 public class EntityManager {
     private VariableManager variableManager;
-    private LinkedList<Pickup> pickups = new LinkedList<>(); // todo: Move to Entity Manager
 
     private LinkedList<Entity> entities;
 
     private Player player = new Player(0, 0, 0);
     private LinkedList<Enemy> enemies = new LinkedList<>();
     private LinkedList<Bullet> bullets = new LinkedList<>();
+    private LinkedList<Pickup> pickups = new LinkedList<>();
 
     private EnemyBoss boss;
 
@@ -148,6 +148,18 @@ public class EntityManager {
         }
     }
 
+    public void clearBullets() {
+        bullets.clear();
+    }
+
+    public void addToBullets(Enemy enemy) {
+        bullets.addAll(enemy.getBullets());
+    }
+
+    private void destroy(Bullet bullet) {
+        bullet.disable();
+    }
+
     /********************
      * Pickup Functions *
      ********************/
@@ -172,16 +184,8 @@ public class EntityManager {
 //        System.out.println("Pickup spawned");
     }
 
-    public void clearBullets() {
-        bullets.clear();
-    }
-
-    public void addToBullets(Enemy enemy) {
-        bullets.addAll(enemy.getBullets());
-    }
-
-    private void destroy(Bullet bullet) {
-        bullet.disable();
+    public void clearPickups() {
+        pickups.clear();
     }
 
     /*******************

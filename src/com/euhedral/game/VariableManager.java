@@ -17,6 +17,7 @@ public class VariableManager {
     private int healthX = Engine.percWidth(2.5);
     private int healthY = 5 * healthX;
     private final int healthDefault = 100;
+    private int healthMAX = healthDefault;
     private int health = healthDefault;
 
     // Score
@@ -58,6 +59,8 @@ public class VariableManager {
 
     public void increaseHealth(int health) {
         this.health += health;
+        if (health >= healthMAX)
+            setHealth(healthMAX);
     }
 
     public void decreaseHealth(int health) {

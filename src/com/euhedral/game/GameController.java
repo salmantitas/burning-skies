@@ -414,6 +414,7 @@ import java.util.Random;
         levelSpawned = false;
         entityManager.clearEnemies();
         entityManager.clearBullets();
+        entityManager.clearPickups();
         levelSpawned = false;
         uiHandler.ground = false;
 
