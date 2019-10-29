@@ -23,8 +23,6 @@ public class Pickup extends MobileEntity {
     @Override
     public void update() {
         super.update();
-//        y += velY;
-//        System.out.println(x + ", " + y);
     }
 
     @Override
