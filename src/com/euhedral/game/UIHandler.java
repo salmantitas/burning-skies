@@ -110,28 +110,6 @@ public class UIHandler {
 
         currentMenu.render(g);
 
-//        if (Engine.currentState == GameState.Pause) {
-//            drawPause(g);
-//        }
-
-        if (Engine.currentState == GameState.GameOver) {
-            drawGameOverScreen(g);
-        }
-
-//        for (MenuItem menuItem: menuItems) {
-//            if (menuItem.stateIs(Engine.currentState))
-//                menuItem.render(g);
-//        }
-//
-//        for (ButtonNav buttonNav : navButtons) {
-//            if (buttonNav.stateIs(Engine.currentState))
-//                buttonNav.render(g);
-//        }
-//
-
-//        if (currentMenu.getState() != GameState.Quit)
-//            currentMenu.render(g);
-////        }
         drawState(g);
     }
 

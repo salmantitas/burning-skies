@@ -25,11 +25,18 @@ public class MenuGameOver extends Menu{
     @Override
     public void render(Graphics g) {
         super.render(g);
+        drawGameOverScreen(g);
     }
 
 
     /*
     *
     * */
+
+    public void drawGameOverScreen(Graphics g) {
+        g.setFont(new Font("arial", 1, 150));
+        g.setColor(Color.WHITE);
+        g.drawString("GAME OVER", Engine.percWidth(2), Engine.HEIGHT/2);
+    }
 
 }
