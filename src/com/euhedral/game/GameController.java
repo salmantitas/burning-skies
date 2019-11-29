@@ -56,7 +56,7 @@ import java.util.Random;
     private static int level;
     private final int MAXLEVEL = 2;
 
-    private Flag flag; // todo: Move to Entity Manager
+    private Flag flag; // move to EntityManager
 
     private boolean levelSpawned = false;
     private boolean ground = false; // true for testing, has to be false by default
