@@ -25,27 +25,6 @@ public class MenuHelp extends Menu {
         drawHelpText(g);
     }
 
-//    public void checkHover(int mx, int my) {
-//
-//    }
-
-//    public void checkButtonAction(int mx, int my) {
-//
-//    }
-//
-//    public void chooseSelected() {
-//
-//
-//    }
-
-//    public GameState getState() {
-//
-//    }
-
-    /*
-    *
-    * */
-
     private void drawHelpText(Graphics g) {
         g.setFont(new Font("arial", 1, 30));
         g.setColor(Color.WHITE);
