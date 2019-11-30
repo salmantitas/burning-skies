@@ -1,8 +1,9 @@
-package com.euhedral.game;
+package com.euhedral.game.Menus;
 
 import com.euhedral.engine.*;
 import com.euhedral.engine.Button;
 import com.euhedral.engine.Menu;
+import com.euhedral.game.ActionTag;
 
 import java.awt.*;
 

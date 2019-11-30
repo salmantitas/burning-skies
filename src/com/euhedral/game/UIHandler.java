@@ -2,6 +2,7 @@ package com.euhedral.game;
 
 import com.euhedral.engine.*;
 import com.euhedral.engine.Menu;
+import com.euhedral.game.Menus.*;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.euhedral.game;
+package com.euhedral.game.Menus;
 
 import com.euhedral.engine.Button;
 import com.euhedral.engine.ButtonNav;
@@ -8,10 +8,10 @@ import com.euhedral.engine.Menu;
 
 import java.awt.*;
 
-public class MenuGameOver extends Menu {
+public class MenuPause extends Menu {
 
-    public MenuGameOver() {
-        super(GameState.GameOver);
+    public MenuPause() {
+        super(GameState.Pause);
         MAXBUTTON = 2;
         options = new Button[MAXBUTTON];
 
@@ -26,18 +26,16 @@ public class MenuGameOver extends Menu {
     @Override
     public void render(Graphics g) {
         super.render(g);
-        drawGameOverScreen(g);
+        drawPause(g);
     }
-
 
     /*
     *
     * */
 
-    public void drawGameOverScreen(Graphics g) {
-        g.setFont(new Font("arial", 1, 150));
+    public void drawPause(Graphics g) {
+        g.setFont(new Font("arial", 1, Engine.percWidth(20)));
         g.setColor(Color.WHITE);
-        g.drawString("GAME OVER", Engine.percWidth(2), Engine.HEIGHT/2);
+        g.drawString("PAUSE", Engine.percWidth(16), Engine.percHeight(25));
     }
-
 }

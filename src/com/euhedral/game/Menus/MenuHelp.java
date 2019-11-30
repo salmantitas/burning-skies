@@ -1,4 +1,4 @@
-package com.euhedral.game;
+package com.euhedral.game.Menus;
 
 import com.euhedral.engine.Button;
 import com.euhedral.engine.Menu;
