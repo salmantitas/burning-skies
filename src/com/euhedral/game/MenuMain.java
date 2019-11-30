@@ -1,14 +1,13 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.Button;
-import com.euhedral.engine.MenuItem;
+import com.euhedral.engine.Menu;
 import com.euhedral.engine.Panel;
 import com.euhedral.engine.*;
 
 import java.awt.*;
-import java.util.LinkedList;
 
-public class MenuMain extends Menu{
+public class MenuMain extends Menu {
 
     public MenuMain() {
         super(GameState.Menu);

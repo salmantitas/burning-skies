@@ -4,10 +4,11 @@ import com.euhedral.engine.Button;
 import com.euhedral.engine.ButtonNav;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.GameState;
+import com.euhedral.engine.Menu;
 
 import java.awt.*;
 
-public class MenuPause extends Menu{
+public class MenuPause extends Menu {
 
     public MenuPause() {
         super(GameState.Pause);

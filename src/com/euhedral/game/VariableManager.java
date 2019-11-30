@@ -41,6 +41,9 @@ public class VariableManager {
     private int bossScore = 500;
     private boolean bossLives = false;
 
+    // todo: ActionTag will be updated here
+    private ActionTag action = null;
+
     public VariableManager() {
 
     }

@@ -37,4 +37,10 @@ public class ButtonNav extends Button {
     public GameState getTargetSate() {
         return targetSate;
     }
+
+    @Override
+    public void activate() {
+        super.activate();
+        Engine.setState(targetSate);
+    }
 }

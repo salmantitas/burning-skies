@@ -10,14 +10,14 @@ public class Engine extends Canvas implements Runnable{
 
     /*
      * By Default:
-     * VERSION = 0.195
-     * TITLE = "Euhedral Engine 0.195"
+     * VERSION = 0.23
+     * TITLE = "Euhedral Engine 0.23"
      * SCREEN_RATIO = 4.0/3.0
      * WIDTH = 640
      * HEIGHT = 480
      * BACKGROUND_COLOR = Color.BLACK
      */
-    public static double VERSION = 0.1951;
+    public static double VERSION = 0.23;
     public static String TITLE = "Euhedral Engine " + VERSION;
     public static double SCREEN_RATIO = 4.0/3.0;
     public static int WIDTH = 640;
@@ -29,7 +29,7 @@ public class Engine extends Canvas implements Runnable{
     public static int timeInSeconds = 0;
     public static int timer = 0;
 
-    public GameController gameController;
+    public static GameController gameController;
     public static BufferedImageLoader loader;
 
     public static GameState currentState = GameState.Game;
@@ -290,10 +290,19 @@ public class Engine extends Canvas implements Runnable{
      ***********************/
 
     /*
+     * Notify UI Handler about the change of state
+     * */
+    private static void notifyUIHandler() {
+        if (gameController != null)
+            gameController.notifyUIHandler(currentState);
+    }
+
+    /*
      * Manually set the GameState
      * */
     public static void setState(GameState state) {
         currentState = state;
+        notifyUIHandler();
     }
 
     /*

@@ -1,12 +1,12 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.Button;
-import com.euhedral.engine.Panel;
+import com.euhedral.engine.Menu;
 import com.euhedral.engine.*;
 
 import java.awt.*;
 
-public class MenuHelp extends Menu{
+public class MenuHelp extends Menu {
 
     public MenuHelp() {
         super(GameState.Help);

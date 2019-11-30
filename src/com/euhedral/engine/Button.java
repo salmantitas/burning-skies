@@ -99,6 +99,10 @@ public class Button {
         otherStates.add(state);
     }
 
+    public void activate() {
+
+    }
+
     public void setText(String text) {
         this.text = text;
     }

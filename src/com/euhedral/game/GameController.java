@@ -34,10 +34,6 @@ import java.util.Random;
 
     // Camera
     public static Camera camera;
-//    public int struct  {
-//        offsetVertical,
-//        offsetHorizontal
-//        };
     int offsetHorizontal;
     int offsetVertical;
 
@@ -320,7 +316,11 @@ import java.util.Random;
             }
 
             if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
-//                uiHandler.keyboardSelection();
+                uiHandler.keyboardSelection('r');
+            }
+
+            if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
+                uiHandler.keyboardSelection('l');
             }
         }
 
@@ -425,7 +425,7 @@ import java.util.Random;
         performAction();
     }
 
-    private void performAction() {
+    public void performAction() {
         ActionTag action = uiHandler.getAction();
         if (action != null) {
             if (action == ActionTag.go) {
@@ -442,6 +442,10 @@ import java.util.Random;
             uiHandler.endAction();
         }
     }
+
+    public void notifyUIHandler(GameState state) {
+            uiHandler.updateState(state);
+        }
 
     /***************************
      * Render Helper Functions *

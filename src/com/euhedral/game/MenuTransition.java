@@ -2,10 +2,11 @@ package com.euhedral.game;
 
 import com.euhedral.engine.*;
 import com.euhedral.engine.Button;
+import com.euhedral.engine.Menu;
 
 import java.awt.*;
 
-public class MenuTransition extends Menu{
+public class MenuTransition extends Menu {
 
     public MenuTransition() {
         super(GameState.Transition);

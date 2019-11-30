@@ -4,10 +4,11 @@ import com.euhedral.engine.Button;
 import com.euhedral.engine.ButtonNav;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.GameState;
+import com.euhedral.engine.Menu;
 
 import java.awt.*;
 
-public class MenuGameOver extends Menu{
+public class MenuGameOver extends Menu {
 
     public MenuGameOver() {
         super(GameState.GameOver);
