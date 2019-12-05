@@ -48,7 +48,9 @@ public abstract class Entity {
 
     public abstract void update();
 
-    public abstract void render(Graphics g);
+    public void render(Graphics g) {
+        drawDefault(g);
+    }
 
     protected void drawDefault(Graphics g) {
         if (images != null) {

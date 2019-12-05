@@ -417,7 +417,7 @@ import java.util.Random;
         levelSpawned = false;
         uiHandler.ground = false;
 
-        testingCheat();
+//        testingCheat();
     }
 
     public void checkButtonAction(int mx, int my) {
