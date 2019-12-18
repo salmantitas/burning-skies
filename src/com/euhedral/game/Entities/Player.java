@@ -5,6 +5,8 @@ import com.euhedral.engine.MobileEntity;
 import com.euhedral.game.ContactID;
 import com.euhedral.game.Entities.*;
 import com.euhedral.game.EntityID;
+import com.euhedral.game.GameController;
+import com.euhedral.game.Texture;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -32,9 +34,12 @@ public class Player extends MobileEntity {
 
     // Graphics
     private BufferedImage image;
+    private Texture texture;
 
     public Player(int x, int y, int levelHeight) {
         super(x,y, EntityID.Player);
+        texture = GameController.getTexture();
+        image = texture.ps.grabImage(1,2,32,32);
         this.levelHeight = levelHeight;
         width = Engine.intAtWidth640(32);
         height = width;
@@ -92,8 +97,12 @@ public class Player extends MobileEntity {
                 bullet.render(g);
         }
 
-        g.setColor(color);
-        g.fillRect(x, y, width, height); //stub
+        super.render(g);
+
+//        g.setColor(color);
+//        g.fillRect(x, y, width, height); //stub
+//
+//        g.drawImage(image, (int) x, (int) y, null);
     }
 
     public Bullet checkCollision(Enemy enemy) {

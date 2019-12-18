@@ -62,6 +62,8 @@ import java.util.Random;
 
     private float inscreenMarker;
 
+    public static Texture texture = new Texture();
+
     /************
      * Graphics *
      ************/
@@ -631,6 +633,10 @@ import java.util.Random;
     private void testingCheat() {
         level = 2;
         ground = true;
+    }
+
+    public static Texture getTexture() {
+        return texture;
     }
 
 }
