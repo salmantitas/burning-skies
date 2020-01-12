@@ -39,7 +39,7 @@ public class Player extends MobileEntity {
     public Player(int x, int y, int levelHeight) {
         super(x,y, EntityID.Player);
         texture = GameController.getTexture();
-        image = texture.ps.grabImage(1,2,32,32);
+//        image = texture.ps.grabImage(0,0,width,height);
         this.levelHeight = levelHeight;
         width = Engine.intAtWidth640(32);
         height = width;
@@ -90,8 +90,6 @@ public class Player extends MobileEntity {
     }
 
     public void render(Graphics g) {
-//        g.fillRect(mx, my, 10, 10);
-
         for (Bullet bullet : bullets) {
             if (bullet.isActive())
                 bullet.render(g);
@@ -99,9 +97,6 @@ public class Player extends MobileEntity {
 
         super.render(g);
 
-//        g.setColor(color);
-//        g.fillRect(x, y, width, height); //stub
-//
 //        g.drawImage(image, (int) x, (int) y, null);
     }
 

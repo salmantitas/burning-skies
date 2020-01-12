@@ -24,15 +24,15 @@ public class MenuMain extends Menu {
 
         ButtonNav help = new ButtonNav(midButtonX, lowestButtonY, buttonSize, "Help", GameState.Menu, GameState.Help);
 
-        ButtonNav mainMenuQuit = new ButtonNav(rightButtonX, lowestButtonY, buttonSize, "Quit", GameState.Menu, GameState.Quit);
-        mainMenuQuit.setFill();
-        mainMenuQuit.addOtherState(GameState.Transition);
-        mainMenuQuit.addOtherState(GameState.Pause);
-        mainMenuQuit.addOtherState(GameState.GameOver);
+        ButtonNav quit = new ButtonNav(rightButtonX, lowestButtonY, buttonSize, "Quit", GameState.Menu, GameState.Quit);
+        quit.setFill();
+        quit.addOtherState(GameState.Transition);
+        quit.addOtherState(GameState.Pause);
+        quit.addOtherState(GameState.GameOver);
 
         options[0] = mainMenuPlay;
         options[1] = help;
-        options[2] = mainMenuQuit;
+        options[2] = quit;
 
     }
 

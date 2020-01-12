@@ -11,7 +11,7 @@ public class MenuTransition extends Menu {
 
     public MenuTransition() {
         super(GameState.Transition);
-        MAXBUTTON = 6;
+        MAXBUTTON = 9;
         options = new Button[MAXBUTTON];
 
         // Transition / Shop
@@ -28,12 +28,21 @@ public class MenuTransition extends Menu {
 
         ButtonNav backToMenu = new ButtonNav(midLeftButtonX, lowestButtonY, Engine.perc(buttonSize, 80), "Main Menu", GameState.Help, GameState.Menu);
 
+        ButtonAction save = new ButtonAction(midLeftButtonX,topButtonY + 150, buttonSize, "Save", GameState.Transition, ActionTag.save);
+
+        ButtonAction load = new ButtonAction(midLeftButtonX,topButtonY + 200, buttonSize, "Load", GameState.Transition, ActionTag.load);
+
+        ButtonNav quit = new ButtonNav(rightButtonX, lowestButtonY, buttonSize, "Quit", GameState.Menu, GameState.Quit);
+
         options[0] = health;
         options[1] = ground;
         options[2] = power;
         options[3] = go;
         options[4] = control;
-        options[5] = backToMenu;
+        options[5] = save;
+        options[6] = load;
+        options[7] = backToMenu;
+        options[8] = quit;
     }
 
     @Override

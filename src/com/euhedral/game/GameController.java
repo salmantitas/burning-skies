@@ -440,9 +440,33 @@ import java.util.Random;
                 buyPower();
             } else if (action == ActionTag.ground) {
                 buyGround();
+            } else if (action == ActionTag.save) {
+                save();
+            } else if (action == ActionTag.load) {
+                load();
             }
             uiHandler.endAction();
         }
+    }
+
+    public void save() {
+        System.out.println("Saving");
+        // write to JSON current:
+        // level
+        // health
+        // score
+        // power
+        // ground
+    }
+
+    public void load() {
+        System.out.println("Loading");
+        // set from JSON current:
+        // level
+        // health
+        // score
+        // power
+        // ground
     }
 
     public void notifyUIHandler(GameState state) {
