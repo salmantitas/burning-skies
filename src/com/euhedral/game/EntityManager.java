@@ -109,8 +109,8 @@ public class EntityManager {
         player.canShoot(false);
     }
 
-    public void spawnPlayer(int width, int height, int levelHeight, BufferedImage sprite, int power, boolean ground) {
-        player = new Player(width, height, levelHeight, sprite);
+    public void spawnPlayer(int width, int height, int levelHeight, int power, boolean ground) {
+        player = new Player(width, height, levelHeight);
         player.setGround(ground);
         player.setPower(power);
     }

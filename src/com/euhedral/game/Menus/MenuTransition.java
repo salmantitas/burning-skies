@@ -28,9 +28,9 @@ public class MenuTransition extends Menu {
 
         ButtonNav backToMenu = new ButtonNav(midLeftButtonX, lowestButtonY, Engine.perc(buttonSize, 80), "Main Menu", GameState.Help, GameState.Menu);
 
-        ButtonAction save = new ButtonAction(midLeftButtonX,topButtonY + 150, buttonSize, "Save", GameState.Transition, ActionTag.save);
+        ButtonAction save = new ButtonAction(midLeftButtonX + 30,topButtonY + 140, buttonSize, "Save", GameState.Transition, ActionTag.save);
 
-        ButtonAction load = new ButtonAction(midLeftButtonX,topButtonY + 200, buttonSize, "Load", GameState.Transition, ActionTag.load);
+        ButtonAction load = new ButtonAction(midLeftButtonX + 30,topButtonY + 220, buttonSize, "Load", GameState.Transition, ActionTag.load);
 
         ButtonNav quit = new ButtonNav(rightButtonX, lowestButtonY, buttonSize, "Quit", GameState.Menu, GameState.Quit);
 

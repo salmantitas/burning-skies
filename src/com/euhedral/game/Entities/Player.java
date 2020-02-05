@@ -39,11 +39,12 @@ public class Player extends MobileEntity {
     public Player(int x, int y, int levelHeight) {
         super(x,y, EntityID.Player);
         texture = GameController.getTexture();
-//        image = texture.ps.grabImage(0,0,width,height);
+        image = texture.player[0];
+        System.out.println("Image width: "+image.getWidth() + ", height: " + image.getHeight());
         this.levelHeight = levelHeight;
         width = Engine.intAtWidth640(32);
         height = width;
-        color = Color.darkGray;
+        color = Color.WHITE;
 
         velX = 0;
         velY = 0;
@@ -69,10 +70,10 @@ public class Player extends MobileEntity {
         clampOffsetY = height;
     }
 
-    public Player(int x, int y, int levelHeight, BufferedImage image) {
-        this(x, y, levelHeight);
-        this.image = image;
-    }
+//    public Player(int x, int y, int levelHeight, BufferedImage image) {
+//        this(x, y, levelHeight);
+//        this.image = image;
+//    }
 
     public void update() {
 //        System.out.println("Player at (" + x + ", " + y + ")");
@@ -97,7 +98,7 @@ public class Player extends MobileEntity {
 
         super.render(g);
 
-//        g.drawImage(image, (int) x, (int) y, null);
+        g.drawImage(image, (int) x, (int) y, null);
     }
 
     public Bullet checkCollision(Enemy enemy) {

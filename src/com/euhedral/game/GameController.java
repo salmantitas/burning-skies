@@ -62,7 +62,7 @@ import java.util.Random;
 
     private float inscreenMarker;
 
-    public static Texture texture = new Texture();
+    public static Texture texture;
 
     /************
      * Graphics *
@@ -82,9 +82,9 @@ import java.util.Random;
         Engine.setBACKGROUND_COLOR(gameBackground);
         gameHeight = Engine.HEIGHT;
         uiHandler = new UIHandler();
-        initializeGame();
         initializeGraphics();
         initializeAnimations();
+        initializeGame();
         initializeLevel();
     }
 
@@ -108,10 +108,7 @@ import java.util.Random;
         /*************
          * Game Code *
          *************/
-        playerSpriteSheet = new SpriteSheet("/player.png");
-        playerImage = new BufferedImage[2];
-        playerImage[0] = playerSpriteSheet.grabImage(1,1,32,32);
-        playerImage[1] = playerSpriteSheet.grabImage(2,1,32,32);
+        texture = new Texture();
     }
 
     private void initializeAnimations() {
@@ -595,7 +592,7 @@ import java.util.Random;
     public void spawnPlayer(int width, int height, int levelHeight) {
         offsetHorizontal = -gameWidth / 2 + 32;
         offsetVertical = gameHeight - 160;
-        entityManager.spawnPlayer(width, height, levelHeight, playerImage[0], variableManager.getPower(), ground);
+        entityManager.spawnPlayer(width, height, levelHeight, variableManager.getPower(), ground);
 
         // sets the camera's width to center the player horizontally, essentially to 0, and
         // adjust the height so that player is at the bottom of the screen
