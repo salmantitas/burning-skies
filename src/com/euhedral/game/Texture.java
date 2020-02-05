@@ -29,7 +29,7 @@ public class Texture {
     }
 
     public void initializeTexture() {
-        player[0] = ps.grabImage(3,1, Engine.intAtWidth640(32),Engine.intAtWidth640(32));
+        player[0] = ps.grabImage(1,1, Engine.intAtWidth640(32),Engine.intAtWidth640(32));
     }
 
 
