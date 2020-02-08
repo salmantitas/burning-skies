@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class Texture {
 
-    public BufferedImage[] player = new BufferedImage[1];
+    public BufferedImage[] player = new BufferedImage[4];
 
     public SpriteSheet ps;
 
@@ -30,6 +30,9 @@ public class Texture {
 
     public void initializeTexture() {
         player[0] = ps.grabImage(1,1, Engine.intAtWidth640(32),Engine.intAtWidth640(32));
+        player[1] = ps.grabImage(2,1, Engine.intAtWidth640(32),Engine.intAtWidth640(32));
+        player[2] = ps.grabImage(3,1, Engine.intAtWidth640(32),Engine.intAtWidth640(32));
+        player[3] = ps.grabImage(4,1, Engine.intAtWidth640(32),Engine.intAtWidth640(32));
     }
 
 

@@ -280,6 +280,11 @@ public class EntityManager {
         }
     }
 
+    public void damagePlayer(int num){
+        player.decreaseHealth(num);
+        variableManager.decreaseHealth(num);
+    }
+
     /***********************
      * Collision Functions *
      ***********************/
@@ -287,7 +292,7 @@ public class EntityManager {
     public void playerVsEnemyBulletCollision() {
         for (Bullet bullet: bullets) {
             if (bullet.isActive() && bullet.getBounds().intersects(player.getBounds())) {
-                variableManager.decreaseHealth(10);
+                damagePlayer(10);
                 destroy(bullet);
             }
         }
@@ -298,10 +303,10 @@ public class EntityManager {
             if (enemy.getID() == ContactID.Air)
                 if (enemy.isInscreen() && enemy.getBounds().intersects(player.getBounds()) && enemy.isActive()) {
                     variableManager.increaseScore(enemy.getScore());
-                    variableManager.decreaseHealth(30);
+                    damagePlayer(30);
                     destroy(enemy);
                 } else if (enemy.getID() == ContactID.Boss) {
-                    variableManager.decreaseHealth(10);
+                    damagePlayer(10);
                 }
         }
     }

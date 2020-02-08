@@ -35,12 +35,14 @@ public class Player extends MobileEntity {
     // Graphics
     private BufferedImage image;
     private Texture texture;
+    private final int healthDefault = 100;
+    private int healthMAX = healthDefault;
+    private int health = healthDefault;
 
     public Player(int x, int y, int levelHeight) {
         super(x,y, EntityID.Player);
         texture = GameController.getTexture();
         image = texture.player[0];
-        System.out.println("Image width: "+image.getWidth() + ", height: " + image.getHeight());
         this.levelHeight = levelHeight;
         width = Engine.intAtWidth640(32);
         height = width;
@@ -86,6 +88,14 @@ public class Player extends MobileEntity {
         for (Bullet bullet : bullets) {
             if (bullet.isActive())
                 bullet.update();
+        }
+
+        if (health > 75) {
+            image = texture.player[0];
+        } else if (health > 50) {
+            image = texture.player[1];
+        } else if (health > 25) {
+            image = texture.player[2];
         }
 
     }
@@ -295,5 +305,9 @@ public class Player extends MobileEntity {
 
     public void setGround(Boolean ground) {
         this.ground = ground;
+    }
+
+    public void decreaseHealth(int num) {
+        health -= num;
     }
 }
