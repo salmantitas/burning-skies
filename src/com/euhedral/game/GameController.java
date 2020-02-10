@@ -416,7 +416,7 @@ import java.util.Random;
         levelSpawned = false;
         uiHandler.ground = false;
 
-//        testingCheat();
+        testingCheat();
     }
 
     public void checkButtonAction(int mx, int my) {
@@ -653,6 +653,7 @@ import java.util.Random;
 
     private void testingCheat() {
         level = 2;
+        variableManager.setPower(3);
         ground = true;
     }
 

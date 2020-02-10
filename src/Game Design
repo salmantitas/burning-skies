@@ -1,3 +1,5 @@
+
+
 Pause Menu:
     Buttons:
         Resume to return to game renderState
@@ -11,3 +13,9 @@ Layout of the Main Menu:
         Play to go to game renderState
         High Score to go to high score renderState
         Quit to go to quit renderState
+
+DIRECTIONS:
+UP = -90
+DOWN = 90
+UP-LEFT = -70;
+UP-RIGHT = -110;

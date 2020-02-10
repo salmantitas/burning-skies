@@ -39,6 +39,7 @@ public class Player extends MobileEntity {
     private int healthMAX = healthDefault;
     private int health = healthDefault;
 
+
     public Player(int x, int y, int levelHeight) {
         super(x,y, EntityID.Player);
         texture = GameController.getTexture();
@@ -171,29 +172,40 @@ public class Player extends MobileEntity {
     }
 
     private void shoot() {
+        // Bullet Spawn Points
+        // todo: positioning adjustment of bullet spawn point
+        int bltSpnLeft = x + width - 8;
+        int bltSpnMid = x + width / 2;
+        int bltSpnRight = x + 4;
+
         if (power == 5) {
             // todo
-        } else if (power == 4) {
-            // todo
+        }
+        else if (power == 4) {
+            spawnBullet(bltSpnLeft, y, -70);
+            spawnBullet(bltSpnLeft, y, -90);
+            spawnBullet(bltSpnRight, y, -90);
+            spawnBullet(bltSpnRight, y, -110);
         } else if (power == 3) {
-            // todo
+            spawnBullet(bltSpnLeft, y, -70);
+            spawnBullet(bltSpnMid, y, -90);
+            spawnBullet(bltSpnRight, y, -110);
         } else if (power == 2) {
-            if (airBullet) {
-                bullets.add(new BulletPlayerAir(x + 4, y, -90));
-                bullets.add(new BulletPlayerAir(x + width - 8, y, -90));
-            } else {
-                bullets.add(new BulletPlayerGround(x + 8, y, -90));
-                bullets.add(new BulletPlayerGround(x + width - 16, y, -90));
-            }
+            spawnBullet(bltSpnLeft, y, -90);
+            spawnBullet(bltSpnRight, y, -90);
         } else {
-            if (airBullet) {
-                bullets.add(new BulletPlayerAir(x + width / 2, y, -90));
-            } else {
-                bullets.add(new BulletPlayerGround(x + width / 2, y, -90));
-            }
+            spawnBullet(bltSpnMid, y, -90);
         }
         // reset shoot timer to default
         shootTimer = shootTimerDefault;
+    }
+
+    private void spawnBullet(int x, int y, int dir) {
+        if (airBullet) {
+            bullets.add(new BulletPlayerAir(x, y, dir));
+        } else {
+            bullets.add(new BulletPlayerGround(x, y, dir));
+        }
     }
 
     private void keyboardMove() {
