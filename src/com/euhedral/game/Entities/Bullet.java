@@ -2,6 +2,7 @@ package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.MobileEntity;
+import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityID;
 
 import java.awt.*;
@@ -20,9 +21,9 @@ public class Bullet extends MobileEntity {
         this.x = x;
         this.y = y;
         collided = false;
-        width = Engine.intAtWidth640(8)/2;
-        height = Engine.intAtWidth640(24)/2;
-        vel = Engine.intAtWidth640(4);
+        width = Utility.intAtWidth640(8)/2;
+        height = Utility.intAtWidth640(24)/2;
+        vel = Utility.intAtWidth640(4);
     }
 
     Bullet(int x, int y, double angle) {

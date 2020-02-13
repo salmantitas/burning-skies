@@ -2,6 +2,7 @@ package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.MobileEntity;
+import com.euhedral.engine.Utility;
 import com.euhedral.game.ContactID;
 import com.euhedral.game.Entities.*;
 import com.euhedral.game.EntityID;
@@ -45,7 +46,7 @@ public class Player extends MobileEntity {
         texture = GameController.getTexture();
         image = texture.player[0];
         this.levelHeight = levelHeight;
-        width = Engine.intAtWidth640(32);
+        width = Utility.intAtWidth640(32);
         height = width;
         color = Color.WHITE;
 
@@ -194,7 +195,7 @@ public class Player extends MobileEntity {
             spawnBullet(bltSpnLeft, y, -90);
             spawnBullet(bltSpnRight, y, -90);
         } else {
-            spawnBullet(bltSpnMid, y, -90);
+            spawnBullet(bltSpnMid, y, NORTH);
         }
         // reset shoot timer to default
         shootTimer = shootTimerDefault;
@@ -213,14 +214,14 @@ public class Player extends MobileEntity {
         if (moveLeft && !moveRight) {
 //            velX = - horizontalMovement; // stub
             velX -= acceleration;
-            velX = Engine.clamp(velX, - maxVelX, - minVelX);
+            velX = Utility.clamp(velX, - maxVelX, - minVelX);
         }
 
         // Moving Right
         else if (moveRight && !moveLeft) {
 //            velX = horizontalMovement; // stub
             velX += acceleration;
-            velX = Engine.clamp(velX, minVelX, maxVelX);
+            velX = Utility.clamp(velX, minVelX, maxVelX);
         }
 
         // Not Moving Left or Right
@@ -237,14 +238,14 @@ public class Player extends MobileEntity {
         if (moveUp && !moveDown) {
 //            velY = -verticalMovement; // stub
             velY -= acceleration;
-            velY = Engine.clamp(velY, - maxVelY, - minVelY);
+            velY = Utility.clamp(velY, - maxVelY, - minVelY);
         }
 
         // Moving Down
         else if (moveDown && !moveUp) {
 //            velY = horizontalMovement;
             velY += acceleration;
-            velY = Engine.clamp(velY, minVelY, maxVelY);
+            velY = Utility.clamp(velY, minVelY, maxVelY);
 
         }
 
@@ -261,8 +262,8 @@ public class Player extends MobileEntity {
     }
 
     private void mouseMove() {
-        x = Engine.clamp(x, 0, Engine.WIDTH + clampOffsetX);
-        y = Engine.clamp(y, 5900, levelHeight + clampOffsetY);
+        x = Utility.clamp(x, 0, Engine.WIDTH + clampOffsetX);
+        y = Utility.clamp(y, 5900, levelHeight + clampOffsetY);
 
         if (destinationGiven) {
             int positionOffset = 5;
@@ -294,7 +295,7 @@ public class Player extends MobileEntity {
 
     public void giveDestination(int mx, int my) {
         this.mx = mx - width / 2;
-        this.my = levelHeight - Engine.percHeight(83.5) + my;
+        this.my = levelHeight - Utility.percHeight(83.5) + my;
         System.out.println("Destination: " + this.my);
         destinationGiven = true;
     }

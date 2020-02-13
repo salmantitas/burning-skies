@@ -1,0 +1,67 @@
+package com.euhedral.engine;
+
+import static com.euhedral.engine.Engine.HEIGHT;
+import static com.euhedral.engine.Engine.WIDTH;
+
+public class Utility {
+
+    /*
+     * Returns the given percentage of a given parameter
+     * */
+    public static int perc(int parameter, double percentage) {
+        return  (int) (parameter * percentage/ 100.0);
+    }
+
+    /*
+     * Returns the given percentage of the screen width
+     * */
+    public static int percWidth(double percentage) {
+        return perc(WIDTH, percentage);
+    }
+
+    /*
+     * Returns the given percentage of the screen height
+     * */
+    public static int percHeight(double percentage) {
+        return perc(HEIGHT, percentage);
+    }
+
+    /*
+     * Scales the input integer up from what it would have been at screen width of 640
+     * */
+    public static int intAtWidth640(int var) {
+        float factor = 640/var;
+        return (int) (WIDTH/factor);
+    }
+
+    /*
+     * Scales the input float up from what it would have been at screen width of 640
+     * */
+    public static float floatAtWidth640(int var) {
+        float factor = 640/var;
+        return (float) (WIDTH/factor);
+    }
+
+    /*
+     * Limits the given integer between min and max
+     * */
+    public static int clamp(int var, int min, int max) {
+        if (var <= min)
+            return min;
+        if (var >= max)
+            return max;
+        else return var;
+    }
+
+    /*
+     * Limits the given float between min and max
+     * */
+    public static float clamp(float var, float min, float max) {
+        if (var <= min)
+            return min;
+        if (var >= max)
+            return max;
+        else return var;
+    }
+
+}

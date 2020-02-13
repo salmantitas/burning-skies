@@ -2,6 +2,7 @@ package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.MobileEntity;
+import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityID;
 import com.euhedral.game.PickupID;
 
@@ -13,7 +14,7 @@ public class Pickup extends MobileEntity {
 
     public Pickup(int x, int y, PickupID pickupID, Color color) {
         super(x, y, EntityID.Pickup);
-        width = Engine.intAtWidth640(16);
+        width = Utility.intAtWidth640(16);
         height = width * 2;
         this.pickupID = pickupID;
         this.color = color;

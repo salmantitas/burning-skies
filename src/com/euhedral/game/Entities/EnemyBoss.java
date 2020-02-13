@@ -1,6 +1,7 @@
 package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
+import com.euhedral.engine.Utility;
 import com.euhedral.game.ContactID;
 import com.euhedral.game.EnemyID;
 
@@ -47,7 +48,7 @@ public abstract class EnemyBoss extends Enemy {
             moveInScreen();
         } else {
             y += velY;
-            x = Engine.clamp(x, 0, Engine.WIDTH - width);
+            x = Utility.clamp(x, 0, Engine.WIDTH - width);
         }
 
 //        System.out.println("Boss at (" + x + ", " + y + ")");

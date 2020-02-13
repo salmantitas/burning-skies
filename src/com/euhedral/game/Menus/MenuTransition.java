@@ -26,7 +26,7 @@ public class MenuTransition extends Menu {
 
         ButtonAction control = new ButtonAction(leftButtonX, lowestButtonY + 50, buttonSize/2, "Switch Control Scheme", GameState.Transition, ActionTag.control);
 
-        ButtonNav backToMenu = new ButtonNav(midLeftButtonX, lowestButtonY, Engine.perc(buttonSize, 80), "Main Menu", GameState.Help, GameState.Menu);
+        ButtonNav backToMenu = new ButtonNav(midLeftButtonX, lowestButtonY, Utility.perc(buttonSize, 80), "Main Menu", GameState.Help, GameState.Menu);
 
         ButtonAction save = new ButtonAction(midLeftButtonX + 30,topButtonY + 140, buttonSize, "Save", GameState.Transition, ActionTag.save);
 

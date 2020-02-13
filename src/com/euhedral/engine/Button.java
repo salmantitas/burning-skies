@@ -36,10 +36,10 @@ public class Button {
         }
 
         g.setFont(font);
-        width = Engine.perc((g.getFontMetrics().stringWidth(text)), 110);
+        width = Utility.perc((g.getFontMetrics().stringWidth(text)), 110);
         if (width / size < 3)
-            height = Engine.perc(width, 50);
-        else height = Engine.perc(width, 25);
+            height = Utility.perc(width, 50);
+        else height = Utility.perc(width, 25);
 
         g.setColor(backColor);
         if (fill)
@@ -49,7 +49,7 @@ public class Button {
         if (selected)
             g.setColor(selectedColor);
         else g.setColor(textColor);
-        g.drawString(text, x + Engine.perc(width, 5), y + Engine.perc(height, 75));
+        g.drawString(text, x + Utility.perc(width, 5), y + Utility.perc(height, 75));
 
         if (transparency < 1) {
             g2d.setComposite(makeTransparent(1));

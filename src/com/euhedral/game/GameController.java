@@ -190,9 +190,9 @@ import java.util.Random;
              * Game Code *
              *************/
 
-            g.setFont(new Font("arial", 1, Engine.percWidth(5)));
+            g.setFont(new Font("arial", 1, Utility.percWidth(5)));
             g.setColor(Color.WHITE);
-            g.drawString("Level " + level, Engine.percWidth(40), Engine.percHeight(45));
+            g.drawString("Level " + level, Utility.percWidth(40), Utility.percHeight(45));
             drawHealth(g);
             drawScore(g);
             drawPower(g);
@@ -653,7 +653,7 @@ import java.util.Random;
 
     private void testingCheat() {
         level = 2;
-        variableManager.setPower(3);
+//        variableManager.setPower(3);
         ground = true;
     }
 

@@ -114,9 +114,9 @@ public class UIHandler {
      *******************/
 
     public void drawState(Graphics g) {
-        g.setFont(new Font("arial", 1, Engine.percWidth(1.5)));
+        g.setFont(new Font("arial", 1, Utility.percWidth(1.5)));
         g.setColor(Color.WHITE);
-        g.drawString("State: " + Engine.currentState, Engine.percWidth(85), Engine.percHeight(8));
+        g.drawString("State: " + Engine.currentState, Utility.percWidth(85), Utility.percHeight(8));
     }
 
 }

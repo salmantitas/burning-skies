@@ -1,6 +1,7 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
+import com.euhedral.engine.Utility;
 
 import java.awt.*;
 
@@ -16,9 +17,9 @@ public class Flag {
     public Flag(int x, int y, ContactID contactId) {
         this.x = x;
         this.y = y;
-        width = Engine.intAtWidth640(32);
+        width = Utility.intAtWidth640(32);
         height = width;
-        velY = Engine.floatAtWidth640(2)/2;
+        velY = Utility.floatAtWidth640(2)/2;
         color = Color.YELLOW;
         this.contactId = contactId;
         cam = GameController.getCamera();

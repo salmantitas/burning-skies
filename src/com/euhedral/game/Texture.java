@@ -3,6 +3,7 @@ package com.euhedral.game;
 import com.euhedral.engine.BufferedImageLoader;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.SpriteSheet;
+import com.euhedral.engine.Utility;
 
 import java.awt.image.BufferedImage;
 
@@ -29,10 +30,12 @@ public class Texture {
     }
 
     public void initializeTexture() {
-        player[0] = ps.grabImage(1,1, Engine.intAtWidth640(32),Engine.intAtWidth640(32));
-        player[1] = ps.grabImage(2,1, Engine.intAtWidth640(32),Engine.intAtWidth640(32));
-        player[2] = ps.grabImage(3,1, Engine.intAtWidth640(32),Engine.intAtWidth640(32));
-        player[3] = ps.grabImage(4,1, Engine.intAtWidth640(32),Engine.intAtWidth640(32));
+        int w = Utility.intAtWidth640(32);
+        int h = w;
+        player[0] = ps.grabImage(1,1, w,h);
+        player[1] = ps.grabImage(2,1, w,h);
+        player[2] = ps.grabImage(3,1, w,h);
+        player[3] = ps.grabImage(4,1, w,h);
     }
 
 

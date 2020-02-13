@@ -1,10 +1,16 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
+import com.euhedral.engine.Utility;
 
 import java.awt.*;
 
 public class VariableManager {
+
+    /****************************************
+     * Global Game Variables                *
+     * Comment Out Whichever is Unnecessary *
+     ****************************************/
 
     /****************************************
      * Common Game Variables                *
@@ -14,7 +20,7 @@ public class VariableManager {
     // Vitality
 //    private int lives = 3;
 
-    private int healthX = Engine.percWidth(2.5);
+    private int healthX = Utility.percWidth(2.5);
     private int healthY = 5 * healthX;
     private final int healthDefault = 100;
     private int healthMAX = healthDefault;
@@ -22,12 +28,12 @@ public class VariableManager {
 
     // Score
     private int score = 0;
-    private int scoreX = Engine.percWidth(2.5);
-    private int scoreY = Engine.percHeight(15);
-    private int scoreSize = Engine.percWidth(2);
+    private int scoreX = Utility.percWidth(2.5);
+    private int scoreY = Utility.percHeight(15);
+    private int scoreSize = Utility.percWidth(2);
 
     // Power
-    private int powerX = Engine.percWidth(24);
+    private int powerX = Utility.percWidth(24);
     private int powerY = scoreY;
     private int powerSize = scoreSize;
     private final int maxPower = 5;
@@ -91,7 +97,7 @@ public class VariableManager {
     * */
 
     public void renderHealth(Graphics g) {
-        int width = Engine.intAtWidth640(2);
+        int width = Utility.intAtWidth640(2);
         int height = width * 6;
         Color backColor = Color.lightGray;
         Color healthColor = Color.GREEN;
@@ -114,11 +120,11 @@ public class VariableManager {
     }
 
     protected void drawBossHealth(Graphics g) {
-        int startX = Engine.percWidth(35);
-        int endX = Engine.percWidth(65);
+        int startX = Utility.percWidth(35);
+        int endX = Utility.percWidth(65);
         int diffX = endX - startX;
 
-        int y = Engine.percHeight(28);
+        int y = Utility.percHeight(28);
         int width = diffX / healthBossDef;
         int height = width;
         Color backColor = Color.lightGray;

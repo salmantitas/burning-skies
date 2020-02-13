@@ -2,6 +2,7 @@ package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.MobileEntity;
+import com.euhedral.engine.Utility;
 import com.euhedral.game.*;
 import com.euhedral.game.Entities.Bullet;
 import com.euhedral.game.Entities.BulletEnemy;
@@ -43,7 +44,7 @@ public class Enemy extends MobileEntity {
         moveLeft = false;
         cam = GameController.getCamera();
         power = 1;
-        width = Engine.intAtWidth640(32);
+        width = Utility.intAtWidth640(32);
         height = width;
         color = Color.red;
         this.contactId = contactID;
@@ -78,7 +79,7 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void move() {
-        x = Engine.clamp(x, 0, Engine.WIDTH - width);
+        x = Utility.clamp(x, 0, Engine.WIDTH - width);
 
         if (inscreen) {
             moveInScreen();
@@ -90,7 +91,7 @@ public class Enemy extends MobileEntity {
     @Override
     public void initialize() {
         if (contactId == ContactID.Ground) {
-            width = Engine.intAtWidth640(32);
+            width = Utility.intAtWidth640(32);
             height = 2* width;
             color = Color.pink;
             r = new Random();
@@ -118,7 +119,7 @@ public class Enemy extends MobileEntity {
             distance = width * 2;
             movementTimer = distance;
         } else if (enemyID == EnemyID.Move) {
-            width = Engine.intAtWidth640(48);
+            width = Utility.intAtWidth640(48);
             shootTimerDef = 120;
             velY = 1.75f;
             healthRange(8,12);
@@ -156,7 +157,7 @@ public class Enemy extends MobileEntity {
     }
 
     private void fastShoot() {
-        int newVel = Engine.intAtWidth640(5);
+        int newVel = Utility.intAtWidth640(5);
         double angle = 75;
         bullets.add(new BulletEnemy(x + width/2,y, angle, newVel));
         bullets.add(new BulletEnemy(x + width/2,y, angle + 2 * (90 - angle), newVel));
@@ -167,7 +168,7 @@ public class Enemy extends MobileEntity {
 
     private void snakeShoot() {
         int var = shotNum % 3;
-        int newVel = Engine.intAtWidth640(5);
+        int newVel = Utility.intAtWidth640(5);
         double angle = 75;
 
         if (var == 0) {
@@ -179,6 +180,14 @@ public class Enemy extends MobileEntity {
         }
 
         resetShooter();
+    }
+
+    protected void shootDownDefault() {
+        spawnBullet(x + width/2, y, SOUTH);
+    }
+
+    private void spawnBullet(int x, int y, int dir) {
+        bullets.add(new BulletEnemy(x, y, dir));
     }
 
     public void moveInScreen() {
@@ -203,9 +212,9 @@ public class Enemy extends MobileEntity {
 
         int
                 int0 = 0,
-                int1 = Engine.perc(distance, 30),
-                int2 = Engine.perc(distance, 50),
-                int3 = Engine.perc(distance, 80);
+                int1 = Utility.perc(distance, 30),
+                int2 = Utility.perc(distance, 50),
+                int3 = Utility.perc(distance, 80);
 
 
         if (movementTimer <= distance && movementTimer > int3) {
@@ -229,9 +238,9 @@ public class Enemy extends MobileEntity {
 
         int
                 int0 = 0,
-                int1 = Engine.perc(distance, 30),
-                int2 = Engine.perc(distance, 50),
-                int3 = Engine.perc(distance, 80);
+                int1 = Utility.perc(distance, 30),
+                int2 = Utility.perc(distance, 50),
+                int3 = Utility.perc(distance, 80);
 
 
         if (movementTimer <= distance && movementTimer > int3) {
@@ -263,10 +272,6 @@ public class Enemy extends MobileEntity {
 
     public void setInscreen(boolean inscreen) {
         this.inscreen = inscreen;
-    }
-
-    protected void shootDownDefault() {
-        bullets.add(new BulletEnemy(x + width/2,y, 90));
     }
 
     protected void resetShooter() {
