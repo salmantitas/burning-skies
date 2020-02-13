@@ -208,12 +208,15 @@ import java.util.Random;
             if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause ) {
 
                 renderInCamera(g);
-                drawHealth(g);
 
-                entityManager.renderBossHealth(g);
+                if (VariableManager.hud) {
+                    drawHealth(g);
 
-                drawScore(g);
-                drawPower(g);
+                    entityManager.renderBossHealth(g);
+
+                    drawScore(g);
+                    drawPower(g);
+                }
 
             }
         }

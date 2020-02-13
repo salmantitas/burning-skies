@@ -27,7 +27,6 @@ public class MenuGameOver extends Menu {
         drawGameOverScreen(g);
     }
 
-
     /*
     *
     * */

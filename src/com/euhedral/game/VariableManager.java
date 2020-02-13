@@ -11,6 +11,7 @@ public class VariableManager {
      * Global Game Variables                *
      * Comment Out Whichever is Unnecessary *
      ****************************************/
+    public static boolean hud = true;
 
     /****************************************
      * Common Game Variables                *
