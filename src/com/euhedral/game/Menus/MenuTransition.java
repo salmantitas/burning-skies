@@ -50,23 +50,6 @@ public class MenuTransition extends Menu {
         super.render(g);
     }
 
-//    public void checkHover(int mx, int my) {
-//
-//    }
-
-//    public void checkButtonAction(int mx, int my) {
-//
-//    }
-//
-//    public void chooseSelected() {
-//
-//
-//    }
-
-//    public GameState getState() {
-//
-//    }
-
     /*
     *
     * */

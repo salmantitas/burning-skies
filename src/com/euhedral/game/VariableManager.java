@@ -58,6 +58,7 @@ public class VariableManager {
 
     public static void console() {
         console = !console;
+        System.out.println("Console is " + console);
     }
 
     public static boolean isConsole() {

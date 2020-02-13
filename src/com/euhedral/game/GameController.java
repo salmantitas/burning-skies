@@ -129,7 +129,7 @@ import java.util.Random;
 //        System.out.println(Engine.currentState);
         Engine.timer++;
 
-        if (Engine.currentState == GameState.Quit)
+        if (Engine.stateIs(GameState.Quit))
             Engine.stop();
 
         if (Engine.currentState != GameState.Pause && Engine.currentState != GameState.Game && Engine.currentState != GameState.Transition)
@@ -153,7 +153,7 @@ import java.util.Random;
         /*
         * Disable the level load permission, as the level is already running
         * */
-        if (Engine.currentState == GameState.Game) {
+        if (Engine.currentState == GameState.Game && !VariableManager.isConsole()) {
             loadMission = false;
             boolean endGameCondition = variableManager.getHealth() <= 0;
 
@@ -311,8 +311,8 @@ import java.util.Random;
          *************/
 
         if (key == 192) {
-            VariableManager.console();
             System.out.println("TILDE PRESSED");
+            VariableManager.console();
         }
 
         if (Engine.currentState != GameState.Game) {
@@ -425,7 +425,7 @@ import java.util.Random;
         levelSpawned = false;
         uiHandler.ground = false;
 
-        testingCheat();
+//        testingCheat();
     }
 
     public void checkButtonAction(int mx, int my) {

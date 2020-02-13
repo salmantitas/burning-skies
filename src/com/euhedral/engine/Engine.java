@@ -278,5 +278,10 @@ public class Engine extends Canvas implements Runnable{
      * Set the state to Pause
      * */
     public static void pauseState() {
-        setState(GameState.Pause);}
+        setState(GameState.Pause);
+    }
+
+    public static boolean stateIs(GameState state) {
+        return currentState == state;
+    }
 }
