@@ -12,7 +12,7 @@ import java.util.Random;
     public class GameController {
     private UIHandler uiHandler;
     private Random r = new Random();
-    private String cmd;
+    public static String cmd;
 
     /********************************************
      * Window Settings - Manually Configurable *
@@ -310,6 +310,11 @@ import java.util.Random;
         /*************
          * Game Code *
          *************/
+
+        if (VariableManager.isConsole()) {
+            String keyString = KeyEvent.getKeyText(key);
+            cmd += keyString;
+        }
 
         if (key == 192) {
             System.out.println("TILDE PRESSED");

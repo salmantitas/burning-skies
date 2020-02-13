@@ -91,11 +91,11 @@ public class Player extends MobileEntity {
                 bullet.update();
         }
 
-        if (health > 75) {
+        if (health > 66) {
             image = texture.player[0];
-        } else if (health > 50) {
+        } else if (health > 33) {
             image = texture.player[1];
-        } else if (health > 25) {
+        } else {
             image = texture.player[2];
         }
 

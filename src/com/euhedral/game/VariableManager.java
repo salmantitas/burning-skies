@@ -1,6 +1,5 @@
 package com.euhedral.game;
 
-import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
 
 import java.awt.*;
