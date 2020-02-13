@@ -5,6 +5,7 @@ import com.euhedral.engine.EngineKeyboard;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class KeyInput extends KeyAdapter{
 
@@ -17,26 +18,28 @@ public class KeyInput extends KeyAdapter{
         this.gameController = gameController;
         keyboard = engineKeyboard;
 
-        legalKeysPress = new ArrayList<>();
         legalKeysRelease = new ArrayList<>();
 
         /*************
          * Game Code *
          *************/
 
-        legalKeysPress.add(KeyEvent.VK_LEFT);
-        legalKeysPress.add(KeyEvent.VK_A);
-        legalKeysPress.add(KeyEvent.VK_RIGHT);
-        legalKeysPress.add(KeyEvent.VK_D);
-        legalKeysPress.add(KeyEvent.VK_UP);
-        legalKeysPress.add(KeyEvent.VK_W);
-        legalKeysPress.add(KeyEvent.VK_DOWN);
-        legalKeysPress.add(KeyEvent.VK_S);
-        legalKeysPress.add(KeyEvent.VK_SPACE);
-        legalKeysPress.add(KeyEvent.VK_NUMPAD0);
-        legalKeysPress.add(KeyEvent.VK_ESCAPE);
-        legalKeysPress.add(KeyEvent.VK_CONTROL);
-        legalKeysPress.add(KeyEvent.VK_P);
+        legalKeysPress = new ArrayList<> (Arrays.asList(
+                KeyEvent.VK_LEFT,
+                KeyEvent.VK_A,
+                KeyEvent.VK_RIGHT,
+                KeyEvent.VK_D,
+                KeyEvent.VK_UP,
+                KeyEvent.VK_W,
+                KeyEvent.VK_DOWN,
+                KeyEvent.VK_S,
+                KeyEvent.VK_SPACE,
+                KeyEvent.VK_NUMPAD0,
+                KeyEvent.VK_ESCAPE,
+                KeyEvent.VK_CONTROL,
+                KeyEvent.VK_P,
+                192
+        ));
 
         for (int i: legalKeysPress)
             if (i != KeyEvent.VK_ESCAPE)

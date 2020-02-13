@@ -198,7 +198,8 @@ import java.util.Random;
             drawPower(g);
         }
 
-        if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause || Engine.currentState == GameState.GameOver) {
+        if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause ||
+                Engine.currentState == GameState.GameOver) {
 
 
             /*************
@@ -209,7 +210,7 @@ import java.util.Random;
 
                 renderInCamera(g);
 
-                if (VariableManager.hud) {
+                if (VariableManager.isHud()) {
                     drawHealth(g);
 
                     entityManager.renderBossHealth(g);
@@ -308,6 +309,11 @@ import java.util.Random;
         /*************
          * Game Code *
          *************/
+
+        if (key == 192) {
+            VariableManager.console();
+            System.out.println("TILDE PRESSED");
+        }
 
         if (Engine.currentState != GameState.Game) {
             // Keyboard to Navigate buttons

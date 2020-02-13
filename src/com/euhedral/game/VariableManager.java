@@ -11,7 +11,8 @@ public class VariableManager {
      * Global Game Variables                *
      * Comment Out Whichever is Unnecessary *
      ****************************************/
-    public static boolean hud = true;
+    private static boolean hud = true;
+    private static boolean console = false;
 
     /****************************************
      * Common Game Variables                *
@@ -53,6 +54,18 @@ public class VariableManager {
 
     public VariableManager() {
 
+    }
+
+    public static void console() {
+        console = !console;
+    }
+
+    public static boolean isConsole() {
+        return console;
+    }
+
+    public static boolean isHud() {
+        return hud;
     }
 
     public void resetHealth() {
