@@ -32,6 +32,7 @@ public class Engine extends Canvas implements Runnable{
     public static GameController gameController;
     public static BufferedImageLoader loader;
 
+    // todo: change to private
     public static GameState currentState = GameState.Game;
 
     public EngineKeyboard keyInput;

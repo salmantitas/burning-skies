@@ -12,6 +12,7 @@ import java.util.Random;
     public class GameController {
     private UIHandler uiHandler;
     private Random r = new Random();
+    private String cmd;
 
     /********************************************
      * Window Settings - Manually Configurable *
@@ -132,10 +133,10 @@ import java.util.Random;
         if (Engine.stateIs(GameState.Quit))
             Engine.stop();
 
-        if (Engine.currentState != GameState.Pause && Engine.currentState != GameState.Game && Engine.currentState != GameState.Transition)
+        if (!Engine.stateIs(GameState.Pause) && !Engine.stateIs(GameState.Game) && !Engine.stateIs(GameState.Transition))
             resetGame();
 
-        if (Engine.currentState == GameState.Transition) {
+        if (Engine.stateIs(GameState.Transition)) {
             /*************
              * Game Code *
              *************/
@@ -153,7 +154,7 @@ import java.util.Random;
         /*
         * Disable the level load permission, as the level is already running
         * */
-        if (Engine.currentState == GameState.Game && !VariableManager.isConsole()) {
+        if (Engine.stateIs(GameState.Game) && !VariableManager.isConsole()) {
             loadMission = false;
             boolean endGameCondition = variableManager.getHealth() <= 0;
 
