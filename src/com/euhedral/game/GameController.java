@@ -621,6 +621,11 @@ import java.util.Random;
         camera = new Camera(width, -750); // -700 = 2 fps;
     }
 
+    //
+    public void spawnEntity(int x, int y, EntityID id, Color color) {
+        entityManager.spawnEntity(x, y, id, color);
+    }
+
     // Spawn Enemy
     public void spawnEnemy(int x, int y, EnemyID enemyID, ContactID contactId, Color color) {
         entityManager.spawnEnemy(x, y, enemyID, contactId, color);
