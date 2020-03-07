@@ -49,9 +49,9 @@ import java.util.Random;
      * User variables *
      ******************/
 
-    private static int STARTLEVEL = 1;
-    private static int level;
-    private final int MAXLEVEL = 2;
+//    private static int STARTLEVEL = 1;
+//    private static int level;
+//    private final int MAXLEVEL = 2;
 
     private Flag flag; // move to EntityManager
 
@@ -193,7 +193,7 @@ import java.util.Random;
 
             g.setFont(new Font("arial", 1, Utility.percWidth(5)));
             g.setColor(Color.WHITE);
-            g.drawString("Level " + level, Utility.percWidth(40), Utility.percHeight(45));
+            g.drawString("Level " + variableManager.getLevel(), Utility.percWidth(40), Utility.percHeight(45));
             drawHealth(g);
             drawScore(g);
             drawPower(g);
@@ -423,7 +423,7 @@ import java.util.Random;
          * Game Code *
          *************/
 
-        level = STARTLEVEL;
+        variableManager.resetLevel();
         levelSpawned = false;
         entityManager.clearEnemies();
         entityManager.clearBullets();
@@ -593,6 +593,8 @@ import java.util.Random;
         levelSpawned = !levelSpawned;
         Engine.gameState();
 
+        int level = variableManager.getLevel();
+
         if (level == 1)
             levelGenerator.loadImageLevel(level1);
 
@@ -604,7 +606,17 @@ import java.util.Random;
         return camera;
     }
 
+    //
+    public void spawnEntity(int x, int y, EntityID id, Color color) {
+        if (id == EntityID.Boss) {
+            spawnBoss(x,y);
+        }
+        else
+            entityManager.spawnEntity(x, y, id, color);
+    }
+
     public void spawnPlayer(int width, int height, int levelHeight) {
+        // todo: move to EntityManager
         offsetHorizontal = -gameWidth / 2 + 32;
         offsetVertical = gameHeight - 160;
         entityManager.spawnPlayer(width, height, levelHeight, variableManager.getPower(), ground);
@@ -617,27 +629,13 @@ import java.util.Random;
         inscreenMarker = camera.getMarker() + 100;
     }
 
+    public void spawnBoss(int width, int height) {
+        // todo: move to EntityManager
+        entityManager.spawnBoss(variableManager.getLevel(), width, height);
+    }
+
     public void spawnCamera(int width, int height) {
         camera = new Camera(width, -750); // -700 = 2 fps;
-    }
-
-    //
-    public void spawnEntity(int x, int y, EntityID id, Color color) {
-        entityManager.spawnEntity(x, y, id, color);
-    }
-
-    // Spawn Enemy
-    public void spawnEnemy(int x, int y, EnemyID enemyID, ContactID contactId, Color color) {
-        entityManager.spawnEnemy(x, y, enemyID, contactId, color);
-    }
-
-    // Spawn Pickups
-    public void spawnPickup(int x, int y, PickupID id, Color color) {
-        entityManager.spawnPickup(x, y, id, color);
-    }
-
-    public void spawnBoss(int width, int height) {
-        entityManager.spawnBoss(level, width, height);
     }
 
     public void spawnFlag() {
@@ -654,11 +652,11 @@ import java.util.Random;
         entityManager.checkBoss();
 
         if (flag.getY() > levelHeight && !variableManager.isBossLives()) {
-            level++;
+            variableManager.nextLevel();
             levelSpawned = false;
             variableManager.setBossLives(false);
 
-            if (level > MAXLEVEL) {
+            if (variableManager.finishedFinalLevel()) {
                 Engine.menuState(); // stub
                 resetGame();
             } else {
@@ -672,7 +670,7 @@ import java.util.Random;
     }
 
     private void testingCheat() {
-        level = 2;
+        variableManager.setLevel(2);
 //        variableManager.setPower(3);
         ground = true;
     }

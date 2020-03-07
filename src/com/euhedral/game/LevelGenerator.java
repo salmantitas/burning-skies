@@ -47,12 +47,9 @@ public class LevelGenerator {
 
                     // Game Code
 
-                    // todo: move spawnPlayer and spawnBoss under spawnEntity
+                    // todo: move spawnPlayer under spawnEntity
                     if (id == EntityID.Player) {
                         gameController.spawnPlayer(x, y,height * 32);
-                    }
-                    else if (id == EntityID.Boss) {
-                        gameController.spawnBoss(x, y);
                     }
                     else
                         gameController.spawnEntity(x, y, id, c);

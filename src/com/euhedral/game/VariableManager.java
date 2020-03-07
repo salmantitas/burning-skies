@@ -44,6 +44,10 @@ public class VariableManager {
     * User Variables
     * */
 
+    private static int STARTLEVEL = 1;
+    private static int level;
+    private final int MAXLEVEL = 2;
+
     private int healthBossDef, healthBoss;
     private int bossScore = 500;
     private boolean bossLives = false;
@@ -278,5 +282,27 @@ public class VariableManager {
 
     public void setBossLives(boolean bossLives) {
         this.bossLives = bossLives;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void resetLevel() {
+        level = STARTLEVEL;
+    }
+
+    public void nextLevel() {
+        level++;
+    }
+
+    public boolean finishedFinalLevel() {
+        return level > MAXLEVEL;
+    }
+
+    public void setLevel(int i) {
+        level = i;
+        if (finishedFinalLevel())
+            level = MAXLEVEL;
     }
 }
