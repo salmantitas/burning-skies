@@ -51,7 +51,39 @@ public class EntityManager {
     }
 
     public void spawnEntity(int x, int y, EntityID id, Color color) {
-        // todo
+        // todo: Player
+
+        // Air Enemies
+
+        if (id == EntityID.EnemyBasic) {
+            spawnEnemy(x, y, EnemyID.Basic, ContactID.Air, color);
+        }
+
+        else if (id == EntityID.EnemyMove) {
+            spawnEnemy(x, y, EnemyID.Move, ContactID.Air, color);
+        }
+
+        else if (id == EntityID.EnemySnake) {
+            spawnEnemy(x, y, EnemyID.Snake, ContactID.Air, color);
+        }
+
+        else if (id == EntityID.EnemyFast) {
+            spawnEnemy(x, y, EnemyID.Fast, ContactID.Air, color);
+        }
+
+        // Ground Enemies
+
+        else if (id == EntityID.EnemyGround) {
+            spawnEnemy(x, y, EnemyID.Basic, ContactID.Ground, color);
+        }
+
+        // Pickups
+
+        else if (id == EntityID.Pickup) {
+            spawnPickup(x, y, PickupID.Health, color);
+        }
+
+        // todo: Boss
     }
 
     /********************

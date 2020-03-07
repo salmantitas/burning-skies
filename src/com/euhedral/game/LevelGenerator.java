@@ -44,67 +44,18 @@ public class LevelGenerator {
                     int y = j * 32;
 
                     EntityID id = colorMap.get(c);
-//                    gameController.spawnEntity(x, y, id, color);
 
-                    // Game Code//
+                    // Game Code
 
+                    // todo: move spawnPlayer and spawnBoss under spawnEntity
                     if (id == EntityID.Player) {
-                        gameController.spawnPlayer(i * 32, j * 32, height * 32);
+                        gameController.spawnPlayer(x, y,height * 32);
                     }
-
-                    // Air Enemies
-
-                    else if (id == EntityID.EnemyBasic) {
-                        gameController.spawnEnemy(i * 32, j * 32, EnemyID.Basic, ContactID.Air, c);
-                    }
-                    else if (id == EntityID.EnemyMove) {
-                        gameController.spawnEnemy(i * 32, j * 32, EnemyID.Move, ContactID.Air, c);
-                    }
-                    else if (id == EntityID.EnemySnake) {
-                        gameController.spawnEnemy(i * 32, j * 32, EnemyID.Snake, ContactID.Air, c);
-                    }
-                    else if (id == EntityID.EnemyFast) {
-                        gameController.spawnEnemy(i * 32, j * 32, EnemyID.Fast, ContactID.Air, c);
-                    }
-
-                    // Ground Enemies
-
-                    else if (id == EntityID.EnemyGround) {
-                        gameController.spawnEnemy(i * 32, j * 32, EnemyID.Basic, ContactID.Ground, new Color(r, g, b));
-                    }
-
-                    // Pickups
-
-                    else if (id == EntityID.Pickup) {
-                        gameController.spawnPickup(i * 32, j * 32, PickupID.Health, new Color(r, g, b));
-                    }
-
-                    // Boss
-
                     else if (id == EntityID.Boss) {
-                        gameController.spawnBoss(i * 32, j * 32);
+                        gameController.spawnBoss(x, y);
                     }
-
-//                    else if (r == 255 && g == 0 && b == 0)
-//                        gameController.spawnEnemy(i * 32, j * 32, EnemyID.Basic, ContactID.Air, new Color(r, g, b));
-//                    else if (r == 150 && g == 0 && b == 0)
-//                        gameController.spawnEnemy(i * 32, j * 32, EnemyID.Move, ContactID.Air, new Color(r, g, b));
-//                    else if (r == 100 && g == 0 && b == 0)
-//                        gameController.spawnEnemy(i * 32, j * 32, EnemyID.Snake, ContactID.Air, new Color(r, g, b));
-//                    else if (r == 200 && g == 0 && b == 0)
-//                        gameController.spawnEnemy(i * 32, j * 32, EnemyID.Fast, ContactID.Air, new Color(r, g, b));
-
-                        // Ground Enemies
-
-//                    else if (r == 255 && g == 150 && b == 244)
-//                        gameController.spawnEnemy(i * 32, j * 32, EnemyID.Basic, ContactID.Ground, new Color(r, g, b));
-//
-//                        // Pickups
-//
-//                    else if (r == 0 && g == 255 && b == 0) {
-//                        gameController.spawnPickup(i * 32, j * 32, PickupID.Health, new Color(r, g, b));
-//                    } else if (r == 255 && g == 216 && b == 0)
-//                        gameController.spawnBoss(i * 32, j * 32);
+                    else
+                        gameController.spawnEntity(x, y, id, c);
                 }
             }
 
