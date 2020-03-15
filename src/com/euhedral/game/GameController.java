@@ -606,10 +606,14 @@ import java.util.Random;
         return camera;
     }
 
-    //
+    // Using the id, spawns the appropriate entity.
+    // todo: condense everything into one call to the EntityManager
     public void spawnEntity(int x, int y, EntityID id, Color color) {
+        if (id == EntityID.Player) {
+            spawnPlayer(x,y, levelHeight);
+        }
         if (id == EntityID.Boss) {
-            spawnBoss(x,y);
+            entityManager.spawnBoss(variableManager.getLevel(), x, y);
         }
         else
             entityManager.spawnEntity(x, y, id, color);
@@ -627,11 +631,6 @@ import java.util.Random;
         camera = new Camera(0, -entityManager.getPlayerY() + offsetVertical);
         camera.setMarker(entityManager.getPlayerY());
         inscreenMarker = camera.getMarker() + 100;
-    }
-
-    public void spawnBoss(int width, int height) {
-        // todo: move to EntityManager
-        entityManager.spawnBoss(variableManager.getLevel(), width, height);
     }
 
     public void spawnCamera(int width, int height) {

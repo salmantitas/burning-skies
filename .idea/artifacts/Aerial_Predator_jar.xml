@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Aerial Predator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Aerial_Predator_jar</output-path>
+    <root id="archive" name="Aerial Predator.jar">
+      <element id="module-output" name="Aerial Predator" />
+    </root>
+  </artifact>
+</component>

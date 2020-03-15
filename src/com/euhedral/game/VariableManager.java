@@ -3,6 +3,7 @@ package com.euhedral.game;
 import com.euhedral.engine.Utility;
 
 import java.awt.*;
+import java.util.HashMap;
 
 public class VariableManager {
 
@@ -52,11 +53,28 @@ public class VariableManager {
     private int bossScore = 500;
     private boolean bossLives = false;
 
+    public static HashMap<Color, EntityID> colorMap;
+
     // todo: ActionTag will be updated here
     private ActionTag action = null;
 
     public VariableManager() {
+        // Engine Code
+        colorMap = new HashMap<>();
+        initializeColorMap();
+    }
 
+    private void initializeColorMap() {
+        // Game Code
+
+        colorMap.put(new Color(0,0,255), EntityID.Player );
+        colorMap.put(new Color(255,0,0), EntityID.EnemyBasic);
+        colorMap.put(new Color(150,0,0), EntityID.EnemyMove);
+        colorMap.put(new Color(100,0,0), EntityID.EnemySnake);
+        colorMap.put(new Color(200,0,0), EntityID.EnemyFast);
+        colorMap.put(new Color(255,150,244), EntityID.EnemyGround);
+        colorMap.put(new Color(0,255,0), EntityID.Pickup);
+        colorMap.put(new Color(255,216,0), EntityID.Boss);
     }
 
     public static void console() {
