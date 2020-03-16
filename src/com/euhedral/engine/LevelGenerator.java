@@ -1,4 +1,8 @@
-package com.euhedral.game;
+package com.euhedral.engine;
+
+import com.euhedral.game.EntityID;
+import com.euhedral.game.GameController;
+import com.euhedral.game.VariableManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -40,8 +44,6 @@ public class LevelGenerator {
                     gameController.spawnEntity(x, y, id, c);
                 }
             }
-
-            gameController.spawnFlag();
         }
     }
 

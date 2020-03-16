@@ -600,6 +600,8 @@ import java.util.Random;
 
         if (level == 2)
             levelGenerator.loadImageLevel(level2);
+
+        spawnFlag();
     }
 
     public static Camera getCamera() {
