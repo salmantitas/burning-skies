@@ -8,10 +8,13 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.Scanner;
 
-    public class GameController {
+public class GameController {
     private UIHandler uiHandler;
     private Random r = new Random();
+
+    public Scanner scanner;
     public static String cmd;
 
     /********************************************
@@ -103,6 +106,7 @@ import java.util.Random;
         level2 = Engine.loader.loadImage("/level2.png");
         variableManager = new VariableManager();
         entityManager = new EntityManager(variableManager);
+        scanner = new Scanner(System.in);
     }
 
     private void initializeGraphics() {
@@ -312,8 +316,9 @@ import java.util.Random;
          *************/
 
         if (VariableManager.isConsole()) {
-            String keyString = KeyEvent.getKeyText(key);
-            cmd += keyString;
+//            scanner = new Scanner(System.in);
+//            cmd = scanner.nextLine();
+//            variableManager.console();
         }
 
         if (key == 192) {
