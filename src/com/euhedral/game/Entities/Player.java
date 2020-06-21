@@ -43,7 +43,7 @@ public class Player extends MobileEntity {
     public Player(int x, int y, int levelHeight) {
         super(x,y, EntityID.Player);
         texture = GameController.getTexture();
-        image = texture.player[0];
+        setImage();
         this.levelHeight = levelHeight;
         width = Utility.intAtWidth640(32);
         height = width;
@@ -91,6 +91,10 @@ public class Player extends MobileEntity {
                 bullet.update();
         }
 
+        setImage();
+    }
+
+    public void setImage() {
         if (health > 66) {
             image = texture.player[0];
         } else if (health > 33) {
@@ -98,7 +102,6 @@ public class Player extends MobileEntity {
         } else {
             image = texture.player[2];
         }
-
     }
 
     public void render(Graphics g) {

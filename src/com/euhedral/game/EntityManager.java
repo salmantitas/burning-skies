@@ -1,5 +1,6 @@
 package com.euhedral.game;
 
+import com.euhedral.engine.Engine;
 import com.euhedral.engine.Entity;
 import com.euhedral.game.Entities.*;
 
@@ -13,6 +14,7 @@ public class EntityManager {
     private LinkedList<Entity> entities;
 
     private Player player = new Player(0, 0, 0);
+    private Flag flag;
     private LinkedList<Enemy> enemies = new LinkedList<>();
     private LinkedList<Bullet> bullets = new LinkedList<>();
     private LinkedList<Pickup> pickups = new LinkedList<>();
@@ -44,10 +46,15 @@ public class EntityManager {
         updateBullets();
         updateEnemies();
         updatePickup();
+        updateFlag();
     }
 
     public void render(Graphics g) {
-
+        renderBullets(g);
+        renderPickup(g);
+        renderEnemies(g);
+        renderFlag(g);
+        renderPlayer(g);
     }
 
     public void spawnEntity(int x, int y, EntityID id, Color color) {
@@ -222,6 +229,30 @@ public class EntityManager {
 
     public void clearPickups() {
         pickups.clear();
+    }
+
+    /******************
+     * Flag Functions *
+     ******************/
+
+    public void updateFlag() {
+        flag.update();
+    }
+
+    public void renderFlag(Graphics g) {
+        flag.render(g);
+    }
+
+    public void spawnFlag() {
+        flag = new Flag(Engine.WIDTH / 2, -Engine.HEIGHT / 2, ContactID.Air);
+    }
+
+    public void respawnFlag() {
+        flag.reset();
+    }
+
+    public int getFlagY() {
+        return flag.getY();
     }
 
     /*******************

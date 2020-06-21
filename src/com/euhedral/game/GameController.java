@@ -56,8 +56,6 @@ public class GameController {
 //    private static int level;
 //    private final int MAXLEVEL = 2;
 
-    private Flag flag; // move to EntityManager
-
     private boolean levelSpawned = false;
     private boolean ground = false; // true for testing, has to be false by default
 
@@ -175,8 +173,6 @@ public class GameController {
 
                 entityManager.update();
 
-                flag.update();
-
                 checkCollision();
 
                 checkLevelStatus();
@@ -247,16 +243,7 @@ public class GameController {
         /*************
          * Game Code *
          *************/
-
-        // todo: put it all in EntityManager's render
-        entityManager.renderBullets(g);
-
-        entityManager.renderPickup(g);
-
-        entityManager.renderEnemies(g);
-
-        flag.render(g);
-        entityManager.renderPlayer(g);
+        entityManager.render(g);
 
         g.setColor(Color.RED);
         g.drawLine(0, (int) inscreenMarker, Engine.WIDTH, (int) inscreenMarker);
@@ -467,6 +454,7 @@ public class GameController {
     }
 
     public void save() {
+        // todo: make it work
         System.out.println("Saving");
         // write to JSON current:
         // level
@@ -477,6 +465,7 @@ public class GameController {
     }
 
     public void load() {
+        // todo: make it work
         System.out.println("Loading");
         // set from JSON current:
         // level
@@ -606,7 +595,7 @@ public class GameController {
         if (level == 2)
             levelGenerator.loadImageLevel(level2);
 
-        spawnFlag();
+        entityManager.spawnFlag();
     }
 
     public static Camera getCamera() {
@@ -644,20 +633,12 @@ public class GameController {
         camera = new Camera(width, -750); // -700 = 2 fps;
     }
 
-    public void spawnFlag() {
-        flag = new Flag(Engine.WIDTH / 2, -Engine.HEIGHT / 2, ContactID.Air);
-    }
-
-    public void respawnFlag() {
-        flag.reset();
-    }
-
     // if the flag crosses the screen, advance level and if no levels remain, end game
     public void checkLevelStatus() {
         // If the boss is killed, updates the boolean variable
         entityManager.checkBoss();
 
-        if (flag.getY() > levelHeight && !variableManager.isBossLives()) {
+        if (entityManager.getFlagY() > levelHeight && !variableManager.isBossLives()) {
             variableManager.nextLevel();
             levelSpawned = false;
             variableManager.setBossLives(false);
