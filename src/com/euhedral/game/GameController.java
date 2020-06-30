@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
@@ -57,7 +58,7 @@ public class GameController {
 //    private final int MAXLEVEL = 2;
 
     private boolean levelSpawned = false;
-    private boolean ground = false; // true for testing, has to be false by default
+//    private boolean ground = false; // todo: move to Variable Manager
 
     private boolean keyboardControl = true; // false means mouse Control
     private BufferedImage level1 = null, level2 = null;
@@ -454,25 +455,17 @@ public class GameController {
     }
 
     public void save() {
-        // todo: make it work
+        new SaveData(variableManager);
         System.out.println("Saving");
-        // write to JSON current:
-        // level
-        // health
-        // score
-        // power
-        // ground
     }
 
     public void load() {
-        // todo: make it work
+        try {
+            new LoadData(variableManager);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("Loading");
-        // set from JSON current:
-        // level
-        // health
-        // score
-        // power
-        // ground
     }
 
     public void notifyUIHandler(GameState state) {
@@ -541,9 +534,9 @@ public class GameController {
     private void buyGround() {
         int cost = 2000;
         if (variableManager.getScore() >= cost) {
-            if (!ground) {
+            if (!variableManager.isGround()) {
                 variableManager.decreaseScore(cost);
-                ground = true;
+                variableManager.setGround(true);
                 uiHandler.ground = true;
             }
         } else {
@@ -619,7 +612,7 @@ public class GameController {
         // todo: move to EntityManager
         offsetHorizontal = -gameWidth / 2 + 32;
         offsetVertical = gameHeight - 160;
-        entityManager.spawnPlayer(width, height, levelHeight, variableManager.getPower(), ground);
+        entityManager.spawnPlayer(width, height, levelHeight, variableManager.getPower(), variableManager.isGround());
 
         // sets the camera's width to center the player horizontally, essentially to 0, and
         // adjust the height so that player is at the bottom of the screen
@@ -658,8 +651,8 @@ public class GameController {
 
     private void testingCheat() {
         variableManager.setLevel(2);
-//        variableManager.setPower(3);
-        ground = true;
+        variableManager.setPower(3);
+        variableManager.setGround(true);
     }
 
     public static Texture getTexture() {

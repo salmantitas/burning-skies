@@ -58,6 +58,9 @@ public class VariableManager {
     // todo: ActionTag will be updated here
     private ActionTag action = null;
 
+    // todo: Ground will be updated here
+    private boolean ground = false;
+
     public VariableManager() {
         // Engine Code
         colorMap = new HashMap<>();
@@ -312,6 +315,14 @@ public class VariableManager {
 
     public void nextLevel() {
         level++;
+    }
+
+    public void setGround(boolean ground) {
+        this.ground = ground;
+    }
+
+    public boolean isGround() {
+        return ground;
     }
 
     public boolean finishedFinalLevel() {

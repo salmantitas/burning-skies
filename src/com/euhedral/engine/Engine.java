@@ -10,14 +10,14 @@ public class Engine extends Canvas implements Runnable{
 
     /*
      * By Default:
-     * VERSION = 0.23
-     * TITLE = "Euhedral Engine 0.23"
+     * VERSION = 0.245
+     * TITLE = "Euhedral Engine 0.245"
      * SCREEN_RATIO = 4.0/3.0
      * WIDTH = 640
      * HEIGHT = 480
      * BACKGROUND_COLOR = Color.BLACK
      */
-    public static double VERSION = 0.23;
+    public static double VERSION = 0.245;
     public static String TITLE = "Euhedral Engine " + VERSION;
     public static double SCREEN_RATIO = 4.0/3.0;
     public static int WIDTH = 640;
