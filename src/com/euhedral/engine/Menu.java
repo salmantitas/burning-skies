@@ -1,9 +1,5 @@
 package com.euhedral.engine;
 
-import com.euhedral.engine.*;
-import com.euhedral.engine.Button;
-import com.euhedral.engine.MenuItem;
-import com.euhedral.engine.Panel;
 import com.euhedral.game.ActionTag;
 
 import java.awt.*;
@@ -31,13 +27,17 @@ public class Menu {
     protected int midLeftButtonX = Utility.percWidth(38);
     protected int midButtonX = Utility.percWidth(45);
     protected int midRightButtonX = Utility.percWidth(50);
-    protected int rightButtonX = Utility.percWidth(80);
+    protected int rightButtonX = Utility.percWidth(75);
     protected int topButtonY = Utility.percHeight(30);
     protected int midHeightButtonY = Utility.percHeight(50);
     protected int lowestButtonY = Utility.percHeight(70);
 
     public Menu(GameState state) {
         this.state = state;
+    }
+
+    public void update() {
+
     }
 
     public void render(Graphics g) {
@@ -71,8 +71,10 @@ public class Menu {
         for (int i = 0; i < MAXBUTTON; i++) {
             Button button = options[i];
             if (button.mouseOverlap(mx, my)) {
-                activateButton(button);
-                break;
+                if (button.isEnabled()) {
+                    activateButton(button);
+                    break;
+                }
 //                if (button instanceof ButtonNav) {
 //                    ButtonNav navButton = (ButtonNav) button;
 //                    Engine.setState(navButton.getTargetSate());

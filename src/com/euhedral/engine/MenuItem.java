@@ -29,7 +29,6 @@ public abstract class MenuItem {
         this.backColor = backColor;
     }
 
-
     public abstract void render(Graphics g);
 
     protected void setBackColor(Color backColor) {

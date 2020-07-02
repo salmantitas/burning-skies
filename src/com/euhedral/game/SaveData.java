@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SaveData {
-    VariableManager variableManager;
+    VariableManager variableManager; // todo: Use static variableManager instead
 
     public SaveData(VariableManager variableManager) {
         this.variableManager = variableManager;
@@ -16,7 +16,7 @@ public class SaveData {
     private void save() {
         String score = Integer.toString(variableManager.getScore());
         String health = Integer.toString(variableManager.getHealth());
-        String ground = Boolean.toString(variableManager.isGround());
+        String ground = Boolean.toString(variableManager.gotGround());
         String level = Integer.toString(variableManager.getLevel());
         String power = Integer.toString(variableManager.getPower());
 

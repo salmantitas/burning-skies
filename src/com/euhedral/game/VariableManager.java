@@ -24,12 +24,12 @@ public class VariableManager {
 
     private int healthX = Utility.percWidth(2.5);
     private int healthY = 5 * healthX;
-    private final int healthDefault = 100;
-    private int healthMAX = healthDefault;
-    private int health = healthDefault;
+    private static final int healthDefault = 100;
+    private static int healthMAX = healthDefault;
+    private static int health = healthDefault;
 
     // Score
-    private int score = 0;
+    private static int score = 0;
     private int scoreX = Utility.percWidth(2.5);
     private int scoreY = Utility.percHeight(15);
     private int scoreSize = Utility.percWidth(2);
@@ -40,6 +40,12 @@ public class VariableManager {
     private int powerSize = scoreSize;
     private final int maxPower = 5;
     private int power = 1;
+
+    // Shop Costs
+
+    public static final int costHealth = 500;
+    public static final int costPower = 1000;
+    public static final int costGround = 1000;
 
     /*
     * User Variables
@@ -59,7 +65,7 @@ public class VariableManager {
     private ActionTag action = null;
 
     // todo: Ground will be updated here
-    private boolean ground = false;
+    private static boolean ground = false;
 
     public VariableManager() {
         // Engine Code
@@ -197,15 +203,19 @@ public class VariableManager {
         return healthDefault;
     }
 
-    public int getHealth() {
+    public static int getHealth() {
         return health;
+    }
+
+    public static int getHealthMAX() {
+        return healthMAX;
     }
 
     public void setHealth(int health) {
         this.health = health;
     }
 
-    public int getScore() {
+    public static int getScore() {
         return score;
     }
 
@@ -321,7 +331,7 @@ public class VariableManager {
         this.ground = ground;
     }
 
-    public boolean isGround() {
+    public static boolean gotGround() {
         return ground;
     }
 

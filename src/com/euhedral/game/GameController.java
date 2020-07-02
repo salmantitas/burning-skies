@@ -139,6 +139,8 @@ public class GameController {
         if (!Engine.stateIs(GameState.Pause) && !Engine.stateIs(GameState.Game) && !Engine.stateIs(GameState.Transition))
             resetGame();
 
+        uiHandler.update();
+
         if (Engine.stateIs(GameState.Transition)) {
             /*************
              * Game Code *
@@ -495,7 +497,7 @@ public class GameController {
     // Shop Functions
 
     private void buyHealth() {
-        int cost = 500;
+        int cost = VariableManager.costHealth;
 
 //        int health = variableManager.getHealth();
         int healthDefault = variableManager.getHealthDefault();
@@ -515,7 +517,7 @@ public class GameController {
     }
 
     private void buyPower() {
-        int cost = 1000;
+        int cost = variableManager.costPower;
 
         if (variableManager.getScore() >= cost) {
             if (entityManager.getPlayerPower() < variableManager.getMaxPower()) {
@@ -532,9 +534,9 @@ public class GameController {
     }
 
     private void buyGround() {
-        int cost = 2000;
+        int cost = variableManager.costGround;
         if (variableManager.getScore() >= cost) {
-            if (!variableManager.isGround()) {
+            if (!variableManager.gotGround()) {
                 variableManager.decreaseScore(cost);
                 variableManager.setGround(true);
                 uiHandler.ground = true;
@@ -612,7 +614,7 @@ public class GameController {
         // todo: move to EntityManager
         offsetHorizontal = -gameWidth / 2 + 32;
         offsetVertical = gameHeight - 160;
-        entityManager.spawnPlayer(width, height, levelHeight, variableManager.getPower(), variableManager.isGround());
+        entityManager.spawnPlayer(width, height, levelHeight, variableManager.getPower(), variableManager.gotGround());
 
         // sets the camera's width to center the player horizontally, essentially to 0, and
         // adjust the height so that player is at the bottom of the screen

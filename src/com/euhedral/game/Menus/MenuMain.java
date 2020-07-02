@@ -17,10 +17,10 @@ public class MenuMain extends Menu {
         Panel sidePanel = new Panel(0, 0, Utility.percWidth(40), Engine.HEIGHT, GameState.Menu);
         menuItems.add(sidePanel);
 
-        ButtonNav mainMenuPlay = new ButtonNav(leftButtonX, lowestButtonY, buttonSize, "Play", GameState.Menu, GameState.Transition);
+        ButtonNav play = new ButtonNav(leftButtonX, lowestButtonY, buttonSize, "Play", GameState.Menu, GameState.Transition);
 
-        mainMenuPlay.addOtherState(GameState.GameOver);
-        mainMenuPlay.setFill();
+        play.addOtherState(GameState.GameOver);
+        play.setFill();
 
         ButtonNav help = new ButtonNav(midButtonX, lowestButtonY, buttonSize, "Help", GameState.Menu, GameState.Help);
 
@@ -30,7 +30,7 @@ public class MenuMain extends Menu {
         quit.addOtherState(GameState.Pause);
         quit.addOtherState(GameState.GameOver);
 
-        options[0] = mainMenuPlay;
+        options[0] = play;
         options[1] = help;
         options[2] = quit;
 

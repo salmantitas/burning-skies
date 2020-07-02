@@ -43,9 +43,9 @@ public class UIHandler {
 
     }
 
-//    public void update() {
-//
-//    }
+    public void update() {
+        currentMenu.update();
+    }
 
     /*
     * Renders the current menu

@@ -12,8 +12,11 @@ public class Button {
     protected boolean selected = false;
     protected Color backColor, textColor, selectedColor;
     protected boolean fill = false;
+    protected boolean enabled = true;
     protected LinkedList<GameState> otherStates = new LinkedList<>();
     protected float transparency = 1;
+
+    protected Color disabledColor, disabledTextColor;
 
     public Button(int x, int y, int size, String text, GameState renderState) {
         this.x = x;
@@ -25,31 +28,45 @@ public class Button {
         backColor = Color.BLUE;
         selectedColor = Color.GREEN;
         textColor = Color.RED;
+        disabledColor = Color.GRAY;
+        disabledTextColor = Color.LIGHT_GRAY;
     }
 
     public void render(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
 
+        // make it transparent whether the button is enabled or disabled
+
         if (transparency < 1) {
             g2d.setComposite(makeTransparent(transparency));
         }
 
         g.setFont(font);
+
+        // Adjusts the width and height of the button to fit the text
         width = Utility.perc((g.getFontMetrics().stringWidth(text)), 110);
         if (width / size < 3)
             height = Utility.perc(width, 50);
         else height = Utility.perc(width, 25);
 
-        g.setColor(backColor);
-        if (fill)
+        if (!enabled) {
+            g.setColor(disabledColor);
             g.fill3DRect(x,y,width,height, true);
-        else g.draw3DRect(x, y, width, height, true);
 
-        if (selected)
-            g.setColor(selectedColor);
-        else g.setColor(textColor);
-        g.drawString(text, x + Utility.perc(width, 5), y + Utility.perc(height, 75));
+            g.setColor(disabledTextColor);
+            g.drawString(text, x + Utility.perc(width, 5), y + Utility.perc(height, 75));
+        } else {
+            g.setColor(backColor);
+            if (fill)
+                g.fill3DRect(x,y,width,height, true);
+            else g.draw3DRect(x, y, width, height, true);
+
+            if (selected)
+                g.setColor(selectedColor);
+            else g.setColor(textColor);
+            g.drawString(text, x + Utility.perc(width, 5), y + Utility.perc(height, 75));
+        }
 
         if (transparency < 1) {
             g2d.setComposite(makeTransparent(1));
@@ -101,6 +118,18 @@ public class Button {
 
     public void activate() {
 
+    }
+
+    public void enable() {
+        enabled = true;
+    }
+
+    public void disable() {
+        enabled = false;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public void setText(String text) {

@@ -1,14 +1,9 @@
 package com.euhedral.game;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 
 public class LoadData {
-    VariableManager variableManager;
+    VariableManager variableManager; // todo: Use static variableManager instead
 
     public LoadData(VariableManager variableManager) throws IOException{
         this.variableManager = variableManager;
@@ -17,7 +12,6 @@ public class LoadData {
 
     private void load() throws IOException{
         String pathString = "save.csv";
-//        Path path = Paths.get(pathString);
 
         String[] data = new String[5];
 
