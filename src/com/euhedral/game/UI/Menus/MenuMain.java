@@ -11,8 +11,6 @@ import java.awt.*;
 
 public class MenuMain extends Menu {
 
-    MessageBox a = new MessageBox(100,100);
-
     public MenuMain() {
         super(GameState.Menu);
         MAXBUTTON = 3;
@@ -38,17 +36,15 @@ public class MenuMain extends Menu {
         options[1] = help;
         options[2] = quit;
 
-        a.setText("This is a test Message Box.");
-
     }
 
     @Override
     public void render(Graphics g) {
-        a.render(g);
-
         super.render(g);
 
 //        drawTitle(g);
+
+        super.postRender(g);
     }
 
     /*

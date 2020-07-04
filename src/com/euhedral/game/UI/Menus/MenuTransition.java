@@ -6,6 +6,7 @@ import com.euhedral.engine.UI.ButtonAction;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.game.ActionTag;
+import com.euhedral.game.UI.MessageBox;
 import com.euhedral.game.VariableManager;
 
 import java.awt.*;
@@ -48,6 +49,7 @@ public class MenuTransition extends Menu {
         options[6] = load;
         options[7] = backToMenu;
         options[8] = quit;
+
     }
 
     @Override
@@ -83,6 +85,7 @@ public class MenuTransition extends Menu {
     @Override
     public void render(Graphics g) {
         super.render(g);
+        super.postRender(g);
     }
 
     /*

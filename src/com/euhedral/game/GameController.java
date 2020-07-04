@@ -175,11 +175,14 @@ public class GameController {
 
             else {
 
-                entityManager.update();
+                if (uiHandler.noActiveMessageBoxes()) {
 
-                checkCollision();
+                    entityManager.update();
 
-                checkLevelStatus();
+                    checkCollision();
+
+                    checkLevelStatus();
+                }
             }
         }
     }

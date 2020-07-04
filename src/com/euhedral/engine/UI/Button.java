@@ -74,10 +74,6 @@ public class Button extends UIItem{
         }
     }
 
-    public boolean mouseOverlap(int mx, int my) {
-        return (mx >= x && mx <= x + width && my >= y && my <= y + height);
-    }
-
     public void setBackColor(Color backColor) {
         this.backColor = backColor;
     }
@@ -86,26 +82,9 @@ public class Button extends UIItem{
         this.transparency = transparency;
     }
 
-//    public boolean stateIs(GameState state) {
-//        boolean temp;
-//        if (otherStates.isEmpty())
-//            temp = state == this.renderState;
-//        else {
-//            temp = state == this.renderState;
-//            for (GameState gs: otherStates) {
-//                temp = temp || (gs == state);
-//            }
-//        }
-//        return temp;
-//    }
-
     public void setFill() {
         this.fill = true;
     }
-
-//    public GameState getRenderState() {
-//        return renderState;
-//    }
 
     // Not very sure what's happening here
     private AlphaComposite makeTransparent(float alpha) {
@@ -113,6 +92,7 @@ public class Button extends UIItem{
         return(AlphaComposite.getInstance(type, alpha));
     }
 
+    // todo: removal
     public void addOtherState(GameState state) {
         otherStates.add(state);
     }

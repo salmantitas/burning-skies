@@ -34,15 +34,16 @@ public class UIHandler {
         MenuPause pauseMenu = new MenuPause();
         MenuGameOver gameOverMenu = new MenuGameOver();
 
+        MenuPlay playMenu = new MenuPlay();
+
         menus.add(mainMenu);
         menus.add(helpMenu);
         menus.add(transitionMenu);
         menus.add(pauseMenu);
         menus.add(gameOverMenu);
+        menus.add(playMenu);
 
         currentMenu = mainMenu;
-
-
     }
 
     public void update() {
@@ -107,6 +108,10 @@ public class UIHandler {
 
     public void updateState(GameState state) {
         findNewCurrent(state);
+    }
+
+    public boolean noActiveMessageBoxes() {
+        return currentMenu.getActiveMessageBoxes() == 0;
     }
 
     /***************************

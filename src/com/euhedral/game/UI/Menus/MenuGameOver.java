@@ -26,6 +26,7 @@ public class MenuGameOver extends Menu {
     public void render(Graphics g) {
         super.render(g);
         drawGameOverScreen(g);
+        super.postRender(g);
     }
 
     /*

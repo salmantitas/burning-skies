@@ -4,6 +4,7 @@ import com.euhedral.engine.*;
 import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
+import com.euhedral.game.UI.MessageBox;
 
 import java.awt.*;
 
@@ -25,7 +26,10 @@ public class MenuPause extends Menu {
     @Override
     public void render(Graphics g) {
         super.render(g);
+
         drawPause(g);
+
+        super.postRender(g);
     }
 
     /*

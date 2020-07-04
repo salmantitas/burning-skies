@@ -4,6 +4,7 @@ import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.*;
+import com.euhedral.game.UI.MessageBox;
 
 import java.awt.*;
 
@@ -24,6 +25,8 @@ public class MenuHelp extends Menu {
         super.render(g);
 
         drawHelpText(g);
+
+        super.postRender(g);
     }
 
     private void drawHelpText(Graphics g) {

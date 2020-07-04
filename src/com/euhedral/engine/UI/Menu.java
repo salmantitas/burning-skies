@@ -21,6 +21,7 @@ public class Menu {
     protected int MAXBUTTON;
 
     protected ArrayList<MessageBox> messageBoxes;
+    protected int activeMessageBoxes;
 
     // Title Variables
 
@@ -42,6 +43,7 @@ public class Menu {
     public Menu(GameState state) {
         this.state = state;
         messageBoxes = new ArrayList<>();
+        activeMessageBoxes = 0;
     }
 
     public void update() {
@@ -59,16 +61,31 @@ public class Menu {
         }
     }
 
+    // UIItems here will be rendered on top of everything else
+    protected void postRender(Graphics g) {
+        for (MessageBox messageBox: messageBoxes) {
+            messageBox.render(g);
+        }
+    }
+
     /*
     * Selects the button over which the cursor is hovering.
     * Everything else is deselected.
     * */
     public void checkHover(int mx, int my) {
-        for (int i = 0; i < MAXBUTTON; i++) {
-            Button button = options[i];
-            if (button.mouseOverlap(mx, my)) {
-                button.select();
-            } else button.deselect();
+        for (int i = 0; i < messageBoxes.size(); i++) {
+            MessageBox messageBox = messageBoxes.get(i);
+            if (messageBox.mouseOverlap(mx, my)) {
+                messageBox.checkHover(mx, my);
+            }
+        }
+        if (activeMessageBoxes == 0) {
+            for (int i = 0; i < MAXBUTTON; i++) {
+                Button button = options[i];
+                if (button.mouseOverlap(mx, my)) {
+                    button.select();
+                } else button.deselect();
+            }
         }
     }
 
@@ -78,24 +95,24 @@ public class Menu {
     public void checkButtonAction(int mx, int my) {
         for (int i = 0; i < messageBoxes.size(); i++) {
             MessageBox messageBox = messageBoxes.get(i);
-
+            if (messageBox.mouseOverlap(mx, my)) {
+                if (messageBox.isEnabled()) {
+                    messageBox.checkButtonAction(mx, my);
+                    if (!messageBox.isEnabled())
+                        activeMessageBoxes--;
+                    // todo: else drag
+                }
+            }
         }
         for (int i = 0; i < MAXBUTTON; i++) {
-            Button button = options[i];
-            if (button.mouseOverlap(mx, my)) {
-                if (button.isEnabled()) {
-                    activateButton(button);
-                    break;
+            if (activeMessageBoxes == 0) {
+                Button button = options[i];
+                if (button.mouseOverlap(mx, my)) {
+                    if (button.isEnabled()) {
+                        activateButton(button);
+                        break;
+                    }
                 }
-//                if (button instanceof ButtonNav) {
-//                    ButtonNav navButton = (ButtonNav) button;
-//                    Engine.setState(navButton.getTargetSate());
-//                    break;
-//                } else {
-//                    ButtonAction actButton = (ButtonAction) button;
-//                    this.action = actButton.getAction();
-//                    break;
-//                }
             }
         }
     }
@@ -106,8 +123,6 @@ public class Menu {
     public void activateButton(Button button) {
         if (button instanceof ButtonNav) {
             button.activate();
-//            ButtonNav navButton = (ButtonNav) button;
-//            Engine.setState(navButton.getTargetSate());
         } else {
             ButtonAction actButton = (ButtonAction) button;
             this.action = actButton.getAction();
@@ -125,15 +140,17 @@ public class Menu {
     * Changes selected button by keypress
     * */
     public void keyboardSelection(char c) {
-        if (c == 'r') {
-            options[index].deselect();
-            index = (index + 1) % MAXBUTTON;
-            options[index].select();
-        } else {
-            options[index].deselect();
-            index = (index - 1);
-            if (index < 0) index = MAXBUTTON-1;
-            options[index].select();
+        if (activeMessageBoxes == 0) {
+            if (c == 'r') {
+                options[index].deselect();
+                index = (index + 1) % MAXBUTTON;
+                options[index].select();
+            } else {
+                options[index].deselect();
+                index = (index - 1);
+                if (index < 0) index = MAXBUTTON - 1;
+                options[index].select();
+            }
         }
     }
 
@@ -143,6 +160,10 @@ public class Menu {
 
     public ActionTag getAction() {
         return action;
+    }
+
+    public int getActiveMessageBoxes() {
+        return activeMessageBoxes;
     }
 
     /****************
@@ -160,5 +181,10 @@ public class Menu {
 
     public void addPanel(int x, int y, int width, int height, GameState state, float transparency, Color color) {
         menuItems.add(new Panel(x, y, width, height, state, transparency, color));
+    }
+
+    public void addMessageBox(MessageBox messageBox) {
+        messageBoxes.add(messageBox);
+        activeMessageBoxes++;
     }
 }
