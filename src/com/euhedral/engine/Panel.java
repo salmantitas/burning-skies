@@ -1,8 +1,10 @@
 package com.euhedral.engine;
 
+import com.euhedral.engine.UI.MenuItem;
+
 import java.awt.*;
 
-public class Panel extends MenuItem{
+public class Panel extends MenuItem {
 
     public Panel(int x, int y, int width, int height, GameState state) {
         super(x,y,width, height, state);

@@ -1,13 +1,17 @@
-package com.euhedral.game.Menus;
+package com.euhedral.game.UI.Menus;
 
-import com.euhedral.engine.Button;
-import com.euhedral.engine.Menu;
+import com.euhedral.engine.UI.Button;
+import com.euhedral.engine.UI.ButtonNav;
+import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.Panel;
 import com.euhedral.engine.*;
+import com.euhedral.game.UI.MessageBox;
 
 import java.awt.*;
 
 public class MenuMain extends Menu {
+
+    MessageBox a = new MessageBox(100,100);
 
     public MenuMain() {
         super(GameState.Menu);
@@ -17,14 +21,14 @@ public class MenuMain extends Menu {
         Panel sidePanel = new Panel(0, 0, Utility.percWidth(40), Engine.HEIGHT, GameState.Menu);
         menuItems.add(sidePanel);
 
-        ButtonNav play = new ButtonNav(leftButtonX, lowestButtonY, buttonSize, "Play", GameState.Menu, GameState.Transition);
+        ButtonNav play = new ButtonNav(leftButtonX, lowestButtonY, buttonSize, "Play", GameState.Transition);
 
         play.addOtherState(GameState.GameOver);
         play.setFill();
 
-        ButtonNav help = new ButtonNav(midButtonX, lowestButtonY, buttonSize, "Help", GameState.Menu, GameState.Help);
+        ButtonNav help = new ButtonNav(midButtonX, lowestButtonY, buttonSize, "Help", GameState.Help);
 
-        ButtonNav quit = new ButtonNav(rightButtonX, lowestButtonY, buttonSize, "Quit", GameState.Menu, GameState.Quit);
+        ButtonNav quit = new ButtonNav(rightButtonX, lowestButtonY, buttonSize, "Quit", GameState.Quit);
         quit.setFill();
         quit.addOtherState(GameState.Transition);
         quit.addOtherState(GameState.Pause);
@@ -34,10 +38,14 @@ public class MenuMain extends Menu {
         options[1] = help;
         options[2] = quit;
 
+        a.setText("This is a test Message Box.");
+
     }
 
     @Override
     public void render(Graphics g) {
+        a.render(g);
+
         super.render(g);
 
 //        drawTitle(g);

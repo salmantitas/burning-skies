@@ -1,4 +1,6 @@
-package com.euhedral.engine;
+package com.euhedral.engine.UI;
+
+import com.euhedral.engine.GameState;
 
 import java.awt.*;
 import java.util.LinkedList;

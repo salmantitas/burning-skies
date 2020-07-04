@@ -1,12 +1,14 @@
-package com.euhedral.game;
+package com.euhedral.game.UI;
 
 import com.euhedral.engine.*;
-import com.euhedral.engine.Menu;
-import com.euhedral.game.Menus.*;
+import com.euhedral.engine.UI.Menu;
+import com.euhedral.game.ActionTag;
+import com.euhedral.game.GameController;
+import com.euhedral.game.UI.Menus.*;
+import com.euhedral.game.VariableManager;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class UIHandler {
 

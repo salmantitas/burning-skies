@@ -1,6 +1,7 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.*;
+import com.euhedral.game.UI.UIHandler;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

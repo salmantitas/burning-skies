@@ -1,8 +1,9 @@
-package com.euhedral.game.Menus;
+package com.euhedral.game.UI.Menus;
 
 import com.euhedral.engine.*;
-import com.euhedral.engine.Button;
-import com.euhedral.engine.Menu;
+import com.euhedral.engine.UI.Button;
+import com.euhedral.engine.UI.ButtonNav;
+import com.euhedral.engine.UI.Menu;
 
 import java.awt.*;
 
@@ -13,8 +14,8 @@ public class MenuPause extends Menu {
         MAXBUTTON = 2;
         options = new Button[MAXBUTTON];
 
-        ButtonNav backToMenu = new ButtonNav(midLeftButtonX, lowestButtonY, Utility.perc(buttonSize, 80), "Main Menu", GameState.Help, GameState.Menu);
-        ButtonNav quit = new ButtonNav(rightButtonX, lowestButtonY, buttonSize, "Quit", GameState.Menu, GameState.Quit);
+        ButtonNav backToMenu = new ButtonNav(midLeftButtonX, lowestButtonY, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+        ButtonNav quit = new ButtonNav(rightButtonX, lowestButtonY, buttonSize, "Quit", GameState.Quit);
         quit.setFill();
 
         options[0] = backToMenu;

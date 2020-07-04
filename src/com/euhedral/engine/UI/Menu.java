@@ -1,8 +1,13 @@
-package com.euhedral.engine;
+package com.euhedral.engine.UI;
 
+import com.euhedral.engine.GameState;
+import com.euhedral.engine.Panel;
+import com.euhedral.engine.Utility;
 import com.euhedral.game.ActionTag;
+import com.euhedral.game.UI.MessageBox;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Menu {
@@ -14,6 +19,8 @@ public class Menu {
 
     protected Button[] options;
     protected int MAXBUTTON;
+
+    protected ArrayList<MessageBox> messageBoxes;
 
     // Title Variables
 
@@ -34,6 +41,7 @@ public class Menu {
 
     public Menu(GameState state) {
         this.state = state;
+        messageBoxes = new ArrayList<>();
     }
 
     public void update() {
@@ -68,6 +76,10 @@ public class Menu {
     * Checks whether the mouse has clicked on a button. If true, the button is activated.
     * */
     public void checkButtonAction(int mx, int my) {
+        for (int i = 0; i < messageBoxes.size(); i++) {
+            MessageBox messageBox = messageBoxes.get(i);
+
+        }
         for (int i = 0; i < MAXBUTTON; i++) {
             Button button = options[i];
             if (button.mouseOverlap(mx, my)) {
@@ -137,12 +149,12 @@ public class Menu {
      * UI Functions *
      ****************/
 
-    public void addPanel(Panel panel) {
+    public void addPanel(com.euhedral.engine.Panel panel) {
         menuItems.add(panel);
     }
 
     public void addPanel(int x, int y, int width, int height, GameState state) {
-        menuItems.add(new Panel(x, y, width, height, state));
+        menuItems.add(new com.euhedral.engine.Panel(x, y, width, height, state));
     }
 
 

@@ -1,14 +1,16 @@
-package com.euhedral.engine;
+package com.euhedral.engine.UI;
+
+import com.euhedral.engine.GameState;
+import com.euhedral.engine.Utility;
 
 import java.awt.*;
 import java.util.LinkedList;
 
-public class Button {
-    protected int x, y, width, height;
+public class Button extends UIItem{
     protected int size;
     protected String text;
     protected Font font;
-    protected GameState renderState;
+//    protected GameState renderState;
     protected boolean selected = false;
     protected Color backColor, textColor, selectedColor;
     protected boolean fill = false;
@@ -18,12 +20,11 @@ public class Button {
 
     protected Color disabledColor, disabledTextColor;
 
-    public Button(int x, int y, int size, String text, GameState renderState) {
+    public Button(int x, int y, int size, String text) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.text = text;
-        this.renderState = renderState;
         font = new Font("arial", 1, size);
         backColor = Color.BLUE;
         selectedColor = Color.GREEN;
@@ -85,26 +86,26 @@ public class Button {
         this.transparency = transparency;
     }
 
-    public boolean stateIs(GameState state) {
-        boolean temp;
-        if (otherStates.isEmpty())
-            temp = state == this.renderState;
-        else {
-            temp = state == this.renderState;
-            for (GameState gs: otherStates) {
-                temp = temp || (gs == state);
-            }
-        }
-        return temp;
-    }
+//    public boolean stateIs(GameState state) {
+//        boolean temp;
+//        if (otherStates.isEmpty())
+//            temp = state == this.renderState;
+//        else {
+//            temp = state == this.renderState;
+//            for (GameState gs: otherStates) {
+//                temp = temp || (gs == state);
+//            }
+//        }
+//        return temp;
+//    }
 
     public void setFill() {
         this.fill = true;
     }
 
-    public GameState getRenderState() {
-        return renderState;
-    }
+//    public GameState getRenderState() {
+//        return renderState;
+//    }
 
     // Not very sure what's happening here
     private AlphaComposite makeTransparent(float alpha) {
