@@ -57,9 +57,9 @@ public class UIHandler {
         currentMenu.render(g);
 
         // Debug/Console
-        drawState(g);
+        Utility.drawState(g);
         if (VariableManager.isConsole())
-            drawCommand(g);
+            Utility.drawCommand(g);
     }
 
     public void checkHover(int mx, int my) {
@@ -118,20 +118,6 @@ public class UIHandler {
      * Render Helper Functions *
      ***************************/
 
-    /*******************
-     * Debug Functions *
-     *******************/
 
-    public void drawState(Graphics g) {
-        g.setFont(new Font("arial", 1, Utility.percWidth(1.5)));
-        g.setColor(Color.WHITE);
-        g.drawString("State: " + Engine.currentState, Utility.percWidth(85), Utility.percHeight(8));
-    }
-
-    public void drawCommand(Graphics g) {
-        g.setFont(new Font("arial", 1, Utility.percWidth(1.5)));
-        g.setColor(Color.WHITE);
-        g.drawString("Command: " + GameController.cmd, Utility.percWidth(25), Utility.percHeight(45));
-    }
 
 }

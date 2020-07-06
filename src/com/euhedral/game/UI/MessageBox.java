@@ -13,12 +13,16 @@ public class MessageBox extends UIItem {
         boolean selected = false;
 
         public Close(int x, int y, int margin) {
-            this.x = x;
+            setX(x);
             this.y = y;
             this.width = margin;
             height = width;
             color = Color.red;
             selectColor = Color.green;
+        }
+
+        public void setX(int x) {
+            this.x = x;
         }
 
         public void render(Graphics g) {
@@ -45,19 +49,29 @@ public class MessageBox extends UIItem {
     }
 
     private ArrayList<String> texts;
-    private Color backColor = Color.GRAY;
+    private Color
+            backColor = Color.GRAY,
+            textColor = Color.BLACK,
+            textColorError = Color.red;
     private boolean enable = true;
     private Close close;
     private int margin = Utility.intAtWidth640(20);
     private int fontSize = Utility.intAtWidth640(10);
     private Font font = new Font("arial", 0, fontSize);
 
+    private double SCALE_FACTOR;
+
+    private int widthMax = 500;
+    private int heightMax;
+
     public MessageBox(int x, int y) {
         this.x = x;
         this.y = y;
         texts = new ArrayList<>();
+        SCALE_FACTOR = 2.00/3.00;
         width = 300;
-        height = 200;
+        height = (int) (width * SCALE_FACTOR);
+        heightMax = (int) (widthMax * SCALE_FACTOR);
         close = new Close(x+width,y, margin);
     }
 
@@ -77,13 +91,23 @@ public class MessageBox extends UIItem {
     public void render(Graphics g) {
         g.setFont(font);
 
-        // todo: make text fit to box
         if (texts.size() != 0 && isEnabled()) {
             g.setColor(backColor);
             g.fillRect(x, y, width, height);
-            g.setColor(Color.BLACK);
+            g.setColor(textColor);
             for (int i = 0; i < texts.size(); i++) {
                 String text = texts.get(i);
+                int textSize = Utility.perc((g.getFontMetrics().stringWidth(text)), 110);
+                if (textSize > width - margin) {
+                    if (textSize > widthMax - margin) {
+                        g.setColor(textColorError);
+                        text += "Text too long, please reformat.";
+                    }
+                    else {
+                        width = textSize + margin;
+                        close.setX(x+width);
+                    }
+                }
                 g.drawString(text, x + margin, y + (i*20) + height / 3);
             }
             close.render(g);

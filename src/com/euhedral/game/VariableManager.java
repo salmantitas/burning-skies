@@ -22,24 +22,24 @@ public class VariableManager {
     // Vitality
 //    private int lives = 3;
 
-    private int healthX = Utility.percWidth(2.5);
-    private int healthY = 5 * healthX;
+    private static int healthX = Utility.percWidth(2.5);
+    private static int healthY = Utility.percHeight(5);
     private static final int healthDefault = 100;
     private static int healthMAX = healthDefault;
     private static int health = healthDefault;
 
     // Score
     private static int score = 0;
-    private int scoreX = Utility.percWidth(2.5);
-    private int scoreY = Utility.percHeight(15);
-    private int scoreSize = Utility.percWidth(2);
+    private static int scoreX = Utility.percWidth(2.5);
+    private static int scoreY = Utility.percHeight(4);
+    private static int scoreSize = Utility.percWidth(2);
 
     // Power
-    private int powerX = Utility.percWidth(24);
-    private int powerY = scoreY;
-    private int powerSize = scoreSize;
+    private static int powerX = Utility.percWidth(24);
+    private static int powerY = scoreY;
+    private static int powerSize = scoreSize;
     private final int maxPower = 5;
-    private int power = 1;
+    private static int power = 1;
 
     // Shop Costs
 
@@ -141,7 +141,13 @@ public class VariableManager {
     * Render
     * */
 
-    public void renderHealth(Graphics g) {
+    public static void renderHUD(Graphics g) {
+        renderScore(g);
+        renderPower(g);
+        renderHealth(g);
+    }
+
+    public static void renderHealth(Graphics g) {
         int width = Utility.intAtWidth640(2);
         int height = width * 6;
         Color backColor = Color.lightGray;
@@ -152,13 +158,13 @@ public class VariableManager {
         g.fillRect(healthX, healthY, health * width, height);
     }
 
-    public void renderScore(Graphics g) {
+    public static void renderScore(Graphics g) {
         g.setFont(new Font("arial", 1, scoreSize));
         g.setColor(Color.WHITE);
         g.drawString("Score: " + score, scoreX, scoreY);
     }
 
-    public void renderPower(Graphics g) {
+    public static void renderPower(Graphics g) {
         g.setFont(new Font("arial", 1, powerSize));
         g.setColor(Color.WHITE);
         g.drawString("Power: " + power, powerX, powerY);

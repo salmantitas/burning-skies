@@ -62,7 +62,7 @@ public class Enemy extends MobileEntity {
         super.update();
         shootTimer--;
         if (!inscreen) {
-            inscreen = y > cam.getMarker() + 100;
+            inscreen = y > cam.getMarker() + Utility.percHeight(30);
         }
         if (inscreen) {
             if (shootTimer <= 0) {

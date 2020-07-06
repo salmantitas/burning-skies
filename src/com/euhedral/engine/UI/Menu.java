@@ -1,7 +1,6 @@
 package com.euhedral.engine.UI;
 
 import com.euhedral.engine.GameState;
-import com.euhedral.engine.Panel;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ActionTag;
 import com.euhedral.game.UI.MessageBox;
@@ -170,12 +169,12 @@ public class Menu {
      * UI Functions *
      ****************/
 
-    public void addPanel(com.euhedral.engine.Panel panel) {
+    public void addPanel(Panel panel) {
         menuItems.add(panel);
     }
 
     public void addPanel(int x, int y, int width, int height, GameState state) {
-        menuItems.add(new com.euhedral.engine.Panel(x, y, width, height, state));
+        menuItems.add(new Panel(x, y, width, height, state));
     }
 
 

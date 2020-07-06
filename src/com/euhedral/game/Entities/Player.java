@@ -214,21 +214,18 @@ public class Player extends MobileEntity {
     private void keyboardMove() {
         // Moving Left
         if (moveLeft && !moveRight) {
-//            velX = - horizontalMovement; // stub
             velX -= acceleration;
             velX = Utility.clamp(velX, - maxVelX, - minVelX);
         }
 
         // Moving Right
         else if (moveRight && !moveLeft) {
-//            velX = horizontalMovement; // stub
             velX += acceleration;
             velX = Utility.clamp(velX, minVelX, maxVelX);
         }
 
         // Not Moving Left or Right
         else if (!moveLeft && !moveRight || (moveLeft && moveRight)) {
-//            velX = 0; // stub
             if (velX > 0) {
                 velX -= frictionalForce;
             } if (velX < 0) {
@@ -238,14 +235,12 @@ public class Player extends MobileEntity {
 
         // Moving Up
         if (moveUp && !moveDown) {
-//            velY = -verticalMovement; // stub
             velY -= acceleration;
             velY = Utility.clamp(velY, - maxVelY, - minVelY);
         }
 
         // Moving Down
         else if (moveDown && !moveUp) {
-//            velY = horizontalMovement;
             velY += acceleration;
             velY = Utility.clamp(velY, minVelY, maxVelY);
 
@@ -253,7 +248,6 @@ public class Player extends MobileEntity {
 
         // Not Moving Up or Down
         else if (!moveUp && !moveDown || (moveUp && moveDown)) {
-//            velY = 0; // stub
             if (velY > 0) {
                 velY -= frictionalForce;
             }

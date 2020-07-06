@@ -202,7 +202,6 @@ public class GameController {
             g.setColor(Color.WHITE);
             g.drawString("Level " + variableManager.getLevel(), Utility.percWidth(40), Utility.percHeight(45));
             drawHealth(g);
-            drawScore(g);
             drawPower(g);
         }
 
@@ -219,12 +218,9 @@ public class GameController {
                 renderInCamera(g);
 
                 if (VariableManager.isHud()) {
-                    drawHealth(g);
 
                     entityManager.renderBossHealth(g);
 
-                    drawScore(g);
-                    drawPower(g);
                 }
 
             }

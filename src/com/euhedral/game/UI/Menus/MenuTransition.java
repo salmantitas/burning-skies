@@ -85,6 +85,9 @@ public class MenuTransition extends Menu {
     @Override
     public void render(Graphics g) {
         super.render(g);
+
+        VariableManager.renderHUD(g);
+
         super.postRender(g);
     }
 

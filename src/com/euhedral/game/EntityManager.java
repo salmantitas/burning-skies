@@ -5,7 +5,6 @@ import com.euhedral.engine.Entity;
 import com.euhedral.game.Entities.*;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public class EntityManager {

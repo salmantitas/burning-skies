@@ -3,9 +3,8 @@ package com.euhedral.game.UI.Menus;
 import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
-import com.euhedral.engine.Panel;
+import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.*;
-import com.euhedral.game.UI.MessageBox;
 
 import java.awt.*;
 

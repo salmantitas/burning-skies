@@ -1,7 +1,10 @@
-package com.euhedral.game;
+package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.Camera;
+import com.euhedral.game.ContactID;
+import com.euhedral.game.GameController;
 
 import java.awt.*;
 
@@ -28,7 +31,7 @@ public class Flag {
     public void update() {
         move();
 
-//        System.out.println("com.euhedral.game.Flag at (" + x + ", " + y + ")");
+//        System.out.println("com.euhedral.game.Entities.Flag at (" + x + ", " + y + ")");
     }
 
     public void render(Graphics g) {
