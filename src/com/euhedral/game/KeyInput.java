@@ -6,7 +6,7 @@ import java.awt.event.KeyAdapter;
 
 public class KeyInput extends KeyAdapter{
 
-    private EngineKeyboard keyboard;
+    private static EngineKeyboard keyboard;
     private GameController gameController;
 
     public KeyInput(EngineKeyboard engineKeyboard, GameController gameController) {
@@ -52,6 +52,10 @@ public class KeyInput extends KeyAdapter{
 
     private void notifyKeyRelease(int key) {
         gameController.keyReleased(key);
+    }
+
+    public static int getKeyEvent(String str) {
+        return keyboard.getKeyEvent(str);
     }
 
     /******************

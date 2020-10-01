@@ -9,8 +9,10 @@ To-Be-Implemented
 
 Buttons to Inherit MenuItems
 
-Message-Box
+Message-Box to be dragged
 
 Rebinding Keys
+
+Replace Menu System with State Machine
 
 Procedural Generation

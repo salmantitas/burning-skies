@@ -67,6 +67,8 @@ public class VariableManager {
     // todo: Ground will be updated here
     private static boolean ground = false;
 
+    private static boolean tutorial = false;
+
     public VariableManager() {
         // Engine Code
         colorMap = new HashMap<>();
@@ -349,5 +351,9 @@ public class VariableManager {
         level = i;
         if (finishedFinalLevel())
             level = MAXLEVEL;
+    }
+
+    public static boolean tutorialEnabled() {
+        return tutorial;
     }
 }

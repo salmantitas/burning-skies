@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
@@ -50,6 +51,13 @@ public class GameController {
     private int levelHeight;
     private boolean loadMission = false; // levels will only loaded when this is true
 
+    /************
+     * Controls *
+     ************/
+    public static String UP = "W", DOWN = "S", LEFT = "A", RIGHT = "D", SHOOT  = "SPACE",
+            BULLET = "CTRL",
+            PAUSE = "P";
+
     /******************
      * User variables *
      ******************/
@@ -58,8 +66,11 @@ public class GameController {
 //    private static int level;
 //    private final int MAXLEVEL = 2;
 
+    // LevelMap to automate level loading
+    private HashMap<Integer, BufferedImage> levelMap;
+
     private boolean levelSpawned = false;
-//    private boolean ground = false; // todo: move to Variable Manager
+    public static boolean rebinding = false;
 
     private boolean keyboardControl = true; // false means mouse Control
     private BufferedImage level1 = null, level2 = null;
@@ -102,8 +113,6 @@ public class GameController {
          *************/
 
         Engine.menuState();
-        level1 = Engine.loader.loadImage("/level1.png");
-        level2 = Engine.loader.loadImage("/level2.png");
         variableManager = new VariableManager();
         entityManager = new EntityManager(variableManager);
         scanner = new Scanner(System.in);
@@ -127,6 +136,13 @@ public class GameController {
          * Game Code *
          *************/
 
+        // todo: load level using levelMap
+        level1 = Engine.loader.loadImage("/level1.png");
+        level2 = Engine.loader.loadImage("/level2.png");
+
+        levelMap = new HashMap<>();
+        levelMap.put(1, level1);
+        levelMap.put(2, level2);
         levelGenerator = new LevelGenerator(this);
     }
 
@@ -174,8 +190,10 @@ public class GameController {
              *************/
 
             else {
+                
+                // Game only runs if either tutorials are disabled, or no message boxes are active
 
-                if (uiHandler.noActiveMessageBoxes()) {
+                if (uiHandler.noActiveMessageBoxes() || !VariableManager.tutorialEnabled()) {
 
                     entityManager.update();
 
@@ -316,37 +334,42 @@ public class GameController {
             VariableManager.console();
         }
 
+        if (Engine.currentState == GameState.Help) {
+            // todo: Pass it to the menu
+            uiHandler.keyPressed(key);
+        }
+
         if (Engine.currentState != GameState.Game) {
             // Keyboard to Navigate buttons
 
             // Enter/Spacebar to select selected
-            if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE) {
+            if (key == KeyEvent.VK_ENTER || key == KeyInput.getKeyEvent(SHOOT)) {
                 uiHandler.chooseSelected();
             }
 
-            if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
+            if (key == KeyEvent.VK_RIGHT || key == KeyInput.getKeyEvent(RIGHT)) {
                 uiHandler.keyboardSelection('r');
             }
 
-            if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
+            if (key == KeyEvent.VK_LEFT || key == KeyInput.getKeyEvent(LEFT)) {
                 uiHandler.keyboardSelection('l');
             }
         }
 
         if (Engine.currentState != GameState.Pause) {
-            if (key == (KeyEvent.VK_LEFT) || key == (KeyEvent.VK_A))
+            if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
                 movePlayer('l');
 
-            if (key == (KeyEvent.VK_RIGHT) || key == (KeyEvent.VK_D))
+            if (key == (KeyEvent.VK_RIGHT) || key == KeyInput.getKeyEvent(RIGHT))
                 movePlayer('r');
 
-            if (key == (KeyEvent.VK_UP) || key == (KeyEvent.VK_W))
+            if (key == (KeyEvent.VK_UP) || key == KeyInput.getKeyEvent(UP))
                 movePlayer('u');
 
-            if (key == (KeyEvent.VK_DOWN) || key == (KeyEvent.VK_S))
+            if (key == (KeyEvent.VK_DOWN) || key == KeyInput.getKeyEvent(DOWN))
                 movePlayer('d');
 
-            if (key == (KeyEvent.VK_SPACE) || key == (KeyEvent.VK_NUMPAD0))
+            if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
                 shootPlayer();
 
             if (key == KeyEvent.VK_CONTROL)
@@ -380,19 +403,19 @@ public class GameController {
          * Game Code *
          *************/
 
-        if (key == (KeyEvent.VK_LEFT) || key == (KeyEvent.VK_A))
+        if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
             stopMovePlayer('l');
 
-        if (key == (KeyEvent.VK_RIGHT) || key == (KeyEvent.VK_D))
+        if (key == (KeyEvent.VK_RIGHT) || key == KeyInput.getKeyEvent(RIGHT))
             stopMovePlayer('r');
 
-        if (key == (KeyEvent.VK_UP) || key == (KeyEvent.VK_W))
+        if (key == (KeyEvent.VK_UP) || key == KeyInput.getKeyEvent(UP))
             stopMovePlayer('u');
 
-        if (key == (KeyEvent.VK_DOWN) || key == (KeyEvent.VK_S))
+        if (key == (KeyEvent.VK_DOWN) || key == KeyInput.getKeyEvent(DOWN))
             stopMovePlayer('d');
 
-        if (key == (KeyEvent.VK_SPACE) || key == (KeyEvent.VK_NUMPAD0))
+        if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
             stopShootPlayer();
 
     }
@@ -583,12 +606,16 @@ public class GameController {
         Engine.gameState();
 
         int level = variableManager.getLevel();
+        BufferedImage currentLevel = levelMap.get(level);
 
         if (level == 1)
             levelGenerator.loadImageLevel(level1);
 
         if (level == 2)
             levelGenerator.loadImageLevel(level2);
+
+        // todo: load using the levelMap. To be tested
+        levelGenerator.loadImageLevel(currentLevel);
 
         entityManager.spawnFlag();
     }
@@ -610,6 +637,7 @@ public class GameController {
             entityManager.spawnEntity(x, y, id, color);
     }
 
+    // Creates an instance of the player and sets the camera to follow it
     public void spawnPlayer(int width, int height, int levelHeight) {
         // todo: move to EntityManager
         offsetHorizontal = -gameWidth / 2 + 32;

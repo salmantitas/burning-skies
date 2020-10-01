@@ -4,6 +4,7 @@ import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ActionTag;
 import com.euhedral.game.UI.MessageBox;
+import com.euhedral.game.VariableManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -62,8 +63,10 @@ public class Menu {
 
     // UIItems here will be rendered on top of everything else
     protected void postRender(Graphics g) {
-        for (MessageBox messageBox: messageBoxes) {
-            messageBox.render(g);
+        if (VariableManager.tutorialEnabled()) {
+            for (MessageBox messageBox : messageBoxes) {
+                messageBox.render(g);
+            }
         }
     }
 
@@ -163,6 +166,10 @@ public class Menu {
 
     public int getActiveMessageBoxes() {
         return activeMessageBoxes;
+    }
+
+    public void keyPressed(int key) {
+
     }
 
     /****************

@@ -114,6 +114,10 @@ public class UIHandler {
         return currentMenu.getActiveMessageBoxes() == 0;
     }
 
+    public void keyPressed(int key) {
+        currentMenu.keyPressed(key);
+    }
+
     /***************************
      * Render Helper Functions *
      ***************************/
