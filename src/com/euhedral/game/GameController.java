@@ -190,7 +190,7 @@ public class GameController {
              *************/
 
             else {
-                
+
                 // Game only runs if either tutorials are disabled, or no message boxes are active
 
                 if (uiHandler.noActiveMessageBoxes() || !VariableManager.tutorialEnabled()) {
@@ -480,13 +480,13 @@ public class GameController {
     }
 
     public void save() {
-        new SaveData(variableManager);
+        SaveLoad.save();
         System.out.println("Saving");
     }
 
     public void load() {
         try {
-            new LoadData(variableManager);
+            SaveLoad.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -606,16 +606,22 @@ public class GameController {
         Engine.gameState();
 
         int level = variableManager.getLevel();
-        BufferedImage currentLevel = levelMap.get(level);
+
+        /*// todo: load using the levelMap. To be tested
+        // Use manually designed levels
+        if (level <= 2) {
+            BufferedImage currentLevel = levelMap.get(level);
+
+            levelGenerator.loadImageLevel(currentLevel);
+        } else {
+            // todo: Procedurally generate level
+        }*/
 
         if (level == 1)
             levelGenerator.loadImageLevel(level1);
 
         if (level == 2)
             levelGenerator.loadImageLevel(level2);
-
-        // todo: load using the levelMap. To be tested
-        levelGenerator.loadImageLevel(currentLevel);
 
         entityManager.spawnFlag();
     }

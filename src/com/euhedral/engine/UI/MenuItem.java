@@ -22,11 +22,7 @@ public abstract class MenuItem {
     }
 
     public MenuItem(int x, int y, int width, int height, GameState renderState, float transparency, Color backColor) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.renderState = renderState;
+        this(x, y, width, height, renderState);
         this.transparency = transparency;
         this.backColor = backColor;
     }

@@ -7,8 +7,11 @@ import com.euhedral.game.UI.MessageBox;
 import com.euhedral.game.VariableManager;
 
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Menu {
 
@@ -170,6 +173,70 @@ public class Menu {
 
     public void keyPressed(int key) {
 
+    }
+
+    protected void exportButtons() {
+        List<List<Integer>> rows = new ArrayList<>();
+
+        for (int i =0; i < MAXBUTTON; i++) {
+            Button b = options[i];
+            List<Integer> data = Arrays.asList(b.x, b.y);
+            rows.add(data);
+        }
+
+        try {
+            String filename = this.getClass().getSimpleName();
+            FileWriter csvWriter = new FileWriter(filename + ".csv");
+
+            for (List<Integer> data : rows) {
+                for (Integer i : data) {
+
+                    csvWriter.append(Integer.toString(i));
+                    csvWriter.append(",");
+                }
+                csvWriter.append("\n");
+            }
+
+            csvWriter.flush();
+            csvWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void importButtons() throws IOException{
+        String filename = this.getClass().getSimpleName();
+        String pathString = filename + ".csv";
+
+        List<Integer[]> rows = new ArrayList<>();
+        Integer[] data = new Integer[2];
+
+        // Code modified and implemented from:
+        // https://stackabuse.com/reading-and-writing-csvs-in-java/
+
+        File csvFile = new File(pathString);
+        if (csvFile.isFile()) {
+            BufferedReader csvReader = new BufferedReader(new FileReader(pathString));
+            String row;
+
+            // Assumes there's only one line to parse
+            while ((row = csvReader.readLine()) != null) {
+                String[] sData = row.split(",");
+//                List<Integer> iData = Arrays.asList(Integer.parseInt(sData[0]), Integer.parseInt(sData[1]));
+                Integer[] iData = new Integer[2];
+                for (int i = 0; i < 2; i++) {
+                    iData[i] = Integer.parseInt(sData[i]);
+                }
+                rows.add(iData);
+            }
+        }
+
+        for (int i = 0; i < MAXBUTTON; i++) {
+            Button b = options[i];
+            b.x = rows.get(i)[0];
+            b.y = rows.get(i)[1];
+        }
     }
 
     /****************

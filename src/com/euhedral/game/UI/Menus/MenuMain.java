@@ -7,6 +7,7 @@ import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.*;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class MenuMain extends Menu {
 
@@ -34,6 +35,12 @@ public class MenuMain extends Menu {
         options[0] = play;
         options[1] = help;
         options[2] = quit;
+
+        try {
+            importButtons();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

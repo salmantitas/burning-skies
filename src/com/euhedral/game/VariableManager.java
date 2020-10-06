@@ -53,7 +53,7 @@ public class VariableManager {
 
     private static int STARTLEVEL = 1;
     private static int level;
-    private final int MAXLEVEL = 2;
+    private static final int MAXLEVEL = 2;
 
     private int healthBossDef, healthBoss;
     private int bossScore = 500;
@@ -114,29 +114,29 @@ public class VariableManager {
     }
 
     public void increaseHealth(int health) {
-        this.health += health;
+        VariableManager.health += health;
         if (health >= healthMAX)
             setHealth(healthMAX);
     }
 
     public void decreaseHealth(int health) {
-        this.health -= health;
+        VariableManager.health -= health;
     }
 
     public void increaseScore(int score) {
-        this.score += score;
+        VariableManager.score += score;
     }
 
     public void decreaseScore(int score) {
-        this.score -= score;
+        VariableManager.score -= score;
     }
 
     public void increasePower(int power) {
-        this.power += power;
+        VariableManager.power += power;
     }
 
     public void decreasePower(int power) {
-        this.power -= power;
+        VariableManager.power -= power;
     }
 
     /*
@@ -196,7 +196,7 @@ public class VariableManager {
     }
 
     public void setHealthX(int healthX) {
-        this.healthX = healthX;
+        VariableManager.healthX = healthX;
     }
 
     public int getHealthY() {
@@ -204,7 +204,7 @@ public class VariableManager {
     }
 
     public void setHealthY(int healthY) {
-        this.healthY = healthY;
+        VariableManager.healthY = healthY;
     }
 
     public int getHealthDefault() {
@@ -219,16 +219,16 @@ public class VariableManager {
         return healthMAX;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public static void setHealth(int health) {
+        VariableManager.health = health;
     }
 
     public static int getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public static void setScore(int score) {
+        VariableManager.score = score;
     }
 
     public int getScoreX() {
@@ -236,7 +236,7 @@ public class VariableManager {
     }
 
     public void setScoreX(int scoreX) {
-        this.scoreX = scoreX;
+        VariableManager.scoreX = scoreX;
     }
 
     public int getScoreY() {
@@ -244,7 +244,7 @@ public class VariableManager {
     }
 
     public void setScoreY(int scoreY) {
-        this.scoreY = scoreY;
+        VariableManager.scoreY = scoreY;
     }
 
     public int getScoreSize() {
@@ -252,7 +252,7 @@ public class VariableManager {
     }
 
     public void setScoreSize(int scoreSize) {
-        this.scoreSize = scoreSize;
+        VariableManager.scoreSize = scoreSize;
     }
 
     public int getPowerX() {
@@ -260,7 +260,7 @@ public class VariableManager {
     }
 
     public void setPowerX(int powerX) {
-        this.powerX = powerX;
+        VariableManager.powerX = powerX;
     }
 
     public int getPowerY() {
@@ -268,7 +268,7 @@ public class VariableManager {
     }
 
     public void setPowerY(int powerY) {
-        this.powerY = powerY;
+        VariableManager.powerY = powerY;
     }
 
     public int getPowerSize() {
@@ -276,19 +276,19 @@ public class VariableManager {
     }
 
     public void setPowerSize(int powerSize) {
-        this.powerSize = powerSize;
+        VariableManager.powerSize = powerSize;
     }
 
     public int getMaxPower() {
         return maxPower;
     }
 
-    public int getPower() {
+    public static int getPower() {
         return power;
     }
 
-    public void setPower(int power) {
-        this.power = power;
+    public static void setPower(int power) {
+        VariableManager.power = power;
     }
 
     public int getHealthBossDef() {
@@ -323,7 +323,7 @@ public class VariableManager {
         this.bossLives = bossLives;
     }
 
-    public int getLevel() {
+    public static int getLevel() {
         return level;
     }
 
@@ -335,19 +335,19 @@ public class VariableManager {
         level++;
     }
 
-    public void setGround(boolean ground) {
-        this.ground = ground;
+    public static void setGround(boolean ground) {
+        VariableManager.ground = ground;
     }
 
     public static boolean gotGround() {
         return ground;
     }
 
-    public boolean finishedFinalLevel() {
+    public static boolean finishedFinalLevel() {
         return level > MAXLEVEL;
     }
 
-    public void setLevel(int i) {
+    public static void setLevel(int i) {
         level = i;
         if (finishedFinalLevel())
             level = MAXLEVEL;
