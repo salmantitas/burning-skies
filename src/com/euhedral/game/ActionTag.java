@@ -5,7 +5,7 @@ public enum ActionTag {
     health,
     power,
     ground,
-    control,
+    tutorial,
     save,
     load
 }

@@ -356,4 +356,8 @@ public class VariableManager {
     public static boolean tutorialEnabled() {
         return tutorial;
     }
+
+    public static void toggleTutorial() {
+        tutorial = !tutorial;
+    }
 }

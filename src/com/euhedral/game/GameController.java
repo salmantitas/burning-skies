@@ -216,11 +216,7 @@ public class GameController {
              * Game Code *
              *************/
 
-            g.setFont(new Font("arial", 1, Utility.percWidth(5)));
-            g.setColor(Color.WHITE);
-            g.drawString("Level " + variableManager.getLevel(), Utility.percWidth(40), Utility.percHeight(45));
-            drawHealth(g);
-            drawPower(g);
+
         }
 
         if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause ||
@@ -462,8 +458,8 @@ public class GameController {
         if (action != null) {
             if (action == ActionTag.go) {
                 loadMission = true;
-            } else if (action == ActionTag.control) {
-                keyboardControl = !keyboardControl;
+            } else if (action == ActionTag.tutorial) {
+                VariableManager.toggleTutorial();
             } else if (action == ActionTag.health) {
                 buyHealth();
             } else if (action == ActionTag.power) {

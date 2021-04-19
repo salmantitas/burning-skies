@@ -6,7 +6,6 @@ import com.euhedral.engine.UI.ButtonAction;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.game.ActionTag;
-import com.euhedral.game.UI.MessageBox;
 import com.euhedral.game.VariableManager;
 
 import java.awt.*;
@@ -15,38 +14,43 @@ public class MenuTransition extends Menu {
 
     boolean changeControl = false;
 
-    ButtonAction health = new ButtonAction(leftButtonX, topButtonY, buttonSize/2, "Buy Health", ActionTag.health);
+    // Shop
 
-    ButtonAction ground = new ButtonAction(midLeftButtonX, topButtonY, buttonSize/2, "Ground Bullets", ActionTag.ground);
+    ButtonAction health = new ButtonAction(x0, y1, buttonSize/2, "Buy Health", ActionTag.health);
 
-    ButtonAction power = new ButtonAction(rightButtonX, topButtonY, buttonSize/2, "Upgrade Power", ActionTag.power);
+    ButtonAction ground = new ButtonAction(x0, y2, buttonSize/2, "Ground Bullets", ActionTag.ground);
 
-    ButtonAction control = new ButtonAction(leftButtonX, lowestButtonY + 50, buttonSize/2, "Switch Control Scheme", ActionTag.control);
+    ButtonAction power = new ButtonAction(x0, y3, buttonSize/2, "Upgrade Power", ActionTag.power);
 
     public MenuTransition() {
         super(GameState.Transition);
         MAXBUTTON = 9;
         options = new Button[MAXBUTTON];
 
-        // Transition / Shop
 
-        ButtonAction go = new ButtonAction(leftButtonX, lowestButtonY, buttonSize, "Go!", ActionTag.go);
+        // Options
 
-        ButtonNav backToMenu = new ButtonNav(midLeftButtonX, lowestButtonY, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+        ButtonAction save = new ButtonAction(x2, y1, buttonSize, "Save", ActionTag.save);
 
-        ButtonAction save = new ButtonAction(midLeftButtonX + 30,topButtonY + 140, buttonSize, "Save", ActionTag.save);
+        ButtonAction load = new ButtonAction(x2, y2, buttonSize, "Load", ActionTag.load);
 
-        ButtonAction load = new ButtonAction(midLeftButtonX + 30,topButtonY + 220, buttonSize, "Load", ActionTag.load);
+        ButtonAction tutorial = new ButtonAction(x2, y3, buttonSize, "Tutorial", ActionTag.tutorial);
 
-        ButtonNav quit = new ButtonNav(rightButtonX, lowestButtonY, buttonSize, "Quit", GameState.Quit);
+        // Transition
+
+        ButtonAction go = new ButtonAction(x0, yFINAL, buttonSize, "Go!", ActionTag.go);
+
+        ButtonNav backToMenu = new ButtonNav(x2, yFINAL, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+
+        ButtonNav quit = new ButtonNav(xFINAL, yFINAL, buttonSize, "Quit", GameState.Quit);
 
         options[0] = health;
         options[1] = ground;
         options[2] = power;
-        options[3] = go;
-        options[4] = control;
-        options[5] = save;
-        options[6] = load;
+        options[3] = save;
+        options[4] = load;
+        options[5] = tutorial;
+        options[6] = go;
         options[7] = backToMenu;
         options[8] = quit;
 
@@ -58,9 +62,6 @@ public class MenuTransition extends Menu {
         boolean fullHealth = VariableManager.getHealth() == VariableManager.getHealthMAX();
         boolean minPowerScore = VariableManager.getScore() > VariableManager.costPower;
         boolean minGroundScore = VariableManager.getScore() > VariableManager.costGround;
-
-        if (!changeControl)
-            control.disable();
 
         if (minHealthScore && !fullHealth) {
             health.enable();
@@ -88,10 +89,22 @@ public class MenuTransition extends Menu {
 
         VariableManager.renderHUD(g);
 
+        g.setFont(new Font("arial", 1, Utility.percWidth(5)));
+        g.setColor(Color.WHITE);
+
+        // Shop
+        g.drawString("Shop", x0, y0);
+
+        // Level
+        g.drawString("Level " + VariableManager.getLevel(), x2, y0);
+//        drawHealth(g);
+//        drawPower(g);
+
         super.postRender(g);
     }
 
     /*
-    *
+    * Render Functions
     * */
+
 }

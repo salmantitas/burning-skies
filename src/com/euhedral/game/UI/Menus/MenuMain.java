@@ -19,14 +19,14 @@ public class MenuMain extends Menu {
         Panel sidePanel = new Panel(0, 0, Utility.percWidth(40), Engine.HEIGHT, GameState.Menu);
         menuItems.add(sidePanel);
 
-        ButtonNav play = new ButtonNav(leftButtonX, lowestButtonY, buttonSize, "Play", GameState.Transition);
+        ButtonNav play = new ButtonNav(x0, yFINAL, buttonSize, "Play", GameState.Transition);
 
         play.addOtherState(GameState.GameOver);
         play.setFill();
 
-        ButtonNav help = new ButtonNav(midButtonX, lowestButtonY, buttonSize, "Help", GameState.Help);
+        ButtonNav help = new ButtonNav(x3, yFINAL, buttonSize, "Help", GameState.Help);
 
-        ButtonNav quit = new ButtonNav(rightButtonX, lowestButtonY, buttonSize, "Quit", GameState.Quit);
+        ButtonNav quit = new ButtonNav(xFINAL, yFINAL, buttonSize, "Quit", GameState.Quit);
         quit.setFill();
         quit.addOtherState(GameState.Transition);
         quit.addOtherState(GameState.Pause);

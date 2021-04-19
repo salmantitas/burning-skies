@@ -34,14 +34,16 @@ public class Menu {
     protected Color titleColor = Color.BLACK;
 
     protected int buttonSize = Utility.percWidth(5);
-    protected int leftButtonX = Utility.percWidth(5);
-    protected int midLeftButtonX = Utility.percWidth(38);
-    protected int midButtonX = Utility.percWidth(45);
-    protected int midRightButtonX = Utility.percWidth(50);
-    protected int rightButtonX = Utility.percWidth(75);
-    protected int topButtonY = Utility.percHeight(30);
-    protected int midHeightButtonY = Utility.percHeight(50);
-    protected int lowestButtonY = Utility.percHeight(70);
+    protected int x0 = Utility.percWidth(5);
+    protected int x2 = Utility.percWidth(40);
+    protected int x3 = Utility.percWidth(45);
+    protected int x4 = Utility.percWidth(50);
+    protected int xFINAL = Utility.percWidth(75);
+    protected int y0 = Utility.percHeight(30);
+    protected int y1 = Utility.percHeight(40);
+    protected int y2 = Utility.percHeight(50);
+    protected int y3 = Utility.percHeight(60);
+    protected int yFINAL = Utility.percHeight(70);
 
     public Menu(GameState state) {
         this.state = state;
