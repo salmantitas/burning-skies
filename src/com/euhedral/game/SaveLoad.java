@@ -6,12 +6,13 @@ import java.util.List;
 
 public class SaveLoad {
     private static String filename = "save";
+    private static String settings = "settings";
 
     public SaveLoad() {
 
     }
 
-    public static void save() {
+    public static void saveGame() {
         String score = Integer.toString(VariableManager.getScore());
         String health = Integer.toString(VariableManager.getHealth());
         String ground = Boolean.toString(VariableManager.gotGround());
@@ -37,7 +38,7 @@ public class SaveLoad {
         }
     }
 
-    public static void load () throws IOException {
+    public static void loadGame() throws IOException {
         String[] data = new String[5];
         String pathString = filename + ".csv";
 
@@ -66,6 +67,50 @@ public class SaveLoad {
             VariableManager.setGround(ground);
             VariableManager.setLevel(level);
             VariableManager.setPower(power);
+        }
+    }
+
+    public static void saveSettings() {
+        String tutorial = Boolean.toString(VariableManager.tutorialEnabled());
+
+        List<String> rows = Arrays.asList(tutorial);
+
+        // Code implemented from https://stackabuse.com/reading-and-writing-csvs-in-java/
+        try {
+            FileWriter csvWriter = new FileWriter(settings + ".csv");
+
+            csvWriter.append(tutorial);
+            csvWriter.flush();
+            csvWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadSettings () throws IOException {
+        String[] data = new String[1];
+        String pathString = settings + ".csv";
+
+        // Code modified and implemented from:
+        // https://stackabuse.com/reading-and-writing-csvs-in-java/
+
+        File csvFile = new File(pathString);
+        if (csvFile.isFile()) {
+            BufferedReader csvReader = new BufferedReader(new FileReader(pathString));
+            String row;
+
+            // Assumes there's only one word to parse
+            while ((row = csvReader.readLine()) != null) {
+                data = row.split(",");
+
+            }
+
+            boolean tutorial = Boolean.parseBoolean(data[0]);
+
+            if (!VariableManager.tutorialEnabled() == tutorial) {
+                VariableManager.toggleTutorial();
+            }
         }
     }
 }

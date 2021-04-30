@@ -116,6 +116,11 @@ public class GameController {
         variableManager = new VariableManager();
         entityManager = new EntityManager(variableManager);
         scanner = new Scanner(System.in);
+        try {
+            SaveLoad.loadSettings();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initializeGraphics() {
@@ -476,13 +481,13 @@ public class GameController {
     }
 
     public void save() {
-        SaveLoad.save();
+        SaveLoad.saveGame();
         System.out.println("Saving");
     }
 
     public void load() {
         try {
-            SaveLoad.load();
+            SaveLoad.loadGame();
         } catch (IOException e) {
             e.printStackTrace();
         }

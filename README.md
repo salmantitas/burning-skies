@@ -1,4 +1,4 @@
-# Aerial Predator
+Savi# Aerial Predator
 
 Bug Report:
 
@@ -6,13 +6,5 @@ Bug Report:
 - Possible bugs in the save/load features
 
 To-Be-Implemented
-
-Buttons to Inherit MenuItems
-
-Message-Box to be dragged
-
-Rebinding Keys
-
-Replace Menu System with State Machine
 
 Procedural Generation

@@ -359,5 +359,6 @@ public class VariableManager {
 
     public static void toggleTutorial() {
         tutorial = !tutorial;
+        SaveLoad.saveSettings();
     }
 }

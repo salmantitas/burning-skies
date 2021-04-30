@@ -7,4 +7,20 @@ public class UIItem {
         int maxX = x + width, maxY = y + height;
         return (mx >= x && mx <= maxX && my >= y && my <= maxY);
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }
