@@ -180,8 +180,10 @@ public class EntityManager {
                 bullet.update();
         }
 
-        bullets.addAll(boss.getBullets());
-        boss.clearBullets();
+        if (boss != null) {
+            bullets.addAll(boss.getBullets());
+            boss.clearBullets();
+        }
     }
     public void renderBullets(Graphics g) {
         for (Bullet bullet: bullets) {

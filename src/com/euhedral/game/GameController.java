@@ -62,10 +62,6 @@ public class GameController {
      * User variables *
      ******************/
 
-//    private static int STARTLEVEL = 1;
-//    private static int level;
-//    private final int MAXLEVEL = 2;
-
     // LevelMap to automate level loading
     private HashMap<Integer, BufferedImage> levelMap;
 
@@ -73,7 +69,6 @@ public class GameController {
     public static boolean rebinding = false;
 
     private boolean keyboardControl = true; // false means mouse Control
-    private BufferedImage level1 = null, level2 = null;
 
     private float inscreenMarker;
 
@@ -141,13 +136,12 @@ public class GameController {
          * Game Code *
          *************/
 
-        // todo: load level using levelMap
-        level1 = Engine.loader.loadImage("/level1.png");
-        level2 = Engine.loader.loadImage("/level2.png");
-
+        // Initialize Manual Levels
         levelMap = new HashMap<>();
-        levelMap.put(1, level1);
-        levelMap.put(2, level2);
+
+//        addLevel(1, "/level1.png");
+//        addLevel(2, "/level2.png");
+
         levelGenerator = new LevelGenerator(this);
     }
 
@@ -235,6 +229,9 @@ public class GameController {
             if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause ) {
 
                 renderInCamera(g);
+
+                int d = (int) camera.getY() - entityManager.getPlayerY();
+                g.drawString("Distance: " + d, 100, 100);
 
                 if (VariableManager.isHud()) {
 
@@ -608,21 +605,13 @@ public class GameController {
 
         int level = variableManager.getLevel();
 
-        /*// todo: load using the levelMap. To be tested
-        // Use manually designed levels
-        if (level <= 2) {
-            BufferedImage currentLevel = levelMap.get(level);
-
+        BufferedImage currentLevel = levelMap.get(level);
+        if (currentLevel != null) {
+            levelGenerator.loadImageLevel(currentLevel);
             levelGenerator.loadImageLevel(currentLevel);
         } else {
-            // todo: Procedurally generate level
-        }*/
-
-        if (level == 1)
-            levelGenerator.loadImageLevel(level1);
-
-        if (level == 2)
-            levelGenerator.loadImageLevel(level2);
+            levelGenerator.generateLevel();
+        }
 
         entityManager.spawnFlag();
     }
@@ -655,6 +644,7 @@ public class GameController {
         // adjust the height so that player is at the bottom of the screen
 //        camera = new Camera(player.getX() + offsetHorizontal, -player.getY() + offsetVertical);
         camera = new Camera(0, -entityManager.getPlayerY() + offsetVertical);
+//        camera = new Camera(0, entityManager.getPlayerY() - Engine.WIDTH);
         camera.setMarker(entityManager.getPlayerY());
         inscreenMarker = camera.getMarker() + 100;
     }
@@ -694,6 +684,11 @@ public class GameController {
 
     public static Texture getTexture() {
         return texture;
+    }
+
+    private void addLevel(int num, String path) {
+        BufferedImage level = Engine.loader.loadImage(path);
+        levelMap.put(num, level);
     }
 
 }
