@@ -9,9 +9,6 @@
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/LevelGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/LevelGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/Utility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EntityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EntityManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,38 +99,38 @@
     </state>
     <state x="549" y="154" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1622062594032" />
     <state x="549" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1624223017083" />
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1624314239078">
+    <state width="1493" height="258" key="GridCell.Tab.0.bottom" timestamp="1624315740738">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1624314239078" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1624314239078">
+    <state width="1493" height="258" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1624315740738" />
+    <state width="1493" height="258" key="GridCell.Tab.0.center" timestamp="1624315740738">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1624314239078" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1624314239078">
+    <state width="1493" height="258" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1624315740738" />
+    <state width="1493" height="258" key="GridCell.Tab.0.left" timestamp="1624315740738">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1624314239078" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1624314239078">
+    <state width="1493" height="258" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1624315740738" />
+    <state width="1493" height="258" key="GridCell.Tab.0.right" timestamp="1624315740738">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1624314239078" />
-    <state width="1493" height="258" key="GridCell.Tab.1.bottom" timestamp="1624313512270">
+    <state width="1493" height="258" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1624315740738" />
+    <state width="1493" height="258" key="GridCell.Tab.1.bottom" timestamp="1624315745261">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="258" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1624313512270" />
-    <state width="1493" height="258" key="GridCell.Tab.1.center" timestamp="1624313512270">
+    <state width="1493" height="258" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1624315745261" />
+    <state width="1493" height="258" key="GridCell.Tab.1.center" timestamp="1624315745261">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="258" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1624313512270" />
-    <state width="1493" height="258" key="GridCell.Tab.1.left" timestamp="1624313512270">
+    <state width="1493" height="258" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1624315745261" />
+    <state width="1493" height="258" key="GridCell.Tab.1.left" timestamp="1624315745260">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="258" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1624313512270" />
-    <state width="1493" height="258" key="GridCell.Tab.1.right" timestamp="1624313512270">
+    <state width="1493" height="258" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1624315745260" />
+    <state width="1493" height="258" key="GridCell.Tab.1.right" timestamp="1624315745261">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="258" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1624313512270" />
+    <state width="1493" height="258" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1624315745261" />
     <state x="249" y="0" key="SettingsEditor" timestamp="1618870598812">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -146,10 +143,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="360" y="33" key="new project wizard/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1622062595519" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1624313631038">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1624315252149">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1624313631038" />
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1624315252149" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -168,6 +165,11 @@
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/UI/Menu.java</url>
           <line>182</line>
           <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/engine/LevelGenerator.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="36" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

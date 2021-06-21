@@ -12,7 +12,7 @@ public class LevelGenerator {
 
     public HashMap<Color, EntityID> colorMap;
     int width = 31;
-    int spawnZone = 3;
+    int spawnZone, lastZone, lastLastZone;
     int waves;
 
     private GameController gameController;
@@ -31,30 +31,39 @@ public class LevelGenerator {
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
         int remainingHeight = height;
+        int numwaves = 3; // testVar
+
+        // spawn Player
+        int x = 15 * 32, y = remainingHeight * 32;
+
+        gameController.spawnEntity(x, y, EntityID.Player, Color.BLUE);
+
+        // create distance between player and first wave
+        remainingHeight -= 25;
+
         while (remainingHeight > 0) {
-            // spawn Player
-            int x = 15 * 32, y = remainingHeight * 32;
-
-            gameController.spawnEntity(x, y, EntityID.Player, Color.BLUE);
-
-            // create distance between player and first wave
-            remainingHeight -= 25;
-
             // for every wave
             waves = 10; // stub
 
             // for every zone
-            spawnZone = 2;
+            lastLastZone = lastZone;
+            lastZone = spawnZone;
+            spawnZone = Utility.randomRange(1, 3);
+            while (spawnZone == lastZone && spawnZone == lastLastZone) {
+                spawnZone = Utility.randomRange(1,3);
+            }
 
             // choose spawn pattern
-            String pattern = "line"; // stub
-            int num = 1; //Utility.randomRange(1,5);
+//            String pattern = "line"; // stub
+            int num = Utility.randomRange(1,5);
+
+            int tileSize = Utility.intAtWidth640(32);
 
             // spawn enemies
 
             // from left
             if (spawnZone == 1) {
-                spawnLeft(num, remainingHeight);
+                spawnLeft(num, remainingHeight, -1 * tileSize);
             }
             // spawn from middle
             else if (spawnZone == 2) {
@@ -64,29 +73,28 @@ public class LevelGenerator {
                 } // odd num
 
                 else {
-                    if (num == 1) {
-                        int tileSize = Utility.intAtWidth640(32);
+                    int j = remainingHeight; // stub
+                    Color c = Color.RED; // stub
+                    x = (Engine.WIDTH - tileSize) / 2;
+                    y = j * 32;
 
-                        // x0 = screenstart + enemywidth
-                        int x0 = 1 * tileSize;
+                    EntityID id = colorMap.get(c);
+                    gameController.spawnEntity(x, y, id, c);
 
-                        int j = remainingHeight; // stub
-                        Color c = Color.RED; // stub
-                        x = (Engine.WIDTH + tileSize) / 2;
-                        y = j * 32;
-
-                        EntityID id = colorMap.get(c);
-                        gameController.spawnEntity(x, y, id, c);
+                    if (num > 1) {
+                        int newNum = (num - 1) / 2;
+                        spawnLeft(newNum, remainingHeight, x);
+                        spawnRight(newNum, remainingHeight, x);
                     }
                 }
             }
             // spawn from right
             else if (spawnZone == 3) {
-                spawnRight(num, remainingHeight);
+                spawnRight(num, remainingHeight, Engine.WIDTH);
             }
             // pause between next wave
             remainingHeight -= waves;
-            break;
+//            break;
         }
     }
 
@@ -118,18 +126,17 @@ public class LevelGenerator {
         }
     }
 
-    private void spawnLeft(int num, int remainingHeight) {
+    private void spawnLeft(int num, int remainingHeight, int x0) {
         int x, y;
         for (int i = 0; i < num; i++) {
 
             int tileSize = Utility.intAtWidth640(32);
 
             // x0 = screenstart + enemywidth
-            int x0 = 1 * tileSize;
 
             int j = remainingHeight; // stub
             Color c = Color.RED; // stub
-            x = x0 + (i) * (2 * tileSize);
+            x = x0 + (i + 1) * (2 * tileSize);
             y = j * 32;
 
             EntityID id = colorMap.get(c);
@@ -137,18 +144,17 @@ public class LevelGenerator {
         }
     }
 
-    private void spawnRight(int num, int remainingHeight) {
+    private void spawnRight(int num, int remainingHeight, int xF) {
         int x, y;
         for (int i = 0; i < num; i++) {
 
             int tileSize = Utility.intAtWidth640(32);
 
             // screenend - 2 * enemywidth
-            int xF = Engine.WIDTH - 2 * tileSize;
 
             int j = remainingHeight; // stub
             Color c = Color.RED; // stub
-            x = xF - (i) * (3 * tileSize);
+            x = xF - (i+1) * (2 * tileSize);
             y = j * 32;
 
             EntityID id = colorMap.get(c);
