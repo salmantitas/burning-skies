@@ -5,6 +5,7 @@ import com.euhedral.engine.GameState;
 import java.awt.*;
 import java.util.LinkedList;
 
+//
 public abstract class MenuItem {
 
     protected int x, y, width, height;

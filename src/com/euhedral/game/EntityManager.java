@@ -7,12 +7,16 @@ import com.euhedral.game.Entities.*;
 import java.awt.*;
 import java.util.LinkedList;
 
+// Manages all entities in game
 public class EntityManager {
     private VariableManager variableManager;
 
     private LinkedList<Entity> entities;
 
+    // Player
     private Player player = new Player(0, 0, 0);
+
+    // Entity Lists
     private Flag flag;
     private LinkedList<Enemy> enemies = new LinkedList<>();
     private LinkedList<Bullet> bullets = new LinkedList<>();

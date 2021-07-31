@@ -1,7 +1,6 @@
 package com.euhedral.engine.UI;
 
 import com.euhedral.engine.GameState;
-import com.euhedral.engine.UI.MenuItem;
 
 import java.awt.*;
 

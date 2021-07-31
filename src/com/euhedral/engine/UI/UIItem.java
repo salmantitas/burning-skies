@@ -1,5 +1,7 @@
 package com.euhedral.engine.UI;
 
+// Parent class of UI Items that can be interacted with
+// Buttons
 public class UIItem {
     protected int x, y, width, height;
 

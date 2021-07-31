@@ -10,12 +10,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Random;
 import java.util.Scanner;
 
+// Manages the game itself, and passes instructions to all other classes under it
 public class GameController {
     private UIHandler uiHandler;
-    private Random r = new Random();
 
     public Scanner scanner;
     public static String cmd;
@@ -92,6 +91,7 @@ public class GameController {
         Engine.setBACKGROUND_COLOR(gameBackground);
         gameHeight = Engine.HEIGHT;
         uiHandler = new UIHandler();
+
         initializeGraphics();
         initializeAnimations();
         initializeGame();
@@ -111,11 +111,9 @@ public class GameController {
         variableManager = new VariableManager();
         entityManager = new EntityManager(variableManager);
         scanner = new Scanner(System.in);
-        try {
-            SaveLoad.loadSettings();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        // Attempt loading latest save-file
+        load();
     }
 
     private void initializeGraphics() {
@@ -221,7 +219,6 @@ public class GameController {
         if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause ||
                 Engine.currentState == GameState.GameOver) {
 
-
             /*************
              * Game Code *
              *************/
@@ -230,7 +227,10 @@ public class GameController {
 
                 renderInCamera(g);
 
-                int d = (int) camera.getY() - entityManager.getPlayerY();
+                // todo: remove after camera is fixed
+                int d = entityManager.getPlayerY() -  (int) camera.getY();
+                g.drawString("Camera: " + camera.getY(), 100, 80);
+                g.drawString("Player: " + entityManager.getPlayerY(), 100, 90);
                 g.drawString("Distance: " + d, 100, 100);
 
                 if (VariableManager.isHud()) {
@@ -257,7 +257,9 @@ public class GameController {
         Graphics2D g2d = (Graphics2D) g;
 
         // Camera start
-        g2d.translate(camera.getX(), camera.getY());
+        // Camera Translation Variables
+        float camX = camera.getX(), camY = camera.getY();
+        g2d.translate(-camX, -camY);
 
         /*************
          * Game Code *
@@ -272,7 +274,7 @@ public class GameController {
          *****************/
 
         // Camera end
-        g2d.translate(-camera.getX(), -camera.getY());
+        g2d.translate(camX, camY);
     }
 
     /************************
@@ -636,15 +638,12 @@ public class GameController {
     // Creates an instance of the player and sets the camera to follow it
     public void spawnPlayer(int width, int height, int levelHeight) {
         // todo: move to EntityManager
-        offsetHorizontal = -gameWidth / 2 + 32;
-        offsetVertical = gameHeight - 160;
+        offsetVertical = gameHeight - Utility.intAtWidth640(32)*4;
         entityManager.spawnPlayer(width, height, levelHeight, variableManager.getPower(), variableManager.gotGround());
 
         // sets the camera's width to center the player horizontally, essentially to 0, and
         // adjust the height so that player is at the bottom of the screen
-//        camera = new Camera(player.getX() + offsetHorizontal, -player.getY() + offsetVertical);
-        camera = new Camera(0, -entityManager.getPlayerY() + offsetVertical);
-//        camera = new Camera(0, entityManager.getPlayerY() - Engine.WIDTH);
+        camera = new Camera(0,entityManager.getPlayerY() - offsetVertical); // works for now
         camera.setMarker(entityManager.getPlayerY());
         inscreenMarker = camera.getMarker() + 100;
     }

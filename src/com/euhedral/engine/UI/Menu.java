@@ -13,10 +13,12 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+// Displays collection of Interactive and Non-Interactive Menu Items
+// Each Menu is specific to a gameState
 public class Menu {
 
     protected ActionTag action = null;
-    private int index = 0;
+    private int index = 0; // for buttons
     private GameState state;
     protected LinkedList<MenuItem> menuItems = new LinkedList<>();
 
@@ -177,6 +179,9 @@ public class Menu {
 
     }
 
+    // todo: Experimental feature
+    // Editor Feature
+    // Save buttons' location
     protected void exportButtons() {
         List<List<Integer>> rows = new ArrayList<>();
 
@@ -207,6 +212,9 @@ public class Menu {
         }
     }
 
+    // todo: Experimental feature
+    // Editor Feature
+    // Load buttons' location
     protected void importButtons() throws IOException{
         String filename = this.getClass().getSimpleName();
         String pathString = filename + ".csv";

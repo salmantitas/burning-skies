@@ -6,11 +6,11 @@ import com.euhedral.engine.Utility;
 import java.awt.*;
 import java.util.LinkedList;
 
+// Interactive Buttons to navigate between menus or activate actions
 public class Button extends UIItem{
     protected int size;
     protected String text;
     protected Font font;
-//    protected GameState renderState;
     protected boolean selected = false;
     protected Color backColor, textColor, selectedColor;
     protected boolean fill = false;

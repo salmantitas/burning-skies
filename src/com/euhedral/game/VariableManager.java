@@ -47,9 +47,9 @@ public class VariableManager {
     public static final int costPower = 1000;
     public static final int costGround = 1000;
 
-    /*
-    * User Variables
-    * */
+    /******************
+     * User Variables *
+     ******************/
 
     private static int STARTLEVEL = 1;
     private static int level;
@@ -70,13 +70,14 @@ public class VariableManager {
     private static boolean tutorial = false;
 
     public VariableManager() {
-        // Engine Code
         colorMap = new HashMap<>();
         initializeColorMap();
     }
 
     private void initializeColorMap() {
-        // Game Code
+        /*************
+         * Game Code *
+         *************/
 
         colorMap.put(new Color(0,0,255), EntityID.Player );
         colorMap.put(new Color(255,0,0), EntityID.EnemyBasic);
@@ -139,9 +140,9 @@ public class VariableManager {
         VariableManager.power -= power;
     }
 
-    /*
-    * Render
-    * */
+    /**********
+     * Render *
+     **********/
 
     public static void renderHUD(Graphics g) {
         renderScore(g);
@@ -189,7 +190,9 @@ public class VariableManager {
     }
 
 
-    /**/
+    /**********************
+    * Getters and setters *
+    ***********************/
 
     public int getHealthX() {
         return healthX;
