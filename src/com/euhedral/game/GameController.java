@@ -1,6 +1,7 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.*;
+import com.euhedral.game.Entities.Shop;
 import com.euhedral.game.UI.UIHandler;
 
 import java.awt.*;
@@ -37,6 +38,7 @@ public class GameController {
     // Objects
     private VariableManager variableManager;
     private EntityManager entityManager;
+    private Shop shop;
 
     // Camera
     public static Camera camera;
@@ -110,10 +112,8 @@ public class GameController {
         Engine.menuState();
         variableManager = new VariableManager();
         entityManager = new EntityManager(variableManager);
+        shop = new Shop();
         scanner = new Scanner(System.in);
-
-        // Attempt loading latest save-file
-        load();
     }
 
     private void initializeGraphics() {
@@ -136,15 +136,16 @@ public class GameController {
 
         // Initialize Manual Levels
         levelMap = new HashMap<>();
-
-//        addLevel(1, "/level1.png");
-//        addLevel(2, "/level2.png");
-
+//        loadCustomMap();
         levelGenerator = new LevelGenerator(this);
     }
 
+    private void loadCustomMap() {
+        addLevel(1, "/level1.png");
+        addLevel(2, "/level2.png");
+    }
+
     public void update() {
-//        System.out.println(Engine.currentState);
         Engine.timer++;
 
         if (Engine.stateIs(GameState.Quit))
@@ -175,7 +176,7 @@ public class GameController {
         * */
         if (Engine.stateIs(GameState.Game) && !VariableManager.isConsole()) {
             loadMission = false;
-            boolean endGameCondition = variableManager.getHealth() <= 0;
+            boolean endGameCondition = variableManager.health.getValue() <= 0;
 
             if (endGameCondition) {
                 Engine.gameOverState();
@@ -193,9 +194,6 @@ public class GameController {
                 if (uiHandler.noActiveMessageBoxes() || !VariableManager.tutorialEnabled()) {
 
                     entityManager.update();
-
-                    checkCollision();
-
                     checkLevelStatus();
                 }
             }
@@ -212,8 +210,6 @@ public class GameController {
             /*************
              * Game Code *
              *************/
-
-
         }
 
         if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause ||
@@ -229,9 +225,9 @@ public class GameController {
 
                 // todo: remove after camera is fixed
                 int d = entityManager.getPlayerY() -  (int) camera.getY();
-                g.drawString("Camera: " + camera.getY(), 100, 80);
                 g.drawString("Player: " + entityManager.getPlayerY(), 100, 90);
                 g.drawString("Distance: " + d, 100, 100);
+                // distance should be 570
 
                 if (VariableManager.isHud()) {
 
@@ -435,7 +431,7 @@ public class GameController {
         Engine.timer = 0;
         variableManager.resetScore();
         variableManager.resetPower();
-        variableManager.resetHealth();
+        variableManager.health.getValue();
 
         /*************
          * Game Code *
@@ -447,7 +443,6 @@ public class GameController {
         entityManager.clearBullets();
         entityManager.clearPickups();
         levelSpawned = false;
-        uiHandler.ground = false;
 
 //        testingCheat();
     }
@@ -460,20 +455,21 @@ public class GameController {
     public void performAction() {
         ActionTag action = uiHandler.getAction();
         if (action != null) {
-            if (action == ActionTag.go) {
-                loadMission = true;
-            } else if (action == ActionTag.tutorial) {
-                VariableManager.toggleTutorial();
-            } else if (action == ActionTag.health) {
-                buyHealth();
-            } else if (action == ActionTag.power) {
-                buyPower();
-            } else if (action == ActionTag.ground) {
-                buyGround();
-            } else if (action == ActionTag.save) {
-                save();
-            } else if (action == ActionTag.load) {
-                load();
+            switch (action) {
+                case go: loadMission = true;
+                break;
+                case tutorial: VariableManager.toggleTutorial();
+                break;
+                case health: shop.buyHealth();
+                break;
+                case power: shop.buyPower(entityManager.getPlayerPower());
+                break;
+                case ground: shop.buyGround();
+                break;
+                case save: save();
+                break;
+                case load: load();
+                break;
             }
             uiHandler.endAction();
         }
@@ -519,55 +515,7 @@ public class GameController {
 
     // Shop Functions
 
-    private void buyHealth() {
-        int cost = VariableManager.costHealth;
 
-//        int health = variableManager.getHealth();
-        int healthDefault = variableManager.getHealthDefault();
-
-        if (variableManager.getScore() >= cost) {
-            if (variableManager.getHealth() < healthDefault) {
-                variableManager.increaseHealth(25);
-                variableManager.decreaseScore(cost);
-                if (variableManager.getHealth() > healthDefault)
-                    variableManager.resetHealth();
-            } else {
-                System.out.println("Health is full");
-            }
-        } else {
-            System.out.println("Not enough score");
-        }
-    }
-
-    private void buyPower() {
-        int cost = variableManager.costPower;
-
-        if (variableManager.getScore() >= cost) {
-            if (entityManager.getPlayerPower() < variableManager.getMaxPower()) {
-                variableManager.increasePower(1);
-                variableManager.decreaseScore(cost);
-                if (variableManager.getPower() > variableManager.getMaxPower())
-                    variableManager.decreasePower(1);
-            } else {
-                System.out.println("Max power is reached");
-            }
-        } else {
-            System.out.println("Not enough score");
-        }
-    }
-
-    private void buyGround() {
-        int cost = variableManager.costGround;
-        if (variableManager.getScore() >= cost) {
-            if (!variableManager.gotGround()) {
-                variableManager.decreaseScore(cost);
-                variableManager.setGround(true);
-                uiHandler.ground = true;
-            }
-        } else {
-            System.out.println("Not enough score");
-        }
-    }
 
     public void movePlayer(char c) {
         if (c == 'l' || c == 'r' || c == 'u' | c == 'd') {
@@ -592,13 +540,6 @@ public class GameController {
 
     public void stopShootPlayer() {
         entityManager.playerCannotShoot();
-    }
-
-    public void checkCollision() {
-        entityManager.playerVsPickupCollision();
-        entityManager.playerVsEnemyCollision();
-        entityManager.playerVsEnemyBulletCollision();
-        entityManager.enemyVsPlayerBulletCollision();
     }
 
     private void spawn() {
@@ -652,12 +593,15 @@ public class GameController {
         camera = new Camera(width, -750); // -700 = 2 fps;
     }
 
+    // checks whether the condition to advance to the next level has been fulfilled
     // if the flag crosses the screen, advance level and if no levels remain, end game
     public void checkLevelStatus() {
         // If the boss is killed, updates the boolean variable
         entityManager.checkBoss();
 
-        if (entityManager.getFlagY() > levelHeight && !variableManager.isBossLives()) {
+        boolean condition = entityManager.getFlagY() > levelHeight && !variableManager.isBossLives();
+
+        if (condition) {
             variableManager.nextLevel();
             levelSpawned = false;
             variableManager.setBossLives(false);

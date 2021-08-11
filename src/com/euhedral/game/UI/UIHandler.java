@@ -22,8 +22,6 @@ public class UIHandler {
 
     // User Variables
 
-    public boolean ground = false;
-
     public UIHandler() {
 
         menus = new ArrayList<>();
@@ -80,7 +78,6 @@ public class UIHandler {
     * */
     private void findNewCurrent(GameState state) {
         boolean menuChanged = false;
-//        currentMenu = nullMenu;
 
         for (Menu menu: menus) {
             if (menu.getState() == state) {

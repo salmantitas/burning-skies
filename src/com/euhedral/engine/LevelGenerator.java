@@ -13,14 +13,27 @@ public class LevelGenerator {
     public HashMap<Color, EntityID> colorMap;
     int width = 31;
     int spawnZone, lastZone, lastLastZone;
-    int wave, waves, pattern;
+    int wave, pauseBetweenWaves, pattern;
+    int increment = 3;
 
     enum Pattern {
         line,
-        v,
+        v;
+
+        public static Pattern fromInteger(int x) {
+            switch(x) {
+                case 0:
+                    return line;
+                case 1:
+                    return v;
+            }
+            return null;
+        }
     }
 
-    int maxP = 2;
+
+
+    int maxP = Pattern.values().length;
 
     private GameController gameController;
 
@@ -61,7 +74,7 @@ public class LevelGenerator {
     // generate a level using procedural generation
     public void generateLevel() {
         int level = VariableManager.getLevel();
-        int height = 200;// * Utility.randomRange(1, 1); // stub
+        int height = 200;
         gameController.setLevelHeight(height * 32);
 
         System.out.printf("Width: %d, Height: %d\n", width, height);
@@ -72,7 +85,7 @@ public class LevelGenerator {
         // spawn Player
         int x = 15 * 32, y = remainingHeight * 32;
 
-        gameController.spawnEntity(x, y, EntityID.Player, Color.BLUE);
+        gameController.spawnPlayer(x, y, height*32);
 
         // create distance between player and first wave
         remainingHeight -= Engine.HEIGHT / 32;
@@ -80,50 +93,114 @@ public class LevelGenerator {
 
         while (remainingHeight > 0) {
             // for every wave
-            waves = 10; // stub
+            pauseBetweenWaves = 10; // stub
             nextPattern();
 
             // for every zone
             lastLastZone = lastZone;
             lastZone = spawnZone;
-            spawnZone = 2;// Utility.randomRange(1, 3);
-//            while (spawnZone == lastZone && spawnZone == lastLastZone) {
-//                spawnZone = Utility.randomRange(1,3);
-//            }
+            spawnZone = Utility.randomRange(1, 3);
+
+            while (spawnZone == lastZone && spawnZone == lastLastZone) {
+                spawnZone = Utility.randomRange(1,3);
+            }
 
             // choose spawn pattern
-//            int pattern = Utility.randomRange(1, maxP);
-            int num = 1; //Utility.randomRange(1,5);
+            Pattern pattern = Pattern.fromInteger (Utility.randomRange(0, maxP));
+            int num = 1;
+            int maxV = 7;
+
+            if (pattern == Pattern.line) {
+                num = Utility.randomRange(1,5);
+            }
+            if (pattern == Pattern.v) {
+                num = Utility.randomRange(3,maxV);
+            }
+
+            if (pattern == Pattern.v) {
+                // todo: naive solution, fix
+                if (num < 5) {
+                    pauseBetweenWaves = 10;
+                } else if (num < 7) {
+                    pauseBetweenWaves = 15;
+                } else {
+                    pauseBetweenWaves = 20;
+                }
+            }
 
             int tileSize = Utility.intAtWidth640(32);
 
             // spawn enemies
 
-            System.out.println(spawnZone + " " + num);
-
-            // from left
-            if (spawnZone == 1) {
-                spawnLeft(num, remainingHeight, 1);
-
+            switch (pattern) {
+                case line: spawnLine(num, remainingHeight);
+                break;
+                case v: spawnV(num, remainingHeight);
+                break;
             }
-            // spawn from middle
-            else if (spawnZone == 2) {
-                spawnMiddle(num, remainingHeight);
+            remainingHeight -= pauseBetweenWaves;
+        }
 
-            }
-            // spawn from right
-            else if (spawnZone == 3) {
-                spawnRight(num, remainingHeight, Engine.WIDTH/32 - 3);
-            }
-            // pause between next wave
-            remainingHeight -= waves;
-//            break;
+    }
+
+    /* Spawn Pattern Functions*/
+
+    private void spawnLine(int num, int remainingHeight) {
+        System.out.println(spawnZone + " " + num);
+
+        switch (spawnZone) {
+            case 1:
+                spawnFromLeft(num, remainingHeight, 1);
+                break;
+            case 2:
+                spawnFromMiddle(num, remainingHeight);
+                break;
+            case 3:
+                spawnFromRight(num, remainingHeight, Engine.WIDTH/32 - 3);
+                break;
+        }
+
+        // pause between next wave
+        remainingHeight -= pauseBetweenWaves;
+    }
+
+    private void spawnV(int num, int remainingHeight) {
+        int xStart, xMid, xLast;
+        xStart = 6;
+        xMid = (width - 1) / 2;
+        xLast = width - xStart;
+        switch (spawnZone) {
+            case 1:
+                spawnFromMiddleV(xStart, num, remainingHeight);
+                break;
+            case 2:
+                spawnFromMiddleV(xMid, num, remainingHeight);
+                break;
+            case 3:
+                spawnFromMiddleV(xLast, num, remainingHeight);
+                break;
         }
     }
 
     /* Recursive Spawning Functions */
 
-    private void spawnLeft(int num, int y, int x) {
+    private void spawnFromLeft(int num, int y, int x) {
+//        int tileSize = Utility.intAtWidth640(32);
+
+        Color c = Color.RED; // stub
+
+        // Base Case
+
+        if (num > 1) {
+            int skip = calculateSkip();
+            int x0 = x + (increment + skip);
+            spawnFromLeft(num - 1, y, x0);
+        }
+
+        spawnHelper(x, y, c);
+    }
+
+    private void spawnFromRight(int num, int y, int x) {
         int tileSize = Utility.intAtWidth640(32);
 
         Color c = Color.RED; // stub
@@ -131,29 +208,15 @@ public class LevelGenerator {
         // Base Case
 
         if (num > 1) {
-            int x0 = x + 3;
-            spawnLeft(num - 1, y, x0);
+            int skip = calculateSkip();
+            int x0 = x - (increment + skip);
+            spawnFromRight(num - 1, y, x0);
         }
 
         spawnHelper(x, y, c);
     }
 
-    private void spawnRight(int num, int y, int x) {
-        int tileSize = Utility.intAtWidth640(32);
-
-        Color c = Color.RED; // stub
-
-        // Base Case
-
-        if (num > 1) {
-            int x0 = x - 3;
-            spawnRight(num - 1, y, x0);
-        }
-
-        spawnHelper(x, y, c);
-    }
-
-    private void spawnMiddle(int num, int remainingHeight) {
+    private void spawnFromMiddle(int num, int remainingHeight) {
         int tileSize = Utility.intAtWidth640(32);
         int x = (width - 1) / 2;
         int y = remainingHeight;
@@ -166,16 +229,93 @@ public class LevelGenerator {
             if (num > 1) {
                 num -= 1;
                 num = num / 2;
-                spawnLeft(num, y, x + 3);
-                spawnRight(num, y, x - 3);
+                int skip = calculateSkip();
+
+                spawnFromLeft(num, y, x + (increment + skip));
+
+                skip = calculateSkip();
+
+                spawnFromRight(num, y, x - (increment + skip));
             }
         } else {
             num = num /2;
 
-            spawnLeft(num, y, x + 1);
-            spawnRight(num, y, x - 1);
+            spawnFromLeft(num, y, x + 1);
+            spawnFromRight(num, y, x - 1);
 
         }
+    }
+
+    private void spawnFromMiddleV(int x, int num, int remainingHeight) {
+        int tileSize = Utility.intAtWidth640(32);
+        int y = remainingHeight;
+        Color c = Color.RED; // stub
+
+        int incrementX = 2;
+
+        int y0 = y - increment;
+
+        // odd numb
+        if (num % 2 != 0) {
+            spawnHelper(x, y, c);
+
+            if (num > 1) {
+                num -= 1;
+                num = num / 2;
+
+                int xL = x + (incrementX);
+
+                spawnFromLeftV(num, y0, xL);
+
+                int xR = x - (incrementX);
+
+                spawnFromRightV(num, y0, xR);
+            }
+        } else {
+            num = num /2;
+
+            spawnFromLeftV(num, y0, x + 1);
+            spawnFromRightV(num, y0, x - 1);
+
+        }
+    }
+
+    private void spawnFromLeftV(int num, int y, int x) {
+//        int tileSize = Utility.intAtWidth640(32);
+
+        Color c = Color.RED; // stub
+
+        // Base Case
+
+        int incrementX = 2;
+        int y0 = y - increment;
+
+        if (num > 1) {
+            int skip = calculateSkip();
+            int x0 = x + (incrementX);
+            spawnFromLeftV(num - 1, y0, x0);
+        }
+
+        spawnHelper(x, y, c);
+    }
+
+    private void spawnFromRightV(int num, int y, int x) {
+        int tileSize = Utility.intAtWidth640(32);
+
+        Color c = Color.RED; // stub
+
+        int incrementX = 2;
+        int y0 = y - increment;
+
+        // Base Case
+
+        if (num > 1) {
+            int skip = calculateSkip();
+            int x0 = x - (incrementX);
+            spawnFromRightV(num - 1, y0, x0);
+        }
+
+        spawnHelper(x, y, c);
     }
 
     private void spawnHelper(int x, int y, Color c) {
@@ -185,5 +325,9 @@ public class LevelGenerator {
 
     private void nextPattern() {
         pattern = Utility.randomRange(1, maxP);
+    }
+
+    private int calculateSkip() {
+        return Utility.randomRange(0, 2);
     }
 }

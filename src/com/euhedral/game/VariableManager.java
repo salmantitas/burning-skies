@@ -19,14 +19,12 @@ public class VariableManager {
      * Comment Out Whichever is Unnecessary *
      ****************************************/
 
+    // Attributes
+
     // Vitality
 //    private int lives = 3;
 
-    private static int healthX = Utility.percWidth(2.5);
-    private static int healthY = Utility.percHeight(5);
-    private static final int healthDefault = 100;
-    private static int healthMAX = healthDefault;
-    private static int health = healthDefault;
+    public static Attribute health;
 
     // Score
     private static int score = 0;
@@ -38,12 +36,11 @@ public class VariableManager {
     private static int powerX = Utility.percWidth(24);
     private static int powerY = scoreY;
     private static int powerSize = scoreSize;
-    private final int maxPower = 5;
+    private static final int maxPower = 5;
     private static int power = 1;
 
     // Shop Costs
 
-    public static final int costHealth = 500;
     public static final int costPower = 1000;
     public static final int costGround = 1000;
 
@@ -70,6 +67,7 @@ public class VariableManager {
     private static boolean tutorial = false;
 
     public VariableManager() {
+        health = new Attribute(100, 500);
         colorMap = new HashMap<>();
         initializeColorMap();
     }
@@ -102,10 +100,6 @@ public class VariableManager {
         return hud;
     }
 
-    public void resetHealth() {
-        health = healthDefault;
-    }
-
     public void resetScore() {
         score = 0;
     }
@@ -114,29 +108,19 @@ public class VariableManager {
         power = 1;
     }
 
-    public void increaseHealth(int health) {
-        VariableManager.health += health;
-        if (health >= healthMAX)
-            setHealth(healthMAX);
-    }
-
-    public void decreaseHealth(int health) {
-        VariableManager.health -= health;
-    }
-
-    public void increaseScore(int score) {
+    public static void increaseScore(int score) {
         VariableManager.score += score;
     }
 
-    public void decreaseScore(int score) {
+    public static void decreaseScore(int score) {
         VariableManager.score -= score;
     }
 
-    public void increasePower(int power) {
+    public static void increasePower(int power) {
         VariableManager.power += power;
     }
 
-    public void decreasePower(int power) {
+    public static void decreasePower(int power) {
         VariableManager.power -= power;
     }
 
@@ -156,9 +140,9 @@ public class VariableManager {
         Color backColor = Color.lightGray;
         Color healthColor = Color.GREEN;
         g.setColor(backColor);
-        g.fillRect(healthX, healthY, healthDefault * width, height);
+        g.fillRect(health.getX(), health.getY(), health.getDefaultValue() * width, height);
         g.setColor(healthColor);
-        g.fillRect(healthX, healthY, health * width, height);
+        g.fillRect(health.getX(), health.getY(), health.getValue() * width, height);
     }
 
     public static void renderScore(Graphics g) {
@@ -193,38 +177,6 @@ public class VariableManager {
     /**********************
     * Getters and setters *
     ***********************/
-
-    public int getHealthX() {
-        return healthX;
-    }
-
-    public void setHealthX(int healthX) {
-        VariableManager.healthX = healthX;
-    }
-
-    public int getHealthY() {
-        return healthY;
-    }
-
-    public void setHealthY(int healthY) {
-        VariableManager.healthY = healthY;
-    }
-
-    public int getHealthDefault() {
-        return healthDefault;
-    }
-
-    public static int getHealth() {
-        return health;
-    }
-
-    public static int getHealthMAX() {
-        return healthMAX;
-    }
-
-    public static void setHealth(int health) {
-        VariableManager.health = health;
-    }
 
     public static int getScore() {
         return score;
@@ -282,7 +234,7 @@ public class VariableManager {
         VariableManager.powerSize = powerSize;
     }
 
-    public int getMaxPower() {
+    public static int getMaxPower() {
         return maxPower;
     }
 

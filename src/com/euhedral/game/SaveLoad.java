@@ -19,7 +19,7 @@ public class SaveLoad {
 
         // Create string variables of variables that will be saved
         String score = Integer.toString(VariableManager.getScore());
-        String health = Integer.toString(VariableManager.getHealth());
+        String health = Integer.toString(VariableManager.health.getValue());
         String ground = Boolean.toString(VariableManager.gotGround());
         String level = Integer.toString(VariableManager.getLevel());
         String power = Integer.toString(VariableManager.getPower());
@@ -89,7 +89,7 @@ public class SaveLoad {
 
             // Update variables
             VariableManager.setScore(score);
-            VariableManager.setHealth(health);
+            VariableManager.health.set(health);
             VariableManager.setGround(ground);
             VariableManager.setLevel(level);
             VariableManager.setPower(power);

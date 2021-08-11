@@ -50,6 +50,8 @@ public class EntityManager {
         updateEnemies();
         updatePickup();
         updateFlag();
+
+        checkCollisions();
     }
 
     public void render(Graphics g) {
@@ -161,7 +163,14 @@ public class EntityManager {
         player.setPower(power);
     }
 
-    public Bullet checkPlayerCollision(Enemy enemy) {
+    public void checkCollisions() {
+        playerVsPickupCollision();
+        playerVsEnemyCollision();
+        playerVsEnemyBulletCollision();
+        enemyVsPlayerBulletCollision();
+    }
+
+    private Bullet checkPlayerCollision(Enemy enemy) {
         return player.checkCollision(enemy);
     }
 
@@ -354,14 +363,14 @@ public class EntityManager {
 
     public void damagePlayer(int num){
         player.decreaseHealth(num);
-        variableManager.decreaseHealth(num);
+        variableManager.health.decrease(num);
     }
 
     /***********************
      * Collision Functions *
      ***********************/
 
-    public void playerVsEnemyBulletCollision() {
+    private void playerVsEnemyBulletCollision() {
         for (Bullet bullet: bullets) {
             if (bullet.isActive() && bullet.getBounds().intersects(player.getBounds())) {
                 damagePlayer(10);
@@ -370,7 +379,7 @@ public class EntityManager {
         }
     }
 
-    public void playerVsEnemyCollision() {
+    private void playerVsEnemyCollision() {
         for (Enemy enemy : enemies) {
             if (enemy.getID() == ContactID.Air)
                 if (enemy.isInscreen() && enemy.getBounds().intersects(player.getBounds()) && enemy.isActive()) {
@@ -383,7 +392,7 @@ public class EntityManager {
         }
     }
 
-    public void enemyVsPlayerBulletCollision() {
+    private void enemyVsPlayerBulletCollision() {
         for (Enemy enemy : enemies) {
             if (enemy.isInscreen() && enemy.isActive()) {
                 Bullet b = player.checkCollision(enemy);
@@ -414,7 +423,7 @@ public class EntityManager {
         for (Pickup pickup: pickups) {
             if (pickup.isActive()) {
                 if (pickup.getBounds().intersects(getPlayerBounds())) {
-                    variableManager.increaseHealth(25);
+                    variableManager.health.increase(25);
                     pickup.disable();
                 }
             }
