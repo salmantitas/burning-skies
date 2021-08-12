@@ -3,6 +3,7 @@ package com.euhedral.game;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Entity;
 import com.euhedral.game.Entities.*;
+import com.euhedral.game.Entities.Enemy.*;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -68,19 +69,23 @@ public class EntityManager {
         // Air Enemies
 
         if (id == EntityID.EnemyBasic) {
-            spawnEnemy(x, y, EnemyID.Basic, ContactID.Air, color);
+            Enemy enemy = new EnemyBasic(x, y, ContactID.Air, color);
+            enemies.add(enemy);
         }
 
         else if (id == EntityID.EnemyMove) {
-            spawnEnemy(x, y, EnemyID.Move, ContactID.Air, color);
+            Enemy enemy = new EnemyMove(x, y, ContactID.Air, color);
+            enemies.add(enemy);
         }
 
         else if (id == EntityID.EnemySnake) {
-            spawnEnemy(x, y, EnemyID.Snake, ContactID.Air, color);
+            Enemy enemy = new EnemySnake(x, y, ContactID.Air, color);
+            enemies.add(enemy);
         }
 
         else if (id == EntityID.EnemyFast) {
-            spawnEnemy(x, y, EnemyID.Fast, ContactID.Air, color);
+            Enemy enemy = new EnemyFast(x, y, ContactID.Air, color);
+            enemies.add(enemy);
         }
 
         // Ground Enemies
@@ -282,12 +287,12 @@ public class EntityManager {
     }
 
     private void addEnemy(int x, int y, EnemyID eID, ContactID cID) {
-        Enemy enemy = new Enemy(x, y, eID, cID);
-        enemies.add(enemy);
+//        Enemy enemy = new Enemy(x, y, eID, cID);
+//        enemies.add(enemy);
     }
 
     private void addEnemy(int x, int y, EnemyID eID, ContactID cID, Color color) {
-        Enemy enemy = new Enemy(x, y, eID, cID, color);
+        Enemy enemy = new Enemy(x, y, cID, color);
         enemies.add(enemy);
     }
 

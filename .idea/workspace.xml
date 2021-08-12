@@ -25,16 +25,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/euhedral/game/Attribute.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Shop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyBasic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyFast.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyMove.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemySnake.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/LevelGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/LevelGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/BulletEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/BulletEnemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/EnemyBoss.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyBoss.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/EnemyBoss1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyBoss1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/EnemyBoss2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyBoss2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EntityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EntityManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/SaveLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/SaveLoad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuTransition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuTransition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/UIHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/UIHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/VariableManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/VariableManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,10 +124,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1628640845440">
+    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser" timestamp="1628711457751">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1628640845440" />
+    <state x="765" y="204" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1628711457751" />
     <state x="480" y="201" key="#com.intellij.refactoring.move.moveMembers.MoveMembersDialog" timestamp="1624477228193">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -133,50 +137,54 @@
     </state>
     <state x="549" y="154" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1622062594032" />
     <state x="549" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1624473797987" />
-    <state width="1877" height="343" key="GridCell.Tab.0.bottom" timestamp="1628661823319">
+    <state width="1877" height="343" key="GridCell.Tab.0.bottom" timestamp="1628741066346">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="258" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1624645924292" />
-    <state width="1877" height="343" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1628661823319" />
-    <state width="1877" height="343" key="GridCell.Tab.0.center" timestamp="1628661823319">
+    <state width="1877" height="343" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1628741066346" />
+    <state width="1877" height="343" key="GridCell.Tab.0.center" timestamp="1628741066342">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="258" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1624645924292" />
-    <state width="1877" height="343" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1628661823319" />
-    <state width="1877" height="343" key="GridCell.Tab.0.left" timestamp="1628661823319">
+    <state width="1877" height="343" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1628741066342" />
+    <state width="1877" height="343" key="GridCell.Tab.0.left" timestamp="1628741066342">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="258" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1624645924292" />
-    <state width="1877" height="343" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1628661823319" />
-    <state width="1877" height="343" key="GridCell.Tab.0.right" timestamp="1628661823319">
+    <state width="1877" height="343" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1628741066342" />
+    <state width="1877" height="343" key="GridCell.Tab.0.right" timestamp="1628741066345">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="258" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1624645924292" />
-    <state width="1877" height="343" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1628661823319" />
-    <state width="1877" height="343" key="GridCell.Tab.1.bottom" timestamp="1628661823319">
+    <state width="1877" height="343" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1628741066345" />
+    <state width="1877" height="343" key="GridCell.Tab.1.bottom" timestamp="1628741066354">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="258" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1624645924292" />
-    <state width="1877" height="343" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1628661823319" />
-    <state width="1877" height="343" key="GridCell.Tab.1.center" timestamp="1628661823319">
+    <state width="1877" height="343" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1628741066354" />
+    <state width="1877" height="343" key="GridCell.Tab.1.center" timestamp="1628741066346">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="258" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1624645924292" />
-    <state width="1877" height="343" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1628661823319" />
-    <state width="1877" height="343" key="GridCell.Tab.1.left" timestamp="1628661823319">
+    <state width="1877" height="343" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1628741066346" />
+    <state width="1877" height="343" key="GridCell.Tab.1.left" timestamp="1628741066346">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="258" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1624645924292" />
-    <state width="1877" height="343" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1628661823319" />
-    <state width="1877" height="343" key="GridCell.Tab.1.right" timestamp="1628661823319">
+    <state width="1877" height="343" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1628741066346" />
+    <state width="1877" height="343" key="GridCell.Tab.1.right" timestamp="1628741066354">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="258" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1624645924292" />
-    <state width="1877" height="343" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1628661823319" />
+    <state width="1877" height="343" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1628741066354" />
     <state x="360" y="33" key="new project wizard" timestamp="1622062595519">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="360" y="33" key="new project wizard/0.0.1536.824/1920.0.1280.680@0.0.1536.824" timestamp="1622062595519" />
+    <state x="803" y="277" key="refactoring.ChangeSignatureDialog" timestamp="1628710389913">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="803" y="277" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1628710389913" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1624315252149">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -192,7 +200,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/EntityManager.java</url>
-          <line>36</line>
+          <line>37</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -207,28 +215,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/LevelGenerator.java</url>
-          <line>194</line>
+          <line>196</line>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/LevelGenerator.java</url>
-          <line>137</line>
+          <line>139</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/LevelGenerator.java</url>
-          <line>115</line>
+          <line>117</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/game/GameController.java</url>
-          <line>581</line>
-          <option name="timeStamp" value="48" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/game/GameController.java</url>
-          <line>569</line>
-          <option name="timeStamp" value="49" />
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java</url>
+          <line>158</line>
+          <option name="timeStamp" value="50" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

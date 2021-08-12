@@ -136,7 +136,7 @@ public class GameController {
 
         // Initialize Manual Levels
         levelMap = new HashMap<>();
-//        loadCustomMap();
+        loadCustomMap();
         levelGenerator = new LevelGenerator(this);
     }
 

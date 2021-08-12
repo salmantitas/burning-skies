@@ -6,6 +6,7 @@ import com.euhedral.game.VariableManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LevelGenerator {
@@ -15,6 +16,7 @@ public class LevelGenerator {
     int spawnZone, lastZone, lastLastZone;
     int wave, pauseBetweenWaves, pattern;
     int increment = 3;
+    private ArrayList<Entity> entities;
 
     enum Pattern {
         line,

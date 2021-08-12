@@ -1,4 +1,4 @@
-package com.euhedral.game.Entities;
+package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
@@ -13,8 +13,9 @@ public abstract class EnemyBoss extends Enemy {
     boolean alive = true;
 
     public EnemyBoss(int x, int y) {
-        super(x,y, EnemyID.Boss, ContactID.Boss);
+        super(x,y, ContactID.Boss);
         shootTimerDef = 150;
+        enemyID = EnemyID.Boss;
     }
 
     public boolean isAlive() {

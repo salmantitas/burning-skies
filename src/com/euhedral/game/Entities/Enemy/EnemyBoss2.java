@@ -1,18 +1,19 @@
-package com.euhedral.game.Entities;
+package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.Entities.BulletEnemy;
 
 import java.awt.*;
 
-public class EnemyBoss1 extends EnemyBoss{
+public class EnemyBoss2 extends EnemyBoss{
 
     int
             distToCover = Engine.HEIGHT/8,
             min = Utility.percWidth(25) ,
             max = Utility.percWidth(75) - (int) 1.8 * width;
 
-    public EnemyBoss1(int x, int y) {
+    public EnemyBoss2(int x, int y) {
         super(x,y);
         height = Utility.intAtWidth640(48);
         width = height*3;
