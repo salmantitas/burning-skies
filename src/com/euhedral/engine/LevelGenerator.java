@@ -141,6 +141,7 @@ public class LevelGenerator {
                 break;
             }
             remainingHeight -= pauseBetweenWaves;
+            pauseBetweenWaves = recalculatePause(num, pattern);
         }
 
     }
@@ -331,5 +332,14 @@ public class LevelGenerator {
 
     private int calculateSkip() {
         return Utility.randomRange(0, 2);
+    }
+
+    private int recalculatePause(int num, Pattern pattern) {
+        float factor = 1;
+        if (pattern == Pattern.v) {
+            factor *= 1.2;
+        }
+        factor += num/10;
+        return (int) (10 * factor);
     }
 }
