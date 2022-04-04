@@ -1,4 +1,4 @@
-package com.euhedral.engine;
+package com.euhedral.game.Entities;
 
 import com.euhedral.game.EntityID;
 import com.euhedral.game.GameController;
@@ -6,7 +6,6 @@ import com.euhedral.game.VariableManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LevelGenerator {
