@@ -47,6 +47,7 @@ public class GameController {
 
     // Level Generation
     private LevelGenerator levelGenerator;
+    private ProceduralGenerator proceduralGenerator;
 
     // Levels
     private int levelHeight;
@@ -138,6 +139,7 @@ public class GameController {
         levelMap = new HashMap<>();
 //        loadCustomMap();
         levelGenerator = new LevelGenerator(this);
+        proceduralGenerator = new ProceduralGenerator(this);
     }
 
     private void loadCustomMap() {
@@ -497,17 +499,17 @@ public class GameController {
      * Render Helper Functions *
      ***************************/
 
-    private void drawScore(Graphics g) {
-        variableManager.renderScore(g);
-    }
-
-    private void drawHealth(Graphics g) {
-        variableManager.renderHealth(g);
-    }
-
-    private void drawPower(Graphics g) {
-        variableManager.renderPower(g);
-    }
+//    private void drawScore(Graphics g) {
+//        variableManager.renderScore(g);
+//    }
+//
+//    private void drawHealth(Graphics g) {
+//        variableManager.renderHealth(g);
+//    }
+//
+//    private void drawPower(Graphics g) {
+//        variableManager.renderPower(g);
+//    }
 
     /******************
      * User functions *
@@ -553,7 +555,7 @@ public class GameController {
             levelGenerator.loadImageLevel(currentLevel);
             levelGenerator.loadImageLevel(currentLevel);
         } else {
-            levelGenerator.generateLevel();
+            proceduralGenerator.generateLevel();
         }
 
         entityManager.spawnFlag();

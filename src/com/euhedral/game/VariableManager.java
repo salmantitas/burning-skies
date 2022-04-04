@@ -39,6 +39,11 @@ public class VariableManager {
     private static final int maxPower = 5;
     private static int power = 1;
 
+    // Level
+    private static int levelX = Utility.percWidth(50);
+    private static int levelY = scoreY;
+    private static int levelSize = Utility.percWidth(2);
+
     // Shop Costs
 
     public static final int costPower = 1000;
@@ -50,7 +55,7 @@ public class VariableManager {
 
     private static int STARTLEVEL = 1;
     private static int level;
-    private static final int MAXLEVEL = 2;
+    private static final int MAXLEVEL = 3;
 
     private int healthBossDef, healthBoss;
     private int bossScore = 500;
@@ -149,6 +154,12 @@ public class VariableManager {
         g.setFont(new Font("arial", 1, scoreSize));
         g.setColor(Color.WHITE);
         g.drawString("Score: " + score, scoreX, scoreY);
+    }
+
+    public static void renderLevel(Graphics g) {
+        g.setFont(new Font("arial", 1, scoreSize));
+        g.setColor(Color.WHITE);
+        g.drawString("Level " + level, levelX, levelY);
     }
 
     public static void renderPower(Graphics g) {

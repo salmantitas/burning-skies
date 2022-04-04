@@ -28,7 +28,7 @@ public class Attribute {
     }
 
     public void increase(int value) {
-        value += value;
+        this.value += value;
         if (value >= MAX)
             set(MAX);
     }

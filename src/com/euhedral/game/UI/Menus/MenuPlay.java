@@ -36,6 +36,7 @@ public class MenuPlay extends Menu {
         super.render(g);
 
         VariableManager.renderHUD(g);
+        VariableManager.renderLevel(g);
 
         super.postRender(g);
     }
