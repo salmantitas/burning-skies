@@ -170,6 +170,11 @@ public class Player extends MobileEntity {
 
 //        System.out.printf("VelX: %f | VelY: %f\n", velX, velY);
 
+        // Clamp
+        x = Utility.clamp(x, 0, Engine.WIDTH + clampOffsetX);
+        y = Utility.clamp(y, levelHeight - 500, levelHeight + clampOffsetY);
+
+        // movement
         mouseMove();
         keyboardMove();
 
@@ -259,8 +264,6 @@ public class Player extends MobileEntity {
     }
 
     private void mouseMove() {
-        x = Utility.clamp(x, 0, Engine.WIDTH + clampOffsetX);
-        y = Utility.clamp(y, 5900, levelHeight + clampOffsetY);
 
         if (destinationGiven) {
             int positionOffset = 5;

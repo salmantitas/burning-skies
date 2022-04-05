@@ -3,6 +3,7 @@ package com.euhedral.game.Entities;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityID;
+import com.euhedral.game.EntityManager;
 import com.euhedral.game.GameController;
 import com.euhedral.game.VariableManager;
 
@@ -37,9 +38,11 @@ public class ProceduralGenerator {
     int maxP = Pattern.values().length;
 
     private GameController gameController;
+    private EntityManager entityManager;
 
-    public ProceduralGenerator(GameController gameController) {
+    public ProceduralGenerator(GameController gameController, EntityManager entityManager) {
         this.gameController = gameController;
+        this.entityManager = entityManager;
         colorMap = VariableManager.colorMap;
     }
 
@@ -52,12 +55,12 @@ public class ProceduralGenerator {
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
         int remainingHeight = height;
-        int numwaves = 3; // testVar
 
         // spawn Player
         int x = 15 * 32, y = remainingHeight * 32;
 
-        gameController.spawnPlayer(x, y, height*32);
+        entityManager.spawnPlayer(xMid*32, height*32, height*32, VariableManager.getPower(), VariableManager.gotGround());
+        gameController.setCameraToPlayer();
 
         // create distance between player and first wave
         remainingHeight -= Engine.HEIGHT / 32;
@@ -297,11 +300,11 @@ public class ProceduralGenerator {
 
     private void spawnHelper(int x, int y, Color c) {
         EntityID id = colorMap.get(c);
-        gameController.spawnEntity(x * 32, y * 32, id, c);
+        entityManager.spawnEntity(x*32, y*32, id, c);
     }
 
     private void spawnBoss(int x, int y) {
-        gameController.spawnEntity(x * 32, y * 32, EntityID.Boss, Color.YELLOW);
+        entityManager.spawnBoss(1, x*32, y*32);
     }
 
     private void nextPattern() {
@@ -310,16 +313,6 @@ public class ProceduralGenerator {
 
     private int calculateSkip() {
         return Utility.randomRange(0, 2);
-    }
-
-    // calculate how long the pause should be between each wave, depending on the pattern
-    private int recalculatePause(int num, Pattern pattern) {
-        float factor = 1;
-        if (pattern == Pattern.v) {
-            factor *= 1.2;
-        }
-        factor += num/10;
-        return (int) (10 * factor);
     }
 
     private void determineSpawn() {

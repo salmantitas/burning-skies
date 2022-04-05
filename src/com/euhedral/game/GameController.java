@@ -1,7 +1,7 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.*;
-import com.euhedral.game.Entities.LevelGenerator;
+//import com.euhedral.game.Entities.LevelGenerator;
 import com.euhedral.game.Entities.ProceduralGenerator;
 import com.euhedral.game.Entities.Shop;
 import com.euhedral.game.UI.UIHandler;
@@ -48,7 +48,7 @@ public class GameController {
     int offsetVertical;
 
     // Level Generation
-    private LevelGenerator levelGenerator;
+//    private LevelGenerator levelGenerator;
     private ProceduralGenerator proceduralGenerator;
 
     // Levels
@@ -140,8 +140,8 @@ public class GameController {
         // Initialize Manual Levels
         levelMap = new HashMap<>();
 //        loadCustomMap();
-        levelGenerator = new LevelGenerator(this);
-        proceduralGenerator = new ProceduralGenerator(this);
+//        levelGenerator = new LevelGenerator(this);
+        proceduralGenerator = new ProceduralGenerator(this, entityManager);
     }
 
     private void loadCustomMap() {
@@ -560,8 +560,8 @@ public class GameController {
 
         BufferedImage currentLevel = levelMap.get(level);
         if (currentLevel != null) {
-            levelGenerator.loadImageLevel(currentLevel);
-            levelGenerator.loadImageLevel(currentLevel);
+//            levelGenerator.loadImageLevel(currentLevel);
+//            levelGenerator.loadImageLevel(currentLevel);
         } else {
             proceduralGenerator.generateLevel();
         }
@@ -573,34 +573,15 @@ public class GameController {
         return camera;
     }
 
-    // Using the id, spawns the appropriate entity.
-    // todo: condense everything into one call to the EntityManager
-    public void spawnEntity(int x, int y, EntityID id, Color color) {
-        if (id == EntityID.Player) {
-            spawnPlayer(x,y, levelHeight);
-        }
-        if (id == EntityID.Boss) {
-            entityManager.spawnBoss(variableManager.getLevel(), x, y);
-        }
-        else
-            entityManager.spawnEntity(x, y, id, color);
-    }
-
     // Creates an instance of the player and sets the camera to follow it
-    public void spawnPlayer(int width, int height, int levelHeight) {
-        // todo: move to EntityManager
+    public void setCameraToPlayer() {
         offsetVertical = gameHeight - Utility.intAtWidth640(32)*4;
-        entityManager.spawnPlayer(width, height, levelHeight, variableManager.getPower(), variableManager.gotGround());
 
         // sets the camera's width to center the player horizontally, essentially to 0, and
         // adjust the height so that player is at the bottom of the screen
-        camera = new Camera(0,entityManager.getPlayerY() - offsetVertical); // works for now
+        camera = new Camera(0,entityManager.getPlayerY() - 615);
         camera.setMarker(entityManager.getPlayerY());
         inscreenMarker = camera.getMarker() + 100;
-    }
-
-    public void spawnCamera(int width, int height) {
-        camera = new Camera(width, -750); // -700 = 2 fps;
     }
 
     // checks whether the condition to advance to the next level has been fulfilled

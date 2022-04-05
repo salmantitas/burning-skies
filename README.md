@@ -41,11 +41,6 @@ Player
 - Shields
 - Bombs
 
-Camera Fix
- - 
- Problem: Camera only works when level height is 200 units
- Proposed solution: Set camera's static location to levelheight*32 - screen heigth
-
 Procedural Generation
  - 
  - Level 2: Boss
