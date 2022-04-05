@@ -192,7 +192,7 @@ public class EntityManager {
      * Bullet Functions *
      ********************/
 
-    public void updateBullets() {
+    private void updateBullets() {
         for (Bullet bullet : bullets) {
             if (bullet.isActive())
                 bullet.update();
@@ -203,18 +203,18 @@ public class EntityManager {
             boss.clearBullets();
         }
     }
-    public void renderBullets(Graphics g) {
+    private void renderBullets(Graphics g) {
         for (Bullet bullet: bullets) {
             if (bullet.isActive())
                 bullet.render(g);
         }
     }
 
-    public void clearBullets() {
+    private void clearBullets() {
         bullets.clear();
     }
 
-    public void addToBullets(Enemy enemy) {
+    private void addToBullets(Enemy enemy) {
         bullets.addAll(enemy.getBullets());
     }
 
@@ -316,6 +316,7 @@ public class EntityManager {
 
     public void clearEnemies() {
         enemies.clear();
+        clearBullets();
     }
 
     private void destroy(Enemy enemy) {

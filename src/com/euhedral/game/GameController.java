@@ -444,7 +444,6 @@ public class GameController {
         variableManager.resetLevel();
         levelSpawned = false;
         entityManager.clearEnemies();
-        entityManager.clearBullets();
         entityManager.clearPickups();
         levelSpawned = false;
 
@@ -545,6 +544,13 @@ public class GameController {
     public void stopShootPlayer() {
         entityManager.playerCannotShoot();
     }
+
+
+    /*
+     * Creates the level and spawns enemies appropriately
+     * Generates a flag to indicate end of level after level generation
+     */
+
 
     private void spawn() {
         levelSpawned = !levelSpawned;

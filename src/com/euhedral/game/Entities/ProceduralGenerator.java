@@ -1,24 +1,23 @@
 package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
-import com.euhedral.engine.Entity;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityID;
 import com.euhedral.game.GameController;
 import com.euhedral.game.VariableManager;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProceduralGenerator {
 
     public HashMap<Color, EntityID> colorMap;
     int width = 31;
+    int xMid = width/2;
     int spawnZone, lastZone, lastLastZone;
     int wave, pauseBetweenWaves, pattern;
     int increment = 3;
-    private ArrayList<Entity> entities;
+    int level;
 
     enum Pattern {
         line,
@@ -46,7 +45,7 @@ public class ProceduralGenerator {
 
     // generate a level using procedural generation
     public void generateLevel() {
-        int level = VariableManager.getLevel();
+        level = VariableManager.getLevel();
         int height = 200;
         gameController.setLevelHeight(height * 32);
 
@@ -64,9 +63,20 @@ public class ProceduralGenerator {
         remainingHeight -= Engine.HEIGHT / 32;
         wave = 1;
 
+        // max spawns in V pattern
+        int minV = 3;
+        int maxV = 7;
+
+        // max spawns in line pattern
+        int minL = 1;
+        int maxL = 5;
+
+        // pauses between each waves
+        int minPause = 5;
+        pauseBetweenWaves = minPause;
+
         while (remainingHeight > 0) {
             // for every wave
-            pauseBetweenWaves = 10; // stub
             nextPattern();
 
             // for every zone
@@ -81,24 +91,14 @@ public class ProceduralGenerator {
             // choose spawn pattern
             Pattern pattern = Pattern.fromInteger (Utility.randomRange(0, maxP));
             int num = 1;
-            int maxV = 7;
 
             if (pattern == Pattern.line) {
-                num = Utility.randomRange(1,5);
+                num = Utility.randomRange(1, maxL);
+                pauseBetweenWaves = minPause + (num - minL);
             }
             if (pattern == Pattern.v) {
-                num = Utility.randomRange(3,maxV);
-            }
-
-            if (pattern == Pattern.v) {
-                // todo: naive solution, fix
-                if (num < 5) {
-                    pauseBetweenWaves = 10;
-                } else if (num < 7) {
-                    pauseBetweenWaves = 15;
-                } else {
-                    pauseBetweenWaves = 20;
-                }
+                num = Utility.randomRange(minV, maxV);
+                pauseBetweenWaves = 2* minPause + (num - minV) * 4;
             }
 
             int tileSize = Utility.intAtWidth640(32);
@@ -111,9 +111,12 @@ public class ProceduralGenerator {
                 case v: spawnV(num, remainingHeight);
                 break;
             }
+
             remainingHeight -= pauseBetweenWaves;
-            pauseBetweenWaves = recalculatePause(num, pattern);
         }
+
+        remainingHeight -= pauseBetweenWaves;
+        spawnBoss(xMid, remainingHeight);
 
     }
 
@@ -297,6 +300,10 @@ public class ProceduralGenerator {
         gameController.spawnEntity(x * 32, y * 32, id, c);
     }
 
+    private void spawnBoss(int x, int y) {
+        gameController.spawnEntity(x * 32, y * 32, EntityID.Boss, Color.YELLOW);
+    }
+
     private void nextPattern() {
         pattern = Utility.randomRange(1, maxP);
     }
@@ -305,6 +312,7 @@ public class ProceduralGenerator {
         return Utility.randomRange(0, 2);
     }
 
+    // calculate how long the pause should be between each wave, depending on the pattern
     private int recalculatePause(int num, Pattern pattern) {
         float factor = 1;
         if (pattern == Pattern.v) {
@@ -312,5 +320,9 @@ public class ProceduralGenerator {
         }
         factor += num/10;
         return (int) (10 * factor);
+    }
+
+    private void determineSpawn() {
+//        if level
     }
 }
