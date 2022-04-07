@@ -23,6 +23,8 @@ public class MenuTransition extends Menu {
 
     ButtonAction power = new ButtonAction(x0, y3, shopSize, "Upgrade Power", ActionTag.power);
 
+    ButtonAction shield = new ButtonAction(x0, y4, shopSize, "Buy Shield", ActionTag.shield);
+
     // Options
 
     ButtonAction save = new ButtonAction(x2, y1, optionSize, "Save", ActionTag.save);
@@ -41,7 +43,7 @@ public class MenuTransition extends Menu {
 
     public MenuTransition() {
         super(GameState.Transition);
-        MAXBUTTON = 9;
+        MAXBUTTON = 10;
         options = new Button[MAXBUTTON];
 
 
@@ -50,33 +52,42 @@ public class MenuTransition extends Menu {
         options[0] = health;
         options[1] = ground;
         options[2] = power;
-        options[3] = save;
-        options[4] = load;
-        options[5] = tutorial;
-        options[6] = go;
-        options[7] = backToMenu;
-        options[8] = quit;
+        options[3] = shield;
+        options[4] = save;
+        options[5] = load;
+        options[6] = tutorial;
+        options[7] = go;
+        options[8] = backToMenu;
+        options[9] = quit;
 
     }
 
     @Override
     public void update() {
-        boolean minHealthScore = VariableManager.getScore() > VariableManager.health.getCost();
-        boolean fullHealth = VariableManager.health.getValue() == VariableManager.health.getMAX();
-        boolean minPowerScore = VariableManager.getScore() > VariableManager.costPower;
-        boolean minGroundScore = VariableManager.getScore() > VariableManager.costGround;
+        int score = VariableManager.getScore();
+        boolean minHealthScore = score > VariableManager.health.getCost();
+        boolean fullHealth = VariableManager.health.getValue() >= VariableManager.health.getMAX();
+        boolean minPowerScore = score > VariableManager.power.getCost();
+        boolean maxPower = VariableManager.getPower() >= VariableManager.power.getMAX();
+        boolean minGroundScore = score > VariableManager.ground.getCost();
+        boolean minShieldScore = score > VariableManager.shield.getCost();
+        boolean fullShield = VariableManager.shield.getValue() >= VariableManager.shield.getMAX();
 
-        if (minHealthScore && !fullHealth) {
-            health.enable();
-        } else health.disable();
+        checkConditionAndDisable(health, minHealthScore && !fullHealth);
+        checkConditionAndDisable(power, minPowerScore && !maxPower);
+        checkConditionAndDisable(ground, minGroundScore && !VariableManager.gotGround());
+        checkConditionAndDisable(shield, minShieldScore && !fullShield);
+
+//        if (minHealthScore && !fullHealth) {
+//            health.enable();
+//        } else health.disable();
 
         // If the score is greater than the cost for ground bullets AND if the player has not already bought them
         // then ground bullets are buyable
-        if (minGroundScore && !VariableManager.gotGround()) {
-            ground.enable();
-        } else ground.disable();
+//        if (minGroundScore && !VariableManager.gotGround()) {
+//            ground.enable();
+//        } else ground.disable();
 
-        checkConditionAndDisable(power, minPowerScore);
     }
 
     // Disables button when the conditions are not true

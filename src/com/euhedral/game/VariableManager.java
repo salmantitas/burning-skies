@@ -25,6 +25,12 @@ public class VariableManager {
 //    private int lives = 3;
 
     public static Attribute health;
+    public static Attribute power;
+    public static Attribute ground;
+    public static Attribute shield;
+
+    // todo: Boss Health
+//    public static Attribute bossHealth;
 
     // Score
     private static int score = 0;
@@ -32,22 +38,15 @@ public class VariableManager {
     private static int scoreY = Utility.percHeight(4);
     private static int scoreSize = Utility.percWidth(2);
 
-    // Power
-    private static int powerX = Utility.percWidth(24);
-    private static int powerY = scoreY;
-    private static int powerSize = scoreSize;
-    private static final int maxPower = 5;
-    private static int power = 1;
-
     // Level
     private static int levelX = Utility.percWidth(50);
     private static int levelY = scoreY;
-    private static int levelSize = Utility.percWidth(2);
+    private static int levelSize = scoreSize;
 
     // Shop Costs
 
-    public static final int costPower = 1000;
-    public static final int costGround = 1000;
+//    public static final int costPower = 1000;
+//    public static final int costGround = 1000;
 
     /******************
      * User Variables *
@@ -66,15 +65,15 @@ public class VariableManager {
     // todo: ActionTag will be updated here
     private ActionTag action = null;
 
-    // todo: Ground will be updated here
-    private static boolean ground = false;
+//    // todo: Ground will be updated here
+//    private static boolean ground = false;
 
     private static boolean tutorial = false;
 
     public VariableManager() {
-        health = new Attribute(100, 500);
         colorMap = new HashMap<>();
         initializeColorMap();
+        initializeAttributes();
     }
 
     private void initializeColorMap() {
@@ -90,6 +89,24 @@ public class VariableManager {
         colorMap.put(new Color(255,150,244), EntityID.EnemyGround);
         colorMap.put(new Color(0,255,0), EntityID.Pickup);
         colorMap.put(new Color(255,216,0), EntityID.Boss);
+    }
+
+    public static void initializeAttributes() {
+        health = new Attribute(100, false, 500);
+        health.setY(Utility.percHeight(5));
+        health.setBodyColor(Color.green);
+
+        power = new Attribute(1, false, 1000);
+        power.setMAX(5);
+        power.setX(Utility.percWidth(24));
+        power.setY(scoreY);
+        power.setFontSize(scoreSize);
+
+        ground = new Attribute(0, true, 1500);
+        shield = new Attribute(0, false, 2000);
+        shield.setMAX(100);
+        shield.setY(health.getY() + Utility.percHeight(3));
+        shield.setBodyColor(Color.yellow);
     }
 
     public static void console() {
@@ -110,7 +127,7 @@ public class VariableManager {
     }
 
     public void resetPower() {
-        power = 1;
+        power.reset();
     }
 
     public static void increaseScore(int score) {
@@ -121,12 +138,12 @@ public class VariableManager {
         VariableManager.score -= score;
     }
 
-    public static void increasePower(int power) {
-        VariableManager.power += power;
+    public static void increasePower(int value) {
+        power.increase(value);
     }
 
-    public static void decreasePower(int power) {
-        VariableManager.power -= power;
+    public static void decreasePower(int value) {
+        power.decrease(value);
     }
 
     /**********
@@ -135,19 +152,9 @@ public class VariableManager {
 
     public static void renderHUD(Graphics g) {
         renderScore(g);
-        renderPower(g);
-        renderHealth(g);
-    }
-
-    public static void renderHealth(Graphics g) {
-        int width = Utility.intAtWidth640(2);
-        int height = width * 6;
-        Color backColor = Color.lightGray;
-        Color healthColor = Color.GREEN;
-        g.setColor(backColor);
-        g.fillRect(health.getX(), health.getY(), health.getDefaultValue() * width, height);
-        g.setColor(healthColor);
-        g.fillRect(health.getX(), health.getY(), health.getValue() * width, height);
+        power.renderValue(g);
+        health.renderBar(g);
+        shield.renderBar(g);
     }
 
     public static void renderScore(Graphics g) {
@@ -157,15 +164,9 @@ public class VariableManager {
     }
 
     public static void renderLevel(Graphics g) {
-        g.setFont(new Font("arial", 1, scoreSize));
+        g.setFont(new Font("arial", 1, levelSize));
         g.setColor(Color.WHITE);
         g.drawString("Level " + level, levelX, levelY);
-    }
-
-    public static void renderPower(Graphics g) {
-        g.setFont(new Font("arial", 1, powerSize));
-        g.setColor(Color.WHITE);
-        g.drawString("Power: " + power, powerX, powerY);
     }
 
     protected void drawBossHealth(Graphics g) {
@@ -221,40 +222,15 @@ public class VariableManager {
         VariableManager.scoreSize = scoreSize;
     }
 
-    public int getPowerX() {
-        return powerX;
-    }
-
-    public void setPowerX(int powerX) {
-        VariableManager.powerX = powerX;
-    }
-
-    public int getPowerY() {
-        return powerY;
-    }
-
-    public void setPowerY(int powerY) {
-        VariableManager.powerY = powerY;
-    }
-
-    public int getPowerSize() {
-        return powerSize;
-    }
-
-    public void setPowerSize(int powerSize) {
-        VariableManager.powerSize = powerSize;
-    }
-
     public static int getMaxPower() {
-        return maxPower;
+        return power.getMAX();
     }
 
     public static int getPower() {
-        return power;
+        return power.getValue();
     }
 
-    public static void setPower(int power) {
-        VariableManager.power = power;
+    public static void setPower(int value) {power.set(value);
     }
 
     public int getHealthBossDef() {
@@ -301,12 +277,12 @@ public class VariableManager {
         level++;
     }
 
-    public static void setGround(boolean ground) {
-        VariableManager.ground = ground;
+    public static void setGround(boolean active) {
+        ground.setActive(active);
     }
 
     public static boolean gotGround() {
-        return ground;
+        return ground.isActive();
     }
 
     public static boolean finishedFinalLevel() {

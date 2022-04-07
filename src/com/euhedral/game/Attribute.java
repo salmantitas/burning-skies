@@ -2,24 +2,35 @@ package com.euhedral.game;
 
 import com.euhedral.engine.Utility;
 
+import java.awt.*;
+
 public class Attribute {
 
     private int x = Utility.percWidth(2.5);
-    private int y = Utility.percHeight(5);
+    private int y;
     private int defaultValue;
     private int MIN = 0;
     private int MAX;
     private int value;
     private int cost;
+    private boolean active = false, binary = false;
 
-    public Attribute(int defaultValue) {
-        this.defaultValue = defaultValue;
-        MAX = defaultValue;
-        value = defaultValue;
+    // Render Properties
+
+    Color backColor = Color.lightGray;
+    Color bodyColor;
+
+    int fontSize;
+
+    public Attribute(int defaultValue, boolean binary) {
+        setDefaultValue(defaultValue);
+        setMAX(defaultValue);
+        setValue(defaultValue);
+        this.binary = binary;
     }
 
-    Attribute(int defaultValue, int cost) {
-        this(defaultValue);
+    Attribute(int defaultValue, boolean binary, int cost) {
+        this(defaultValue, binary);
         this.cost = cost;
     }
 
@@ -29,8 +40,8 @@ public class Attribute {
 
     public void increase(int value) {
         this.value += value;
-        if (value >= MAX)
-            set(MAX);
+        if (this.value >= MAX)
+            this.value = MAX;
     }
 
     public void decrease(int value) {
@@ -83,5 +94,36 @@ public class Attribute {
 
     public int getCost() {
         return cost;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setBodyColor(Color c) {
+        bodyColor = c;
+    }
+
+    public void setFontSize(int size) {
+        fontSize = size;
+    }
+
+    public void renderBar(Graphics g) {
+        int width = Utility.intAtWidth640(2);
+        int height = width * 6;
+        g.setColor(backColor);
+        g.fillRect(x, y, MAX * width, height);
+        g.setColor(bodyColor);
+        g.fillRect(x, y, value * width, height);
+    }
+
+    public void renderValue(Graphics g) {
+        g.setFont(new Font("arial", 1, fontSize));
+        g.setColor(Color.WHITE);
+        g.drawString("Power: " + value, x, y);
     }
 }

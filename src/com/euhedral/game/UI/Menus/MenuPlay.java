@@ -27,7 +27,7 @@ public class MenuPlay extends Menu {
         a.addText("Enjoy!");
         addMessageBox(a);
 
-        Panel topPane = new Panel(0,0, Engine.WIDTH, Utility.percHeight(10), GameState.Game);
+        Panel topPane = new Panel(0,0, Engine.WIDTH, Utility.percHeight(12), GameState.Game);
         menuItems.add(topPane);
     }
 

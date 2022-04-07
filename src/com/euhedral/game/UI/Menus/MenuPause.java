@@ -35,12 +35,13 @@ public class MenuPause extends Menu {
     }
 
     /*
-    *
+    * Renders the text "Pause"
     * */
 
     public void drawPause(Graphics g) {
+        int x = Utility.percWidth(16), y = Utility.percHeight(50);
         g.setFont(new Font("arial", 1, Utility.percWidth(20)));
         g.setColor(Color.WHITE);
-        g.drawString("PAUSE", Utility.percWidth(16), Utility.percHeight(25));
+        g.drawString("PAUSE", x, y);
     }
 }

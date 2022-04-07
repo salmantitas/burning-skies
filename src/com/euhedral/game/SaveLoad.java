@@ -1,10 +1,16 @@
 package com.euhedral.game;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SaveLoad {
+
+    private enum index {
+        score, health, ground, level, power, shield;
+    }
+
     private static String filename = "save";
     private static String settings = "settings";
 
@@ -23,9 +29,10 @@ public class SaveLoad {
         String ground = Boolean.toString(VariableManager.gotGround());
         String level = Integer.toString(VariableManager.getLevel());
         String power = Integer.toString(VariableManager.getPower());
+        String shield = Integer.toString(VariableManager.shield.getValue());
 
         // Turn strings into a string array to be written
-        List<String> rows = Arrays.asList(score, health, ground, level, power);
+        List<String> rows = Arrays.asList(score, health, ground, level, power, shield);
 
         // Code implemented from https://stackabuse.com/reading-and-writing-csvs-in-java/
         try {
@@ -56,7 +63,7 @@ public class SaveLoad {
          *************/
 
         // Create array of string to store variables from save-file
-        String[] data = new String[5];
+        String[] data = new String[6];
 
         /***************
          * Engine Code *
@@ -80,12 +87,22 @@ public class SaveLoad {
              * Game Code *
              *************/
 
+            ArrayList<String> loadData = new ArrayList<>(6);
+            for (String s: data) {
+                loadData.add(s);
+            }
+
+            while (loadData.size() < 6) {
+                loadData.add("0");
+            }
+
             // Create variables to store data from save-file
-            int score = Integer.parseInt(data[0]);
-            int health = Integer.parseInt(data[1]);
-            boolean ground = Boolean.parseBoolean(data[2]);
-            int level = Integer.parseInt(data[3]);
-            int power = Integer.parseInt(data[4]);
+            int score = Integer.parseInt(loadData.get(0));
+            int health = Integer.parseInt(loadData.get(1));
+            boolean ground = Boolean.parseBoolean(loadData.get(2));
+            int level = Integer.parseInt(loadData.get(3));
+            int power = Integer.parseInt(loadData.get(4));
+            int shield = Integer.parseInt(loadData.get(5));
 
             // Update variables
             VariableManager.setScore(score);
@@ -93,6 +110,7 @@ public class SaveLoad {
             VariableManager.setGround(ground);
             VariableManager.setLevel(level);
             VariableManager.setPower(power);
+            VariableManager.shield.setValue(shield);
         }
     }
 

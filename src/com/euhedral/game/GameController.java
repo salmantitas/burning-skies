@@ -435,7 +435,8 @@ public class GameController {
         Engine.timer = 0;
         variableManager.resetScore();
         variableManager.resetPower();
-        variableManager.health.getValue();
+        VariableManager.shield.reset();
+//        variableManager.health.getValue();
 
         /*************
          * Game Code *
@@ -447,7 +448,7 @@ public class GameController {
         entityManager.clearPickups();
         levelSpawned = false;
 
-//        testingCheat();
+        testingCheat();
     }
 
     public void checkButtonAction(int mx, int my) {
@@ -465,9 +466,11 @@ public class GameController {
                 break;
                 case health: shop.buyHealth();
                 break;
-                case power: shop.buyPower(entityManager.getPlayerPower());
+                case power: shop.buyPower();
                 break;
                 case ground: shop.buyGround();
+                break;
+                case shield: shop.buyShield();
                 break;
                 case save: save();
                 break;
@@ -564,6 +567,7 @@ public class GameController {
 //            levelGenerator.loadImageLevel(currentLevel);
         } else {
             proceduralGenerator.generateLevel();
+            // todo: setCameraToPlayer
         }
 
         entityManager.spawnFlag();
@@ -611,6 +615,8 @@ public class GameController {
     }
 
     private void testingCheat() {
+        VariableManager.health.set(80);
+        VariableManager.setScore(4000);
         variableManager.setLevel(2);
         variableManager.setPower(3);
         variableManager.setGround(true);

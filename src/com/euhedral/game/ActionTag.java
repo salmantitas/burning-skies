@@ -6,6 +6,7 @@ public enum ActionTag {
     health,
     power,
     ground,
+    shield,
     tutorial,
     save,
     load

@@ -1,50 +1,44 @@
 package com.euhedral.game.Entities;
 
+import com.euhedral.game.Attribute;
 import com.euhedral.game.VariableManager;
 
 public class Shop {
 
     public void buyHealth() {
-        int cost = VariableManager.health.getCost();
-        int healthDefault = VariableManager.health.getDefaultValue();
-
-        if (VariableManager.getScore() >= cost) {
-            if (VariableManager.health.getValue() < healthDefault) {
-                VariableManager.health.increase(25);
-                VariableManager.decreaseScore(cost);
-                if (VariableManager.health.getValue() > healthDefault)
-                    VariableManager.health.reset();
-            } else {
-                System.out.println("Health is full");
-            }
-        } else {
-            System.out.println("Not enough score");
-        }
+        buyAbstract(VariableManager.health, 25, "Health is full");
     }
 
-    public void buyPower(int power) {
-        int cost = VariableManager.costPower;
+    public void buyPower() {
+        buyAbstract(VariableManager.power, 1, "Max power has been reached");
+    }
 
-        if (VariableManager.getScore() >= cost) {
-            if (power < VariableManager.getMaxPower()) {
-                VariableManager.increasePower(1);
-                VariableManager.decreaseScore(cost);
-                if (VariableManager.getPower() > VariableManager.getMaxPower())
-                    VariableManager.decreasePower(1);
-            } else {
-                System.out.println("Max power is reached");
-            }
-        } else {
-            System.out.println("Not enough score");
-        }
+    public void buyShield() {
+        buyAbstract(VariableManager.shield, 50, "Shield is full");
     }
 
     public void buyGround() {
-        int cost = VariableManager.costGround;
+        int cost = VariableManager.ground.getCost();
         if (VariableManager.getScore() >= cost) {
             if (!VariableManager.gotGround()) {
                 VariableManager.decreaseScore(cost);
                 VariableManager.setGround(true);
+            }
+        } else {
+            System.out.println("Not enough score");
+        }
+    }
+
+    public void buyAbstract(Attribute attribute, int value, String message) {
+        int cost = attribute.getCost();
+        int valueMax = attribute.getMAX();
+
+        if (VariableManager.getScore() >= cost) {
+            if (attribute.getValue() < valueMax) {
+                attribute.increase(value);
+                VariableManager.decreaseScore(cost);
+            } else {
+                System.out.println(message);
             }
         } else {
             System.out.println("Not enough score");

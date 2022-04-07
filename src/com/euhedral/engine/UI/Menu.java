@@ -45,7 +45,8 @@ public class Menu {
     protected int y1 = Utility.percHeight(40);
     protected int y2 = Utility.percHeight(50);
     protected int y3 = Utility.percHeight(60);
-    protected int yFINAL = Utility.percHeight(70);
+    protected int y4 = Utility.percHeight(70);
+    protected int yFINAL = Utility.percHeight(80);
 
     public Menu(GameState state) {
         this.state = state;

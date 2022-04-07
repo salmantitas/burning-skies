@@ -60,7 +60,7 @@ public class ProceduralGenerator {
         int x = 15 * 32, y = remainingHeight * 32;
 
         entityManager.spawnPlayer(xMid*32, height*32, height*32, VariableManager.getPower(), VariableManager.gotGround());
-        gameController.setCameraToPlayer();
+        gameController.setCameraToPlayer(); // todo: move to Game Controller
 
         // create distance between player and first wave
         remainingHeight -= Engine.HEIGHT / 32;

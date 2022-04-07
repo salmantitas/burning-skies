@@ -188,7 +188,11 @@ public class Player extends MobileEntity {
         int bltSpnRight = x + 4;
 
         if (power == 5) {
-            // todo
+            spawnBullet(bltSpnLeft, y, -70);
+            spawnBullet(bltSpnLeft, y, -90);
+            spawnBullet(bltSpnMid, y, -90);
+            spawnBullet(bltSpnRight, y, -90);
+            spawnBullet(bltSpnRight, y, -110);
         }
         else if (power == 4) {
             spawnBullet(bltSpnLeft, y, -70);
