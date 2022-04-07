@@ -227,12 +227,6 @@ public class GameController {
 
                 renderInCamera(g);
 
-                // todo: remove after camera is fixed
-                int d = entityManager.getPlayerY() -  (int) camera.getY();
-                g.drawString("Player: " + entityManager.getPlayerY(), 100, 90);
-                g.drawString("Distance: " + d, 100, 100);
-                // distance should be 570
-
                 if (VariableManager.isHud()) {
 
                     entityManager.renderBossHealth(g);
@@ -618,8 +612,9 @@ public class GameController {
         VariableManager.health.set(80);
         VariableManager.setScore(4000);
         variableManager.setLevel(2);
-        variableManager.setPower(3);
+        VariableManager.power.set(3);
         variableManager.setGround(true);
+        VariableManager.shield.set(75);
     }
 
     public static Texture getTexture() {

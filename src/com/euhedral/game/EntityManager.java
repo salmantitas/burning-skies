@@ -15,7 +15,7 @@ public class EntityManager {
     private LinkedList<Entity> entities;
 
     // Player
-    private Player player = new Player(0, 0, 0);
+    private Player player;// = new Player(0, 0, 0);
 
     // Entity Lists
     private Flag flag;
@@ -96,8 +96,12 @@ public class EntityManager {
 
         // Pickups
 
-        else if (id == EntityID.Pickup) {
+        else if (id == EntityID.PickupHealth) {
             spawnPickup(x, y, PickupID.Health, color);
+        }
+
+        else if (id == EntityID.PickupShield) {
+            spawnPickup(x, y, PickupID.Shield, color);
         }
 
         // todo: Boss
@@ -156,10 +160,12 @@ public class EntityManager {
     }
 
     public void playerCanShoot() {
-        player.canShoot(true);
+        if (player != null)
+            player.canShoot(true);
     }
     public void playerCannotShoot() {
-        player.canShoot(false);
+        if (player != null)
+            player.canShoot(false);
     }
 
     public void spawnPlayer(int width, int height, int levelHeight, int power, boolean ground) {
@@ -368,8 +374,7 @@ public class EntityManager {
     }
 
     public void damagePlayer(int num){
-        player.decreaseHealth(num);
-        variableManager.health.decrease(num);
+        player.damage(num);
     }
 
     /***********************

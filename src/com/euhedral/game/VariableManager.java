@@ -87,7 +87,8 @@ public class VariableManager {
         colorMap.put(new Color(100,0,0), EntityID.EnemySnake);
         colorMap.put(new Color(200,0,0), EntityID.EnemyFast);
         colorMap.put(new Color(255,150,244), EntityID.EnemyGround);
-        colorMap.put(new Color(0,255,0), EntityID.Pickup);
+        colorMap.put(new Color(0,255,0), EntityID.PickupHealth);
+        colorMap.put(new Color(255,255,0), EntityID.PickupShield);
         colorMap.put(new Color(255,216,0), EntityID.Boss);
     }
 
@@ -136,14 +137,6 @@ public class VariableManager {
 
     public static void decreaseScore(int score) {
         VariableManager.score -= score;
-    }
-
-    public static void increasePower(int value) {
-        power.increase(value);
-    }
-
-    public static void decreasePower(int value) {
-        power.decrease(value);
     }
 
     /**********
@@ -220,17 +213,6 @@ public class VariableManager {
 
     public void setScoreSize(int scoreSize) {
         VariableManager.scoreSize = scoreSize;
-    }
-
-    public static int getMaxPower() {
-        return power.getMAX();
-    }
-
-    public static int getPower() {
-        return power.getValue();
-    }
-
-    public static void setPower(int value) {power.set(value);
     }
 
     public int getHealthBossDef() {

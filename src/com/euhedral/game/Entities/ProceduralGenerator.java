@@ -59,7 +59,7 @@ public class ProceduralGenerator {
         // spawn Player
         int x = 15 * 32, y = remainingHeight * 32;
 
-        entityManager.spawnPlayer(xMid*32, height*32, height*32, VariableManager.getPower(), VariableManager.gotGround());
+        entityManager.spawnPlayer(xMid*32, height*32, height*32, VariableManager.power.getValue(), VariableManager.gotGround());
         gameController.setCameraToPlayer(); // todo: move to Game Controller
 
         // create distance between player and first wave

@@ -17,6 +17,7 @@ Shop
 - At the end of beginning of every level, the player can use their accumulated points to buy items from the shop
 - Health
 - Power
+- Shields for extra protection
 - Air to Ground weapon
 
 Enemy Variety

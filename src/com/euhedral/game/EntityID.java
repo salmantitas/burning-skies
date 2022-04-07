@@ -9,6 +9,7 @@ public enum EntityID {
     EnemyFast,
     EnemyGround,
     Bullet,
-    Pickup,
+    PickupHealth,
+    PickupShield,
     Boss
 }

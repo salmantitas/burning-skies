@@ -52,6 +52,9 @@ public abstract class Entity {
         drawDefault(g);
     }
 
+    // Attempts to animate the object.
+    // In the absense of an animation, it attempts to draw an image
+    // Otherwise, a default color is set and a rectangle is drawn on screen
     protected void drawDefault(Graphics g) {
         if (images != null) {
             drawAnimation(g);

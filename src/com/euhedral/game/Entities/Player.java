@@ -3,11 +3,8 @@ package com.euhedral.game.Entities;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.ContactID;
+import com.euhedral.game.*;
 import com.euhedral.game.Entities.Enemy.Enemy;
-import com.euhedral.game.EntityID;
-import com.euhedral.game.GameController;
-import com.euhedral.game.Texture;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -29,6 +26,9 @@ public class Player extends MobileEntity {
     private int clampOffsetX;
     private int clampOffsetY;
 
+    private Attribute health;
+    private Attribute shield;
+
     // Test
     private int mx, my;
     private boolean destinationGiven = false;
@@ -36,14 +36,12 @@ public class Player extends MobileEntity {
     // Graphics
     private BufferedImage image;
     private Texture texture;
-    private final int healthDefault = 100;
-    private int healthMAX = healthDefault;
-    private int health = healthDefault;
 
 
     public Player(int x, int y, int levelHeight) {
         super(x,y, EntityID.Player);
         texture = GameController.getTexture();
+        setAttributes();
         setImage();
         this.levelHeight = levelHeight;
         width = Utility.intAtWidth640(32);
@@ -95,10 +93,15 @@ public class Player extends MobileEntity {
         setImage();
     }
 
+    private void setAttributes() {
+        health = VariableManager.health;
+        shield = VariableManager.shield;
+    }
+
     public void setImage() {
-        if (health > 66) {
+        if (health.getValue() > 66) {
             image = texture.player[0];
-        } else if (health > 33) {
+        } else if (health.getValue() > 33) {
             image = texture.player[1];
         } else {
             image = texture.player[2];
@@ -114,6 +117,11 @@ public class Player extends MobileEntity {
         super.render(g);
 
         g.drawImage(image, (int) x, (int) y, null);
+
+        if (shield.getValue() > 0) {
+            g.setColor(Color.yellow);
+            g.drawOval(x-width/2, y-height/2, width*2, height*2);
+        }
     }
 
     public Bullet checkCollision(Enemy enemy) {
@@ -324,7 +332,14 @@ public class Player extends MobileEntity {
         this.ground = ground;
     }
 
-    public void decreaseHealth(int num) {
-        health -= num;
+    public void damage(int num) {
+        if (shield.getValue() > 0) {
+            int temp = num - shield.getValue();
+            shield.decrease(num * 2);
+            if (temp > 0) {
+                health.decrease(temp);
+            }
+        }
+        else health.decrease(num);
     }
 }

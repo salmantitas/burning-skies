@@ -28,7 +28,7 @@ public class SaveLoad {
         String health = Integer.toString(VariableManager.health.getValue());
         String ground = Boolean.toString(VariableManager.gotGround());
         String level = Integer.toString(VariableManager.getLevel());
-        String power = Integer.toString(VariableManager.getPower());
+        String power = Integer.toString(VariableManager.power.getValue());
         String shield = Integer.toString(VariableManager.shield.getValue());
 
         // Turn strings into a string array to be written
@@ -92,6 +92,7 @@ public class SaveLoad {
                 loadData.add(s);
             }
 
+            // Loads the array with 0 in the event that a new variable has been added, to prevent null values
             while (loadData.size() < 6) {
                 loadData.add("0");
             }
@@ -109,7 +110,7 @@ public class SaveLoad {
             VariableManager.health.set(health);
             VariableManager.setGround(ground);
             VariableManager.setLevel(level);
-            VariableManager.setPower(power);
+            VariableManager.power.set(power);
             VariableManager.shield.setValue(shield);
         }
     }

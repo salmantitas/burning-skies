@@ -13,7 +13,7 @@ public class Pickup extends MobileEntity {
     private PickupID pickupID;
 
     public Pickup(int x, int y, PickupID pickupID, Color color) {
-        super(x, y, EntityID.Pickup);
+        super(x, y, EntityID.PickupHealth);
         width = Utility.intAtWidth640(16);
         height = width * 2;
         this.pickupID = pickupID;
