@@ -2,6 +2,7 @@ package com.euhedral.game;
 
 import com.euhedral.engine.*;
 //import com.euhedral.game.Entities.LevelGenerator;
+import com.euhedral.game.Entities.LevelGenerator;
 import com.euhedral.game.Entities.ProceduralGenerator;
 import com.euhedral.game.Entities.Shop;
 import com.euhedral.game.UI.UIHandler;
@@ -48,7 +49,7 @@ public class GameController {
     int offsetVertical;
 
     // Level Generation
-//    private LevelGenerator levelGenerator;
+    private LevelGenerator levelGenerator;
     private ProceduralGenerator proceduralGenerator;
 
     // Levels
@@ -140,7 +141,7 @@ public class GameController {
         // Initialize Manual Levels
         levelMap = new HashMap<>();
 //        loadCustomMap();
-//        levelGenerator = new LevelGenerator(this);
+        levelGenerator = new LevelGenerator(entityManager);
         proceduralGenerator = new ProceduralGenerator(this, entityManager);
     }
 
@@ -559,9 +560,12 @@ public class GameController {
         if (currentLevel != null) {
 //            levelGenerator.loadImageLevel(currentLevel);
 //            levelGenerator.loadImageLevel(currentLevel);
+            levelHeight = levelGenerator.getLevelHeight();
         } else {
             proceduralGenerator.generateLevel();
             // todo: setCameraToPlayer
+            // todo: setLevelHeight
+            levelHeight = proceduralGenerator.getLevelHeight();
         }
 
         entityManager.spawnFlag();
@@ -602,10 +606,6 @@ public class GameController {
                 Engine.transitionState();
             }
         }
-    }
-
-    public void setLevelHeight(int h) {
-        levelHeight = h;
     }
 
     private void testingCheat() {

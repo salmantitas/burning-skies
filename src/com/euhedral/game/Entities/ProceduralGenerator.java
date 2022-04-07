@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class ProceduralGenerator {
 
     public HashMap<Color, EntityID> colorMap;
-    int width = 31;
+    int height, width = 31;
     int xMid = width/2;
     int spawnZone, lastZone, lastLastZone;
     int wave, pauseBetweenWaves, pattern;
@@ -49,8 +49,8 @@ public class ProceduralGenerator {
     // generate a level using procedural generation
     public void generateLevel() {
         level = VariableManager.getLevel();
-        int height = 200;
-        gameController.setLevelHeight(height * 32);
+        height = 200;
+//        gameController.setLevelHeight(height * 32);
 
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
@@ -317,5 +317,9 @@ public class ProceduralGenerator {
 
     private void determineSpawn() {
 //        if level
+    }
+
+    public int getLevelHeight() {
+        return height * 32;
     }
 }
