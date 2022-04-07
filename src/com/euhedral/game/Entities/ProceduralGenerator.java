@@ -9,6 +9,8 @@ import com.euhedral.game.VariableManager;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class ProceduralGenerator {
 
@@ -19,6 +21,23 @@ public class ProceduralGenerator {
     int wave, pauseBetweenWaves, pattern;
     int increment = 3;
     int level;
+
+    /*
+    * Basic - 1/1
+    * Fast - 1/2
+    * Move - 1/3
+    * Snake - 1/4
+    * */
+
+    // Enemy spawning chances
+    int spawnFast = 4;
+    int spawnMove = spawnFast * 2;
+    int SpawnSnake = spawnMove * 2;
+
+    // Spawning pick-up, every 50 units of level height
+    int spawnPickupRate = 50;
+    int spawnPickupChance = 1; // in 10;
+    int spawnedPickupCount = 0;
 
     enum Pattern {
         line,
@@ -40,8 +59,8 @@ public class ProceduralGenerator {
     private GameController gameController;
     private EntityManager entityManager;
 
-    public ProceduralGenerator(GameController gameController, EntityManager entityManager) {
-        this.gameController = gameController;
+    public ProceduralGenerator(EntityManager entityManager) {
+//        this.gameController = gameController;
         this.entityManager = entityManager;
         colorMap = VariableManager.colorMap;
     }
@@ -50,7 +69,6 @@ public class ProceduralGenerator {
     public void generateLevel() {
         level = VariableManager.getLevel();
         height = 200;
-//        gameController.setLevelHeight(height * 32);
 
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
@@ -60,7 +78,7 @@ public class ProceduralGenerator {
         int x = 15 * 32, y = remainingHeight * 32;
 
         entityManager.spawnPlayer(xMid*32, height*32, height*32, VariableManager.power.getValue(), VariableManager.gotGround());
-        gameController.setCameraToPlayer(); // todo: move to Game Controller
+//        gameController.setCameraToPlayer(); // todo: move to Game Controller
 
         // create distance between player and first wave
         remainingHeight -= Engine.HEIGHT / 32;
@@ -299,7 +317,19 @@ public class ProceduralGenerator {
     }
 
     private void spawnHelper(int x, int y, Color c) {
-        EntityID id = colorMap.get(c);
+        // todo: choose which to spawn depending on level
+        // todo: then choose which to spawn depending on spawn chances
+
+        EntityID id = colorMap.get(Color.RED);
+
+        if (level == 2) {
+            int spawnChance = Utility.randomRange(0, spawnFast);
+            if (spawnChance == 0)
+                id = EntityID.EnemyFast;
+        }
+
+        c = getKey(id);
+
         entityManager.spawnEntity(x*32, y*32, id, c);
     }
 
@@ -321,5 +351,14 @@ public class ProceduralGenerator {
 
     public int getLevelHeight() {
         return height * 32;
+    }
+
+    private Color getKey(EntityID id) {
+        for (Map.Entry<Color, EntityID> entry : colorMap.entrySet()) {
+            if (Objects.equals(id, entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 }

@@ -2,6 +2,7 @@ package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Entity;
+import com.euhedral.engine.Utility;
 import com.euhedral.game.Entities.*;
 import com.euhedral.game.Entities.Enemy.*;
 
@@ -11,6 +12,7 @@ import java.util.LinkedList;
 // Manages all entities in game
 public class EntityManager {
     private VariableManager variableManager;
+    private Camera camera;
 
     private LinkedList<Entity> entities;
 
@@ -25,7 +27,7 @@ public class EntityManager {
 
     private EnemyBoss boss;
 
-    EntityManager(VariableManager variableManager) {
+    EntityManager(VariableManager variableManager, Camera camera) {
         this.variableManager = variableManager;
     }
 
@@ -172,6 +174,7 @@ public class EntityManager {
         player = new Player(width, height, levelHeight);
         player.setGround(ground);
         player.setPower(power);
+        setCameraToPlayer();
     }
 
     public void checkCollisions() {
@@ -439,6 +442,16 @@ public class EntityManager {
                 }
             }
         }
+    }
+
+    // Creates an instance of the player and sets the camera to follow it
+    public void setCameraToPlayer() {
+        int offsetVertical = Engine.HEIGHT - Utility.intAtWidth640(32)*3;
+
+        // sets the camera's width to center the player horizontally, essentially to 0, and
+        // adjust the height so that player is at the bottom of the screen
+        GameController.camera = new Camera(0,getPlayerY() - offsetVertical);
+        GameController.camera.setMarker(getPlayerY());
     }
 
     /*******************************

@@ -75,8 +75,6 @@ public class GameController {
 
     private boolean keyboardControl = true; // false means mouse Control
 
-    private float inscreenMarker;
-
     public static Texture texture;
 
     /************
@@ -115,7 +113,7 @@ public class GameController {
 
         Engine.menuState();
         variableManager = new VariableManager();
-        entityManager = new EntityManager(variableManager);
+        entityManager = new EntityManager(variableManager, camera);
         shop = new Shop();
         scanner = new Scanner(System.in);
     }
@@ -142,7 +140,7 @@ public class GameController {
         levelMap = new HashMap<>();
 //        loadCustomMap();
         levelGenerator = new LevelGenerator(entityManager);
-        proceduralGenerator = new ProceduralGenerator(this, entityManager);
+        proceduralGenerator = new ProceduralGenerator(entityManager);
     }
 
     private void loadCustomMap() {
@@ -261,8 +259,10 @@ public class GameController {
          *************/
         entityManager.render(g);
 
+        int inScreenMarker = (int) camera.getMarker() + 100;
+
         g.setColor(Color.RED);
-        g.drawLine(0, (int) inscreenMarker, Engine.WIDTH, (int) inscreenMarker);
+        g.drawLine(0, inScreenMarker, Engine.WIDTH, inScreenMarker);
 
         /*****************
          * Engine Code *
@@ -563,8 +563,6 @@ public class GameController {
             levelHeight = levelGenerator.getLevelHeight();
         } else {
             proceduralGenerator.generateLevel();
-            // todo: setCameraToPlayer
-            // todo: setLevelHeight
             levelHeight = proceduralGenerator.getLevelHeight();
         }
 
@@ -583,7 +581,6 @@ public class GameController {
         // adjust the height so that player is at the bottom of the screen
         camera = new Camera(0,entityManager.getPlayerY() - 615);
         camera.setMarker(entityManager.getPlayerY());
-        inscreenMarker = camera.getMarker() + 100;
     }
 
     // checks whether the condition to advance to the next level has been fulfilled
