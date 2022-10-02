@@ -5,6 +5,7 @@ import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.*;
 import com.euhedral.engine.UI.UIItem;
+import com.euhedral.game.ActionTag;
 import com.euhedral.game.GameController;
 
 import java.awt.*;
@@ -95,12 +96,13 @@ public class MenuHelp extends Menu {
     }
 
     @Override
-    public void checkButtonAction(int mx, int my) {
+    public ActionTag checkButtonAction(int mx, int my) {
         super.checkButtonAction(mx, my);
         // do the same for bindable keys
         for (Bindable b: bindables) {
             b.rebind();
         }
+        return null;
     }
 
     private void drawBindables(Graphics g) {

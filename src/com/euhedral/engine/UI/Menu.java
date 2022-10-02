@@ -17,7 +17,6 @@ import java.util.List;
 // Each Menu is specific to a gameState
 public class Menu {
 
-    protected ActionTag action = null;
     private int index = 0; // for buttons
     private GameState state;
     protected LinkedList<MenuItem> menuItems = new LinkedList<>();
@@ -102,7 +101,8 @@ public class Menu {
     /*
     * Checks whether the mouse has clicked on a button. If true, the button is activated.
     * */
-    public void checkButtonAction(int mx, int my) {
+    public ActionTag checkButtonAction(int mx, int my) {
+        ActionTag returnAction = null;
         for (int i = 0; i < messageBoxes.size(); i++) {
             MessageBox messageBox = messageBoxes.get(i);
             if (messageBox.mouseOverlap(mx, my)) {
@@ -119,24 +119,27 @@ public class Menu {
                 Button button = options[i];
                 if (button.mouseOverlap(mx, my)) {
                     if (button.isEnabled()) {
-                        activateButton(button);
+                        returnAction = activateButton(button);
                         break;
                     }
                 }
             }
         }
+        return returnAction;
     }
 
     /*
     * If the selected button is a navigation button, the GameState is changed. Otherwise, the ActionTag is applied.
     * */
-    public void activateButton(Button button) {
+    public ActionTag activateButton(Button button) {
+        ActionTag returnAction = null;
         if (button instanceof ButtonNav) {
             button.activate();
         } else {
             ButtonAction actButton = (ButtonAction) button;
-            this.action = actButton.getAction();
+            returnAction = actButton.getAction();
         }
+        return returnAction;
     }
 
     /*
@@ -166,12 +169,6 @@ public class Menu {
 
     public GameState getState() {
         return state;
-    }
-
-    public ActionTag getAction() {
-        ActionTag retAction = action;
-        action = null;
-        return retAction;
     }
 
     public int getActiveMessageBoxes() {
