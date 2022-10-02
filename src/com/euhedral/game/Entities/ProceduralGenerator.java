@@ -66,7 +66,21 @@ public class ProceduralGenerator {
     // generate a level using procedural generation
     public void generateLevel() {
         level = VariableManager.getLevel();
-        height = 200;
+        switch (level) {
+            case 1:
+                height = 150; // 100 = ~4 waves
+                break;
+            case 2:
+                height = 225;
+                break;
+            case 3:
+                height = 275;
+                break;
+            case 4:
+                height = 300;
+                break;
+
+        }
 
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
@@ -132,16 +146,19 @@ public class ProceduralGenerator {
             }
 
             // check if pickup can be spawned
-            if (!pickupSpawned && height - remainingHeight >= 50) {
-                entityManager.spawnPickup(xMid*32, remainingHeight * 32, PickupID.Health, Color.green);
-                pickupSpawned = true;
+            if (level > 1) {
+                if (!pickupSpawned && height - remainingHeight >= 50) {
+                    entityManager.spawnPickup(xMid * 32, remainingHeight * 32, PickupID.Health, Color.green);
+                    pickupSpawned = true;
+                }
             }
 
             remainingHeight -= pauseBetweenWaves;
         }
 
         remainingHeight -= pauseBetweenWaves;
-        spawnBoss(xMid, remainingHeight);
+        if (level > 1)
+            spawnBoss(xMid, remainingHeight);
 
     }
 

@@ -439,7 +439,7 @@ public class GameController {
         variableManager.resetScore();
         variableManager.resetPower();
         VariableManager.shield.reset();
-//        variableManager.health.getValue();
+        variableManager.health.reset();
 
         /*************
          * Game Code *
@@ -451,7 +451,7 @@ public class GameController {
         entityManager.clearPickups();
         levelSpawned = false;
 
-        testingCheat();
+//        testingCheat();
     }
 
     public void checkButtonAction(int mx, int my) {
