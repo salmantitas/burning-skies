@@ -88,8 +88,6 @@ public class UIHandler {
 
         if (!menuChanged)
             currentMenu = nullMenu;
-
-        System.out.println("Current state is " + Engine.currentState);
     }
 
     public void keyboardSelection(char c) {
@@ -97,7 +95,6 @@ public class UIHandler {
     }
 
     public ActionTag getAction() {
-        System.out.println("Action is " + action);
         return action;
     }
 

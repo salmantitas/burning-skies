@@ -465,7 +465,6 @@ public class GameController {
             switch (action) {
                 case go:
                     loadMission = true;
-                    System.out.println("loadmission = true");
                     break;
                 case tutorial: VariableManager.toggleTutorial();
                 break;
@@ -501,7 +500,6 @@ public class GameController {
     }
 
     public void notifyUIHandler(GameState state) {
-        System.out.println("GC:notifyUIHander " + state);
         uiHandler.updateState(state);
     }
 

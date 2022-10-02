@@ -61,7 +61,6 @@ public class MenuTransition extends Menu {
 
     @Override
     public void update() {
-        System.out.println("Transition menu");
         int score = VariableManager.getScore();
         boolean minHealthScore = score > VariableManager.health.getCost();
         boolean fullHealth = VariableManager.health.getValue() >= VariableManager.health.getMAX();

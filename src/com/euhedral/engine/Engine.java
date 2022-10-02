@@ -112,7 +112,7 @@ public class Engine extends Canvas implements Runnable{
 
             if (System.currentTimeMillis() - 1000 > timer) {
                 timer += 1000;
-                System.out.printf("FPS: %d | TPS: %d\n", fps, tps);
+//                System.out.printf("FPS: %d | TPS: %d\n", fps, tps);
                 fps = 0;
                 tps = 0;
             }
@@ -244,7 +244,6 @@ public class Engine extends Canvas implements Runnable{
      * */
     public static void setState(GameState state) {
         currentState = state;
-        System.out.println("Engine:setState "+ currentState);
         notifyUIHandler();
     }
 
