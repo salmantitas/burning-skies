@@ -2,10 +2,7 @@ package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.EntityID;
-import com.euhedral.game.EntityManager;
-import com.euhedral.game.GameController;
-import com.euhedral.game.VariableManager;
+import com.euhedral.game.*;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -30,14 +27,15 @@ public class ProceduralGenerator {
     * */
 
     // Enemy spawning chances
-    int spawnFast = 4;
+    int spawnFast = 5;
     int spawnMove = spawnFast * 2;
-    int SpawnSnake = spawnMove * 2;
+    int spawnSnake = spawnMove * 2;
 
     // Spawning pick-up, every 50 units of level height
     int spawnPickupRate = 50;
     int spawnPickupChance = 1; // in 10;
     int spawnedPickupCount = 0;
+    boolean pickupSpawned = false;
 
     enum Pattern {
         line,
@@ -131,6 +129,12 @@ public class ProceduralGenerator {
                 break;
                 case v: spawnV(num, remainingHeight);
                 break;
+            }
+
+            // check if pickup can be spawned
+            if (!pickupSpawned && height - remainingHeight >= 50) {
+                entityManager.spawnPickup(xMid*32, remainingHeight * 32, PickupID.Health, Color.green);
+                pickupSpawned = true;
             }
 
             remainingHeight -= pauseBetweenWaves;
@@ -322,10 +326,22 @@ public class ProceduralGenerator {
 
         EntityID id = colorMap.get(Color.RED);
 
-        if (level == 2) {
+        if (level >= 2) {
             int spawnChance = Utility.randomRange(0, spawnFast);
             if (spawnChance == 0)
                 id = EntityID.EnemyFast;
+        }
+
+        if (level >= 3) {
+            int spawnChance = Utility.randomRange(0, spawnMove);
+            if (spawnChance == 0)
+                id = EntityID.EnemyMove;
+        }
+
+        if (level >= 4) {
+            int spawnChance = Utility.randomRange(0, spawnSnake);
+            if (spawnChance == 0)
+                id = EntityID.EnemySnake;
         }
 
         c = getKey(id);

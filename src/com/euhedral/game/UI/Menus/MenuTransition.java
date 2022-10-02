@@ -46,9 +46,6 @@ public class MenuTransition extends Menu {
         MAXBUTTON = 10;
         options = new Button[MAXBUTTON];
 
-
-
-
         options[0] = health;
         options[1] = ground;
         options[2] = power;
@@ -64,6 +61,7 @@ public class MenuTransition extends Menu {
 
     @Override
     public void update() {
+        System.out.println("Transition menu");
         int score = VariableManager.getScore();
         boolean minHealthScore = score > VariableManager.health.getCost();
         boolean fullHealth = VariableManager.health.getValue() >= VariableManager.health.getMAX();
@@ -77,17 +75,6 @@ public class MenuTransition extends Menu {
         checkConditionAndDisable(power, minPowerScore && !maxPower);
         checkConditionAndDisable(ground, minGroundScore && !VariableManager.gotGround());
         checkConditionAndDisable(shield, minShieldScore && !fullShield);
-
-//        if (minHealthScore && !fullHealth) {
-//            health.enable();
-//        } else health.disable();
-
-        // If the score is greater than the cost for ground bullets AND if the player has not already bought them
-        // then ground bullets are buyable
-//        if (minGroundScore && !VariableManager.gotGround()) {
-//            ground.enable();
-//        } else ground.disable();
-
     }
 
     // Disables button when the conditions are not true

@@ -169,7 +169,9 @@ public class Menu {
     }
 
     public ActionTag getAction() {
-        return action;
+        ActionTag retAction = action;
+        action = null;
+        return retAction;
     }
 
     public int getActiveMessageBoxes() {

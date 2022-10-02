@@ -21,7 +21,7 @@ public class MenuMain extends Menu {
 
         ButtonNav play = new ButtonNav(x0, yFINAL, buttonSize, "Play", GameState.Transition);
 
-        play.addOtherState(GameState.GameOver);
+//        play.addOtherState(GameState.GameOver);
         play.setFill();
 
         ButtonNav help = new ButtonNav(x3, yFINAL, buttonSize, "Help", GameState.Help);

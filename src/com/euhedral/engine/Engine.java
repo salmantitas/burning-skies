@@ -244,6 +244,7 @@ public class Engine extends Canvas implements Runnable{
      * */
     public static void setState(GameState state) {
         currentState = state;
+        System.out.println("Engine:setState "+ currentState);
         notifyUIHandler();
     }
 

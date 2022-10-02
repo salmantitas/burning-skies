@@ -31,7 +31,6 @@ Procedural Generation
 
 Bug Report
  - 
- - After losing once, pressing Play from Menu skips Transition state and goes straight to Game state
  - Possible bugs in the save/load features
  - Boss bullets (and possibly regular bullets as well) are not cleaned up after end up of a level
 

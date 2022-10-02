@@ -56,6 +56,8 @@ public class GameController {
     private int levelHeight;
     private boolean loadMission = false; // levels will only loaded when this is true
 
+    int count = 0;
+
     /************
      * Controls *
      ************/
@@ -159,6 +161,10 @@ public class GameController {
 
         uiHandler.update();
 
+        if (Engine.stateIs(GameState.Menu)) {
+            loadMission = false;
+        }
+
         if (Engine.stateIs(GameState.Transition)) {
             /*************
              * Game Code *
@@ -177,7 +183,9 @@ public class GameController {
         /*
         * Disable the level load permission, as the level is already running
         * */
-        if (Engine.stateIs(GameState.Game) && !VariableManager.isConsole()) {
+        if (Engine.stateIs(GameState.Game)
+//                && !VariableManager.isConsole()
+        ) {
             loadMission = false;
             boolean endGameCondition = variableManager.health.getValue() <= 0;
 
@@ -455,8 +463,10 @@ public class GameController {
         ActionTag action = uiHandler.getAction();
         if (action != null) {
             switch (action) {
-                case go: loadMission = true;
-                break;
+                case go:
+                    loadMission = true;
+                    System.out.println("loadmission = true");
+                    break;
                 case tutorial: VariableManager.toggleTutorial();
                 break;
                 case health: shop.buyHealth();
@@ -491,8 +501,9 @@ public class GameController {
     }
 
     public void notifyUIHandler(GameState state) {
-            uiHandler.updateState(state);
-        }
+        System.out.println("GC:notifyUIHander " + state);
+        uiHandler.updateState(state);
+    }
 
     /***************************
      * Render Helper Functions *
@@ -559,7 +570,6 @@ public class GameController {
         BufferedImage currentLevel = levelMap.get(level);
         if (currentLevel != null) {
 //            levelGenerator.loadImageLevel(currentLevel);
-//            levelGenerator.loadImageLevel(currentLevel);
             levelHeight = levelGenerator.getLevelHeight();
         } else {
             proceduralGenerator.generateLevel();
@@ -606,12 +616,12 @@ public class GameController {
     }
 
     private void testingCheat() {
-        VariableManager.health.set(80);
+        VariableManager.health.set(100);
         VariableManager.setScore(4000);
-        variableManager.setLevel(2);
-        VariableManager.power.set(3);
+        variableManager.setLevel(4);
+        VariableManager.power.set(5);
         variableManager.setGround(true);
-        VariableManager.shield.set(75);
+        VariableManager.shield.set(100);
     }
 
     public static Texture getTexture() {
