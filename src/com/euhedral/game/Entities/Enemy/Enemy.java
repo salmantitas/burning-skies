@@ -175,7 +175,7 @@ public class Enemy extends MobileEntity {
         this.velY =  velY;
     }
 
-    public ContactID getID() {
+    public ContactID getContactId() {
         return contactId;
     }
 

@@ -35,7 +35,6 @@ public class ProceduralGenerator {
     int spawnPickupRate = 50;
     int spawnPickupChance = 1; // in 10;
     int spawnedPickupCount = 0;
-    boolean pickupSpawned = false;
 
     enum Pattern {
         line,
@@ -54,11 +53,9 @@ public class ProceduralGenerator {
 
     int maxP = Pattern.values().length;
 
-    private GameController gameController;
     private EntityManager entityManager;
 
     public ProceduralGenerator(EntityManager entityManager) {
-//        this.gameController = gameController;
         this.entityManager = entityManager;
         colorMap = VariableManager.colorMap;
     }
@@ -147,10 +144,26 @@ public class ProceduralGenerator {
 
             // check if pickup can be spawned
             if (level > 1) {
-                if (!pickupSpawned && height - remainingHeight >= 50) {
-                    entityManager.spawnPickup(xMid * 32, remainingHeight * 32, PickupID.Health, Color.green);
-                    pickupSpawned = true;
-                }
+                spawnPickupHelper(remainingHeight, 0, 50, EntityID.PickupHealth);
+//                if (spawnedPickupCount == 0 && height - remainingHeight >= 50) {
+//                    entityManager.spawnPickup(xMid * 32, remainingHeight * 32, PickupID.Health, Color.green);
+//                    spawnedPickupCount++;
+//                }
+            }
+
+            if (level > 2) {
+                spawnPickupHelper(remainingHeight, 1, 100, EntityID.PickupShield);
+//                if (spawnedPickupCount == 1 && height - remainingHeight >= 100) {
+//                    entityManager.spawnPickup(xMid * 32, remainingHeight * 32, PickupID.Shield, Color.yellow);
+//                    spawnedPickupCount++;
+//                }
+
+                spawnPickupHelper(remainingHeight, 2, 150, EntityID.PickupHealth);
+
+//                if (spawnedPickupCount == 2 && height - remainingHeight >= 150) {
+//                    entityManager.spawnPickup(xMid * 32, remainingHeight * 32, PickupID.Health, Color.green);
+//                    spawnedPickupCount++;
+//                }
             }
 
             remainingHeight -= pauseBetweenWaves;
@@ -163,6 +176,14 @@ public class ProceduralGenerator {
     }
 
     /* Spawn Pattern Functions*/
+
+    // Pickup Spawner Helped
+    private void spawnPickupHelper(int remainingHeight, int num, int spawnHeight, EntityID id) {
+        if (spawnedPickupCount == num && height - remainingHeight >= spawnHeight) {
+            entityManager.spawnPickup(xMid * 32, remainingHeight * 32, id);
+            spawnedPickupCount++;
+        }
+    }
 
     private void spawnLine(int num, int remainingHeight) {
         System.out.println(spawnZone + " " + num);

@@ -98,13 +98,13 @@ public class EntityManager {
 
         // Pickups
 
-        else if (id == EntityID.PickupHealth) {
-            spawnPickup(x, y, PickupID.Health, color);
-        }
-
-        else if (id == EntityID.PickupShield) {
-            spawnPickup(x, y, PickupID.Shield, color);
-        }
+//        else if (id == EntityID.Pickup) {
+//            spawnPickup(x, y, PickupID.Health, color);
+//        }
+//
+//        else if (id == EntityID.PickupShield) {
+//            spawnPickup(x, y, PickupID.Shield, color);
+//        }
 
         // todo: Boss
     }
@@ -250,8 +250,8 @@ public class EntityManager {
         }
     }
 
-    public void spawnPickup(int x, int y, PickupID id, Color color) {
-        pickups.add(new Pickup(x, y, id, color));
+    public void spawnPickup(int x, int y, EntityID id) {
+        pickups.add(new Pickup(x, y, id));
 //        System.out.println("Pickup spawned");
     }
 
@@ -395,12 +395,12 @@ public class EntityManager {
 
     private void playerVsEnemyCollision() {
         for (Enemy enemy : enemies) {
-            if (enemy.getID() == ContactID.Air)
+            if (enemy.getContactId() == ContactID.Air)
                 if (enemy.isInscreen() && enemy.getBounds().intersects(player.getBounds()) && enemy.isActive()) {
                     variableManager.increaseScore(enemy.getScore());
                     damagePlayer(30);
                     destroy(enemy);
-                } else if (enemy.getID() == ContactID.Boss) {
+                } else if (enemy.getContactId() == ContactID.Boss) {
                     damagePlayer(10);
                 }
         }
@@ -411,7 +411,7 @@ public class EntityManager {
             if (enemy.isInscreen() && enemy.isActive()) {
                 Bullet b = player.checkCollision(enemy);
                 if (b != null) {
-                    if (enemy.getID() == ContactID.Boss) {
+                    if (enemy.getContactId() == ContactID.Boss) {
                         boss.damage();
                         variableManager.setHealthBoss(boss.getHealth());
 //                        healthBoss = boss.getHealth();
@@ -437,7 +437,9 @@ public class EntityManager {
         for (Pickup pickup: pickups) {
             if (pickup.isActive()) {
                 if (pickup.getBounds().intersects(getPlayerBounds())) {
-                    variableManager.health.increase(25);
+                    if (pickup.getID() == EntityID.PickupHealth)
+                        variableManager.health.increase(25);
+                    else variableManager.shield.increase(25);
                     pickup.disable();
                 }
             }

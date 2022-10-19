@@ -23,6 +23,8 @@ Shop
 Enemy Variety
 -
 - Basic Enemy
+- Moving Enemy
+- Snake Enemy
 
 Procedural Generation
  - 
@@ -37,6 +39,19 @@ Level 1
 - No Boss
 - No Pickups
 - 1 Enemy Type
+
+Level 2
+-
+- Boss1
+- Health Pickup
+- 2 Enemy Types
+
+Level 3
+-
+- 
+- 3 Enemy Types
+- 2 Health Pick-ups
+- 1 Shield Pick-up
 
 Bug Report
  - 
@@ -57,11 +72,11 @@ Enemy Drops
 - Shields
 
 Procedural Generation
- - 
- - Level 2: Boss
- - Enemies with more health
- - Boss
- - Ground Enemies
+-
+
+Level 3
+-
+- Boss2
  
 Enemy Types
 - 
@@ -75,16 +90,6 @@ Bosses
 
 Level Variation
 -
-
-Level 2
--
-- Boss1
-- Health Pickups
-- 2 Enemy Types
-
-Level 3
--
-- Boss2, 3 Enemy Types + Ground
 
 Level 4
 -

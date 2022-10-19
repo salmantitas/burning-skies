@@ -25,6 +25,7 @@ public class Player extends MobileEntity {
     private boolean airBullet = true;
     private int clampOffsetX;
     private int clampOffsetY;
+    private int shootAngle = 5;
 
     private Attribute health;
     private Attribute shield;
@@ -129,7 +130,7 @@ public class Player extends MobileEntity {
         for (Bullet bullet : bullets) {
             BulletPlayer bulletPlayer = (BulletPlayer) bullet;
             if (bulletPlayer.isActive() && bulletPlayer.getBounds().intersects(enemy.getBounds()) &&
-                    (bulletPlayer.getContactId() == enemy.getID() || bulletPlayer.getContactId() == ContactID.Air && enemy.getID() == ContactID.Boss)) {
+                    (bulletPlayer.getContactId() == enemy.getContactId() || bulletPlayer.getContactId() == ContactID.Air && enemy.getContactId() == ContactID.Boss)) {
                 b = bulletPlayer;
             }
         }
@@ -196,24 +197,24 @@ public class Player extends MobileEntity {
         int bltSpnRight = x + 4;
 
         if (power == 5) {
-            spawnBullet(bltSpnLeft, y, -70);
-            spawnBullet(bltSpnLeft, y, -90);
-            spawnBullet(bltSpnMid, y, -90);
-            spawnBullet(bltSpnRight, y, -90);
-            spawnBullet(bltSpnRight, y, -110);
+            spawnBullet(bltSpnLeft, y, NORTH + shootAngle);
+            spawnBullet(bltSpnLeft, y, NORTH);
+            spawnBullet(bltSpnMid, y, NORTH);
+            spawnBullet(bltSpnRight, y, NORTH);
+            spawnBullet(bltSpnRight, y, NORTH - shootAngle);
         }
         else if (power == 4) {
-            spawnBullet(bltSpnLeft, y, -70);
-            spawnBullet(bltSpnLeft, y, -90);
-            spawnBullet(bltSpnRight, y, -90);
-            spawnBullet(bltSpnRight, y, -110);
+            spawnBullet(bltSpnLeft, y, NORTH + shootAngle);
+            spawnBullet(bltSpnLeft, y, NORTH);
+            spawnBullet(bltSpnRight, y, NORTH);
+            spawnBullet(bltSpnRight, y, NORTH - shootAngle);
         } else if (power == 3) {
-            spawnBullet(bltSpnLeft, y, -70);
-            spawnBullet(bltSpnMid, y, -90);
-            spawnBullet(bltSpnRight, y, -110);
+            spawnBullet(bltSpnLeft, y, NORTH + shootAngle);
+            spawnBullet(bltSpnMid, y, NORTH);
+            spawnBullet(bltSpnRight, y, NORTH - shootAngle);
         } else if (power == 2) {
-            spawnBullet(bltSpnLeft, y, -90);
-            spawnBullet(bltSpnRight, y, -90);
+            spawnBullet(bltSpnLeft, y, NORTH);
+            spawnBullet(bltSpnRight, y, NORTH);
         } else {
             spawnBullet(bltSpnMid, y, NORTH);
         }

@@ -208,4 +208,8 @@ public abstract class Entity {
     protected void printLocation() {
         System.out.printf("__ at (%d, %d)", x, y);
     }
+
+    public EntityID getID() {
+        return id;
+    }
 }
