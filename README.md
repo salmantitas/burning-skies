@@ -53,6 +53,14 @@ Level 3
 - 2 Health Pick-ups
 - 1 Shield Pick-up
 
+Level 4
+-
+- 
+- 4 Enemy Types
+- Ground Enemy Variation
+- 2 Health Pick-ups
+- 1 Shield Pick-up
+
 Bug Report
  - 
  - Possible bugs in the save/load features
@@ -77,6 +85,10 @@ Procedural Generation
 Level 3
 -
 - Boss2
+
+Pickups
+-
+- Stop overlapping of picksups and enemy spawning
  
 Enemy Types
 - 
@@ -86,14 +98,13 @@ Bosses
 -
 - Boss2
 - Boss3
-- Boss4
 
 Level Variation
 -
 
 Level 4
 -
-- Boss3, 4 Enemy Types + Ground
+- Boss3
 
 Congratulations Screen
 -
@@ -101,7 +112,7 @@ Congratulations Screen
 
 Graphics
 -
-- After finishing all the levels, a screen to congratulate the player before resetting them
+- Implement spritesheet
 
 UI
 -

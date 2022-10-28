@@ -90,7 +90,8 @@ public class Enemy extends MobileEntity {
             color = Color.pink;
             r = new Random();
             health = r.nextInt(3) + 2;
-            velY = 1.75f;
+            minVelY = 1.75f;
+            velY = minVelY;
         }
     }
 
@@ -117,14 +118,6 @@ public class Enemy extends MobileEntity {
     public void moveInScreen() {
         y += velY;
         x += velX;
-
-        if (hMove == HorizontalMovement.LEFT) {
-            velX = -2f;
-        } else if (hMove == HorizontalMovement.RIGHT) {
-            velX = 2f;
-        } else {
-            velX = 0;
-        }
     }
 
     public void damage() {
@@ -167,7 +160,7 @@ public class Enemy extends MobileEntity {
         this.y = y;
     }
 
-    public void setVelX(int velX) {
+    public void setVelX(float velX) {
         this.velX = velX;
     }
 
@@ -189,6 +182,18 @@ public class Enemy extends MobileEntity {
 
     public void clearBullets() {
         bullets.clear();
+    }
+
+    public void setHMove(String move) {
+        if (move == "left") {
+            hMove = HorizontalMovement.LEFT;
+            velX = -minVelX;
+        } else if (move == "right") {
+            hMove = HorizontalMovement.RIGHT;
+            velX = minVelX*1.45f;//1.95f;
+        } else {
+            velX = 0;
+        }
     }
 
     // Private Methods

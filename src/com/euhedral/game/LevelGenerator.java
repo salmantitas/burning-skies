@@ -1,8 +1,4 @@
-package com.euhedral.game.Entities;
-
-import com.euhedral.game.EntityID;
-import com.euhedral.game.EntityManager;
-import com.euhedral.game.VariableManager;
+package com.euhedral.game;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,7 +12,6 @@ public class LevelGenerator {
     private EntityManager entityManager;
 
     public LevelGenerator(EntityManager entityManager) {
-//        this.gameController = gameController;
         this.entityManager = entityManager;
         colorMap = VariableManager.colorMap;
     }

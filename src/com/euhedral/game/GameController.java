@@ -1,9 +1,7 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.*;
-//import com.euhedral.game.Entities.LevelGenerator;
-import com.euhedral.game.Entities.LevelGenerator;
-import com.euhedral.game.Entities.ProceduralGenerator;
+//import com.euhedral.game.LevelGenerator;
 import com.euhedral.game.Entities.Shop;
 import com.euhedral.game.UI.UIHandler;
 

@@ -291,7 +291,7 @@ public class EntityManager {
         addEnemy(x, y, enemyID, contactId, color);
     }
 
-    private void addEnemy(Enemy enemy) {
+    public void addEnemy(Enemy enemy) {
         enemies.add(enemy);
     }
 

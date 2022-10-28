@@ -1,8 +1,8 @@
-package com.euhedral.game.Entities;
+package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.*;
+import com.euhedral.game.Entities.Enemy.EnemyGround;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -13,6 +13,7 @@ public class ProceduralGenerator {
 
     public HashMap<Color, EntityID> colorMap;
     int height, width = 31;
+    int xStart = 1, xEnd = width - 3;
     int xMid = width/2;
     int spawnZone, lastZone, lastLastZone;
     int wave, pauseBetweenWaves, pattern;
@@ -28,13 +29,18 @@ public class ProceduralGenerator {
 
     // Enemy spawning chances
     int spawnFast = 5;
-    int spawnMove = spawnFast * 2;
+    int spawnMove = spawnFast * 3;
     int spawnSnake = spawnMove * 2;
 
     // Spawning pick-up, every 50 units of level height
     int spawnPickupRate = 50;
     int spawnPickupChance = 1; // in 10;
     int spawnedPickupCount = 0;
+
+    // Ground enemy spawn rate
+    int groundRate = 50;
+    int groundChance = 1; // in 10;
+    int groundCount = 0;
 
     enum Pattern {
         line,
@@ -87,24 +93,28 @@ public class ProceduralGenerator {
         int x = 15 * 32, y = remainingHeight * 32;
 
         entityManager.spawnPlayer(xMid*32, height*32, height*32, VariableManager.power.getValue(), VariableManager.gotGround());
-//        gameController.setCameraToPlayer(); // todo: move to Game Controller
 
         // create distance between player and first wave
         remainingHeight -= Engine.HEIGHT / 32;
         wave = 1;
 
-        // max spawns in V pattern
+        // spawns in V pattern
         int minV = 3;
         int maxV = 7;
 
-        // max spawns in line pattern
+        // spawns in line pattern
         int minL = 1;
         int maxL = 5;
+
+        // ground spawns
+        int minG = 1;
+        int maxG = 2;
 
         // pauses between each waves
         int minPause = 5;
         pauseBetweenWaves = minPause;
 
+        // todo: Every can spawn either of the 3 - Air Enemy, Ground Enemy, Pickup
         while (remainingHeight > 0) {
             // for every wave
             nextPattern();
@@ -114,6 +124,7 @@ public class ProceduralGenerator {
             lastZone = spawnZone;
             spawnZone = Utility.randomRange(1, 3);
 
+            // determine that no zone spawns more than twice in a row
             while (spawnZone == lastZone && spawnZone == lastLastZone) {
                 spawnZone = Utility.randomRange(1,3);
             }
@@ -142,28 +153,19 @@ public class ProceduralGenerator {
                 break;
             }
 
-            // check if pickup can be spawned
+            // spawn pickups
             if (level > 1) {
                 spawnPickupHelper(remainingHeight, 0, 50, EntityID.PickupHealth);
-//                if (spawnedPickupCount == 0 && height - remainingHeight >= 50) {
-//                    entityManager.spawnPickup(xMid * 32, remainingHeight * 32, PickupID.Health, Color.green);
-//                    spawnedPickupCount++;
-//                }
             }
 
             if (level > 2) {
                 spawnPickupHelper(remainingHeight, 1, 100, EntityID.PickupShield);
-//                if (spawnedPickupCount == 1 && height - remainingHeight >= 100) {
-//                    entityManager.spawnPickup(xMid * 32, remainingHeight * 32, PickupID.Shield, Color.yellow);
-//                    spawnedPickupCount++;
-//                }
-
                 spawnPickupHelper(remainingHeight, 2, 150, EntityID.PickupHealth);
+            }
 
-//                if (spawnedPickupCount == 2 && height - remainingHeight >= 150) {
-//                    entityManager.spawnPickup(xMid * 32, remainingHeight * 32, PickupID.Health, Color.green);
-//                    spawnedPickupCount++;
-//                }
+            if (level > 3) {
+                spawnGroundLeft(remainingHeight, 85, 0);
+                spawnGroundRight(remainingHeight, 100, 1);
             }
 
             remainingHeight -= pauseBetweenWaves;
@@ -359,8 +361,6 @@ public class ProceduralGenerator {
     }
 
     private void spawnHelper(int x, int y, Color c) {
-        // todo: choose which to spawn depending on level
-        // todo: then choose which to spawn depending on spawn chances
 
         EntityID id = colorMap.get(Color.RED);
 
@@ -385,6 +385,28 @@ public class ProceduralGenerator {
         c = getKey(id);
 
         entityManager.spawnEntity(x*32, y*32, id, c);
+    }
+
+    private void spawnGround(int remainingHeight, int spawnHeight, int num, String spawnFrom) {
+        if (groundCount == num && remainingHeight >= spawnHeight) {
+            EnemyGround eG = new EnemyGround(xStart * 32, remainingHeight * 32);
+            groundCount++;
+            if (spawnFrom == "left") {
+                eG.setHMove("right");
+            } else if (spawnFrom == "right") {
+                eG.setHMove("left");
+                eG.setX(xEnd*32);
+            }
+            entityManager.addEnemy(eG);
+        }
+    }
+
+    private void spawnGroundLeft(int remainingHeight, int spawnHeight, int num) {
+        spawnGround(remainingHeight, spawnHeight, num, "left");
+    }
+
+    private void spawnGroundRight(int remainingHeight, int spawnHeight, int num) {
+        spawnGround(remainingHeight, spawnHeight, num, "right");
     }
 
     private void spawnBoss(int x, int y) {
