@@ -61,11 +61,6 @@ Level 4
 - 2 Health Pick-ups
 - 1 Shield Pick-up
 
-Bug Report
- - 
- - Possible bugs in the save/load features
- - Boss bullets (and possibly regular bullets as well) are not cleaned up after end up of a level
-
 To-Be-Implemented
 -
 
@@ -107,10 +102,6 @@ Graphics
 -
 - Implement spritesheet
 
-UI
--
-- Confirmation of successful save/load
-
-Bug
--
-- Enemies are not cleared at the end of the level.
+Bug Report
+- 
+- Possible bugs in the save/load features

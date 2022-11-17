@@ -1,7 +1,6 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.*;
-//import com.euhedral.game.LevelGenerator;
 import com.euhedral.game.Entities.Shop;
 import com.euhedral.game.UI.UIHandler;
 
@@ -11,16 +10,10 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 // Manages the game itself, and passes instructions to all other classes under it
 public class GameController {
-    private UIHandler uiHandler;
-
-    public Scanner scanner;
-    public static String cmd;
-
     /********************************************
      * Window Settings - Manually Configurable *
      *******************************************/
@@ -31,23 +24,29 @@ public class GameController {
     private String gameTitle = "Aerial Predator";
     private Color gameBackground = Color.BLUE;
 
-    // High Score
-    private LinkedList<Integer> highScore = new LinkedList<>();
-    private int highScoreNumbers = 5;
-    private boolean updateHighScore = false;
-
-    // Objects
+    // Management
+    private UIHandler uiHandler;
     private VariableManager variableManager;
     private EntityManager entityManager;
+
+    public Scanner scanner;
+    public static String cmd;
+
+    // High Score
+//    private LinkedList<Integer> highScore = new LinkedList<>();
+//    private int highScoreNumbers = 5;
+//    private boolean updateHighScore = false;
+
+    // Objects
     private Shop shop;
 
     // Camera
     public static Camera camera;
-    int offsetHorizontal;
+//    int offsetHorizontal;
     int offsetVertical;
 
     // Level Generation
-    private LevelGenerator levelGenerator;
+//    private LevelGenerator levelGenerator;
     private ProceduralGenerator proceduralGenerator;
 
     // Levels
@@ -139,7 +138,7 @@ public class GameController {
         // Initialize Manual Levels
         levelMap = new HashMap<>();
 //        loadCustomMap();
-        levelGenerator = new LevelGenerator(entityManager);
+//        levelGenerator = new LevelGenerator(entityManager);
         proceduralGenerator = new ProceduralGenerator(entityManager);
     }
 
@@ -421,11 +420,11 @@ public class GameController {
 
     }
 
-    private void setupHighScore() {
-        for (int i = 0; i < highScoreNumbers; i++) {
-            highScore.add(0);
-        }
-    }
+//    private void setupHighScore() {
+//        for (int i = 0; i < highScoreNumbers; i++) {
+//            highScore.add(0);
+//        }
+//    }
 
     /***************************
      * Game Managing Functions *
@@ -572,7 +571,7 @@ public class GameController {
         BufferedImage currentLevel = levelMap.get(level);
         if (currentLevel != null) {
 //            levelGenerator.loadImageLevel(currentLevel);
-            levelHeight = levelGenerator.getLevelHeight();
+//            levelHeight = levelGenerator.getLevelHeight();
         } else {
             proceduralGenerator.generateLevel();
             levelHeight = proceduralGenerator.getLevelHeight();
@@ -607,6 +606,8 @@ public class GameController {
             variableManager.nextLevel();
             levelSpawned = false;
             variableManager.setBossLives(false);
+            entityManager.clearEnemies();
+            entityManager.clearPickups();
 
             if (variableManager.finishedFinalLevel()) {
                 Engine.menuState(); // stub
