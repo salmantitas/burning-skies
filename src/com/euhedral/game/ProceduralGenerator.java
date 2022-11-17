@@ -119,6 +119,29 @@ public class ProceduralGenerator {
             // for every wave
             nextPattern();
 
+            // spawn pickups
+            if (level > 1) {
+                spawnPickupHelper(remainingHeight, 0, 50, EntityID.PickupHealth);
+            }
+
+            if (level > 2) {
+                spawnPickupHelper(remainingHeight, 1, 100, EntityID.PickupShield);
+                spawnPickupHelper(remainingHeight, 2, 150, EntityID.PickupHealth);
+            }
+
+            if (level > 3) {
+                spawnPickupHelper(remainingHeight, 3, 200, EntityID.PickupShield);
+                spawnPickupHelper(remainingHeight, 3, 250, EntityID.PickupHealth);
+            }
+
+            // spawn ground
+            if (level > 3) {
+                spawnGroundLeft(remainingHeight, 75, 0);
+                spawnGroundRight(remainingHeight, 150, 1);
+                spawnGroundLeft(remainingHeight, 175, 2);
+                spawnGroundRight(remainingHeight, 250, 3);
+            }
+
             // for every zone
             lastLastZone = lastZone;
             lastZone = spawnZone;
@@ -151,21 +174,6 @@ public class ProceduralGenerator {
                 break;
                 case v: spawnV(num, remainingHeight);
                 break;
-            }
-
-            // spawn pickups
-            if (level > 1) {
-                spawnPickupHelper(remainingHeight, 0, 50, EntityID.PickupHealth);
-            }
-
-            if (level > 2) {
-                spawnPickupHelper(remainingHeight, 1, 100, EntityID.PickupShield);
-                spawnPickupHelper(remainingHeight, 2, 150, EntityID.PickupHealth);
-            }
-
-            if (level > 3) {
-                spawnGroundLeft(remainingHeight, 85, 0);
-                spawnGroundRight(remainingHeight, 100, 1);
             }
 
             remainingHeight -= pauseBetweenWaves;
@@ -388,7 +396,7 @@ public class ProceduralGenerator {
     }
 
     private void spawnGround(int remainingHeight, int spawnHeight, int num, String spawnFrom) {
-        if (groundCount == num && remainingHeight >= spawnHeight) {
+        if (groundCount == num && height - remainingHeight >= spawnHeight) {
             EnemyGround eG = new EnemyGround(xStart * 32, remainingHeight * 32);
             groundCount++;
             if (spawnFrom == "left") {

@@ -74,6 +74,10 @@ public class MenuTransition extends Menu {
         checkConditionAndDisable(power, minPowerScore && !maxPower);
         checkConditionAndDisable(ground, minGroundScore && !VariableManager.gotGround());
         checkConditionAndDisable(shield, minShieldScore && !fullShield);
+
+        if (Engine.timer > VariableManager.notificationSet + 100) {
+            VariableManager.resetSaveDataNotification();
+        }
     }
 
     // Disables button when the conditions are not true
@@ -105,6 +109,10 @@ public class MenuTransition extends Menu {
 
         // Navigation
         g.drawString("Navigation", xFINAL-10, y0);
+
+        // Notification
+        g.setFont(new Font("arial", 1, Utility.percWidth(1)));
+        g.drawString(VariableManager.saveDataNotification, x2, y4);
 
         super.postRender(g);
     }

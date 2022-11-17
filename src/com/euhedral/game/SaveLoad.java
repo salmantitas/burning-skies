@@ -47,6 +47,8 @@ public class SaveLoad {
             csvWriter.flush();
             csvWriter.close();
 
+            VariableManager.saveDataNotification = VariableManager.saveText;
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,6 +114,8 @@ public class SaveLoad {
             VariableManager.setLevel(level);
             VariableManager.power.set(power);
             VariableManager.shield.setValue(shield);
+
+            VariableManager.saveDataNotification = VariableManager.loadText;
         }
     }
 

@@ -48,6 +48,12 @@ public class VariableManager {
 //    public static final int costPower = 1000;
 //    public static final int costGround = 1000;
 
+    // Notifications
+    public static String saveText = "Game Saved Successfully.";
+    public static String loadText = "Game Loaded Successfully.";
+    public static String saveDataNotification = "";
+    public static int notificationSet;
+
     /******************
      * User Variables *
      ******************/
@@ -284,5 +290,9 @@ public class VariableManager {
     public static void toggleTutorial() {
         tutorial = !tutorial;
         SaveLoad.saveSettings();
+    }
+
+    public static void resetSaveDataNotification() {
+        saveDataNotification = "";
     }
 }

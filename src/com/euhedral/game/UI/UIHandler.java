@@ -3,7 +3,6 @@ package com.euhedral.game.UI;
 import com.euhedral.engine.*;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.game.ActionTag;
-import com.euhedral.game.GameController;
 import com.euhedral.game.UI.Menus.*;
 import com.euhedral.game.VariableManager;
 
@@ -80,6 +79,12 @@ public class UIHandler {
 
         for (Menu menu: menus) {
             if (menu.getState() == state) {
+
+                // resets the notification for
+                if (currentMenu instanceof MenuTransition) {
+                    VariableManager.resetSaveDataNotification();
+                }
+
                 currentMenu = menu;
                 menuChanged = true;
                 break;

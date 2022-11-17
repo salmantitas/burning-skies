@@ -71,13 +71,6 @@ To-Be-Implemented
 
 Pickups
 -
-- Shields
-- Bombs
-
-Enemy Drops
--
-- Small Health
-- Shields
 
 Procedural Generation
 -
@@ -117,3 +110,7 @@ Graphics
 UI
 -
 - Confirmation of successful save/load
+
+Bug
+-
+- Enemies are not cleared at the end of the level.

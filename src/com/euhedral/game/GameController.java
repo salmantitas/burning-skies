@@ -486,11 +486,13 @@ public class GameController {
     public void save() {
         SaveLoad.saveGame();
         System.out.println("Saving");
+        beginSaveLoadResetTimer();
     }
 
     public void load() {
         try {
             SaveLoad.loadGame();
+            beginSaveLoadResetTimer();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -499,6 +501,10 @@ public class GameController {
 
     public void notifyUIHandler(GameState state) {
         uiHandler.updateState(state);
+    }
+
+    private void beginSaveLoadResetTimer() {
+        VariableManager.notificationSet = Engine.timer;
     }
 
     /***************************
