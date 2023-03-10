@@ -21,7 +21,7 @@ public class EnemyBoss1 extends EnemyBoss{
         color = Color.orange;
         velX = Utility.intAtWidth640(2);
         health = 100;
-        left = true;
+        moveLeft = true;
     }
 
 //    @Override
@@ -60,16 +60,16 @@ public class EnemyBoss1 extends EnemyBoss{
             y += velY;
         }
         else {
-            if (!left)
+            if (!moveLeft)
                 x += velX;
             else
                 x -= velX;
         }
 
         if (x < min)
-            left = false;
+            moveLeft = false;
         if (x > max)
-            left = true;
+            moveLeft = true;
     }
 
     // Private Methods

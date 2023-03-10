@@ -344,11 +344,14 @@ public class EntityManager {
     }
 
     public void spawnBoss(int level, int x, int y) {
-        if (level == 1) {
+        if (level == 2) {
             boss = new EnemyBoss1(x, y);
-        } else if (level == 2) {
-            boss = new EnemyBoss2(x, y);
+        } else if (level == 3) {
+            boss = new EnemyBoss2(x, y, player);
+        } else if (level == 4) {
+//        boss = new EnemyBoss3(x, y);
         }
+
         if (boss != null) {
             variableManager.setBossLives(true);
 //            bossLives = true;
