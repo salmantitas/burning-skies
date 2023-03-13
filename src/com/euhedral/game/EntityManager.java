@@ -61,7 +61,7 @@ public class EntityManager {
         renderBullets(g);
         renderPickup(g);
         renderEnemies(g);
-        renderFlag(g);
+        //renderFlag(g);
         renderPlayer(g);
     }
 

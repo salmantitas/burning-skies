@@ -21,7 +21,7 @@ public class GameController {
     private int gameWidth = 1024;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
-    private String gameTitle = "Aerial Predator";
+    private String gameTitle = "Burning Skies";
     private Color gameBackground = Color.BLUE;
 
     // Management

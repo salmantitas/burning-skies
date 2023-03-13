@@ -113,79 +113,73 @@ public class ProceduralGenerator {
         int minPause = 5;
         pauseBetweenWaves = minPause;
 
-        // todo: Delete
-        remainingHeight -= pauseBetweenWaves;
-        if (level > 1)
-            spawnBoss(xMid, remainingHeight);
+        // todo: Every can spawn either of the 3 - Air Enemy, Ground Enemy, Pickup
+        while (remainingHeight > 0) {
+            // for every wave
+            nextPattern();
 
-//        // todo: Every can spawn either of the 3 - Air Enemy, Ground Enemy, Pickup
-//        while (remainingHeight > 0) {
-//            // for every wave
-//            nextPattern();
-//
-//            // spawn pickups
-//            if (level > 1) {
-//                spawnPickupHelper(remainingHeight, 0, 50, EntityID.PickupHealth);
-//            }
-//
-//            if (level > 2) {
-//                spawnPickupHelper(remainingHeight, 1, 100, EntityID.PickupShield);
-//                spawnPickupHelper(remainingHeight, 2, 150, EntityID.PickupHealth);
-//            }
-//
-//            if (level > 3) {
-//                spawnPickupHelper(remainingHeight, 3, 200, EntityID.PickupShield);
-//                spawnPickupHelper(remainingHeight, 3, 250, EntityID.PickupHealth);
-//            }
-//
-//            // spawn ground
-//            if (level > 3) {
-//                spawnGroundLeft(remainingHeight, 75, 0);
-//                spawnGroundRight(remainingHeight, 150, 1);
-//                spawnGroundLeft(remainingHeight, 175, 2);
-//                spawnGroundRight(remainingHeight, 250, 3);
-//            }
-//
-//            // for every zone
-//            lastLastZone = lastZone;
-//            lastZone = spawnZone;
-//            spawnZone = Utility.randomRange(1, 3);
-//
-//            // determine that no zone spawns more than twice in a row
-//            while (spawnZone == lastZone && spawnZone == lastLastZone) {
-//                spawnZone = Utility.randomRange(1,3);
-//            }
-//
-//            // choose spawn pattern
-//            Pattern pattern = Pattern.fromInteger (Utility.randomRange(0, maxP));
-//            int num = 1;
-//
-//            if (pattern == Pattern.line) {
-//                num = Utility.randomRange(1, maxL);
-//                pauseBetweenWaves = minPause + (num - minL);
-//            }
-//            if (pattern == Pattern.v) {
-//                num = Utility.randomRange(minV, maxV);
-//                pauseBetweenWaves = 2* minPause + (num - minV) * 4;
-//            }
-//
-//            int tileSize = Utility.intAtWidth640(32);
-//
-//            // spawn enemies
-//
-//            switch (pattern) {
-//                case line: spawnLine(num, remainingHeight);
-//                break;
-//                case v: spawnV(num, remainingHeight);
-//                break;
-//            }
-//
-//            remainingHeight -= pauseBetweenWaves;
-//        }
-//
-//        remainingHeight -= pauseBetweenWaves;
-//        if (level > 1)
-//            spawnBoss(xMid, remainingHeight);
+            // spawn pickups
+            if (level > 1) {
+                spawnPickupHelper(remainingHeight, 0, 50, EntityID.PickupHealth);
+            }
+
+            if (level > 2) {
+                spawnPickupHelper(remainingHeight, 1, 100, EntityID.PickupShield);
+                spawnPickupHelper(remainingHeight, 2, 150, EntityID.PickupHealth);
+            }
+
+            if (level > 3) {
+                spawnPickupHelper(remainingHeight, 3, 200, EntityID.PickupShield);
+                spawnPickupHelper(remainingHeight, 3, 250, EntityID.PickupHealth);
+            }
+
+            // spawn ground
+            if (level > 3) {
+                spawnGroundLeft(remainingHeight, 75, 0);
+                spawnGroundRight(remainingHeight, 150, 1);
+                spawnGroundLeft(remainingHeight, 175, 2);
+                spawnGroundRight(remainingHeight, 250, 3);
+            }
+
+            // for every zone
+            lastLastZone = lastZone;
+            lastZone = spawnZone;
+            spawnZone = Utility.randomRange(1, 3);
+
+            // determine that no zone spawns more than twice in a row
+            while (spawnZone == lastZone && spawnZone == lastLastZone) {
+                spawnZone = Utility.randomRange(1,3);
+            }
+
+            // choose spawn pattern
+            Pattern pattern = Pattern.fromInteger (Utility.randomRange(0, maxP));
+            int num = 1;
+
+            if (pattern == Pattern.line) {
+                num = Utility.randomRange(1, maxL);
+                pauseBetweenWaves = minPause + (num - minL);
+            }
+            if (pattern == Pattern.v) {
+                num = Utility.randomRange(minV, maxV);
+                pauseBetweenWaves = 2* minPause + (num - minV) * 4;
+            }
+
+            int tileSize = Utility.intAtWidth640(32);
+
+            // spawn enemies
+
+            switch (pattern) {
+                case line: spawnLine(num, remainingHeight);
+                break;
+                case v: spawnV(num, remainingHeight);
+                break;
+            }
+
+            remainingHeight -= pauseBetweenWaves;
+        }
+
+        remainingHeight -= pauseBetweenWaves;
+        spawnBoss(xMid, remainingHeight);
 
     }
 

@@ -60,7 +60,7 @@ public class VariableManager {
 
     private static int STARTLEVEL = 1;
     private static int level;
-    private static final int MAXLEVEL = 4;
+    private static final int MAXLEVEL = 1;
 
     private int healthBossDef, healthBoss;
     private int bossScore = 500;

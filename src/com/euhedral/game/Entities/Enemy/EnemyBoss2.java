@@ -18,6 +18,7 @@ public class EnemyBoss2 extends EnemyBoss{
     private Graphics g;
 
     int midPoint, playerStart, playerMid, playerEnd, offset;
+    int shootTimerSmall = 10;
 
     public EnemyBoss2(int x, int y, Player player) {
         super(x,y);
@@ -51,17 +52,23 @@ public class EnemyBoss2 extends EnemyBoss{
 
     @Override
     public void shoot() {
+        double leftGun = x + offset;
+        double rightGun = x + width- offset;
         // left gun
-        bullets.add(new BulletEnemy((int) (1.1 * x), y + height / 2, 110));
+        bullets.add(new BulletEnemy((int) (leftGun), y + height / 2, 110));
 
         // right gun
-        bullets.add(new BulletEnemy(x + (int) (0.8 * width) , y + height / 2, 70));
+        bullets.add(new BulletEnemy((int) (rightGun) , y + height / 2, 70));
 
         // front guns
-        bullets.add(new BulletEnemy((int) (1.2 * x), y + height / 2, 90));
-        bullets.add(new BulletEnemy(x + (int) (0.7 * width) , y + height / 2, 90));
+        bullets.add(new BulletEnemy((int) (leftGun), y + height / 2, 90));
+        bullets.add(new BulletEnemy((int) (rightGun) , y + height / 2, 90));
 
-        shootTimer = shootTimerDef;
+        shotNum += 4;
+
+        if (shotNum % 12 == 0) {
+            shootTimer = shootTimerDef;
+        } else shootTimer = shootTimerSmall;
 
 //        System.out.println("Shooting at (" + (x + width/2) + ", " + y + ")" );
     }
