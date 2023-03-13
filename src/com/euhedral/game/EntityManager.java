@@ -13,6 +13,7 @@ import java.util.LinkedList;
 public class EntityManager {
     private VariableManager variableManager;
     private Camera camera;
+    private int levelHeight;
 
     private LinkedList<Entity> entities;
 
@@ -71,22 +72,22 @@ public class EntityManager {
         // Air Enemies
 
         if (id == EntityID.EnemyBasic) {
-            Enemy enemy = new EnemyBasic(x, y, ContactID.Air, color);
+            Enemy enemy = new EnemyBasic(x, y, ContactID.Air, color, levelHeight);
             enemies.add(enemy);
         }
 
         else if (id == EntityID.EnemyMove) {
-            Enemy enemy = new EnemyMove(x, y, ContactID.Air, color);
+            Enemy enemy = new EnemyMove(x, y, ContactID.Air, color, levelHeight);
             enemies.add(enemy);
         }
 
         else if (id == EntityID.EnemySnake) {
-            Enemy enemy = new EnemySnake(x, y, ContactID.Air, color);
+            Enemy enemy = new EnemySnake(x, y, ContactID.Air, color, levelHeight);
             enemies.add(enemy);
         }
 
         else if (id == EntityID.EnemyFast) {
-            Enemy enemy = new EnemyFast(x, y, ContactID.Air, color);
+            Enemy enemy = new EnemyFast(x, y, ContactID.Air, color, levelHeight);
             enemies.add(enemy);
         }
 
@@ -170,7 +171,7 @@ public class EntityManager {
             player.canShoot(false);
     }
 
-    public void spawnPlayer(int width, int height, int levelHeight, int power, boolean ground) {
+    public void spawnPlayer(int width, int height, int power, boolean ground) {
         player = new Player(width, height, levelHeight);
         player.setGround(ground);
         player.setPower(power);
@@ -292,6 +293,7 @@ public class EntityManager {
     }
 
     public void addEnemy(Enemy enemy) {
+        enemy.setLevelHeight(levelHeight);
         enemies.add(enemy);
     }
 
@@ -301,8 +303,8 @@ public class EntityManager {
     }
 
     private void addEnemy(int x, int y, EnemyID eID, ContactID cID, Color color) {
-        Enemy enemy = new Enemy(x, y, cID, color);
-        enemies.add(enemy);
+        Enemy enemy = new Enemy(x, y, cID, color, levelHeight);
+        addEnemy(enemy);
     }
 
     public void updateEnemies() {
@@ -345,9 +347,9 @@ public class EntityManager {
 
     public void spawnBoss(int level, int x, int y) {
         if (level == 2) {
-            boss = new EnemyBoss1(x, y);
+            boss = new EnemyBoss1(x, y, levelHeight);
         } else if (level == 3) {
-            boss = new EnemyBoss2(x, y, player);
+            boss = new EnemyBoss2(x, y, player, levelHeight);
         } else if (level == 4) {
 //        boss = new EnemyBoss3(x, y);
         }
@@ -499,5 +501,9 @@ public class EntityManager {
             Entity entity = entities.get(i);
             entity.render(g);
         }
+    }
+
+    public void setLevelHeight(int levelHeight) {
+        this.levelHeight = levelHeight;
     }
 }

@@ -1,7 +1,6 @@
 package com.euhedral.engine;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 

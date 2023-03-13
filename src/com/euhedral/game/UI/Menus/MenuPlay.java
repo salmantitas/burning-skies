@@ -20,14 +20,17 @@ public class MenuPlay extends Menu {
         options = new Button[MAXBUTTON];
 
         MessageBox a = new MessageBox(500,100);
-        a.addText("You can use the WASD or Arrow Keys for movement.");
-        a.addText("SPACEBAR or NUM0 can be used for shooting.");
-        a.addText("CTRL is used to switch to ground bullets.");
-        a.addText("CTRL is used to switch to ground bullets.");
+        a.addText("You can use the WASD for movement.");
+        a.addText("SPACEBAR can be used for shooting.");
+//        a.addText("CTRL is used to switch to ground bullets.");
+//        a.addText("CTRL is used to switch to ground bullets.");
+        a.addText("Click the red square to dismiss this");
+        a.addText("message and start the game.");
         a.addText("Enjoy!");
         addMessageBox(a);
 
         Panel topPane = new Panel(0,0, Engine.WIDTH, Utility.percHeight(12), GameState.Game);
+        topPane.setTransparency(1);
         menuItems.add(topPane);
     }
 

@@ -54,7 +54,7 @@ public class UIHandler {
         currentMenu.render(g);
 
         // Debug/Console
-        Utility.drawState(g);
+//        Utility.drawState(g);
         if (VariableManager.isConsole())
             Utility.drawCommand(g);
     }
@@ -68,7 +68,7 @@ public class UIHandler {
     }
 
     public void chooseSelected() {
-        currentMenu.chooseSelected();
+        action = currentMenu.chooseSelected();
     }
 
     /*

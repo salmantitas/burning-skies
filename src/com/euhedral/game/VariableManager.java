@@ -39,8 +39,8 @@ public class VariableManager {
     private static int scoreSize = Utility.percWidth(2);
 
     // Level
-    private static int levelX = Utility.percWidth(50);
-    private static int levelY = scoreY;
+    private static int levelX = Utility.percWidth(90);
+    private static int levelY;
     private static int levelSize = scoreSize;
 
     // Shop Costs
@@ -74,7 +74,7 @@ public class VariableManager {
 //    // todo: Ground will be updated here
 //    private static boolean ground = false;
 
-    private static boolean tutorial = false;
+    private static boolean tutorial = true;
 
     public VariableManager() {
         colorMap = new HashMap<>();
@@ -102,6 +102,8 @@ public class VariableManager {
         health = new Attribute(100, false, 500);
         health.setY(Utility.percHeight(5));
         health.setBodyColor(Color.green);
+
+        levelY = Utility.percHeight(7);
 
         power = new Attribute(1, false, 1000);
         power.setMAX(5);
@@ -151,9 +153,9 @@ public class VariableManager {
 
     public static void renderHUD(Graphics g) {
         renderScore(g);
-        power.renderValue(g);
+//        power.renderValue(g);
         health.renderBar(g);
-        shield.renderBar(g);
+//        shield.renderBar(g);
     }
 
     public static void renderScore(Graphics g) {

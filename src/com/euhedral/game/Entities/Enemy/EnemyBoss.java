@@ -11,8 +11,8 @@ public abstract class EnemyBoss extends Enemy {
 
     boolean alive = true;
 
-    public EnemyBoss(int x, int y) {
-        super(x,y, ContactID.Boss);
+    public EnemyBoss(int x, int y, int levelHeight) {
+        super(x,y, ContactID.Boss, levelHeight);
         shootTimerDef = 150;
         enemyID = EnemyID.Boss;
     }

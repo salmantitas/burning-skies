@@ -74,7 +74,8 @@ public class GameController {
 
     private boolean keyboardControl = true; // false means mouse Control
 
-    public static Texture texture;
+    private static Texture texture;
+    private static Sound sound;
 
     /************
      * Graphics *
@@ -96,6 +97,7 @@ public class GameController {
         uiHandler = new UIHandler();
 
         initializeGraphics();
+        initializeSound();
         initializeAnimations();
         initializeGame();
         initializeLevel();
@@ -115,6 +117,11 @@ public class GameController {
         entityManager = new EntityManager(variableManager, camera);
         shop = new Shop();
         scanner = new Scanner(System.in);
+        try {
+            SaveLoad.loadSettings();
+        } catch (Exception e) {
+
+        }
     }
 
     private void initializeGraphics() {
@@ -122,6 +129,14 @@ public class GameController {
          * Game Code *
          *************/
         texture = new Texture();
+    }
+
+    private void initializeSound() {
+        /*************
+         * Game Code *
+         *************/
+        sound = new Sound();
+        sound.playMusic(0);
     }
 
     private void initializeAnimations() {
@@ -329,10 +344,10 @@ public class GameController {
 //            variableManager.console();
         }
 
-        if (key == 192) {
-            System.out.println("TILDE PRESSED");
-            VariableManager.console();
-        }
+//        if (key == 192) {
+//            System.out.println("TILDE PRESSED");
+//            VariableManager.console();
+//        }
 
         if (Engine.currentState == GameState.Help) {
             // todo: Pass it to the menu
@@ -345,18 +360,19 @@ public class GameController {
             // Enter/Spacebar to select selected
             if (key == KeyEvent.VK_ENTER || key == KeyInput.getKeyEvent(SHOOT)) {
                 uiHandler.chooseSelected();
+                performAction();
             }
 
-            if (key == KeyEvent.VK_RIGHT || key == KeyInput.getKeyEvent(RIGHT)) {
+            if (key == KeyEvent.VK_RIGHT || key == KeyInput.getKeyEvent(RIGHT) || key == KeyEvent.VK_DOWN || key == KeyInput.getKeyEvent(DOWN)) {
                 uiHandler.keyboardSelection('r');
             }
 
-            if (key == KeyEvent.VK_LEFT || key == KeyInput.getKeyEvent(LEFT)) {
+            if (key == KeyEvent.VK_LEFT || key == KeyInput.getKeyEvent(LEFT) || key == KeyEvent.VK_UP || key == KeyInput.getKeyEvent(UP)) {
                 uiHandler.keyboardSelection('l');
             }
         }
 
-        if (Engine.currentState != GameState.Pause) {
+        if (Engine.currentState == GameState.Game) {
             if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
                 movePlayer('l');
 
@@ -403,20 +419,23 @@ public class GameController {
          * Game Code *
          *************/
 
-        if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
-            stopMovePlayer('l');
+        if (Engine.stateIs(GameState.Game)) {
 
-        if (key == (KeyEvent.VK_RIGHT) || key == KeyInput.getKeyEvent(RIGHT))
-            stopMovePlayer('r');
+            if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
+                stopMovePlayer('l');
 
-        if (key == (KeyEvent.VK_UP) || key == KeyInput.getKeyEvent(UP))
-            stopMovePlayer('u');
+            if (key == (KeyEvent.VK_RIGHT) || key == KeyInput.getKeyEvent(RIGHT))
+                stopMovePlayer('r');
 
-        if (key == (KeyEvent.VK_DOWN) || key == KeyInput.getKeyEvent(DOWN))
-            stopMovePlayer('d');
+            if (key == (KeyEvent.VK_UP) || key == KeyInput.getKeyEvent(UP))
+                stopMovePlayer('u');
 
-        if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
-            stopShootPlayer();
+            if (key == (KeyEvent.VK_DOWN) || key == KeyInput.getKeyEvent(DOWN))
+                stopMovePlayer('d');
+
+            if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
+                stopShootPlayer();
+        }
 
     }
 
@@ -629,6 +648,9 @@ public class GameController {
 
     public static Texture getTexture() {
         return texture;
+    }
+    public static Sound getSound() {
+        return sound;
     }
 
     private void addLevel(int num, String path) {

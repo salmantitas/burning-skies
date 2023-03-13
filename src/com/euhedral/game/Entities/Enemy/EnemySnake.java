@@ -8,13 +8,13 @@ import com.euhedral.game.Entities.BulletEnemy;
 import java.awt.*;
 
 public class EnemySnake extends Enemy {
-    public EnemySnake(int x, int y, ContactID contactID) {
-        super(x, y, contactID);
+    public EnemySnake(int x, int y, ContactID contactID, int levelHeight) {
+        super(x, y, contactID, levelHeight);
         enemyID = EnemyID.Snake;
     }
 
-    public EnemySnake(int x, int y, ContactID contactID, Color color) {
-        super(x, y, contactID, color);
+    public EnemySnake(int x, int y, ContactID contactID, Color color, int levelHeight) {
+        super(x, y, contactID, color, levelHeight);
         enemyID = EnemyID.Snake;
     }
 

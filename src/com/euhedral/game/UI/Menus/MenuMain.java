@@ -16,9 +16,6 @@ public class MenuMain extends Menu {
         MAXBUTTON = 3;
         options = new Button[MAXBUTTON];
 
-        Panel sidePanel = new Panel(0, 0, Utility.percWidth(40), Engine.HEIGHT, GameState.Menu);
-        menuItems.add(sidePanel);
-
         ButtonNav play = new ButtonNav(x0, yFINAL, buttonSize, "Play", GameState.Transition);
 
 //        play.addOtherState(GameState.GameOver);
@@ -48,7 +45,7 @@ public class MenuMain extends Menu {
     public void render(Graphics g) {
         super.render(g);
 
-//        drawTitle(g);
+        drawTitle(g);
 
         super.postRender(g);
     }

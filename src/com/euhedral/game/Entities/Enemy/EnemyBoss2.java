@@ -20,8 +20,8 @@ public class EnemyBoss2 extends EnemyBoss{
     int midPoint, playerStart, playerMid, playerEnd, offset;
     int shootTimerSmall = 10;
 
-    public EnemyBoss2(int x, int y, Player player) {
-        super(x,y);
+    public EnemyBoss2(int x, int y, Player player, int levelHeight) {
+        super(x,y, levelHeight);
         height = Utility.intAtWidth640(48);
         width = height*3;
         this.x = x - width/2;

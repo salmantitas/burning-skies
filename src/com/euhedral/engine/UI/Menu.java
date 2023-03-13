@@ -145,8 +145,8 @@ public class Menu {
     /*
     * Activates the button that is selected
     * */
-    public void chooseSelected() {
-        activateButton(options[index]);
+    public ActionTag chooseSelected() {
+        return activateButton(options[index]);
     }
 
     /*

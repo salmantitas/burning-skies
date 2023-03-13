@@ -91,7 +91,8 @@ public class ProceduralGenerator {
         // spawn Player
         int x = 15 * 32, y = remainingHeight * 32;
 
-        entityManager.spawnPlayer(xMid*32, height*32, height*32, VariableManager.power.getValue(), VariableManager.gotGround());
+        entityManager.setLevelHeight(getLevelHeight());
+        entityManager.spawnPlayer(xMid*32, height*32, VariableManager.power.getValue(), VariableManager.gotGround());
 
         // create distance between player and first wave
         remainingHeight -= Engine.HEIGHT / 32;
@@ -395,7 +396,7 @@ public class ProceduralGenerator {
 
     private void spawnGround(int remainingHeight, int spawnHeight, int num, String spawnFrom) {
         if (groundCount == num && height - remainingHeight >= spawnHeight) {
-            EnemyGround eG = new EnemyGround(xStart * 32, remainingHeight * 32);
+            EnemyGround eG = new EnemyGround(xStart * 32, remainingHeight * 32, getLevelHeight());
             groundCount++;
             if (spawnFrom == "left") {
                 eG.setHMove("right");

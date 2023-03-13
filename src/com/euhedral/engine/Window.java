@@ -30,7 +30,6 @@ public class Window extends Canvas {
         frame.setFocusable(true); // not sure yet
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         frame.add(engine);
         System.out.println("Engine added to window");
 

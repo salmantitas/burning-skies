@@ -34,7 +34,7 @@ public abstract class MenuItem {
         this.backColor = backColor;
     }
 
-    protected void setTransparency(float transparency) {
+    public void setTransparency(float transparency) {
         this.transparency = transparency;
     }
 

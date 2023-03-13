@@ -13,8 +13,8 @@ public class EnemyBoss1 extends EnemyBoss{
             min = Utility.percWidth(25) ,
             max = Utility.percWidth(75) - (int) 1.8 * width;
 
-    public EnemyBoss1(int x, int y) {
-        super(x,y);
+    public EnemyBoss1(int x, int y, int levelHeight) {
+        super(x,y, levelHeight);
         height = Utility.intAtWidth640(48);
         width = height*3;
         this.x = x - width/2;

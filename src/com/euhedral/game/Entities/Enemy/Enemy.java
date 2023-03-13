@@ -34,7 +34,9 @@ public class Enemy extends MobileEntity {
     protected int shotNum = 0;
     protected int movementTimer;
 
-    public Enemy(int x, int y, ContactID contactID) {
+    protected int levelHeight;
+
+    public Enemy(int x, int y, ContactID contactID, int levelHeight) {
         super(x, y, EntityID.Enemy);
         this.enemyID = EnemyID.Basic;
         contactId = ContactID.Air;
@@ -49,11 +51,12 @@ public class Enemy extends MobileEntity {
         color = Color.red;
         this.contactId = contactID;
         r = new Random();
+        this.levelHeight = levelHeight;
         initialize();
     }
 
-    public Enemy(int x, int y, ContactID contactID, Color color) {
-        this(x, y, contactID);
+    public Enemy(int x, int y, ContactID contactID, Color color, int levelHeight) {
+        this(x, y, contactID, levelHeight);
         this.color = color;
     }
 
@@ -68,6 +71,10 @@ public class Enemy extends MobileEntity {
             if (shootTimer <= 0) {
                 shoot();
             }
+        }
+
+        if (y > levelHeight + (2.5 * height)) {
+            active = false;
         }
     }
 
@@ -98,8 +105,6 @@ public class Enemy extends MobileEntity {
     @Override
     public void render(Graphics g) {
         super.render(g);
-        g.setColor(color);
-        g.fillRect(x,y,width,height);
     }
 
     protected void shoot() {
@@ -194,6 +199,10 @@ public class Enemy extends MobileEntity {
         } else {
             velX = 0;
         }
+    }
+
+    public void setLevelHeight(int levelHeight) {
+        this.levelHeight = levelHeight;
     }
 
     // Private Methods

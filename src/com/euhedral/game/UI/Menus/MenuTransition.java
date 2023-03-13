@@ -25,37 +25,41 @@ public class MenuTransition extends Menu {
 
     ButtonAction shield = new ButtonAction(x0, y4, shopSize, "Buy Shield", ActionTag.shield);
 
+    // Navigation
+
+    ButtonAction start = new ButtonAction(x2, y1, buttonSize, "Start", ActionTag.go);
+
+    ButtonNav backToMenu = new ButtonNav(x2, y2, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+
+    ButtonNav quit = new ButtonNav(x2, y3, buttonSize, "Quit", GameState.Quit);
+
     // Options
 
-    ButtonAction save = new ButtonAction(x2, y1, optionSize, "Save", ActionTag.save);
+    ButtonAction save = new ButtonAction(xFINAL, y1, optionSize, "Save", ActionTag.save);
 
-    ButtonAction load = new ButtonAction(x2, y2, optionSize, "Load", ActionTag.load);
+    ButtonAction load = new ButtonAction(xFINAL, y2, optionSize, "Load", ActionTag.load);
 
-    ButtonAction tutorial = new ButtonAction(x2, y3, optionSize, "Tutorial", ActionTag.tutorial);
-
-    // Transition
-
-    ButtonAction go = new ButtonAction(xFINAL, y1, buttonSize, "Go!", ActionTag.go);
-
-    ButtonNav backToMenu = new ButtonNav(xFINAL, y2, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
-
-    ButtonNav quit = new ButtonNav(xFINAL, y3, buttonSize, "Quit", GameState.Quit);
+    ButtonAction tutorial = new ButtonAction(xFINAL, y3, optionSize, "Tutorial", ActionTag.tutorial);
 
     public MenuTransition() {
         super(GameState.Transition);
-        MAXBUTTON = 10;
+        MAXBUTTON = 4;
         options = new Button[MAXBUTTON];
 
-        options[0] = health;
-        options[1] = ground;
-        options[2] = power;
-        options[3] = shield;
-        options[4] = save;
-        options[5] = load;
-        options[6] = tutorial;
-        options[7] = go;
-        options[8] = backToMenu;
-        options[9] = quit;
+        options[0] = start;
+        options[1] = backToMenu;
+        options[2] = quit;
+
+        options[3] = tutorial;
+
+//        options[4] = health;
+//        options[5] = ground;
+//        options[6] = power;
+//        options[7] = shield;
+//
+//        options[8] = save;
+//        options[9] = load;
+
 
     }
 
@@ -90,7 +94,7 @@ public class MenuTransition extends Menu {
     @Override
     public void render(Graphics g) {
         super.render(g);
-        tutorialState(g); // to be deleted
+//        tutorialState(g); // to be deleted
 
         VariableManager.renderHUD(g);
 
@@ -101,18 +105,27 @@ public class MenuTransition extends Menu {
         g.setColor(Color.WHITE);
 
 
-        // Shop
-        g.drawString("Shop", x0, y0);
+//        // Shop
+//        g.drawString("Shop", x0, y0);
 
         // Level
-        g.drawString("Level " + VariableManager.getLevel(), x2, y0);
+//        g.drawString("Level " + VariableManager.getLevel(), x2, y0);
 
-        // Navigation
-        g.drawString("Navigation", xFINAL-10, y0);
+//        // Navigation
+//        g.drawString("Navigation", xFINAL-10, y0);
 
         // Notification
         g.setFont(new Font("arial", 1, Utility.percWidth(1)));
         g.drawString(VariableManager.saveDataNotification, x2, y4);
+
+        // Render Tutorial Icon
+        int bx = tutorial.getX() + tutorial.getWidth();
+        int by = tutorial.getY();
+        int bsize = tutorial.getHeight();
+
+        Color c = VariableManager.tutorialEnabled() ? Color.GREEN : Color.RED;
+        g.setColor(c);
+        g.fillOval(10+bx,by,bsize,bsize);
 
         super.postRender(g);
     }
@@ -125,14 +138,6 @@ public class MenuTransition extends Menu {
         g.setFont(new Font("arial", 1, Utility.percWidth(1.5)));
         g.setColor(Color.WHITE);
         g.drawString("Tutorial: " + VariableManager.tutorialEnabled(), Utility.percWidth(85), Utility.percHeight(8));
-
-        Color c = VariableManager.tutorialEnabled() ? Color.GREEN : Color.RED;
-        int bx = tutorial.getX() + tutorial.getWidth();
-        int by = tutorial.getY();
-        int bsize = tutorial.getHeight();
-
-        g.setColor(c);
-        g.fillOval(10+bx,by,bsize,bsize);
     }
 
 }

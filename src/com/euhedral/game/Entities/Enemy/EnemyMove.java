@@ -8,13 +8,13 @@ import com.euhedral.game.Entities.BulletEnemy;
 import java.awt.*;
 
 public class EnemyMove extends Enemy {
-    public EnemyMove(int x, int y, ContactID contactID) {
-        super(x, y, contactID);
+    public EnemyMove(int x, int y, ContactID contactID, int levelHeight) {
+        super(x, y, contactID, levelHeight);
         enemyID = EnemyID.Move;
     }
 
-    public EnemyMove(int x, int y, ContactID contactID, Color color) {
-        super(x, y, contactID, color);
+    public EnemyMove(int x, int y, ContactID contactID, Color color, int levelHeight) {
+        super(x, y, contactID, color, levelHeight);
         enemyID = EnemyID.Move;
     }
 

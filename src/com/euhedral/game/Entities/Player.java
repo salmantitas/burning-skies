@@ -35,7 +35,6 @@ public class Player extends MobileEntity {
     private boolean destinationGiven = false;
 
     // Graphics
-    private BufferedImage image;
     private Texture texture;
 
 
@@ -99,7 +98,7 @@ public class Player extends MobileEntity {
         shield = VariableManager.shield;
     }
 
-    public void setImage() {
+    private void setImage() {
         if (health.getValue() > 66) {
             image = texture.player[0];
         } else if (health.getValue() > 33) {
@@ -116,8 +115,6 @@ public class Player extends MobileEntity {
         }
 
         super.render(g);
-
-        g.drawImage(image, (int) x, (int) y, null);
 
         if (shield.getValue() > 0) {
             g.setColor(Color.yellow);
@@ -196,25 +193,27 @@ public class Player extends MobileEntity {
         int bltSpnMid = x + width / 2;
         int bltSpnRight = x + 4;
 
+        int bltSpnDown = y + height * 2 / 3;
+
         if (power == 5) {
-            spawnBullet(bltSpnLeft, y, NORTH + shootAngle);
-            spawnBullet(bltSpnLeft, y, NORTH);
+            spawnBullet(bltSpnLeft, bltSpnDown, NORTH + shootAngle);
+            spawnBullet(bltSpnLeft, bltSpnDown, NORTH);
             spawnBullet(bltSpnMid, y, NORTH);
-            spawnBullet(bltSpnRight, y, NORTH);
-            spawnBullet(bltSpnRight, y, NORTH - shootAngle);
+            spawnBullet(bltSpnRight, bltSpnDown, NORTH);
+            spawnBullet(bltSpnRight, bltSpnDown, NORTH - shootAngle);
         }
         else if (power == 4) {
-            spawnBullet(bltSpnLeft, y, NORTH + shootAngle);
-            spawnBullet(bltSpnLeft, y, NORTH);
-            spawnBullet(bltSpnRight, y, NORTH);
-            spawnBullet(bltSpnRight, y, NORTH - shootAngle);
+            spawnBullet(bltSpnLeft, bltSpnDown, NORTH + shootAngle);
+            spawnBullet(bltSpnLeft, bltSpnDown, NORTH);
+            spawnBullet(bltSpnRight, bltSpnDown, NORTH);
+            spawnBullet(bltSpnRight, bltSpnDown, NORTH - shootAngle);
         } else if (power == 3) {
-            spawnBullet(bltSpnLeft, y, NORTH + shootAngle);
+            spawnBullet(bltSpnLeft, bltSpnDown, NORTH + shootAngle);
             spawnBullet(bltSpnMid, y, NORTH);
-            spawnBullet(bltSpnRight, y, NORTH - shootAngle);
+            spawnBullet(bltSpnRight, bltSpnDown, NORTH - shootAngle);
         } else if (power == 2) {
-            spawnBullet(bltSpnLeft, y, NORTH);
-            spawnBullet(bltSpnRight, y, NORTH);
+            spawnBullet(bltSpnLeft, bltSpnDown, NORTH);
+            spawnBullet(bltSpnRight, bltSpnDown, NORTH);
         } else {
             spawnBullet(bltSpnMid, y, NORTH);
         }

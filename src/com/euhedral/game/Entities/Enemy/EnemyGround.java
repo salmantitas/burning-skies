@@ -5,12 +5,12 @@ import com.euhedral.game.ContactID;
 import java.awt.*;
 
 public class EnemyGround extends Enemy{
-    public EnemyGround(int x, int y) {
-        super(x, y, ContactID.Ground);
+    public EnemyGround(int x, int y, int levelHeight) {
+        super(x, y, ContactID.Ground, levelHeight);
     }
 
-    public EnemyGround(int x, int y, Color color) {
-        super(x, y, ContactID.Ground, color);
+    public EnemyGround(int x, int y, Color color, int levelHeight) {
+        super(x, y, ContactID.Ground, color, levelHeight);
     }
 
     @Override
