@@ -202,6 +202,7 @@ public class GameController {
             boolean endGameCondition = variableManager.health.getValue() <= 0;
 
             if (endGameCondition) {
+                // todo: play explosion animation first
                 Engine.gameOverState();
                 resetGame();
             }
@@ -524,22 +525,6 @@ public class GameController {
     private void beginSaveLoadResetTimer() {
         VariableManager.notificationSet = Engine.timer;
     }
-
-    /***************************
-     * Render Helper Functions *
-     ***************************/
-
-//    private void drawScore(Graphics g) {
-//        variableManager.renderScore(g);
-//    }
-//
-//    private void drawHealth(Graphics g) {
-//        variableManager.renderHealth(g);
-//    }
-//
-//    private void drawPower(Graphics g) {
-//        variableManager.renderPower(g);
-//    }
 
     /******************
      * User functions *

@@ -1,5 +1,6 @@
 package com.euhedral.game.Entities.Enemy;
 
+import com.euhedral.engine.Animation;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
@@ -34,7 +35,10 @@ public class Enemy extends MobileEntity {
     protected int shotNum = 0;
     protected int movementTimer;
 
+    protected Animation explosion;
+
     protected int levelHeight;
+    protected boolean alive = true;
 
     public Enemy(int x, int y, ContactID contactID, int levelHeight) {
         super(x, y, EntityID.Enemy);
@@ -203,6 +207,17 @@ public class Enemy extends MobileEntity {
 
     public void setLevelHeight(int levelHeight) {
         this.levelHeight = levelHeight;
+    }
+
+    @Override
+    public void disable() {
+        alive = false;
+        velX = 0;
+        velY = 0;
+        explosion = new Animation(10, GameController.getTexture().explosion[0],
+                GameController.getTexture().explosion[1],
+                GameController.getTexture().explosion[2],
+                GameController.getTexture().explosion[3]);
     }
 
     // Private Methods

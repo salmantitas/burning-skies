@@ -195,7 +195,7 @@ public class ProceduralGenerator {
     }
 
     private void spawnLine(int num, int remainingHeight) {
-        System.out.println(spawnZone + " " + num);
+//        System.out.println(spawnZone + " " + num);
 
         switch (spawnZone) {
             case 1:

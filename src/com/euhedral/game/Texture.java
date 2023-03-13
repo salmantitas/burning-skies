@@ -10,24 +10,28 @@ public class Texture {
 
     public BufferedImage[] player = new BufferedImage[3];
     public BufferedImage[] enemy = new BufferedImage[1];
+    public BufferedImage[] explosion = new BufferedImage[4];
 
-    public SpriteSheet ps, es;
+    public SpriteSheet playerSS, enemySS, explosionSS;
 
-    public BufferedImage playerSheet = null;
-    public BufferedImage enemySheet = null;
+    public BufferedImage playerImage = null;
+    public BufferedImage enemyImage = null;
+    public BufferedImage explosionImage = null;
 
     public Texture() {
         BufferedImageLoader loader = new BufferedImageLoader();
 
         try {
-            playerSheet = loader.loadImage("/player.png");
-            enemySheet = loader.loadImage("/enemy.png");
+            playerImage = loader.loadImage("/player.png");
+            enemyImage = loader.loadImage("/enemy.png");
+            explosionImage = loader.loadImage("/explosion.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        ps = new SpriteSheet(playerSheet);
-        es = new SpriteSheet(enemySheet);
+        playerSS = new SpriteSheet(playerImage);
+        enemySS = new SpriteSheet(enemyImage);
+        explosionSS = new SpriteSheet(explosionImage);
 
         initializeTexture();
     }
@@ -35,11 +39,16 @@ public class Texture {
     private void initializeTexture() {
         int w = Utility.intAtWidth640(32);
         int h = w;
-        player[0] = ps.grabImage(1,1, w,h);
-        player[1] = ps.grabImage(2,1, w,h);
-        player[2] = ps.grabImage(3,1, w,h);
+        player[0] = playerSS.grabImage(1,1, w,h);
+        player[1] = playerSS.grabImage(2,1, w,h);
+        player[2] = playerSS.grabImage(3,1, w,h);
 
-        enemy[0] = es.grabImage(1,1,w,h);
+        enemy[0] = enemySS.grabImage(1,1,w,h);
+
+        explosion[0] = explosionSS.grabImage(1,1,w,h);
+        explosion[1] = explosionSS.grabImage(2,1,w,h);
+        explosion[2] = explosionSS.grabImage(3,1,w,h);
+        explosion[3] = explosionSS.grabImage(4,1,w,h);
     }
 
 

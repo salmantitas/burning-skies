@@ -1,6 +1,8 @@
 package com.euhedral.game.Entities.Enemy;
 
+import com.euhedral.engine.Animation;
 import com.euhedral.game.ContactID;
+import com.euhedral.game.EntityManager;
 import com.euhedral.game.GameController;
 import com.euhedral.game.Texture;
 
@@ -27,7 +29,7 @@ public class EnemyBasic extends Enemy{
         power = 1;
         shootTimerDef = 250;
         velY = 1.8f;
-        healthRange(4,6);
+        healthRange(2,4);
         score = 50;
     }
 
@@ -35,5 +37,24 @@ public class EnemyBasic extends Enemy{
     protected void shoot() {
         super.shoot();
         shootDownDefault();
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        if (!alive)
+            explosion.runAnimation();
+    }
+
+    @Override
+    public void render(Graphics g) {
+        if (alive) {
+            super.render(g);
+        } else {
+            if (explosion.playedOnce) {
+                active = false;
+            }
+            explosion.drawAnimation(g, x, y);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.euhedral.game;
 
+import com.euhedral.engine.Animation;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Entity;
 import com.euhedral.engine.Utility;
@@ -30,6 +31,7 @@ public class EntityManager {
 
     EntityManager(VariableManager variableManager, Camera camera) {
         this.variableManager = variableManager;
+        initializeAnimations();
     }
 
     public void initializeGraphics() {
@@ -46,6 +48,8 @@ public class EntityManager {
         /*************
          * Game Code *
          *************/
+        Texture texture = GameController.getTexture();
+
     }
 
     public void update() {

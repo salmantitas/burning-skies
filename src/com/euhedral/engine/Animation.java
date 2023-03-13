@@ -12,6 +12,7 @@ public class Animation {
 
     private BufferedImage[] images;
     private BufferedImage curr;
+    public boolean playedOnce = false;
 
     public Animation(int speed, BufferedImage... args) {
         this.speed = speed;
@@ -35,6 +36,7 @@ public class Animation {
         count++;
         if (count >= frames) {
             count = 0;
+            playedOnce = true;
         }
     }
 
