@@ -16,8 +16,8 @@ public class MenuPause extends Menu {
         MAXBUTTON = 2;
         options = new Button[MAXBUTTON];
 
-        ButtonNav backToMenu = new ButtonNav(x2, yFINAL, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
-        ButtonNav quit = new ButtonNav(xFINAL, yFINAL, buttonSize, "Quit", GameState.Quit);
+        ButtonNav backToMenu = new ButtonNav(x2, y60, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+        ButtonNav quit = new ButtonNav(x3, yFINAL, buttonSize, "Quit", GameState.Quit);
         quit.setFill();
 
         com.euhedral.engine.UI.Panel topPane = new Panel(0,0, Engine.WIDTH, Utility.percHeight(12), GameState.Game);

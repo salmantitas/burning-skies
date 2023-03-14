@@ -51,10 +51,11 @@ public class EnemyBasic extends Enemy{
         if (alive) {
             super.render(g);
         } else {
+            explosion.drawAnimation(g, x, y);
+
             if (explosion.playedOnce) {
                 active = false;
             }
-            explosion.drawAnimation(g, x, y);
         }
     }
 }

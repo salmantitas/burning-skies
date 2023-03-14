@@ -1,11 +1,9 @@
 package com.euhedral.game.Entities;
 
-import com.euhedral.engine.Engine;
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityID;
 import com.euhedral.game.GameController;
-import com.euhedral.game.Sound;
 
 import java.awt.*;
 
@@ -37,19 +35,13 @@ public class Bullet extends MobileEntity {
     protected void calculateVelocities() {
         double angleX;
         double angleY;
-//        if (angle >= - 90 && angle <= 90) {
-            angleX = Math.toRadians(360 - angle);
-            angleY = Math.toRadians(angle);
-//        } else {
-//            angleX = Math.toRadians(angle);
-//            angleY = Math.toRadians(360 - angle);
-//        }
-            velX = (float) (vel * Math.cos(angleX));
-            velY = (float) (vel * Math.sin(angleY));
-//        } else {
-//            velX = (float) (vel * Math.sin(angleX));
-//            velY = (float) (vel * Math.cos(angleY));
-//        }
+
+        angleX = Math.toRadians(360 - angle);
+        angleY = Math.toRadians(angle);
+
+        velX = (float) (vel * Math.cos(angleX));
+        velY = (float) (vel * Math.sin(angleY));
+
         calculated = true;
     }
 

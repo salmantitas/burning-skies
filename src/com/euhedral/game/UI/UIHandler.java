@@ -27,6 +27,7 @@ public class UIHandler {
 
         MenuMain mainMenu = new MenuMain();
         MenuHelp helpMenu = new MenuHelp();
+        MenuCredits creditsMenu = new MenuCredits();
         MenuTransition transitionMenu = new MenuTransition();
         MenuPause pauseMenu = new MenuPause();
         MenuGameOver gameOverMenu = new MenuGameOver();
@@ -35,6 +36,7 @@ public class UIHandler {
 
         menus.add(mainMenu);
         menus.add(helpMenu);
+        menus.add(creditsMenu);
         menus.add(transitionMenu);
         menus.add(pauseMenu);
         menus.add(gameOverMenu);

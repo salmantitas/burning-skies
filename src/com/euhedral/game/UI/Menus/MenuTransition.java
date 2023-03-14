@@ -17,29 +17,29 @@ public class MenuTransition extends Menu {
 
     // Shop
 
-    ButtonAction health = new ButtonAction(x0, y1, shopSize, "Buy Health", ActionTag.health);
+    ButtonAction health = new ButtonAction(x0, y30, shopSize, "Buy Health", ActionTag.health);
 
-    ButtonAction ground = new ButtonAction(x0, y2, shopSize, "Ground Bullets", ActionTag.ground);
+    ButtonAction ground = new ButtonAction(x0, y40, shopSize, "Ground Bullets", ActionTag.ground);
 
-    ButtonAction power = new ButtonAction(x0, y3, shopSize, "Upgrade Power", ActionTag.power);
+    ButtonAction power = new ButtonAction(x0, y50, shopSize, "Upgrade Power", ActionTag.power);
 
-    ButtonAction shield = new ButtonAction(x0, y4, shopSize, "Buy Shield", ActionTag.shield);
+    ButtonAction shield = new ButtonAction(x0, y60, shopSize, "Buy Shield", ActionTag.shield);
 
     // Navigation
 
-    ButtonAction start = new ButtonAction(x2, y1, buttonSize, "Start", ActionTag.go);
+    ButtonAction start = new ButtonAction(x3, y20, buttonSize, "Start", ActionTag.go);
 
-    ButtonNav backToMenu = new ButtonNav(x2, y2, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+    ButtonNav backToMenu = new ButtonNav(x2, y40, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
 
-    ButtonNav quit = new ButtonNav(x2, y3, buttonSize, "Quit", GameState.Quit);
+    ButtonNav quit = new ButtonNav(x3, yFINAL, buttonSize, "Quit", GameState.Quit);
 
     // Options
 
-    ButtonAction save = new ButtonAction(xFINAL, y1, optionSize, "Save", ActionTag.save);
+    ButtonAction save = new ButtonAction(xFINAL, y30, optionSize, "Save", ActionTag.save);
 
-    ButtonAction load = new ButtonAction(xFINAL, y2, optionSize, "Load", ActionTag.load);
+    ButtonAction load = new ButtonAction(xFINAL, y40, optionSize, "Load", ActionTag.load);
 
-    ButtonAction tutorial = new ButtonAction(xFINAL, y3, optionSize, "Tutorial", ActionTag.tutorial);
+    ButtonAction tutorial = new ButtonAction(xFINAL, y50, optionSize, "Tutorial", ActionTag.tutorial);
 
     public MenuTransition() {
         super(GameState.Transition);
@@ -116,7 +116,7 @@ public class MenuTransition extends Menu {
 
         // Notification
         g.setFont(new Font("arial", 1, Utility.percWidth(1)));
-        g.drawString(VariableManager.saveDataNotification, x2, y4);
+        g.drawString(VariableManager.saveDataNotification, x2, y60);
 
         // Render Tutorial Icon
         int bx = tutorial.getX() + tutorial.getWidth();

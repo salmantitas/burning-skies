@@ -71,7 +71,7 @@ public class Enemy extends MobileEntity {
         if (!inscreen) {
             inscreen = y > cam.getMarker() + Utility.percHeight(30);
         }
-        if (inscreen) {
+        if (inscreen && alive) {
             if (shootTimer <= 0) {
                 shoot();
             }
@@ -104,6 +104,14 @@ public class Enemy extends MobileEntity {
             minVelY = 1.75f;
             velY = minVelY;
         }
+        explosion = new Animation(10, GameController.getTexture().explosion[0],
+                GameController.getTexture().explosion[1],
+                GameController.getTexture().explosion[2],
+                GameController.getTexture().explosion[3]
+//                GameController.getTexture().explosion[2],
+//                GameController.getTexture().explosion[1],
+//                GameController.getTexture().explosion[0]
+        );
     }
 
     @Override
@@ -214,10 +222,11 @@ public class Enemy extends MobileEntity {
         alive = false;
         velX = 0;
         velY = 0;
-        explosion = new Animation(10, GameController.getTexture().explosion[0],
-                GameController.getTexture().explosion[1],
-                GameController.getTexture().explosion[2],
-                GameController.getTexture().explosion[3]);
+        GameController.getSound().playSound(3);
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 
     // Private Methods

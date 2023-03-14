@@ -319,9 +319,9 @@ public class GameController {
          * Game Code *
          *************/
 
-        if (mouse == MouseEvent.BUTTON1) {
-            shootPlayer();
-        }
+//        if (mouse == MouseEvent.BUTTON1) {
+//            shootPlayer();
+//        }
     }
 
     public void mouseReleased(int mouse) {
@@ -329,9 +329,9 @@ public class GameController {
          * Game Code *
          *************/
 
-        if (mouse == MouseEvent.BUTTON1) {
-            stopShootPlayer();
-        }
+//        if (mouse == MouseEvent.BUTTON1) {
+//            stopShootPlayer();
+//        }
     }
 
     public void keyPressed(int key) {

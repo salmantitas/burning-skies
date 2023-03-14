@@ -32,6 +32,7 @@ public class Animation {
     }
 
     private void nextFrame() {
+
         curr = images[count];
         count++;
         if (count >= frames) {
@@ -46,5 +47,13 @@ public class Animation {
 
     public void drawAnimation(Graphics g, int x, int y, int scaleX, int scaleY) {
         g.drawImage(curr, x, y, scaleX, scaleY, null);
+    }
+
+    public boolean isFrame(int i) {
+        return count == i;
+    }
+
+    public int getCount() {
+        return count;
     }
 }

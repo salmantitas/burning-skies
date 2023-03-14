@@ -65,9 +65,9 @@ public class EntityManager {
     public void render(Graphics g) {
         renderBullets(g);
         renderPickup(g);
+        renderPlayer(g);
         renderEnemies(g);
         //renderFlag(g);
-        renderPlayer(g);
     }
 
     public void spawnEntity(int x, int y, EntityID id, Color color) {
@@ -346,7 +346,6 @@ public class EntityManager {
         boss.setAlive(false);
         destroy(boss);
         variableManager.increaseScore(variableManager.getBossScore());
-//        score += bossScore;
     }
 
     public void spawnBoss(int level, int x, int y) {
@@ -404,7 +403,7 @@ public class EntityManager {
 
     private void playerVsEnemyCollision() {
         for (Enemy enemy : enemies) {
-            if (enemy.getContactId() == ContactID.Air)
+            if (enemy.getContactId() == ContactID.Air && enemy.isAlive())
                 if (enemy.isInscreen() && enemy.getBounds().intersects(player.getBounds()) && enemy.isActive()) {
                     variableManager.increaseScore(enemy.getScore());
                     damagePlayer(30);
@@ -417,7 +416,7 @@ public class EntityManager {
 
     private void enemyVsPlayerBulletCollision() {
         for (Enemy enemy : enemies) {
-            if (enemy.isInscreen() && enemy.isActive()) {
+            if (enemy.isInscreen() && enemy.isAlive()) {
                 Bullet b = player.checkCollision(enemy);
                 if (b != null) {
                     if (enemy.getContactId() == ContactID.Boss) {
