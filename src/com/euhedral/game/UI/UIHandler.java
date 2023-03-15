@@ -4,7 +4,7 @@ import com.euhedral.engine.*;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.game.ActionTag;
 import com.euhedral.game.UI.Menus.*;
-import com.euhedral.game.VariableManager;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class UIHandler {
 
         // Debug/Console
 //        Utility.drawState(g);
-        if (VariableManager.isConsole())
+        if (VariableHandler.isConsole())
             Utility.drawCommand(g);
     }
 
@@ -84,7 +84,7 @@ public class UIHandler {
 
                 // resets the notification for
                 if (currentMenu instanceof MenuTransition) {
-                    VariableManager.resetSaveDataNotification();
+                    VariableHandler.resetSaveDataNotification();
                 }
 
                 currentMenu = menu;

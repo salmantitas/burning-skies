@@ -59,16 +59,16 @@ public class ProceduralGenerator {
 
     int maxP = Pattern.values().length;
 
-    private EntityManager entityManager;
+    private EntityHandler entityHandler;
 
-    public ProceduralGenerator(EntityManager entityManager) {
-        this.entityManager = entityManager;
-        colorMap = VariableManager.colorMap;
+    public ProceduralGenerator(EntityHandler entityHandler) {
+        this.entityHandler = entityHandler;
+        colorMap = VariableHandler.colorMap;
     }
 
     // generate a level using procedural generation
     public void generateLevel() {
-        level = VariableManager.getLevel();
+        level = VariableHandler.getLevel();
         switch (level) {
             case 1:
                 height = 150; // 100 = ~4 waves
@@ -91,8 +91,8 @@ public class ProceduralGenerator {
         // spawn Player
         int x = 15 * 32, y = remainingHeight * 32;
 
-        entityManager.setLevelHeight(getLevelHeight());
-        entityManager.spawnPlayer(xMid*32, height*32, VariableManager.power.getValue(), VariableManager.gotGround());
+        entityHandler.setLevelHeight(getLevelHeight());
+        entityHandler.spawnPlayer(xMid*32, height*32, VariableHandler.power.getValue(), VariableHandler.gotGround());
 
         // create distance between player and first wave
         remainingHeight -= Engine.HEIGHT / 32;
@@ -189,7 +189,7 @@ public class ProceduralGenerator {
     // Pickup Spawner Helped
     private void spawnPickupHelper(int remainingHeight, int num, int spawnHeight, EntityID id) {
         if (spawnedPickupCount == num && height - remainingHeight >= spawnHeight) {
-            entityManager.spawnPickup(xMid * 32, remainingHeight * 32, id);
+            entityHandler.spawnPickup(xMid * 32, remainingHeight * 32, id);
             spawnedPickupCount++;
         }
     }
@@ -391,7 +391,7 @@ public class ProceduralGenerator {
 
         c = getKey(id);
 
-        entityManager.spawnEntity(x*32, y*32, id, c);
+        entityHandler.spawnEntity(x*32, y*32, id, c);
     }
 
     private void spawnGround(int remainingHeight, int spawnHeight, int num, String spawnFrom) {
@@ -404,7 +404,7 @@ public class ProceduralGenerator {
                 eG.setHMove("left");
                 eG.setX(xEnd*32);
             }
-            entityManager.addEnemy(eG);
+            entityHandler.addEnemy(eG);
         }
     }
 
@@ -417,7 +417,7 @@ public class ProceduralGenerator {
     }
 
     private void spawnBoss(int x, int y) {
-        entityManager.spawnBoss(level, x*32, y*32);
+        entityHandler.spawnBoss(level, x*32, y*32);
     }
 
     private void nextPattern() {

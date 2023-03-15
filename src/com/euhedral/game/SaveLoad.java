@@ -24,12 +24,12 @@ public class SaveLoad {
          *************/
 
         // Create string variables of variables that will be saved
-        String score = Integer.toString(VariableManager.getScore());
-        String health = Integer.toString(VariableManager.health.getValue());
-        String ground = Boolean.toString(VariableManager.gotGround());
-        String level = Integer.toString(VariableManager.getLevel());
-        String power = Integer.toString(VariableManager.power.getValue());
-        String shield = Integer.toString(VariableManager.shield.getValue());
+        String score = Integer.toString(VariableHandler.getScore());
+        String health = Integer.toString(VariableHandler.health.getValue());
+        String ground = Boolean.toString(VariableHandler.gotGround());
+        String level = Integer.toString(VariableHandler.getLevel());
+        String power = Integer.toString(VariableHandler.power.getValue());
+        String shield = Integer.toString(VariableHandler.shield.getValue());
 
         // Turn strings into a string array to be written
         List<String> rows = Arrays.asList(score, health, ground, level, power, shield);
@@ -47,7 +47,7 @@ public class SaveLoad {
             csvWriter.flush();
             csvWriter.close();
 
-            VariableManager.saveDataNotification = VariableManager.saveText;
+            VariableHandler.saveDataNotification = VariableHandler.saveText;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,14 +108,14 @@ public class SaveLoad {
             int shield = Integer.parseInt(loadData.get(5));
 
             // Update variables
-            VariableManager.setScore(score);
-            VariableManager.health.set(health);
-            VariableManager.setGround(ground);
-            VariableManager.setLevel(level);
-            VariableManager.power.set(power);
-            VariableManager.shield.setValue(shield);
+            VariableHandler.setScore(score);
+            VariableHandler.health.set(health);
+            VariableHandler.setGround(ground);
+            VariableHandler.setLevel(level);
+            VariableHandler.power.set(power);
+            VariableHandler.shield.setValue(shield);
 
-            VariableManager.saveDataNotification = VariableManager.loadText;
+            VariableHandler.saveDataNotification = VariableHandler.loadText;
         }
     }
 
@@ -131,7 +131,7 @@ public class SaveLoad {
          *************/
 
         // Create string for settings that will be saved
-        String tutorial = Boolean.toString(VariableManager.tutorialEnabled());
+        String tutorial = Boolean.toString(VariableHandler.tutorialEnabled());
 
         List<String> rows = Arrays.asList(tutorial);
 
@@ -190,8 +190,8 @@ public class SaveLoad {
             boolean tutorial = Boolean.parseBoolean(data[0]);
 
             // Update variables
-            if (!VariableManager.tutorialEnabled() == tutorial) {
-                VariableManager.toggleTutorial();
+            if (!VariableHandler.tutorialEnabled() == tutorial) {
+                VariableHandler.toggleTutorial();
             }
         }
     }

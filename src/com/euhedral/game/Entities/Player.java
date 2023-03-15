@@ -7,7 +7,6 @@ import com.euhedral.game.*;
 import com.euhedral.game.Entities.Enemy.Enemy;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public class Player extends MobileEntity {
@@ -35,12 +34,12 @@ public class Player extends MobileEntity {
     private boolean destinationGiven = false;
 
     // Graphics
-    private Texture texture;
+    private TextureHandler textureHandler;
 
 
     public Player(int x, int y, int levelHeight) {
         super(x,y, EntityID.Player);
-        texture = GameController.getTexture();
+        textureHandler = GameController.getTexture();
         setAttributes();
         setImage();
         this.levelHeight = levelHeight;
@@ -94,17 +93,17 @@ public class Player extends MobileEntity {
     }
 
     private void setAttributes() {
-        health = VariableManager.health;
-        shield = VariableManager.shield;
+        health = VariableHandler.health;
+        shield = VariableHandler.shield;
     }
 
     private void setImage() {
         if (health.getValue() > 66) {
-            image = texture.player[0];
+            image = textureHandler.player[0];
         } else if (health.getValue() > 33) {
-            image = texture.player[1];
+            image = textureHandler.player[1];
         } else {
-            image = texture.player[2];
+            image = textureHandler.player[2];
         }
     }
 

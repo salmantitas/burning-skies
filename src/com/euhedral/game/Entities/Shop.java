@@ -1,28 +1,28 @@
 package com.euhedral.game.Entities;
 
 import com.euhedral.game.Attribute;
-import com.euhedral.game.VariableManager;
+import com.euhedral.game.VariableHandler;
 
 public class Shop {
 
     public void buyHealth() {
-        buyAbstract(VariableManager.health, 25, "Health is full");
+        buyAbstract(VariableHandler.health, 25, "Health is full");
     }
 
     public void buyPower() {
-        buyAbstract(VariableManager.power, 1, "Max power has been reached");
+        buyAbstract(VariableHandler.power, 1, "Max power has been reached");
     }
 
     public void buyShield() {
-        buyAbstract(VariableManager.shield, 50, "Shield is full");
+        buyAbstract(VariableHandler.shield, 50, "Shield is full");
     }
 
     public void buyGround() {
-        int cost = VariableManager.ground.getCost();
-        if (VariableManager.getScore() >= cost) {
-            if (!VariableManager.gotGround()) {
-                VariableManager.decreaseScore(cost);
-                VariableManager.setGround(true);
+        int cost = VariableHandler.ground.getCost();
+        if (VariableHandler.getScore() >= cost) {
+            if (!VariableHandler.gotGround()) {
+                VariableHandler.decreaseScore(cost);
+                VariableHandler.setGround(true);
             }
         } else {
             System.out.println("Not enough score");
@@ -33,10 +33,10 @@ public class Shop {
         int cost = attribute.getCost();
         int valueMax = attribute.getMAX();
 
-        if (VariableManager.getScore() >= cost) {
+        if (VariableHandler.getScore() >= cost) {
             if (attribute.getValue() < valueMax) {
                 attribute.increase(value);
-                VariableManager.decreaseScore(cost);
+                VariableHandler.decreaseScore(cost);
             } else {
                 System.out.println(message);
             }

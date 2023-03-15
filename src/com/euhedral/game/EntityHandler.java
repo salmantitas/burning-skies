@@ -1,6 +1,5 @@
 package com.euhedral.game;
 
-import com.euhedral.engine.Animation;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Entity;
 import com.euhedral.engine.Utility;
@@ -11,8 +10,8 @@ import java.awt.*;
 import java.util.LinkedList;
 
 // Manages all entities in game
-public class EntityManager {
-    private VariableManager variableManager;
+public class EntityHandler {
+    private VariableHandler variableHandler;
 //    private Camera camera;
     private int levelHeight;
 
@@ -29,8 +28,8 @@ public class EntityManager {
 
     private EnemyBoss boss;
 
-    EntityManager(VariableManager variableManager) {
-        this.variableManager = variableManager;
+    EntityHandler(VariableHandler variableHandler) {
+        this.variableHandler = variableHandler;
         initializeAnimations();
     }
 
@@ -48,7 +47,7 @@ public class EntityManager {
         /*************
          * Game Code *
          *************/
-        Texture texture = GameController.getTexture();
+        TextureHandler textureHandler = GameController.getTexture();
 
     }
 
@@ -345,7 +344,7 @@ public class EntityManager {
     private void destroyBoss() {
         boss.setAlive(false);
         destroy(boss);
-        variableManager.increaseScore(variableManager.getBossScore());
+        variableHandler.increaseScore(variableHandler.getBossScore());
     }
 
     public void spawnBoss(int level, int x, int y) {
@@ -358,12 +357,12 @@ public class EntityManager {
         }
 
         if (boss != null) {
-            variableManager.setBossLives(true);
+            variableHandler.setBossLives(true);
 //            bossLives = true;
             enemies.add(boss);
-            variableManager.setHealthBossDef(boss.getHealth());
+            variableHandler.setHealthBossDef(boss.getHealth());
 //            healthBossDef = boss.getHealth();
-            variableManager.setHealthBoss(variableManager.getHealthBossDef());
+            variableHandler.setHealthBoss(variableHandler.getHealthBossDef());
 //            healthBoss = healthBossDef;
         }
         this.boss = boss;
@@ -371,8 +370,8 @@ public class EntityManager {
 
     public void checkBoss() {
         if (boss != null) {
-            if (variableManager.isBossLives() != boss.isAlive()) {
-                variableManager.setBossLives(boss.isAlive());
+            if (variableHandler.isBossLives() != boss.isAlive()) {
+                variableHandler.setBossLives(boss.isAlive());
             }
         }
     }
@@ -380,7 +379,7 @@ public class EntityManager {
     public void renderBossHealth(Graphics g) {
         if (boss != null) {
             if (boss.isInscreen() && boss.isAlive())
-                variableManager.drawBossHealth(g);
+                variableHandler.drawBossHealth(g);
         }
     }
 
@@ -405,7 +404,7 @@ public class EntityManager {
         for (Enemy enemy : enemies) {
             if (enemy.getContactId() == ContactID.Air && enemy.isAlive())
                 if (enemy.isInscreen() && enemy.getBounds().intersects(player.getBounds()) && enemy.isActive()) {
-                    variableManager.increaseScore(enemy.getScore());
+                    variableHandler.increaseScore(enemy.getScore());
                     damagePlayer(30);
                     destroy(enemy);
                 } else if (enemy.getContactId() == ContactID.Boss) {
@@ -421,7 +420,7 @@ public class EntityManager {
                 if (b != null) {
                     if (enemy.getContactId() == ContactID.Boss) {
                         boss.damage();
-                        variableManager.setHealthBoss(boss.getHealth());
+                        variableHandler.setHealthBoss(boss.getHealth());
 //                        healthBoss = boss.getHealth();
                         if (boss.getHealth() <= 0) {
                             destroyBoss();
@@ -430,7 +429,7 @@ public class EntityManager {
                         enemy.damage();
                         if (enemy.getHealth() <= 0) {
                             destroy(enemy);
-                            variableManager.increaseScore(enemy.getScore());
+                            variableHandler.increaseScore(enemy.getScore());
 //                            score += enemy.getScore();
                         }
                     }
@@ -446,8 +445,8 @@ public class EntityManager {
             if (pickup.isActive()) {
                 if (pickup.getBounds().intersects(getPlayerBounds())) {
                     if (pickup.getID() == EntityID.PickupHealth)
-                        variableManager.health.increase(25);
-                    else variableManager.shield.increase(25);
+                        variableHandler.health.increase(25);
+                    else variableHandler.shield.increase(25);
                     pickup.disable();
                 }
             }

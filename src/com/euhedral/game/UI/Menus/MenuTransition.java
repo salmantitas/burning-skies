@@ -6,7 +6,7 @@ import com.euhedral.engine.UI.ButtonAction;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.game.ActionTag;
-import com.euhedral.game.VariableManager;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 
@@ -65,22 +65,22 @@ public class MenuTransition extends Menu {
 
     @Override
     public void update() {
-        int score = VariableManager.getScore();
-        boolean minHealthScore = score > VariableManager.health.getCost();
-        boolean fullHealth = VariableManager.health.getValue() >= VariableManager.health.getMAX();
-        boolean minPowerScore = score > VariableManager.power.getCost();
-        boolean maxPower = VariableManager.power.getValue() >= VariableManager.power.getMAX();
-        boolean minGroundScore = score > VariableManager.ground.getCost();
-        boolean minShieldScore = score > VariableManager.shield.getCost();
-        boolean fullShield = VariableManager.shield.getValue() >= VariableManager.shield.getMAX();
+        int score = VariableHandler.getScore();
+        boolean minHealthScore = score > VariableHandler.health.getCost();
+        boolean fullHealth = VariableHandler.health.getValue() >= VariableHandler.health.getMAX();
+        boolean minPowerScore = score > VariableHandler.power.getCost();
+        boolean maxPower = VariableHandler.power.getValue() >= VariableHandler.power.getMAX();
+        boolean minGroundScore = score > VariableHandler.ground.getCost();
+        boolean minShieldScore = score > VariableHandler.shield.getCost();
+        boolean fullShield = VariableHandler.shield.getValue() >= VariableHandler.shield.getMAX();
 
         checkConditionAndDisable(health, minHealthScore && !fullHealth);
         checkConditionAndDisable(power, minPowerScore && !maxPower);
-        checkConditionAndDisable(ground, minGroundScore && !VariableManager.gotGround());
+        checkConditionAndDisable(ground, minGroundScore && !VariableHandler.gotGround());
         checkConditionAndDisable(shield, minShieldScore && !fullShield);
 
-        if (Engine.timer > VariableManager.notificationSet + 100) {
-            VariableManager.resetSaveDataNotification();
+        if (Engine.timer > VariableHandler.notificationSet + 100) {
+            VariableHandler.resetSaveDataNotification();
         }
     }
 
@@ -96,7 +96,7 @@ public class MenuTransition extends Menu {
         super.render(g);
 //        tutorialState(g); // to be deleted
 
-        VariableManager.renderHUD(g);
+        VariableHandler.renderHUD(g);
 
 
         // Render Screen Text
@@ -116,14 +116,14 @@ public class MenuTransition extends Menu {
 
         // Notification
         g.setFont(new Font("arial", 1, Utility.percWidth(1)));
-        g.drawString(VariableManager.saveDataNotification, x2, y60);
+        g.drawString(VariableHandler.saveDataNotification, x2, y60);
 
         // Render Tutorial Icon
         int bx = tutorial.getX() + tutorial.getWidth();
         int by = tutorial.getY();
         int bsize = tutorial.getHeight();
 
-        Color c = VariableManager.tutorialEnabled() ? Color.GREEN : Color.RED;
+        Color c = VariableHandler.tutorialEnabled() ? Color.GREEN : Color.RED;
         g.setColor(c);
         g.fillOval(10+bx,by,bsize,bsize);
 
@@ -137,7 +137,7 @@ public class MenuTransition extends Menu {
     public void tutorialState(Graphics g) {
         g.setFont(new Font("arial", 1, Utility.percWidth(1.5)));
         g.setColor(Color.WHITE);
-        g.drawString("Tutorial: " + VariableManager.tutorialEnabled(), Utility.percWidth(85), Utility.percHeight(8));
+        g.drawString("Tutorial: " + VariableHandler.tutorialEnabled(), Utility.percWidth(85), Utility.percHeight(8));
     }
 
 }

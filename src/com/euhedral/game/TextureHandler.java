@@ -6,7 +6,7 @@ import com.euhedral.engine.Utility;
 
 import java.awt.image.BufferedImage;
 
-public class Texture {
+public class TextureHandler {
 
     public BufferedImage[] player = new BufferedImage[3];
     public BufferedImage[] enemy = new BufferedImage[1];
@@ -20,7 +20,7 @@ public class Texture {
     public BufferedImage title = null;
     public BufferedImage logo = null;
 
-    public Texture() {
+    public TextureHandler() {
         BufferedImageLoader loader = new BufferedImageLoader();
 
         try {

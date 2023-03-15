@@ -5,7 +5,7 @@ import com.euhedral.engine.Utility;
 import java.awt.*;
 import java.util.HashMap;
 
-public class VariableManager {
+public class VariableHandler {
 
     /****************************************
      * Global Game Variables                *
@@ -76,7 +76,7 @@ public class VariableManager {
 
     private static boolean tutorial = true;
 
-    public VariableManager() {
+    public VariableHandler() {
         colorMap = new HashMap<>();
         initializeColorMap();
         initializeAttributes();
@@ -140,11 +140,11 @@ public class VariableManager {
     }
 
     public static void increaseScore(int score) {
-        VariableManager.score += score;
+        VariableHandler.score += score;
     }
 
     public static void decreaseScore(int score) {
-        VariableManager.score -= score;
+        VariableHandler.score -= score;
     }
 
     /**********
@@ -196,7 +196,7 @@ public class VariableManager {
     }
 
     public static void setScore(int score) {
-        VariableManager.score = score;
+        VariableHandler.score = score;
     }
 
     public int getScoreX() {
@@ -204,7 +204,7 @@ public class VariableManager {
     }
 
     public void setScoreX(int scoreX) {
-        VariableManager.scoreX = scoreX;
+        VariableHandler.scoreX = scoreX;
     }
 
     public int getScoreY() {
@@ -212,7 +212,7 @@ public class VariableManager {
     }
 
     public void setScoreY(int scoreY) {
-        VariableManager.scoreY = scoreY;
+        VariableHandler.scoreY = scoreY;
     }
 
     public int getScoreSize() {
@@ -220,7 +220,7 @@ public class VariableManager {
     }
 
     public void setScoreSize(int scoreSize) {
-        VariableManager.scoreSize = scoreSize;
+        VariableHandler.scoreSize = scoreSize;
     }
 
     public int getHealthBossDef() {

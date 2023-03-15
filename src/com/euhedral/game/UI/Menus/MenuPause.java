@@ -5,7 +5,7 @@ import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
-import com.euhedral.game.VariableManager;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 
@@ -31,9 +31,9 @@ public class MenuPause extends Menu {
     public void render(Graphics g) {
         super.render(g);
 
-        VariableManager.renderHUD(g);
+        VariableHandler.renderHUD(g);
         drawPause(g);
-        VariableManager.renderLevel(g);
+        VariableHandler.renderLevel(g);
 
         super.postRender(g);
     }

@@ -6,7 +6,6 @@ import com.euhedral.game.UI.UIHandler;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,17 +18,18 @@ public class GameController {
      * Window Settings - Manually Configurable *
      *******************************************/
 
+    private String gameTitle = "Burning Skies";
     private int gameWidth = 1024;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
-    private String gameTitle = "Burning Skies";
+    private Color gameBackground = Color.BLUE;
 
     // Management
     private UIHandler uiHandler;
-    private VariableManager variableManager;
-    private EntityManager entityManager;
-    private static Texture texture;
-    private static Sound sound;
+    private VariableHandler variableHandler;
+    private EntityHandler entityHandler;
+    private static TextureHandler textureHandler;
+    private static SoundHandler soundHandler;
 
     public Scanner scanner;
     public static String cmd;
@@ -112,8 +112,8 @@ public class GameController {
          *************/
 
         Engine.menuState();
-        variableManager = new VariableManager();
-        entityManager = new EntityManager(variableManager);
+        variableHandler = new VariableHandler();
+        entityHandler = new EntityHandler(variableHandler);
         shop = new Shop();
         scanner = new Scanner(System.in);
         try {
@@ -127,15 +127,15 @@ public class GameController {
         /*************
          * Game Code *
          *************/
-        texture = new Texture();
+        textureHandler = new TextureHandler();
     }
 
     private void initializeSound() {
         /*************
          * Game Code *
          *************/
-        sound = new Sound();
-        sound.playMusic(0);
+        soundHandler = new SoundHandler();
+        soundHandler.playMusic(0);
     }
 
     private void initializeAnimations() {
@@ -153,7 +153,7 @@ public class GameController {
         levelMap = new HashMap<>();
 //        loadCustomMap();
 //        levelGenerator = new LevelGenerator(entityManager);
-        proceduralGenerator = new ProceduralGenerator(entityManager);
+        proceduralGenerator = new ProceduralGenerator(entityHandler);
     }
 
     private void loadCustomMap() {
@@ -198,7 +198,7 @@ public class GameController {
 //                && !VariableManager.isConsole()
         ) {
             loadMission = false;
-            boolean endGameCondition = variableManager.health.getValue() <= 0;
+            boolean endGameCondition = variableHandler.health.getValue() <= 0;
 
             if (endGameCondition) {
                 // todo: play explosion animation first
@@ -214,9 +214,9 @@ public class GameController {
 
                 // Game only runs if either tutorials are disabled, or no message boxes are active
 
-                if (uiHandler.noActiveMessageBoxes() || !VariableManager.tutorialEnabled()) {
+                if (uiHandler.noActiveMessageBoxes() || !VariableHandler.tutorialEnabled()) {
 
-                    entityManager.update();
+                    entityHandler.update();
                     checkLevelStatus();
                 }
             }
@@ -246,9 +246,9 @@ public class GameController {
 
                 renderInCamera(g);
 
-                if (VariableManager.isHud()) {
+                if (VariableHandler.isHud()) {
 
-                    entityManager.renderBossHealth(g);
+                    entityHandler.renderBossHealth(g);
 
                 }
 
@@ -277,7 +277,7 @@ public class GameController {
         /*************
          * Game Code *
          *************/
-        entityManager.render(g);
+        entityHandler.render(g);
 
         int inScreenMarker = (int) camera.getMarker() + 100;
 
@@ -338,7 +338,7 @@ public class GameController {
          * Game Code *
          *************/
 
-        if (VariableManager.isConsole()) {
+        if (VariableHandler.isConsole()) {
 //            scanner = new Scanner(System.in);
 //            cmd = scanner.nextLine();
 //            variableManager.console();
@@ -389,7 +389,7 @@ public class GameController {
                 shootPlayer();
 
             if (key == KeyEvent.VK_CONTROL)
-                entityManager.switchPlayerBullet();
+                entityHandler.switchPlayerBullet();
 
             if (Engine.currentState == GameState.Game) {
                 if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
@@ -452,19 +452,19 @@ public class GameController {
     public void resetGame() {
 
         Engine.timer = 0;
-        variableManager.resetScore();
-        variableManager.resetPower();
-        VariableManager.shield.reset();
-        variableManager.health.reset();
+        variableHandler.resetScore();
+        variableHandler.resetPower();
+        VariableHandler.shield.reset();
+        variableHandler.health.reset();
 
         /*************
          * Game Code *
          *************/
 
-        variableManager.resetLevel();
+        variableHandler.resetLevel();
         levelSpawned = false;
-        entityManager.clearEnemies();
-        entityManager.clearPickups();
+        entityHandler.clearEnemies();
+        entityHandler.clearPickups();
         levelSpawned = false;
 
 //        testingCheat();
@@ -482,7 +482,7 @@ public class GameController {
                 case go:
                     loadMission = true;
                     break;
-                case tutorial: VariableManager.toggleTutorial();
+                case tutorial: VariableHandler.toggleTutorial();
                 break;
                 case health: shop.buyHealth();
                 break;
@@ -522,7 +522,7 @@ public class GameController {
     }
 
     private void beginSaveLoadResetTimer() {
-        VariableManager.notificationSet = Engine.timer;
+        VariableHandler.notificationSet = Engine.timer;
     }
 
     /******************
@@ -535,27 +535,27 @@ public class GameController {
 
     public void movePlayer(char c) {
         if (c == 'l' || c == 'r' || c == 'u' | c == 'd') {
-            entityManager.movePlayer(c);
+            entityHandler.movePlayer(c);
         }
     }
 
     public void stopMovePlayer(char c) {
         if (c == 'l' || c == 'r' || c == 'u' | c == 'd') {
-            entityManager.stopMovePlayer(c);
+            entityHandler.stopMovePlayer(c);
         }
     }
 
     private void giveDestination(int mx, int my) {
         if (!keyboardControl)
-            entityManager.giveDestination(mx, my);
+            entityHandler.giveDestination(mx, my);
     }
 
     public void shootPlayer() {
-        entityManager.playerCanShoot();
+        entityHandler.playerCanShoot();
     }
 
     public void stopShootPlayer() {
-        entityManager.playerCannotShoot();
+        entityHandler.playerCannotShoot();
     }
 
 
@@ -569,7 +569,7 @@ public class GameController {
         levelSpawned = !levelSpawned;
         Engine.gameState();
 
-        int level = variableManager.getLevel();
+        int level = variableHandler.getLevel();
 
         BufferedImage currentLevel = levelMap.get(level);
         if (currentLevel != null) {
@@ -580,7 +580,7 @@ public class GameController {
             levelHeight = proceduralGenerator.getLevelHeight();
         }
 
-        entityManager.spawnFlag();
+        entityHandler.spawnFlag();
     }
 
     public static Camera getCamera() {
@@ -593,26 +593,26 @@ public class GameController {
 
         // sets the camera's width to center the player horizontally, essentially to 0, and
         // adjust the height so that player is at the bottom of the screen
-        camera = new Camera(0,entityManager.getPlayerY() - 615);
-        camera.setMarker(entityManager.getPlayerY());
+        camera = new Camera(0, entityHandler.getPlayerY() - 615);
+        camera.setMarker(entityHandler.getPlayerY());
     }
 
     // checks whether the condition to advance to the next level has been fulfilled
     // if the flag crosses the screen, advance level and if no levels remain, end game
     public void checkLevelStatus() {
         // If the boss is killed, updates the boolean variable
-        entityManager.checkBoss();
+        entityHandler.checkBoss();
 
-        boolean condition = entityManager.getFlagY() > levelHeight && !variableManager.isBossLives();
+        boolean condition = entityHandler.getFlagY() > levelHeight && !variableHandler.isBossLives();
 
         if (condition) {
-            variableManager.nextLevel();
+            variableHandler.nextLevel();
             levelSpawned = false;
-            variableManager.setBossLives(false);
-            entityManager.clearEnemies();
-            entityManager.clearPickups();
+            variableHandler.setBossLives(false);
+            entityHandler.clearEnemies();
+            entityHandler.clearPickups();
 
-            if (variableManager.finishedFinalLevel()) {
+            if (variableHandler.finishedFinalLevel()) {
                 Engine.menuState(); // stub
                 resetGame();
             } else {
@@ -622,19 +622,19 @@ public class GameController {
     }
 
     private void testingCheat() {
-        VariableManager.health.set(100);
-        VariableManager.setScore(4000);
-        variableManager.setLevel(4);
-        VariableManager.power.set(5);
-        variableManager.setGround(true);
-        VariableManager.shield.set(100);
+        VariableHandler.health.set(100);
+        VariableHandler.setScore(4000);
+        variableHandler.setLevel(4);
+        VariableHandler.power.set(5);
+        variableHandler.setGround(true);
+        VariableHandler.shield.set(100);
     }
 
-    public static Texture getTexture() {
-        return texture;
+    public static TextureHandler getTexture() {
+        return textureHandler;
     }
-    public static Sound getSound() {
-        return sound;
+    public static SoundHandler getSound() {
+        return soundHandler;
     }
 
     private void addLevel(int num, String path) {

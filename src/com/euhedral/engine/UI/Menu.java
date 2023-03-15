@@ -4,7 +4,7 @@ import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ActionTag;
 import com.euhedral.game.UI.MessageBox;
-import com.euhedral.game.VariableManager;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 import java.io.*;
@@ -74,7 +74,7 @@ public class Menu {
 
     // UIItems here will be rendered on top of everything else
     protected void postRender(Graphics g) {
-        if (VariableManager.tutorialEnabled()) {
+        if (VariableHandler.tutorialEnabled()) {
             for (MessageBox messageBox : messageBoxes) {
                 messageBox.render(g);
             }

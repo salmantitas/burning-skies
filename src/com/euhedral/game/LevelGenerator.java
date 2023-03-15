@@ -9,11 +9,11 @@ public class LevelGenerator {
     public HashMap<Color, EntityID> colorMap;
     int height, width = 31;
 
-    private EntityManager entityManager;
+    private EntityHandler entityHandler;
 
-    public LevelGenerator(EntityManager entityManager) {
-        this.entityManager = entityManager;
-        colorMap = VariableManager.colorMap;
+    public LevelGenerator(EntityHandler entityHandler) {
+        this.entityHandler = entityHandler;
+        colorMap = VariableHandler.colorMap;
     }
 
     // Generate level from an image
@@ -39,7 +39,7 @@ public class LevelGenerator {
                     int y = j * 32;
 
                     EntityID id = colorMap.get(c);
-                    entityManager.spawnEntity(x, y, id, c);
+                    entityHandler.spawnEntity(x, y, id, c);
                 }
             }
         }

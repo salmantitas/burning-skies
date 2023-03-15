@@ -3,17 +3,13 @@ package com.euhedral.game.UI.Menus;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.UI.Button;
-import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.GameController;
-import com.euhedral.game.Texture;
 import com.euhedral.game.UI.MessageBox;
-import com.euhedral.game.VariableManager;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class MenuPlay extends Menu {
 
@@ -41,8 +37,8 @@ public class MenuPlay extends Menu {
     public void render(Graphics g) {
         super.render(g);
 
-        VariableManager.renderHUD(g);
-        VariableManager.renderLevel(g);
+        VariableHandler.renderHUD(g);
+        VariableHandler.renderLevel(g);
 
         super.postRender(g);
     }

@@ -5,12 +5,12 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.net.URL;
 
-public class Sound {
+public class SoundHandler {
     int MAX_CLIP = 30;
     Clip clip;
     URL soundURL[] = new URL[MAX_CLIP];
 
-    public Sound() {
+    public SoundHandler() {
         initializeSounds();
     }
 
