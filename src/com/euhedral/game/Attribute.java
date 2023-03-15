@@ -13,7 +13,7 @@ public class Attribute {
     private int MAX;
     private int value;
     private int cost;
-    private boolean active = false, binary = false;
+    private boolean active = false, binary;
 
     // Render Properties
 

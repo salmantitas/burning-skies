@@ -14,6 +14,7 @@ import java.util.Scanner;
 
 // Manages the game itself, and passes instructions to all other classes under it
 public class GameController {
+
     /********************************************
      * Window Settings - Manually Configurable *
      *******************************************/
@@ -22,12 +23,13 @@ public class GameController {
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
     private String gameTitle = "Burning Skies";
-    private Color gameBackground = Color.BLUE;
 
     // Management
     private UIHandler uiHandler;
     private VariableManager variableManager;
     private EntityManager entityManager;
+    private static Texture texture;
+    private static Sound sound;
 
     public Scanner scanner;
     public static String cmd;
@@ -36,9 +38,6 @@ public class GameController {
 //    private LinkedList<Integer> highScore = new LinkedList<>();
 //    private int highScoreNumbers = 5;
 //    private boolean updateHighScore = false;
-
-    // Objects
-    private Shop shop;
 
     // Camera
     public static Camera camera;
@@ -66,6 +65,9 @@ public class GameController {
      * User variables *
      ******************/
 
+    // Objects
+    private Shop shop;
+
     // LevelMap to automate level loading
     private HashMap<Integer, BufferedImage> levelMap;
 
@@ -73,9 +75,6 @@ public class GameController {
     public static boolean rebinding = false;
 
     private boolean keyboardControl = true; // false means mouse Control
-
-    private static Texture texture;
-    private static Sound sound;
 
     /************
      * Graphics *
@@ -114,7 +113,7 @@ public class GameController {
 
         Engine.menuState();
         variableManager = new VariableManager();
-        entityManager = new EntityManager(variableManager, camera);
+        entityManager = new EntityManager(variableManager);
         shop = new Shop();
         scanner = new Scanner(System.in);
         try {
@@ -502,6 +501,10 @@ public class GameController {
         }
     }
 
+    public void notifyUIHandler(GameState state) {
+        uiHandler.updateState(state);
+    }
+
     public void save() {
         SaveLoad.saveGame();
         System.out.println("Saving");
@@ -516,10 +519,6 @@ public class GameController {
             e.printStackTrace();
         }
         System.out.println("Loading");
-    }
-
-    public void notifyUIHandler(GameState state) {
-        uiHandler.updateState(state);
     }
 
     private void beginSaveLoadResetTimer() {

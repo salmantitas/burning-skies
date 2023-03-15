@@ -17,6 +17,8 @@ public class Texture {
     public BufferedImage playerImage = null;
     public BufferedImage enemyImage = null;
     public BufferedImage explosionImage = null;
+    public BufferedImage title = null;
+    public BufferedImage logo = null;
 
     public Texture() {
         BufferedImageLoader loader = new BufferedImageLoader();
@@ -25,6 +27,8 @@ public class Texture {
             playerImage = loader.loadImage("/player.png");
             enemyImage = loader.loadImage("/enemy.png");
             explosionImage = loader.loadImage("/explosion.png");
+            title = loader.loadImage("/title.png");
+            logo = loader.loadImage("/logo.png");
         } catch (Exception e) {
             e.printStackTrace();
         }

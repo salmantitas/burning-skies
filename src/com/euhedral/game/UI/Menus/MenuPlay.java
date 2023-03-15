@@ -7,10 +7,13 @@ import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.GameController;
+import com.euhedral.game.Texture;
 import com.euhedral.game.UI.MessageBox;
 import com.euhedral.game.VariableManager;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class MenuPlay extends Menu {
 

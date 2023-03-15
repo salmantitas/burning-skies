@@ -6,8 +6,9 @@ import javax.sound.sampled.Clip;
 import java.net.URL;
 
 public class Sound {
+    int MAX_CLIP = 30;
     Clip clip;
-    URL soundURL[] = new URL[30];
+    URL soundURL[] = new URL[MAX_CLIP];
 
     public Sound() {
         initializeSounds();

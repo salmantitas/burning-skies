@@ -13,7 +13,7 @@ import java.util.LinkedList;
 // Manages all entities in game
 public class EntityManager {
     private VariableManager variableManager;
-    private Camera camera;
+//    private Camera camera;
     private int levelHeight;
 
     private LinkedList<Entity> entities;
@@ -29,7 +29,7 @@ public class EntityManager {
 
     private EnemyBoss boss;
 
-    EntityManager(VariableManager variableManager, Camera camera) {
+    EntityManager(VariableManager variableManager) {
         this.variableManager = variableManager;
         initializeAnimations();
     }

@@ -4,8 +4,10 @@ import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.*;
+import com.euhedral.game.GameController;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class MenuMain extends Menu {
 
@@ -15,18 +17,9 @@ public class MenuMain extends Menu {
         options = new Button[MAXBUTTON];
 
         ButtonNav play = new ButtonNav(x3, y20, buttonSize, "Play", GameState.Transition);
-
-//        play.addOtherState(GameState.GameOver);
-        play.setFill();
-
         ButtonNav help = new ButtonNav(x3, y40, buttonSize, "Help", GameState.Help);
         ButtonNav credits = new ButtonNav(x2, y60, buttonSize, "Credits", GameState.Credits);
-
         ButtonNav quit = new ButtonNav(x3, yFINAL, buttonSize, "Quit", GameState.Quit);
-        quit.setFill();
-        quit.addOtherState(GameState.Transition);
-        quit.addOtherState(GameState.Pause);
-        quit.addOtherState(GameState.GameOver);
 
         options[0] = play;
         options[1] = help;
@@ -46,6 +39,7 @@ public class MenuMain extends Menu {
         super.render(g);
 
         drawTitle(g);
+//        renderLogo(g);
 
         super.postRender(g);
     }
@@ -59,5 +53,22 @@ public class MenuMain extends Menu {
         g.setFont(font);
         g.setColor(titleColor);
         g.drawString(Engine.TITLE, titleX, y10);
+//        BufferedImage image = GameController.getTexture().title;
+//        int imageWidth = image.getWidth(), imageHeight = image.getHeight();
+//        int imageOffset = 50;
+//        int imageX = Engine.WIDTH - imageWidth - imageOffset;
+//        int imageY = 0;
+//
+//        g.drawImage(image, imageX, imageY, null);
+    }
+
+    private void renderLogo(Graphics g) {
+        BufferedImage logo = GameController.getTexture().logo;
+        int imageWidth = logo.getWidth(), imageHeight = logo.getHeight();
+        int imageOffset = 20;
+        int imageX = Engine.WIDTH - imageWidth - imageOffset;
+        int imageY = Engine.HEIGHT - imageHeight - imageOffset;
+
+        g.drawImage(logo, imageX, imageY, null);
     }
 }

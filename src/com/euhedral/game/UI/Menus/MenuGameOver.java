@@ -16,7 +16,6 @@ public class MenuGameOver extends Menu {
 
         ButtonNav backToMenu = new ButtonNav(x2, y60, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
         ButtonNav quit = new ButtonNav(x3, yFINAL, buttonSize, "Quit", GameState.Quit);
-        quit.setFill();
 
         options[0] = backToMenu;
         options[1] = quit;
