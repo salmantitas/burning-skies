@@ -28,24 +28,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/res/sea.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/UI/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/UI/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyBasic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyBasic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Shop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Shop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EntityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/explosion.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/explosion.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/UI/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/UI/Button.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/LevelGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/LevelGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/SaveLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/SaveLoad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Sound.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/SoundHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/TextureHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPause.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPause.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/TextureHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/TextureHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPlay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuTransition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuTransition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/UIHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/UIHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/VariableManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/VariableHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +181,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/GameController.java</url>
-          <line>627</line>
+          <line>629</line>
           <option name="timeStamp" value="133" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -203,6 +193,11 @@
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuMain.java</url>
           <line>66</line>
           <option name="timeStamp" value="163" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyBasic.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="165" />
         </line-breakpoint>
         <line-breakpoint enabled="true" log-message="true" suspend="NONE" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/Animation.java</url>

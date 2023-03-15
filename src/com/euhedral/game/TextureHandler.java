@@ -10,7 +10,7 @@ public class TextureHandler {
 
     public BufferedImage[] player = new BufferedImage[3];
     public BufferedImage[] enemy = new BufferedImage[1];
-    public BufferedImage[] explosion = new BufferedImage[4];
+    public BufferedImage[] explosion = new BufferedImage[7];
 
     public SpriteSheet playerSS, enemySS, explosionSS;
 
@@ -19,6 +19,7 @@ public class TextureHandler {
     public BufferedImage explosionImage = null;
     public BufferedImage title = null;
     public BufferedImage logo = null;
+    public BufferedImage sea  = null;
 
     public TextureHandler() {
         BufferedImageLoader loader = new BufferedImageLoader();
@@ -29,6 +30,7 @@ public class TextureHandler {
             explosionImage = loader.loadImage("/explosion.png");
             title = loader.loadImage("/title.png");
             logo = loader.loadImage("/logo.png");
+            sea = loader.loadImage("/sea.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,6 +55,7 @@ public class TextureHandler {
         explosion[1] = explosionSS.grabImage(2,1,w,h);
         explosion[2] = explosionSS.grabImage(3,1,w,h);
         explosion[3] = explosionSS.grabImage(4,1,w,h);
+        explosion[4] = explosionSS.grabImage(5,1,w,h);
     }
 
 

@@ -14,6 +14,7 @@ public class Button extends UIItem{
     protected boolean selected = false;
     protected Color backColor, textColor, selectedColor;
     protected boolean fill = false;
+    protected boolean outline = false;
     protected boolean enabled = true;
     protected LinkedList<GameState> otherStates = new LinkedList<>();
     protected float transparency = 1;
@@ -61,7 +62,9 @@ public class Button extends UIItem{
             g.setColor(backColor);
             if (fill)
                 g.fill3DRect(x,y,width,height, true);
-            else g.draw3DRect(x, y, width, height, true);
+            else if (outline) {
+                g.draw3DRect(x, y, width, height, true);
+            }
 
             if (selected)
                 g.setColor(selectedColor);

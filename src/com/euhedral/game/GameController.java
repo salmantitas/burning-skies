@@ -80,8 +80,9 @@ public class GameController {
      * Graphics *
      ************/
 
-    private SpriteSheet playerSpriteSheet;
-    private BufferedImage[] playerImage;
+    private float backgroundScroll = 0;
+    private float scrollRate = 0.0005f;
+    private float maxScroll = 100f;
 
     public GameController() {
 
@@ -244,6 +245,7 @@ public class GameController {
 
             if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause ) {
 
+                renderSea(g);
                 renderInCamera(g);
 
                 if (VariableHandler.isHud()) {
@@ -640,6 +642,25 @@ public class GameController {
     private void addLevel(int num, String path) {
         BufferedImage level = Engine.loader.loadImage(path);
         levelMap.put(num, level);
+    }
+
+    private void renderSea(Graphics g) {
+        int interval = Utility.intAtWidth640(16);
+        BufferedImage image = GameController.getTexture().sea;
+
+        int minX = 0;
+        int minY = (int) -maxScroll;
+
+        for (int i = minX; i < Engine.WIDTH; i += interval) {
+            for (int j = minY; j < Engine.HEIGHT; j += interval) {
+                g.drawImage(image, i, j + (int) (backgroundScroll), null);
+                backgroundScroll += scrollRate;
+
+                if (backgroundScroll >= maxScroll) {
+                    backgroundScroll = 0;
+                }
+            }
+        }
     }
 
 }

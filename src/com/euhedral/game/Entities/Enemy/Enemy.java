@@ -107,10 +107,8 @@ public class Enemy extends MobileEntity {
         explosion = new Animation(10, GameController.getTexture().explosion[0],
                 GameController.getTexture().explosion[1],
                 GameController.getTexture().explosion[2],
-                GameController.getTexture().explosion[3]
-//                GameController.getTexture().explosion[2],
-//                GameController.getTexture().explosion[1],
-//                GameController.getTexture().explosion[0]
+                GameController.getTexture().explosion[3],
+                GameController.getTexture().explosion[4]
         );
     }
 

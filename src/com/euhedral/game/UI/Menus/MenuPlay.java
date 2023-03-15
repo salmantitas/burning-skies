@@ -6,10 +6,12 @@ import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.GameController;
 import com.euhedral.game.UI.MessageBox;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class MenuPlay extends Menu {
 
@@ -35,6 +37,7 @@ public class MenuPlay extends Menu {
 
     @Override
     public void render(Graphics g) {
+
         super.render(g);
 
         VariableHandler.renderHUD(g);
