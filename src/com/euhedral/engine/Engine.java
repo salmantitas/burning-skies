@@ -76,6 +76,7 @@ public class Engine extends Canvas implements Runnable{
     public void run() {
 //        gameLoop();
 
+        requestFocus();
         double target = 60.0;
         double nanosecondsPerCycle =  1000000000.0;
         long lastTime = System.nanoTime();

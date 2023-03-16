@@ -81,7 +81,7 @@ public class GameController {
      ************/
 
     private float backgroundScroll = 0;
-    private float scrollRate = 0.005f;
+    private static float scrollRate = 0.005f;
     private float maxScroll = 62f + 1;
 
     public GameController() {
@@ -675,6 +675,10 @@ public class GameController {
 
             }
         }
+    }
+
+    public static float getScrollRate() {
+        return scrollRate;
     }
 
 }

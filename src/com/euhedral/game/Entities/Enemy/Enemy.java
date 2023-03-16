@@ -219,7 +219,6 @@ public class Enemy extends MobileEntity {
     public void disable() {
         alive = false;
         velX = 0;
-        velY = 0;
         GameController.getSound().playSound(3);
     }
 

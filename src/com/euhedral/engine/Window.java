@@ -33,8 +33,8 @@ public class Window extends Canvas {
         frame.add(engine);
         System.out.println("Engine added to window");
 
+//        frame.requestFocus();
         frame.setVisible(true);
-        frame.requestFocus();
         engine.start();
     }
 }
