@@ -81,8 +81,8 @@ public class GameController {
      ************/
 
     private float backgroundScroll = 0;
-    private float scrollRate = 0.0005f;
-    private float maxScroll = 100f;
+    private float scrollRate = 0.005f;
+    private float maxScroll = 62f + 1;
 
     public GameController() {
 
@@ -245,7 +245,7 @@ public class GameController {
 
             if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause ) {
 
-                renderSea(g);
+                renderScrollingBackground(g);
                 renderInCamera(g);
 
                 if (VariableHandler.isHud()) {
@@ -644,21 +644,35 @@ public class GameController {
         levelMap.put(num, level);
     }
 
-    private void renderSea(Graphics g) {
-        int interval = Utility.intAtWidth640(16);
-        BufferedImage image = GameController.getTexture().sea;
+    private void renderScrollingBackground(Graphics g) {
+        // rendering sea
+        count = 0;
+        BufferedImage image = GameController.getTexture().sea[count];
+        int interval = image.getHeight()*2;
 
         int minX = 0;
         int minY = (int) -maxScroll;
 
         for (int i = minX; i < Engine.WIDTH; i += interval) {
             for (int j = minY; j < Engine.HEIGHT; j += interval) {
-                g.drawImage(image, i, j + (int) (backgroundScroll), null);
-                backgroundScroll += scrollRate;
+                g.drawImage(image, i, j + (int) (backgroundScroll), interval + 1, interval + 1, null);
 
-                if (backgroundScroll >= maxScroll) {
-                    backgroundScroll = 0;
+                if (Engine.stateIs(GameState.Game)) {
+                    backgroundScroll += scrollRate;
+
+                    if (backgroundScroll >= maxScroll) {
+                        backgroundScroll = 0;
+                    }
+
+                    count++;
+                    if (count > 7) {
+                        count = 0;
+                    }
+
+                    image = GameController.getTexture().sea[count];
                 }
+
+
             }
         }
     }
