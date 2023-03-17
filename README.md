@@ -5,7 +5,7 @@ Overview
  - A retro-style top-down scrolling shooter game, inspired by the classics (Raptor and Demonstar)
  - Procedurally generated waves of enemies
  
- Try It Out On Itch.io
+ Play The Game Here!
  -
  - https://monkeys-in-distress.itch.io/burning-skies
 
