@@ -9,18 +9,19 @@ Overview
  -
  - https://monkeys-in-distress.itch.io/burning-skies
 
+How To Play
+-
+
 Player
 -
-- The player controls an airplane which can move in four directions, though the player cannot move outside of the screen, and shoot bullets at enemies. 
+- Control an airplane that can move in four directions.
+- Shoot enemies to destroy them and earn score.
+- Avoid damage by dodging enemy bullets and collisions. 
 
 Controls
 -
 - The WASD or directional keys can be used to control the player’s movements. 
 - The SPACEBAR is used to shoot.
-
-Physics
--
-- The player’s movements are affected by accelaration and friction.
 
 UI
 -
@@ -37,6 +38,13 @@ Menu
 HUD
 - 
 - The HUD only shows up during Play, Pause or Transition Menus. It shows the player’s health, level and score.
+
+Technical Stuff
+- 
+
+Physics
+-
+- The player’s movements are affected by accelaration and friction.
 
 Game Camera
 - 
