@@ -9,8 +9,7 @@ Overview
  -
  - https://monkeys-in-distress.itch.io/burning-skies
 
-How To Play
--
+![Burning Skies Heading HOW TO PLAY](https://user-images.githubusercontent.com/26829338/226021406-60cb286e-480e-4652-a5fa-1603657fe2b4.png)
 
 Player
 -
@@ -39,8 +38,7 @@ HUD
 - 
 - The HUD only shows up during Play, Pause or Transition Menus. It shows the player’s health, level and score.
 
-Technical Stuff
-- 
+![Burning Skies Heading TECHNICAL](https://user-images.githubusercontent.com/26829338/226022076-daf81f99-85b8-46a8-bd98-e47e5ca419f9.png)
 
 Physics
 -
