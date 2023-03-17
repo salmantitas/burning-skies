@@ -61,5 +61,5 @@ Enemies
 - The game only has one type of enemy as of now. Enemy health is randomly generated from a pre-determined range.
 
 Drones
-Health: 2 - 4
+- Health: 2 - 4
 - Flies down the screen and shoots a bullet at a given interval.
