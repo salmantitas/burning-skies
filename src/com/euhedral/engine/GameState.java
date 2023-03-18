@@ -4,6 +4,7 @@ public enum GameState {
     Game,
     Menu,
     Help,
+    Settings,
     Credits,
     Pause,
     Transition,

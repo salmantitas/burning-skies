@@ -48,6 +48,7 @@ public class EnemyBasic extends Enemy{
     public void render(Graphics g) {
         if (alive) {
             super.render(g);
+//            renderBounds(g);
         } else {
             explosion.drawAnimation(g, x, y);
 

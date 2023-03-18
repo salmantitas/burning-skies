@@ -39,18 +39,15 @@ public class MenuTransition extends Menu {
 
     ButtonAction load = new ButtonAction(xFINAL, y40, optionSize, "Load", ActionTag.load);
 
-    ButtonAction tutorial = new ButtonAction(xFINAL, y50, optionSize, "Tutorial", ActionTag.tutorial);
 
     public MenuTransition() {
         super(GameState.Transition);
-        MAXBUTTON = 4;
+        MAXBUTTON = 3;
         options = new Button[MAXBUTTON];
 
         options[0] = start;
         options[1] = backToMenu;
         options[2] = quit;
-
-        options[3] = tutorial;
 
 //        options[4] = health;
 //        options[5] = ground;
@@ -118,26 +115,7 @@ public class MenuTransition extends Menu {
         g.setFont(new Font("arial", 1, Utility.percWidth(1)));
         g.drawString(VariableHandler.saveDataNotification, x2, y60);
 
-        // Render Tutorial Icon
-        int bx = tutorial.getX() + tutorial.getWidth();
-        int by = tutorial.getY();
-        int bsize = tutorial.getHeight();
-
-        Color c = VariableHandler.tutorialEnabled() ? Color.GREEN : Color.RED;
-        g.setColor(c);
-        g.fillOval(10+bx,by,bsize,bsize);
-
         super.postRender(g);
-    }
-
-    /*
-    * Render Functions
-    * */
-
-    public void tutorialState(Graphics g) {
-        g.setFont(new Font("arial", 1, Utility.percWidth(1.5)));
-        g.setColor(Color.WHITE);
-        g.drawString("Tutorial: " + VariableHandler.tutorialEnabled(), Utility.percWidth(85), Utility.percHeight(8));
     }
 
 }

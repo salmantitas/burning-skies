@@ -4,6 +4,7 @@ import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityID;
 import com.euhedral.game.GameController;
+import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
 
@@ -24,7 +25,7 @@ public class Bullet extends MobileEntity {
         width = Utility.intAtWidth640(8)/2;
         height = Utility.intAtWidth640(24)/2;
         vel = Utility.intAtWidth640(4);
-        GameController.getSound().playSound(1);
+        GameController.getSound().playSound(SoundHandler.BULLET);
     }
 
     Bullet(int x, int y, double angle) {

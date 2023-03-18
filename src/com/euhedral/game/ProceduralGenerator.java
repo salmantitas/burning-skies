@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+ /*
+  * todo: real-time generation rather than before
+ */
+
 public class ProceduralGenerator {
 
     public HashMap<Color, EntityID> colorMap;
@@ -19,6 +23,7 @@ public class ProceduralGenerator {
     int wave, pauseBetweenWaves, pattern;
     int increment = 3;
     int level;
+    int remainingHeight;
 
     /*
     * Basic - 1/1
@@ -66,6 +71,11 @@ public class ProceduralGenerator {
         colorMap = VariableHandler.colorMap;
     }
 
+    // called to spawn next wave
+    public void update() {
+
+    }
+
     // generate a level using procedural generation
     public void generateLevel() {
         level = VariableHandler.getLevel();
@@ -86,7 +96,7 @@ public class ProceduralGenerator {
 
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
-        int remainingHeight = height;
+        remainingHeight = height;
 
         // spawn Player
         int x = 15 * 32, y = remainingHeight * 32;

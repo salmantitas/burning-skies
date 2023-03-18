@@ -8,6 +8,7 @@ public enum ActionTag {
     ground,
     shield,
     tutorial,
+    volume,
     save,
     load
 }

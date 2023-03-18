@@ -13,18 +13,20 @@ public class MenuMain extends Menu {
 
     public MenuMain() {
         super(GameState.Menu);
-        MAXBUTTON = 4;
+        MAXBUTTON = 5;
         options = new Button[MAXBUTTON];
 
         ButtonNav play = new ButtonNav(x3, y20, buttonSize, "Play", GameState.Transition);
+        ButtonNav settings = new ButtonNav(x2, y30, buttonSize, "Settings", GameState.Settings);
         ButtonNav help = new ButtonNav(x3, y40, buttonSize, "Help", GameState.Help);
         ButtonNav credits = new ButtonNav(x2, y60, buttonSize, "Credits", GameState.Credits);
         ButtonNav quit = new ButtonNav(x3, yFINAL, buttonSize, "Quit", GameState.Quit);
 
         options[0] = play;
-        options[1] = help;
-        options[2] = credits;
-        options[3] = quit;
+        options[1] = settings;
+        options[2] = help;
+        options[3] = credits;
+        options[4] = quit;
 
 //        try {
 //            importButtons();
@@ -42,6 +44,15 @@ public class MenuMain extends Menu {
 //        renderLogo(g);
 
         super.postRender(g);
+    }
+
+    @Override
+    public void onSwitch() {
+//        GameController.getSound().BGM_GameOver.stop();
+        if (!GameController.getSound().playingBGMMenu()) {
+            GameController.getSound().stopMusic();
+            GameController.getSound().playBGMMenu();
+        }
     }
 
     /*

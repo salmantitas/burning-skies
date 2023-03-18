@@ -50,7 +50,10 @@ public class Button extends UIItem{
         width = Utility.perc((g.getFontMetrics().stringWidth(text)), 110);
         if (width / size < 3)
             height = Utility.perc(width, 50);
-        else height = Utility.perc(width, 25);
+        else if (width / size < 4)
+            height = Utility.perc(width, 25);
+        else
+            height = Utility.perc(width, 15);
 
         if (!enabled) {
             g.setColor(disabledColor);

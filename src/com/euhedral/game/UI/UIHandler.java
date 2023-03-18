@@ -26,6 +26,7 @@ public class UIHandler {
         menus = new ArrayList<>();
 
         MenuMain mainMenu = new MenuMain();
+        MenuSettings settingsMenu = new MenuSettings();
         MenuHelp helpMenu = new MenuHelp();
         MenuCredits creditsMenu = new MenuCredits();
         MenuTransition transitionMenu = new MenuTransition();
@@ -35,6 +36,7 @@ public class UIHandler {
         MenuPlay playMenu = new MenuPlay();
 
         menus.add(mainMenu);
+        menus.add(settingsMenu);
         menus.add(helpMenu);
         menus.add(creditsMenu);
         menus.add(transitionMenu);
@@ -88,6 +90,7 @@ public class UIHandler {
                 }
 
                 currentMenu = menu;
+                menu.onSwitch();
                 menuChanged = true;
                 break;
             }

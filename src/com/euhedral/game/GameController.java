@@ -4,6 +4,7 @@ import com.euhedral.engine.*;
 import com.euhedral.game.Entities.Shop;
 import com.euhedral.game.UI.UIHandler;
 
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -97,9 +98,9 @@ public class GameController {
         uiHandler = new UIHandler();
 
         initializeGraphics();
-        initializeSound();
         initializeAnimations();
         initializeGame();
+        initializeSound();
         initializeLevel();
     }
 
@@ -136,7 +137,7 @@ public class GameController {
          * Game Code *
          *************/
         soundHandler = new SoundHandler();
-        soundHandler.playMusic(0);
+        soundHandler.playBGMMenu();
     }
 
     private void initializeAnimations() {
@@ -202,6 +203,7 @@ public class GameController {
             boolean endGameCondition = variableHandler.health.getValue() <= 0;
 
             if (endGameCondition) {
+                soundHandler.playSound(soundHandler.EXPLOSION);
                 // todo: play explosion animation first
                 Engine.gameOverState();
                 resetGame();
@@ -215,7 +217,7 @@ public class GameController {
 
                 // Game only runs if either tutorials are disabled, or no message boxes are active
 
-                if (uiHandler.noActiveMessageBoxes() || !VariableHandler.tutorialEnabled()) {
+                if (uiHandler.noActiveMessageBoxes() || !VariableHandler.isTutorial()) {
 
                     entityHandler.update();
                     checkLevelStatus();
@@ -486,6 +488,13 @@ public class GameController {
                     break;
                 case tutorial: VariableHandler.toggleTutorial();
                 break;
+                case volume: {
+                    VariableHandler.toggleVolume();
+                    if (VariableHandler.isVolume()) {
+                        soundHandler.setVolume(1);
+                    } else soundHandler.setVolume(0);
+                    break;
+                }
                 case health: shop.buyHealth();
                 break;
                 case power: shop.buyPower();
@@ -644,18 +653,18 @@ public class GameController {
         levelMap.put(num, level);
     }
 
+    // todo: speed up 'animation'
     private void renderScrollingBackground(Graphics g) {
-        // rendering sea
         count = 0;
-        BufferedImage image = GameController.getTexture().sea[count];
-        int interval = image.getHeight()*2;
+        BufferedImage imageSea = GameController.getTexture().sea[count];
+        int interval = imageSea.getHeight()*2;
 
         int minX = 0;
         int minY = (int) -maxScroll;
 
         for (int i = minX; i < Engine.WIDTH; i += interval) {
             for (int j = minY; j < Engine.HEIGHT; j += interval) {
-                g.drawImage(image, i, j + (int) (backgroundScroll), interval + 1, interval + 1, null);
+                g.drawImage(imageSea, i, j + (int) (backgroundScroll), interval + 1, interval + 1, null);
 
                 if (Engine.stateIs(GameState.Game)) {
                     backgroundScroll += scrollRate;
@@ -669,7 +678,7 @@ public class GameController {
                         count = 0;
                     }
 
-                    image = GameController.getTexture().sea[count];
+                    imageSea = GameController.getTexture().sea[count];
                 }
 
 

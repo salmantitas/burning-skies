@@ -74,7 +74,7 @@ public class Menu {
 
     // UIItems here will be rendered on top of everything else
     protected void postRender(Graphics g) {
-        if (VariableHandler.tutorialEnabled()) {
+        if (VariableHandler.isTutorial()) {
             for (MessageBox messageBox : messageBoxes) {
                 messageBox.render(g);
             }
@@ -97,6 +97,7 @@ public class Menu {
                 Button button = options[i];
                 if (button.mouseOverlap(mx, my)) {
                     button.select();
+                    index = i;
                 } else button.deselect();
             }
         }
@@ -180,6 +181,10 @@ public class Menu {
     }
 
     public void keyPressed(int key) {
+
+    }
+
+    public void onSwitch() {
 
     }
 

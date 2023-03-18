@@ -48,8 +48,8 @@ public class TextureHandler {
         int w = Utility.intAtWidth640(32);
         int h = w;
         player[0] = playerSS.grabImage(1,1, w,h);
-        player[1] = playerSS.grabImage(2,1, w,h);
-        player[2] = playerSS.grabImage(3,1, w,h);
+        player[1] = playerSS.grabImage(1,2, w,h);
+        player[2] = playerSS.grabImage(1,3, w,h);
 
         enemy[0] = enemySS.grabImage(1,1,w,h);
 

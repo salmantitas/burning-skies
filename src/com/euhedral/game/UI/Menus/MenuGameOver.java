@@ -4,6 +4,8 @@ import com.euhedral.engine.*;
 import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
+import com.euhedral.game.GameController;
+import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
 
@@ -36,6 +38,12 @@ public class MenuGameOver extends Menu {
         g.setFont(new Font("arial", 1, 150));
         g.setColor(Color.WHITE);
         g.drawString("GAME OVER", Utility.percWidth(2), Engine.HEIGHT/2);
+    }
+
+    @Override
+    public void onSwitch() {
+        GameController.getSound().BGM_Menu.stop();
+        GameController.getSound().playBGMGameOver();
     }
 
 }

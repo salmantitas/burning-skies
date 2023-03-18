@@ -159,10 +159,6 @@ public class Enemy extends MobileEntity {
         shootTimer = shootTimerDef;
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
-    }
-
     protected void healthRange(int min, int max) {
         health = Utility.randomRange(min, max);
     }
@@ -219,11 +215,31 @@ public class Enemy extends MobileEntity {
     public void disable() {
         alive = false;
         velX = 0;
-        GameController.getSound().playSound(3);
+        GameController.getSound().playSound(SoundHandler.EXPLOSION);
     }
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public Rectangle getBoundsHorizontal() {
+        Rectangle bounds = new Rectangle(x, y, width, 1*height/3 + 2);
+        return bounds;
+    }
+
+    public Rectangle getBoundsVertical() {
+        Rectangle bounds = new Rectangle(x + (width / 4), y, (2 * width) / 4, height);
+        return bounds;
+    }
+
+    @Override
+    protected void renderBounds(Graphics g) {
+        g.setColor(Color.green);
+        Rectangle r1 = getBoundsVertical();
+        Rectangle r2 = getBoundsHorizontal();
+        g.drawRect(r1.x, r1.y, r1.width, r1.height);
+        g.drawRect(r2.x, r2.y, r2.width, r2.height);
+
     }
 
     // Private Methods

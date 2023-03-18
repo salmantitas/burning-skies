@@ -131,16 +131,20 @@ public class SaveLoad {
          *************/
 
         // Create string for settings that will be saved
-        String tutorial = Boolean.toString(VariableHandler.tutorialEnabled());
+        String tutorial = Boolean.toString(VariableHandler.isTutorial());
+        String volume = Boolean.toString(VariableHandler.isVolume());
 
-        List<String> rows = Arrays.asList(tutorial);
+        List<String> rows = Arrays.asList(tutorial, volume);
 
         // Code implemented from https://stackabuse.com/reading-and-writing-csvs-in-java/
         try {
             FileWriter csvWriter = new FileWriter(pathString);
 
             // Write the setting
-            csvWriter.append(tutorial);
+            for (String data: rows) {
+                csvWriter.append(data);
+                csvWriter.append(",");
+            }
 
             /***************
              * Engine Code *
@@ -163,7 +167,7 @@ public class SaveLoad {
          * Game Code *
          *************/
         // Create array to store settings
-        String[] data = new String[1];
+        String[] data = new String[2];
 
         /***************
          * Engine Code *
@@ -188,10 +192,14 @@ public class SaveLoad {
 
             // Create variables from parsed data
             boolean tutorial = Boolean.parseBoolean(data[0]);
+            boolean volume  = Boolean.parseBoolean(data[1]);
 
             // Update variables
-            if (!VariableHandler.tutorialEnabled() == tutorial) {
+            if (!VariableHandler.isTutorial() == tutorial) {
                 VariableHandler.toggleTutorial();
+            }
+            if (!VariableHandler.isVolume() == volume) {
+                VariableHandler.toggleVolume();
             }
         }
     }

@@ -8,7 +8,8 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 
-    protected int x, y, width, height;
+    protected int x, y;
+    protected int width, height;
     protected EntityID id;
     protected boolean active = true;
 
@@ -18,13 +19,6 @@ public abstract class Entity {
 
     protected Animation anim;
     protected int animationSpeed = 3;
-
-    // this can be completely commented out if the
-    // game has no functional use of physics
-    protected float gravity = 1f, terminalVel;
-
-    // every object is initialized to be not jumping or affected by gravity
-    protected boolean gravityAffected = false, jumping = false, friction = false;
 
     public Entity(int x, int y, EntityID id) {
         this.x = x;
@@ -60,7 +54,7 @@ public abstract class Entity {
             drawAnimation(g);
         }
         else if (image != null) {
-            g.drawImage(image, (int) x, (int) y, null);
+            drawImage(g, image);
         }
         else {
             setColor(g);
@@ -77,14 +71,13 @@ public abstract class Entity {
 
         Color boundColor = Color.green;
 
-//        g.setColor(Color.white);
-//        g2d.draw(getBounds());
-
         g.setColor(boundColor);
-        g2d.draw(getBoundsTop());
-        g2d.draw(getBoundsBottom());
-        g2d.draw(getBoundsLeft());
-        g2d.draw(getBoundsRight());
+        g2d.draw(getBounds());
+
+//        g2d.draw(getBoundsTop());
+//        g2d.draw(getBoundsBottom());
+//        g2d.draw(getBoundsLeft());
+//        g2d.draw(getBoundsRight());
     }
 
     // Getters & Setters
@@ -97,12 +90,12 @@ public abstract class Entity {
         this.x = x;
     }
 
-    public int getY() {
-        return y;
-    }
-
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public int getWidth() {
@@ -127,22 +120,6 @@ public abstract class Entity {
 
     public void setId(EntityID id) {
         this.id = id;
-    }
-
-    public boolean isGravityAffected() {
-        return gravityAffected;
-    }
-
-    public void setGravityAffected(boolean gravityAffected) {
-        this.gravityAffected = gravityAffected;
-    }
-
-    public boolean isJumping() {
-        return jumping;
-    }
-
-    public void setJumping(boolean jumping) {
-        this.jumping = jumping;
     }
 
     public Rectangle getBounds() {

@@ -6,6 +6,34 @@ import java.awt.*;
 
 public class MobileEntity extends Entity {
 
+    protected class Physics {
+        /**********
+         * Physics *
+         ***********/
+
+        // this can be completely commented out if the
+        // game has no functional use of physics
+        protected float gravity = 1f, terminalVel = 0;
+        protected float acceleration = 0, frictionalForce = 0;
+
+        // every object is initialized to be not jumping or affected by gravity
+        protected boolean gravityAffected = false, jumping = false, friction = false;
+
+        public void enableFriction() {
+            friction = true;
+        }
+
+        public void setFrictionalForce(float frictionalForce) {
+            this.frictionalForce = frictionalForce;
+        }
+
+        public void setAcceleration(float acceleration) {
+            this.acceleration = acceleration;
+        }
+    }
+
+    protected Physics physics = new Physics();
+
     protected enum HorizontalMovement{
         LEFT, RIGHT, NONE;
     }
@@ -26,7 +54,6 @@ public class MobileEntity extends Entity {
     protected float turn = SOUTH_WEST - WEST;
     protected float forwardVelocity = 0;
     protected float facing = 0;
-    protected float acceleration, frictionalForce;
     protected float velX, velY;
     protected float minVelX, minVelY;
     protected float maxVelX, maxVelY;
@@ -53,12 +80,9 @@ public class MobileEntity extends Entity {
         super.render(g);
     }
 
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle((int) x, (int) y, width, height);
-    }
-
     protected void move() {
+//        updateX(velX);
+//        updateY(velY);
         x += velX;
         y += velY;
     }
@@ -71,5 +95,25 @@ public class MobileEntity extends Entity {
         angleY = Math.toRadians(angle);
         velX = (float) (forwardVelocity * Math.cos(angleX));
         velY = (float) (forwardVelocity * Math.sin(angleY));
+    }
+
+    /*
+    * Physics Function
+    * */
+
+    public boolean isGravityAffected() {
+        return physics.gravityAffected;
+    }
+
+    public void setGravityAffected(boolean gravityAffected) {
+        physics.gravityAffected = gravityAffected;
+    }
+
+    public boolean isJumping() {
+        return physics.jumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        physics.jumping = jumping;
     }
 }

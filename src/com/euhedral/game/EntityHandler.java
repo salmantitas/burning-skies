@@ -183,14 +183,13 @@ public class EntityHandler {
 
     public void checkCollisions() {
         playerVsPickupCollision();
-        playerVsEnemyCollision();
-        playerVsEnemyBulletCollision();
+        playerHostileCollision();
         enemyVsPlayerBulletCollision();
     }
 
-    private Bullet checkPlayerCollision(Enemy enemy) {
-        return player.checkCollision(enemy);
-    }
+//    private Bullet checkPlayerCollision(Enemy enemy) {
+//        return player.checkCollision(enemy);
+//    }
 
     // Temp Functions
     public Rectangle getPlayerBounds() {
@@ -391,9 +390,14 @@ public class EntityHandler {
      * Collision Functions *
      ***********************/
 
+    private void playerHostileCollision() {
+        playerVsEnemyCollision();
+        playerVsEnemyBulletCollision();
+    }
+
     private void playerVsEnemyBulletCollision() {
         for (Bullet bullet: bullets) {
-            if (bullet.isActive() && bullet.getBounds().intersects(player.getBounds())) {
+            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
                 damagePlayer(10);
                 destroy(bullet);
             }
@@ -402,11 +406,16 @@ public class EntityHandler {
 
     private void playerVsEnemyCollision() {
         for (Enemy enemy : enemies) {
-            if (enemy.getContactId() == ContactID.Air && enemy.isAlive())
-                if (enemy.isInscreen() && enemy.getBounds().intersects(player.getBounds()) && enemy.isActive()) {
-                    variableHandler.increaseScore(enemy.getScore());
-                    damagePlayer(30);
-                    destroy(enemy);
+            boolean enemyInAir = enemy.getContactId() == ContactID.Air;
+            if (enemyInAir && enemy.isAlive())
+                if (enemy.isInscreen() && enemy.isActive()) {
+                    boolean collision1 = player.checkCollision(enemy.getBoundsHorizontal());
+                    boolean collision2 = player.checkCollision(enemy.getBoundsVertical());
+                    if (collision1 || collision2) {
+                        variableHandler.increaseScore(enemy.getScore());
+                        damagePlayer(30);
+                        destroy(enemy);
+                    }
                 } else if (enemy.getContactId() == ContactID.Boss) {
                     damagePlayer(10);
                 }

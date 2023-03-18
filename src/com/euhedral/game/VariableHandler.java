@@ -75,6 +75,7 @@ public class VariableHandler {
 //    private static boolean ground = false;
 
     private static boolean tutorial = true;
+    private static float volume = 1f;
 
     public VariableHandler() {
         colorMap = new HashMap<>();
@@ -285,12 +286,26 @@ public class VariableHandler {
             level = MAXLEVEL;
     }
 
-    public static boolean tutorialEnabled() {
+    public static boolean isTutorial() {
         return tutorial;
     }
 
     public static void toggleTutorial() {
         tutorial = !tutorial;
+        SaveLoad.saveSettings();
+    }
+
+    public static boolean isVolume() {
+        return volume == 1f;
+    }
+    public static float getVolume() {
+        return volume;
+    }
+
+    public static void toggleVolume() {
+        if (isVolume()) {
+            volume = 0;
+        } else volume = 1f;
         SaveLoad.saveSettings();
     }
 

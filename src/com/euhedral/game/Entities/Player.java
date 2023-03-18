@@ -7,6 +7,8 @@ import com.euhedral.game.*;
 import com.euhedral.game.Entities.Enemy.Enemy;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public class Player extends MobileEntity {
@@ -36,6 +38,9 @@ public class Player extends MobileEntity {
     // Graphics
     private TextureHandler textureHandler;
 
+    // Lazy Physics
+    private float acceleration; //stub //todo:delete
+    private float frictionalForce; //stub //todo:delete
 
     public Player(int x, int y, int levelHeight) {
         super(x,y, EntityID.Player);
@@ -49,7 +54,8 @@ public class Player extends MobileEntity {
 
         velX = 0;
         velY = 0;
-        acceleration = 0.05f;
+        physics.setAcceleration(0.05f);
+        acceleration = 0.05f; // todo: delete
         minVelY = 3;
         minVelX = 4;
         velY = minVelY;
@@ -57,8 +63,9 @@ public class Player extends MobileEntity {
         maxVelY = 2 * minVelY;
         maxVelX = 2 * minVelX;
 
-        friction = true;
-        frictionalForce = 0.9f;
+        physics.enableFriction();
+        physics.setFrictionalForce(0.9f);
+        frictionalForce = 0.9f; // todo: delete
 
         moveRight = false;
         moveLeft = false;
@@ -107,6 +114,7 @@ public class Player extends MobileEntity {
         }
     }
 
+    @Override
     public void render(Graphics g) {
         for (Bullet bullet : bullets) {
             if (bullet.isActive())
@@ -119,6 +127,18 @@ public class Player extends MobileEntity {
             g.setColor(Color.yellow);
             g.drawOval(x-width/2, y-height/2, width*2, height*2);
         }
+
+//        renderBounds(g);
+    }
+
+    @Override
+    protected void renderBounds(Graphics g) {
+        g.setColor(Color.green);
+        Rectangle r1 = getBoundsVertical();
+        Rectangle r2 = getBoundsHorizontal();
+        g.drawRect(r1.x, r1.y, r1.width, r1.height);
+        g.drawRect(r2.x, r2.y, r2.width, r2.height);
+
     }
 
     public Bullet checkCollision(Enemy enemy) {
@@ -153,8 +173,23 @@ public class Player extends MobileEntity {
         canShoot = b;
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+    public boolean checkCollision(Rectangle object) {
+        Rectangle rV = getBoundsVertical();
+        Rectangle rH = getBoundsHorizontal();
+        boolean collidesVertically = object.intersects(rV);
+        boolean collidesHorizontally = object.intersects(rH);
+
+        return collidesVertically || collidesHorizontally;
+    }
+
+    public Rectangle getBoundsHorizontal() {
+        Rectangle bounds = new Rectangle(x, y + 2*height/3 - 2, width, height/3 + 2);
+        return bounds;
+    }
+
+    public Rectangle getBoundsVertical() {
+        Rectangle bounds = new Rectangle(x + (width / 4), y, (2 * width) / 4, height);
+        return bounds;
     }
 
     public void setX(int x) {
