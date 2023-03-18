@@ -1,13 +1,13 @@
 ![Burning Skies Banner](https://user-images.githubusercontent.com/26829338/225977134-5e694a01-c665-44cc-a73a-80b780bd8ea1.png)
 
 Overview
--
-- A retro-style top-down scrolling shooter game, inspired by the classics (Raptor and Demonstar)
-- Procedurally generated waves of enemies
-
-Play The Game Here!
--
-- https://monkeys-in-distress.itch.io/burning-skies
+ -
+ - A retro-style top-down scrolling shooter game, inspired by the classics (Raptor and Demonstar)
+ - Procedurally generated waves of enemies
+ 
+ Play The Game Here!
+ -
+ - https://monkeys-in-distress.itch.io/burning-skies
 
 ![Burning Skies Heading HOW TO PLAY](https://user-images.githubusercontent.com/26829338/226021406-60cb286e-480e-4652-a5fa-1603657fe2b4.png)
 
@@ -15,11 +15,11 @@ Player
 -
 - Control an airplane that can move in four directions.
 - Shoot enemies to destroy them and earn score.
-- Avoid damage by dodging enemy bullets and collisions.
+- Avoid damage by dodging enemy bullets and collisions. 
 
 Controls
 -
-- The WASD or directional keys can be used to control the player’s movements.
+- The WASD or directional keys can be used to control the player’s movements. 
 - The SPACEBAR is used to shoot.
 
 UI
