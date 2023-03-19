@@ -1,7 +1,5 @@
 package com.euhedral.game;
 
-import com.euhedral.game.Entities.Enemy.Enemy;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -13,31 +11,39 @@ public class SoundHandler {
     Clip clip;
     URL soundURL[] = new URL[MAX_CLIP];
 
-    public Clip BGM_Menu;
-    public Clip BGM_GameOver;
+    public Clip bgm_Main;
+    public Clip bgm_Play;
+    public Clip bgm_GameOver;
 
-    public static final int BGM = 0;
+    private Clip current;
+
+    public static final int BGMMAINMENU = 0;
     public static final int BULLET = 1;
     public static final int EXPLOSION = 3;
-    public static final int BGM_Game_Over = 4;
+    public static final int BGMGAMEOVER = 4;
+    public static final int BGMPLAY = 5;
 
     public SoundHandler() {
         initializeSounds();
     }
 
     private void initializeSounds() {
-        soundURL[0] = getClass().getResource("/bgm1.wav");
+        soundURL[0] = getClass().getResource("/bgmMain.wav");
         soundURL[1] = getClass().getResource("/bullet.wav");
         soundURL[2] = getClass().getResource("/collision.wav");
         soundURL[3] = getClass().getResource("/explosion.wav");
         soundURL[4] = getClass().getResource("/bgmGameOver.wav");
+        soundURL[5] = getClass().getResource("/bgm1.wav");
 
         try {
-            BGM_Menu = AudioSystem.getClip();
-            BGM_Menu.open(AudioSystem.getAudioInputStream(soundURL[BGM]));
+            bgm_Main = AudioSystem.getClip();
+            bgm_Main.open(AudioSystem.getAudioInputStream(soundURL[BGMMAINMENU]));
 
-            BGM_GameOver = AudioSystem.getClip();
-            BGM_GameOver.open(AudioSystem.getAudioInputStream(soundURL[BGM_Game_Over]));
+            bgm_Play = AudioSystem.getClip();
+            bgm_Play.open(AudioSystem.getAudioInputStream(soundURL[BGMPLAY]));
+
+            bgm_GameOver = AudioSystem.getClip();
+            bgm_GameOver.open(AudioSystem.getAudioInputStream(soundURL[BGMGAMEOVER]));
         } catch (Exception e) {
 
         }
@@ -92,23 +98,30 @@ public class SoundHandler {
     }
 
     public void playBGMMenu() {
-        playBGM(BGM_Menu);
+        playBGM(bgm_Main);
+    }
+
+    public void playBGMPlay() {
+        playBGM(bgm_Play);
     }
 
     public void playBGMGameOver() {
-        playBGM(BGM_GameOver);
+        playBGM(bgm_GameOver);
     }
 
     private void playBGM(Clip bgm) {
+        if (current != null)
+            current.stop();
         bgm.setFramePosition(0);
         bgm.start();
         clip = bgm;
         setVolume(VariableHandler.getVolume());
         bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        current = bgm;
     }
 
     public boolean playingBGMMenu() {
-        return clip == BGM_Menu;
+        return clip == bgm_Main;
     }
 
 }

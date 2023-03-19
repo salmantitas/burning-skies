@@ -48,11 +48,7 @@ public class MenuMain extends Menu {
 
     @Override
     public void onSwitch() {
-//        GameController.getSound().BGM_GameOver.stop();
-        if (!GameController.getSound().playingBGMMenu()) {
-            GameController.getSound().stopMusic();
-            GameController.getSound().playBGMMenu();
-        }
+        GameController.getSound().playBGMMenu();
     }
 
     /*

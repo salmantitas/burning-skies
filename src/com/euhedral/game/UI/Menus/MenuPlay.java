@@ -45,4 +45,10 @@ public class MenuPlay extends Menu {
 
         super.postRender(g);
     }
+
+    @Override
+    public void onSwitch() {
+//        GameController.getSound().bgm_Main.stop();
+        GameController.getSound().playBGMPlay();
+    }
 }
