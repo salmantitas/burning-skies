@@ -24,9 +24,9 @@ public class MenuPlay extends Menu {
         a.addText("You can use the WASD for movement.");
         a.addText("SPACEBAR can be used for shooting.");
 //        a.addText("CTRL is used to switch to ground bullets.");
-//        a.addText("CTRL is used to switch to ground bullets.");
         a.addText("Click the red square to dismiss this");
         a.addText("message and start the game.");
+        a.addText("You can disable tutorial in Settings.");
         a.addText("Enjoy!");
         addMessageBox(a);
 
@@ -41,7 +41,7 @@ public class MenuPlay extends Menu {
         super.render(g);
 
         VariableHandler.renderHUD(g);
-        VariableHandler.renderLevel(g);
+//        VariableHandler.renderLevel(g); // todo: disabled unless levels are reimplemented
 
         super.postRender(g);
     }

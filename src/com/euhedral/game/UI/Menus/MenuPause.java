@@ -33,7 +33,7 @@ public class MenuPause extends Menu {
 
         VariableHandler.renderHUD(g);
         drawPause(g);
-        VariableHandler.renderLevel(g);
+//        VariableHandler.renderLevel(g);
 
         super.postRender(g);
     }

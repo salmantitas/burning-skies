@@ -30,16 +30,8 @@
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.csv" beforeDir="false" afterPath="$PROJECT_DIR$/settings.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/Engine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/UI/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/UI/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/SoundHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/SoundHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuCredits.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuCredits.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuGameOver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuGameOver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuHelp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuHelp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuMain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPause.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPause.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuTransition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuTransition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPlay.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
