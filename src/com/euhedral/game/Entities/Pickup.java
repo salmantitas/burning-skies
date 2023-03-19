@@ -40,4 +40,10 @@ public class Pickup extends MobileEntity {
 //        super.render(g);
         drawDefault(g);
     }
+
+//    @Override
+//    public void disable() {
+//
+//        super.disable();
+//    }
 }

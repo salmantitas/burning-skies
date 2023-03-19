@@ -455,7 +455,7 @@ public class GameController {
 
     public void resetGame() {
 
-        Engine.timer = 0;
+        Engine.timeInSeconds = 0;
         variableHandler.resetScore();
         variableHandler.resetPower();
         VariableHandler.shield.reset();

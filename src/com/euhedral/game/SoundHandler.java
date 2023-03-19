@@ -7,9 +7,9 @@ import javax.sound.sampled.FloatControl;
 import java.net.URL;
 
 public class SoundHandler {
-    int MAX_CLIP = 30;
-    Clip clip;
-    URL soundURL[] = new URL[MAX_CLIP];
+    static int MAX_CLIP = 30;
+    static Clip clip;
+    static URL soundURL[] = new URL[MAX_CLIP];
 
     public Clip bgm_Main;
     public Clip bgm_Play;
@@ -50,7 +50,7 @@ public class SoundHandler {
         }
     }
 
-    public void setFile(int i) {
+    public static void setFile(int i) {
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
@@ -70,12 +70,12 @@ public class SoundHandler {
         clip.stop();
     }
 
-    public void playSound(int i) {
+    public static void playSound(int i) {
         setFile(i);
         play();
     }
 
-    private void play() {
+    static private void play() {
         clip.start();
         setVolume(VariableHandler.getVolume());
     }
@@ -91,7 +91,7 @@ public class SoundHandler {
         return (float) Math.pow(10f, gainControl.getValue() / 20f);
     }
 
-    public void setVolume(float volume) {
+    public static void setVolume(float volume) {
         if (volume < 0f || volume > 1f)
             throw new IllegalArgumentException("Volume not valid: " + volume);
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);

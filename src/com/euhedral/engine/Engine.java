@@ -110,7 +110,8 @@ public class Engine extends Canvas implements Runnable{
 
             if (System.currentTimeMillis() - 1000 > timer) {
                 timer += 1000;
-                System.out.printf("FPS: %d | TPS: %d\n", fps, tps);
+                timeInSeconds++;
+                System.out.printf("FPS: %d | TPS: %d | Timer: %d\n", fps, tps, timeInSeconds);
                 fps = 0;
                 tps = 0;
             }

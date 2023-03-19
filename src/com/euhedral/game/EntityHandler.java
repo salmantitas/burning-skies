@@ -15,7 +15,7 @@ public class EntityHandler {
 //    private Camera camera;
     private int levelHeight;
 
-    private LinkedList<Entity> entities;
+//    private LinkedList<Entity> entities;
 
     // Player
     private Player player;// = new Player(0, 0, 0);
@@ -59,6 +59,14 @@ public class EntityHandler {
         updateFlag();
 
         checkCollisions();
+
+//        cleanDisabledEntities();
+    }
+
+    public void cleanDisabledEntities() {
+        cleanBullets();
+        cleanEnemies();
+        cleanPickups();
     }
 
     public void render(Graphics g) {
@@ -330,6 +338,36 @@ public class EntityHandler {
         }
     }
 
+    public void cleanEnemies() {
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy enemy = enemies.get(i);
+            if (!enemy.isActive()) {
+                enemies.remove(enemy);
+                i--; // list is smaller by 1 now, so index is subtracted to prevent out of bounds
+            }
+        }
+    }
+
+    public void cleanBullets() {
+        for (int i = 0; i < bullets.size(); i++) {
+            Bullet bullet = bullets.get(i);
+            if (!bullet.isActive()) {
+                bullets.remove(bullet);
+                i--; // list is smaller by 1 now, so index is subtracted to prevent out of bounds
+            }
+        }
+    }
+
+    public void cleanPickups() {
+        for (int i = 0; i < pickups.size(); i++) {
+            Pickup pickup = pickups.get(i);
+            if (!pickup.isActive()) {
+                pickups.remove(pickup);
+                i--; // list is smaller by 1 now, so index is subtracted to prevent out of bounds
+            }
+        }
+    }
+
     public void clearEnemies() {
         enemies.clear();
         clearBullets();
@@ -480,41 +518,51 @@ public class EntityHandler {
      * Entity Management Functions *
      ****************-**************/
 
-    public void addEntity(Entity entity) {
-        entities.add(entity);
+//    public void addEntity(Entity entity) {
+//        entities.add(entity);
+//
+//        /*************
+//         * Game Code *
+//         *************/
+//    }
+//
+//    public void removeEntity(Entity entity) {
+//        entities.remove(entity);
+//
+//        /*************
+//         * Game Code *
+//         *************/
+//    }
+//
+//    private void updateEntities() {
+//        for (int i = 0; i < entities.size(); i++) {
+//            Entity entity = entities.get(i);
+//            entity.update();
+//        }
+//    }
+//
+//    private void updateActiveEntities(LinkedList<Entity> list) {
+//        for (int i = 0; i < list.size(); i++) {
+//            Entity entity = list.get(i);
+//            if (entity.isActive())
+//                entity.update();
+//        }
+//    }
+//
+//    private void renderEntities(Graphics g) {
+//        for (int i = 0; i < entities.size(); i++) {
+//            Entity entity = entities.get(i);
+//            entity.render(g);
+//        }
+//    }
 
-        /*************
-         * Game Code *
-         *************/
-    }
-
-    public void removeEntity(Entity entity) {
-        entities.remove(entity);
-
-        /*************
-         * Game Code *
-         *************/
-    }
-
-    private void updateEntities() {
-        for (int i = 0; i < entities.size(); i++) {
-            Entity entity = entities.get(i);
-            entity.update();
-        }
-    }
-
-    private void updateActiveEntities(LinkedList<Entity> list) {
+    private void cleanEntities(LinkedList<Entity> list) {
         for (int i = 0; i < list.size(); i++) {
             Entity entity = list.get(i);
-            if (entity.isActive())
-                entity.update();
-        }
-    }
-
-    private void renderEntities(Graphics g) {
-        for (int i = 0; i < entities.size(); i++) {
-            Entity entity = entities.get(i);
-            entity.render(g);
+            if (!entity.isActive()) {
+                list.remove(entity);
+                i--; // list is smaller by 1 now, so index is subtracted to prevent out of bounds
+            }
         }
     }
 

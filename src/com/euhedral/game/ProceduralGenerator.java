@@ -20,7 +20,7 @@ public class ProceduralGenerator {
     int xStart = 1, xEnd = width - 3;
     int xMid = width/2;
     int spawnZone, lastZone, lastLastZone;
-    int wave, pauseBetweenWaves, pattern;
+    int wave, pauseBetweenWaves, pattern, waveBetweenHealth;
     int increment = 3;
     int level;
     int remainingHeight;
@@ -28,9 +28,10 @@ public class ProceduralGenerator {
     final int ENDLESS = -1;
 
     int SPAWN_ENEMY = 0;
-    int SPAWN_HEALTH = 1;
+    int SPAWN_HEALTH = 10;
     int spawnNext = 0;
-    int MIN_WAVE_HEALTH_SPAWN = 0;
+    int MIN_WAVE_HEALTH_SPAWN = 15;
+    int MIN_WAVE_BETWEEN_HEALTH_SPAWN = 10;
 
     /*
     * Basic - 1/1
@@ -135,7 +136,9 @@ public class ProceduralGenerator {
 
     public void update() {
         spawnNext = Utility.randomRangeInclusive(SPAWN_ENEMY, SPAWN_HEALTH);
-        if (spawnNext == SPAWN_HEALTH && wave >= MIN_WAVE_HEALTH_SPAWN)
+        if (wave == MIN_WAVE_HEALTH_SPAWN) {
+            spawnHealth();
+        } else if (spawnNext == SPAWN_HEALTH && wave >= MIN_WAVE_HEALTH_SPAWN)
             spawnHealth();
         else
             generateEnemiesHelper();
@@ -145,6 +148,7 @@ public class ProceduralGenerator {
     private void generateEnemiesHelper() {
 //        if (remainingHeight > 0) {
             // for every wave
+        waveBetweenHealth++;
             nextPattern();
 
             // for every zone
