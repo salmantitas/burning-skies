@@ -24,6 +24,13 @@ public class ProceduralGenerator {
     int increment = 3;
     int level;
     int remainingHeight;
+    int playerX = xMid*32, playerY = Engine.HEIGHT;
+    final int ENDLESS = -1;
+
+    int SPAWN_ENEMY = 0;
+    int SPAWN_HEALTH = 1;
+    int spawnNext = 0;
+    int MIN_WAVE_HEALTH_SPAWN = 0;
 
     /*
     * Basic - 1/1
@@ -46,6 +53,21 @@ public class ProceduralGenerator {
     int groundRate = 50;
     int groundChance = 1; // in 10;
     int groundCount = 0;
+
+    // spawns in V pattern
+    int minEnemiesV = 3;
+    int maxEnemiesV = 7;
+
+    // spawns in line pattern
+    int minEnemiesL = 1;
+    int maxEnemiesL = 5;
+
+    // ground spawns
+    int minG = 1;
+    int maxG = 2;
+
+    // pauses between each waves
+    int minPause = 5;
 
     enum Pattern {
         line,
@@ -71,15 +93,13 @@ public class ProceduralGenerator {
         colorMap = VariableHandler.colorMap;
     }
 
-    // called to spawn next wave
-    public void update() {
-
-    }
-
     // generate a level using procedural generation
     public void generateLevel() {
         level = VariableHandler.getLevel();
         switch (level) {
+            case ENDLESS:
+                height = ENDLESS;
+                break;
             case 1:
                 height = 150; // 100 = ~4 waves
                 break;
@@ -102,28 +122,114 @@ public class ProceduralGenerator {
         int x = 15 * 32, y = remainingHeight * 32;
 
         entityHandler.setLevelHeight(getLevelHeight());
-        entityHandler.spawnPlayer(xMid*32, height*32, VariableHandler.power.getValue(), VariableHandler.gotGround());
+        entityHandler.spawnPlayer(playerX, height * 32, VariableHandler.power.getValue(), VariableHandler.gotGround());
 
         // create distance between player and first wave
         remainingHeight -= Engine.HEIGHT / 32;
         wave = 1;
 
-        // spawns in V pattern
-        int minV = 3;
-        int maxV = 7;
-
-        // spawns in line pattern
-        int minL = 1;
-        int maxL = 5;
-
-        // ground spawns
-        int minG = 1;
-        int maxG = 2;
-
-        // pauses between each waves
-        int minPause = 5;
         pauseBetweenWaves = minPause;
 
+//        generateEnemies();
+    }
+
+    public void update() {
+        spawnNext = Utility.randomRangeInclusive(SPAWN_ENEMY, SPAWN_HEALTH);
+        if (spawnNext == SPAWN_HEALTH && wave >= MIN_WAVE_HEALTH_SPAWN)
+            spawnHealth();
+        else
+            generateEnemiesHelper();
+//        System.out.println("Spawn Code: " + spawnNext);
+    }
+
+    private void generateEnemiesHelper() {
+//        if (remainingHeight > 0) {
+            // for every wave
+            nextPattern();
+
+            // for every zone
+            lastLastZone = lastZone;
+            lastZone = spawnZone;
+            spawnZone = Utility.randomRange(1, 3);
+
+            // determine that no zone spawns more than twice in a row
+            while (spawnZone == lastZone && spawnZone == lastLastZone) {
+                spawnZone = Utility.randomRange(1,3);
+            }
+
+            // choose spawn pattern
+            Pattern pattern = Pattern.fromInteger (Utility.randomRange(0, maxP));
+            int num = 1;
+
+            if (pattern == Pattern.line) {
+                num = Utility.randomRange(1, maxEnemiesL);
+                pauseBetweenWaves = minPause + (num - minEnemiesL);
+            }
+            if (pattern == Pattern.v) {
+                num = Utility.randomRange(minEnemiesV, maxEnemiesV);
+                pauseBetweenWaves = 2* minPause + (num - minEnemiesV) * 4;
+            }
+
+            // spawn enemies
+
+            switch (pattern) {
+                case line: spawnLine(num, remainingHeight);
+                    break;
+                case v: spawnV(num, remainingHeight);
+                    break;
+            }
+
+            wave++;
+            remainingHeight -= pauseBetweenWaves;
+//        }
+
+    }
+
+    private void spawnHealth() {
+//        // for every zone
+//        lastLastZone = lastZone;
+//        lastZone = spawnZone;
+        spawnZone = Utility.randomRange(1, 3);
+
+//        // determine that no zone spawns more than twice in a row
+//        while (spawnZone == lastZone && spawnZone == lastLastZone) {
+//            spawnZone = Utility.randomRange(1,3);
+//        }
+
+//        // choose spawn pattern
+//        Pattern pattern = Pattern.fromInteger (Utility.randomRange(0, maxP));
+//        int num = 1;
+//
+//        if (pattern == Pattern.line) {
+//            num = Utility.randomRange(1, maxEnemiesL);
+//            pauseBetweenWaves = minPause + (num - minEnemiesL);
+//        }
+//        if (pattern == Pattern.v) {
+//            num = Utility.randomRange(minEnemiesV, maxEnemiesV);
+//            pauseBetweenWaves = 2* minPause + (num - minEnemiesV) * 4;
+//        }
+
+        // spawn enemies
+
+//        switch (pattern) {
+//            case line: spawnLine(num, remainingHeight);
+//                break;
+//            case v: spawnV(num, remainingHeight);
+//                break;
+//        }
+
+        spawnPickupHelper2(remainingHeight, EntityID.PickupHealth);
+
+        wave++;
+        remainingHeight -= pauseBetweenWaves;
+    }
+
+    // Pickup Spawner Helped
+    private void spawnPickupHelper2(int remainingHeight, EntityID id) {
+        entityHandler.spawnPickup(xMid * 32, remainingHeight * 32, id);
+    }
+
+    private void generateEnemies() {
         // todo: Every can spawn either of the 3 - Air Enemy, Ground Enemy, Pickup
         while (remainingHeight > 0) {
             // for every wave
@@ -167,12 +273,12 @@ public class ProceduralGenerator {
             int num = 1;
 
             if (pattern == Pattern.line) {
-                num = Utility.randomRange(1, maxL);
-                pauseBetweenWaves = minPause + (num - minL);
+                num = Utility.randomRange(1, maxEnemiesL);
+                pauseBetweenWaves = minPause + (num - minEnemiesL);
             }
             if (pattern == Pattern.v) {
-                num = Utility.randomRange(minV, maxV);
-                pauseBetweenWaves = 2* minPause + (num - minV) * 4;
+                num = Utility.randomRange(minEnemiesV, maxEnemiesV);
+                pauseBetweenWaves = 2* minPause + (num - minEnemiesV) * 4;
             }
 
             int tileSize = Utility.intAtWidth640(32);

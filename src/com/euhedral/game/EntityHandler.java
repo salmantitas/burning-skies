@@ -267,7 +267,8 @@ public class EntityHandler {
      ******************/
 
     public void updateFlag() {
-        flag.update();
+        if (flag != null)
+            flag.update();
     }
 
     public void renderFlag(Graphics g) {
@@ -283,6 +284,8 @@ public class EntityHandler {
     }
 
     public int getFlagY() {
+        if (flag == null)
+            return levelHeight;
         return flag.getY();
     }
 
@@ -456,6 +459,7 @@ public class EntityHandler {
                     if (pickup.getID() == EntityID.PickupHealth)
                         variableHandler.health.increase(25);
                     else variableHandler.shield.increase(25);
+                    GameController.getSound().playSound(SoundHandler.PICKUP);
                     pickup.disable();
                 }
             }

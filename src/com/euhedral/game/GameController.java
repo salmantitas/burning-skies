@@ -4,7 +4,6 @@ import com.euhedral.engine.*;
 import com.euhedral.game.Entities.Shop;
 import com.euhedral.game.UI.UIHandler;
 
-import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -219,6 +218,7 @@ public class GameController {
 
                 if (uiHandler.noActiveMessageBoxes() || !VariableHandler.isTutorial()) {
 
+                    proceduralGenerator.update();
                     entityHandler.update();
                     checkLevelStatus();
                 }
@@ -591,7 +591,7 @@ public class GameController {
             levelHeight = proceduralGenerator.getLevelHeight();
         }
 
-        entityHandler.spawnFlag();
+//        entityHandler.spawnFlag();
     }
 
     public static Camera getCamera() {

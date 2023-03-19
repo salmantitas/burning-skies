@@ -8,19 +8,28 @@ import java.awt.image.BufferedImage;
 
 public class TextureHandler {
 
+    public BufferedImage
+            playerImage,
+            enemyImage,
+            explosionImage,
+            title,
+            logo,
+            seaImage,
+            pickupImage;
+
+    public SpriteSheet
+            playerSS,
+            enemySS,
+            explosionSS,
+            seaSS,
+            pickupSS;
+
+
     public BufferedImage[] player = new BufferedImage[3];
     public BufferedImage[] enemy = new BufferedImage[1];
     public BufferedImage[] explosion = new BufferedImage[7];
     public BufferedImage[] sea = new BufferedImage[8];
-
-    public SpriteSheet playerSS, enemySS, explosionSS, seaSS;
-
-    public BufferedImage playerImage = null;
-    public BufferedImage enemyImage = null;
-    public BufferedImage explosionImage = null;
-    public BufferedImage title = null;
-    public BufferedImage logo = null;
-    public BufferedImage seaImage = null;
+    public BufferedImage[] pickup = new BufferedImage[2];
 
     public TextureHandler() {
         BufferedImageLoader loader = new BufferedImageLoader();
@@ -32,6 +41,7 @@ public class TextureHandler {
             title = loader.loadImage("/title.png");
             logo = loader.loadImage("/logo.png");
             seaImage = loader.loadImage("/sea.png");
+            pickupImage = loader.loadImage("/health.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,6 +50,7 @@ public class TextureHandler {
         enemySS = new SpriteSheet(enemyImage);
         explosionSS = new SpriteSheet(explosionImage);
         seaSS = new SpriteSheet(seaImage);
+        pickupSS = new SpriteSheet(pickupImage);
 
         initializeTexture();
     }
@@ -59,9 +70,17 @@ public class TextureHandler {
         explosion[3] = explosionSS.grabImage(4,1,w,h);
         explosion[4] = explosionSS.grabImage(5,1,w,h);
 
+        w = 32;
+        h = 32;
+
         for (int i = 0; i < 8; i++) {
-            sea[i] = seaSS.grabImage(i+1, 1, 32, 32);
+            sea[i] = seaSS.grabImage(i+1, 1, w, h);
         }
+
+        w = Utility.intAtWidth640(16);
+        h = w*2;
+
+        pickup[0] = pickupSS.grabImage(1,1, w, h);
     }
 
 

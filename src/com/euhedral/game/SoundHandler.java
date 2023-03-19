@@ -19,6 +19,7 @@ public class SoundHandler {
 
     public static final int BGMMAINMENU = 0;
     public static final int BULLET = 1;
+    public static final int PICKUP = 2;
     public static final int EXPLOSION = 3;
     public static final int BGMGAMEOVER = 4;
     public static final int BGMPLAY = 5;
@@ -30,7 +31,7 @@ public class SoundHandler {
     private void initializeSounds() {
         soundURL[0] = getClass().getResource("/bgmMain.wav");
         soundURL[1] = getClass().getResource("/bullet.wav");
-        soundURL[2] = getClass().getResource("/collision.wav");
+        soundURL[2] = getClass().getResource("/pickup.wav");
         soundURL[3] = getClass().getResource("/explosion.wav");
         soundURL[4] = getClass().getResource("/bgmGameOver.wav");
         soundURL[5] = getClass().getResource("/bgm1.wav");

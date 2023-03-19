@@ -73,6 +73,10 @@ public class Utility {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
+    public static int randomRangeInclusive(int min, int max) {
+        return (int) ((Math.random() * ((max + 1) - min)) + min);
+    }
+
     /*******************
      * Debug Functions *
      *******************/
