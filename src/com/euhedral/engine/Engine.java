@@ -74,41 +74,38 @@ public class Engine extends Canvas implements Runnable{
 
     @Override
     public void run() {
-//        gameLoop();
-
         requestFocus();
         double target = 60.0;
+        double millisecondsPerCycle =  1000000.0;
         double nanosecondsPerCycle =  1000000000.0;
-        long lastTime = System.nanoTime();
+        double drawInterval = nanosecondsPerCycle/target;
+        double nextDrawTime = System.nanoTime() + drawInterval;
         long timer = System.currentTimeMillis();
-        double unprocessedTime = 0.0;
         int fps = 0;
         int tps = 0;
-        boolean render = false;
-        while (running) {
-            long now = System.nanoTime();
-            unprocessedTime += (now - lastTime / nanosecondsPerCycle);
-            lastTime = now;
 
-            if (unprocessedTime >= 1) {
-                update();
-                unprocessedTime--;
-                tps++;
-                render = true;
-            } else {
-                render = false;
-            }
+        // Sleep Based Game Loop
+        // todo: Replace with timestep based loop
+        while (running) {
+            update();
+            tps++;
+            render();
+            fps++;
 
             try {
-//                Thread.sleep(1);
-                Thread.sleep(10);
+                double remainingTime = nextDrawTime - System.nanoTime();
+                remainingTime = remainingTime/millisecondsPerCycle;
+
+                if (remainingTime < 0) {
+                    remainingTime = 0;
+                }
+
+                Thread.sleep((long) remainingTime);
+
+                nextDrawTime += drawInterval;
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
-
-            if (render) {
-                render();
-                fps++;
             }
 
             if (System.currentTimeMillis() - 1000 > timer) {

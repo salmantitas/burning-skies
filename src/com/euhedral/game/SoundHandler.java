@@ -111,8 +111,10 @@ public class SoundHandler {
 
     private void playBGM(Clip bgm) {
         if (current != null)
-            current.stop();
-        bgm.setFramePosition(0);
+            if (current != bgm) {
+                current.stop();
+                bgm.setFramePosition(0);
+            }
         bgm.start();
         clip = bgm;
         setVolume(VariableHandler.getVolume());

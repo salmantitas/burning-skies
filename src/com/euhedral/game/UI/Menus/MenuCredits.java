@@ -16,7 +16,7 @@ public class MenuCredits extends Menu {
         MAXBUTTON = 1;
         options = new Button[MAXBUTTON];
 
-        ButtonNav backToMenu = new ButtonNav(x2, yFINAL, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+        ButtonNav backToMenu = new ButtonNav(x2, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
         options[0] = backToMenu;
     }
 
@@ -35,24 +35,29 @@ public class MenuCredits extends Menu {
 
         g.drawString("Credits", x15, y00);
 
-        g.setFont(new Font("arial", 1, 30));
+        int creditFontSize = 25;
+
+        g.setFont(new Font("arial", 1, creditFontSize));
         ArrayList<String> text = new ArrayList<>();
         text.add("Background Music");
         text.add("Dar Golan");
+        text.add("Joshua McLean");
         text.add("");
 
         text.add("Bullet Sound Effect");
         text.add("The Premiere Edition 10 on videvo.com");
-        text.add("");
-
         text.add("Explosion Sound Effect");
         text.add("Pranus Production's Gun Sound Pack on itch.io");
+        text.add("");
 
-        int lineHeightInPixel = 40;
+        text.add("Sea Texture");
+        text.add("Rafael Matos");
+
+        int lineHeightInPixel = 35;
         for (int i = 0; i < text.size(); i++)
         {
             String s = text.get(i);
-            g.drawString(s, x0, y20 + (i+1)*lineHeightInPixel);
+            g.drawString(s, x0, y10 + (i+1)*lineHeightInPixel);
         }
     }
 }

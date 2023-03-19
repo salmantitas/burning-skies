@@ -4,12 +4,10 @@ import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.*;
-import com.euhedral.engine.UI.UIItem;
 import com.euhedral.game.ActionTag;
 import com.euhedral.game.GameController;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MenuHelp extends Menu {
@@ -67,7 +65,7 @@ public class MenuHelp extends Menu {
         MAXBUTTON = 1;
         options = new Button[MAXBUTTON];
 
-        ButtonNav backToMenu = new ButtonNav(x2, yFINAL, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+        ButtonNav backToMenu = new ButtonNav(x2, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
         options[0] = backToMenu;
 
 //        createBindable(GameController.UP, 100, 100);

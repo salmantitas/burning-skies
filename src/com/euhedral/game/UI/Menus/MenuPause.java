@@ -17,7 +17,7 @@ public class MenuPause extends Menu {
         options = new Button[MAXBUTTON];
 
         ButtonNav backToMenu = new ButtonNav(x2, y60, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
-        ButtonNav quit = new ButtonNav(x3, yFINAL, buttonSize, "Quit", GameState.Quit);
+        ButtonNav quit = new ButtonNav(x3, y80, buttonSize, "Quit", GameState.Quit);
 
         Panel topPane = new Panel(0,0, Engine.WIDTH, Utility.percHeight(12), GameState.Game);
         topPane.setTransparency(1);

@@ -28,15 +28,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/res/bgmMain.wav" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/bgm1.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/bgm1.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/bgm1.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/bgm1.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.csv" beforeDir="false" afterPath="$PROJECT_DIR$/settings.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/Engine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/UI/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/UI/Menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/SoundHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/SoundHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuCredits.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuCredits.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuGameOver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuGameOver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuHelp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuHelp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPlay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPause.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPause.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuSettings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuTransition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuTransition.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,12 +166,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuHelp.java</url>
-          <line>39</line>
+          <line>37</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/UI/Menu.java</url>
-          <line>196</line>
+          <line>197</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -187,14 +190,9 @@
           <option name="timeStamp" value="143" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/engine/Engine.java</url>
-          <line>97</line>
-          <option name="timeStamp" value="164" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/engine/Engine.java</url>
-          <line>90</line>
-          <option name="timeStamp" value="165" />
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuMain.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="168" />
         </line-breakpoint>
         <line-breakpoint enabled="true" log-message="true" suspend="NONE" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/Animation.java</url>
@@ -210,6 +208,9 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/aerial_predator$Engine.ic" NAME="Engine Coverage Results" MODIFIED="1678749477797" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.euhedral.engine.UI.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/burning_skies$Engine.ic" NAME="Engine Coverage Results" MODIFIED="1679202108406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.euhedral.engine.UI.*</FILTER>
     </SUITE>
   </component>

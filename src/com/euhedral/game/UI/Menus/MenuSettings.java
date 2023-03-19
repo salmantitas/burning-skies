@@ -21,7 +21,7 @@ public class MenuSettings extends Menu {
 
     ButtonAction tutorial = new ButtonAction(x2, y40, optionSize, "Tutorial", ActionTag.tutorial);
     ButtonAction volume = new ButtonAction(x2, y50, optionSize, "Background Music", ActionTag.volume);
-    ButtonNav backToMenu = new ButtonNav(x2, yFINAL, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+    ButtonNav backToMenu = new ButtonNav(x2, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
 
     public MenuSettings() {
         super(GameState.Settings);

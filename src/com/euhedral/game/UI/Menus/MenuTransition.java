@@ -29,9 +29,9 @@ public class MenuTransition extends Menu {
 
     ButtonAction start = new ButtonAction(x3, y20, buttonSize, "Start", ActionTag.go);
 
-    ButtonNav backToMenu = new ButtonNav(x2, y40, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+    ButtonNav backToMenu = new ButtonNav(x2, y60, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
 
-    ButtonNav quit = new ButtonNav(x3, yFINAL, buttonSize, "Quit", GameState.Quit);
+    ButtonNav quit = new ButtonNav(x3, y80, buttonSize, "Quit", GameState.Quit);
 
     // Options
 

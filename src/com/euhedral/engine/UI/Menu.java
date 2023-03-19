@@ -38,18 +38,19 @@ public class Menu {
     protected int x10 = Utility.percWidth(10);
     protected int x15 = Utility.percWidth(30);
     protected int x2 = Utility.percWidth(40);
-    protected int x3 = Utility.percWidth(43);
+    protected int x3 = Utility.percWidth(43) + 10;
     protected int x4 = Utility.percWidth(50);
     protected int xFINAL = Utility.percWidth(75);
     protected int y00 = Utility.percHeight(20);
-    protected int y10 = Utility.percHeight(20);
-    protected int y20 = Utility.percHeight(30);
-    protected int y30 = Utility.percHeight(38);
-    protected int y40 = Utility.percHeight(46);
-    protected int y50 = Utility.percHeight(54);
-    protected int y60 = Utility.percHeight(64);
+    protected int y10 = Utility.percHeight(26);
+    protected int y15 = Utility.percHeight(32);
+    protected int y20 = Utility.percHeight(40);
+    protected int y30 = Utility.percHeight(48);
+    protected int y40 = Utility.percHeight(56);
+    protected int y50 = Utility.percHeight(62);
+    protected int y60 = Utility.percHeight(70);
     protected int y70 = Utility.percHeight(72);
-    protected int yFINAL = Utility.percHeight(80);
+    protected int y80 = Utility.percHeight(80);
 
     public Menu(GameState state) {
         this.state = state;

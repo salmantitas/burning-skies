@@ -16,11 +16,17 @@ public class MenuMain extends Menu {
         MAXBUTTON = 5;
         options = new Button[MAXBUTTON];
 
-        ButtonNav play = new ButtonNav(x3, y20, buttonSize, "Play", GameState.Transition);
-        ButtonNav settings = new ButtonNav(x2, y30, buttonSize, "Settings", GameState.Settings);
-        ButtonNav help = new ButtonNav(x3, y40, buttonSize, "Help", GameState.Help);
-        ButtonNav credits = new ButtonNav(x2, y60, buttonSize, "Credits", GameState.Credits);
-        ButtonNav quit = new ButtonNav(x3, yFINAL, buttonSize, "Quit", GameState.Quit);
+        int playY = y15;
+        int settingsY = Utility.percHeight(47);
+        int helpY = Utility.percHeight(56);
+        int creditsY = Utility.percHeight(69);
+        int quitY = y80;
+
+        ButtonNav play = new ButtonNav(x3, playY, buttonSize, "Play", GameState.Transition);
+        ButtonNav settings = new ButtonNav(x2, settingsY, buttonSize, "Settings", GameState.Settings);
+        ButtonNav help = new ButtonNav(x3, helpY, buttonSize, "Help", GameState.Help);
+        ButtonNav credits = new ButtonNav(x2, creditsY, buttonSize, "Credits", GameState.Credits);
+        ButtonNav quit = new ButtonNav(x3, quitY, buttonSize, "Quit", GameState.Quit);
 
         options[0] = play;
         options[1] = settings;
