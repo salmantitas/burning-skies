@@ -182,6 +182,13 @@ public class EntityHandler {
             player.canShoot(false);
     }
 
+    public void spawnPlayer(int width, int height) {
+        player = new Player(width, height, levelHeight);
+        player.setGround(VariableHandler.gotGround());
+        player.setPower(VariableHandler.power.getValue());
+        setCameraToPlayer();
+    }
+
     public void spawnPlayer(int width, int height, int power, boolean ground) {
         player = new Player(width, height, levelHeight);
         player.setGround(ground);
