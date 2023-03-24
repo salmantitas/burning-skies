@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/*
+* todo: remove health and enemy overlap
+* todo: calculate pause betwwen waves after spawning
+* todo: gradually increasing difficulty
+* */
 public class ProceduralGenerator {
 
     public HashMap<Color, EntityID> colorMap;
@@ -19,10 +24,8 @@ public class ProceduralGenerator {
     int pattern; //, lastPattern, lastLastPattern; todo: use to prevent repetition of pattern
     int wave, pauseBetweenWaves, waveSinceHealth;
     int spacingHorizontal = 3;
-    int spacingVertical = 3;
     int level;
-    int remainingHeight;
-    int playerX = xMid*32, playerY = Engine.HEIGHT;
+    int playerX = xMid*32, playerY = height*32;
     final int ENDLESS = -1;
     int lastSpawnY;
 
@@ -120,13 +123,10 @@ public class ProceduralGenerator {
 
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
-        remainingHeight = height;
-
         entityHandler.setLevelHeight(getLevelHeight());
-        entityHandler.spawnPlayer(playerX, height * 32);
+        entityHandler.spawnPlayer(playerX, playerY);
 
         // create distance between player and first wave
-        remainingHeight -= Engine.HEIGHT / 32;
         wave = 1;
 
         // todo: use line for first wave here
@@ -144,7 +144,6 @@ public class ProceduralGenerator {
         else
             generateEnemies();
 //        System.out.println("Spawn Code: " + spawnNext);
-//        System.out.printf("Remaining Height: %d\n", remainingHeight);
     }
 
     private void generateEnemies() {
@@ -170,19 +169,7 @@ public class ProceduralGenerator {
 
         int num = Utility.randomRange(minEnemies, maxEnemies);
 
-        float minPause = 0 , maxPause = 0;
-
-        if (pattern == PATTERN_LINE) {
-            minPause = MIN_PAUSE_LINE;
-            maxPause = MAX_PAUSE_LINE;
-        }
-        if (pattern == PATTERN_V) {
-            minPause = MIN_PAUSE_V;
-            maxPause = MAX_PAUSE_V;
-        }
-
-        float pauseCalculationFloat = (maxPause - minPause) * num/maxEnemies;
-        pauseBetweenWaves = (int) pauseCalculationFloat;
+        calculatePauseBetweenWaves(num, maxEnemies);
 
 //        System.out.printf("Num: %d\n", num);
 
@@ -205,21 +192,20 @@ public class ProceduralGenerator {
 
         wave++;
 
-        remainingHeight -= pauseBetweenWaves;
-
     }
 
     private void spawnHealth() {
         spawnZone = Utility.randomRange(1, 3);
-        spawnPickupHelper2(remainingHeight, EntityID.PickupHealth);
+        int spawnHeight = lastSpawnY - pauseBetweenWaves;
+        spawnPickupHelper2(spawnHeight, EntityID.PickupHealth);
         wave++;
         waveSinceHealth = 0;
-        remainingHeight -= MIN_PAUSE_LINE;
     }
 
     // Pickup Spawner Helped
-    private void spawnPickupHelper2(int remainingHeight, EntityID id) {
-        entityHandler.spawnPickup(xMid * 32, remainingHeight * 32, id);
+    private void spawnPickupHelper2(int spawnHeight, EntityID id) {
+        entityHandler.spawnPickup(xMid * 32, spawnHeight * 32, id);
+        lastSpawnY = spawnHeight;
     }
 
     /* Spawn Pattern Functions*/
@@ -301,10 +287,10 @@ public class ProceduralGenerator {
         spawnHelper(x, y, c);
     }
 
-    private void spawnFromMiddle(int num, int remainingHeight) {
+    private void spawnFromMiddle(int num, int spawnHeight) {
         int tileSize = Utility.intAtWidth640(32);
         int x = (width - 1) / 2;
-        int y = remainingHeight;
+        int y = spawnHeight;
         Color c = Color.RED; // stub
 
         // odd numb
@@ -331,9 +317,9 @@ public class ProceduralGenerator {
         }
     }
 
-    private void spawnFromMiddleV(int x, int num, int remainingHeight) {
+    private void spawnFromMiddleV(int x, int num, int spawnHeight) {
         int tileSize = Utility.intAtWidth640(32);
-        int y = remainingHeight;
+        int y = spawnHeight;
         Color c = Color.RED; // stub
 
         int incrementX = 2;
@@ -465,6 +451,22 @@ public class ProceduralGenerator {
 
     private int calculateSkip() {
         return Utility.randomRange(0, 2);
+    }
+
+    private void calculatePauseBetweenWaves(int num, int maxEnemies) {
+        float minPause = 0 , maxPause = 0;
+
+        if (pattern == PATTERN_LINE) {
+            minPause = MIN_PAUSE_LINE;
+            maxPause = MAX_PAUSE_LINE;
+        }
+        if (pattern == PATTERN_V) {
+            minPause = MIN_PAUSE_V;
+            maxPause = MAX_PAUSE_V;
+        }
+
+        float pauseCalculationFloat = (maxPause - minPause) * (num - 1)/(maxEnemies - 1) + minPause;
+        pauseBetweenWaves = (int) pauseCalculationFloat;
     }
 
     private void determineSpawn() {
