@@ -446,6 +446,7 @@ public class EntityHandler {
     private void playerVsEnemyBulletCollision() {
         for (Bullet bullet: bullets) {
             if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
+//                GameController.getSound().playSound(SoundHandler.IMPACT); // feels off
                 damagePlayer(10);
                 destroy(bullet);
             }
@@ -473,12 +474,12 @@ public class EntityHandler {
     private void enemyVsPlayerBulletCollision() {
         for (Enemy enemy : enemies) {
             if (enemy.isInscreen() && enemy.isAlive()) {
-                Bullet b = player.checkCollision(enemy);
-                if (b != null) {
+                Bullet bullet = player.checkCollision(enemy);
+                if (bullet != null) {
+//                    GameController.getSound().playSound(SoundHandler.IMPACT); // feels off
                     if (enemy.getContactId() == ContactID.Boss) {
                         boss.damage();
                         variableHandler.setHealthBoss(boss.getHealth());
-//                        healthBoss = boss.getHealth();
                         if (boss.getHealth() <= 0) {
                             destroyBoss();
                         }
@@ -487,10 +488,9 @@ public class EntityHandler {
                         if (enemy.getHealth() <= 0) {
                             destroy(enemy);
                             variableHandler.increaseScore(enemy.getScore());
-//                            score += enemy.getScore();
                         }
                     }
-                    destroy(b);
+                    destroy(bullet);
                 }
             }
         }
