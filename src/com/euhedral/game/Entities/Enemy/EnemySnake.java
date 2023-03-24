@@ -23,7 +23,7 @@ public class EnemySnake extends Enemy {
         super.initialize();
 
         width = Utility.intAtWidth640(48);
-        shootTimerDef = 120;
+        shootTimerDefault = 120;
         velY = 1.75f;
         healthRange(8,12);
         score = 200;

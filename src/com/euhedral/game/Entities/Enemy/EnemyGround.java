@@ -18,7 +18,7 @@ public class EnemyGround extends Enemy{
         super.initialize();
 
         power = 1;
-        shootTimerDef = 250;
+        shootTimerDefault = 250;
         minVelY = 1.8f;
         velY = minVelY;
         hMove = HorizontalMovement.RIGHT;

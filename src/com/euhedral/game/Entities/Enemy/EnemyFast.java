@@ -23,7 +23,7 @@ public class EnemyFast extends Enemy{
         super.initialize();
 
         power = 2;
-        shootTimerDef = 150;
+        shootTimerDefault = 150;
         velY = 4f;
         healthRange(2,4);
         score = 100;

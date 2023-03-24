@@ -25,7 +25,7 @@ public class EnemyBasic extends Enemy{
         super.initialize();
 
         power = 1;
-        shootTimerDef = 250;
+        shootTimerDefault = 250;
         velY = 1.8f;
         healthRange(2,4);
         score = 50;

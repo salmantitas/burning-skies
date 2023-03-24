@@ -24,8 +24,8 @@ public class Enemy extends MobileEntity {
     protected float offscreenVelY;
     protected boolean moveLeft, moveRight;
     protected Color color;
-    protected int shootTimerDef = 250;
-    protected int shootTimer = shootTimerDef;
+    protected int shootTimerDefault = 150;
+    protected int shootTimer = shootTimerDefault;
     protected LinkedList<Bullet> bullets = new LinkedList<>();
     protected boolean inscreen = false;
     protected Camera cam;
@@ -156,7 +156,7 @@ public class Enemy extends MobileEntity {
     }
 
     protected void resetShooter() {
-        shootTimer = shootTimerDef;
+        shootTimer = shootTimerDefault;
     }
 
     protected void healthRange(int min, int max) {

@@ -16,7 +16,7 @@ public class Player extends MobileEntity {
     // Shooting Entity
     private boolean canShoot;
     private int shootTimer = 0;
-    private final int shootTimerDefault = 10;
+    private final int shootTimerDefault = 7;
     private LinkedList<Bullet> bullets = new LinkedList<>();
 
     // Personal

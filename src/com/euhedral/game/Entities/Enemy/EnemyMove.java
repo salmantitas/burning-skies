@@ -22,7 +22,7 @@ public class EnemyMove extends Enemy {
     public void initialize() {
         super.initialize();
 
-        shootTimerDef = 60;
+        shootTimerDefault = 60;
         healthRange(6,10);
         score = 150;
         velX = velY;

@@ -67,7 +67,7 @@ public class EnemyBoss2 extends EnemyBoss{
         shotNum += 4;
 
         if (shotNum % 12 == 0) {
-            shootTimer = shootTimerDef;
+            shootTimer = shootTimerDefault;
         } else shootTimer = shootTimerSmall;
 
 //        System.out.println("Shooting at (" + (x + width/2) + ", " + y + ")" );

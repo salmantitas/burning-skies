@@ -13,7 +13,7 @@ public abstract class EnemyBoss extends Enemy {
 
     public EnemyBoss(int x, int y, int levelHeight) {
         super(x,y, ContactID.Boss, levelHeight);
-        shootTimerDef = 150;
+        shootTimerDefault = 150;
         enemyID = EnemyID.Boss;
     }
 
