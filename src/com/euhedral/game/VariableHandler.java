@@ -1,5 +1,7 @@
 package com.euhedral.game;
 
+import com.euhedral.engine.Engine;
+import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 
 import java.awt.*;
@@ -24,10 +26,14 @@ public class VariableHandler {
     // Vitality
 //    private int lives = 3;
 
-    public static Attribute health;
     public static Attribute power;
     public static Attribute ground;
     public static Attribute shield;
+    public static Attribute health;
+
+    private static Color healthLow = Color.RED;
+    private static Color healthMed = Color.ORANGE;
+    private static Color healthHigh = Color.GREEN;
 
     // todo: Boss Health
 //    public static Attribute bossHealth;
@@ -42,6 +48,9 @@ public class VariableHandler {
     private static int levelX = Utility.percWidth(90);
     private static int levelY;
     private static int levelSize = scoreSize;
+
+    // Timer
+    private static int timerX = Utility.percWidth(85);
 
     // Shop Costs
 
@@ -102,7 +111,7 @@ public class VariableHandler {
     public static void initializeAttributes() {
         health = new Attribute(100, false, 500);
         health.setY(Utility.percHeight(5));
-        health.setBodyColor(Color.green);
+        health.setForegroundColor(healthHigh);
 
         levelY = Utility.percHeight(7);
 
@@ -116,7 +125,7 @@ public class VariableHandler {
         shield = new Attribute(0, false, 2000);
         shield.setMAX(100);
         shield.setY(health.getY() + Utility.percHeight(3));
-        shield.setBodyColor(Color.yellow);
+        shield.setForegroundColor(Color.yellow);
     }
 
     public static void console() {
@@ -157,6 +166,8 @@ public class VariableHandler {
 //        power.renderValue(g);
         health.renderBar(g);
 //        shield.renderBar(g);
+        if (Engine.stateIs(GameState.Game))
+            renderTimer(g);
     }
 
     public static void renderScore(Graphics g) {
@@ -169,6 +180,12 @@ public class VariableHandler {
         g.setFont(new Font("arial", 1, levelSize));
         g.setColor(Color.WHITE);
         g.drawString("Level " + level, levelX, levelY);
+    }
+
+    public static void renderTimer(Graphics g) {
+        g.setFont(new Font("arial", 1, levelSize));
+        g.setColor(Color.YELLOW);
+        g.drawString("Timer: " + Engine.timeInSeconds, timerX, levelY);
     }
 
     protected void drawBossHealth(Graphics g) {
@@ -311,5 +328,15 @@ public class VariableHandler {
 
     public static void resetSaveDataNotification() {
         saveDataNotification = "";
+    }
+
+    public static void setHealthColor() {
+        if (health.getValue() > 66) {
+            health.setForegroundColor(healthHigh);
+        } else if (health.getValue() > 33) {
+            health.setForegroundColor(healthMed);
+        } else {
+            health.setForegroundColor(healthLow);
+        }
     }
 }

@@ -17,8 +17,8 @@ public class Attribute {
 
     // Render Properties
 
-    Color backColor = Color.lightGray;
-    Color bodyColor;
+    Color backgroundColor = Color.lightGray;
+    Color foregroundColor;
 
     int fontSize;
 
@@ -104,8 +104,8 @@ public class Attribute {
         return active;
     }
 
-    public void setBodyColor(Color c) {
-        bodyColor = c;
+    public void setForegroundColor(Color c) {
+        foregroundColor = c;
     }
 
     public void setFontSize(int size) {
@@ -115,9 +115,9 @@ public class Attribute {
     public void renderBar(Graphics g) {
         int width = Utility.intAtWidth640(2);
         int height = width * 6;
-        g.setColor(backColor);
+        g.setColor(backgroundColor);
         g.fillRect(x, y, MAX * width, height);
-        g.setColor(bodyColor);
+        g.setColor(foregroundColor);
         g.fillRect(x, y, value * width, height);
     }
 

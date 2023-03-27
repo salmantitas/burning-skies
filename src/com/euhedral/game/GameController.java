@@ -598,16 +598,6 @@ public class GameController {
         return camera;
     }
 
-    // Creates an instance of the player and sets the camera to follow it
-    public void setCameraToPlayer() {
-        offsetVertical = gameHeight - Utility.intAtWidth640(32)*4;
-
-        // sets the camera's width to center the player horizontally, essentially to 0, and
-        // adjust the height so that player is at the bottom of the screen
-        camera = new Camera(0, entityHandler.getPlayerY() - 615);
-        camera.setMarker(entityHandler.getPlayerY());
-    }
-
     // checks whether the condition to advance to the next level has been fulfilled
     // if the flag crosses the screen, advance level and if no levels remain, end game
     public void checkLevelStatus() {

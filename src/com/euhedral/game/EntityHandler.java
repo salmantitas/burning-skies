@@ -12,7 +12,6 @@ import java.util.LinkedList;
 // Manages all entities in game
 public class EntityHandler {
     private VariableHandler variableHandler;
-//    private Camera camera;
     private int levelHeight;
 
 //    private LinkedList<Entity> entities;

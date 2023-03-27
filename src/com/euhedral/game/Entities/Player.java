@@ -112,6 +112,7 @@ public class Player extends MobileEntity {
         } else {
             image = textureHandler.player[2];
         }
+        VariableHandler.setHealthColor();
     }
 
     @Override
