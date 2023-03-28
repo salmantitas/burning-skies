@@ -29,12 +29,8 @@
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Attribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Attribute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/Utility.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/VariableHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/VariableHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,8 +182,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java</url>
-          <line>212</line>
+          <line>213</line>
           <option name="timeStamp" value="178" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java</url>
+          <line>185</line>
+          <option name="timeStamp" value="179" />
         </line-breakpoint>
         <line-breakpoint enabled="true" log-message="true" suspend="NONE" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/Animation.java</url>

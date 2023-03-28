@@ -77,6 +77,14 @@ public class Utility {
         return (int) ((Math.random() * ((max + 1) - min)) + min);
     }
 
+    public static boolean oddInt(int number) {
+        return (number % 2 != 0);
+    }
+
+    public static boolean evenInt(int number) {
+        return (number % 2 == 0);
+    }
+
     /*******************
      * Debug Functions *
      *******************/

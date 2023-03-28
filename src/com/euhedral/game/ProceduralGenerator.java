@@ -90,7 +90,7 @@ public class ProceduralGenerator {
         int maxEnemiesV = 9;
 
         // spawns in line pattern
-        int minEnemiesL = 1;
+        int minEnemiesL = 2;
         int maxEnemiesL = 9;
 
         enemyNumbers = new int[2][2];
@@ -161,17 +161,19 @@ public class ProceduralGenerator {
     }
 
     private void spawnFirstWave() {
-        if (wave == 1) {
-            lastLastPattern = lastPattern;
-            lastPattern = pattern;
-            pattern = PATTERN_LINE;
-        }
+        lastLastPattern = lastPattern;
+        lastPattern = pattern;
+        pattern = PATTERN_LINE;
 
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
         int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
 
         int num = Utility.randomRangeInclusive(minEnemies, currentMax);
+
+        spawnLine(num);
+        wave++;
+        calculateSpawnInterval(num, maxEnemies);
     }
 
     private void spawnEnemies() {
@@ -202,7 +204,6 @@ public class ProceduralGenerator {
         int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
 
         int num = Utility.randomRangeInclusive(minEnemies, currentMax);
-        num = maxEnemies;
 
         // spawn enemies
         switch (pattern) {
@@ -228,15 +229,15 @@ public class ProceduralGenerator {
         spawnZone = Utility.randomRange(1, 3);
         int spawnHeight = this.spawnHeight;
         spawnPickupHelper2(spawnHeight, EntityID.PickupHealth);
-        System.out.println("Health Spawned");
+//        System.out.println("Health Spawned");
         wave++;
         waveSinceHealth = 0;
+        spawnIntervalMillis = spawnIntervalMillis_MIN;
     }
 
     // Pickup Spawner Helped
     private void spawnPickupHelper2(int spawnHeight, EntityID id) {
         entityHandler.spawnPickup(xMid * 32, spawnHeight * 32, id);
-        this.spawnHeight = spawnHeight;
     }
 
     /* Spawn Pattern Functions*/
@@ -324,8 +325,8 @@ public class ProceduralGenerator {
         int y = spawnHeight;
         Color c = Color.RED; // stub
 
-        // odd numb
-        if (num % 2 != 0) {
+        boolean odd = num% 2 != 0;
+        if (odd) {
             spawnHelper(x, y, c);
 
             if (num > 1) {
@@ -349,7 +350,6 @@ public class ProceduralGenerator {
     }
 
     private void spawnFromMiddleV(int x, int num, int spawnHeight) {
-        int tileSize = Utility.intAtWidth640(32);
         int y = spawnHeight;
         Color c = Color.RED; // stub
 
@@ -357,8 +357,8 @@ public class ProceduralGenerator {
 
         int newY = y - spacingHorizontal;
 
-        // odd numb
-        if (num % 2 != 0) {
+        boolean odd = (num % 2) != 0;
+        if (odd) {
             spawnHelper(x, y, c);
 
             if (num > 1) {
@@ -394,48 +394,20 @@ public class ProceduralGenerator {
 
         if (num > 1) {
             int x0 = x + (increment);
-            spawnFromLeftV(num - 1, y0, x0);
+            spawnVHelper(num - 1, y0, x0, increment);
         }
 
         spawnHelper(x, y, c);
     }
 
     private void spawnFromLeftV(int num, int y, int x) {
-//        int tileSize = Utility.intAtWidth640(32);
-
-        Color c = Color.RED; // stub
-
-        // Base Case
-
         int incrementX = 2;
-        int y0 = y - spacingHorizontal;
-
-        if (num > 1) {
-            int skip = calculateSkip();
-            int x0 = x + (incrementX);
-            spawnFromLeftV(num - 1, y0, x0);
-        }
-
-        spawnHelper(x, y, c);
+        spawnVHelper(num, y, x, incrementX);
     }
 
     private void spawnFromRightV(int num, int y, int x) {
-        int tileSize = Utility.intAtWidth640(32);
-
-        Color c = Color.RED; // stub
-
-        int incrementX = 2;
-        int y0 = y - spacingHorizontal;
-
-        // Base Case
-
-        if (num > 1) {
-            int skip = calculateSkip();
-            int x0 = x - (incrementX);
-            spawnFromRightV(num - 1, y0, x0);
-        }
-
-        spawnHelper(x, y, c);
+        int incrementX = -2;
+        spawnVHelper(num, y, x, incrementX);
     }
 
     private void spawnHelper(int x, int y, Color c) {
