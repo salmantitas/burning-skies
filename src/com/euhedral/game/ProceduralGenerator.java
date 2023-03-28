@@ -288,10 +288,6 @@ public class ProceduralGenerator {
     /* Recursive Spawning Functions */
 
     private void spawnFromLeft(int num, int y, int x) {
-//        int tileSize = Utility.intAtWidth640(32);
-
-        Color c = Color.RED; // stub
-
         // Base Case
 
         if (num > 1) {
@@ -300,14 +296,11 @@ public class ProceduralGenerator {
             spawnFromLeft(num - 1, y, x0);
         }
 
+        Color c = Color.RED; // stub
         spawnHelper(x, y, c);
     }
 
     private void spawnFromRight(int num, int y, int x) {
-        int tileSize = Utility.intAtWidth640(32);
-
-        Color c = Color.RED; // stub
-
         // Base Case
 
         if (num > 1) {
@@ -316,6 +309,7 @@ public class ProceduralGenerator {
             spawnFromRight(num - 1, y, x0);
         }
 
+        Color c = Color.RED; // stub
         spawnHelper(x, y, c);
     }
 

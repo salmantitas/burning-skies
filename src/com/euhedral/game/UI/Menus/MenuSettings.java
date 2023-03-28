@@ -20,7 +20,7 @@ public class MenuSettings extends Menu {
 
 
     ButtonAction tutorial = new ButtonAction(x2, y40, optionSize, "Tutorial", ActionTag.tutorial);
-    ButtonAction volume = new ButtonAction(x2, y50, optionSize, "Background Music", ActionTag.volume);
+    ButtonAction volume = new ButtonAction(x2, y50, optionSize, "Voume", ActionTag.volume);
     ButtonNav backToMenu = new ButtonNav(x2, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
 
     public MenuSettings() {
