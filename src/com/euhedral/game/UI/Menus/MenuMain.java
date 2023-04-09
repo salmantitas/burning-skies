@@ -13,26 +13,29 @@ public class MenuMain extends Menu {
 
     public MenuMain() {
         super(GameState.Menu);
-        MAXBUTTON = 5;
+        MAXBUTTON = 6;
         options = new Button[MAXBUTTON];
 
         int playY = y15;
-        int settingsY = Utility.percHeight(47);
-        int helpY = Utility.percHeight(56);
-        int creditsY = Utility.percHeight(69);
+        int settingsY = playY + Utility.percHeight(12);
+        int highScoreY = settingsY + Utility.percHeight(9);
+        int helpY = highScoreY + Utility.percHeight(8);
+        int creditsY = helpY + Utility.percHeight(11);
         int quitY = y80;
 
         ButtonNav play = new ButtonNav(x3, playY, buttonSize, "Play", GameState.Transition);
         ButtonNav settings = new ButtonNav(x2, settingsY, buttonSize, "Settings", GameState.Settings);
+        ButtonNav highScore = new ButtonNav(x18, highScoreY, buttonSize, "High Score", GameState.Highscore);
         ButtonNav help = new ButtonNav(x3, helpY, buttonSize, "Help", GameState.Help);
         ButtonNav credits = new ButtonNav(x2, creditsY, buttonSize, "Credits", GameState.Credits);
         ButtonNav quit = new ButtonNav(x3, quitY, buttonSize, "Quit", GameState.Quit);
 
         options[0] = play;
         options[1] = settings;
-        options[2] = help;
-        options[3] = credits;
-        options[4] = quit;
+        options[2] = highScore;
+        options[3] = help;
+        options[4] = credits;
+        options[5] = quit;
 
 //        try {
 //            importButtons();

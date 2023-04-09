@@ -5,7 +5,9 @@ import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class VariableHandler {
 
@@ -44,6 +46,10 @@ public class VariableHandler {
     private static int scoreY = Utility.percHeight(4);
     private static int scoreSize = Utility.percWidth(2);
 
+    // High Score
+    public static final int HIGH_SCORE_NUMBERS_MAX = 10;
+    private static LinkedList<Integer> highScore;
+
     // Level
     private static int levelX = Utility.percWidth(90);
     private static int levelY;
@@ -52,16 +58,14 @@ public class VariableHandler {
     // Timer
     private static int timerX = Utility.percWidth(85);
 
-    // Shop Costs
-
-//    public static final int costPower = 1000;
-//    public static final int costGround = 1000;
-
     // Notifications
     public static String saveText = "Game Saved Successfully.";
     public static String loadText = "Game Loaded Successfully.";
     public static String saveDataNotification = "";
     public static int notificationSet;
+
+    // Sound
+    private static float volume = 1f;
 
     /******************
      * User Variables *
@@ -84,12 +88,25 @@ public class VariableHandler {
 //    private static boolean ground = false;
 
     private static boolean tutorial = true;
-    private static float volume = 1f;
+
+    // Shop Costs
+
+//    public static final int costPower = 1000;
+//    public static final int costGround = 1000;
 
     public VariableHandler() {
         colorMap = new HashMap<>();
         initializeColorMap();
         initializeAttributes();
+        try {
+            highScore = SaveLoad.loadHighScore();
+        } catch (IOException e) {
+            highScore = new LinkedList<>();
+            for (int i = 0; i < HIGH_SCORE_NUMBERS_MAX; i++) {
+                highScore.add(0);
+            }
+            SaveLoad.saveHighScore();
+        }
     }
 
     private void initializeColorMap() {
@@ -97,15 +114,15 @@ public class VariableHandler {
          * Game Code *
          *************/
 
-        colorMap.put(new Color(0,0,255), EntityID.Player );
-        colorMap.put(new Color(255,0,0), EntityID.EnemyBasic);
-        colorMap.put(new Color(150,0,0), EntityID.EnemyMove);
-        colorMap.put(new Color(100,0,0), EntityID.EnemySnake);
-        colorMap.put(new Color(200,0,0), EntityID.EnemyFast);
-        colorMap.put(new Color(255,150,244), EntityID.EnemyGround);
-        colorMap.put(new Color(0,255,0), EntityID.PickupHealth);
-        colorMap.put(new Color(255,255,0), EntityID.PickupShield);
-        colorMap.put(new Color(255,216,0), EntityID.Boss);
+        colorMap.put(new Color(0, 0, 255), EntityID.Player);
+        colorMap.put(new Color(255, 0, 0), EntityID.EnemyBasic);
+        colorMap.put(new Color(150, 0, 0), EntityID.EnemyMove);
+        colorMap.put(new Color(100, 0, 0), EntityID.EnemySnake);
+        colorMap.put(new Color(200, 0, 0), EntityID.EnemyFast);
+        colorMap.put(new Color(255, 150, 244), EntityID.EnemyGround);
+        colorMap.put(new Color(0, 255, 0), EntityID.PickupHealth);
+        colorMap.put(new Color(255, 255, 0), EntityID.PickupShield);
+        colorMap.put(new Color(255, 216, 0), EntityID.Boss);
     }
 
     public static void initializeAttributes() {
@@ -143,6 +160,26 @@ public class VariableHandler {
 
     public void resetScore() {
         score = 0;
+    }
+
+    public static void updateHighScore() {
+        if (highScore.size() == 0) {
+            highScore.add(score);
+            SaveLoad.saveHighScore();
+            score = 0;
+            return;
+        }
+
+        for (int i = 0; i < highScore.size(); i++) {
+            int baseScore = highScore.get(i);
+
+            if (score >= baseScore) {
+                highScore.add(i, score);
+                SaveLoad.saveHighScore();
+                score = 0;
+                return;
+            }
+        }
     }
 
     public void resetPower() {
@@ -206,8 +243,8 @@ public class VariableHandler {
 
 
     /**********************
-    * Getters and setters *
-    ***********************/
+     * Getters and setters *
+     ***********************/
 
     public static int getScore() {
         return score;
@@ -315,6 +352,7 @@ public class VariableHandler {
     public static boolean isVolume() {
         return volume == 1f;
     }
+
     public static float getVolume() {
         return volume;
     }
@@ -338,5 +376,24 @@ public class VariableHandler {
         } else {
             health.setForegroundColor(healthLow);
         }
+    }
+
+    public static void drawHighScore(Graphics g, int x0, int y0) {
+        int fontSize = 25;
+        g.setFont(new Font("arial", 1, fontSize));
+
+        int lineHeightInPixel = 35;
+        for (int i = 0; i < highScore.size(); i++) {
+            int val = highScore.get(i);
+            g.drawString(Integer.toString(val), x0, y0 + (i + 1) * lineHeightInPixel);
+        }
+    }
+
+    public static LinkedList<String> getHighScoreList() {
+        LinkedList outputList = new LinkedList();
+        for (int i = 0; i < HIGH_SCORE_NUMBERS_MAX; i++) {
+            outputList.add(highScore.get(i).toString());
+        }
+        return outputList;
     }
 }

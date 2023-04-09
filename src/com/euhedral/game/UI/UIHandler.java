@@ -27,6 +27,7 @@ public class UIHandler {
 
         MenuMain mainMenu = new MenuMain();
         MenuSettings settingsMenu = new MenuSettings();
+        MenuHighScore highScoreMenu = new MenuHighScore();
         MenuHelp helpMenu = new MenuHelp();
         MenuCredits creditsMenu = new MenuCredits();
         MenuTransition transitionMenu = new MenuTransition();
@@ -37,6 +38,7 @@ public class UIHandler {
 
         menus.add(mainMenu);
         menus.add(settingsMenu);
+        menus.add(highScoreMenu);
         menus.add(helpMenu);
         menus.add(creditsMenu);
         menus.add(transitionMenu);

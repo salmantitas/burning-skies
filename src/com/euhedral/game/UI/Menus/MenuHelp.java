@@ -115,11 +115,11 @@ public class MenuHelp extends Menu {
         g.setColor(Color.WHITE);
         ArrayList<String> help = new ArrayList<>();
         help.add(GameController.UP + "-" + GameController.LEFT + "-" + GameController.DOWN + "-"
-                + GameController.RIGHT + " for movement");
+                + GameController.RIGHT + " or the Arrow Keys for movement");
         help.add(GameController.SHOOT + " to shoot");
         help.add("ESC or " + GameController.PAUSE + " in-game to pause or resume");
         help.add("");
-        help.add("You can use the Tutorial button to permanently");
+        help.add("You can use Settings Menu to permanently");
         help.add("enable or disable the tutorial message-boxes");
 //        help.add("ESC from menu to quit");
         int lineHeightInPixel = 80;

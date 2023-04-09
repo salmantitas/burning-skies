@@ -3,6 +3,7 @@ package com.euhedral.game;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SaveLoad {
@@ -13,6 +14,7 @@ public class SaveLoad {
 
     private static String filename = "save";
     private static String settings = "settings";
+    private static String score = "score";
 
     public SaveLoad() {
 
@@ -202,5 +204,86 @@ public class SaveLoad {
                 VariableHandler.toggleVolume();
             }
         }
+    }
+
+    // Save settings
+    public static void saveHighScore() {
+        /***************
+         * Engine Code *
+         ***************/
+        String pathString = score + ".csv";
+
+        /*************
+         * Game Code *
+         *************/
+
+        LinkedList<String> rows = VariableHandler.getHighScoreList();
+
+        // Code implemented from https://stackabuse.com/reading-and-writing-csvs-in-java/
+        try {
+            FileWriter csvWriter = new FileWriter(pathString);
+
+            // Write the setting
+            for (String data: rows) {
+                csvWriter.append(data);
+                csvWriter.append(",");
+            }
+
+            /***************
+             * Engine Code *
+             ***************/
+            csvWriter.flush();
+            csvWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static LinkedList<Integer> loadHighScore () throws IOException {
+        /***************
+         * Engine Code *
+         ***************/
+        String pathString = score + ".csv";
+
+        /*************
+         * Game Code *
+         *************/
+        // Create array to store settings
+        String[] data = new String[VariableHandler.HIGH_SCORE_NUMBERS_MAX];
+
+        /***************
+         * Engine Code *
+         ***************/
+
+        // Code modified and implemented from:
+        // https://stackabuse.com/reading-and-writing-csvs-in-java/
+
+        LinkedList<Integer> scores = new LinkedList<>();
+
+        File csvFile = new File(pathString);
+        if (!csvFile.exists()) {
+            for (int i = 0; i < VariableHandler.HIGH_SCORE_NUMBERS_MAX; i++) {
+                scores.add(0);
+            }
+        } else if (csvFile.isFile()) {
+            BufferedReader csvReader = new BufferedReader(new FileReader(pathString));
+            String row;
+
+            // Assumes there's only one word to parse
+            while ((row = csvReader.readLine()) != null) {
+                data = row.split(",");
+            }
+
+
+            for (int i = 0; i < data.length; i++) {
+                scores.add(Integer.parseInt(data[i]));
+            }
+
+            /*************
+             * Game Code *
+             *************/
+        }
+        return scores;
     }
 }

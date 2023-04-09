@@ -41,7 +41,7 @@ public class GameController {
 
     // Camera
     public static Camera camera;
-//    int offsetHorizontal;
+    //    int offsetHorizontal;
     int offsetVertical;
 
     // Level Generation
@@ -53,11 +53,12 @@ public class GameController {
     private boolean loadMission = false; // levels will only loaded when this is true
 
     int count = 0;
+    boolean reset = true;
 
     /************
      * Controls *
      ************/
-    public static String UP = "W", DOWN = "S", LEFT = "A", RIGHT = "D", SHOOT  = "SPACE",
+    public static String UP = "W", DOWN = "S", LEFT = "A", RIGHT = "D", SHOOT = "SPACE",
             BULLET = "CTRL",
             PAUSE = "P";
 
@@ -169,12 +170,15 @@ public class GameController {
             Engine.stop();
 
         if (!Engine.stateIs(GameState.Pause) && !Engine.stateIs(GameState.Game) && !Engine.stateIs(GameState.Transition))
-            resetGame();
+//            resetGame();
 
         uiHandler.update();
 
         if (Engine.stateIs(GameState.Menu)) {
             loadMission = false;
+
+            if (reset)
+                resetGame();
         }
 
         if (Engine.stateIs(GameState.Transition)) {
@@ -183,8 +187,8 @@ public class GameController {
              *************/
 
             /*
-            * Spawn if the level can loaded and has not already been spawned
-            * */
+             * Spawn if the level can loaded and has not already been spawned
+             * */
 
             if (loadMission) {
                 if (!levelSpawned)
@@ -193,8 +197,8 @@ public class GameController {
         }
 
         /*
-        * Disable the level load permission, as the level is already running
-        * */
+         * Disable the level load permission, as the level is already running
+         * */
         if (Engine.stateIs(GameState.Game)
 //                && !VariableManager.isConsole()
         ) {
@@ -205,7 +209,9 @@ public class GameController {
                 soundHandler.playSound(soundHandler.EXPLOSION);
                 // todo: play explosion animation first
                 Engine.gameOverState();
-                resetGame();
+                System.out.println("Game Over");
+                VariableHandler.updateHighScore();
+//                resetGame();
             }
 
             /*************
@@ -228,10 +234,6 @@ public class GameController {
 
     public void render(Graphics g) {
 
-        if (Engine.currentState == GameState.Highscore) {
-//            drawHighScore(g);
-        }
-
         if (Engine.currentState == GameState.Transition) {
             /*************
              * Game Code *
@@ -245,7 +247,7 @@ public class GameController {
              * Game Code *
              *************/
 
-            if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause ) {
+            if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause) {
 
                 renderScrollingBackground(g);
                 renderInCamera(g);
@@ -395,10 +397,8 @@ public class GameController {
             if (key == KeyEvent.VK_CONTROL)
                 entityHandler.switchPlayerBullet();
 
-            if (Engine.currentState == GameState.Game) {
-                if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
-                    Engine.pauseState();
-                }
+            if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
+                Engine.pauseState();
             }
 
         } else {
@@ -454,12 +454,14 @@ public class GameController {
      ***************************/
 
     public void resetGame() {
-
+        System.out.println("Game has been reset");
+        reset = false;
         Engine.timeInSeconds = 0;
         variableHandler.resetScore();
         variableHandler.resetPower();
         VariableHandler.shield.reset();
         variableHandler.health.reset();
+        VariableHandler.setHealthColor();
 
         /*************
          * Game Code *
@@ -486,8 +488,9 @@ public class GameController {
                 case go:
                     loadMission = true;
                     break;
-                case tutorial: VariableHandler.toggleTutorial();
-                break;
+                case tutorial:
+                    VariableHandler.toggleTutorial();
+                    break;
                 case volume: {
                     VariableHandler.toggleVolume();
                     if (VariableHandler.isVolume()) {
@@ -495,18 +498,24 @@ public class GameController {
                     } else soundHandler.setVolume(0);
                     break;
                 }
-                case health: shop.buyHealth();
-                break;
-                case power: shop.buyPower();
-                break;
-                case ground: shop.buyGround();
-                break;
-                case shield: shop.buyShield();
-                break;
-                case save: save();
-                break;
-                case load: load();
-                break;
+                case health:
+                    shop.buyHealth();
+                    break;
+                case power:
+                    shop.buyPower();
+                    break;
+                case ground:
+                    shop.buyGround();
+                    break;
+                case shield:
+                    shop.buyShield();
+                    break;
+                case save:
+                    save();
+                    break;
+                case load:
+                    load();
+                    break;
             }
             uiHandler.endAction();
         }
@@ -514,6 +523,11 @@ public class GameController {
 
     public void notifyUIHandler(GameState state) {
         uiHandler.updateState(state);
+
+        if (state == GameState.Menu) {
+            reset = true;
+            VariableHandler.updateHighScore();
+        }
     }
 
     public void save() {
@@ -541,9 +555,6 @@ public class GameController {
      ******************/
 
     // Shop Functions
-
-
-
     public void movePlayer(char c) {
         if (c == 'l' || c == 'r' || c == 'u' | c == 'd') {
             entityHandler.movePlayer(c);
@@ -615,7 +626,7 @@ public class GameController {
 
             if (variableHandler.finishedFinalLevel()) {
                 Engine.menuState(); // stub
-                resetGame();
+//                resetGame();
             } else {
                 Engine.transitionState();
             }
@@ -634,6 +645,7 @@ public class GameController {
     public static TextureHandler getTexture() {
         return textureHandler;
     }
+
     public static SoundHandler getSound() {
         return soundHandler;
     }
@@ -647,7 +659,7 @@ public class GameController {
     private void renderScrollingBackground(Graphics g) {
         count = 0;
         BufferedImage imageSea = GameController.getTexture().sea[count];
-        int interval = imageSea.getHeight()*2;
+        int interval = imageSea.getHeight() * 2;
 
         int minX = 0;
         int minY = (int) -maxScroll;
