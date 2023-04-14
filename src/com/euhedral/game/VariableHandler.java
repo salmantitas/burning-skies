@@ -222,7 +222,7 @@ public class VariableHandler {
     public static void renderTimer(Graphics g) {
         g.setFont(new Font("arial", 1, levelSize));
         g.setColor(Color.YELLOW);
-        g.drawString("Timer: " + Engine.timeInSeconds, timerX, levelY);
+        g.drawString("Timer: " + GameController.getCurrentTime(), timerX, levelY);
     }
 
     protected void drawBossHealth(Graphics g) {

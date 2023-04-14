@@ -28,10 +28,10 @@ public class ProceduralGenerator {
     final int ENDLESS = -1;
     int spawnHeight;
 
-    long lastSpawnMillis;
-    long spawnIntervalMillis;
-    long spawnIntervalMillis_MIN = 2000;
-    long spawnIntervalMillis_MAX = 5000;
+    long lastSpawnTime;
+    long spawnInterval;
+    long spawnInterval_MIN = 2;
+    long spawnInterval_MAX = 5;
 
     final int SPAWN_ENEMY = 0;
     final int SPAWN_HEALTH = 10;
@@ -136,26 +136,28 @@ public class ProceduralGenerator {
         // todo: use line for first wave here
 
         spawnHeight = (height - Engine.HEIGHT/32) ;//- (wave * MIN_PAUSE);
-        lastSpawnMillis = System.currentTimeMillis();
-        spawnIntervalMillis = 0;
+        lastSpawnTime = GameController.getCurrentTime();
+        spawnInterval = 0;
 
 //        spawnFirstWave();
     }
 
+    // todo: Use a separate game timer that only updates while the game isn't paused
+    // todo: Reimplement health
     public void update() {
-        long timeNowMillis = System.currentTimeMillis();
-        long timeSinceLastSpawnMillis = timeNowMillis - lastSpawnMillis;
-        boolean canSpawn = spawnIntervalMillis <= timeSinceLastSpawnMillis;
+        long timeNowMillis = GameController.getCurrentTime();
+        long timeSinceLastSpawnMillis = timeNowMillis - lastSpawnTime;
+        boolean canSpawn = spawnInterval <= timeSinceLastSpawnMillis;
 
         if (canSpawn) {
-            spawnNext = Utility.randomRangeInclusive(SPAWN_ENEMY, SPAWN_HEALTH);
-            if (wave == MIN_WAVE_HEALTH_SPAWN) {
-                spawnHealth();
-            } else if (spawnNext == SPAWN_HEALTH && wave >= MIN_WAVE_HEALTH_SPAWN && waveSinceHealth >= MIN_WAVE_BETWEEN_HEALTH_SPAWN)
-                spawnHealth();
-            else
+//            spawnNext = Utility.randomRangeInclusive(SPAWN_ENEMY, SPAWN_HEALTH);
+//            if (wave == MIN_WAVE_HEALTH_SPAWN) {
+//                spawnHealth();
+//            } else if (spawnNext == SPAWN_HEALTH && wave >= MIN_WAVE_HEALTH_SPAWN && waveSinceHealth >= MIN_WAVE_BETWEEN_HEALTH_SPAWN)
+//                spawnHealth();
+//            else
                 spawnEnemies();
-            lastSpawnMillis = System.currentTimeMillis();
+            lastSpawnTime = GameController.getCurrentTime();
         }
 //        System.out.println("Spawn Code: " + spawnNext);
     }
@@ -232,7 +234,7 @@ public class ProceduralGenerator {
 //        System.out.println("Health Spawned");
         wave++;
         waveSinceHealth = 0;
-        spawnIntervalMillis = spawnIntervalMillis_MIN;
+        spawnInterval = spawnInterval_MIN;
     }
 
     // Pickup Spawner Helped
@@ -429,6 +431,7 @@ public class ProceduralGenerator {
         c = getKey(id);
 
         entityHandler.spawnEntity(x*32, y*32, id, c);
+        System.out.println("Enemy spawned");
     }
 
     private void spawnGround(int remainingHeight, int spawnHeight, int num, String spawnFrom) {
@@ -472,14 +475,14 @@ public class ProceduralGenerator {
     }
 
     private void calculateSpawnInterval(int num, int maxEnemies) {
-        float minPause = (float) spawnIntervalMillis_MIN;
-        float maxPause = (float) spawnIntervalMillis_MAX;
+        float minPause = (float) spawnInterval_MIN;
+        float maxPause = (float) spawnInterval_MAX;
 
         float spawnIntervalFloat = (maxPause - minPause) * (num - 1)/(maxEnemies - 1) + minPause;
-        spawnIntervalMillis = (long) spawnIntervalFloat;
+        spawnInterval = (long) spawnIntervalFloat;
 
         if (pattern == PATTERN_V) {
-            spawnIntervalMillis *= 2;
+            spawnInterval *= 2;
         }
     }
 

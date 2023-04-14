@@ -55,6 +55,9 @@ public class GameController {
     int count = 0;
     boolean reset = true;
 
+    long timer = System.currentTimeMillis();
+    public static long timeInSeconds;
+
     /************
      * Controls *
      ************/
@@ -202,6 +205,13 @@ public class GameController {
         if (Engine.stateIs(GameState.Game)
 //                && !VariableManager.isConsole()
         ) {
+            if (System.currentTimeMillis() - 1000 > timer) {
+                timer = System.currentTimeMillis();
+                timeInSeconds++;
+                System.out.printf("Timer: %d\n", timeInSeconds);
+            }
+
+
             loadMission = false;
             boolean endGameCondition = variableHandler.health.getValue() <= 0;
 
@@ -457,6 +467,7 @@ public class GameController {
         System.out.println("Game has been reset");
         reset = false;
         Engine.timeInSeconds = 0;
+        timeInSeconds = 0;
         variableHandler.resetScore();
         variableHandler.resetPower();
         VariableHandler.shield.reset();
@@ -690,6 +701,10 @@ public class GameController {
 
     public static float getScrollRate() {
         return scrollRate;
+    }
+
+    public static long getCurrentTime() {
+        return timeInSeconds;
     }
 
 }

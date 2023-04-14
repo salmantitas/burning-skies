@@ -56,8 +56,8 @@ public class Player extends MobileEntity {
         velY = 0;
         physics.setAcceleration(0.05f);
         acceleration = 0.05f; // todo: delete
-        minVelY = 3;
-        minVelX = 4;
+        minVelY = 4;
+        minVelX = 5;
         velY = minVelY;
         velX = minVelX;
         maxVelY = 2 * minVelY;
