@@ -17,10 +17,11 @@ public class ProceduralGenerator {
 
     public HashMap<Color, EntityID> colorMap;
     int height, width = 31;
-    int xStart = 1, xEnd = width - 3;
+    final int incrementMIN = 2;
+    int xStart = incrementMIN, xEnd = width - 3;
     int xMid = width/2;
     int spawnZone, lastZone, lastLastZone;
-    int pattern, lastPattern, lastLastPattern; // todo: use to prevent repetition of pattern
+    int pattern, lastPattern, lastLastPattern;
     int wave, waveSinceHealth;
     int spacingHorizontal = 3;
     int level;
@@ -142,7 +143,6 @@ public class ProceduralGenerator {
 //        spawnFirstWave();
     }
 
-    // todo: Use a separate game timer that only updates while the game isn't paused
     // todo: Reimplement health
     public void update() {
         long timeNowMillis = GameController.getCurrentTime();
@@ -339,8 +339,8 @@ public class ProceduralGenerator {
         } else {
             num = num /2;
 
-            spawnFromLeft(num, y, x + 1);
-            spawnFromRight(num, y, x - 1);
+            spawnFromLeft(num, y, x + incrementMIN);
+            spawnFromRight(num, y, x - incrementMIN);
 
         }
     }
@@ -349,7 +349,7 @@ public class ProceduralGenerator {
         int y = spawnHeight;
         Color c = Color.RED; // stub
 
-        int incrementX = 2;
+        int incrementX = 2*incrementMIN;
 
         int newY = y - spacingHorizontal;
 
@@ -370,7 +370,7 @@ public class ProceduralGenerator {
         } else {
             num = num /2;
 
-            incrementX = 1;
+            incrementX = incrementMIN;
             int xLeft = x + (incrementX);
             spawnFromLeftV(num, newY, xLeft);
 
@@ -397,12 +397,12 @@ public class ProceduralGenerator {
     }
 
     private void spawnFromLeftV(int num, int y, int x) {
-        int incrementX = 2;
+        int incrementX = 2 * incrementMIN;
         spawnVHelper(num, y, x, incrementX);
     }
 
     private void spawnFromRightV(int num, int y, int x) {
-        int incrementX = -2;
+        int incrementX = -2 * incrementMIN;
         spawnVHelper(num, y, x, incrementX);
     }
 

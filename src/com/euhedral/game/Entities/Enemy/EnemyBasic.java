@@ -26,7 +26,7 @@ public class EnemyBasic extends Enemy{
 
         power = 1;
         shootTimerDefault = 250;
-        velY = 1.8f;
+        velY = 2.5f;
         healthRange(2,4);
         score = 50;
     }

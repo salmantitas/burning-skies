@@ -44,7 +44,6 @@ public class Enemy extends MobileEntity {
         super(x, y, EntityID.Enemy);
         this.enemyID = EnemyID.Basic;
         contactId = ContactID.Air;
-        velY = 1.95f;
         offscreenVelY = velY;
         moveRight = false;
         moveLeft = false;
@@ -101,7 +100,7 @@ public class Enemy extends MobileEntity {
             color = Color.pink;
             r = new Random();
             health = r.nextInt(3) + 2;
-            minVelY = 1.75f;
+            minVelY = 2f;
             velY = minVelY;
         }
         explosion = new Animation(10, GameController.getTexture().explosion[0],

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="Burning Skies:jar" />
+      <artifact name="Burning Skies" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -29,10 +29,58 @@
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/biggerboom/biggerboom1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/biggerboom/biggerboom2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/biggerboom/biggerboom3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/biggerboom/biggerboom4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/enemy.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/enemy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/enemy.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/explosion.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/explosion.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/explosion.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/health.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/health.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/health.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/health_full.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/health_full.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/pixel_ship_blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/pixel_ship_left.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/pixel_ship_neutral.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/pixel_ship_red.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/pixel_ship_right.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/pixel_ship_yellow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/player.pdn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/player.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/player.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/player.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/biggerboom/biggerboom1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/biggerboom/biggerboom2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/biggerboom/biggerboom3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/biggerboom/biggerboom4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/enemy.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/enemy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/enemy.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/explosion.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/explosion.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/explosion.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/health.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/health.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/health.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/health_full.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/health_full.xcf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/pixel_ship_blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/pixel_ship_left.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/pixel_ship_neutral.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/pixel_ship_red.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/pixel_ship_right.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/pixel_ship_yellow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/player.pdn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/player.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/player.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/player.xcf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/score.csv" beforeDir="false" afterPath="$PROJECT_DIR$/score.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.csv" beforeDir="false" afterPath="$PROJECT_DIR$/settings.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/Utility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/Utility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyBasic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyBasic.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/SaveLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/SaveLoad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/SoundHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/SoundHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuSettings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/VariableHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/VariableHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -175,7 +223,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/GameController.java</url>
-          <line>650</line>
+          <line>642</line>
           <option name="timeStamp" value="133" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -187,6 +235,11 @@
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/SaveLoad.java</url>
           <line>265</line>
           <option name="timeStamp" value="196" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/GameController.java</url>
+          <line>500</line>
+          <option name="timeStamp" value="207" />
         </line-breakpoint>
         <line-breakpoint enabled="true" log-message="true" suspend="NONE" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/Animation.java</url>

@@ -64,9 +64,6 @@ public class VariableHandler {
     public static String saveDataNotification = "";
     public static int notificationSet;
 
-    // Sound
-    private static float volume = 1f;
-
     /******************
      * User Variables *
      ******************/
@@ -241,7 +238,6 @@ public class VariableHandler {
         g.fillRect(startX, y, healthBoss * width, height);
     }
 
-
     /**********************
      * Getters and setters *
      ***********************/
@@ -346,21 +342,6 @@ public class VariableHandler {
 
     public static void toggleTutorial() {
         tutorial = !tutorial;
-        SaveLoad.saveSettings();
-    }
-
-    public static boolean isVolume() {
-        return volume == 1f;
-    }
-
-    public static float getVolume() {
-        return volume;
-    }
-
-    public static void toggleVolume() {
-        if (isVolume()) {
-            volume = 0;
-        } else volume = 1f;
         SaveLoad.saveSettings();
     }
 

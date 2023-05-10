@@ -7,6 +7,7 @@ import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ActionTag;
+import com.euhedral.game.SoundHandler;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
@@ -20,7 +21,7 @@ public class MenuSettings extends Menu {
 
 
     ButtonAction tutorial = new ButtonAction(x2, y40, optionSize, "Tutorial", ActionTag.tutorial);
-    ButtonAction volume = new ButtonAction(x2, y50, optionSize, "Voume", ActionTag.volume);
+    ButtonAction volume = new ButtonAction(x2, y50, optionSize, "Volume", ActionTag.volume);
     ButtonNav backToMenu = new ButtonNav(x2, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
 
     public MenuSettings() {
@@ -58,7 +59,7 @@ public class MenuSettings extends Menu {
         // Render Toggle Icons
 
         renderIcon(g, tutorial, VariableHandler.isTutorial());
-        renderIcon(g, volume, VariableHandler.isVolume());
+        renderIcon(g, volume, SoundHandler.isVolume());
 
         super.postRender(g);
     }

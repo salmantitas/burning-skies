@@ -19,10 +19,14 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    private int gameWidth = 1024;
+    private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
     private Color gameBackground = Color.BLUE;
+
+    // Game Timer
+    long timer = System.currentTimeMillis();
+    public static long timeInSeconds;
 
     // Management
     private UIHandler uiHandler;
@@ -33,11 +37,6 @@ public class GameController {
 
     public Scanner scanner;
     public static String cmd;
-
-    // High Score
-//    private LinkedList<Integer> highScore = new LinkedList<>();
-//    private int highScoreNumbers = 5;
-//    private boolean updateHighScore = false;
 
     // Camera
     public static Camera camera;
@@ -54,9 +53,6 @@ public class GameController {
 
     int count = 0;
     boolean reset = true;
-
-    long timer = System.currentTimeMillis();
-    public static long timeInSeconds;
 
     /************
      * Controls *
@@ -175,7 +171,7 @@ public class GameController {
         if (!Engine.stateIs(GameState.Pause) && !Engine.stateIs(GameState.Game) && !Engine.stateIs(GameState.Transition))
 //            resetGame();
 
-        uiHandler.update();
+            uiHandler.update();
 
         if (Engine.stateIs(GameState.Menu)) {
             loadMission = false;
@@ -388,7 +384,7 @@ public class GameController {
             }
         }
 
-        if (Engine.currentState == GameState.Game) {
+        if (Engine.stateIs(GameState.Game) || Engine.stateIs(GameState.Pause)) {
             if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
                 movePlayer('l');
 
@@ -407,25 +403,24 @@ public class GameController {
             if (key == KeyEvent.VK_CONTROL)
                 entityHandler.switchPlayerBullet();
 
-            if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
-                Engine.pauseState();
-            }
-
-        } else {
-
-            if (Engine.currentState == GameState.Pause) {
+            if (Engine.stateIs(GameState.Game)) {
+                if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
+                    Engine.pauseState();
+                }
+            } else if (Engine.currentState == GameState.Pause) {
                 if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
                     Engine.gameState();
                 }
             }
+        }
 
-            if (key == (KeyEvent.VK_ESCAPE)) {
-                if (Engine.currentState == GameState.Menu) {
-                    System.exit(1);
-                }
+        if (key == (KeyEvent.VK_ESCAPE)) {
+            if (Engine.currentState == GameState.Menu) {
+                System.exit(1);
             }
         }
 
+        volumeControl(key); // stub
     }
 
     public void keyReleased(int key) {
@@ -433,7 +428,7 @@ public class GameController {
          * Game Code *
          *************/
 
-        if (Engine.stateIs(GameState.Game)) {
+        if (Engine.stateIs(GameState.Game) || Engine.stateIs(GameState.Pause)) {
 
             if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
                 stopMovePlayer('l');
@@ -503,10 +498,7 @@ public class GameController {
                     VariableHandler.toggleTutorial();
                     break;
                 case volume: {
-                    VariableHandler.toggleVolume();
-                    if (VariableHandler.isVolume()) {
-                        soundHandler.setVolume(1);
-                    } else soundHandler.setVolume(0);
+                    soundHandler.toggleVolume();
                     break;
                 }
                 case health:
@@ -705,6 +697,19 @@ public class GameController {
 
     public static long getCurrentTime() {
         return timeInSeconds;
+    }
+
+    private void volumeControl(int key) {
+        int VOLUME_UP = KeyEvent.VK_EQUALS;
+        int VOLUME_DOWN = KeyEvent.VK_MINUS;
+
+        if (key == VOLUME_UP) {
+            soundHandler.volumeUp();
+        }
+
+        if (key == VOLUME_DOWN) {
+            soundHandler.volumeDown();
+        }
     }
 
 }

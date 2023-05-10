@@ -104,4 +104,8 @@ public class Utility {
         g.drawString("Command: " + GameController.cmd, Utility.percWidth(25), Utility.percHeight(45));
     }
 
+    public static void log(String s) {
+        System.out.println(s);
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.euhedral.game;
 
+import com.euhedral.engine.Utility;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -16,6 +18,10 @@ public class SoundHandler {
     public Clip bgm_GameOver;
 
     private Clip current;
+
+    private static int volume = 10;
+    private final static int VOLUME_MAX = 10;
+    private final static int VOLUME_MIN = 0;
 
     public static final int BGMMAINMENU = 0;
     public static final int BULLET = 1;
@@ -79,7 +85,7 @@ public class SoundHandler {
 
     static private void play() {
         clip.start();
-        setVolume(VariableHandler.getVolume());
+        setVolume(volume);
     }
 
     private void loop() {
@@ -93,11 +99,15 @@ public class SoundHandler {
         return (float) Math.pow(10f, gainControl.getValue() / 20f);
     }
 
-    public static void setVolume(float volume) {
+    public static void setVolume(int volumeI) {
+        float volume = (float) volumeI/10;
         if (volume < 0f || volume > 1f)
             throw new IllegalArgumentException("Volume not valid: " + volume);
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+
         gainControl.setValue(20f * (float) Math.log10(volume));
+
+        Utility.log("Volume set to " + (int) (volume*100) + "%");
     }
 
     public void playBGMMenu() {
@@ -120,13 +130,47 @@ public class SoundHandler {
             }
         bgm.start();
         clip = bgm;
-        setVolume(VariableHandler.getVolume());
+        setVolume(volume);
         bgm.loop(Clip.LOOP_CONTINUOUSLY);
         current = bgm;
     }
 
     public boolean playingBGMMenu() {
         return clip == bgm_Main;
+    }
+
+    /******************
+     * Volume Control *
+     ******************/
+
+    public static void toggleVolume() {
+        if (isVolume()) {
+            volume = 0;
+        } else volume = 10;
+        SaveLoad.saveSettings();
+        setVolume(volume);
+    }
+
+    public static void volumeUp() {
+        if (volume >= VOLUME_MAX) {
+            return;
+        }
+
+        volume += 2;
+        setVolume(volume);
+    }
+
+    public static void volumeDown() {
+        if (volume <= VOLUME_MIN) {
+            return;
+        }
+
+        volume -= 2;
+        setVolume(volume);
+    }
+
+    public static boolean isVolume() {
+        return volume == 10;
     }
 
 }

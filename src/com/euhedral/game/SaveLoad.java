@@ -134,7 +134,7 @@ public class SaveLoad {
 
         // Create string for settings that will be saved
         String tutorial = Boolean.toString(VariableHandler.isTutorial());
-        String volume = Boolean.toString(VariableHandler.isVolume());
+        String volume = Boolean.toString(SoundHandler.isVolume());
 
         List<String> rows = Arrays.asList(tutorial, volume);
 
@@ -200,8 +200,8 @@ public class SaveLoad {
             if (!VariableHandler.isTutorial() == tutorial) {
                 VariableHandler.toggleTutorial();
             }
-            if (!VariableHandler.isVolume() == volume) {
-                VariableHandler.toggleVolume();
+            if (!SoundHandler.isVolume() == volume) {
+                SoundHandler.toggleVolume();
             }
         }
     }
