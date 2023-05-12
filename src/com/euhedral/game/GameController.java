@@ -366,61 +366,14 @@ public class GameController {
             uiHandler.keyPressed(key);
         }
 
-        if (Engine.currentState != GameState.Game) {
-            // Keyboard to Navigate buttons
-
-            // Enter/Spacebar to select selected
-            if (key == KeyEvent.VK_ENTER || key == KeyInput.getKeyEvent(SHOOT)) {
-                uiHandler.chooseSelected();
-                performAction();
-            }
-
-            if (key == KeyEvent.VK_RIGHT || key == KeyInput.getKeyEvent(RIGHT) || key == KeyEvent.VK_DOWN || key == KeyInput.getKeyEvent(DOWN)) {
-                uiHandler.keyboardSelection('r');
-            }
-
-            if (key == KeyEvent.VK_LEFT || key == KeyInput.getKeyEvent(LEFT) || key == KeyEvent.VK_UP || key == KeyInput.getKeyEvent(UP)) {
-                uiHandler.keyboardSelection('l');
-            }
-        }
-
-        if (Engine.stateIs(GameState.Game) || Engine.stateIs(GameState.Pause)) {
-            if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
-                movePlayer('l');
-
-            if (key == (KeyEvent.VK_RIGHT) || key == KeyInput.getKeyEvent(RIGHT))
-                movePlayer('r');
-
-            if (key == (KeyEvent.VK_UP) || key == KeyInput.getKeyEvent(UP))
-                movePlayer('u');
-
-            if (key == (KeyEvent.VK_DOWN) || key == KeyInput.getKeyEvent(DOWN))
-                movePlayer('d');
-
-            if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
-                shootPlayer();
-
-            if (key == KeyEvent.VK_CONTROL)
-                entityHandler.switchPlayerBullet();
-
-            if (Engine.stateIs(GameState.Game)) {
-                if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
-                    Engine.pauseState();
-                }
-            } else if (Engine.currentState == GameState.Pause) {
-                if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
-                    Engine.gameState();
-                }
-            }
-        }
+        keyboardMenuNavigation(key);
+        keyPressedPlayer(key);
 
         if (key == (KeyEvent.VK_ESCAPE)) {
             if (Engine.currentState == GameState.Menu) {
                 System.exit(1);
             }
         }
-
-        volumeControl(key); // stub
     }
 
     public void keyReleased(int key) {
@@ -501,6 +454,14 @@ public class GameController {
                     soundHandler.toggleVolume();
                     break;
                 }
+                case volumeUp: {
+                    soundHandler.volumeUp();
+                    break;
+                }
+                case volumeDown: {
+                    soundHandler.volumeDown();
+                    break;
+                }
                 case health:
                     shop.buyHealth();
                     break;
@@ -556,6 +517,62 @@ public class GameController {
     /******************
      * User functions *
      ******************/
+
+    /********************************
+     * Keyboard Functions functions *
+     ********************************/
+
+    private void keyboardMenuNavigation(int key) {
+        if (Engine.currentState != GameState.Game) {
+            // Keyboard to Navigate buttons
+
+            // Enter/Spacebar to select selected
+            if (key == KeyEvent.VK_ENTER || key == KeyInput.getKeyEvent(SHOOT)) {
+                uiHandler.chooseSelected();
+                performAction();
+            }
+
+            if (key == KeyEvent.VK_RIGHT || key == KeyInput.getKeyEvent(RIGHT) || key == KeyEvent.VK_DOWN || key == KeyInput.getKeyEvent(DOWN)) {
+                uiHandler.keyboardSelection('r');
+            }
+
+            if (key == KeyEvent.VK_LEFT || key == KeyInput.getKeyEvent(LEFT) || key == KeyEvent.VK_UP || key == KeyInput.getKeyEvent(UP)) {
+                uiHandler.keyboardSelection('l');
+            }
+        }
+    }
+
+    private void keyPressedPlayer(int key) {
+        if (Engine.stateIs(GameState.Game) || Engine.stateIs(GameState.Pause)) {
+            if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
+                movePlayer('l');
+
+            if (key == (KeyEvent.VK_RIGHT) || key == KeyInput.getKeyEvent(RIGHT))
+                movePlayer('r');
+
+            if (key == (KeyEvent.VK_UP) || key == KeyInput.getKeyEvent(UP))
+                movePlayer('u');
+
+            if (key == (KeyEvent.VK_DOWN) || key == KeyInput.getKeyEvent(DOWN))
+                movePlayer('d');
+
+            if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
+                shootPlayer();
+
+            if (key == KeyEvent.VK_CONTROL)
+                entityHandler.switchPlayerBullet();
+
+            if (Engine.stateIs(GameState.Game)) {
+                if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
+                    Engine.pauseState();
+                }
+            } else if (Engine.currentState == GameState.Pause) {
+                if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
+                    Engine.gameState();
+                }
+            }
+        }
+    }
 
     // Shop Functions
     public void movePlayer(char c) {
@@ -697,19 +714,6 @@ public class GameController {
 
     public static long getCurrentTime() {
         return timeInSeconds;
-    }
-
-    private void volumeControl(int key) {
-        int VOLUME_UP = KeyEvent.VK_EQUALS;
-        int VOLUME_DOWN = KeyEvent.VK_MINUS;
-
-        if (key == VOLUME_UP) {
-            soundHandler.volumeUp();
-        }
-
-        if (key == VOLUME_DOWN) {
-            soundHandler.volumeDown();
-        }
     }
 
 }

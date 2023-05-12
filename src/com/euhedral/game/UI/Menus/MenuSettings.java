@@ -19,22 +19,22 @@ public class MenuSettings extends Menu {
 
     // Options
 
-
-    ButtonAction tutorial = new ButtonAction(x2, y40, optionSize, "Tutorial", ActionTag.tutorial);
-    ButtonAction volume = new ButtonAction(x2, y50, optionSize, "Volume", ActionTag.volume);
-    ButtonNav backToMenu = new ButtonNav(x2, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+    ButtonAction tutorial = new ButtonAction(x40, y56, optionSize, "Tutorial", ActionTag.tutorial);
+    ButtonAction volumeDown = new ButtonAction(x36, y62, optionSize, optionSize, "-", ActionTag.volumeDown);
+    ButtonAction volume = new ButtonAction(x40, y62, optionSize, "Volume", ActionTag.volume);
+    ButtonAction volumeUp = new ButtonAction(x52, y62, optionSize, optionSize,"+", ActionTag.volumeUp);
+    ButtonNav backToMenu = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
 
     public MenuSettings() {
         super(GameState.Settings);
-        MAXBUTTON = 3;
+        MAXBUTTON = 5;
         options = new Button[MAXBUTTON];
 
-        tutorial.setFill();
-        volume.setFill();
-
         options[0] = tutorial;
-        options[1] = volume;
-        options[2] = backToMenu;
+        options[1] = volumeDown;
+        options[2] = volumeUp;
+        options[3] = volume;
+        options[4] = backToMenu;
     }
 
 //    @Override
@@ -59,14 +59,14 @@ public class MenuSettings extends Menu {
         // Render Toggle Icons
 
         renderIcon(g, tutorial, VariableHandler.isTutorial());
-        renderIcon(g, volume, SoundHandler.isVolume());
+        renderValue(g, volumeUp, SoundHandler.getVolume());
 
         super.postRender(g);
     }
 
-    /*
-    * Render Functions
-    * */
+    /*******************
+    * Render Functions *
+    ********************/
 
     private void renderIcon(Graphics g, Button button, boolean bool) {
         int bx = button.getX() + button.getWidth();
@@ -75,6 +75,17 @@ public class MenuSettings extends Menu {
         Color c = bool ? Color.GREEN : Color.RED;
         g.setColor(c);
         g.fillOval(10 + bx, by ,toggleIconSize,toggleIconSize);
+    }
+
+    private void renderValue(Graphics g, Button button, int value) {
+        int bx = button.getX() + button.getWidth();
+        int by = button.getY() + button.getHeight();
+
+        g.setFont(new Font("arial", 1, 50));
+
+        Color c = SoundHandler.isVolume() ? Color.GREEN : Color.GRAY;
+        g.setColor(c);
+        g.drawString(Integer.toString(value), 10 + bx, by);
     }
 
 }

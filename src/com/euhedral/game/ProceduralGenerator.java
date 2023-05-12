@@ -17,7 +17,7 @@ public class ProceduralGenerator {
 
     public HashMap<Color, EntityID> colorMap;
     int height, width = 31;
-    final int incrementMIN = 2;
+    final int incrementMIN = Utility.intAtWidth640(1);
     int xStart = incrementMIN, xEnd = width - 3;
     int xMid = width/2;
     int spawnZone, lastZone, lastLastZone;

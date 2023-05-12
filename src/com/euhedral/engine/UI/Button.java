@@ -14,24 +14,30 @@ public class Button extends UIItem{
     protected boolean selected = false;
     protected Color backColor, textColor, selectedColor;
     protected boolean fill = false;
-    protected boolean outline = false;
+    protected boolean outline = true;
     protected boolean enabled = true;
     protected LinkedList<GameState> otherStates = new LinkedList<>();
     protected float transparency = 1;
+    protected boolean fontSizeCalculated = false;
 
     protected Color disabledColor, disabledTextColor;
 
-    public Button(int x, int y, int size, String text) {
+    public Button(int x, int y, int width, int height, String text) {
         this.x = x;
         this.y = y;
-        this.size = size;
+        this.width = width;
+        this.height = height;
         this.text = text;
-        font = new Font("arial", 1, size);
+        font = new Font("arial", 1, width);
         backColor = Color.BLUE;
         selectedColor = Color.GREEN;
         textColor = Color.RED;
         disabledColor = Color.GRAY;
         disabledTextColor = Color.LIGHT_GRAY;
+    }
+
+    public Button(int x, int y, int size, String text) {
+        this(x, y, size, (size * 11)/10, text);
     }
 
     public void render(Graphics g) {
@@ -46,14 +52,16 @@ public class Button extends UIItem{
 
         g.setFont(font);
 
-        // Adjusts the width and height of the button to fit the text
-        width = Utility.perc((g.getFontMetrics().stringWidth(text)), 110);
-        if (width / size < 3)
-            height = Utility.perc(width, 50);
-        else if (width / size < 4)
-            height = Utility.perc(width, 25);
-        else
-            height = Utility.perc(width, 15);
+        int stringWidth = (g.getFontMetrics().stringWidth(text));
+
+        if (!fontSizeCalculated) {
+            // Adjusts the width and height of the button to fit the text
+            width = Utility.perc(stringWidth, 110);;
+
+            if (width < height)
+                width = height;
+            fontSizeCalculated = true;
+        }
 
         if (!enabled) {
             g.setColor(disabledColor);
@@ -66,13 +74,16 @@ public class Button extends UIItem{
             if (fill)
                 g.fill3DRect(x,y,width,height, true);
             else if (outline) {
-                g.draw3DRect(x, y, width, height, true);
+                g.setColor(Color.BLACK);
+                g.drawRect(x, y, width, height);
             }
 
             if (selected)
                 g.setColor(selectedColor);
             else g.setColor(textColor);
-            g.drawString(text, x + Utility.perc(width, 5), y + Utility.perc(height, 75));
+//            int stringX = x + Utility.perc(width, 5);
+            int stringX = x + (width/2 - stringWidth/2);
+            g.drawString(text, stringX, y + Utility.perc(height, 75));
         }
 
         if (transparency < 1) {

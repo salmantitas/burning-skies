@@ -16,7 +16,7 @@ public class MenuCredits extends Menu {
         MAXBUTTON = 1;
         options = new Button[MAXBUTTON];
 
-        ButtonNav backToMenu = new ButtonNav(x2, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+        ButtonNav backToMenu = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
         options[0] = backToMenu;
     }
 
@@ -33,7 +33,7 @@ public class MenuCredits extends Menu {
         g.setFont(new Font("arial", 1, titleSize));
         g.setColor(Color.WHITE);
 
-        g.drawString("Credits", x15, y00);
+        g.drawString("Credits", x30, y20);
 
         int creditFontSize = 25;
 
@@ -57,7 +57,7 @@ public class MenuCredits extends Menu {
         for (int i = 0; i < text.size(); i++)
         {
             String s = text.get(i);
-            g.drawString(s, x0, y10 + (i+1)*lineHeightInPixel);
+            g.drawString(s, x5, y26 + (i+1)*lineHeightInPixel);
         }
     }
 }

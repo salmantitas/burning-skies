@@ -9,6 +9,8 @@ public enum ActionTag {
     shield,
     tutorial,
     volume,
+    volumeUp,
+    volumeDown,
     save,
     load
 }

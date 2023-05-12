@@ -8,7 +8,6 @@ import com.euhedral.engine.Utility;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class MenuHighScore extends Menu {
 
@@ -17,7 +16,7 @@ public class MenuHighScore extends Menu {
         MAXBUTTON = 1;
         options = new Button[MAXBUTTON];
 
-        ButtonNav backToMenu = new ButtonNav(x2, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+        ButtonNav backToMenu = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
         options[0] = backToMenu;
     }
 
@@ -34,8 +33,8 @@ public class MenuHighScore extends Menu {
         g.setFont(new Font("arial", 1, titleSize));
         g.setColor(Color.WHITE);
 
-        g.drawString("High Score", x15, y00);
+        g.drawString("High Score", x30, y20);
 
-        VariableHandler.drawHighScore(g, x0, y10);
+        VariableHandler.drawHighScore(g, x5, y26);
     }
 }

@@ -134,9 +134,10 @@ public class SaveLoad {
 
         // Create string for settings that will be saved
         String tutorial = Boolean.toString(VariableHandler.isTutorial());
-        String volume = Boolean.toString(SoundHandler.isVolume());
+        String volumeOn = Boolean.toString(SoundHandler.isVolume());
+        String volumeLevel = Integer.toString(SoundHandler.getVolume());
 
-        List<String> rows = Arrays.asList(tutorial, volume);
+        List<String> rows = Arrays.asList(tutorial, volumeOn, volumeLevel);
 
         // Code implemented from https://stackabuse.com/reading-and-writing-csvs-in-java/
         try {
@@ -169,7 +170,7 @@ public class SaveLoad {
          * Game Code *
          *************/
         // Create array to store settings
-        String[] data = new String[2];
+        String[] data = new String[3];
 
         /***************
          * Engine Code *
@@ -194,15 +195,18 @@ public class SaveLoad {
 
             // Create variables from parsed data
             boolean tutorial = Boolean.parseBoolean(data[0]);
-            boolean volume  = Boolean.parseBoolean(data[1]);
+            boolean volumeOn  = Boolean.parseBoolean(data[1]);
+            int volume = Integer.parseInt(data[2]);
 
             // Update variables
             if (!VariableHandler.isTutorial() == tutorial) {
                 VariableHandler.toggleTutorial();
             }
-            if (!SoundHandler.isVolume() == volume) {
+            if (!SoundHandler.isVolume() == volumeOn) {
                 SoundHandler.toggleVolume();
             }
+
+            SoundHandler.setVolume(volume);
         }
     }
 

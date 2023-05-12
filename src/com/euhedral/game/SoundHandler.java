@@ -22,6 +22,7 @@ public class SoundHandler {
     private static int volume = 10;
     private final static int VOLUME_MAX = 10;
     private final static int VOLUME_MIN = 0;
+    private static boolean volumeOn = true;
 
     public static final int BGMMAINMENU = 0;
     public static final int BULLET = 1;
@@ -94,13 +95,16 @@ public class SoundHandler {
 
     // https://stackoverflow.com/questions/40514910/set-volume-of-java-clip
 
-    public float getVolume() {
-        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        return (float) Math.pow(10f, gainControl.getValue() / 20f);
-    }
+//    public float getVolume() {
+//        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+//        return (float) Math.pow(10f, gainControl.getValue() / 20f);
+//    }
 
     public static void setVolume(int volumeI) {
         float volume = (float) volumeI/10;
+        if (!volumeOn) {
+            volume = 0;
+        }
         if (volume < 0f || volume > 1f)
             throw new IllegalArgumentException("Volume not valid: " + volume);
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -144,9 +148,7 @@ public class SoundHandler {
      ******************/
 
     public static void toggleVolume() {
-        if (isVolume()) {
-            volume = 0;
-        } else volume = 10;
+        volumeOn = !volumeOn;
         SaveLoad.saveSettings();
         setVolume(volume);
     }
@@ -157,6 +159,7 @@ public class SoundHandler {
         }
 
         volume += 2;
+        SaveLoad.saveSettings();
         setVolume(volume);
     }
 
@@ -166,11 +169,18 @@ public class SoundHandler {
         }
 
         volume -= 2;
+        SaveLoad.saveSettings();
         setVolume(volume);
     }
 
+    /*****************
+     * Getter/Setter *
+     *****************/
+
     public static boolean isVolume() {
-        return volume == 10;
+        return volumeOn;
     }
+
+    public static int getVolume() {return volume;}
 
 }

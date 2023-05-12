@@ -34,23 +34,21 @@ public class Menu {
     protected Color titleColor = Color.BLACK;
 
     protected int buttonSize = Utility.percWidth(5);
-    protected int x0 = Utility.percWidth(5);
-    protected int x10 = Utility.percWidth(10);
-    protected int x15 = Utility.percWidth(30);
-    protected int x18 = Utility.percWidth(36);
-    protected int x2 = Utility.percWidth(40);
-    protected int x3 = Utility.percWidth(43) + 10;
-    protected int x4 = Utility.percWidth(50);
-    protected int xFINAL = Utility.percWidth(75);
-    protected int y00 = Utility.percHeight(20);
-    protected int y10 = Utility.percHeight(26);
-    protected int y15 = Utility.percHeight(32);
-    protected int y20 = Utility.percHeight(40);
-    protected int y30 = Utility.percHeight(48);
-    protected int y40 = Utility.percHeight(56);
-    protected int y50 = Utility.percHeight(62);
-    protected int y60 = Utility.percHeight(70);
-    protected int y70 = Utility.percHeight(72);
+    protected int x5 = Utility.percWidth(5);
+    protected int x30 = Utility.percWidth(30);
+    protected int x36 = Utility.percWidth(36);
+    protected int x40 = Utility.percWidth(40);
+    protected int x43 = Utility.percWidth(43) + 10;
+    protected int x52 = Utility.percWidth(52);
+    protected int x75 = Utility.percWidth(75);
+    protected int y20 = Utility.percHeight(20);
+    protected int y26 = Utility.percHeight(26);
+    protected int y32 = Utility.percHeight(32);
+    protected int y40 = Utility.percHeight(40);
+    protected int y48 = Utility.percHeight(48);
+    protected int y56 = Utility.percHeight(56);
+    protected int y62 = Utility.percHeight(62);
+    protected int y70 = Utility.percHeight(70);
     protected int y80 = Utility.percHeight(80);
 
     public Menu(GameState state) {
