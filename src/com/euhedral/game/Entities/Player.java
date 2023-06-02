@@ -213,7 +213,7 @@ public class Player extends MobileEntity {
 
         // Clamp
         x = Utility.clamp(x, 0, Engine.WIDTH + clampOffsetX);
-        y = Utility.clamp(y, levelHeight - 500, levelHeight + clampOffsetY);
+        y = Utility.clamp(y, levelHeight - 600, levelHeight + clampOffsetY);
 
         // movement
         mouseMove();

@@ -17,6 +17,7 @@ public class Engine extends Canvas implements Runnable{
      * HEIGHT = 480
      * BACKGROUND_COLOR = Color.BLACK
      */
+
     public static double VERSION = 0.245;
     public static String TITLE = "Euhedral Framework " + VERSION;
     public static double SCREEN_RATIO = 4.0/3.0;

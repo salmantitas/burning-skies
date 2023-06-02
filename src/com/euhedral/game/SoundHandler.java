@@ -13,11 +13,11 @@ public class SoundHandler {
     static Clip clip;
     static URL soundURL[] = new URL[MAX_CLIP];
 
-    public Clip bgm_Main;
-    public Clip bgm_Play;
-    public Clip bgm_GameOver;
+    public static Clip bgm_Main;
+    public static Clip bgm_Play;
+    public static Clip bgm_GameOver;
 
-    private Clip current;
+    private static Clip current;
 
     private static int volume = 10;
     private final static int VOLUME_MAX = 10;
