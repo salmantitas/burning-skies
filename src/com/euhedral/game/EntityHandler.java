@@ -503,7 +503,7 @@ public class EntityHandler {
                     if (pickup.getID() == EntityID.PickupHealth)
                         variableHandler.health.increase(25);
                     else variableHandler.shield.increase(25);
-                    GameController.getSound().playSound(SoundHandler.PICKUP);
+                    SoundHandler.playSound(SoundHandler.PICKUP);
                     pickup.disable();
                 }
             }

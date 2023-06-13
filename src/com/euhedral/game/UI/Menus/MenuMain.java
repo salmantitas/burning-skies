@@ -5,6 +5,7 @@ import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.*;
 import com.euhedral.game.GameController;
+import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -57,7 +58,7 @@ public class MenuMain extends Menu {
 
     @Override
     public void onSwitch() {
-        GameController.getSound().playBGMMenu();
+        SoundHandler.playBGMMenu();
     }
 
     /*

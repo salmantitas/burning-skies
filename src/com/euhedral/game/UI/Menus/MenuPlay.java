@@ -7,6 +7,7 @@ import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.GameController;
+import com.euhedral.game.SoundHandler;
 import com.euhedral.game.UI.MessageBox;
 import com.euhedral.game.VariableHandler;
 
@@ -49,6 +50,6 @@ public class MenuPlay extends Menu {
     @Override
     public void onSwitch() {
 //        GameController.getSound().bgm_Main.stop();
-        GameController.getSound().playBGMPlay();
+        SoundHandler.playBGMPlay();
     }
 }

@@ -33,7 +33,7 @@ public class GameController {
     private VariableHandler variableHandler;
     private EntityHandler entityHandler;
     private static TextureHandler textureHandler;
-    private static SoundHandler soundHandler;
+    private SoundHandler soundHandler;
 
     public Scanner scanner;
     public static String cmd;
@@ -666,9 +666,9 @@ public class GameController {
         return textureHandler;
     }
 
-    public static SoundHandler getSound() {
-        return soundHandler;
-    }
+//    public static SoundHandler getSound() {
+//        return soundHandler;
+//    }
 
     private void addLevel(int num, String path) {
         BufferedImage level = Engine.loader.loadImage(path);

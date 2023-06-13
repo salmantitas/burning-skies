@@ -19,7 +19,8 @@ public class SoundHandler {
 
     private static Clip current;
 
-    private static int volume = 10;
+    private static int volume;
+    private final static int VOLUME_DELTA = 1;
     private final static int VOLUME_MAX = 10;
     private final static int VOLUME_MIN = 0;
     private static boolean volumeOn = true;
@@ -101,40 +102,41 @@ public class SoundHandler {
 //    }
 
     public static void setVolume(int volumeI) {
-        float volume = (float) volumeI/10;
+        volume = volumeI;
+        float volumeF = (float) volumeI/10;
         if (!volumeOn) {
-            volume = 0;
+            volumeF = 0;
         }
-        if (volume < 0f || volume > 1f)
-            throw new IllegalArgumentException("Volume not valid: " + volume);
+        if (volumeF < 0f || volumeF > 1f)
+            throw new IllegalArgumentException("Volume not valid: " + volumeF);
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 
-        gainControl.setValue(20f * (float) Math.log10(volume));
+        gainControl.setValue(20f * (float) Math.log10(volumeF));
 
-        Utility.log("Volume set to " + (int) (volume*100) + "%");
+        Utility.log("Volume set to " + (int) (volumeF*100) + "%");
     }
 
-    public void playBGMMenu() {
+    public static void playBGMMenu() {
         playBGM(bgm_Main);
     }
 
-    public void playBGMPlay() {
+    public static void playBGMPlay() {
         playBGM(bgm_Play);
     }
 
-    public void playBGMGameOver() {
+    public static void playBGMGameOver() {
         playBGM(bgm_GameOver);
     }
 
-    private void playBGM(Clip bgm) {
+    private static void playBGM(Clip bgm) {
         if (current != null)
             if (current != bgm) {
                 current.stop();
                 bgm.setFramePosition(0);
             }
-        bgm.start();
         clip = bgm;
         setVolume(volume);
+        bgm.start();
         bgm.loop(Clip.LOOP_CONTINUOUSLY);
         current = bgm;
     }
@@ -149,8 +151,8 @@ public class SoundHandler {
 
     public static void toggleVolume() {
         volumeOn = !volumeOn;
-        SaveLoad.saveSettings();
         setVolume(volume);
+        SaveLoad.saveSettings();
     }
 
     public static void volumeUp() {
@@ -158,9 +160,9 @@ public class SoundHandler {
             return;
         }
 
-        volume += 2;
-        SaveLoad.saveSettings();
+        volume += VOLUME_DELTA;
         setVolume(volume);
+        SaveLoad.saveSettings();
     }
 
     public static void volumeDown() {
@@ -168,9 +170,9 @@ public class SoundHandler {
             return;
         }
 
-        volume -= 2;
-        SaveLoad.saveSettings();
+        volume -= VOLUME_DELTA;
         setVolume(volume);
+        SaveLoad.saveSettings();
     }
 
     /*****************

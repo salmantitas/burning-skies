@@ -214,7 +214,7 @@ public class Enemy extends MobileEntity {
     public void disable() {
         alive = false;
         velX = 0;
-        GameController.getSound().playSound(SoundHandler.EXPLOSION);
+        SoundHandler.playSound(SoundHandler.EXPLOSION);
     }
 
     public boolean isAlive() {

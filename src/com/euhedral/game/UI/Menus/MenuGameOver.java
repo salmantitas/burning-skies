@@ -5,6 +5,7 @@ import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.game.GameController;
+import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
 
@@ -42,7 +43,7 @@ public class MenuGameOver extends Menu {
     @Override
     public void onSwitch() {
 //        GameController.getSound().bgm_Main.stop();
-        GameController.getSound().playBGMGameOver();
+        SoundHandler.playBGMGameOver();
     }
 
 }
