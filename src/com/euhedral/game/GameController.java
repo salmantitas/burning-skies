@@ -117,10 +117,11 @@ public class GameController {
         entityHandler = new EntityHandler(variableHandler);
         shop = new Shop();
         scanner = new Scanner(System.in);
+        soundHandler = new SoundHandler();
         try {
             SaveLoad.loadSettings();
         } catch (Exception e) {
-
+            Utility.log("Exception");
         }
     }
 
@@ -135,7 +136,6 @@ public class GameController {
         /*************
          * Game Code *
          *************/
-        soundHandler = new SoundHandler();
         soundHandler.playBGMMenu();
     }
 
@@ -201,11 +201,11 @@ public class GameController {
         if (Engine.stateIs(GameState.Game)
 //                && !VariableManager.isConsole()
         ) {
-            if (System.currentTimeMillis() - 1000 > timer) {
-                timer = System.currentTimeMillis();
-                timeInSeconds++;
-                System.out.printf("Timer: %d\n", timeInSeconds);
-            }
+//            if (System.currentTimeMillis() - 1000 > timer) {
+//                timer = System.currentTimeMillis();
+//                timeInSeconds++;
+//                System.out.printf("Timer: %d\n", timeInSeconds);
+//            }
 
 
             loadMission = false;
@@ -233,6 +233,12 @@ public class GameController {
                     proceduralGenerator.update();
                     entityHandler.update();
                     checkLevelStatus();
+
+                    if (System.currentTimeMillis() - 1000 > timer) {
+                        timer = System.currentTimeMillis();
+                        timeInSeconds++;
+                        System.out.printf("Timer: %d\n", timeInSeconds);
+                    }
                 }
             }
         }
@@ -450,16 +456,49 @@ public class GameController {
                 case tutorial:
                     VariableHandler.toggleTutorial();
                     break;
-                case volume: {
-                    soundHandler.toggleVolume();
+                case volumeMaster: {
+                    soundHandler.toggleVolumeMaster();
+                    SaveLoad.saveSettings();
                     break;
                 }
-                case volumeUp: {
-                    soundHandler.volumeUp();
+                case volumeMasterUp: {
+                    soundHandler.volumeMasterUp();
+                    SaveLoad.saveSettings();
                     break;
                 }
-                case volumeDown: {
-                    soundHandler.volumeDown();
+                case volumeMasterDown: {
+                    soundHandler.volumeMasterDown();
+                    SaveLoad.saveSettings();
+                    break;
+                }
+                case volumeMusic: {
+                    soundHandler.toggleVolumeMusic();
+                    SaveLoad.saveSettings();
+                    break;
+                }
+                case volumeMusicUp: {
+                    soundHandler.volumeMusicUp();
+                    SaveLoad.saveSettings();
+                    break;
+                }
+                case volumeMusicDown: {
+                    soundHandler.volumeMusicDown();
+                    SaveLoad.saveSettings();
+                    break;
+                }
+                case volumeEffects: {
+                    soundHandler.toggleVolumeEffects();
+                    SaveLoad.saveSettings();
+                    break;
+                }
+                case volumeEffectsUp: {
+                    soundHandler.volumeEffectsUp();
+                    SaveLoad.saveSettings();
+                    break;
+                }
+                case volumeEffectsDown: {
+                    soundHandler.volumeEffectsDown();
+                    SaveLoad.saveSettings();
                     break;
                 }
                 case health:

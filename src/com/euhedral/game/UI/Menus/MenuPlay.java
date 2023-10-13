@@ -21,13 +21,18 @@ public class MenuPlay extends Menu {
         MAXBUTTON = 0;
         options = new Button[MAXBUTTON];
 
-        MessageBox a = new MessageBox(500,100);
-        a.addText("You can use WASD or the Arrow Keys for movement.");
+        MessageBox a = new MessageBox(500,150);
+        a.addText("You can use WASD or the Arrow Keys");
+        a.addText("for movement.");
+        a.addText("");
         a.addText("SPACEBAR can be used for shooting.");
 //        a.addText("CTRL is used to switch to ground bullets.");
+        a.addText("");
         a.addText("Click the red square to dismiss this");
         a.addText("message and starts the game.");
+        a.addText("");
         a.addText("You can disable tutorial in Settings.");
+        a.addText("");
         a.addText("Enjoy!");
         addMessageBox(a);
 

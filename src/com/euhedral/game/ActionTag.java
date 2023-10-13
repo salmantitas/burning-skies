@@ -8,9 +8,15 @@ public enum ActionTag {
     ground,
     shield,
     tutorial,
-    volume,
-    volumeUp,
-    volumeDown,
+    volumeMaster,
+    volumeMasterUp,
+    volumeMasterDown,
+    volumeMusic,
+    volumeMusicUp,
+    volumeMusicDown,
+    volumeEffects,
+    volumeEffectsUp,
+    volumeEffectsDown,
     save,
     load
 }

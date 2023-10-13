@@ -340,6 +340,10 @@ public class VariableHandler {
         return tutorial;
     }
 
+    public static void initTutorial() {
+        tutorial = !tutorial;
+    }
+
     public static void toggleTutorial() {
         tutorial = !tutorial;
         SaveLoad.saveSettings();

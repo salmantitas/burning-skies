@@ -134,10 +134,14 @@ public class SaveLoad {
 
         // Create string for settings that will be saved
         String tutorial = Boolean.toString(VariableHandler.isTutorial());
-        String volumeOn = Boolean.toString(SoundHandler.isVolume());
-        String volumeLevel = Integer.toString(SoundHandler.getVolume());
+        String volumeMasterOn = Boolean.toString(SoundHandler.isVolumeMaster());
+        String volumeMasterLevel = Integer.toString(SoundHandler.getVolumeMaster());
+        String volumeMusicOn = Boolean.toString(SoundHandler.isVolumeMusic());
+        String volumeMusicLevel = Integer.toString(SoundHandler.getVolumeMusic());
+        String volumeEffectsOn = Boolean.toString(SoundHandler.isVolumeEffects());
+        String volumeEffectsLevel = Integer.toString(SoundHandler.getVolumeEffects());
 
-        List<String> rows = Arrays.asList(tutorial, volumeOn, volumeLevel);
+        List<String> rows = Arrays.asList(tutorial, volumeMasterOn, volumeMasterLevel, volumeMusicOn, volumeMusicLevel, volumeEffectsOn, volumeEffectsLevel);
 
         // Code implemented from https://stackabuse.com/reading-and-writing-csvs-in-java/
         try {
@@ -170,7 +174,7 @@ public class SaveLoad {
          * Game Code *
          *************/
         // Create array to store settings
-        String[] data = new String[3];
+        String[] data = new String[7];
 
         /***************
          * Engine Code *
@@ -195,18 +199,37 @@ public class SaveLoad {
 
             // Create variables from parsed data
             boolean tutorial = Boolean.parseBoolean(data[0]);
-            boolean volumeOn  = Boolean.parseBoolean(data[1]);
-            int volume = Integer.parseInt(data[2]);
+            boolean volumeMasterOn  = Boolean.parseBoolean(data[1]);
+            int volumeMaster = Integer.parseInt(data[2]);
+            boolean volumeMusicOn  = Boolean.parseBoolean(data[3]);
+            int volumeMusic = Integer.parseInt(data[4]);
+            boolean volumeEffectsOn  = Boolean.parseBoolean(data[5]);
+            int volumeEffects = Integer.parseInt(data[6]);
 
             // Update variables
-            if (!VariableHandler.isTutorial() == tutorial) {
-                VariableHandler.toggleTutorial();
-            }
-            if (!SoundHandler.isVolume() == volumeOn) {
-                SoundHandler.toggleVolume();
-            }
+            if (VariableHandler.isTutorial() == tutorial) {
 
-            SoundHandler.setVolume(volume);
+            } else
+                VariableHandler.initTutorial();
+
+            if (SoundHandler.isVolumeMaster() == volumeMasterOn) {
+
+            } else
+                SoundHandler.toggleVolumeMaster();
+
+            if (SoundHandler.isVolumeMusic() == volumeMusicOn) {
+
+            } else
+                SoundHandler.toggleVolumeMusic();
+
+            if (SoundHandler.isVolumeEffects() == volumeEffectsOn) {
+
+            } else
+                SoundHandler.toggleVolumeEffects();
+
+            SoundHandler.setVolumeMaster(volumeMaster);
+            SoundHandler.setVolumeMusic(volumeMusic);
+            SoundHandler.setVolumeEffects(volumeEffects);
         }
     }
 

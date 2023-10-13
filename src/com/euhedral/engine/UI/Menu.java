@@ -34,12 +34,16 @@ public class Menu {
     protected Color titleColor = Color.BLACK;
 
     protected int buttonSize = Utility.percWidth(5);
+    protected int optionSize = buttonSize/2;
+    protected int toggleIconSize = optionSize;
+
     protected int x5 = Utility.percWidth(5);
     protected int x30 = Utility.percWidth(30);
     protected int x36 = Utility.percWidth(36);
     protected int x40 = Utility.percWidth(40);
     protected int x43 = Utility.percWidth(43) + 10;
     protected int x52 = Utility.percWidth(52);
+    protected int x62 = Utility.percWidth(62);
     protected int x75 = Utility.percWidth(75);
     protected int y20 = Utility.percHeight(20);
     protected int y26 = Utility.percHeight(26);
@@ -279,4 +283,20 @@ public class Menu {
         messageBoxes.add(messageBox);
         activeMessageBoxes++;
     }
+
+    /*****************
+     * Render Helper *
+     *****************/
+
+    protected void renderValue(Graphics g, Button button, int value, boolean condition) {
+        int bx = button.getX() + button.getWidth();
+        int by = button.getY() + button.getHeight();
+
+        g.setFont(new Font("arial", 1, 50));
+
+        Color c = condition ? Color.GREEN : Color.GRAY;
+        g.setColor(c);
+        g.drawString(Integer.toString(value), 10 + bx, by);
+    }
+
 }

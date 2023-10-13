@@ -55,7 +55,7 @@ public class MessageBox extends UIItem {
             textColorError = Color.red;
     private boolean enable = true;
     private Close close;
-    private int margin = Utility.intAtWidth640(20);
+    private int margin = Utility.intAtWidth640(10);
     private int fontSize = Utility.intAtWidth640(10);
     private Font font = new Font("arial", 0, fontSize);
 
@@ -68,7 +68,7 @@ public class MessageBox extends UIItem {
         this.x = x;
         this.y = y;
         texts = new ArrayList<>();
-        SCALE_FACTOR = 2.00/3.00;
+        SCALE_FACTOR = 2.00/2.50;
         width = 300;
         height = (int) (width * SCALE_FACTOR);
         heightMax = (int) (widthMax * SCALE_FACTOR);
@@ -108,7 +108,7 @@ public class MessageBox extends UIItem {
                         close.setX(x+width);
                     }
                 }
-                g.drawString(text, x + margin, y + (i*20) + height / 3);
+                g.drawString(text, x + margin, y + (i*15) + height / 3);
             }
             close.render(g);
         }

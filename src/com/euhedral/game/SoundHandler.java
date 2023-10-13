@@ -9,21 +9,24 @@ import javax.sound.sampled.FloatControl;
 import java.net.URL;
 
 public class SoundHandler {
+
+    static int volTest = 0;
+
     static int MAX_CLIP = 30;
     static Clip clip;
+    public static Clip effect;
+    private static Clip bgm;
     static URL soundURL[] = new URL[MAX_CLIP];
 
-    public static Clip bgm_Main;
-    public static Clip bgm_Play;
-    public static Clip bgm_GameOver;
-
-    private static Clip current;
-
-    private static int volume;
+    private static int volumeMaster;
+    private static int volumeEffects;
+    private static int volumeMusic;
     private final static int VOLUME_DELTA = 1;
     private final static int VOLUME_MAX = 10;
     private final static int VOLUME_MIN = 0;
-    private static boolean volumeOn = true;
+    private static boolean volumeMasterOn = true;
+    private static boolean volumeEffectsOn = true;
+    private static boolean volumeMusicOn = true;
 
     public static final int BGMMAINMENU = 0;
     public static final int BULLET = 1;
@@ -33,31 +36,20 @@ public class SoundHandler {
     public static final int BGMPLAY = 5;
     public static final int IMPACT = 6;
 
+    private static int bgmID = -1;
+
     public SoundHandler() {
         initializeSounds();
     }
 
     private void initializeSounds() {
-        soundURL[0] = getClass().getResource("/bgmMain.wav");
-        soundURL[1] = getClass().getResource("/bullet.wav");
-        soundURL[2] = getClass().getResource("/pickup.wav");
-        soundURL[3] = getClass().getResource("/explosion.wav");
-        soundURL[4] = getClass().getResource("/bgmGameOver.wav");
-        soundURL[5] = getClass().getResource("/bgm1.wav");
-        soundURL[6] = getClass().getResource("/impact.wav");
-
-        try {
-            bgm_Main = AudioSystem.getClip();
-            bgm_Main.open(AudioSystem.getAudioInputStream(soundURL[BGMMAINMENU]));
-
-            bgm_Play = AudioSystem.getClip();
-            bgm_Play.open(AudioSystem.getAudioInputStream(soundURL[BGMPLAY]));
-
-            bgm_GameOver = AudioSystem.getClip();
-            bgm_GameOver.open(AudioSystem.getAudioInputStream(soundURL[BGMGAMEOVER]));
-        } catch (Exception e) {
-
-        }
+        soundURL[BGMMAINMENU] = getClass().getResource("/bgmMain.wav");
+        soundURL[BULLET] = getClass().getResource("/bullet.wav");
+        soundURL[PICKUP] = getClass().getResource("/pickup.wav");
+        soundURL[EXPLOSION] = getClass().getResource("/explosion.wav");
+        soundURL[BGMGAMEOVER] = getClass().getResource("/bgmGameOver.wav");
+        soundURL[BGMPLAY] = getClass().getResource("/bgm1.wav");
+        soundURL[IMPACT] = getClass().getResource("/impact.wav");
     }
 
     public static void setFile(int i) {
@@ -68,6 +60,18 @@ public class SoundHandler {
         } catch (Exception e) {
 
         }
+    }
+
+    public static Clip setClip(int i) {
+        Clip newClip = null;
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
+            newClip = AudioSystem.getClip();
+            newClip.open(ais);
+        } catch (Exception e) {
+
+        }
+        return newClip;
     }
 
     public void playMusic(int i) {
@@ -87,7 +91,7 @@ public class SoundHandler {
 
     static private void play() {
         clip.start();
-        setVolume(volume);
+        gainControlVolumeMaster();
     }
 
     private void loop() {
@@ -101,88 +105,199 @@ public class SoundHandler {
 //        return (float) Math.pow(10f, gainControl.getValue() / 20f);
 //    }
 
-    public static void setVolume(int volumeI) {
-        volume = volumeI;
-        float volumeF = (float) volumeI/10;
-        if (!volumeOn) {
+    public static void gainControlVolumeMaster() {
+        if (clip == null)
+            return;
+        float volumeF = (float) volumeMaster/10;
+        if (!volumeMasterOn) {
             volumeF = 0;
         }
         if (volumeF < 0f || volumeF > 1f)
             throw new IllegalArgumentException("Volume not valid: " + volumeF);
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        FloatControl bgmGainControl = (FloatControl) bgm.getControl(FloatControl.Type.MASTER_GAIN);
+
+        gainControl.setValue(20f * (float) Math.log10(volumeF));
+        bgmGainControl.setValue(20f * (float) Math.log10(volumeF));
+
+        Utility.log("Master Volume set to " + (int) (volumeF*100) + "%");
+    }
+
+    public static void gainControlVolumeMusic() {
+        if (bgm == null)
+            return;
+        float volumeF = (float) volumeMusic/10;
+        if (!volumeMusicOn) {
+            volumeF = 0;
+        }
+        if (volumeF < 0f || volumeF > 1f)
+            throw new IllegalArgumentException("Volume not valid: " + volumeF);
+        FloatControl gainControl = (FloatControl) bgm.getControl(FloatControl.Type.MASTER_GAIN);
 
         gainControl.setValue(20f * (float) Math.log10(volumeF));
 
-        Utility.log("Volume set to " + (int) (volumeF*100) + "%");
+        Utility.log("Master Volume set to " + (int) (volumeF*100) + "%");
+    }
+
+    public static void gainControlVolumeEffects() {
+        // stub
     }
 
     public static void playBGMMenu() {
-        playBGM(bgm_Main);
+        playBGM(BGMMAINMENU);
     }
 
     public static void playBGMPlay() {
-        playBGM(bgm_Play);
+        playBGM(BGMPLAY);
     }
 
     public static void playBGMGameOver() {
-        playBGM(bgm_GameOver);
+        playBGM(BGMGAMEOVER);
     }
 
-    private static void playBGM(Clip bgm) {
-        if (current != null)
-            if (current != bgm) {
-                current.stop();
-                bgm.setFramePosition(0);
-            }
+    private static void playBGM(int soundID) {
+        boolean noBgmPlaying = bgm == null;
+        boolean sameBgmPlaying = bgmID == soundID;
+
+        if (noBgmPlaying) {
+            bgmHelper(soundID);
+        } else if (sameBgmPlaying) {
+
+        } else {
+            bgm.stop();
+            bgmHelper(soundID);
+        }
+    }
+
+    private static void bgmHelper(int soundID) {
+        bgm = setClip(soundID);
         clip = bgm;
-        setVolume(volume);
+        gainControlVolumeMaster();
         bgm.start();
         bgm.loop(Clip.LOOP_CONTINUOUSLY);
-        current = bgm;
+        bgmID = soundID;
     }
 
-    public boolean playingBGMMenu() {
-        return clip == bgm_Main;
-    }
+//    public boolean playingBGMMenu() {
+//        return clip == bgm_Main;
+//    }
 
     /******************
      * Volume Control *
      ******************/
 
-    public static void toggleVolume() {
-        volumeOn = !volumeOn;
-        setVolume(volume);
-        SaveLoad.saveSettings();
+    public static void toggleVolumeMaster() {
+        if (volTest == 1) {
+            System.out.println("Testing");
+        }
+        volumeMasterOn = !volumeMasterOn;
+        gainControlVolumeMaster();
     }
 
-    public static void volumeUp() {
-        if (volume >= VOLUME_MAX) {
+    public static void toggleVolumeMusic() {
+        volumeMusicOn = !volumeMusicOn;
+        // gainControlVolume
+    }
+
+    public static void toggleVolumeEffects() {
+        volumeEffectsOn = !volumeEffectsOn;
+        // gainControlVolume
+    }
+
+    public static void volumeMasterUp() {
+        if (volumeMaster >= VOLUME_MAX) {
             return;
         }
 
-        volume += VOLUME_DELTA;
-        setVolume(volume);
-        SaveLoad.saveSettings();
+        setVolumeMaster(volumeMaster + VOLUME_DELTA);
+        gainControlVolumeMaster();
     }
 
-    public static void volumeDown() {
-        if (volume <= VOLUME_MIN) {
+    public static void volumeMasterDown() {
+        if (volumeMaster <= VOLUME_MIN) {
             return;
         }
 
-        volume -= VOLUME_DELTA;
-        setVolume(volume);
-        SaveLoad.saveSettings();
+        setVolumeMaster(volumeMaster - VOLUME_DELTA);
+        gainControlVolumeMaster();
+
+        volTest += 1;
+    }
+
+    public static void volumeMusicUp() {
+        if (volumeMusic >= VOLUME_MAX) {
+            return;
+        }
+
+        setVolumeMusic(volumeMusic + VOLUME_DELTA);
+        gainControlVolumeMusic();
+    }
+
+    public static void volumeMusicDown() {
+        if (volumeMusic <= VOLUME_MIN) {
+            return;
+        }
+
+        setVolumeMusic(volumeMusic - VOLUME_DELTA);
+        gainControlVolumeMusic();
+    }
+
+    public static void volumeEffectsUp() {
+        if (volumeEffects >= VOLUME_MAX) {
+            return;
+        }
+
+        setVolumeEffects(volumeEffects + VOLUME_DELTA);
+        gainControlVolumeMaster();
+    }
+
+    public static void volumeEffectsDown() {
+        if (volumeEffects <= VOLUME_MIN) {
+            return;
+        }
+
+        setVolumeEffects(volumeEffects - VOLUME_DELTA);
+        gainControlVolumeMaster();
     }
 
     /*****************
      * Getter/Setter *
      *****************/
 
-    public static boolean isVolume() {
-        return volumeOn;
+    public static boolean isVolumeMaster() {
+        return volumeMasterOn;
     }
 
-    public static int getVolume() {return volume;}
+    public static boolean isVolumeMusic() {
+        return volumeMusicOn;
+    }
+
+    public static boolean isVolumeEffects() {
+        return volumeEffectsOn;
+    }
+
+    public static int getVolumeMaster() {return volumeMaster;}
+    public static int getVolumeMusic() {
+        return volumeMusic;
+    }
+
+    public static int getVolumeEffects() {
+        return volumeEffects;
+    }
+
+    public static void setVolumeMaster(int volume) {
+        volumeMaster = volume;
+        Utility.log(Integer.toString(volumeMaster));
+    }
+
+    public static void setVolumeMusic(int volume) {
+        volumeMusic = volume;
+        Utility.log(Integer.toString(volumeMusic));
+    }
+
+    public static void setVolumeEffects(int volume) {
+        volumeEffects = volume;
+        Utility.log(Integer.toString(volumeEffects));
+    }
 
 }
