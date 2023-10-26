@@ -120,7 +120,7 @@ public class SoundHandler {
         gainControl.setValue(20f * (float) Math.log10(volumeF));
         bgmGainControl.setValue(20f * (float) Math.log10(volumeF));
 
-        Utility.log("Master Volume set to " + (int) (volumeF*100) + "%");
+//        Utility.log("Master Volume set to " + (int) (volumeF*100) + "%");
     }
 
     public static void gainControlVolumeMusic() {
@@ -136,7 +136,7 @@ public class SoundHandler {
 
         gainControl.setValue(20f * (float) Math.log10(volumeF));
 
-        Utility.log("Master Volume set to " + (int) (volumeF*100) + "%");
+        Utility.log("Music Volume set to " + (int) (volumeF*100) + "%");
     }
 
     public static void gainControlVolumeEffects() {

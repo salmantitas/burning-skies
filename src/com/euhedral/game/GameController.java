@@ -237,7 +237,7 @@ public class GameController {
                     if (System.currentTimeMillis() - 1000 > timer) {
                         timer = System.currentTimeMillis();
                         timeInSeconds++;
-                        System.out.printf("Timer: %d\n", timeInSeconds);
+//                        System.out.printf("Timer: %d\n", timeInSeconds);
                     }
                 }
             }
