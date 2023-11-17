@@ -45,6 +45,7 @@ public class Menu {
     protected int x52 = Utility.percWidth(52);
     protected int x62 = Utility.percWidth(62);
     protected int x75 = Utility.percWidth(75);
+    protected int xLast = Utility.percWidth(90);
     protected int y20 = Utility.percHeight(20);
     protected int y26 = Utility.percHeight(26);
     protected int y32 = Utility.percHeight(32);
@@ -189,7 +190,16 @@ public class Menu {
     }
 
     public void onSwitch() {
+        resetMessageBoxes();
+    }
 
+    private void resetMessageBoxes() {
+        if (activeMessageBoxes == 0) {
+            for (MessageBox m : messageBoxes) {
+                m.enable();
+                activeMessageBoxes++;
+            }
+        }
     }
 
     // todo: Experimental feature

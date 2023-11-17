@@ -118,6 +118,10 @@ public class MessageBox extends UIItem {
         enable = false;
     }
 
+    public void enable() {
+        enable = true;
+    }
+
     public boolean isEnabled() {
         return enable;
     }

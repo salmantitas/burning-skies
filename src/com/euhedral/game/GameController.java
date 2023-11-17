@@ -2,6 +2,7 @@ package com.euhedral.game;
 
 import com.euhedral.engine.*;
 import com.euhedral.game.Entities.Shop;
+import com.euhedral.game.UI.Menus.MenuPlay;
 import com.euhedral.game.UI.UIHandler;
 
 import java.awt.*;
@@ -207,7 +208,6 @@ public class GameController {
 //                System.out.printf("Timer: %d\n", timeInSeconds);
 //            }
 
-
             loadMission = false;
             boolean endGameCondition = variableHandler.health.getValue() <= 0;
 
@@ -217,7 +217,6 @@ public class GameController {
                 Engine.gameOverState();
                 System.out.println("Game Over");
                 VariableHandler.updateHighScore();
-//                resetGame();
             }
 
             /*************
@@ -227,9 +226,17 @@ public class GameController {
             else {
 
                 // Game only runs if either tutorials are disabled, or no message boxes are active
+                // Player can move when the tutorial box is up.
 
-                if (uiHandler.noActiveMessageBoxes() || !VariableHandler.isTutorial()) {
+                boolean activeMessageBoxes = !uiHandler.noActiveMessageBoxes();
+                boolean tutorialDisabled = !VariableHandler.isTutorial();
 
+                // if tutorial is disabled or there are no active message boxes, just run the game
+
+                if (tutorialDisabled || !activeMessageBoxes) {
+                    if (activeMessageBoxes) {
+                        System.out.println("Active");
+                    }
                     proceduralGenerator.update();
                     entityHandler.update();
                     checkLevelStatus();
@@ -240,6 +247,10 @@ public class GameController {
 //                        System.out.printf("Timer: %d\n", timeInSeconds);
                     }
                 }
+
+                else if (activeMessageBoxes) {
+                        entityHandler.updatePlayer();
+                    }
             }
         }
     }
@@ -617,6 +628,10 @@ public class GameController {
     public void movePlayer(char c) {
         if (c == 'l' || c == 'r' || c == 'u' | c == 'd') {
             entityHandler.movePlayer(c);
+
+//            if (!MenuPlay.moved) {
+//                MenuPlay.moved = true;
+//            }
         }
     }
 
@@ -633,6 +648,10 @@ public class GameController {
 
     public void shootPlayer() {
         entityHandler.playerCanShoot();
+
+//        if (!MenuPlay.shot) {
+//            MenuPlay.shot = true;
+//        }
     }
 
     public void stopShootPlayer() {

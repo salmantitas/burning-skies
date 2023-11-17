@@ -31,10 +31,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/score.csv" beforeDir="false" afterPath="$PROJECT_DIR$/score.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.csv" beforeDir="false" afterPath="$PROJECT_DIR$/settings.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/Engine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/UI/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/UI/Menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/SoundHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/SoundHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPlay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/MessageBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/MessageBox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +92,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="com.intellij.jarRepository.settings.RemoteRepositoriesConfigurable" />
@@ -170,7 +172,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/UI/Menu.java</url>
-          <line>200</line>
+          <line>210</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -180,7 +182,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/GameController.java</url>
-          <line>697</line>
+          <line>716</line>
           <option name="timeStamp" value="133" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -194,19 +196,34 @@
           <option name="timeStamp" value="196" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/game/UI/MessageBox.java</url>
-          <line>110</line>
-          <option name="timeStamp" value="247" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/SoundHandler.java</url>
           <line>190</line>
           <option name="timeStamp" value="248" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java</url>
-          <line>158</line>
+          <line>165</line>
           <option name="timeStamp" value="249" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/GameController.java</url>
+          <line>651</line>
+          <option name="timeStamp" value="251" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java</url>
+          <line>288</line>
+          <option name="timeStamp" value="252" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/GameController.java</url>
+          <line>239</line>
+          <option name="timeStamp" value="259" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuPlay.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="260" />
         </line-breakpoint>
         <line-breakpoint enabled="true" log-message="true" suspend="NONE" type="java-method">
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/Animation.java</url>
@@ -219,6 +236,11 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="((GameController)this).variableHandler" custom="com.euhedral.game.GameController" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/aerial_predator$Engine.ic" NAME="Engine Coverage Results" MODIFIED="1678749477797" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

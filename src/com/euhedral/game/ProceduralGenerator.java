@@ -75,7 +75,8 @@ public class ProceduralGenerator {
 
     final int PATTERN_LINE = 0;
     final int PATTERN_V = 1;
-    final int maxPatterns = 2;
+    final int PATTERN_SQUARE = 2;
+    final int maxPatterns = 3;
 
     private EntityHandler entityHandler;
 
@@ -95,11 +96,17 @@ public class ProceduralGenerator {
         int minEnemiesL = 2;
         int maxEnemiesL = 9;
 
-        enemyNumbers = new int[2][2];
+        // spawns in square pattern
+        int minEnemiesS = 2;
+        int maxEnemiesS = 4; // MAX 8 possible but not fun
+
+        enemyNumbers = new int[maxPatterns][2];
         enemyNumbers[PATTERN_LINE][ENEMY_MIN] = minEnemiesL;
         enemyNumbers[PATTERN_LINE][ENEMY_MAX] = maxEnemiesL;
         enemyNumbers[PATTERN_V][ENEMY_MIN] = minEnemiesV;
         enemyNumbers[PATTERN_V][ENEMY_MAX] = maxEnemiesV;
+        enemyNumbers[PATTERN_SQUARE][ENEMY_MIN] = minEnemiesS;
+        enemyNumbers[PATTERN_SQUARE][ENEMY_MAX] = maxEnemiesS;
     }
 
     // generate a level using procedural generation
@@ -205,6 +212,8 @@ public class ProceduralGenerator {
             nextPattern();
         }
 
+//        pattern = PATTERN_SQUARE;
+
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
         int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
@@ -218,6 +227,9 @@ public class ProceduralGenerator {
                 break;
             case PATTERN_V:
                 spawnV(num);
+                break;
+            case PATTERN_SQUARE:
+                spawnSquare(num);
                 break;
         }
 
@@ -290,6 +302,35 @@ public class ProceduralGenerator {
                 spawnFromMiddleV(xLast, num, spawnHeight);
                 break;
         }
+    }
+
+    private void spawnSquare(int num) {
+        num--;
+        int x0 = 0;
+        int y0 = spawnHeight - num*spacingHorizontal;
+        int xFin = 0;
+        switch (spawnZone) {
+            case 1:
+                x0 = xStart;
+                xFin = x0 + num*spacingHorizontal;
+                y0 = spawnHeight - num*spacingHorizontal;
+                break;
+            case 2:
+                x0 = xMid;
+                xFin = x0 + num*spacingHorizontal;
+                y0 = spawnHeight - num*spacingHorizontal;
+                break;
+            case 3:
+                x0 = xEnd - num*spacingHorizontal;
+                xFin = x0 + num*spacingHorizontal;
+                y0 = spawnHeight - num*spacingHorizontal;
+                break;
+        }
+
+        spawnFromLeft(num, y0, x0);
+        spawnFromTop(num, y0, xFin);
+        spawnFromBottom(num, spawnHeight, x0);
+        spawnFromRight(num, spawnHeight, xFin);
     }
 
     /* Recursive Spawning Functions */
@@ -386,6 +427,32 @@ public class ProceduralGenerator {
         }
     }
 
+    private void spawnFromTop(int num, int y, int x) {
+        // Base Case
+
+        if (num > 1) {
+            int skip = calculateSkip();
+            int y0 = y + (spacingHorizontal + skip);
+            spawnFromTop(num - 1, y0, x);
+        }
+
+        Color c = Color.RED; // stub
+        spawnHelper(x, y, c);
+    }
+
+    private void spawnFromBottom(int num, int y, int x) {
+        // Base Case
+
+        if (num > 1) {
+            int skip = calculateSkip();
+            int y0 = y - (spacingHorizontal + skip);
+            spawnFromBottom(num - 1, y0, x);
+        }
+
+        Color c = Color.RED; // stub
+        spawnHelper(x, y, c);
+    }
+
     private void spawnVHelper(int num, int y, int x, int increment) {
         Color c = Color.RED; // stub
 
@@ -476,7 +543,11 @@ public class ProceduralGenerator {
     }
 
     private int calculateSkip() {
-        return Utility.randomRange(0, 2);
+        int skip = Utility.randomRange(0, 2);
+        if (pattern == PATTERN_SQUARE) {
+            skip = 0;
+        }
+        return skip;
     }
 
     private void calculateSpawnInterval(int num, int maxEnemies) {
@@ -487,7 +558,12 @@ public class ProceduralGenerator {
         spawnInterval = (long) spawnIntervalFloat;
 
         if (pattern == PATTERN_V) {
-            spawnInterval *= 2;
+            spawnInterval *= 1.5;
+        }
+
+        // todo: adjust
+        if (pattern == PATTERN_SQUARE) {
+            spawnInterval *= 1.8;
         }
     }
 
