@@ -18,12 +18,12 @@ public class ProceduralGenerator {
     public HashMap<Color, EntityID> colorMap;
     int height, width = 31;
     final int incrementMIN = Utility.intAtWidth640(1);
-    int xStart = incrementMIN, xEnd = width - 3;
-    int xMid = width/2;
+    int spacing = 3;
+    int xStart = incrementMIN, xEnd = width - spacing;
+    int xMid = (xEnd - xStart)/2 + xStart + spacing;
     int spawnZone, lastZone, lastLastZone;
     int pattern, lastPattern, lastLastPattern;
     int wave, waveSinceHealth;
-    int spacingHorizontal = 3;
     int level;
     int playerX = xMid*32, playerY;
     final int ENDLESS = -1;
@@ -76,7 +76,8 @@ public class ProceduralGenerator {
     final int PATTERN_LINE = 0;
     final int PATTERN_V = 1;
     final int PATTERN_SQUARE = 2;
-    final int maxPatterns = 3;
+    final int PATTERN_CROSS = 3;
+    final int maxPatterns = 2;
 
     private EntityHandler entityHandler;
 
@@ -88,25 +89,27 @@ public class ProceduralGenerator {
     }
 
     private void buildMatrix() {
-        // spawns in V pattern
         int minEnemiesV = 3;
         int maxEnemiesV = 9;
 
-        // spawns in line pattern
-        int minEnemiesL = 2;
-        int maxEnemiesL = 9;
+        int minEnemiesLine = 2;
+        int maxEnemiesLine = 9;
 
-        // spawns in square pattern
-        int minEnemiesS = 2;
-        int maxEnemiesS = 4; // MAX 8 possible but not fun
+        int minEnemiesSquare = 2;
+        int maxEnemiesSquare = 4; // MAX 8 possible but not fun
+
+        int minEnemiesCross = 3;
+        int maxEnemiesCross = 3;
 
         enemyNumbers = new int[maxPatterns][2];
-        enemyNumbers[PATTERN_LINE][ENEMY_MIN] = minEnemiesL;
-        enemyNumbers[PATTERN_LINE][ENEMY_MAX] = maxEnemiesL;
+        enemyNumbers[PATTERN_LINE][ENEMY_MIN] = minEnemiesLine;
+        enemyNumbers[PATTERN_LINE][ENEMY_MAX] = maxEnemiesLine;
         enemyNumbers[PATTERN_V][ENEMY_MIN] = minEnemiesV;
         enemyNumbers[PATTERN_V][ENEMY_MAX] = maxEnemiesV;
-        enemyNumbers[PATTERN_SQUARE][ENEMY_MIN] = minEnemiesS;
-        enemyNumbers[PATTERN_SQUARE][ENEMY_MAX] = maxEnemiesS;
+//        enemyNumbers[PATTERN_SQUARE][ENEMY_MIN] = minEnemiesSquare;
+//        enemyNumbers[PATTERN_SQUARE][ENEMY_MAX] = maxEnemiesSquare;
+//        enemyNumbers[PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
+//        enemyNumbers[PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
     }
 
     // generate a level using procedural generation
@@ -212,7 +215,7 @@ public class ProceduralGenerator {
             nextPattern();
         }
 
-//        pattern = PATTERN_SQUARE;
+//        pattern = PATTERN_CROSS;
 
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
@@ -231,6 +234,9 @@ public class ProceduralGenerator {
             case PATTERN_SQUARE:
                 spawnSquare(num);
                 break;
+            case PATTERN_CROSS:
+                spawnCross(num);
+                break;
         }
 
         if (wave % 10 == 0) {
@@ -247,7 +253,7 @@ public class ProceduralGenerator {
     private void spawnHealth() {
         spawnZone = Utility.randomRange(1, 3);
         int spawnHeight = this.spawnHeight;
-        spawnPickupHelper2(spawnHeight, EntityID.PickupHealth);
+        spawnPickupHelper(spawnHeight, EntityID.PickupHealth);
         System.out.println("Health Spawned");
         wave++;
         waveSinceHealth = 0;
@@ -255,19 +261,11 @@ public class ProceduralGenerator {
     }
 
     // Pickup Spawner Helped
-    private void spawnPickupHelper2(int spawnHeight, EntityID id) {
+    private void spawnPickupHelper(int spawnHeight, EntityID id) {
         entityHandler.spawnPickup(xMid * 32, spawnHeight * 32, id);
     }
 
     /* Spawn Pattern Functions*/
-
-    // Pickup Spawner Helped
-    private void spawnPickupHelper(int remainingHeight, int num, int spawnHeight, EntityID id) {
-        if (spawnedPickupCount == num && height - remainingHeight >= spawnHeight) {
-            entityHandler.spawnPickup(xMid * 32, remainingHeight * 32, id);
-            spawnedPickupCount++;
-        }
-    }
 
     private void spawnLine(int num) {
 //        System.out.println(spawnZone + " " + num);
@@ -307,23 +305,23 @@ public class ProceduralGenerator {
     private void spawnSquare(int num) {
         num--;
         int x0 = 0;
-        int y0 = spawnHeight - num*spacingHorizontal;
+        int y0 = spawnHeight - num* spacing;
         int xFin = 0;
         switch (spawnZone) {
             case 1:
                 x0 = xStart;
-                xFin = x0 + num*spacingHorizontal;
-                y0 = spawnHeight - num*spacingHorizontal;
+                xFin = x0 + num* spacing;
+                y0 = spawnHeight - num* spacing;
                 break;
             case 2:
                 x0 = xMid;
-                xFin = x0 + num*spacingHorizontal;
-                y0 = spawnHeight - num*spacingHorizontal;
+                xFin = x0 + num* spacing;
+                y0 = spawnHeight - num* spacing;
                 break;
             case 3:
-                x0 = xEnd - num*spacingHorizontal;
-                xFin = x0 + num*spacingHorizontal;
-                y0 = spawnHeight - num*spacingHorizontal;
+                x0 = xEnd - num* spacing;
+                xFin = x0 + num* spacing;
+                y0 = spawnHeight - num* spacing;
                 break;
         }
 
@@ -333,6 +331,45 @@ public class ProceduralGenerator {
         spawnFromRight(num, spawnHeight, xFin);
     }
 
+    private void spawnCross(int num) {
+        int interval = spacing;
+        int xLeft = 0;
+        int xRight = 0;
+        int yMid = spawnHeight - interval*num;
+        int yTop = 0;
+        int yBottom = 0;
+        int x0 = 0;
+
+        switch (spawnZone) {
+            case 1:
+                x0 = (xMid - xStart)/2;
+                xLeft = x0 + interval;
+                xRight = x0 - interval;
+                yTop = yMid + interval;
+                yBottom = yMid - interval;
+                break;
+            case 2:
+                x0 = xMid;
+                xLeft = x0 + interval;
+                xRight = x0 - interval;
+                yTop = yMid + interval;
+                yBottom = yMid - interval;
+                break;
+            case 3:
+                x0 = (xEnd - xMid)/2;
+                xLeft = x0 + interval;
+                xRight = x0 - interval;
+                yTop = yMid + interval;
+                yBottom = yMid - interval;
+                break;
+        }
+
+        spawnFromLeft(num, yMid, xLeft);
+        spawnFromRight(num, yMid, xRight);
+        spawnFromTop(num, yTop, x0);
+        spawnFromBottom(num, yBottom, x0);
+    }
+
     /* Recursive Spawning Functions */
 
     private void spawnFromLeft(int num, int y, int x) {
@@ -340,7 +377,7 @@ public class ProceduralGenerator {
 
         if (num > 1) {
             int skip = calculateSkip();
-            int x0 = x + (spacingHorizontal + skip);
+            int x0 = x + (spacing + skip);
             spawnFromLeft(num - 1, y, x0);
         }
 
@@ -353,7 +390,7 @@ public class ProceduralGenerator {
 
         if (num > 1) {
             int skip = calculateSkip();
-            int x0 = x - (spacingHorizontal + skip);
+            int x0 = x - (spacing + skip);
             spawnFromRight(num - 1, y, x0);
         }
 
@@ -376,11 +413,11 @@ public class ProceduralGenerator {
                 num = num / 2;
                 int skip = calculateSkip();
 
-                spawnFromLeft(num, y, x + (spacingHorizontal + skip));
+                spawnFromLeft(num, y, x + (spacing + skip));
 
                 skip = calculateSkip();
 
-                spawnFromRight(num, y, x - (spacingHorizontal + skip));
+                spawnFromRight(num, y, x - (spacing + skip));
             }
         } else {
             num = num /2;
@@ -397,7 +434,7 @@ public class ProceduralGenerator {
 
         int incrementX = 2*incrementMIN;
 
-        int newY = y - spacingHorizontal;
+        int newY = y - spacing;
 
         boolean odd = (num % 2) != 0;
         if (odd) {
@@ -432,7 +469,7 @@ public class ProceduralGenerator {
 
         if (num > 1) {
             int skip = calculateSkip();
-            int y0 = y + (spacingHorizontal + skip);
+            int y0 = y + (spacing + skip);
             spawnFromTop(num - 1, y0, x);
         }
 
@@ -445,7 +482,7 @@ public class ProceduralGenerator {
 
         if (num > 1) {
             int skip = calculateSkip();
-            int y0 = y - (spacingHorizontal + skip);
+            int y0 = y - (spacing + skip);
             spawnFromBottom(num - 1, y0, x);
         }
 
@@ -458,7 +495,7 @@ public class ProceduralGenerator {
 
         // Base Case
 
-        int y0 = y - spacingHorizontal;
+        int y0 = y - spacing;
 
         if (num > 1) {
             int x0 = x + (increment);
@@ -544,7 +581,7 @@ public class ProceduralGenerator {
 
     private int calculateSkip() {
         int skip = Utility.randomRange(0, 2);
-        if (pattern == PATTERN_SQUARE) {
+        if (pattern == PATTERN_SQUARE || pattern == PATTERN_CROSS) {
             skip = 0;
         }
         return skip;
@@ -564,6 +601,11 @@ public class ProceduralGenerator {
         // todo: adjust
         if (pattern == PATTERN_SQUARE) {
             spawnInterval *= 1.8;
+        }
+
+        // todo: adjust
+        if (pattern == PATTERN_CROSS) {
+            spawnInterval *= 1.5;
         }
     }
 

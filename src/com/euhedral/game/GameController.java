@@ -235,7 +235,7 @@ public class GameController {
 
                 if (tutorialDisabled || !activeMessageBoxes) {
                     if (activeMessageBoxes) {
-                        System.out.println("Active");
+//                        System.out.println("Active Message Box");
                     }
                     proceduralGenerator.update();
                     entityHandler.update();
