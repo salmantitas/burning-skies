@@ -199,7 +199,8 @@ public class VariableHandler {
         renderScore(g);
         power.renderValue(g);
         health.renderBar(g);
-//        shield.renderBar(g);
+        if (shield.getValue() > 0)
+            shield.renderBar(g);
         if (Engine.stateIs(GameState.Game))
             renderTimer(g);
     }

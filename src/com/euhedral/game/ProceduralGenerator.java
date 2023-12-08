@@ -41,8 +41,11 @@ public class ProceduralGenerator {
     int MIN_WAVE_BETWEEN_HEALTH_SPAWN = 10;
     int MAX_WAVE_BETWEEN_HEALTH_SPAWN = 20;
     int MIN_WAVE_POWER_SPAWN = 40;
-    int MIN_WAVE_BETWEEN_POWER_SPAWN = 10;
-    int MAX_WAVE_BETWEEN_POWER_SPAWN = 20;
+    int MIN_WAVE_BETWEEN_POWER_SPAWN = 20;
+    int MAX_WAVE_BETWEEN_POWER_SPAWN = 30;
+    int MIN_WAVE_SHIELD_SPAWN = 60;
+    int MIN_WAVE_BETWEEN_SHIELD_SPAWN = 30;
+    int MAX_WAVE_BETWEEN_SHIELD_SPAWN = 40;
 
     int difficulty = 1;
 
@@ -168,10 +171,14 @@ public class ProceduralGenerator {
         // Can spawn multiple pickups
         if (canSpawn) {
             spawnNext = Utility.randomRangeInclusive(SPAWN_ENEMY, SPAWN_HEALTH);
-            if (wave == MIN_WAVE_POWER_SPAWN)
+            if (wave == MIN_WAVE_SHIELD_SPAWN)
+                spawnShield();
+            else if (wave == MIN_WAVE_POWER_SPAWN)
                 spawnPower();
             else if (wave == MIN_WAVE_HEALTH_SPAWN)
                 spawnHealth();
+            else if (waveSinceShield >= MAX_WAVE_BETWEEN_SHIELD_SPAWN)
+                spawnShield();
             else if (waveSincePower >= MAX_WAVE_BETWEEN_POWER_SPAWN)
                 spawnPower();
             else if (waveSinceHealth >= MAX_WAVE_BETWEEN_HEALTH_SPAWN)
