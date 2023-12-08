@@ -197,7 +197,7 @@ public class VariableHandler {
 
     public static void renderHUD(Graphics g) {
         renderScore(g);
-//        power.renderValue(g);
+        power.renderValue(g);
         health.renderBar(g);
 //        shield.renderBar(g);
         if (Engine.stateIs(GameState.Game))

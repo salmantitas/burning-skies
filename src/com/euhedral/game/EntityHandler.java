@@ -502,7 +502,9 @@ public class EntityHandler {
                 if (pickup.getBounds().intersects(getPlayerBounds())) {
                     if (pickup.getID() == EntityID.PickupHealth)
                         variableHandler.health.increase(25);
-                    else variableHandler.shield.increase(25);
+                    else if (pickup.getID() == EntityID.PickupShield)
+                        variableHandler.shield.increase(25);
+                    else variableHandler.power.increase(1);
                     SoundHandler.playSound(SoundHandler.PICKUP);
                     pickup.disable();
                 }

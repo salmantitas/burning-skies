@@ -230,6 +230,8 @@ public class Player extends MobileEntity {
 
         int bltSpnDown = y + height * 2 / 3;
 
+        int power = VariableHandler.power.getValue();
+
         if (power == 5) {
             spawnBullet(bltSpnLeft, bltSpnDown, NORTH + shootAngle);
             spawnBullet(bltSpnLeft, bltSpnDown, NORTH);

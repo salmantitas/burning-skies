@@ -23,7 +23,7 @@ public class ProceduralGenerator {
     int xMid = (xEnd - xStart)/2 + xStart + spacing;
     int spawnZone, lastZone, lastLastZone;
     int pattern, lastPattern, lastLastPattern;
-    int wave, waveSinceHealth;
+    int wave, waveSinceHealth, waveSincePower, waveSinceShield;
     int level;
     int playerX = xMid*32, playerY;
     final int ENDLESS = -1;
@@ -40,6 +40,9 @@ public class ProceduralGenerator {
     int MIN_WAVE_HEALTH_SPAWN = 15;
     int MIN_WAVE_BETWEEN_HEALTH_SPAWN = 10;
     int MAX_WAVE_BETWEEN_HEALTH_SPAWN = 20;
+    int MIN_WAVE_POWER_SPAWN = 40;
+    int MIN_WAVE_BETWEEN_POWER_SPAWN = 10;
+    int MAX_WAVE_BETWEEN_POWER_SPAWN = 20;
 
     int difficulty = 1;
 
@@ -161,11 +164,17 @@ public class ProceduralGenerator {
         long timeSinceLastSpawnMillis = timeNowMillis - lastSpawnTime;
         boolean canSpawn = spawnInterval <= timeSinceLastSpawnMillis;
 
+        // Pickup or Enemies
+        // Can spawn multiple pickups
         if (canSpawn) {
             spawnNext = Utility.randomRangeInclusive(SPAWN_ENEMY, SPAWN_HEALTH);
-            if (wave == MIN_WAVE_HEALTH_SPAWN) {
+            if (wave == MIN_WAVE_POWER_SPAWN)
+                spawnPower();
+            else if (wave == MIN_WAVE_HEALTH_SPAWN)
                 spawnHealth();
-            } else if (waveSinceHealth >= MAX_WAVE_BETWEEN_HEALTH_SPAWN)
+            else if (waveSincePower >= MAX_WAVE_BETWEEN_POWER_SPAWN)
+                spawnPower();
+            else if (waveSinceHealth >= MAX_WAVE_BETWEEN_HEALTH_SPAWN)
                 spawnHealth();
             else if (spawnNext == SPAWN_HEALTH && wave >= MIN_WAVE_HEALTH_SPAWN && waveSinceHealth >= MIN_WAVE_BETWEEN_HEALTH_SPAWN)
                 spawnHealth();
@@ -195,6 +204,8 @@ public class ProceduralGenerator {
     private void spawnEnemies() {
             // for every wave
         waveSinceHealth++;
+        waveSincePower++;
+        waveSinceShield++;
 
         // for every zone
         lastLastZone = lastZone;
@@ -251,18 +262,29 @@ public class ProceduralGenerator {
     }
 
     private void spawnHealth() {
-        spawnZone = Utility.randomRange(1, 3);
-        int spawnHeight = this.spawnHeight;
-        spawnPickupHelper(spawnHeight, EntityID.PickupHealth);
+        spawnPickupHelper(EntityID.PickupHealth);
         System.out.println("Health Spawned");
-        wave++;
         waveSinceHealth = 0;
-        spawnInterval = spawnInterval_MIN;
+    }
+
+    private void spawnPower() {
+        spawnPickupHelper(EntityID.PickupPower);
+        System.out.println("Power-Up Spawned");
+        waveSincePower = 0;
+    }
+
+    private void spawnShield() {
+        spawnPickupHelper( EntityID.PickupShield);
+        System.out.println("Shield Spawned");
+        waveSinceShield = 0;
     }
 
     // Pickup Spawner Helped
-    private void spawnPickupHelper(int spawnHeight, EntityID id) {
+    private void spawnPickupHelper(EntityID id) {
+        spawnZone = Utility.randomRange(1, 3);
         entityHandler.spawnPickup(xMid * 32, spawnHeight * 32, id);
+        wave++;
+        spawnInterval = spawnInterval_MIN;
     }
 
     /* Spawn Pattern Functions*/

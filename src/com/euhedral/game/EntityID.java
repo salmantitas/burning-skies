@@ -11,5 +11,6 @@ public enum EntityID {
     Bullet,
     PickupHealth,
     PickupShield,
+    PickupPower,
     Boss
 }
