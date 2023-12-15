@@ -17,12 +17,19 @@ public class Pickup extends MobileEntity {
         super(x, y, entityID);
         width = Utility.intAtWidth640(16);
         height = width * 2;
-//        this.pickupID = pickupID;
-        if (entityID == entityID.PickupHealth)
-            color = Color.green;
-        else color = Color.YELLOW;
+//        if (entityID == entityID.PickupHealth)
+//            color = Color.green;
+//        else if (entityID == entityID.PickupShield)
+//            color = Color.YELLOW;
+//        else color = Color.orange;
         velY = 1.8f;
-        image = GameController.getTexture().pickup[0];
+        if (entityID == entityID.PickupHealth)
+            image = GameController.getTexture().pickup[0];
+        else if (entityID == entityID.PickupPower)
+            image = GameController.getTexture().pickup[1];
+        else
+            image = GameController.getTexture().pickup[2];
+
     }
 
     public Pickup(int x, int y, EntityID entityID, Color color) {

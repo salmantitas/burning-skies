@@ -29,7 +29,7 @@ public class TextureHandler {
     public BufferedImage[] enemy = new BufferedImage[1];
     public BufferedImage[] explosion = new BufferedImage[7];
     public BufferedImage[] sea = new BufferedImage[8];
-    public BufferedImage[] pickup = new BufferedImage[2];
+    public BufferedImage[] pickup = new BufferedImage[3];
 
     public TextureHandler() {
         BufferedImageLoader loader = new BufferedImageLoader();
@@ -41,7 +41,7 @@ public class TextureHandler {
             title = loader.loadImage("/title.png");
             logo = loader.loadImage("/logo.png");
             seaImage = loader.loadImage("/sea.png");
-            pickupImage = loader.loadImage("/health.png");
+            pickupImage = loader.loadImage("/pickup.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,6 +81,8 @@ public class TextureHandler {
         h = w*2;
 
         pickup[0] = pickupSS.grabImage(1,1, w, h);
+        pickup[1] = pickupSS.grabImage(2,1, w, h);
+        pickup[2] = pickupSS.grabImage(3,1, w, h);
     }
 
 

@@ -16,11 +16,11 @@ import java.util.Objects;
 public class ProceduralGenerator {
 
     public HashMap<Color, EntityID> colorMap;
-    int height, width = 31;
+    int height, width = 35;
     final int incrementMIN = Utility.intAtWidth640(1);
     int spacing = 3;
-    int xStart = incrementMIN, xEnd = width - spacing;
-    int xMid = (xEnd - xStart)/2 + xStart + spacing;
+    int xStart = incrementMIN, xEnd = width;
+    int xMid = (xEnd - xStart)/2 + xStart;
     int spawnZone, lastZone, lastLastZone;
     int pattern, lastPattern, lastLastPattern;
     int wave, waveSinceHealth, waveSincePower, waveSinceShield;
@@ -161,7 +161,6 @@ public class ProceduralGenerator {
 //        spawnFirstWave();
     }
 
-    // todo: Reimplement health
     public void update() {
         long timeNowMillis = GameController.getCurrentTime();
         long timeSinceLastSpawnMillis = timeNowMillis - lastSpawnTime;
@@ -169,6 +168,7 @@ public class ProceduralGenerator {
 
         // Pickup or Enemies
         // Can spawn multiple pickups
+        // todo: Improve the logic
         if (canSpawn) {
             spawnNext = Utility.randomRangeInclusive(SPAWN_ENEMY, SPAWN_HEALTH);
             if (wave == MIN_WAVE_SHIELD_SPAWN)
@@ -233,7 +233,7 @@ public class ProceduralGenerator {
             nextPattern();
         }
 
-//        pattern = PATTERN_CROSS;
+//        pattern = PATTERN_V;
 
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
@@ -313,10 +313,8 @@ public class ProceduralGenerator {
     }
 
     private void spawnV(int num) {
-        int xStart, xMid, xLast;
-        xStart = 6;
-        xMid = (width - 1) / 2;
-        xLast = width - xStart;
+        int xStart = this.xStart + num/2 * spacing;
+        int xEnd = this.xEnd - num/2 * spacing;
 
         switch (spawnZone) {
             case 1:
@@ -326,7 +324,7 @@ public class ProceduralGenerator {
                 spawnFromMiddleV(xMid, num, spawnHeight);
                 break;
             case 3:
-                spawnFromMiddleV(xLast, num, spawnHeight);
+                spawnFromMiddleV(xEnd, num, spawnHeight);
                 break;
         }
     }
@@ -429,7 +427,7 @@ public class ProceduralGenerator {
 
     private void spawnFromMiddle(int num, int spawnHeight) {
         int tileSize = Utility.intAtWidth640(32);
-        int x = (width - 1) / 2;
+        int x = xMid;
         int y = spawnHeight;
         Color c = Color.RED; // stub
 
@@ -608,12 +606,15 @@ public class ProceduralGenerator {
         }
     }
 
+    // todo: redundant
     private int calculateSkip() {
         int skip = Utility.randomRange(0, 2);
         if (pattern == PATTERN_SQUARE || pattern == PATTERN_CROSS) {
             skip = 0;
         }
-        return skip;
+
+        return 0;
+//        return skip;
     }
 
     private void calculateSpawnInterval(int num, int maxEnemies) {
