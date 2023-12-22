@@ -25,6 +25,10 @@ public class EntityHandler {
     private LinkedList<Bullet> bullets = new LinkedList<>();
     private LinkedList<Pickup> pickups = new LinkedList<>();
 
+    private int poolEnemy = enemies.size();
+    private int poolBullet = bullets.size();
+    private int poolPickup = pickups.size();
+
     private EnemyBoss boss;
 
     EntityHandler(VariableHandler variableHandler) {
@@ -81,30 +85,35 @@ public class EntityHandler {
 
         // Air Enemies
 
-        if (id == EntityID.EnemyBasic) {
-            Enemy enemy = new EnemyBasic(x, y, ContactID.Air, color, levelHeight);
-            enemies.add(enemy);
+        if (poolEnemy > 0) {
+            if (id == EntityID.EnemyBasic) {
+                Enemy enemy = findEnemy();
+                if (enemy != null) {
+                    enemy.ressurect(x, y); // todo: pool is potentially being updated before enemy is deactivated
+                    poolEnemy--;
+                }
+            }
         }
+        else {
+            if (id == EntityID.EnemyBasic) {
+                Enemy enemy = new EnemyBasic(x, y, ContactID.Air, color, levelHeight);
+                enemies.add(enemy);
+            } else if (id == EntityID.EnemyMove) {
+                Enemy enemy = new EnemyMove(x, y, ContactID.Air, color, levelHeight);
+                enemies.add(enemy);
+            } else if (id == EntityID.EnemySnake) {
+                Enemy enemy = new EnemySnake(x, y, ContactID.Air, color, levelHeight);
+                enemies.add(enemy);
+            } else if (id == EntityID.EnemyFast) {
+                Enemy enemy = new EnemyFast(x, y, ContactID.Air, color, levelHeight);
+                enemies.add(enemy);
+            }
 
-        else if (id == EntityID.EnemyMove) {
-            Enemy enemy = new EnemyMove(x, y, ContactID.Air, color, levelHeight);
-            enemies.add(enemy);
-        }
+            // Ground Enemies
 
-        else if (id == EntityID.EnemySnake) {
-            Enemy enemy = new EnemySnake(x, y, ContactID.Air, color, levelHeight);
-            enemies.add(enemy);
-        }
-
-        else if (id == EntityID.EnemyFast) {
-            Enemy enemy = new EnemyFast(x, y, ContactID.Air, color, levelHeight);
-            enemies.add(enemy);
-        }
-
-        // Ground Enemies
-
-        else if (id == EntityID.EnemyGround) {
-            spawnEnemy(x, y, EnemyID.Basic, ContactID.Ground, color);
+            else if (id == EntityID.EnemyGround) {
+                spawnEnemy(x, y, EnemyID.Basic, ContactID.Ground, color);
+            }
         }
 
         // Pickups
@@ -308,7 +317,15 @@ public class EntityHandler {
      *******************/
 
     public void spawnEnemy(int x, int y, EnemyID enemyID, ContactID contactId, Color color) {
-        addEnemy(x, y, enemyID, contactId, color);
+            addEnemy(x, y, enemyID, contactId, color);
+    }
+
+    private Enemy findEnemy() {
+        for (Enemy e: enemies) {
+            if (!e.isActive())
+                return e;
+        }
+        return null; // redundant, shouldn't happen
     }
 
     public void addEnemy(Enemy enemy) {
@@ -330,6 +347,7 @@ public class EntityHandler {
         for (Enemy enemy : enemies) {
             if(enemy.isActive()) {
                 enemy.update();
+                checkEnemyBelowScreen(enemy);
                 addToBullets(enemy);
                 enemy.clearBullets();
             }
@@ -345,6 +363,8 @@ public class EntityHandler {
     }
 
     public void cleanEnemies() {
+//        System.out.println("Enemies before cleaning: " + enemies.size());
+
         for (int i = 0; i < enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
             if (!enemy.isActive()) {
@@ -352,6 +372,8 @@ public class EntityHandler {
                 i--; // list is smaller by 1 now, so index is subtracted to prevent out of bounds
             }
         }
+
+//        System.out.println("Enemies after cleaning: " + enemies.size());
     }
 
     public void cleanBullets() {
@@ -381,6 +403,7 @@ public class EntityHandler {
 
     private void destroy(Enemy enemy) {
         enemy.disable();
+        poolEnemy++;
     }
 
     /*
@@ -576,5 +599,11 @@ public class EntityHandler {
 
     public void setLevelHeight(int levelHeight) {
         this.levelHeight = levelHeight;
+    }
+
+    private void checkEnemyBelowScreen(Enemy enemy) {
+        if (enemy.getY() > levelHeight + (2.5 * enemy.getHeight())) {
+            destroy(enemy);
+        }
     }
 }

@@ -30,6 +30,8 @@ public class Engine extends Canvas implements Runnable{
     public static int timeInSeconds = 0;
     public static int timer = 0;
 
+    private static int fps = 0;
+
     public static GameController gameController;
     public static BufferedImageLoader loader;
 
@@ -82,7 +84,6 @@ public class Engine extends Canvas implements Runnable{
         double drawInterval = nanosecondsPerCycle/target;
         double nextDrawTime = System.nanoTime() + drawInterval;
         long timer = System.currentTimeMillis();
-        int fps = 0;
         int tps = 0;
 
         // Sleep Based Game Loop
@@ -284,5 +285,9 @@ public class Engine extends Canvas implements Runnable{
 
     public static boolean stateIs(GameState state) {
         return currentState == state;
+    }
+
+    public static int getFPS() {
+        return 0; // stub
     }
 }

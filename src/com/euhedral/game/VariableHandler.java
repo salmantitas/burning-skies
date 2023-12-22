@@ -203,6 +203,7 @@ public class VariableHandler {
             shield.renderBar(g);
         if (Engine.stateIs(GameState.Game))
             renderTimer(g);
+//            renderFPS(g);
     }
 
     public static void renderScore(Graphics g) {
@@ -222,6 +223,12 @@ public class VariableHandler {
         g.setColor(Color.YELLOW);
         g.drawString("Timer: " + GameController.getCurrentTime(), timerX, levelY);
     }
+
+//    public static void renderFPS(Graphics g) {
+//        g.setFont(new Font("arial", 1, levelSize));
+//        g.setColor(Color.YELLOW);
+//        g.drawString("FPS: " + Engine.getFPS(), timerX, shield.getY());
+//    }
 
     protected void drawBossHealth(Graphics g) {
         int startX = Utility.percWidth(35);

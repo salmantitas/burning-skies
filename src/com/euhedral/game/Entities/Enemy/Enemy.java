@@ -54,7 +54,7 @@ public class Enemy extends MobileEntity {
         color = Color.red;
         this.contactId = contactID;
         r = new Random();
-        this.levelHeight = levelHeight;
+        setLevelHeight(levelHeight);
         initialize();
     }
 
@@ -78,6 +78,7 @@ public class Enemy extends MobileEntity {
 
         if (y > levelHeight + (2.5 * height)) {
             active = false;
+            // todo: update Pool
         }
     }
 
@@ -239,6 +240,16 @@ public class Enemy extends MobileEntity {
         g.drawRect(r1.x, r1.y, r1.width, r1.height);
         g.drawRect(r2.x, r2.y, r2.width, r2.height);
 
+    }
+
+    public void ressurect(int x, int y) {
+        health = 2;
+        velY = 2.5f;
+        alive = true;
+        enable();
+        this.x = x;
+        this.y = y;
+        inscreen = false;
     }
 
     // Private Methods
