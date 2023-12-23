@@ -11,6 +11,7 @@ import java.util.LinkedList;
 
 // Manages all entities in game
 public class EntityHandler {
+
     private VariableHandler variableHandler;
     private int levelHeight;
 
@@ -85,35 +86,12 @@ public class EntityHandler {
 
         // Air Enemies
 
+        // todo: Fix inconsistent spawning. Causes the difference to go up to 5 seconds!
         if (poolEnemy > 0) {
-            if (id == EntityID.EnemyBasic) {
-                Enemy enemy = findEnemy();
-                if (enemy != null) {
-                    enemy.ressurect(x, y); // todo: pool is potentially being updated before enemy is deactivated
-                    poolEnemy--;
-                }
-            }
+            spawnFromPool(x, y, id);
         }
         else {
-            if (id == EntityID.EnemyBasic) {
-                Enemy enemy = new EnemyBasic(x, y, ContactID.Air, color, levelHeight);
-                enemies.add(enemy);
-            } else if (id == EntityID.EnemyMove) {
-                Enemy enemy = new EnemyMove(x, y, ContactID.Air, color, levelHeight);
-                enemies.add(enemy);
-            } else if (id == EntityID.EnemySnake) {
-                Enemy enemy = new EnemySnake(x, y, ContactID.Air, color, levelHeight);
-                enemies.add(enemy);
-            } else if (id == EntityID.EnemyFast) {
-                Enemy enemy = new EnemyFast(x, y, ContactID.Air, color, levelHeight);
-                enemies.add(enemy);
-            }
-
-            // Ground Enemies
-
-            else if (id == EntityID.EnemyGround) {
-                spawnEnemy(x, y, EnemyID.Basic, ContactID.Ground, color);
-            }
+            spawnNew(x, y, id, color);
         }
 
         // Pickups
@@ -127,6 +105,43 @@ public class EntityHandler {
 //        }
 
         // todo: Boss
+    }
+
+    private void spawnFromPool(int x, int y, EntityID id) {
+        if (id == EntityID.EnemyBasic) {
+            Enemy enemy = findEnemy();
+            if (enemy == null) {
+                System.out.println("Null");
+            }
+//                if (enemy != null) {
+            enemy.ressurect(x, y); // todo: pool is potentially being updated before enemy is deactivated
+            poolEnemy--;
+//                    System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
+//                }
+        }
+    }
+
+    private void spawnNew(int x, int y, EntityID id, Color color) {
+        if (id == EntityID.EnemyBasic) {
+            Enemy enemy = new EnemyBasic(x, y, ContactID.Air, color, levelHeight);
+            enemies.add(enemy);
+//                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
+        } else if (id == EntityID.EnemyMove) {
+            Enemy enemy = new EnemyMove(x, y, ContactID.Air, color, levelHeight);
+            enemies.add(enemy);
+        } else if (id == EntityID.EnemySnake) {
+            Enemy enemy = new EnemySnake(x, y, ContactID.Air, color, levelHeight);
+            enemies.add(enemy);
+        } else if (id == EntityID.EnemyFast) {
+            Enemy enemy = new EnemyFast(x, y, ContactID.Air, color, levelHeight);
+            enemies.add(enemy);
+        }
+
+        // Ground Enemies
+
+        else if (id == EntityID.EnemyGround) {
+            spawnEnemy(x, y, EnemyID.Basic, ContactID.Ground, color);
+        }
     }
 
     /********************
@@ -404,6 +419,7 @@ public class EntityHandler {
     private void destroy(Enemy enemy) {
         enemy.disable();
         poolEnemy++;
+//        System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
     }
 
     /*

@@ -241,15 +241,12 @@ public class Enemy extends MobileEntity {
         g.drawRect(r2.x, r2.y, r2.width, r2.height);
 
     }
-
     public void ressurect(int x, int y) {
-        health = 2;
-        velY = 2.5f;
-        alive = true;
-        enable();
         this.x = x;
         this.y = y;
         inscreen = false;
+
+        super.resurrect();
     }
 
     // Private Methods

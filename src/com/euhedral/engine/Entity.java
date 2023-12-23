@@ -174,6 +174,10 @@ public abstract class Entity {
         setActive(false);
     }
 
+    public void resurrect() {
+        enable();
+    }
+
     private void setActive(boolean active) {
         this.active = active;
     }

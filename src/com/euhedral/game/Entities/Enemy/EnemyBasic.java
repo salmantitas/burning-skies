@@ -57,4 +57,11 @@ public class EnemyBasic extends Enemy{
             }
         }
     }
+
+    @Override
+    public void ressurect(int x, int y) {
+        healthRange(2, 4);
+        velY = 2.5f;
+        super.ressurect(x, y);
+    }
 }
