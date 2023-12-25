@@ -40,8 +40,13 @@ public class EnemyBasic extends Enemy{
     @Override
     public void update() {
         super.update();
-        if (!alive)
+        if (!alive) {
             explosion.runAnimation();
+
+            if (explosion.playedOnce) {
+                disable();
+            }
+        }
     }
 
     @Override
@@ -52,9 +57,7 @@ public class EnemyBasic extends Enemy{
         } else {
             explosion.drawAnimation(g, x, y);
 
-            if (explosion.playedOnce) {
-                active = false;
-            }
+
         }
     }
 

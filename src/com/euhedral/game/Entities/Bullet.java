@@ -9,11 +9,11 @@ import com.euhedral.game.SoundHandler;
 import java.awt.*;
 
 public class Bullet extends MobileEntity {
-    protected int x, y, vel;
+//    protected int x, y;
+    protected int vel;
     protected float velX, velY;
     protected double angle;
     protected boolean collided;
-    protected int width, height;
     protected Color color;
     protected boolean calculated = false;
 
@@ -50,6 +50,10 @@ public class Bullet extends MobileEntity {
         if (!calculated)
             calculateVelocities();
         move();
+
+//        if (y > 4800 + (2.5 * height)) {
+//            disable();
+//        }
     }
 
     protected void move() {

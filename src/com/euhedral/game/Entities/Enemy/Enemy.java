@@ -75,11 +75,6 @@ public class Enemy extends MobileEntity {
                 shoot();
             }
         }
-
-        if (y > levelHeight + (2.5 * height)) {
-            active = false;
-            // todo: update Pool
-        }
     }
 
     @Override
@@ -211,8 +206,14 @@ public class Enemy extends MobileEntity {
         this.levelHeight = levelHeight;
     }
 
-    @Override
-    public void disable() {
+//    @Override
+//    public void disable() {
+//        alive = false;
+//        velX = 0;
+//        SoundHandler.playSound(SoundHandler.EXPLOSION);
+//    }
+
+    public void destroy() {
         alive = false;
         velX = 0;
         SoundHandler.playSound(SoundHandler.EXPLOSION);
@@ -245,8 +246,12 @@ public class Enemy extends MobileEntity {
         this.x = x;
         this.y = y;
         inscreen = false;
-
+        alive = true;
         super.resurrect();
+    }
+
+    public boolean checkDeathAnimationEnd() {
+        return explosion.playedOnce;
     }
 
     // Private Methods

@@ -1,7 +1,6 @@
 package com.euhedral.engine;
 
-import com.euhedral.game.Entities.Enemy.Enemy;
-
+import java.awt.*;
 import java.util.LinkedList;
 
 public class Pool {
@@ -11,6 +10,20 @@ public class Pool {
     public Pool() {
         entities = new LinkedList<>();
         reusable = 0;
+    }
+
+    public void update() {
+        for (Entity entity: entities) {
+            if (entity.isActive())
+                entity.update();
+        }
+    }
+
+    public void render(Graphics g) {
+        for (Entity entity: entities) {
+            if (entity.isActive())
+                entity.render(g);
+        }
     }
 
     public void addEntity() {
@@ -29,11 +42,52 @@ public class Pool {
         }
     }
 
-    private Entity findInList() {
+    public int getPoolSize() {
+        return reusable;
+    }
+
+    public void increase() {
+        reusable++;
+    }
+
+    public void decrease() {
+        reusable--;
+    }
+
+    public void add(Entity entity) {
+        entities.add(entity);
+    }
+
+    public void destroy(Entity entity) {
+        entity.disable();
+    }
+
+    public LinkedList<Entity> getEntities() {
+        return entities;
+    }
+
+    public void clear() {
+        reusable = 0;
+        entities.clear();
+    }
+
+    public Entity findInList() throws NullPointerException {
         for (Entity e: entities) {
             if (!e.isActive())
                 return e;
         }
-        return null; // redundant, shouldn't happen
+        return null;
+    }
+
+    public void addAll(LinkedList<Entity> entities) {
+        this.entities.addAll(entities);
+    }
+
+    public void checkIfBelowScreen(Entity entity, int levelHeight) {
+        int offset = 200;
+        if (entity.getY() > levelHeight + offset ) {
+            entity.disable();
+            reusable++;
+        }
     }
 }

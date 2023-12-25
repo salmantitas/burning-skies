@@ -23,12 +23,7 @@ public class Pickup extends MobileEntity {
 //            color = Color.YELLOW;
 //        else color = Color.orange;
         velY = 1.8f;
-        if (entityID == entityID.PickupHealth)
-            image = GameController.getTexture().pickup[0];
-        else if (entityID == entityID.PickupPower)
-            image = GameController.getTexture().pickup[1];
-        else
-            image = GameController.getTexture().pickup[2];
+        selectImage();
 
     }
 
@@ -48,9 +43,20 @@ public class Pickup extends MobileEntity {
         drawDefault(g);
     }
 
-//    @Override
-//    public void disable() {
-//
-//        super.disable();
-//    }
+    public void resurrect(int x, int y, EntityID id) {
+        this.x = x;
+        this.y = y;
+        this.id = id;
+        selectImage();
+        super.resurrect();
+    }
+
+    private void selectImage() {
+        if (id == EntityID.PickupHealth)
+            image = GameController.getTexture().pickup[0];
+        else if (id == EntityID.PickupPower)
+            image = GameController.getTexture().pickup[1];
+        else
+            image = GameController.getTexture().pickup[2];
+    }
 }
