@@ -1,8 +1,6 @@
 package com.euhedral.game.Entities;
 
-import com.euhedral.engine.Engine;
-import com.euhedral.engine.MobileEntity;
-import com.euhedral.engine.Utility;
+import com.euhedral.engine.*;
 import com.euhedral.game.*;
 import com.euhedral.game.Entities.Enemy.Enemy;
 
@@ -17,7 +15,8 @@ public class Player extends MobileEntity {
     private boolean canShoot;
     private int shootTimer = 0;
     private final int shootTimerDefault = 7;
-    private LinkedList<Bullet> bullets = new LinkedList<>();
+    private Pool bullets = new Pool();
+//    private LinkedList<Bullet> bullets = new LinkedList<>();
 
     // Personal
     private int levelHeight;
@@ -91,10 +90,8 @@ public class Player extends MobileEntity {
         if (canShoot && shootTimer <= 0)
             shoot();
 
-        for (Bullet bullet : bullets) {
-            if (bullet.isActive())
-                bullet.update();
-        }
+        bullets.update();
+        bullets.checkIfAboveScreen();
 
         setImage();
     }
@@ -117,10 +114,11 @@ public class Player extends MobileEntity {
 
     @Override
     public void render(Graphics g) {
-        for (Bullet bullet : bullets) {
-            if (bullet.isActive())
-                bullet.render(g);
-        }
+        bullets.render(g);
+//        for (Bullet bullet : bullets) {
+//            if (bullet.isActive())
+//                bullet.render(g);
+//        }
 
         super.render(g);
 
@@ -143,15 +141,15 @@ public class Player extends MobileEntity {
     }
 
     public Bullet checkCollision(Enemy enemy) {
-        Bullet b = null;
-        for (Bullet bullet : bullets) {
-            BulletPlayer bulletPlayer = (BulletPlayer) bullet;
+        Bullet bullet = null;
+        for (Entity entity: bullets.getEntities()) {
+            BulletPlayer bulletPlayer = (BulletPlayer) entity;
             if (bulletPlayer.isActive() && bulletPlayer.getBounds().intersects(enemy.getBounds()) &&
                     (bulletPlayer.getContactId() == enemy.getContactId() || bulletPlayer.getContactId() == ContactID.Air && enemy.getContactId() == ContactID.Boss)) {
-                b = bulletPlayer;
+                bullet = bulletPlayer;
             }
         }
-        return b;
+        return bullet;
     }
 
     public void moveLeft(boolean b) {
@@ -260,7 +258,12 @@ public class Player extends MobileEntity {
 
     private void spawnBullet(int x, int y, int dir) {
         if (airBullet) {
-            bullets.add(new BulletPlayerAir(x, y, dir));
+            if (bullets.getPoolSize() > 0) {
+                bullets.spawnFromPool(x, y, EntityID.Bullet, dir);
+                Utility.log("Bullet | Pool : " + bullets.getPoolSize() + " | Total: " + bullets.getEntities().size());
+            }
+            else
+                bullets.add(new BulletPlayerAir(x, y, dir));
         } else {
             bullets.add(new BulletPlayerGround(x, y, dir));
         }
@@ -378,5 +381,9 @@ public class Player extends MobileEntity {
             }
         }
         else health.decrease(num);
+    }
+
+    public void increaseBullets() {
+        bullets.increase();
     }
 }

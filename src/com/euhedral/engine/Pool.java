@@ -1,11 +1,15 @@
 package com.euhedral.engine;
 
+import com.euhedral.game.EntityID;
+import com.euhedral.game.GameController;
+
 import java.awt.*;
 import java.util.LinkedList;
 
 public class Pool {
     private LinkedList<Entity> entities;
     private int reusable;
+    private float camMarker;
 
     public Pool() {
         entities = new LinkedList<>();
@@ -13,10 +17,11 @@ public class Pool {
     }
 
     public void update() {
-        for (Entity entity: entities) {
-            if (entity.isActive())
-                entity.update();
-        }
+        camMarker = GameController.getCamera().getMarker();
+            for (Entity entity : entities) {
+                if (entity.isActive())
+                    entity.update();
+            }
     }
 
     public void render(Graphics g) {
@@ -26,14 +31,9 @@ public class Pool {
         }
     }
 
-    public void addEntity() {
+    public void addEntity(int x, int y, EntityID id) {
         if (reusable > 0) {
-
-            Entity entity = findInList();
-            if (entity != null) {
-                entity.resurrect();
-                reusable--;
-            }
+            spawnFromPool(x,y,id);
         } else {
             /*
             * Entity entity = new Entity();
@@ -83,11 +83,48 @@ public class Pool {
         this.entities.addAll(entities);
     }
 
+    public void checkIfBelowScreen(int levelHeight) {
+        for (Entity entity: entities) {
+            if (entity.isActive())
+                checkIfBelowScreen(entity, levelHeight);
+        }
+    }
+
     public void checkIfBelowScreen(Entity entity, int levelHeight) {
         int offset = 200;
         if (entity.getY() > levelHeight + offset ) {
             entity.disable();
             reusable++;
         }
+    }
+
+    public void checkIfAboveScreen() {
+        for (Entity entity: entities) {
+            if (entity.isActive())
+                checkIfAboveScreen(entity);
+        }
+    }
+
+    public void checkIfAboveScreen(Entity entity) {
+        if (entity.getY() < camMarker + Utility.percHeight(30)) {
+            entity.disable();
+            increase();
+        }
+    }
+
+    public void spawnFromPool(int x, int y, EntityID id) {
+        Entity entity = findInList();
+        entity.resurrect(x, y, id);
+        decrease();
+//        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
+    }
+
+    public void spawnFromPool(int x, int y, EntityID id, float angle) {
+        Entity entity = findInList();
+        entity.resurrect(x, y, id);
+        MobileEntity mob = (MobileEntity) entity;
+        mob.setAngle(angle);
+        decrease();
+//        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
     }
 }

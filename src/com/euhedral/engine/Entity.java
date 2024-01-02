@@ -174,7 +174,7 @@ public abstract class Entity {
         setActive(false);
     }
 
-    public void resurrect() {
+    public void resurrect(int x, int y, EntityID id) {
         enable();
     }
 

@@ -9,10 +9,7 @@ import com.euhedral.game.SoundHandler;
 import java.awt.*;
 
 public class Bullet extends MobileEntity {
-//    protected int x, y;
     protected int vel;
-    protected float velX, velY;
-    protected double angle;
     protected boolean collided;
     protected Color color;
     protected boolean calculated = false;
@@ -24,7 +21,7 @@ public class Bullet extends MobileEntity {
         collided = false;
         width = Utility.intAtWidth640(8)/2;
         height = Utility.intAtWidth640(24)/2;
-        vel = Utility.intAtWidth640(4);
+        forwardVelocity = Utility.intAtWidth640(4);
         SoundHandler.playSound(SoundHandler.BULLET);
     }
 
@@ -33,16 +30,9 @@ public class Bullet extends MobileEntity {
         this.angle = angle % 360;
     }
 
+    @Override
     protected void calculateVelocities() {
-        double angleX;
-        double angleY;
-
-        angleX = Math.toRadians(360 - angle);
-        angleY = Math.toRadians(angle);
-
-        velX = (float) (vel * Math.cos(angleX));
-        velY = (float) (vel * Math.sin(angleY));
-
+        super.calculateVelocities();
         calculated = true;
     }
 
@@ -50,10 +40,6 @@ public class Bullet extends MobileEntity {
         if (!calculated)
             calculateVelocities();
         move();
-
-//        if (y > 4800 + (2.5 * height)) {
-//            disable();
-//        }
     }
 
     protected void move() {

@@ -72,9 +72,9 @@ public class VariableHandler {
     private static int level;
     private static final int MAXLEVEL = 1;
 
-    private int healthBossDef, healthBoss;
-    private int bossScore = 500;
-    private boolean bossLives = false;
+    private static int healthBossDef, healthBoss;
+    private static int bossScore = 500;
+    private static boolean bossLives = false;
 
     public static HashMap<Color, EntityID> colorMap;
 
@@ -230,7 +230,7 @@ public class VariableHandler {
 //        g.drawString("FPS: " + Engine.getFPS(), timerX, shield.getY());
 //    }
 
-    protected void drawBossHealth(Graphics g) {
+    protected static void drawBossHealth(Graphics g) {
         int startX = Utility.percWidth(35);
         int endX = Utility.percWidth(65);
         int diffX = endX - startX;
@@ -282,23 +282,23 @@ public class VariableHandler {
         VariableHandler.scoreSize = scoreSize;
     }
 
-    public int getHealthBossDef() {
+    public static int getHealthBossDef() {
         return healthBossDef;
     }
 
-    public void setHealthBossDef(int healthBossDef) {
-        this.healthBossDef = healthBossDef;
+    public static void setHealthBossDef(int newHealthBossDef) {
+        healthBossDef = newHealthBossDef;
     }
 
     public int getHealthBoss() {
         return healthBoss;
     }
 
-    public void setHealthBoss(int healthBoss) {
-        this.healthBoss = healthBoss;
+    public static void setHealthBoss(int newHealthBoss) {
+        healthBoss = newHealthBoss;
     }
 
-    public int getBossScore() {
+    public static int getBossScore() {
         return bossScore;
     }
 
@@ -306,12 +306,12 @@ public class VariableHandler {
         this.bossScore = bossScore;
     }
 
-    public boolean isBossLives() {
+    public static boolean isBossLives() {
         return bossLives;
     }
 
-    public void setBossLives(boolean bossLives) {
-        this.bossLives = bossLives;
+    public static void setBossLives(boolean newBossLives) {
+        bossLives = newBossLives;
     }
 
     public static int getLevel() {

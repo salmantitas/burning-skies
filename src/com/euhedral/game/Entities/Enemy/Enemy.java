@@ -28,7 +28,7 @@ public class Enemy extends MobileEntity {
     protected int shootTimer = shootTimerDefault;
     protected LinkedList<Bullet> bullets = new LinkedList<>();
     protected boolean inscreen = false;
-    protected Camera cam;
+    protected float cam;
     protected Random r;
     protected int score = 50;
     protected int distance;
@@ -47,7 +47,7 @@ public class Enemy extends MobileEntity {
         offscreenVelY = velY;
         moveRight = false;
         moveLeft = false;
-        cam = GameController.getCamera();
+        cam = GameController.getCamera().getMarker();
         power = 1;
         width = Utility.intAtWidth640(32);
         height = width;
@@ -68,7 +68,7 @@ public class Enemy extends MobileEntity {
         super.update();
         shootTimer--;
         if (!inscreen) {
-            inscreen = y > cam.getMarker() + Utility.percHeight(30);
+            inscreen = y > cam + Utility.percHeight(30);
         }
         if (inscreen && alive) {
             if (shootTimer <= 0) {
@@ -242,12 +242,14 @@ public class Enemy extends MobileEntity {
         g.drawRect(r2.x, r2.y, r2.width, r2.height);
 
     }
-    public void ressurect(int x, int y) {
+
+    @Override
+    public void resurrect(int x, int y, EntityID id) {
         this.x = x;
         this.y = y;
         inscreen = false;
         alive = true;
-        super.resurrect();
+        super.resurrect(x, y, id);
     }
 
     public boolean checkDeathAnimationEnd() {

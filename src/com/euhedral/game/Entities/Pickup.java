@@ -2,9 +2,7 @@ package com.euhedral.game.Entities;
 
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.EntityID;
-import com.euhedral.game.GameController;
-import com.euhedral.game.TextureHandler;
+import com.euhedral.game.*;
 //import com.euhedral.game.PickupID;
 
 import java.awt.*;
@@ -48,7 +46,17 @@ public class Pickup extends MobileEntity {
         this.y = y;
         this.id = id;
         selectImage();
-        super.resurrect();
+        super.resurrect(x, y, id);
+    }
+
+    public void collision() {
+        if (id == EntityID.PickupHealth)
+            VariableHandler.health.increase(25);
+        else if (id == EntityID.PickupShield)
+            VariableHandler.shield.increase(25);
+        else VariableHandler.power.increase(1);
+        SoundHandler.playSound(SoundHandler.PICKUP);
+        disable();
     }
 
     private void selectImage() {

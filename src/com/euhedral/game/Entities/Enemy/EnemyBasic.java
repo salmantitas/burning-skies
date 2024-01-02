@@ -1,6 +1,7 @@
 package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.game.ContactID;
+import com.euhedral.game.EntityID;
 import com.euhedral.game.GameController;
 import com.euhedral.game.TextureHandler;
 
@@ -62,9 +63,10 @@ public class EnemyBasic extends Enemy{
     }
 
     @Override
-    public void ressurect(int x, int y) {
+    public void resurrect(int x, int y, EntityID id) {
         healthRange(2, 4);
         velY = 2.5f;
-        super.ressurect(x, y);
+        explosion.playedOnce = false;
+        super.resurrect(x, y, id);
     }
 }

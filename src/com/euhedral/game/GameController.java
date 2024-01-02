@@ -115,7 +115,7 @@ public class GameController {
 
         Engine.menuState();
         variableHandler = new VariableHandler();
-        entityHandler = new EntityHandler(variableHandler);
+        entityHandler = new EntityHandler();
         shop = new Shop();
         scanner = new Scanner(System.in);
         soundHandler = new SoundHandler();
@@ -449,7 +449,7 @@ public class GameController {
         entityHandler.clearPickups();
         levelSpawned = false;
 
-//        testingCheat();
+        testingCheat();
     }
 
     public void checkButtonAction(int mx, int my) {

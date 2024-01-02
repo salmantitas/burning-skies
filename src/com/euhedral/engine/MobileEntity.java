@@ -4,7 +4,7 @@ import com.euhedral.game.EntityID;
 
 import java.awt.*;
 
-public class MobileEntity extends Entity {
+public abstract class MobileEntity extends Entity {
 
     protected class Physics {
         /**********
@@ -53,7 +53,7 @@ public class MobileEntity extends Entity {
 
     protected float turn = SOUTH_WEST - WEST;
     protected float forwardVelocity = 0;
-    protected float facing = 0;
+    protected double angle = 0;
     protected float velX, velY;
     protected float minVelX, minVelY;
     protected float maxVelX, maxVelY;
@@ -81,18 +81,17 @@ public class MobileEntity extends Entity {
     }
 
     protected void move() {
-//        updateX(velX);
-//        updateY(velY);
         x += velX;
         y += velY;
     }
 
     protected void calculateVelocities() {
-        double angle = facing;
         double angleX;
         double angleY;
+
         angleX = Math.toRadians(360 - angle);
         angleY = Math.toRadians(angle);
+
         velX = (float) (forwardVelocity * Math.cos(angleX));
         velY = (float) (forwardVelocity * Math.sin(angleY));
     }
@@ -115,5 +114,9 @@ public class MobileEntity extends Entity {
 
     public void setJumping(boolean jumping) {
         physics.jumping = jumping;
+    }
+
+    public void setAngle(float angle) {
+        this.angle = angle;
     }
 }

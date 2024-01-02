@@ -1,6 +1,7 @@
 package com.euhedral.game.Entities;
 
 import com.euhedral.game.ContactID;
+import com.euhedral.game.EntityID;
 
 import java.awt.*;
 
@@ -27,5 +28,12 @@ public class BulletPlayer extends Bullet{
 
     public ContactID getContactId() {
         return contactId;
+    }
+
+    @Override
+    public void resurrect(int x, int y, EntityID id) {
+        this.x = x;
+        this.y = y;
+        super.resurrect(x, y, id);
     }
 }

@@ -13,10 +13,10 @@ import java.util.LinkedList;
 // Manages all entities in game
 public class EntityHandler {
 
-    private VariableHandler variableHandler;
+//    private VariableHandler variableHandler;
     private int levelHeight;
 
-//    private LinkedList<Entity> entities;
+//    private Pool entities;
 
     // Player
     private Player player;// = new Player(0, 0, 0);
@@ -26,18 +26,11 @@ public class EntityHandler {
     private Pool enemies = new Pool();
     private Pool bullets = new Pool();
     private Pool pickups = new Pool();
-//    private LinkedList<Enemy> enemies = new LinkedList<>();
-//    private LinkedList<Bullet> bullets = new LinkedList<>();
-//    private LinkedList<Pickup> pickups = new LinkedList<>();
-
-//    private int poolEnemy = enemies.size();
-//    private int poolBullet = bullets.size();
-//    private int poolPickup = pickups.size();
 
     private EnemyBoss boss;
 
-    EntityHandler(VariableHandler variableHandler) {
-        this.variableHandler = variableHandler;
+    EntityHandler() {
+//        this.variableHandler = variableHandler;
         initializeAnimations();
     }
 
@@ -63,8 +56,8 @@ public class EntityHandler {
         updatePlayer();
         updateBullets();
         updateEnemies();
+
         pickups.update();
-//        updatePickup();
 //        updateFlag();
 
         checkCollisions();
@@ -78,13 +71,9 @@ public class EntityHandler {
 
     public void render(Graphics g) {
         bullets.render(g);
-//        renderBullets(g);
         pickups.render(g);
-//        renderPickup(g);
         player.render(g);
-//        renderPlayer(g);
         enemies.render(g);
-//        renderEnemies(g);
         //renderFlag(g);
     }
 
@@ -95,7 +84,8 @@ public class EntityHandler {
 
         // todo: Fix inconsistent spawning. Causes the difference to go up to 5 seconds!
         if (enemies.getPoolSize() > 0) {
-            spawnFromPool(x, y, id);
+            enemies.spawnFromPool(x, y, id);
+//            spawnEnemiesFromPool(x, y, id);
         }
         else {
             spawnNew(x, y, id, color);
@@ -112,15 +102,6 @@ public class EntityHandler {
 //        }
 
         // todo: Boss
-    }
-
-    private void spawnFromPool(int x, int y, EntityID id) {
-        if (id == EntityID.EnemyBasic) {
-            Enemy enemy = (Enemy) enemies.findInList();
-            enemy.ressurect(x, y); // todo: pool is potentially being updated before enemy is deactivated
-            enemies.decrease();
-            System.out.println("Pool: " + enemies.getPoolSize() + " | Enemies: " + enemies.getEntities().size());
-        }
     }
 
     private void spawnNew(int x, int y, EntityID id, Color color) {
@@ -245,16 +226,18 @@ public class EntityHandler {
      ********************/
 
     private void updateBullets() {
-        LinkedList<Entity> bullets = this.bullets.getEntities();
-//        Utility.log("Bulletsize: " + bullets.size());
-        for (Entity entity : bullets) {
-            Bullet bullet = (Bullet) entity;
-            if (bullet.isActive()) {
-                bullet.update();
-                this.bullets.checkIfBelowScreen(bullet, levelHeight);
-//                checkIfBelowScreen(bullet);
-            }
-        }
+        bullets.update();
+        bullets.checkIfBelowScreen(levelHeight);
+//        LinkedList<Entity> bullets = this.bullets.getEntities();
+////        Utility.log("Bulletsize: " + bullets.size());
+//        for (Entity entity : bullets) {
+//            Bullet bullet = (Bullet) entity;
+//            if (bullet.isActive()) {
+//                bullet.update();
+//                this.bullets.checkIfBelowScreen(bullet, levelHeight);
+////                checkIfBelowScreen(bullet);
+//            }
+//        }
 
         if (boss != null) {
             addToBullets(boss);
@@ -280,32 +263,22 @@ public class EntityHandler {
      * Pickup Functions *
      ********************/
 
-//    public void updatePickup() {
-//        for (Pickup pickup : pickups) {
-//            if (pickup.isActive()) {
-//                pickup.update();
-//            }
-//        }
-//    }
-
-//    public void renderPickup(Graphics g) {
-//        for (Pickup pickup: pickups) {
-//            if (pickup.isActive())
-//                pickup.render(g);
-//        }
-//    }
-
     public void spawnPickup(int x, int y, EntityID id) {
         if (pickups.getPoolSize() > 0) {
-            Pickup pickup = (Pickup) pickups.findInList();
-            pickup.resurrect(x, y, id);
-            pickups.decrease();
-            System.out.println("Pool: " + pickups.getPoolSize() + " | Pickups: " + pickups.getEntities().size());
+            pickups.spawnFromPool(x, y, id);
+//            spawnPickupsFromPool(x, y, id);
         }
         else
             pickups.add(new Pickup(x, y, id));
 //        System.out.println("Pickup spawned");
     }
+
+//    public void spawnPickupsFromPool(int x, int y, EntityID id) {
+//        Pickup pickup = (Pickup) pickups.findInList();
+//        pickup.resurrect(x, y, id);
+//        pickups.decrease();
+//        System.out.println("Pool: " + pickups.getPoolSize() + " | Pickups: " + pickups.getEntities().size());
+//    }
 
     public void clearPickups() {
         pickups.clear();
@@ -362,12 +335,12 @@ public class EntityHandler {
     }
 
     public void updateEnemies() {
+        enemies.checkIfBelowScreen(levelHeight);
         LinkedList<Entity> enemies = this.enemies.getEntities();
         for (Entity entity : enemies) {
             Enemy enemy = (Enemy) entity;
             if(enemy.isActive()) {
                 enemy.update();
-                this.enemies.checkIfBelowScreen(enemy, levelHeight);
                 checkDeathAnimationEnd(enemy);
                 addToBullets(enemy);
             }
@@ -428,7 +401,7 @@ public class EntityHandler {
     private void destroyBoss() {
         boss.setAlive(false);
         destroy(boss);
-        variableHandler.increaseScore(variableHandler.getBossScore());
+        VariableHandler.increaseScore(VariableHandler.getBossScore());
     }
 
     public void spawnBoss(int level, int x, int y) {
@@ -441,12 +414,12 @@ public class EntityHandler {
         }
 
         if (boss != null) {
-            variableHandler.setBossLives(true);
+            VariableHandler.setBossLives(true);
 //            bossLives = true;
             enemies.add(boss);
-            variableHandler.setHealthBossDef(boss.getHealth());
+            VariableHandler.setHealthBossDef(boss.getHealth());
 //            healthBossDef = boss.getHealth();
-            variableHandler.setHealthBoss(variableHandler.getHealthBossDef());
+            VariableHandler.setHealthBoss(VariableHandler.getHealthBossDef());
 //            healthBoss = healthBossDef;
         }
         this.boss = boss;
@@ -454,8 +427,8 @@ public class EntityHandler {
 
     public void checkBoss() {
         if (boss != null) {
-            if (variableHandler.isBossLives() != boss.isAlive()) {
-                variableHandler.setBossLives(boss.isAlive());
+            if (VariableHandler.isBossLives() != boss.isAlive()) {
+                VariableHandler.setBossLives(boss.isAlive());
             }
         }
     }
@@ -463,7 +436,7 @@ public class EntityHandler {
     public void renderBossHealth(Graphics g) {
         if (boss != null) {
             if (boss.isInscreen() && boss.isAlive())
-                variableHandler.drawBossHealth(g);
+                VariableHandler.drawBossHealth(g);
         }
     }
 
@@ -501,7 +474,7 @@ public class EntityHandler {
                     boolean collision1 = player.checkCollision(enemy.getBoundsHorizontal());
                     boolean collision2 = player.checkCollision(enemy.getBoundsVertical());
                     if (collision1 || collision2) {
-                        variableHandler.increaseScore(enemy.getScore());
+                        VariableHandler.increaseScore(enemy.getScore());
                         damagePlayer(30);
                         destroy(enemy);
                     }
@@ -517,10 +490,10 @@ public class EntityHandler {
             if (enemy.isInscreen() && enemy.isAlive()) {
                 Bullet bullet = player.checkCollision(enemy);
                 if (bullet != null) {
-//                    GameController.getSound().playSound(SoundHandler.IMPACT); // feels off
+//                    GameController.getSound().playSound(SoundHandler.IMPACT); // todo: feels off
                     if (enemy.getContactId() == ContactID.Boss) {
                         boss.damage();
-                        variableHandler.setHealthBoss(boss.getHealth());
+                        VariableHandler.setHealthBoss(boss.getHealth());
                         if (boss.getHealth() <= 0) {
                             destroyBoss();
                         }
@@ -528,10 +501,11 @@ public class EntityHandler {
                         enemy.damage();
                         if (enemy.getHealth() <= 0) {
                             destroy(enemy);
-                            variableHandler.increaseScore(enemy.getScore());
+                            VariableHandler.increaseScore(enemy.getScore());
                         }
                     }
                     destroy(bullet);
+                    player.increaseBullets();
                 }
             }
         }
@@ -544,14 +518,9 @@ public class EntityHandler {
             Pickup pickup = (Pickup) entity;
             if (pickup.isActive()) {
                 if (pickup.getBounds().intersects(getPlayerBounds())) {
-                    if (pickup.getID() == EntityID.PickupHealth)
-                        variableHandler.health.increase(25);
-                    else if (pickup.getID() == EntityID.PickupShield)
-                        variableHandler.shield.increase(25);
-                    else variableHandler.power.increase(1);
-                    SoundHandler.playSound(SoundHandler.PICKUP);
-                    pickup.disable();
+                    pickup.collision();
                     pickups.increase();
+                    Utility.log("Pool: " + pickups.getPoolSize());
                 }
             }
         }
@@ -571,69 +540,9 @@ public class EntityHandler {
      * Entity Management Functions *
      ****************-**************/
 
-//    public void addEntity(Entity entity) {
-//        entities.add(entity);
-//
-//        /*************
-//         * Game Code *
-//         *************/
-//    }
-//
-//    public void removeEntity(Entity entity) {
-//        entities.remove(entity);
-//
-//        /*************
-//         * Game Code *
-//         *************/
-//    }
-//
-//    private void updateEntities() {
-//        for (int i = 0; i < entities.size(); i++) {
-//            Entity entity = entities.get(i);
-//            entity.update();
-//        }
-//    }
-//
-//    private void updateActiveEntities(LinkedList<Entity> list) {
-//        for (int i = 0; i < list.size(); i++) {
-//            Entity entity = list.get(i);
-//            if (entity.isActive())
-//                entity.update();
-//        }
-//    }
-//
-//    private void renderEntities(Graphics g) {
-//        for (int i = 0; i < entities.size(); i++) {
-//            Entity entity = entities.get(i);
-//            entity.render(g);
-//        }
-//    }
-
-    private void cleanEntities(LinkedList<Entity> list) {
-        for (int i = 0; i < list.size(); i++) {
-            Entity entity = list.get(i);
-            if (!entity.isActive()) {
-                list.remove(entity);
-                i--; // list is smaller by 1 now, so index is subtracted to prevent out of bounds
-            }
-        }
-    }
-
     public void setLevelHeight(int levelHeight) {
         this.levelHeight = levelHeight;
     }
-
-    private void checkIfPoolable(Entity entity) {
-        if (entity.getY() > levelHeight + (2.5 * entity.getHeight())) {
-            entity.disable();
-        }
-    }
-
-//    private void checkIfBelowScreen(Entity entity) {
-//        if (entity.getY() > levelHeight + (2.5 * entity.getHeight())) {
-//            entity.disable();
-//        }
-//    }
 
     private void checkDeathAnimationEnd(Enemy enemy) {
         if (!enemy.isAlive()) {
