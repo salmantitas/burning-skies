@@ -33,7 +33,7 @@ public class EnemyGround extends Enemy{
         shootDownDefault();
     }
 
-    public float getVelX() {
+    public double getVelX() {
         return velX;
     }
 }

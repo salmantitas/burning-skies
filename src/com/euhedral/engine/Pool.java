@@ -123,7 +123,9 @@ public class Pool {
         Entity entity = findInList();
         entity.resurrect(x, y, id);
         MobileEntity mob = (MobileEntity) entity;
-        mob.setAngle(angle);
+        if (mob.angle != angle) {
+            mob.setAngle(angle);
+        }
         decrease();
 //        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
     }

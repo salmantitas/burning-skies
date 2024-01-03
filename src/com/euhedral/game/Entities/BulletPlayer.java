@@ -34,6 +34,7 @@ public class BulletPlayer extends Bullet{
     public void resurrect(int x, int y, EntityID id) {
         this.x = x;
         this.y = y;
+        this.calculated = false;
         super.resurrect(x, y, id);
     }
 }

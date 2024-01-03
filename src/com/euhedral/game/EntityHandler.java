@@ -81,8 +81,6 @@ public class EntityHandler {
         // todo: Player
 
         // Air Enemies
-
-        // todo: Fix inconsistent spawning. Causes the difference to go up to 5 seconds!
         if (enemies.getPoolSize() > 0) {
             enemies.spawnFromPool(x, y, id);
 //            spawnEnemiesFromPool(x, y, id);
@@ -520,7 +518,7 @@ public class EntityHandler {
                 if (pickup.getBounds().intersects(getPlayerBounds())) {
                     pickup.collision();
                     pickups.increase();
-                    Utility.log("Pool: " + pickups.getPoolSize());
+//                    Utility.log("Pool: " + pickups.getPoolSize());
                 }
             }
         }

@@ -715,7 +715,7 @@ public class GameController {
         VariableHandler.health.set(100);
         VariableHandler.setScore(4000);
         variableHandler.setLevel(4);
-        VariableHandler.power.set(5);
+        VariableHandler.power.set(3);
         variableHandler.setGround(true);
         VariableHandler.shield.set(100);
     }

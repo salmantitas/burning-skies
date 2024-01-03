@@ -54,7 +54,7 @@ public abstract class MobileEntity extends Entity {
     protected float turn = SOUTH_WEST - WEST;
     protected float forwardVelocity = 0;
     protected double angle = 0;
-    protected float velX, velY;
+    protected double velX, velY;
     protected float minVelX, minVelY;
     protected float maxVelX, maxVelY;
     protected boolean moveLeft, moveRight, moveUp, moveDown;
@@ -85,6 +85,7 @@ public abstract class MobileEntity extends Entity {
         y += velY;
     }
 
+    // Calculate the x and y components based on the angle and forward velocity of the entity
     protected void calculateVelocities() {
         double angleX;
         double angleY;
@@ -94,6 +95,8 @@ public abstract class MobileEntity extends Entity {
 
         velX = (float) (forwardVelocity * Math.cos(angleX));
         velY = (float) (forwardVelocity * Math.sin(angleY));
+
+        System.out.println(Math.cos(Math.toRadians(80)) == -Math.cos(Math.toRadians(100)));
     }
 
     /*

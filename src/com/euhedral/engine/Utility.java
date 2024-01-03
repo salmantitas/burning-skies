@@ -69,6 +69,17 @@ public class Utility {
         else return var;
     }
 
+    /*
+     * Limits the given double between min and max
+     * */
+    public static double clamp(double var, double min, double max) {
+        if (var <= min)
+            return min;
+        if (var >= max)
+            return max;
+        else return var;
+    }
+
     public static int randomRange(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }

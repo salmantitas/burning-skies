@@ -21,7 +21,7 @@ public class Enemy extends MobileEntity {
     protected int power = 1;
     protected ContactID contactId;
     protected EnemyID enemyID;
-    protected float offscreenVelY;
+    protected double offscreenVelY;
     protected boolean moveLeft, moveRight;
     protected Color color;
     protected int shootTimerDefault = 150;
@@ -205,13 +205,6 @@ public class Enemy extends MobileEntity {
     public void setLevelHeight(int levelHeight) {
         this.levelHeight = levelHeight;
     }
-
-//    @Override
-//    public void disable() {
-//        alive = false;
-//        velX = 0;
-//        SoundHandler.playSound(SoundHandler.EXPLOSION);
-//    }
 
     public void destroy() {
         alive = false;

@@ -3,6 +3,7 @@ package com.euhedral.game.Entities;
 import com.euhedral.engine.*;
 import com.euhedral.game.*;
 import com.euhedral.game.Entities.Enemy.Enemy;
+import jdk.jshell.execution.Util;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -25,7 +26,7 @@ public class Player extends MobileEntity {
     private boolean airBullet = true;
     private int clampOffsetX;
     private int clampOffsetY;
-    private int shootAngle = 5;
+    private int shootAngle = Utility.intAtWidth640(5);
 
     private Attribute health;
     private Attribute shield;
@@ -115,10 +116,6 @@ public class Player extends MobileEntity {
     @Override
     public void render(Graphics g) {
         bullets.render(g);
-//        for (Bullet bullet : bullets) {
-//            if (bullet.isActive())
-//                bullet.render(g);
-//        }
 
         super.render(g);
 
@@ -222,35 +219,39 @@ public class Player extends MobileEntity {
     private void shoot() {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
-        int bltSpnLeft = x + width - 8;
-        int bltSpnMid = x + width / 2;
-        int bltSpnRight = x + 4;
+        int spawnLeftX = x + 4;
+        int spawnMidX = x + width / 2 - 2;
+        int spawnRightX = x + width - 8;
 
-        int bltSpnDown = y + height * 2 / 3;
+        int spawnY = y + height * 2 / 3;
 
         int power = VariableHandler.power.getValue();
 
+        // tempSolution
+        int shootAngleLeft = NORTH - shootAngle;
+        int shootAngleRight = NORTH + 15*shootAngle/10;
+
         if (power == 5) {
-            spawnBullet(bltSpnLeft, bltSpnDown, NORTH + shootAngle);
-            spawnBullet(bltSpnLeft, bltSpnDown, NORTH);
-            spawnBullet(bltSpnMid, y, NORTH);
-            spawnBullet(bltSpnRight, bltSpnDown, NORTH);
-            spawnBullet(bltSpnRight, bltSpnDown, NORTH - shootAngle);
+            spawnBullet(spawnRightX, spawnY, shootAngleRight);
+            spawnBullet(spawnRightX, spawnY, NORTH);
+            spawnBullet(spawnMidX, y, NORTH);
+            spawnBullet(spawnLeftX, spawnY, NORTH);
+            spawnBullet(spawnLeftX, spawnY, shootAngleLeft);
         }
         else if (power == 4) {
-            spawnBullet(bltSpnLeft, bltSpnDown, NORTH + shootAngle);
-            spawnBullet(bltSpnLeft, bltSpnDown, NORTH);
-            spawnBullet(bltSpnRight, bltSpnDown, NORTH);
-            spawnBullet(bltSpnRight, bltSpnDown, NORTH - shootAngle);
+            spawnBullet(spawnRightX, spawnY, shootAngleRight);
+            spawnBullet(spawnRightX, spawnY, NORTH);
+            spawnBullet(spawnLeftX, spawnY, NORTH);
+            spawnBullet(spawnLeftX, spawnY, shootAngleLeft);
         } else if (power == 3) {
-            spawnBullet(bltSpnLeft, bltSpnDown, NORTH + shootAngle);
-            spawnBullet(bltSpnMid, y, NORTH);
-            spawnBullet(bltSpnRight, bltSpnDown, NORTH - shootAngle);
+            spawnBullet(spawnRightX, spawnY, shootAngleRight);
+            spawnBullet(spawnMidX, y, NORTH);
+            spawnBullet(spawnLeftX, spawnY, shootAngleLeft);
         } else if (power == 2) {
-            spawnBullet(bltSpnLeft, bltSpnDown, NORTH);
-            spawnBullet(bltSpnRight, bltSpnDown, NORTH);
+            spawnBullet(spawnRightX, spawnY, NORTH);
+            spawnBullet(spawnLeftX, spawnY, NORTH);
         } else {
-            spawnBullet(bltSpnMid, y, NORTH);
+            spawnBullet(spawnMidX, y, NORTH);
         }
         // reset shoot timer to default
         shootTimer = shootTimerDefault;
@@ -260,7 +261,6 @@ public class Player extends MobileEntity {
         if (airBullet) {
             if (bullets.getPoolSize() > 0) {
                 bullets.spawnFromPool(x, y, EntityID.Bullet, dir);
-                Utility.log("Bullet | Pool : " + bullets.getPoolSize() + " | Total: " + bullets.getEntities().size());
             }
             else
                 bullets.add(new BulletPlayerAir(x, y, dir));
