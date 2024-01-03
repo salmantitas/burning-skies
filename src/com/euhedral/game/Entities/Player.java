@@ -223,13 +223,16 @@ public class Player extends MobileEntity {
         int spawnMidX = x + width / 2 - 2;
         int spawnRightX = x + width - 8;
 
+//        System.out.printf("Left to Mid: %d, Mid to Right: %d", spawnMidX-spawnLeftX, spawnRightX-spawnMidX);
+
         int spawnY = y + height * 2 / 3;
 
         int power = VariableHandler.power.getValue();
 
         // tempSolution
-        int shootAngleLeft = NORTH - shootAngle;
-        int shootAngleRight = NORTH + 15*shootAngle/10;
+        double correctionFactor = .715;
+        double shootAngleLeft = NORTH - shootAngle*correctionFactor;
+        double shootAngleRight = NORTH + shootAngle;
 
         if (power == 5) {
             spawnBullet(spawnRightX, spawnY, shootAngleRight);
@@ -257,7 +260,7 @@ public class Player extends MobileEntity {
         shootTimer = shootTimerDefault;
     }
 
-    private void spawnBullet(int x, int y, int dir) {
+    private void spawnBullet(int x, int y, double dir) {
         if (airBullet) {
             if (bullets.getPoolSize() > 0) {
                 bullets.spawnFromPool(x, y, EntityID.Bullet, dir);

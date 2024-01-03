@@ -121,7 +121,7 @@ public class Enemy extends MobileEntity {
         spawnBullet(x + width/2, y, SOUTH);
     }
 
-    private void spawnBullet(int x, int y, int dir) {
+    private void spawnBullet(int x, int y, double dir) {
         bullets.add(new BulletEnemy(x, y, dir));
     }
 

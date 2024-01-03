@@ -42,16 +42,16 @@ public abstract class MobileEntity extends Entity {
         UP, DOWN, NONE;
     }
 
-    protected int WEST = 0;
-    protected int SOUTH_WEST = 45;
-    protected int SOUTH = 90;
-    protected int SOUTH_EAST = 135;
-    protected int EAST = 180;
-    protected int NORTH_EAST = 225;
-    protected int NORTH = 270;
-    protected int NORTH_WEST = 315;
+    protected double WEST = 0;
+    protected double SOUTH_WEST = 45;
+    protected double SOUTH = 90;
+    protected double SOUTH_EAST = 135;
+    protected double EAST = 180;
+    protected double NORTH_EAST = 225;
+    protected double NORTH = 270;
+    protected double NORTH_WEST = 315;
 
-    protected float turn = SOUTH_WEST - WEST;
+//    protected double turn = SOUTH_WEST - WEST;
     protected float forwardVelocity = 0;
     protected double angle = 0;
     protected double velX, velY;
@@ -95,8 +95,6 @@ public abstract class MobileEntity extends Entity {
 
         velX = (float) (forwardVelocity * Math.cos(angleX));
         velY = (float) (forwardVelocity * Math.sin(angleY));
-
-        System.out.println(Math.cos(Math.toRadians(80)) == -Math.cos(Math.toRadians(100)));
     }
 
     /*
@@ -119,7 +117,53 @@ public abstract class MobileEntity extends Entity {
         physics.jumping = jumping;
     }
 
-    public void setAngle(float angle) {
+    public void setAngle(double angle) {
         this.angle = angle;
     }
+
+//    private double cos(double angle) {
+//        double angleD = 0;
+//
+//        if (angle > 0 && angle <= 90) {
+//            angleD = Math.toRadians(angle);
+//        } else if (angle > 90 && angle <= 180) {
+//            angleD = Math.toRadians(angle);
+//        } else if (angle > 180 && angle <= 270) {
+//            angleD = 360 - angle;
+//            if (angleD == 90) {
+//                angleD = Math.toRadians(angleD);
+//            } else {
+//                double difference = angleD - 90;
+//                angleD = angleD - 2*difference;
+//                angleD = Math.toRadians(angleD);
+//                double cosAngleD = Math.cos(angleD);
+//                return -cosAngleD;
+//            }
+//        } else if (angle > 270 && angle <= 360) {
+//            angleD = (360 - angle);
+//            angleD = Math.toRadians(angleD);
+//            double cosAngleD = Math.cos(angleD);
+//            return cosAngleD;
+//        }
+//
+//        return Math.cos(angleD);
+//    }
+//
+//    private double sin(double angle) {
+//        double angleD = 0;
+//
+//        if (angle > 0 && angle <= 90) {
+//            angleD = Math.toRadians(angle);
+//        } else if (angle > 90 && angle <= 180) {
+//            angleD = Math.toRadians(angle);
+//        } else if (angle > 180 && angle <= 270) {
+//            angleD = angle;
+//            angleD = Math.toRadians(angleD);
+//        } else if (angle > 270 && angle <= 360) {
+//            angleD = angle;
+//            angleD = Math.toRadians(angleD);
+//        }
+//
+//        return Math.sin(angleD);
+//    }
 }

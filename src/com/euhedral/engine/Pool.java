@@ -119,7 +119,7 @@ public class Pool {
 //        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
     }
 
-    public void spawnFromPool(int x, int y, EntityID id, float angle) {
+    public void spawnFromPool(int x, int y, EntityID id, double angle) {
         Entity entity = findInList();
         entity.resurrect(x, y, id);
         MobileEntity mob = (MobileEntity) entity;
