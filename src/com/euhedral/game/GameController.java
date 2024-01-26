@@ -449,7 +449,7 @@ public class GameController {
         entityHandler.clearPickups();
         levelSpawned = false;
 
-        testingCheat();
+//        testingCheat();
     }
 
     public void checkButtonAction(int mx, int my) {

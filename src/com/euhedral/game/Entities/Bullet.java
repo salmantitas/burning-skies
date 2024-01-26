@@ -73,4 +73,10 @@ public class Bullet extends MobileEntity {
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
     }
+
+    @Override
+    public void resurrect(int x, int y, EntityID id) {
+        super.resurrect(x, y, id);
+        SoundHandler.playSound(SoundHandler.BULLET);
+    }
 }
