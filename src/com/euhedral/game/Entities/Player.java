@@ -263,7 +263,7 @@ public class Player extends MobileEntity {
     private void spawnBullet(int x, int y, double dir) {
         if (airBullet) {
             if (bullets.getPoolSize() > 0) {
-                bullets.spawnFromPool(x, y, EntityID.Bullet, dir);
+                bullets.spawnFromPool(x, y, dir);
             }
             else
                 bullets.add(new BulletPlayerAir(x, y, dir));

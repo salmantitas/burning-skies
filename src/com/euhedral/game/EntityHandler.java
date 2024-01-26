@@ -82,12 +82,12 @@ public class EntityHandler {
 
         // Air Enemies
         if (enemies.getPoolSize() > 0) {
-            enemies.spawnFromPool(x, y, id);
-//            spawnEnemiesFromPool(x, y, id);
+            enemies.spawnFromPool(x, y);
         }
         else {
             spawnNew(x, y, id, color);
         }
+        enemies.printPool("Enemy");
 
         // Pickups
 

@@ -237,12 +237,10 @@ public class Enemy extends MobileEntity {
     }
 
     @Override
-    public void resurrect(int x, int y, EntityID id) {
-        this.x = x;
-        this.y = y;
+    public void resurrect(int x, int y) {
+        super.resurrect(x, y);
         inscreen = false;
         alive = true;
-        super.resurrect(x, y, id);
     }
 
     public boolean checkDeathAnimationEnd() {

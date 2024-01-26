@@ -174,6 +174,12 @@ public abstract class Entity {
         setActive(false);
     }
 
+    public void resurrect(int x, int y) {
+        enable();
+        this.x = x;
+        this.y = y;
+    }
+
     public void resurrect(int x, int y, EntityID id) {
         enable();
     }

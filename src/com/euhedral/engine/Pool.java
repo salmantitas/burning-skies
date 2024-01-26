@@ -112,6 +112,12 @@ public class Pool {
         }
     }
 
+    public void spawnFromPool(int x, int y) {
+        Entity entity = findInList();
+        entity.resurrect(x, y);
+        decrease();
+    }
+
     public void spawnFromPool(int x, int y, EntityID id) {
         Entity entity = findInList();
         entity.resurrect(x, y, id);
@@ -119,14 +125,18 @@ public class Pool {
 //        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
     }
 
-    public void spawnFromPool(int x, int y, EntityID id, double angle) {
+    public void spawnFromPool(int x, int y, double angle) {
         Entity entity = findInList();
-        entity.resurrect(x, y, id);
+        entity.resurrect(x, y);
         MobileEntity mob = (MobileEntity) entity;
         if (mob.angle != angle) {
             mob.setAngle(angle);
         }
         decrease();
 //        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
+    }
+
+    public void printPool(String name) {
+        System.out.println(name + " pool: " + getPoolSize() + " | Total: " + getEntities().size());
     }
 }

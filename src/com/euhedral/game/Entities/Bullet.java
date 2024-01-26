@@ -75,8 +75,8 @@ public class Bullet extends MobileEntity {
     }
 
     @Override
-    public void resurrect(int x, int y, EntityID id) {
-        super.resurrect(x, y, id);
+    public void resurrect(int x, int y) {
+        super.resurrect(x, y);
         SoundHandler.playSound(SoundHandler.BULLET);
     }
 }
