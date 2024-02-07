@@ -63,10 +63,10 @@ public class EnemyBasic extends Enemy{
     }
 
     @Override
-    public void resurrect(int x, int y, EntityID id) {
+    public void resurrect(int x, int y) {
         healthRange(2, 4);
         velY = 2.5f;
         explosion.playedOnce = false;
-        super.resurrect(x, y, id);
+        super.resurrect(x, y);
     }
 }
