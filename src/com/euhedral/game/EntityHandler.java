@@ -87,7 +87,7 @@ public class EntityHandler {
         else {
             spawnNew(x, y, id, color);
         }
-        enemies.printPool("Enemy");
+//        enemies.printPool("Enemy");
 
         // Pickups
 

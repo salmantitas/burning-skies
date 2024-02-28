@@ -30,7 +30,9 @@ public class ProceduralGenerator {
     int spawnHeight;
 
     long lastSpawnTime;
+    long lastSpawnTimePickup;
     long spawnInterval;
+    long spawnIntervalPickups;
     long spawnInterval_MIN = 2;
     long spawnInterval_MAX = 5;
 
@@ -41,11 +43,11 @@ public class ProceduralGenerator {
     int MIN_WAVE_BETWEEN_HEALTH_SPAWN = 10;
     int MAX_WAVE_BETWEEN_HEALTH_SPAWN = 20;
     int MIN_WAVE_POWER_SPAWN = 40;
-    int MIN_WAVE_BETWEEN_POWER_SPAWN = 20;
-    int MAX_WAVE_BETWEEN_POWER_SPAWN = 30;
-    int MIN_WAVE_SHIELD_SPAWN = 60;
+    int MIN_WAVE_BETWEEN_POWER_SPAWN = 30;
+    int MAX_WAVE_BETWEEN_POWER_SPAWN = 50;
+    int MIN_WAVE_SHIELD_SPAWN = 70;
     int MIN_WAVE_BETWEEN_SHIELD_SPAWN = 30;
-    int MAX_WAVE_BETWEEN_SHIELD_SPAWN = 40;
+    int MAX_WAVE_BETWEEN_SHIELD_SPAWN = 80;
 
     int difficulty = 1;
 
@@ -118,7 +120,7 @@ public class ProceduralGenerator {
 //        enemyNumbers[PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
     }
 
-    // generate a level using procedural generation
+    // generate a level using procedural generation // YEAH NO SHIT.
     public void generateLevel() {
         level = VariableHandler.getLevel();
         switch (level) {
@@ -156,11 +158,13 @@ public class ProceduralGenerator {
 
         spawnHeight = (height - Engine.HEIGHT/32) ;//- (wave * MIN_PAUSE);
         lastSpawnTime = GameController.getCurrentTime();
-        spawnInterval = 0;
+        spawnInterval = spawnInterval_MIN;
+        spawnIntervalPickups = spawnInterval_MAX;
 
 //        spawnFirstWave();
     }
 
+    // Spawns an enemy or a pickup depending on how long ago the last one has been spawned
     public void update() {
         long timeNowMillis = GameController.getCurrentTime();
         long timeSinceLastSpawnMillis = timeNowMillis - lastSpawnTime;
@@ -170,23 +174,29 @@ public class ProceduralGenerator {
         // Can spawn multiple pickups
         // todo: Improve the logic
         if (canSpawn) {
-            spawnNext = Utility.randomRangeInclusive(SPAWN_ENEMY, SPAWN_HEALTH);
-            if (wave == MIN_WAVE_SHIELD_SPAWN)
+            boolean canSpawnPickups = spawnIntervalPickups <= timeSinceLastSpawnMillis;
+            if (wave == (MIN_WAVE_SHIELD_SPAWN - 1))
                 spawnShield();
-            else if (wave == MIN_WAVE_POWER_SPAWN)
+            else if (wave == (MIN_WAVE_POWER_SPAWN - 1))
                 spawnPower();
-            else if (wave == MIN_WAVE_HEALTH_SPAWN)
+            else if (wave == (MIN_WAVE_HEALTH_SPAWN - 1))
                 spawnHealth();
-            else if (waveSinceShield >= MAX_WAVE_BETWEEN_SHIELD_SPAWN)
-                spawnShield();
-            else if (waveSincePower >= MAX_WAVE_BETWEEN_POWER_SPAWN)
-                spawnPower();
-            else if (waveSinceHealth >= MAX_WAVE_BETWEEN_HEALTH_SPAWN)
-                spawnHealth();
-            else if (spawnNext == SPAWN_HEALTH && wave >= MIN_WAVE_HEALTH_SPAWN && waveSinceHealth >= MIN_WAVE_BETWEEN_HEALTH_SPAWN)
-                spawnHealth();
-            else
-                spawnEnemies();
+            else {
+                /*
+                * todo:
+                *  If (canSpawnPickups) {
+                *  wrap everything below
+                *  } else spawnEnemies
+                * */
+                if (waveSinceShield >= (MAX_WAVE_BETWEEN_SHIELD_SPAWN - 1))
+                    spawnShield();
+                else if (waveSincePower >= (MAX_WAVE_BETWEEN_POWER_SPAWN - 1))
+                    spawnPower();
+                else if (waveSinceHealth >= (MAX_WAVE_BETWEEN_HEALTH_SPAWN - 1))
+                    spawnHealth();
+                else
+                    spawnEnemies();
+            }
             lastSpawnTime = GameController.getCurrentTime();
         }
 //        System.out.println("Spawn Code: " + spawnNext);
@@ -268,6 +278,13 @@ public class ProceduralGenerator {
         calculateSpawnInterval(num, maxEnemies);
     }
 
+//    private void spawnPickup() {
+//        /*
+//        * - start with health only
+//        * check if pi
+//        * */
+//    }
+
     private void spawnHealth() {
         spawnPickupHelper(EntityID.PickupHealth);
         System.out.println("Health Spawned");
@@ -291,7 +308,9 @@ public class ProceduralGenerator {
         spawnZone = Utility.randomRange(1, 3);
         entityHandler.spawnPickup(xMid * 32, spawnHeight * 32, id);
         wave++;
+        System.out.println("Wave: " + wave);
         spawnInterval = spawnInterval_MIN;
+        lastSpawnTimePickup = GameController.getCurrentTime();
     }
 
     /* Spawn Pattern Functions*/
