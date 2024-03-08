@@ -23,7 +23,7 @@ public class GameController {
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
-    private Color gameBackground = Color.BLUE;
+    private Color gameBackground = new Color(0,0,128);
 
     // Game Timer
     long timer = System.currentTimeMillis();

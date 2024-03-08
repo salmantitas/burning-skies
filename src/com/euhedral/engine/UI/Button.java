@@ -30,8 +30,8 @@ public class Button extends UIItem{
         this.text = text;
         font = new Font("arial", 1, width);
         backColor = Color.BLUE;
-        selectedColor = Color.GREEN;
-        textColor = Color.RED;
+        selectedColor = Color.RED;
+        textColor = new Color(128, 0 , 32);
         disabledColor = Color.GRAY;
         disabledTextColor = Color.LIGHT_GRAY;
     }

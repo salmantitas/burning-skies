@@ -30,6 +30,7 @@ public class EnemyBasic extends Enemy{
         velY = 2.5f;
         healthRange(2,4);
         score = 50;
+        minVelX = 1f;
     }
 
     @Override

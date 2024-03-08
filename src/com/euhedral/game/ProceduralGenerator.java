@@ -42,12 +42,15 @@ public class ProceduralGenerator {
     int MIN_WAVE_HEALTH_SPAWN = 15;
     int MIN_WAVE_BETWEEN_HEALTH_SPAWN = 10;
     int MAX_WAVE_BETWEEN_HEALTH_SPAWN = 20;
-    int MIN_WAVE_POWER_SPAWN = 40;
-    int MIN_WAVE_BETWEEN_POWER_SPAWN = 30;
-    int MAX_WAVE_BETWEEN_POWER_SPAWN = 50;
-    int MIN_WAVE_SHIELD_SPAWN = 70;
+
+    int MIN_WAVE_SHIELD_SPAWN = 40;
     int MIN_WAVE_BETWEEN_SHIELD_SPAWN = 30;
-    int MAX_WAVE_BETWEEN_SHIELD_SPAWN = 80;
+    int MAX_WAVE_BETWEEN_SHIELD_SPAWN = 50;
+
+    int MIN_WAVE_POWER_SPAWN = 70;
+    int MIN_WAVE_BETWEEN_POWER_SPAWN = 30;
+    int MAX_WAVE_BETWEEN_POWER_SPAWN = 80;
+
 
     int difficulty = 1;
 
@@ -175,11 +178,12 @@ public class ProceduralGenerator {
         // todo: Improve the logic
         if (canSpawn) {
             boolean canSpawnPickups = spawnIntervalPickups <= timeSinceLastSpawnMillis;
-            if (wave == (MIN_WAVE_SHIELD_SPAWN - 1))
-                spawnShield();
-            else if (wave == (MIN_WAVE_POWER_SPAWN - 1))
-                spawnPower();
-            else if (wave == (MIN_WAVE_HEALTH_SPAWN - 1))
+//            if (wave == (MIN_WAVE_SHIELD_SPAWN - 1))
+//                spawnShield();
+//            else if (wave == (MIN_WAVE_POWER_SPAWN - 1))
+//                spawnPower();
+//            else
+                if (wave == (MIN_WAVE_HEALTH_SPAWN - 1))
                 spawnHealth();
             else {
                 /*
@@ -188,11 +192,12 @@ public class ProceduralGenerator {
                 *  wrap everything below
                 *  } else spawnEnemies
                 * */
-                if (waveSinceShield >= (MAX_WAVE_BETWEEN_SHIELD_SPAWN - 1))
-                    spawnShield();
-                else if (waveSincePower >= (MAX_WAVE_BETWEEN_POWER_SPAWN - 1))
-                    spawnPower();
-                else if (waveSinceHealth >= (MAX_WAVE_BETWEEN_HEALTH_SPAWN - 1))
+//                if (waveSinceShield >= (MAX_WAVE_BETWEEN_SHIELD_SPAWN - 1))
+//                    spawnShield();
+//                else if (waveSincePower >= (MAX_WAVE_BETWEEN_POWER_SPAWN - 1) && VariableHandler.power.getValue() <= 2)
+//                    spawnPower();
+//                else
+                    if (waveSinceHealth >= (MAX_WAVE_BETWEEN_HEALTH_SPAWN - 1))
                     spawnHealth();
                 else
                     spawnEnemies();
@@ -428,7 +433,7 @@ public class ProceduralGenerator {
         }
 
         Color c = Color.RED; // stub
-        spawnHelper(x, y, c);
+        spawnHelper(x, y, c, "right");
     }
 
     private void spawnFromRight(int num, int y, int x) {
@@ -441,7 +446,7 @@ public class ProceduralGenerator {
         }
 
         Color c = Color.RED; // stub
-        spawnHelper(x, y, c);
+        spawnHelper(x, y, c, "left");
     }
 
     private void spawnFromMiddle(int num, int spawnHeight) {
@@ -452,7 +457,7 @@ public class ProceduralGenerator {
 
         boolean odd = num% 2 != 0;
         if (odd) {
-            spawnHelper(x, y, c);
+            spawnHelper(x, y, c, "");
 
             if (num > 1) {
                 num -= 1;
@@ -484,7 +489,7 @@ public class ProceduralGenerator {
 
         boolean odd = (num % 2) != 0;
         if (odd) {
-            spawnHelper(x, y, c);
+            spawnHelper(x, y, c, "");
 
             if (num > 1) {
                 num -= 1;
@@ -520,7 +525,7 @@ public class ProceduralGenerator {
         }
 
         Color c = Color.RED; // stub
-        spawnHelper(x, y, c);
+        spawnHelper(x, y, c, "");
     }
 
     private void spawnFromBottom(int num, int y, int x) {
@@ -533,7 +538,7 @@ public class ProceduralGenerator {
         }
 
         Color c = Color.RED; // stub
-        spawnHelper(x, y, c);
+        spawnHelper(x, y, c, "");
     }
 
     private void spawnVHelper(int num, int y, int x, int increment) {
@@ -548,7 +553,7 @@ public class ProceduralGenerator {
             spawnVHelper(num - 1, y0, x0, increment);
         }
 
-        spawnHelper(x, y, c);
+        spawnHelper(x, y, c, "");
     }
 
     private void spawnFromLeftV(int num, int y, int x) {
@@ -561,7 +566,7 @@ public class ProceduralGenerator {
         spawnVHelper(num, y, x, incrementX);
     }
 
-    private void spawnHelper(int x, int y, Color c) {
+    private void spawnHelper(int x, int y, Color c, String move) {
 
         EntityID id = colorMap.get(Color.RED);
 
@@ -585,7 +590,7 @@ public class ProceduralGenerator {
 
         c = getKey(id);
 
-        entityHandler.spawnEntity(x*32, y*32, id, c);
+        entityHandler.spawnEntity(x*32, y*32, id, c, move);
 //        System.out.println("Enemy spawned");
     }
 

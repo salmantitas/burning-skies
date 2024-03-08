@@ -39,7 +39,7 @@ public class LevelGenerator {
                     int y = j * 32;
 
                     EntityID id = colorMap.get(c);
-                    entityHandler.spawnEntity(x, y, id, c);
+                    entityHandler.spawnEntity(x, y, id, c, "");
                 }
             }
         }

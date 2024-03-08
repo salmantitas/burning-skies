@@ -1,5 +1,6 @@
 package com.euhedral.engine;
 
+import com.euhedral.game.Entities.Enemy.Enemy;
 import com.euhedral.game.EntityID;
 import com.euhedral.game.GameController;
 
@@ -112,9 +113,11 @@ public class Pool {
         }
     }
 
-    public void spawnFromPool(int x, int y) {
+    public void spawnFromPool(int x, int y, String move) {
         Entity entity = findInList();
         entity.resurrect(x, y);
+        Enemy enemy = (Enemy) entity;
+        enemy.setHMove(move);
         decrease();
     }
 
