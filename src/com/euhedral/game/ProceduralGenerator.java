@@ -90,8 +90,8 @@ public class ProceduralGenerator {
     final int maxPatterns = 2;
 
     // basic enemy movement time
-    final int TIME_MAX = 300;
-    final int TIME_MIN = 15;
+    final int TIME_MIN = 20;
+    final int TIME_MAX = TIME_MIN * 10;
 
     private EntityHandler entityHandler;
 
@@ -107,7 +107,7 @@ public class ProceduralGenerator {
         int maxEnemiesV = 9;
 
         int minEnemiesLine = 2;
-        int maxEnemiesLine = 9;
+        int maxEnemiesLine = 8;
 
         int minEnemiesSquare = 2;
         int maxEnemiesSquare = 4; // MAX 8 possible but not fun
@@ -235,14 +235,14 @@ public class ProceduralGenerator {
         // for every zone
         lastLastZone = lastZone;
         lastZone = spawnZone;
-        spawnZone = Utility.randomRange(1, 3);
+        spawnZone = Utility.randomRangeInclusive(1, 3);
 
         // determine that no zone spawns more than twice in a row
         while (spawnZone == lastZone && spawnZone == lastLastZone) {
-            spawnZone = Utility.randomRange(1, 3);
+            spawnZone = Utility.randomRangeInclusive(1, 3);
         }
 
-//        spawnZone = 2; // stub
+//        spawnZone = 1; // stub
 
         // choose spawn pattern
         if (wave == 1) {
@@ -260,7 +260,7 @@ public class ProceduralGenerator {
 
         int num = Utility.randomRangeInclusive(minEnemies, currentMax);
 
-//        num = 1; // stub
+//        num = 8; // stub
 
         // spawn enemies
         switch (pattern) {
@@ -330,18 +330,21 @@ public class ProceduralGenerator {
 //        System.out.println(spawnZone + " " + num);
 
         double numD = num;
-        double factor = (enemyNumbers[PATTERN_LINE][ENEMY_MAX] - numD) / (enemyNumbers[PATTERN_LINE][ENEMY_MAX] - enemyNumbers[PATTERN_LINE][ENEMY_MIN]);
+        double factor = ((enemyNumbers[PATTERN_LINE][ENEMY_MAX] + 1) - numD) / (enemyNumbers[PATTERN_LINE][ENEMY_MAX] - enemyNumbers[PATTERN_LINE][ENEMY_MIN]);
         int time = (int) (factor * TIME_MAX);
 
-                switch (spawnZone) {
+        int dispersal = Utility.randomRangeInclusive(0,1);
+//        int dispersal = 0; // stub
+
+        switch (spawnZone) {
             case 1:
-                spawnFromLeft(num, spawnHeight, xStart, "", time);
+                spawnFromLeft(num, spawnHeight, xStart, "", time, dispersal);
                 break;
             case 2:
-                spawnFromMiddle(num, spawnHeight, "", "", time/2);
+                spawnFromMiddle(num, spawnHeight, "", "", time/2, dispersal);
                 break;
             case 3:
-                spawnFromRight(num, spawnHeight, xEnd, "", time);
+                spawnFromRight(num, spawnHeight, xEnd, "", time, dispersal);
                 break;
         }
     }
@@ -386,10 +389,10 @@ public class ProceduralGenerator {
                 break;
         }
 
-        spawnFromLeft(num, y0, x0, "", 0);
+        spawnFromLeft(num, y0, x0, "", 0, 0);
         spawnFromTop(num, y0, xFin);
         spawnFromBottom(num, spawnHeight, x0);
-        spawnFromRight(num, spawnHeight, xFin, "", 0);
+        spawnFromRight(num, spawnHeight, xFin, "", 0, 0);
     }
 
     private void spawnCross(int num) {
@@ -425,15 +428,15 @@ public class ProceduralGenerator {
                 break;
         }
 
-        spawnFromLeft(num, yMid, xLeft, "", TIME_MAX);
-        spawnFromRight(num, yMid, xRight, "", TIME_MAX);
+        spawnFromLeft(num, yMid, xLeft, "", TIME_MAX, 0);
+        spawnFromRight(num, yMid, xRight, "", TIME_MAX, 0);
         spawnFromTop(num, yTop, x0);
         spawnFromBottom(num, yBottom, x0);
     }
 
     /* Recursive Spawning Functions */
 
-    private void spawnFromLeft(int num, int y, int x, String move, int time) {
+    private void spawnFromLeft(int num, int y, int x, String move, int time, int dispersal) {
         if (move == "") {
             if (Utility.randomRangeInclusive(0,1) == 0) {
                 move = "right";
@@ -454,7 +457,7 @@ public class ProceduralGenerator {
 
             int skip = calculateSkip();
             int x0 = x + (spacing + skip);
-            spawnFromLeft(num - 1, y, x0, move, time);
+            spawnFromLeft(num - 1, y, x0, move, time + dispersal * TIME_MIN, dispersal);
         }
 
         // Base Case
@@ -462,7 +465,7 @@ public class ProceduralGenerator {
         spawnHelper(x, y, c, move, time);
     }
 
-    private void spawnFromRight(int num, int y, int x, String move, int time) {
+    private void spawnFromRight(int num, int y, int x, String move, int time, int dispersal) {
         if (move == "") {
             if (Utility.randomRangeInclusive(0,1) == 0) {
                 move = "left";
@@ -472,7 +475,7 @@ public class ProceduralGenerator {
         if (num > 1) {
             int skip = calculateSkip();
             int x0 = x - (spacing + skip);
-            spawnFromRight(num - 1, y, x0, move, time);
+            spawnFromRight(num - 1, y, x0, move, time + TIME_MIN*dispersal, dispersal);
         }
 
 //        // time depends on distance of x and xStart.
@@ -483,7 +486,7 @@ public class ProceduralGenerator {
         spawnHelper(x, y, c, move, time);
     }
 
-    private void spawnFromMiddle(int num, int spawnHeight, String moveLeft, String moveRight, int time) {
+    private void spawnFromMiddle(int num, int spawnHeight, String moveLeft, String moveRight, int time, int dispersal) {
         int tileSize = Utility.intAtWidth640(32);
         int x = xMid;
         int y = spawnHeight;
@@ -509,11 +512,11 @@ public class ProceduralGenerator {
                 num = num / 2;
                 int skip = calculateSkip();
 
-                spawnFromLeft(num, y, x + (spacing + skip), moveLeft, time);
+                spawnFromLeft(num, y, x + (spacing + skip), moveLeft, time, dispersal);
 
                 skip = calculateSkip();
 
-                spawnFromRight(num, y, x - (spacing + skip), moveRight, time);
+                spawnFromRight(num, y, x - (spacing + skip), moveRight, time, dispersal);
             }
         } else {
             if (moveLeft == "") {
@@ -530,8 +533,8 @@ public class ProceduralGenerator {
 
             num = num /2;
 
-            spawnFromLeft(num, y, x + incrementMIN, moveLeft, time);
-            spawnFromRight(num, y, x - incrementMIN, moveRight, time);
+            spawnFromLeft(num, y, x + incrementMIN, moveLeft, time, dispersal);
+            spawnFromRight(num, y, x - incrementMIN, moveRight, time, dispersal);
 
         }
     }
