@@ -77,15 +77,15 @@ public class EntityHandler {
         //renderFlag(g);
     }
 
-    public void spawnEntity(int x, int y, EntityID id, Color color, String move) {
+    public void spawnEntity(int x, int y, EntityID id, Color color, String move, int time) {
         // todo: Player
 
         // Air Enemies
         if (enemies.getPoolSize() > 0) {
-            enemies.spawnFromPool(x, y, move);
+            enemies.spawnFromPool(x, y, move, time);
         }
         else {
-            spawnNew(x, y, id, color, move);
+            spawnNew(x, y, id, color, move, time);
         }
 //        enemies.printPool("Enemy");
 
@@ -102,10 +102,11 @@ public class EntityHandler {
         // todo: Boss
     }
 
-    private void spawnNew(int x, int y, EntityID id, Color color, String move) {
+    private void spawnNew(int x, int y, EntityID id, Color color, String move, int time) {
         if (id == EntityID.EnemyBasic) {
             Enemy enemy = new EnemyBasic(x, y, ContactID.Air, color, levelHeight);
             enemy.setHMove(move);
+            enemy.setMovementTimer(time);
             enemies.add(enemy);
 //                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
         } else if (id == EntityID.EnemyMove) {

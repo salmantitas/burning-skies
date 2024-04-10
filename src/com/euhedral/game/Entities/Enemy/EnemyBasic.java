@@ -30,7 +30,7 @@ public class EnemyBasic extends Enemy{
         velY = 2.5f;
         healthRange(2,4);
         score = 50;
-        minVelX = 1f;
+        minVelX = 1.75f;
     }
 
     @Override
@@ -69,5 +69,14 @@ public class EnemyBasic extends Enemy{
         velY = 2.5f;
         explosion.playedOnce = false;
         super.resurrect(x, y);
+    }
+
+    @Override
+    public void moveInScreen() {
+        y += velY;
+        if (movementTimer >= 0) {
+            x += velX;
+            movementTimer--;
+        }
     }
 }

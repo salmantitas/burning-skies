@@ -113,11 +113,12 @@ public class Pool {
         }
     }
 
-    public void spawnFromPool(int x, int y, String move) {
+    public void spawnFromPool(int x, int y, String move, int time) {
         Entity entity = findInList();
         entity.resurrect(x, y);
         Enemy enemy = (Enemy) entity;
         enemy.setHMove(move);
+        enemy.setMovementTimer(time);
         decrease();
     }
 

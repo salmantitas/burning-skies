@@ -51,7 +51,6 @@ public class ProceduralGenerator {
     int MIN_WAVE_BETWEEN_POWER_SPAWN = 30;
     int MAX_WAVE_BETWEEN_POWER_SPAWN = 80;
 
-
     int difficulty = 1;
 
     /*
@@ -89,6 +88,10 @@ public class ProceduralGenerator {
     final int PATTERN_SQUARE = 2;
     final int PATTERN_CROSS = 3;
     final int maxPatterns = 2;
+
+    // basic enemy movement time
+    final int TIME_MAX = 300;
+    final int TIME_MIN = 15;
 
     private EntityHandler entityHandler;
 
@@ -239,6 +242,8 @@ public class ProceduralGenerator {
             spawnZone = Utility.randomRange(1, 3);
         }
 
+//        spawnZone = 2; // stub
+
         // choose spawn pattern
         if (wave == 1) {
             lastLastPattern = lastPattern;
@@ -247,14 +252,15 @@ public class ProceduralGenerator {
         } else {
             nextPattern();
         }
-
-//        pattern = PATTERN_V;
+        pattern = PATTERN_LINE; // stubs
 
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
         int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
 
         int num = Utility.randomRangeInclusive(minEnemies, currentMax);
+
+//        num = 1; // stub
 
         // spawn enemies
         switch (pattern) {
@@ -323,15 +329,19 @@ public class ProceduralGenerator {
     private void spawnLine(int num) {
 //        System.out.println(spawnZone + " " + num);
 
-        switch (spawnZone) {
+        double numD = num;
+        double factor = (enemyNumbers[PATTERN_LINE][ENEMY_MAX] - numD) / (enemyNumbers[PATTERN_LINE][ENEMY_MAX] - enemyNumbers[PATTERN_LINE][ENEMY_MIN]);
+        int time = (int) (factor * TIME_MAX);
+
+                switch (spawnZone) {
             case 1:
-                spawnFromLeft(num, spawnHeight, xStart);
+                spawnFromLeft(num, spawnHeight, xStart, "", time);
                 break;
             case 2:
-                spawnFromMiddle(num, spawnHeight);
+                spawnFromMiddle(num, spawnHeight, "", "", time/2);
                 break;
             case 3:
-                spawnFromRight(num, spawnHeight, xEnd);
+                spawnFromRight(num, spawnHeight, xEnd, "", time);
                 break;
         }
     }
@@ -376,10 +386,10 @@ public class ProceduralGenerator {
                 break;
         }
 
-        spawnFromLeft(num, y0, x0);
+        spawnFromLeft(num, y0, x0, "", 0);
         spawnFromTop(num, y0, xFin);
         spawnFromBottom(num, spawnHeight, x0);
-        spawnFromRight(num, spawnHeight, xFin);
+        spawnFromRight(num, spawnHeight, xFin, "", 0);
     }
 
     private void spawnCross(int num) {
@@ -415,41 +425,65 @@ public class ProceduralGenerator {
                 break;
         }
 
-        spawnFromLeft(num, yMid, xLeft);
-        spawnFromRight(num, yMid, xRight);
+        spawnFromLeft(num, yMid, xLeft, "", TIME_MAX);
+        spawnFromRight(num, yMid, xRight, "", TIME_MAX);
         spawnFromTop(num, yTop, x0);
         spawnFromBottom(num, yBottom, x0);
     }
 
     /* Recursive Spawning Functions */
 
-    private void spawnFromLeft(int num, int y, int x) {
-        // Base Case
-
-        if (num > 1) {
-            int skip = calculateSkip();
-            int x0 = x + (spacing + skip);
-            spawnFromLeft(num - 1, y, x0);
+    private void spawnFromLeft(int num, int y, int x, String move, int time) {
+        if (move == "") {
+            if (Utility.randomRangeInclusive(0,1) == 0) {
+                move = "right";
+            }
         }
 
+        // todo: determine whether to move synchronized or asynchronized
+
+        if (num > 1) {
+            // time depends on distance of x and xEnd.
+//            double xD = x;
+//            double factors = xD/ (xEnd - xStart);
+//            int newTime = (int) (TIME_MAX * factors);
+
+//            double xD = x;
+//            double factors = xD/ (xEnd - xStart);
+//            int newTime = (int) (TIME_MAX * factors);
+
+            int skip = calculateSkip();
+            int x0 = x + (spacing + skip);
+            spawnFromLeft(num - 1, y, x0, move, time);
+        }
+
+        // Base Case
         Color c = Color.RED; // stub
-        spawnHelper(x, y, c, "right");
+        spawnHelper(x, y, c, move, time);
     }
 
-    private void spawnFromRight(int num, int y, int x) {
-        // Base Case
+    private void spawnFromRight(int num, int y, int x, String move, int time) {
+        if (move == "") {
+            if (Utility.randomRangeInclusive(0,1) == 0) {
+                move = "left";
+            }
+        }
 
         if (num > 1) {
             int skip = calculateSkip();
             int x0 = x - (spacing + skip);
-            spawnFromRight(num - 1, y, x0);
+            spawnFromRight(num - 1, y, x0, move, time);
         }
 
+//        // time depends on distance of x and xStart.
+//        int time = 300;
+
+        // Base Case
         Color c = Color.RED; // stub
-        spawnHelper(x, y, c, "left");
+        spawnHelper(x, y, c, move, time);
     }
 
-    private void spawnFromMiddle(int num, int spawnHeight) {
+    private void spawnFromMiddle(int num, int spawnHeight, String moveLeft, String moveRight, int time) {
         int tileSize = Utility.intAtWidth640(32);
         int x = xMid;
         int y = spawnHeight;
@@ -457,24 +491,47 @@ public class ProceduralGenerator {
 
         boolean odd = num% 2 != 0;
         if (odd) {
-            spawnHelper(x, y, c, "");
+
+            // todo: decide whether to move left or right
+            int move = Utility.randomRange(0, 2);
+            if (move == 0) {
+                moveLeft = "right";
+                spawnHelper(x, y, c, moveLeft, time);
+            } else if (move == 1) {
+                moveRight = "left";
+                spawnHelper(x, y, c, moveRight, time);
+            }
+
+//            spawnHelper(x, y, c, moveLeft);
 
             if (num > 1) {
                 num -= 1;
                 num = num / 2;
                 int skip = calculateSkip();
 
-                spawnFromLeft(num, y, x + (spacing + skip));
+                spawnFromLeft(num, y, x + (spacing + skip), moveLeft, time);
 
                 skip = calculateSkip();
 
-                spawnFromRight(num, y, x - (spacing + skip));
+                spawnFromRight(num, y, x - (spacing + skip), moveRight, time);
             }
         } else {
+            if (moveLeft == "") {
+                if (Utility.randomRangeInclusive(0, 1) == 0) {
+                    moveLeft = "right";
+                }
+            }
+
+            if (moveRight == "") {
+                if (Utility.randomRangeInclusive(0, 1) == 0) {
+                    moveRight = "left";
+                }
+            }
+
             num = num /2;
 
-            spawnFromLeft(num, y, x + incrementMIN);
-            spawnFromRight(num, y, x - incrementMIN);
+            spawnFromLeft(num, y, x + incrementMIN, moveLeft, time);
+            spawnFromRight(num, y, x - incrementMIN, moveRight, time);
 
         }
     }
@@ -489,7 +546,7 @@ public class ProceduralGenerator {
 
         boolean odd = (num % 2) != 0;
         if (odd) {
-            spawnHelper(x, y, c, "");
+            spawnHelper(x, y, c, "", 250);
 
             if (num > 1) {
                 num -= 1;
@@ -525,7 +582,7 @@ public class ProceduralGenerator {
         }
 
         Color c = Color.RED; // stub
-        spawnHelper(x, y, c, "");
+        spawnHelper(x, y, c, "", 250);
     }
 
     private void spawnFromBottom(int num, int y, int x) {
@@ -538,7 +595,7 @@ public class ProceduralGenerator {
         }
 
         Color c = Color.RED; // stub
-        spawnHelper(x, y, c, "");
+        spawnHelper(x, y, c, "", 250);
     }
 
     private void spawnVHelper(int num, int y, int x, int increment) {
@@ -553,7 +610,7 @@ public class ProceduralGenerator {
             spawnVHelper(num - 1, y0, x0, increment);
         }
 
-        spawnHelper(x, y, c, "");
+        spawnHelper(x, y, c, "", 250);
     }
 
     private void spawnFromLeftV(int num, int y, int x) {
@@ -566,7 +623,7 @@ public class ProceduralGenerator {
         spawnVHelper(num, y, x, incrementX);
     }
 
-    private void spawnHelper(int x, int y, Color c, String move) {
+    private void spawnHelper(int x, int y, Color c, String move, int time) {
 
         EntityID id = colorMap.get(Color.RED);
 
@@ -590,7 +647,7 @@ public class ProceduralGenerator {
 
         c = getKey(id);
 
-        entityHandler.spawnEntity(x*32, y*32, id, c, move);
+        entityHandler.spawnEntity(x*32, y*32, id, c, move, time);
 //        System.out.println("Enemy spawned");
     }
 

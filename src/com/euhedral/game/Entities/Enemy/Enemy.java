@@ -247,5 +247,9 @@ public class Enemy extends MobileEntity {
         return explosion.playedOnce;
     }
 
+    public void setMovementTimer(int time) {
+        this.movementTimer = time;
+    }
+
     // Private Methods
 }
