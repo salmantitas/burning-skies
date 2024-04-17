@@ -29,7 +29,22 @@
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/bgm1.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/bgm1.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/bgmGameOver.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/bgmGameOver.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/bgmMain.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/bgmMain.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/bullet.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/bullet.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/explosion.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/explosion.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/impact.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/impact.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/pickup.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/pickup.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/bgm1.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/bgm1.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/bgmGameOver.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/bgmGameOver.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/bgmMain.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/bgmMain.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/bullet.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/bullet.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/explosion.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/explosion.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/impact.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/impact.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/pickup.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/pickup.wav" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/score.csv" beforeDir="false" afterPath="$PROJECT_DIR$/score.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.csv" beforeDir="false" afterPath="$PROJECT_DIR$/settings.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
