@@ -3,7 +3,6 @@ package com.euhedral.game.Entities;
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityID;
-import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
@@ -22,7 +21,7 @@ public class Bullet extends MobileEntity {
         width = Utility.intAtWidth640(8)/2;
         height = Utility.intAtWidth640(24)/2;
         forwardVelocity = Utility.intAtWidth640(4);
-        SoundHandler.playSound(SoundHandler.BULLET);
+//        SoundHandler.playSound(SoundHandler.BULLET_PLAYER);
     }
 
     Bullet(int x, int y, double angle) {
@@ -77,6 +76,6 @@ public class Bullet extends MobileEntity {
     @Override
     public void resurrect(int x, int y) {
         super.resurrect(x, y);
-        SoundHandler.playSound(SoundHandler.BULLET);
+//        SoundHandler.playSound(SoundHandler.BULLET_PLAYER);
     }
 }

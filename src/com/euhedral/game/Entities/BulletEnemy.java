@@ -1,5 +1,7 @@
 package com.euhedral.game.Entities;
 
+import com.euhedral.game.SoundHandler;
+
 import java.awt.*;
 
 public class BulletEnemy extends Bullet{
@@ -10,6 +12,7 @@ public class BulletEnemy extends Bullet{
 
     public BulletEnemy(int x, int y, double angle) {
         super(x, y, angle);
+        SoundHandler.playSound(SoundHandler.BULLET_ENEMY);
     }
 
     public BulletEnemy(int x, int y, double angle, int vel) {

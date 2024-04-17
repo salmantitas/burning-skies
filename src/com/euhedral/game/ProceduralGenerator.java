@@ -252,7 +252,7 @@ public class ProceduralGenerator {
         } else {
             nextPattern();
         }
-        pattern = PATTERN_LINE; // stubs
+//        pattern = PATTERN_LINE; // stubs
 
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
