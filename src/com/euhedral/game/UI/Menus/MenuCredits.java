@@ -44,10 +44,11 @@ public class MenuCredits extends Menu {
         text.add("Joshua McLean");
         text.add("");
 
-        text.add("Bullet Sound Effect");
-        text.add("The Premiere Edition 10 on videvo.com");
+        text.add("Bullet Sound Effects");
+        text.add("- The Premiere Edition 10 on videvo.com");
+        text.add("- Michel Baradari");
         text.add("Explosion Sound Effect");
-        text.add("Pranus Production's Gun Sound Pack on itch.io");
+        text.add("- Pranus Production's Gun Sound Pack on itch.io");
         text.add("");
 
         text.add("Sea Texture");

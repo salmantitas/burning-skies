@@ -73,8 +73,8 @@ public class MenuMain extends Menu {
 
         font = new Font("arial", 1, titleSize/10);
         g.setFont(font);
-        g.setColor(titleColor);
-        g.drawString("v 0.5", xLast, y26);
+        g.setColor(Color.WHITE);
+        g.drawString("v " + GameController.gameVersion, xLast, y26);
 //        BufferedImage image = GameController.getTexture().title;
 //        int imageWidth = image.getWidth(), imageHeight = image.getHeight();
 //        int imageOffset = 50;
