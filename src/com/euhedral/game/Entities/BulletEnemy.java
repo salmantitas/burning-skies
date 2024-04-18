@@ -25,7 +25,15 @@ public class BulletEnemy extends Bullet{
 //    }
 
     public void render(Graphics g) {
-        g.setColor(Color.orange);
-        g.fillOval(x,y, width, height);
+        if (isActive()) {
+            g.setColor(Color.orange);
+            g.fillOval(x, y, width, height);
+        }
+    }
+
+    @Override
+    public void resurrect(int x, int y) {
+        super.resurrect(x, y);
+        SoundHandler.playSound(SoundHandler.BULLET_ENEMY);
     }
 }

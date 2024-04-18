@@ -1,12 +1,11 @@
 package com.euhedral.game.Entities.Enemy;
 
-import com.euhedral.engine.Animation;
-import com.euhedral.engine.Engine;
-import com.euhedral.engine.MobileEntity;
-import com.euhedral.engine.Utility;
+import com.euhedral.engine.*;
 import com.euhedral.game.*;
 import com.euhedral.game.Entities.Bullet;
 import com.euhedral.game.Entities.BulletEnemy;
+import com.euhedral.game.Entities.BulletPlayerAir;
+import com.euhedral.game.Entities.Player;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -26,7 +25,8 @@ public class Enemy extends MobileEntity {
     protected Color color;
     protected int shootTimerDefault = 150;
     protected int shootTimer = shootTimerDefault;
-    protected LinkedList<Bullet> bullets = new LinkedList<>();
+    protected Pool bullets = new Pool();
+//    protected LinkedList<Bullet> bullets = new LinkedList<>();
     protected boolean inscreen = false;
     protected float cam;
     protected Random r;
@@ -75,6 +75,9 @@ public class Enemy extends MobileEntity {
                 shoot();
             }
         }
+
+        updateBullets();
+//        bullets.checkIfBelowScreen(levelHeight);
     }
 
     @Override
@@ -109,6 +112,7 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void render(Graphics g) {
+        bullets.render(g);
         super.render(g);
     }
 
@@ -122,7 +126,11 @@ public class Enemy extends MobileEntity {
     }
 
     private void spawnBullet(int x, int y, double dir) {
-        bullets.add(new BulletEnemy(x, y, dir));
+        if (bullets.getPoolSize() > 0) {
+            bullets.spawnFromPool(x, y, dir);
+        }
+        else
+            bullets.add(new BulletEnemy(x, y, dir));
     }
 
     public void moveInScreen() {
@@ -182,9 +190,9 @@ public class Enemy extends MobileEntity {
         return score;
     }
 
-    public LinkedList<Bullet> getBullets() {
-        return bullets;
-    }
+//    public LinkedList<Bullet> getBullets() {
+//        return bullets;
+//    }
 
     public void clearBullets() {
         bullets.clear();
@@ -249,6 +257,35 @@ public class Enemy extends MobileEntity {
 
     public void setMovementTimer(int time) {
         this.movementTimer = time;
+    }
+
+    public boolean checkCollisions(Player player) {
+        for (Entity entity: bullets.getEntities()) {
+            Bullet bullet = (Bullet) entity;
+
+            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
+                bullet.disable();
+                bullets.increase();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void disable() {
+        super.disable();
+    }
+
+    @Override
+    public void clear() {
+        super.clear();
+        bullets.clear();
+    }
+
+    public void updateBullets() {
+        bullets.update();
+        bullets.checkIfBelowScreen(levelHeight);
     }
 
     // Private Methods

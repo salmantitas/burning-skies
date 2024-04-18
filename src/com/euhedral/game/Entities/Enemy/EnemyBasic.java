@@ -57,9 +57,8 @@ public class EnemyBasic extends Enemy{
             super.render(g);
 //            renderBounds(g);
         } else {
+            bullets.render(g);
             explosion.drawAnimation(g, x, y);
-
-
         }
     }
 

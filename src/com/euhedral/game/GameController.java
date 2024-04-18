@@ -20,7 +20,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.5.2";
+    public static String gameVersion = "0.5.3";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -55,6 +55,10 @@ public class GameController {
 
     int count = 0;
     boolean reset = true;
+
+    // Cheats
+
+    public static boolean godMode = false;
 
     /************
      * Controls *
@@ -435,6 +439,7 @@ public class GameController {
         Engine.timeInSeconds = 0;
         timeInSeconds = 0;
         variableHandler.resetScore();
+//        variableHandler.resetDifficulty();
         variableHandler.resetPower();
         VariableHandler.shield.reset();
         variableHandler.health.reset();
@@ -446,6 +451,7 @@ public class GameController {
 
         variableHandler.resetLevel();
         levelSpawned = false;
+        entityHandler.resetPlayer();
         entityHandler.clearEnemies();
         entityHandler.clearPickups();
         levelSpawned = false;
@@ -590,6 +596,11 @@ public class GameController {
             if (key == KeyEvent.VK_LEFT || key == KeyInput.getKeyEvent(LEFT) || key == KeyEvent.VK_UP || key == KeyInput.getKeyEvent(UP)) {
                 uiHandler.keyboardSelection('l');
             }
+        }
+
+        if (key == KeyEvent.VK_G) {
+            godMode = !godMode;
+            Utility.log("God Mode " + godMode);
         }
     }
 

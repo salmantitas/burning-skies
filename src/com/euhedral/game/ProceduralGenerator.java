@@ -150,6 +150,7 @@ public class ProceduralGenerator {
 
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
+        difficulty = 1;
         entityHandler.setLevelHeight(getLevelHeight());
 
         playerY = getLevelHeight();

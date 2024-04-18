@@ -6,6 +6,7 @@ import com.euhedral.engine.Pool;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.Entities.*;
 import com.euhedral.game.Entities.Enemy.*;
+import jdk.jshell.execution.Util;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -24,7 +25,7 @@ public class EntityHandler {
     // Entity Lists
     private Flag flag;
     private Pool enemies = new Pool();
-    private Pool bullets = new Pool();
+//    private Pool bullets = new Pool();
     private Pool pickups = new Pool();
 
     private EnemyBoss boss;
@@ -54,7 +55,7 @@ public class EntityHandler {
 
     public void update() {
         updatePlayer();
-        updateBullets();
+//        updateBullets();
         updateEnemies();
 
         pickups.update();
@@ -70,7 +71,7 @@ public class EntityHandler {
 //    }
 
     public void render(Graphics g) {
-        bullets.render(g);
+//        bullets.render(g);
         pickups.render(g);
         player.render(g);
         enemies.render(g);
@@ -131,6 +132,7 @@ public class EntityHandler {
      * Player Functions *
      ********************/
 
+    // Helper function exists because GameController needs to call on this during tutorial
     public void updatePlayer() {
         player.update();
     }
@@ -188,8 +190,14 @@ public class EntityHandler {
             player.canShoot(false);
     }
 
-    public void spawnPlayer(int width, int height) {
-        player = new Player(width, height, levelHeight);
+    public void spawnPlayer(int x, int y) {
+        if (player == null) {
+            player = new Player(x, y, levelHeight);
+        } else {
+            player.setX(x);
+            player.setY(y);
+        }
+//        player = new Player(x, y, levelHeight);
         player.setGround(VariableHandler.gotGround());
         player.setPower(VariableHandler.power.getValue());
         setCameraToPlayer();
@@ -221,13 +229,19 @@ public class EntityHandler {
         return player.getY();
     }
 
+    public void resetPlayer() {
+        if (player != null) {
+            player.clear();
+        }
+    }
+
     /********************
      * Bullet Functions *
      ********************/
 
     private void updateBullets() {
-        bullets.update();
-        bullets.checkIfBelowScreen(levelHeight);
+//        bullets.update();
+//        bullets.checkIfBelowScreen(levelHeight);
 //        LinkedList<Entity> bullets = this.bullets.getEntities();
 ////        Utility.log("Bulletsize: " + bullets.size());
 //        for (Entity entity : bullets) {
@@ -240,24 +254,26 @@ public class EntityHandler {
 //        }
 
         if (boss != null) {
-            addToBullets(boss);
+//            addToBullets(boss);
 //            LinkedList<Bullet> bossBullets = boss.getBullets();
 //            this.bullets.addAll(bossBullets);
 //            boss.clearBullets();
         }
+
+//        Utility.log("Bullet pool size" + bullets.getPoolSize());
     }
 
     private void clearBullets() {
-        bullets.clear();
+//        bullets.clear();
     }
 
-    private void addToBullets(Enemy enemy) {
-        LinkedList<Bullet> enemyBullets = enemy.getBullets();
-        for (Bullet bullet: enemyBullets) {
-            this.bullets.add(bullet);
-        }
-        enemy.clearBullets();
-    }
+//    private void addToBullets(Enemy enemy) {
+//        LinkedList<Bullet> enemyBullets = enemy.getBullets();
+//        for (Bullet bullet: enemyBullets) {
+//            this.bullets.add(bullet);
+//        }
+//        enemy.clearBullets();
+//    }
 
     /********************
      * Pickup Functions *
@@ -342,7 +358,9 @@ public class EntityHandler {
             if(enemy.isActive()) {
                 enemy.update();
                 checkDeathAnimationEnd(enemy);
-                addToBullets(enemy);
+//                addToBullets(enemy);
+            } else {
+                enemy.updateBullets();
             }
         }
     }
@@ -441,7 +459,10 @@ public class EntityHandler {
     }
 
     public void damagePlayer(int num){
-        player.damage(num);
+        if (GameController.godMode) {
+
+        } else
+            player.damage(num);
     }
 
     /***********************
@@ -454,15 +475,25 @@ public class EntityHandler {
     }
 
     private void playerVsEnemyBulletCollision() {
-        for (Entity entity : bullets.getEntities()) {
-            Bullet bullet = (Bullet) entity;
-            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
-//                GameController.getSound().playSound(SoundHandler.IMPACT); // feels off
+        for (Entity entity : enemies.getEntities()) {
+            Enemy enemy = (Enemy) entity;
+
+            if (enemy.checkCollisions(player)) {
                 damagePlayer(10);
-                destroy(bullet);
-                bullets.increase();
+//                destroy(bullet);
+//                bullets.increase();
             }
+
         }
+//        for (Entity entity : bullets.getEntities()) {
+//            Bullet bullet = (Bullet) entity;
+//            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
+////                GameController.getSound().playSound(SoundHandler.IMPACT); // feels off
+//                damagePlayer(10);
+//                destroy(bullet);
+//                bullets.increase();
+//            }
+//        }
     }
 
     private void playerVsEnemyCollision() {

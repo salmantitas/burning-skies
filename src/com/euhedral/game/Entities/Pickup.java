@@ -37,8 +37,8 @@ public class Pickup extends MobileEntity {
 
     @Override
     public void render(Graphics g) {
-//        super.render(g);
-        drawDefault(g);
+        super.render(g);
+//        drawDefault(g);
     }
 
     public void resurrect(int x, int y, EntityID id) {

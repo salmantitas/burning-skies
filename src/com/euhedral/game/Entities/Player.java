@@ -389,4 +389,9 @@ public class Player extends MobileEntity {
     public void increaseBullets() {
         bullets.increase();
     }
+
+    @Override
+    public void clear() {
+        bullets.clear();
+    }
 }

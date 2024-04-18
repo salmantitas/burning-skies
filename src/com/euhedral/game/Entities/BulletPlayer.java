@@ -24,8 +24,10 @@ public class BulletPlayer extends Bullet{
 //    }
 
     public void render(Graphics g) {
-        g.setColor(color);
-        g.fillOval(x,y, width, height);
+        if (isActive()) {
+            g.setColor(color);
+            g.fillOval(x, y, width, height);
+        }
     }
 
     public ContactID getContactId() {

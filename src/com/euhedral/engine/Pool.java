@@ -20,15 +20,17 @@ public class Pool {
     public void update() {
         camMarker = GameController.getCamera().getMarker();
             for (Entity entity : entities) {
-                if (entity.isActive())
-                    entity.update();
+                entity.update();
+//                if (entity.isActive())
+//                    entity.update();
             }
     }
 
     public void render(Graphics g) {
         for (Entity entity: entities) {
-            if (entity.isActive())
-                entity.render(g);
+            entity.render(g);
+//            if (entity.isActive())
+//                entity.render(g);
         }
     }
 
@@ -69,7 +71,10 @@ public class Pool {
 
     public void clear() {
         reusable = 0;
-        entities.clear();
+        for (Entity entity: entities) {
+            entity.clear();
+        }
+//        entities.clear();
     }
 
     public Entity findInList() throws NullPointerException {

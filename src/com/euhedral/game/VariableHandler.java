@@ -71,6 +71,7 @@ public class VariableHandler {
     private static int STARTLEVEL = 1;
     private static int level;
     private static final int MAXLEVEL = 1;
+//    public static int difficulty = 1;
 
     private static int healthBossDef, healthBoss;
     private static int bossScore = 500;
@@ -158,6 +159,10 @@ public class VariableHandler {
     public void resetScore() {
         score = 0;
     }
+
+//    public void resetDifficulty() {
+//        difficulty = 1;
+//    }
 
     public static void updateHighScore() {
         if (highScore.size() == 0) {

@@ -43,7 +43,9 @@ public abstract class Entity {
     public abstract void update();
 
     public void render(Graphics g) {
-        drawDefault(g);
+        if (isActive()) {
+            drawDefault(g);
+        }
     }
 
     // Attempts to animate the object.
@@ -171,6 +173,10 @@ public abstract class Entity {
     }
 
     public void disable() {
+        setActive(false);
+    }
+
+    public void clear() {
         setActive(false);
     }
 
