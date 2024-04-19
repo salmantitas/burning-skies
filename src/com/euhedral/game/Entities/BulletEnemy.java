@@ -20,15 +20,10 @@ public class BulletEnemy extends Bullet{
         this.vel = vel;
     }
 
-//    public void update() {
-//
-//    }
-
-    public void render(Graphics g) {
-        if (isActive()) {
-            g.setColor(Color.orange);
-            g.fillOval(x, y, width, height);
-        }
+    @Override
+    protected void drawDefault(Graphics g) {
+        g.setColor(Color.orange);
+        g.fillOval(x, y, width, height);
     }
 
     @Override

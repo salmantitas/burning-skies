@@ -1,5 +1,6 @@
 package com.euhedral.game.Entities.Enemy;
 
+import com.euhedral.engine.Utility;
 import com.euhedral.game.ContactID;
 import com.euhedral.game.EntityID;
 import com.euhedral.game.GameController;
@@ -57,7 +58,7 @@ public class EnemyBasic extends Enemy{
             super.render(g);
 //            renderBounds(g);
         } else {
-            bullets.render(g);
+//            bullets.render(g);
             explosion.drawAnimation(g, x, y);
         }
     }
@@ -77,5 +78,10 @@ public class EnemyBasic extends Enemy{
             x += velX;
             movementTimer--;
         }
+    }
+
+    @Override
+    public int getTurretX() {
+        return x + width/2 - Utility.intAtWidth640(2);
     }
 }

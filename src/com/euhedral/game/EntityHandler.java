@@ -6,7 +6,6 @@ import com.euhedral.engine.Pool;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.Entities.*;
 import com.euhedral.game.Entities.Enemy.*;
-import jdk.jshell.execution.Util;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -25,7 +24,7 @@ public class EntityHandler {
     // Entity Lists
     private Flag flag;
     private Pool enemies = new Pool();
-//    private Pool bullets = new Pool();
+    private Pool bullets = new Pool();
     private Pool pickups = new Pool();
 
     private EnemyBoss boss;
@@ -55,7 +54,7 @@ public class EntityHandler {
 
     public void update() {
         updatePlayer();
-//        updateBullets();
+        updateBullets();
         updateEnemies();
 
         pickups.update();
@@ -71,7 +70,7 @@ public class EntityHandler {
 //    }
 
     public void render(Graphics g) {
-//        bullets.render(g);
+        bullets.render(g);
         pickups.render(g);
         player.render(g);
         enemies.render(g);
@@ -240,8 +239,8 @@ public class EntityHandler {
      ********************/
 
     private void updateBullets() {
-//        bullets.update();
-//        bullets.checkIfBelowScreen(levelHeight);
+        bullets.update();
+        bullets.disableIfBelowScreen(levelHeight);
 //        LinkedList<Entity> bullets = this.bullets.getEntities();
 ////        Utility.log("Bulletsize: " + bullets.size());
 //        for (Entity entity : bullets) {
@@ -264,7 +263,7 @@ public class EntityHandler {
     }
 
     private void clearBullets() {
-//        bullets.clear();
+        bullets.clear();
     }
 
 //    private void addToBullets(Enemy enemy) {
@@ -351,53 +350,35 @@ public class EntityHandler {
     }
 
     public void updateEnemies() {
-        enemies.checkIfBelowScreen(levelHeight);
+        enemies.disableIfBelowScreen(levelHeight);
         LinkedList<Entity> enemies = this.enemies.getEntities();
         for (Entity entity : enemies) {
             Enemy enemy = (Enemy) entity;
             if(enemy.isActive()) {
                 enemy.update();
                 checkDeathAnimationEnd(enemy);
+                if (enemy.hasShot()) {
+                    enemy.resetShot();
+                    spawnEnemyBullet(enemy);
+                }
 //                addToBullets(enemy);
-            } else {
-                enemy.updateBullets();
             }
+//            else {
+//                enemy.updateBullets();
+//            }
         }
     }
 
-//    public void cleanEnemies() {
-////        System.out.println("Enemies before cleaning: " + enemies.size());
-//
-//        for (int i = 0; i < enemies.size(); i++) {
-//            Enemy enemy = enemies.get(i);
-//            if (!enemy.isActive()) {
-//                enemies.remove(enemy);
-//                i--; // list is smaller by 1 now, so index is subtracted to prevent out of bounds
-//            }
-//        }
-//
-////        System.out.println("Enemies after cleaning: " + enemies.size());
-//    }
-
-//    public void cleanBullets() {
-//        for (int i = 0; i < bullets.getEntities().size(); i++) {
-//            Bullet bullet = (Bullet) bullets.getEntities().get(i);
-//            if (!bullet.isActive()) {
-//                bullets.remove(bullet);
-//                i--; // list is smaller by 1 now, so index is subtracted to prevent out of bounds
-//            }
-//        }
-//    }
-
-//    public void cleanPickups() {
-//        for (int i = 0; i < pickups.size(); i++) {
-//            Pickup pickup = pickups.get(i);
-//            if (!pickup.isActive()) {
-//                pickups.remove(pickup);
-//                i--; // list is smaller by 1 now, so index is subtracted to prevent out of bounds
-//            }
-//        }
-//    }
+    private void spawnEnemyBullet(Enemy enemy) {
+        int x = enemy.getTurretX();
+        int y = enemy.getY();
+        int dir = 90;
+        if (bullets.getPoolSize() > 0) {
+            bullets.spawnFromPool(x, y, dir);
+        }
+        else
+            bullets.add(new BulletEnemy(x, y, dir));
+    }
 
     public void clearEnemies() {
         enemies.clear();
@@ -474,26 +455,38 @@ public class EntityHandler {
         playerVsEnemyBulletCollision();
     }
 
-    private void playerVsEnemyBulletCollision() {
-        for (Entity entity : enemies.getEntities()) {
-            Enemy enemy = (Enemy) entity;
-
-            if (enemy.checkCollisions(player)) {
-                damagePlayer(10);
-//                destroy(bullet);
-//                bullets.increase();
-            }
-
-        }
-//        for (Entity entity : bullets.getEntities()) {
-//            Bullet bullet = (Bullet) entity;
-//            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
-////                GameController.getSound().playSound(SoundHandler.IMPACT); // feels off
+//    private void playerVsEnemyBulletCollision() {
+//        for (Entity entity : enemies.getEntities()) {
+//            Enemy enemy = (Enemy) entity;
+//
+//            if (enemy.checkCollisions(player)) {
 //                damagePlayer(10);
-//                destroy(bullet);
-//                bullets.increase();
+////                destroy(bullet);
+////                bullets.increase();
 //            }
+//
 //        }
+////        for (Entity entity : bullets.getEntities()) {
+////            Bullet bullet = (Bullet) entity;
+////            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
+//////                GameController.getSound().playSound(SoundHandler.IMPACT); // feels off
+////                damagePlayer(10);
+////                destroy(bullet);
+////                bullets.increase();
+////            }
+////        }
+//    }
+
+    private void playerVsEnemyBulletCollision() {
+        for (Entity entity: bullets.getEntities()) {
+            Bullet bullet = (Bullet) entity;
+
+            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
+                bullet.disable();
+                bullets.increase();
+                damagePlayer(10);
+            }
+        }
     }
 
     private void playerVsEnemyCollision() {

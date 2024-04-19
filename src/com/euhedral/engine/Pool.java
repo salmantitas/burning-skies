@@ -89,14 +89,14 @@ public class Pool {
         this.entities.addAll(entities);
     }
 
-    public void checkIfBelowScreen(int levelHeight) {
+    public void disableIfBelowScreen(int levelHeight) {
         for (Entity entity: entities) {
             if (entity.isActive())
-                checkIfBelowScreen(entity, levelHeight);
+                disableIfBelowScreen(entity, levelHeight);
         }
     }
 
-    public void checkIfBelowScreen(Entity entity, int levelHeight) {
+    public void disableIfBelowScreen(Entity entity, int levelHeight) {
         int offset = 200;
         if (entity.getY() > levelHeight + offset ) {
             entity.disable();

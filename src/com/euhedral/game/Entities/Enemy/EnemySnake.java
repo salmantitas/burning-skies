@@ -49,11 +49,11 @@ public class EnemySnake extends Enemy {
         double angle = 75;
 
         if (var == 0) {
-            bullets.add(new BulletEnemy(x + width/2,y, 90));
-        } else if (var == 1) {
-            bullets.add(new BulletEnemy(x + width/2,y, angle, newVel));
-        } else {
-            bullets.add(new BulletEnemy(x + width/2,y, angle + 2 * (90 - angle), newVel));
+//            bullets.add(new BulletEnemy(x + width/2,y, 90));
+//        } else if (var == 1) {
+//            bullets.add(new BulletEnemy(x + width/2,y, angle, newVel));
+//        } else {
+//            bullets.add(new BulletEnemy(x + width/2,y, angle + 2 * (90 - angle), newVel));
         }
 
         resetShooter();

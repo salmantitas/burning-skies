@@ -43,8 +43,8 @@ public class EnemyMove extends Enemy {
     }
 
     private void moveShoot() {
-        bullets.add(new BulletEnemy((int) (1.1 * x), y + height / 2, 90));
-        bullets.add(new BulletEnemy(x + (int) (0.8 * width), y + height / 2, 90));
+//        bullets.add(new BulletEnemy((int) (1.1 * x), y + height / 2, 90));
+//        bullets.add(new BulletEnemy(x + (int) (0.8 * width), y + height / 2, 90));
     }
 
     public void moveHorizontally() {

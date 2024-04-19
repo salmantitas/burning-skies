@@ -53,10 +53,6 @@ public class Bullet extends MobileEntity {
         }
     }
 
-    public void render(Graphics g) {
-
-    }
-
     public void setX(int x) {
         this.x = x;
     }

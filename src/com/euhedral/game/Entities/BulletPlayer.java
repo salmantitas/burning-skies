@@ -19,15 +19,10 @@ public class BulletPlayer extends Bullet{
         SoundHandler.playSound(SoundHandler.BULLET_PLAYER);
     }
 
-//    public void update() {
-//
-//    }
-
-    public void render(Graphics g) {
-        if (isActive()) {
-            g.setColor(color);
-            g.fillOval(x, y, width, height);
-        }
+    @Override
+    protected void drawDefault(Graphics g) {
+        g.setColor(color);
+        g.fillOval(x, y, width, height);
     }
 
     public ContactID getContactId() {

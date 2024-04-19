@@ -4,11 +4,9 @@ import com.euhedral.engine.*;
 import com.euhedral.game.*;
 import com.euhedral.game.Entities.Bullet;
 import com.euhedral.game.Entities.BulletEnemy;
-import com.euhedral.game.Entities.BulletPlayerAir;
 import com.euhedral.game.Entities.Player;
 
 import java.awt.*;
-import java.util.LinkedList;
 import java.util.Random;
 
 /*
@@ -25,7 +23,7 @@ public class Enemy extends MobileEntity {
     protected Color color;
     protected int shootTimerDefault = 150;
     protected int shootTimer = shootTimerDefault;
-    protected Pool bullets = new Pool();
+//    protected Pool bullets = new Pool();
 //    protected LinkedList<Bullet> bullets = new LinkedList<>();
     protected boolean inscreen = false;
     protected float cam;
@@ -39,6 +37,8 @@ public class Enemy extends MobileEntity {
 
     protected int levelHeight;
     protected boolean alive = true;
+
+    protected boolean shot = false;
 
     public Enemy(int x, int y, ContactID contactID, int levelHeight) {
         super(x, y, EntityID.Enemy);
@@ -76,13 +76,13 @@ public class Enemy extends MobileEntity {
             }
         }
 
-        updateBullets();
+//        updateBullets();
 //        bullets.checkIfBelowScreen(levelHeight);
     }
 
     @Override
     public void move() {
-        x = Utility.clamp(x, 0, Engine.WIDTH - width);
+        x = Utility.clamp(x, 0, Engine.WIDTH - Utility.intAtWidth640(width));
 
         if (inscreen) {
             moveInScreen();
@@ -112,7 +112,7 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void render(Graphics g) {
-        bullets.render(g);
+//        bullets.render(g);
         super.render(g);
     }
 
@@ -122,16 +122,17 @@ public class Enemy extends MobileEntity {
     }
 
     protected void shootDownDefault() {
-        spawnBullet(x + width/2, y, SOUTH);
+        shot = true;
+//        spawnBullet(x + width/2, y, SOUTH);
     }
 
-    private void spawnBullet(int x, int y, double dir) {
-        if (bullets.getPoolSize() > 0) {
-            bullets.spawnFromPool(x, y, dir);
-        }
-        else
-            bullets.add(new BulletEnemy(x, y, dir));
-    }
+//    private void spawnBullet(int x, int y, double dir) {
+//        if (bullets.getPoolSize() > 0) {
+//            bullets.spawnFromPool(x, y, dir);
+//        }
+//        else
+//            bullets.add(new BulletEnemy(x, y, dir));
+//    }
 
     public void moveInScreen() {
         y += velY;
@@ -194,9 +195,9 @@ public class Enemy extends MobileEntity {
 //        return bullets;
 //    }
 
-    public void clearBullets() {
-        bullets.clear();
-    }
+//    public void clearBullets() {
+//        bullets.clear();
+//    }
 
     public void setHMove(String move) {
         if (move == "left") {
@@ -259,18 +260,18 @@ public class Enemy extends MobileEntity {
         this.movementTimer = time;
     }
 
-    public boolean checkCollisions(Player player) {
-        for (Entity entity: bullets.getEntities()) {
-            Bullet bullet = (Bullet) entity;
-
-            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
-                bullet.disable();
-                bullets.increase();
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean checkCollisions(Player player) {
+//        for (Entity entity: bullets.getEntities()) {
+//            Bullet bullet = (Bullet) entity;
+//
+//            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
+//                bullet.disable();
+//                bullets.increase();
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     @Override
     public void disable() {
@@ -280,12 +281,25 @@ public class Enemy extends MobileEntity {
     @Override
     public void clear() {
         super.clear();
-        bullets.clear();
+//        bullets.clear();
     }
 
-    public void updateBullets() {
-        bullets.update();
-        bullets.checkIfBelowScreen(levelHeight);
+//    public void updateBullets() {
+//        bullets.update();
+//        bullets.disableIfBelowScreen(levelHeight);
+//    }
+
+    public boolean hasShot() {
+        return shot;
+    }
+
+    public void resetShot() {
+        shot = false;
+    }
+
+    //stub
+    public int getTurretX() {
+        return 0;
     }
 
     // Private Methods

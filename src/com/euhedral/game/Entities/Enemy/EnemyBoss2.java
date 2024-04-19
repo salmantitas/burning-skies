@@ -55,14 +55,14 @@ public class EnemyBoss2 extends EnemyBoss{
         double leftGun = x + offset;
         double rightGun = x + width- offset;
         // left gun
-        bullets.add(new BulletEnemy((int) (leftGun), y + height / 2, 110));
+//        bullets.add(new BulletEnemy((int) (leftGun), y + height / 2, 110));
 
         // right gun
-        bullets.add(new BulletEnemy((int) (rightGun) , y + height / 2, 70));
+//        bullets.add(new BulletEnemy((int) (rightGun) , y + height / 2, 70));
 
         // front guns
-        bullets.add(new BulletEnemy((int) (leftGun), y + height / 2, 90));
-        bullets.add(new BulletEnemy((int) (rightGun) , y + height / 2, 90));
+//        bullets.add(new BulletEnemy((int) (leftGun), y + height / 2, 90));
+//        bullets.add(new BulletEnemy((int) (rightGun) , y + height / 2, 90));
 
         shotNum += 4;
 

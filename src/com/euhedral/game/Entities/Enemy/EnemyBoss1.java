@@ -40,14 +40,14 @@ public class EnemyBoss1 extends EnemyBoss{
     @Override
     public void shoot() {
         // left gun
-        bullets.add(new BulletEnemy((int) (1.1 * x), y + height / 2, 110));
-
-        // right gun
-        bullets.add(new BulletEnemy(x + (int) (0.8 * width) , y + height / 2, 70));
-
-        // front guns
-        bullets.add(new BulletEnemy((int) (1.1 * x), y + height / 2, 90));
-        bullets.add(new BulletEnemy(x + (int) (0.8 * width) , y + height / 2, 90));
+//        bullets.add(new BulletEnemy((int) (1.1 * x), y + height / 2, 110));
+//
+//        // right gun
+//        bullets.add(new BulletEnemy(x + (int) (0.8 * width) , y + height / 2, 70));
+//
+//        // front guns
+//        bullets.add(new BulletEnemy((int) (1.1 * x), y + height / 2, 90));
+//        bullets.add(new BulletEnemy(x + (int) (0.8 * width) , y + height / 2, 90));
 
         shootTimer = shootTimerDefault;
 

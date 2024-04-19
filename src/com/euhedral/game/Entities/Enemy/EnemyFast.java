@@ -38,10 +38,10 @@ public class EnemyFast extends Enemy{
     private void fastShoot() {
         int newVel = Utility.intAtWidth640(5);
         double angle = 75;
-        bullets.add(new BulletEnemy(x + width/2,y, angle, newVel));
-        bullets.add(new BulletEnemy(x + width/2,y, angle + 2 * (90 - angle), newVel));
+//        bullets.add(new BulletEnemy(x + width/2,y, angle, newVel));
+//        bullets.add(new BulletEnemy(x + width/2,y, angle + 2 * (90 - angle), newVel));
         if (power == 2) {
-            bullets.add(new BulletEnemy(x + width/2,y, 90, newVel));
+//            bullets.add(new BulletEnemy(x + width/2,y, 90, newVel));
         }
     }
 }

@@ -243,7 +243,7 @@ public class ProceduralGenerator {
             spawnZone = Utility.randomRangeInclusive(1, 3);
         }
 
-//        spawnZone = 1; // stub
+//        spawnZone = 3; // stub
 
         // choose spawn pattern
         if (wave == 1) {
@@ -253,7 +253,7 @@ public class ProceduralGenerator {
         } else {
             nextPattern();
         }
-//        pattern = PATTERN_LINE; // stubs
+//        pattern = PATTERN_V; // stubs
 
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
@@ -261,7 +261,7 @@ public class ProceduralGenerator {
 
         int num = Utility.randomRangeInclusive(minEnemies, currentMax);
 
-//        num = 8; // stub
+//        num = maxEnemies; // stub
 
         // spawn enemies
         switch (pattern) {
@@ -352,7 +352,7 @@ public class ProceduralGenerator {
 
     private void spawnV(int num) {
         int xStart = this.xStart + num/2 * spacing;
-        int xEnd = this.xEnd - num/2 * spacing;
+        int xEnd = this.xEnd - (num/2 + 1) * spacing;
 
         switch (spawnZone) {
             case 1:
