@@ -2,7 +2,6 @@ package com.euhedral.game;
 
 import com.euhedral.engine.*;
 import com.euhedral.game.Entities.Shop;
-import com.euhedral.game.UI.Menus.MenuPlay;
 import com.euhedral.game.UI.UIHandler;
 
 import java.awt.*;
@@ -20,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.5.3";
+    public static String gameVersion = "0.5.4";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;

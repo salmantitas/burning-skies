@@ -8,10 +8,12 @@ import com.euhedral.game.SoundHandler;
 import java.awt.*;
 
 public class Bullet extends MobileEntity {
-    protected int vel;
+//    protected int vel;
     protected boolean collided;
     protected Color color;
     protected boolean calculated = false;
+
+    protected int initSound = SoundHandler.BULLET_PLAYER;
 
     Bullet(int x, int y) {
         super(x ,y, EntityID.Bullet);
@@ -21,7 +23,6 @@ public class Bullet extends MobileEntity {
         width = Utility.intAtWidth640(8)/2;
         height = Utility.intAtWidth640(24)/2;
         forwardVelocity = Utility.intAtWidth640(4);
-//        SoundHandler.playSound(SoundHandler.BULLET_PLAYER);
     }
 
     Bullet(int x, int y, double angle) {
@@ -61,9 +62,9 @@ public class Bullet extends MobileEntity {
         this.y = y;
     }
 
-    public void setVel(int vel) {
-        this.vel = vel;
-    }
+//    public void setVel(int vel) {
+//        this.vel = vel;
+//    }
 
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
@@ -72,6 +73,5 @@ public class Bullet extends MobileEntity {
     @Override
     public void resurrect(int x, int y) {
         super.resurrect(x, y);
-//        SoundHandler.playSound(SoundHandler.BULLET_PLAYER);
     }
 }

@@ -23,8 +23,6 @@ public class Enemy extends MobileEntity {
     protected Color color;
     protected int shootTimerDefault = 150;
     protected int shootTimer = shootTimerDefault;
-//    protected Pool bullets = new Pool();
-//    protected LinkedList<Bullet> bullets = new LinkedList<>();
     protected boolean inscreen = false;
     protected float cam;
     protected Random r;
@@ -248,6 +246,7 @@ public class Enemy extends MobileEntity {
     @Override
     public void resurrect(int x, int y) {
         super.resurrect(x, y);
+        shootTimer = shootTimerDefault;
         inscreen = false;
         alive = true;
     }

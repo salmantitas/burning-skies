@@ -15,8 +15,8 @@ public class BulletPlayer extends Bullet{
         this.contactId = contactId;
         width = 5;
         height = width * 3;
-        setVel(12);
-        SoundHandler.playSound(SoundHandler.BULLET_PLAYER);
+//        setVel(12);
+        SoundHandler.playSound(initSound);
     }
 
     @Override
@@ -35,6 +35,6 @@ public class BulletPlayer extends Bullet{
 //        this.y = y;
 //        this.calculated = false;
         super.resurrect(x, y);
-        SoundHandler.playSound(SoundHandler.BULLET_PLAYER);
+        SoundHandler.playSound(initSound);
     }
 }
