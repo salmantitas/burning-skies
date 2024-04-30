@@ -2,7 +2,6 @@ package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ContactID;
-import com.euhedral.game.EntityID;
 import com.euhedral.game.GameController;
 import com.euhedral.game.TextureHandler;
 
@@ -43,18 +42,26 @@ public class EnemyBasic extends Enemy{
     @Override
     public void update() {
         super.update();
-        if (!alive) {
+        if (state == STATE_ACTIVE) {
+            if (movementTimer >= 0) {
+                movementTimer--;
+            } else {
+                velX = 0;
+            }
+        }
+
+        if (state == STATE_EXPLODING) {
             explosion.runAnimation();
 
             if (explosion.playedOnce) {
-                disable();
+//                disable();
             }
         }
     }
 
     @Override
     public void render(Graphics g) {
-        if (alive) {
+        if (isActive()) {
             super.render(g);
 //            renderBounds(g);
         } else {
@@ -69,15 +76,6 @@ public class EnemyBasic extends Enemy{
         velY = 2.5f;
         explosion.playedOnce = false;
         super.resurrect(x, y);
-    }
-
-    @Override
-    public void moveInScreen() {
-        y += velY;
-        if (movementTimer >= 0) {
-            x += velX;
-            movementTimer--;
-        }
     }
 
     @Override

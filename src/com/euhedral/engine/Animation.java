@@ -32,7 +32,6 @@ public class Animation {
     }
 
     private void nextFrame() {
-
         curr = images[count];
         count++;
         if (count >= frames) {
@@ -55,5 +54,10 @@ public class Animation {
 
     public int getCount() {
         return count;
+    }
+
+    public void endAnimation() {
+        count = 0;
+        curr = null;
     }
 }

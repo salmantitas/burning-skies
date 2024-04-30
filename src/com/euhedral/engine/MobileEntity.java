@@ -99,6 +99,14 @@ public abstract class MobileEntity extends Entity {
         velY = (float) (forwardVelocity * Math.sin(angleY));
     }
 
+    public double getVelX() {
+        return velX;
+    }
+
+    public double getVelY() {
+        return velY;
+    }
+
     /*
     * Physics Function
     * */

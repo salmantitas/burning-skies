@@ -2,6 +2,7 @@ package com.euhedral.game.Entities;
 
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.Entities.Enemy.Enemy;
 import com.euhedral.game.EntityID;
 import com.euhedral.game.SoundHandler;
 
@@ -11,9 +12,19 @@ public class Bullet extends MobileEntity {
 //    protected int vel;
     protected boolean collided;
     protected Color color;
+    protected Color impactColor;
     protected boolean calculated = false;
 
     protected int initSound = SoundHandler.BULLET_PLAYER;
+
+    // Impact
+    protected int impactTimer = 0;
+    protected final int impactTimerCheck = 10;
+    protected int impactFactor = 2;
+    protected MobileEntity entity;
+
+    // State Machine
+    protected final int STATE_IMPACT = 2;
 
     Bullet(int x, int y) {
         super(x ,y, EntityID.Bullet);
@@ -42,6 +53,11 @@ public class Bullet extends MobileEntity {
         move();
     }
 
+    @Override
+    public void render(Graphics g) {
+        drawDefault(g);
+    }
+
     protected void move() {
         x += velX;
         y += velY;
@@ -62,10 +78,6 @@ public class Bullet extends MobileEntity {
         this.y = y;
     }
 
-//    public void setVel(int vel) {
-//        this.vel = vel;
-//    }
-
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
     }
@@ -73,5 +85,22 @@ public class Bullet extends MobileEntity {
     @Override
     public void resurrect(int x, int y) {
         super.resurrect(x, y);
+    }
+
+    public void destroy(MobileEntity entity) {
+        state = STATE_IMPACT;
+        this.entity = entity;
+    }
+
+    public boolean isImpacting() {
+        return state == STATE_IMPACT;
+    }
+
+    public boolean checkDeathAnimationEnd() {
+        if (impactTimer > impactTimerCheck) {
+            impactTimer = 0;
+            return true;
+        }
+        return impactTimer > impactTimerCheck;
     }
 }

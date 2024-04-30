@@ -16,6 +16,8 @@ public class BulletEnemy extends Bullet{
         height = width * 6;
         forwardVelocity = Utility.intAtWidth640(8);
         initSound = SoundHandler.BULLET_ENEMY;
+        color = Color.orange;
+        impactColor = Color.red;
         SoundHandler.playSound(initSound);
     }
 
@@ -25,13 +27,31 @@ public class BulletEnemy extends Bullet{
     }
 
     @Override
+    public void update() {
+        if (state == STATE_ACTIVE) {
+            super.update();
+        } else if (state == STATE_IMPACT) {
+            impactTimer++;
+            this.velX = entity.getVelX();
+            this.velY = entity.getVelY();
+            super.update();
+        }
+    }
+
+    @Override
     protected void drawDefault(Graphics g) {
-        g.setColor(Color.orange);
-        g.fillOval(x, y, width, height);
+        if (state == STATE_ACTIVE) {
+            g.setColor(color);
+            g.fillOval(x, y, width, height);
+        } else if (state == STATE_IMPACT) {
+            g.setColor(impactColor);
+            g.fillOval(x - impactFactor, y - impactFactor, width + impactFactor*2, height + impactFactor*2);
+        }
     }
 
     @Override
     public void resurrect(int x, int y) {
+        this.calculated = false;
         super.resurrect(x, y);
         SoundHandler.playSound(initSound);
     }

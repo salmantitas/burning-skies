@@ -1,9 +1,6 @@
 package com.euhedral.game;
 
-import com.euhedral.engine.Engine;
-import com.euhedral.engine.Entity;
-import com.euhedral.engine.Pool;
-import com.euhedral.engine.Utility;
+import com.euhedral.engine.*;
 import com.euhedral.game.Entities.*;
 import com.euhedral.game.Entities.Enemy.*;
 
@@ -72,8 +69,8 @@ public class EntityHandler {
     public void render(Graphics g) {
         bullets.render(g);
         pickups.render(g);
-        player.render(g);
         enemies.render(g);
+        player.render(g);
         //renderFlag(g);
     }
 
@@ -234,6 +231,13 @@ public class EntityHandler {
         }
     }
 
+    public void damagePlayer(int num){
+        if (GameController.godMode) {
+
+        } else
+            player.damage(num);
+    }
+
     /********************
      * Bullet Functions *
      ********************/
@@ -241,16 +245,7 @@ public class EntityHandler {
     private void updateBullets() {
         bullets.update();
         bullets.disableIfBelowScreen(levelHeight);
-//        LinkedList<Entity> bullets = this.bullets.getEntities();
-////        Utility.log("Bulletsize: " + bullets.size());
-//        for (Entity entity : bullets) {
-//            Bullet bullet = (Bullet) entity;
-//            if (bullet.isActive()) {
-//                bullet.update();
-//                this.bullets.checkIfBelowScreen(bullet, levelHeight);
-////                checkIfBelowScreen(bullet);
-//            }
-//        }
+        checkDeathAnimationEnd();
 
         if (boss != null) {
 //            addToBullets(boss);
@@ -265,14 +260,6 @@ public class EntityHandler {
     private void clearBullets() {
         bullets.clear();
     }
-
-//    private void addToBullets(Enemy enemy) {
-//        LinkedList<Bullet> enemyBullets = enemy.getBullets();
-//        for (Bullet bullet: enemyBullets) {
-//            this.bullets.add(bullet);
-//        }
-//        enemy.clearBullets();
-//    }
 
     /********************
      * Pickup Functions *
@@ -354,7 +341,7 @@ public class EntityHandler {
         LinkedList<Entity> enemies = this.enemies.getEntities();
         for (Entity entity : enemies) {
             Enemy enemy = (Enemy) entity;
-            if(enemy.isActive()) {
+            if(true) {
                 enemy.update();
                 checkDeathAnimationEnd(enemy);
                 if (enemy.hasShot()) {
@@ -385,12 +372,17 @@ public class EntityHandler {
         clearBullets();
     }
 
-    private void destroy(Entity entity) {
+    private void disable(Entity entity) {
         entity.disable();
     }
 
     private void destroy(Enemy enemy) {
         enemy.destroy();
+    }
+
+    private void destroy(Bullet bullet, MobileEntity entity) {
+        SoundHandler.playSound(SoundHandler.IMPACT);
+        bullet.destroy(entity);
     }
 
     /*
@@ -439,13 +431,6 @@ public class EntityHandler {
         }
     }
 
-    public void damagePlayer(int num){
-        if (GameController.godMode) {
-
-        } else
-            player.damage(num);
-    }
-
     /***********************
      * Collision Functions *
      ***********************/
@@ -455,35 +440,13 @@ public class EntityHandler {
         playerVsEnemyBulletCollision();
     }
 
-//    private void playerVsEnemyBulletCollision() {
-//        for (Entity entity : enemies.getEntities()) {
-//            Enemy enemy = (Enemy) entity;
-//
-//            if (enemy.checkCollisions(player)) {
-//                damagePlayer(10);
-////                destroy(bullet);
-////                bullets.increase();
-//            }
-//
-//        }
-////        for (Entity entity : bullets.getEntities()) {
-////            Bullet bullet = (Bullet) entity;
-////            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
-//////                GameController.getSound().playSound(SoundHandler.IMPACT); // feels off
-////                damagePlayer(10);
-////                destroy(bullet);
-////                bullets.increase();
-////            }
-////        }
-//    }
-
     private void playerVsEnemyBulletCollision() {
         for (Entity entity: bullets.getEntities()) {
             Bullet bullet = (Bullet) entity;
 
             if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
-                bullet.disable();
-                bullets.increase();
+//                bullets.increase(bullet);
+                destroy(bullet, player);
                 damagePlayer(10);
             }
         }
@@ -493,7 +456,7 @@ public class EntityHandler {
         for (Entity entity : enemies.getEntities()) {
             Enemy enemy = (Enemy) entity;
             boolean enemyInAir = enemy.getContactId() == ContactID.Air;
-            if (enemyInAir && enemy.isAlive())
+            if (enemyInAir && enemy.isActive())
                 if (enemy.isInscreen() && enemy.isActive()) {
                     boolean collision1 = player.checkCollision(enemy.getBoundsHorizontal());
                     boolean collision2 = player.checkCollision(enemy.getBoundsVertical());
@@ -511,10 +474,10 @@ public class EntityHandler {
     private void enemyVsPlayerBulletCollision() {
         for (Entity entity : enemies.getEntities()) {
             Enemy enemy = (Enemy) entity;
-            if (enemy.isInscreen() && enemy.isAlive()) {
+            if (enemy.isInscreen() && enemy.isActive()) {
                 Bullet bullet = player.checkCollision(enemy);
                 if (bullet != null) {
-//                    GameController.getSound().playSound(SoundHandler.IMPACT); // todo: feels off
+                    destroy(bullet, enemy);
                     if (enemy.getContactId() == ContactID.Boss) {
                         boss.damage();
                         VariableHandler.setHealthBoss(boss.getHealth());
@@ -528,8 +491,7 @@ public class EntityHandler {
                             VariableHandler.increaseScore(enemy.getScore());
                         }
                     }
-                    destroy(bullet);
-                    player.increaseBullets();
+//                    player.increaseBullets();
                 }
             }
         }
@@ -569,11 +531,25 @@ public class EntityHandler {
     }
 
     private void checkDeathAnimationEnd(Enemy enemy) {
-        if (!enemy.isAlive()) {
+        if (enemy.isExploding()) {
             if (enemy.checkDeathAnimationEnd()) {
-                enemies.increase();
+                enemies.increase(enemy);
+            }
+        }
+    }
+
+    private void checkDeathAnimationEnd() {
+        for (Entity entity: bullets.getEntities()) {
+
+            Bullet bullet = (Bullet) entity;
+
+            if (bullet.isImpacting()) {
+                if (bullet.checkDeathAnimationEnd()) {
+                    bullets.increase(bullet);
+                }
             }
         }
 
     }
+
 }

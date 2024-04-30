@@ -11,7 +11,12 @@ public abstract class Entity {
     protected int x, y;
     protected int width, height;
     protected EntityID id;
-    protected boolean active = true;
+
+    // State Machine
+    protected final int STATE_INACTIVE = 0; // no update, no rendering
+    protected final int STATE_ACTIVE = 1; // updating and rendering
+
+    protected int state = STATE_ACTIVE;
 
     protected Color color;
     protected BufferedImage image;
@@ -165,7 +170,11 @@ public abstract class Entity {
     }
 
     public boolean isActive() {
-        return active;
+        return state == STATE_ACTIVE;
+    }
+
+    public boolean isInactive() {
+        return state == STATE_INACTIVE;
     }
 
     public void enable() {
@@ -191,7 +200,11 @@ public abstract class Entity {
     }
 
     private void setActive(boolean active) {
-        this.active = active;
+        if (active) {
+            state = STATE_ACTIVE;
+        } else {
+            state = STATE_INACTIVE;
+        }
     }
 
     /*

@@ -17,7 +17,6 @@ public class Player extends MobileEntity {
     private int shootTimer = 0;
     private final int shootTimerDefault = 7;
     private Pool bullets = new Pool();
-//    private LinkedList<Bullet> bullets = new LinkedList<>();
 
     // Personal
     private int levelHeight;
@@ -93,6 +92,7 @@ public class Player extends MobileEntity {
 
         bullets.update();
         bullets.checkIfAboveScreen();
+        checkDeathAnimationEnd();
 
         setImage();
     }
@@ -386,6 +386,8 @@ public class Player extends MobileEntity {
         else health.decrease(num);
     }
 
+    // Bullet Functions
+
     public void increaseBullets() {
         bullets.increase();
     }
@@ -393,5 +395,19 @@ public class Player extends MobileEntity {
     @Override
     public void clear() {
         bullets.clear();
+    }
+
+    private void checkDeathAnimationEnd() {
+        for (Entity entity: bullets.getEntities()) {
+
+            Bullet bullet = (Bullet) entity;
+
+            if (bullet.isImpacting()) {
+                if (bullet.checkDeathAnimationEnd()) {
+                    bullets.increase(bullet);
+                }
+            }
+        }
+
     }
 }

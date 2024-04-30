@@ -2,9 +2,6 @@ package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.*;
 import com.euhedral.game.*;
-import com.euhedral.game.Entities.Bullet;
-import com.euhedral.game.Entities.BulletEnemy;
-import com.euhedral.game.Entities.Player;
 
 import java.awt.*;
 import java.util.Random;
@@ -34,9 +31,12 @@ public class Enemy extends MobileEntity {
     protected Animation explosion;
 
     protected int levelHeight;
-    protected boolean alive = true;
+//    protected boolean alive = true;
 
     protected boolean shot = false;
+
+    // State Machine
+    protected final int STATE_EXPLODING = 2;
 
     public Enemy(int x, int y, ContactID contactID, int levelHeight) {
         super(x, y, EntityID.Enemy);
@@ -63,19 +63,29 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void update() {
-        super.update();
-        shootTimer--;
-        if (!inscreen) {
-            inscreen = y > cam + Utility.percHeight(30);
-        }
-        if (inscreen && alive) {
-            if (shootTimer <= 0) {
-                shoot();
+//        updateActive();
+        if (state == STATE_ACTIVE) {
+            super.update();
+            shootTimer--;
+            if (!inscreen) {
+                inscreen = y > cam + Utility.percHeight(30);
             }
+            if (inscreen && isActive()) {
+                if (shootTimer <= 0) {
+                    shoot();
+                }
+            }
+        } else if (state == STATE_EXPLODING) {
+//            Utility.log("Exploding");
         }
+    }
 
-//        updateBullets();
-//        bullets.checkIfBelowScreen(levelHeight);
+    protected void updateActive() {
+
+    }
+
+    protected void updateExploding() {
+
     }
 
     @Override
@@ -110,7 +120,6 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void render(Graphics g) {
-//        bullets.render(g);
         super.render(g);
     }
 
@@ -121,16 +130,7 @@ public class Enemy extends MobileEntity {
 
     protected void shootDownDefault() {
         shot = true;
-//        spawnBullet(x + width/2, y, SOUTH);
     }
-
-//    private void spawnBullet(int x, int y, double dir) {
-//        if (bullets.getPoolSize() > 0) {
-//            bullets.spawnFromPool(x, y, dir);
-//        }
-//        else
-//            bullets.add(new BulletEnemy(x, y, dir));
-//    }
 
     public void moveInScreen() {
         y += velY;
@@ -165,22 +165,6 @@ public class Enemy extends MobileEntity {
         health = Utility.randomRange(min, max);
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public void setVelX(float velX) {
-        this.velX = velX;
-    }
-
-    public void setVelY(int velY) {
-        this.velY =  velY;
-    }
-
     public ContactID getContactId() {
         return contactId;
     }
@@ -188,14 +172,6 @@ public class Enemy extends MobileEntity {
     public int getScore() {
         return score;
     }
-
-//    public LinkedList<Bullet> getBullets() {
-//        return bullets;
-//    }
-
-//    public void clearBullets() {
-//        bullets.clear();
-//    }
 
     public void setHMove(String move) {
         if (move == "left") {
@@ -214,14 +190,14 @@ public class Enemy extends MobileEntity {
     }
 
     public void destroy() {
-        alive = false;
+        state = STATE_EXPLODING;
         velX = 0;
         SoundHandler.playSound(SoundHandler.EXPLOSION);
     }
 
-    public boolean isAlive() {
-        return alive;
-    }
+//    public boolean isAlive() {
+//        return state == STATE_ACTIVE;
+//    }
 
     public Rectangle getBoundsHorizontal() {
         Rectangle bounds = new Rectangle(x, y, width, 1*height/3 + 2);
@@ -248,7 +224,6 @@ public class Enemy extends MobileEntity {
         super.resurrect(x, y);
         shootTimer = shootTimerDefault;
         inscreen = false;
-        alive = true;
     }
 
     public boolean checkDeathAnimationEnd() {
@@ -259,19 +234,6 @@ public class Enemy extends MobileEntity {
         this.movementTimer = time;
     }
 
-//    public boolean checkCollisions(Player player) {
-//        for (Entity entity: bullets.getEntities()) {
-//            Bullet bullet = (Bullet) entity;
-//
-//            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
-//                bullet.disable();
-//                bullets.increase();
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
     @Override
     public void disable() {
         super.disable();
@@ -280,13 +242,9 @@ public class Enemy extends MobileEntity {
     @Override
     public void clear() {
         super.clear();
-//        bullets.clear();
+        explosion.endAnimation();
+//        explosion.playedOnce = false;
     }
-
-//    public void updateBullets() {
-//        bullets.update();
-//        bullets.disableIfBelowScreen(levelHeight);
-//    }
 
     public boolean hasShot() {
         return shot;
@@ -299,6 +257,10 @@ public class Enemy extends MobileEntity {
     //stub
     public int getTurretX() {
         return 0;
+    }
+
+    public boolean isExploding() {
+        return state == STATE_EXPLODING;
     }
 
     // Private Methods
