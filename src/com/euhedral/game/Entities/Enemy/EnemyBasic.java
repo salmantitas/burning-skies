@@ -27,8 +27,7 @@ public class EnemyBasic extends Enemy{
 
         power = 1;
         shootTimerDefault = 250;
-        velY = 2.5f;
-        healthRange(2,4);
+        commonInit();
         score = 50;
         minVelX = 1.75f;
     }
@@ -42,7 +41,7 @@ public class EnemyBasic extends Enemy{
     @Override
     public void update() {
         super.update();
-        if (state == STATE_ACTIVE) {
+        if (state == STATE_ACTIVE && inscreen) {
             if (movementTimer >= 0) {
                 movementTimer--;
             } else {
@@ -70,10 +69,14 @@ public class EnemyBasic extends Enemy{
         }
     }
 
+    private void commonInit() {
+        healthRange(3, 3);
+        velY = 2.5f;
+    }
+
     @Override
     public void resurrect(int x, int y) {
-        healthRange(2, 4);
-        velY = 2.5f;
+        commonInit();
         explosion.playedOnce = false;
         super.resurrect(x, y);
     }

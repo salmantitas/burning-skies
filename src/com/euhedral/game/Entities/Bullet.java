@@ -33,7 +33,7 @@ public class Bullet extends MobileEntity {
         collided = false;
         width = Utility.intAtWidth640(8)/2;
         height = Utility.intAtWidth640(24)/2;
-        forwardVelocity = Utility.intAtWidth640(4);
+        forwardVelocity = Utility.intAtWidth640(5);
     }
 
     Bullet(int x, int y, double angle) {
