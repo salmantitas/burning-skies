@@ -4,6 +4,7 @@ import com.euhedral.game.Camera;
 import com.euhedral.game.GameController;
 
 import java.awt.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static com.euhedral.engine.Engine.HEIGHT;
 import static com.euhedral.engine.Engine.WIDTH;
@@ -85,7 +86,8 @@ public class Utility {
     }
 
     public static int randomRangeInclusive(int min, int max) {
-        return (int) ((Math.random() * ((max + 1) - min)) + min);
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
+//        return (int) ((Math.random() * ((max + 1) - min)) + min);
     }
 
     public static boolean oddInt(int number) {
@@ -117,6 +119,13 @@ public class Utility {
 
     public static void log(String s) {
         System.out.println(s);
+    }
+
+    public static void log(String[] arg) {
+        for (String s: arg) {
+            log(s);
+            log(", ");
+        }
     }
 
 }

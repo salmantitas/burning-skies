@@ -254,7 +254,7 @@ public class ProceduralGenerator {
             spawnZone = Utility.randomRangeInclusive(1, 3);
         }
 
-//        spawnZone = 2; // stub
+//        spawnZone = 3; // stub
 
         // choose spawn pattern
         if (wave == 1) {
@@ -273,7 +273,7 @@ public class ProceduralGenerator {
 
         int num = Utility.randomRangeInclusive(minEnemies, currentMax);
 
-//        num = minEnemies; // stub
+        num = minEnemies + 1; // stub
 
         // spawn enemies
         switch (pattern) {
@@ -346,13 +346,11 @@ public class ProceduralGenerator {
 //        System.out.println(spawnZone + " " + num);
 
         int distance = MOVEMENT_MAX - (num - 1)*2;
-        int dispersal = Utility.randomRangeInclusive(0,1);
-//        dispersal = 0; // stub
+        int dispersal = Utility.randomRangeInclusive(-1,1);
 
         switch (spawnZone) {
             case 1:
                 spawnFromDirection(num, spawnHeight, xStart, "", distance, dispersal, LEFT);
-//                spawnFromDirection(num, spawnHeight, xEnd, "", distance, dispersal, RIGHT); // test
                 break;
             case 2:
                 spawnFromMiddle(num, spawnHeight, "", "", distance, dispersal);
@@ -487,30 +485,6 @@ public class ProceduralGenerator {
         spawnFromBottom(num, yBottom, x0);
     }
 
-    /* Recursive Spawning Functions */
-
-//    private void spawnFromLeft(int num, int y, int x, String move, int time, int dispersal) {
-//        move = calculateMoveDirection(move, "right");
-//
-//        if (num > 1) {
-//            int x0 = x + (spacing);
-//            spawnFromLeft(num - 1, y, x0, move, time + dispersal * TIME_MIN, dispersal);
-//        }
-//
-//        spawnHelper(x, y, move, time);
-//    }
-
-//    private void spawnFromRight(int num, int y, int x, String move, int time, int dispersal) {
-//        move = calculateMoveDirection(move, RIGHT);
-//
-//        if (num > 1) {
-//            int x0 = x - (spacing);
-//            spawnFromRight(num - 1, y, x0, move, time + TIME_MIN*dispersal, dispersal);
-//        }
-//
-//        spawnHelper(x, y, move, time);
-//    }
-
     private String calculateMoveDirection(String move, int direction) {
         if (move == "") {
             if (Utility.randomRangeInclusive(0,1) == 0) {
@@ -530,15 +504,9 @@ public class ProceduralGenerator {
         if (num > 1) {
             int x0 = x + direction * (spacing);
             spawnFromDirection(num - 1, y, x0, move, distance, dispersal, direction);
-//            spawnFromDirection(num - 1, y, x0, move, time + dispersal * spacing, dispersal, direction);
         }
 
-//        // todo: new dispersal code
-//        if (dispersal == 1) {
-//            distance -= incrementMIN * num;
-//        }
-
-//        distance -= totalSpawning;
+        distance += dispersal*num;
         spawnHelper(x, y, move, distance);
 
     }
@@ -582,17 +550,6 @@ public class ProceduralGenerator {
 
             moveLeft = calculateMoveDirection(moveLeft, LEFT);
             moveRight = calculateMoveDirection(moveRight, RIGHT);
-//                if (moveLeft == "") {
-//                    if (Utility.randomRangeInclusive(0, 1) == 0) {
-//                        moveLeft = "right";
-//                    }
-//                }
-//
-//                if (moveRight == "") {
-//                    if (Utility.randomRangeInclusive(0, 1) == 0) {
-//                        moveRight = "left";
-//                    }
-//                }
 
             spawnFromDirection(num, y, x0Left, moveLeft, time, dispersal, LEFT);
             spawnFromDirection(num, y, x0Right, moveRight, time, dispersal, RIGHT);
