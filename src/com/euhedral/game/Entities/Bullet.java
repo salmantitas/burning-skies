@@ -2,11 +2,11 @@ package com.euhedral.game.Entities;
 
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.Entities.Enemy.Enemy;
 import com.euhedral.game.EntityID;
 import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class Bullet extends MobileEntity {
 //    protected int vel;
@@ -78,8 +78,8 @@ public class Bullet extends MobileEntity {
         this.y = y;
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+    public Rectangle2D getBounds() {
+        return new Rectangle2D.Double(x, y, width, height);
     }
 
     @Override

@@ -15,6 +15,7 @@ import java.util.Objects;
 
 public class ProceduralGenerator {
 
+    final int SCALE = 32;
     public HashMap<Color, EntityID> colorMap;
     int height, width = 35;
     final int incrementMIN = Utility.intAtWidth640(1);
@@ -25,7 +26,7 @@ public class ProceduralGenerator {
     int pattern, lastPattern, lastLastPattern;
     int wave, waveSinceHealth, waveSincePower, waveSinceShield;
     int level;
-    int playerX = xMid*32, playerY;
+    int playerX = xMid*SCALE, playerY;
     final int ENDLESS = -1;
     int spawnHeight;
 
@@ -84,15 +85,15 @@ public class ProceduralGenerator {
     int maxG = 2;
 
     final int PATTERN_LINE = 0;
-    final int PATTERN_V = 1;
-    final int PATTERN_SQUARE = 2;
-    final int PATTERN_CROSS = 3;
-    final int PATTERN_PINCER = 4;
+    final int PATTERN_PINCER = 1;
+    final int PATTERN_V = 2;
+    final int PATTERN_SQUARE = 3;
+    final int PATTERN_CROSS = 4;
     final int maxPatterns = 2;
 
-    // basic enemy movement time
-    final int TIME_MIN = 20;
-    final int TIME_MAX = TIME_MIN * 20;
+    // basic enemy movement distance
+    final int movementFactor = 6;
+    final int MOVEMENT_MAX = spacing * movementFactor;
 
     // Spawn From Direction
     int LEFT = 1;
@@ -108,11 +109,14 @@ public class ProceduralGenerator {
     }
 
     private void buildMatrix() {
+        int minLine = 2;
+        int maxLine = 8;
+
+        int minPincer = 1;
+        int maxPincer = 4;
+
         int minEnemiesV = 3;
         int maxEnemiesV = 9;
-
-        int minEnemiesLine = 2;
-        int maxEnemiesLine = 8;
 
         int minEnemiesSquare = 2;
         int maxEnemiesSquare = 4; // MAX 8 possible but not fun
@@ -121,16 +125,16 @@ public class ProceduralGenerator {
         int maxEnemiesCross = 3;
 
         enemyNumbers = new int[maxPatterns][2];
-        enemyNumbers[PATTERN_LINE][ENEMY_MIN] = minEnemiesLine;
-        enemyNumbers[PATTERN_LINE][ENEMY_MAX] = maxEnemiesLine;
-        enemyNumbers[PATTERN_V][ENEMY_MIN] = minEnemiesV;
-        enemyNumbers[PATTERN_V][ENEMY_MAX] = maxEnemiesV;
+        enemyNumbers[PATTERN_LINE][ENEMY_MIN] = minLine;
+        enemyNumbers[PATTERN_LINE][ENEMY_MAX] = maxLine;
+        enemyNumbers[PATTERN_PINCER][ENEMY_MIN] = minPincer;
+        enemyNumbers[PATTERN_PINCER][ENEMY_MAX] = maxPincer;
+//        enemyNumbers[PATTERN_V][ENEMY_MIN] = minEnemiesV;
+//        enemyNumbers[PATTERN_V][ENEMY_MAX] = maxEnemiesV;
 //        enemyNumbers[PATTERN_SQUARE][ENEMY_MIN] = minEnemiesSquare;
 //        enemyNumbers[PATTERN_SQUARE][ENEMY_MAX] = maxEnemiesSquare;
 //        enemyNumbers[PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
 //        enemyNumbers[PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
-//        enemyNumbers[PATTERN_PINCER][ENEMY_MIN] = minEnemiesLine;
-//        enemyNumbers[PATTERN_PINCER][ENEMY_MAX] = maxEnemiesLine;
     }
 
     // generate a level using procedural generation // YEAH NO SHIT.
@@ -170,7 +174,7 @@ public class ProceduralGenerator {
 
         // todo: use line for first wave here
 
-        spawnHeight = (height - Engine.HEIGHT/32) ;//- (wave * MIN_PAUSE);
+        spawnHeight = (height - Engine.HEIGHT/SCALE) ;//- (wave * MIN_PAUSE);
         lastSpawnTime = GameController.getCurrentTime();
         spawnInterval = spawnInterval_MIN;
         spawnIntervalPickups = spawnInterval_MAX;
@@ -250,7 +254,7 @@ public class ProceduralGenerator {
             spawnZone = Utility.randomRangeInclusive(1, 3);
         }
 
-        spawnZone = 2; // stub
+//        spawnZone = 2; // stub
 
         // choose spawn pattern
         if (wave == 1) {
@@ -260,6 +264,7 @@ public class ProceduralGenerator {
         } else {
             nextPattern();
         }
+
         pattern = PATTERN_LINE; // stub
 
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
@@ -268,12 +273,15 @@ public class ProceduralGenerator {
 
         int num = Utility.randomRangeInclusive(minEnemies, currentMax);
 
-        num = minEnemies; // stub
+//        num = minEnemies; // stub
 
         // spawn enemies
         switch (pattern) {
             case PATTERN_LINE:
                 spawnLine(num);
+                break;
+            case PATTERN_PINCER:
+                spawnPincer(num);
                 break;
             case PATTERN_V:
                 spawnV(num);
@@ -283,9 +291,6 @@ public class ProceduralGenerator {
                 break;
             case PATTERN_CROSS:
                 spawnCross(num);
-                break;
-            case PATTERN_PINCER:
-                spawnPincer(num);
                 break;
         }
 
@@ -328,7 +333,7 @@ public class ProceduralGenerator {
     // Pickup Spawner Helped
     private void spawnPickupHelper(EntityID id) {
         spawnZone = Utility.randomRange(1, 3);
-        entityHandler.spawnPickup(xMid * 32, spawnHeight * 32, id);
+        entityHandler.spawnPickup(xMid * SCALE, spawnHeight * SCALE, id);
         wave++;
         System.out.println("Wave: " + wave);
         spawnInterval = spawnInterval_MIN;
@@ -340,47 +345,61 @@ public class ProceduralGenerator {
     private void spawnLine(int num) {
 //        System.out.println(spawnZone + " " + num);
 
-        double numD = num;
-        double factor = ((enemyNumbers[PATTERN_LINE][ENEMY_MAX] + 1) - numD) / (enemyNumbers[PATTERN_LINE][ENEMY_MAX] - enemyNumbers[PATTERN_LINE][ENEMY_MIN]);
-        int time = (int) (factor * TIME_MAX);
-
+        int distance = MOVEMENT_MAX - (num - 1)*2;
         int dispersal = Utility.randomRangeInclusive(0,1);
 //        dispersal = 0; // stub
 
         switch (spawnZone) {
             case 1:
-                spawnFromDirection(num, spawnHeight, xStart, "", time, dispersal, LEFT);
+                spawnFromDirection(num, spawnHeight, xStart, "", distance, dispersal, LEFT);
+//                spawnFromDirection(num, spawnHeight, xEnd, "", distance, dispersal, RIGHT); // test
                 break;
             case 2:
-                spawnFromMiddle(num, spawnHeight, "", "", time/2, dispersal);
+                spawnFromMiddle(num, spawnHeight, "", "", distance, dispersal);
                 break;
             case 3:
-                spawnFromDirection(num, spawnHeight, xEnd, "", time, dispersal, RIGHT);
+                spawnFromDirection(num, spawnHeight, xEnd, "", distance, dispersal, RIGHT);
                 break;
         }
     }
 
+    // todo: zone 2 and 3
     private void spawnPincer(int num) {
 //        System.out.println(spawnZone + " " + num);
 
-        double numD = num;
-        double factor = ((enemyNumbers[PATTERN_LINE][ENEMY_MAX] + 1) - numD) / (enemyNumbers[PATTERN_LINE][ENEMY_MAX] - enemyNumbers[PATTERN_LINE][ENEMY_MIN]);
-        int time = (int) (factor * TIME_MAX);
-
-        int dispersal = Utility.randomRangeInclusive(0,1);
-//        int dispersal = 0; // stub
-
-        switch (spawnZone) {
-            case 1:
-//                spawnFromLeft(num, spawnHeight, xStart, "", time, dispersal);
-                break;
-            case 2:
-                spawnFromMiddle(num, spawnHeight, "", "", time/2, dispersal);
-                break;
-            case 3:
-//                spawnFromRight(num, spawnHeight, xEnd, "", time, dispersal);
-                break;
-        }
+//        double numD = num;
+//        double factor = ((enemyNumbers[pattern][ENEMY_MAX] + 1) - numD) / (enemyNumbers[pattern][ENEMY_MAX] - enemyNumbers[pattern][ENEMY_MIN]);
+//        int time = (int) (factor * TIME_MAX);
+//
+//        int dispersal = Utility.randomRangeInclusive(0,1);
+//        dispersal = 0; // stub
+//
+//        switch (spawnZone) {
+//            case 1:
+//                // 1 - > 1.7, 2-> 2, 3-> 1.9 4 -> 1.5
+//                double timeFactor = 1.7 - (num - 1)*0.18;
+//                time = (int) (time/timeFactor);
+//                if (num == 4) {
+//                    time += 2;
+//                }
+//                spawnFromDirection(num, spawnHeight, xStart, "", time, dispersal, LEFT);
+//                spawnFromDirection(num, spawnHeight, xEnd, "", time, dispersal, RIGHT);
+//                break;
+//            case 2:
+//                timeFactor = 3.5;
+//                time = (int) (time/timeFactor);
+//                int offset = spacing * 2;
+//                spawnFromDirection(num, spawnHeight, xStart + offset, "", time, dispersal, LEFT);
+//                spawnFromDirection(num, spawnHeight, xEnd - offset, "", time, dispersal, RIGHT);
+//                break;
+//            case 3:
+//                timeFactor = 5.0;
+//                time = (int) (time/timeFactor);
+//                offset = spacing * 3;
+//                spawnFromDirection(num, spawnHeight, xStart + offset, "", time, dispersal, LEFT);
+//                spawnFromDirection(num, spawnHeight, xEnd - offset, "", time, dispersal, RIGHT);
+//                break;
+//        }
     }
 
     private void spawnV(int num) {
@@ -505,19 +524,26 @@ public class ProceduralGenerator {
         return move;
     }
 
-    private void spawnFromDirection(int num, int y, int x, String move, int time, int dispersal, int direction) {
+    private void spawnFromDirection(int num, int y, int x, String move, int distance, int dispersal, int direction) {
         move = calculateMoveDirection(move, direction);
 
         if (num > 1) {
             int x0 = x + direction * (spacing);
-            spawnFromDirection(num - 1, y, x0, move, time + dispersal * TIME_MIN, dispersal, direction);
+            spawnFromDirection(num - 1, y, x0, move, distance, dispersal, direction);
+//            spawnFromDirection(num - 1, y, x0, move, time + dispersal * spacing, dispersal, direction);
         }
 
-        spawnHelper(x, y, move, time);
+//        // todo: new dispersal code
+//        if (dispersal == 1) {
+//            distance -= incrementMIN * num;
+//        }
+
+//        distance -= totalSpawning;
+        spawnHelper(x, y, move, distance);
+
     }
 
     private void spawnFromMiddle(int num, int spawnHeight, String moveLeft, String moveRight, int time, int dispersal) {
-        int tileSize = Utility.intAtWidth640(32);
         int x = xMid;
         int y = spawnHeight;
 
@@ -575,7 +601,6 @@ public class ProceduralGenerator {
     }
 
     private void spawnPincerMiddle(int num, int spawnHeight, String moveLeft, String moveRight, int time, int dispersal) {
-        int tileSize = Utility.intAtWidth640(32);
         int x = xMid;
         int y = spawnHeight;
 
@@ -642,7 +667,6 @@ public class ProceduralGenerator {
     }
 
     private void spawnPincerSides(int num, int spawnHeight, String moveLeft, String moveRight, int time, int dispersal) {
-        int tileSize = Utility.intAtWidth640(32);
         int x = xMid;
         int y = spawnHeight;
 
@@ -788,7 +812,7 @@ public class ProceduralGenerator {
         spawnVHelper(num, y, x, incrementX);
     }
 
-    private void spawnHelper(int x, int y, String move, int time) {
+    private void spawnHelper(int x, int y, String move, int distance) {
 
         EntityID id = colorMap.get(Color.RED);
 
@@ -812,19 +836,19 @@ public class ProceduralGenerator {
 
         Color c = getKey(id);
 
-        entityHandler.spawnEntity(x*32, y*32, id, c, move, time);
+        entityHandler.spawnEntity(x*SCALE, y*SCALE, id, c, move, distance*SCALE);
 //        System.out.println("Enemy spawned");
     }
 
     private void spawnGround(int remainingHeight, int spawnHeight, int num, String spawnFrom) {
         if (groundCount == num && height - remainingHeight >= spawnHeight) {
-            EnemyGround eG = new EnemyGround(xStart * 32, remainingHeight * 32, getLevelHeight());
+            EnemyGround eG = new EnemyGround(xStart * SCALE, remainingHeight * SCALE, getLevelHeight());
             groundCount++;
             if (spawnFrom == "left") {
                 eG.setHMove("right");
             } else if (spawnFrom == "right") {
                 eG.setHMove("left");
-                eG.setX(xEnd*32);
+                eG.setX(xEnd*SCALE);
             }
             entityHandler.addEnemy(eG);
         }
@@ -839,7 +863,7 @@ public class ProceduralGenerator {
     }
 
     private void spawnBoss(int x, int y) {
-        entityHandler.spawnBoss(level, x*32, y*32);
+        entityHandler.spawnBoss(level, x*SCALE, y*SCALE);
     }
 
     private void nextPattern() {
@@ -879,7 +903,7 @@ public class ProceduralGenerator {
     }
 
     public int getLevelHeight() {
-        return height * 32;
+        return height * SCALE;
     }
 
     private Color getKey(EntityID id) {

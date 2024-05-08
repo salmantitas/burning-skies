@@ -4,6 +4,7 @@ import com.euhedral.engine.*;
 import com.euhedral.game.*;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 /*
@@ -26,7 +27,7 @@ public class Enemy extends MobileEntity {
     protected int score = 50;
     protected int distance;
     protected int shotNum = 0;
-    protected int movementTimer;
+    protected int movementDistance;
 
     protected Animation explosion;
 
@@ -179,7 +180,7 @@ public class Enemy extends MobileEntity {
             velX = -minVelX;
         } else if (move == "right") {
             hMove = HorizontalMovement.RIGHT;
-            velX = minVelX*1.45f;//1.95f;
+            velX = minVelX;//*1.45f;//1.95f;
         } else {
             velX = 0;
         }
@@ -199,23 +200,31 @@ public class Enemy extends MobileEntity {
 //        return state == STATE_ACTIVE;
 //    }
 
-    public Rectangle getBoundsHorizontal() {
-        Rectangle bounds = new Rectangle(x, y, width, 1*height/3 + 2);
+    public Rectangle2D getBoundsHorizontal() {
+        Rectangle2D bounds = new Rectangle2D.Double(x, y, width, 1*height/3 + 2);
+//        Rectangle bounds = new Rectangle(x, y, width, 1*height/3 + 2);
         return bounds;
     }
 
-    public Rectangle getBoundsVertical() {
-        Rectangle bounds = new Rectangle(x + (width / 4), y, (2 * width) / 4, height);
+    public Rectangle2D getBoundsVertical() {
+        Rectangle2D bounds = new Rectangle2D.Double(x + (width / 4), y, (2 * width) / 4, height);
+//        Rectangle bounds = new Rectangle(x + (width / 4), y, (2 * width) / 4, height);
         return bounds;
     }
 
     @Override
     protected void renderBounds(Graphics g) {
         g.setColor(Color.green);
-        Rectangle r1 = getBoundsVertical();
-        Rectangle r2 = getBoundsHorizontal();
-        g.drawRect(r1.x, r1.y, r1.width, r1.height);
-        g.drawRect(r2.x, r2.y, r2.width, r2.height);
+        Rectangle2D r1 = getBoundsVertical();
+        Rectangle2D r2 = getBoundsHorizontal();
+
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.draw(r1);
+        g2d.draw(r2);
+
+//        g2d.drawRect(r1.x, r1.y, r1.width, r1.height);
+//        g2d.drawRect(r2.x, r2.y, r2.width, r2.height);
 
     }
 
@@ -230,8 +239,8 @@ public class Enemy extends MobileEntity {
         return explosion.playedOnce;
     }
 
-    public void setMovementTimer(int time) {
-        this.movementTimer = time;
+    public void setMovementDistance(int time) {
+        this.movementDistance = time;
     }
 
     @Override

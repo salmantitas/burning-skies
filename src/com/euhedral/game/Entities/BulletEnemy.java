@@ -42,10 +42,10 @@ public class BulletEnemy extends Bullet{
     protected void drawDefault(Graphics g) {
         if (state == STATE_ACTIVE) {
             g.setColor(color);
-            g.fillOval(x, y, width, height);
+            g.fillOval((int) x, (int) y, width, height);
         } else if (state == STATE_IMPACT) {
             g.setColor(impactColor);
-            g.fillOval(x - impactFactor, y - impactFactor, width + impactFactor*2, height + impactFactor*2);
+            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
         }
     }
 

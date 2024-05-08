@@ -42,8 +42,8 @@ public class EnemyBasic extends Enemy{
     public void update() {
         super.update();
         if (state == STATE_ACTIVE && inscreen) {
-            if (movementTimer >= 0) {
-                movementTimer--;
+            if (movementDistance >= 0) {
+                movementDistance -= Math.abs(velX);
             } else {
                 velX = 0;
             }
@@ -65,7 +65,7 @@ public class EnemyBasic extends Enemy{
 //            renderBounds(g);
         } else {
 //            bullets.render(g);
-            explosion.drawAnimation(g, x, y);
+            explosion.drawAnimation(g, (int) x, (int) y);
         }
     }
 
@@ -83,6 +83,6 @@ public class EnemyBasic extends Enemy{
 
     @Override
     public int getTurretX() {
-        return x + width/2 - Utility.intAtWidth640(2);
+        return (int) x + width/2 - Utility.intAtWidth640(2);
     }
 }

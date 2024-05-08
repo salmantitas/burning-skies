@@ -3,7 +3,6 @@ package com.euhedral.game.Entities.Enemy;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ContactID;
 import com.euhedral.game.EnemyID;
-import com.euhedral.game.Entities.BulletEnemy;
 
 import java.awt.*;
 
@@ -27,7 +26,7 @@ public class EnemyMove extends Enemy {
         score = 150;
         velX = velY;
         distance = width * 2;
-        movementTimer = distance;
+        movementDistance = distance;
     }
 
     @Override
@@ -48,10 +47,10 @@ public class EnemyMove extends Enemy {
     }
 
     public void moveHorizontally() {
-        if (movementTimer > 0) {
-            movementTimer--;
+        if (movementDistance > 0) {
+            movementDistance--;
         } else {
-            movementTimer = distance;
+            movementDistance = distance;
         }
 
         int
@@ -61,11 +60,11 @@ public class EnemyMove extends Enemy {
                 int3 = Utility.perc(distance, 80);
 
 
-        if (movementTimer <= distance && movementTimer > int3) {
+        if (movementDistance <= distance && movementDistance > int3) {
             hMove = HorizontalMovement.LEFT;
-        } else if (movementTimer <= int3 && movementTimer > int2 || movementTimer <= int1 && movementTimer > int0) {
+        } else if (movementDistance <= int3 && movementDistance > int2 || movementDistance <= int1 && movementDistance > int0) {
             hMove = HorizontalMovement.NONE;
-        } else if (movementTimer <= int2 && movementTimer > int1) {
+        } else if (movementDistance <= int2 && movementDistance > int1) {
             hMove = HorizontalMovement.RIGHT;
         }
 //        } else if (movementTimer <= int1 && movementTimer > int0) {

@@ -124,7 +124,7 @@ public class Pool {
         entity.resurrect(x, y);
         Enemy enemy = (Enemy) entity;
         enemy.setHMove(move);
-        enemy.setMovementTimer(time);
+        enemy.setMovementDistance(time);
         decrease();
     }
 

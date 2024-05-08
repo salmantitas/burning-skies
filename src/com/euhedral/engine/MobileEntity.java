@@ -77,10 +77,10 @@ public abstract class MobileEntity extends Entity {
         }
     }
 
-    @Override
-    public void render(Graphics g) {
-        super.render(g);
-    }
+//    @Override
+//    public void render(Graphics g) {
+//        super.render(g);
+//    }
 
     protected void move() {
         x += velX;

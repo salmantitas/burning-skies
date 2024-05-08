@@ -7,6 +7,7 @@ import jdk.jshell.execution.Util;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
@@ -54,11 +55,11 @@ public class Player extends MobileEntity {
         velX = 0;
         velY = 0;
         physics.setAcceleration(0.05f);
-        acceleration = 0.05f; // todo: delete
+        acceleration = 0.1f; // todo: delete
         minVelY = 4;
         minVelX = 5;
-        velY = minVelY;
-        velX = minVelX;
+//        velY = minVelY;
+//        velX = minVelX;
         maxVelY = 2 * minVelY;
         maxVelX = 2 * minVelX;
 
@@ -121,20 +122,35 @@ public class Player extends MobileEntity {
 
         if (shield.getValue() > 0) {
             g.setColor(Color.yellow);
-            g.drawOval(x-width/2, y-height/2, width*2, height*2);
+            g.drawOval((int) x-width/2, (int) y-height/2, width*2, height*2);
         }
 
+//        renderStats(g);
 //        renderBounds(g);
     }
 
     @Override
     protected void renderBounds(Graphics g) {
         g.setColor(Color.green);
-        Rectangle r1 = getBoundsVertical();
-        Rectangle r2 = getBoundsHorizontal();
-        g.drawRect(r1.x, r1.y, r1.width, r1.height);
-        g.drawRect(r2.x, r2.y, r2.width, r2.height);
+        Rectangle2D r1 = getBoundsVertical();
+        Rectangle2D r2 = getBoundsHorizontal();
+        Graphics2D g2d = (Graphics2D) g;
 
+        g2d.draw(r1);
+        g2d.draw(r2);
+//        g.drawRect(r1.x, r1.y, r1.width, r1.height);
+//        g.drawRect(r2.x, r2.y, r2.width, r2.height);
+
+    }
+
+    private void renderStats(Graphics g) {
+        g.setColor(Color.white);
+        int x = 10, y = 10, width = 1000, height = 1000;
+        g.fillRect(x, y, width, height);
+        g.setColor(Color.BLACK);
+        g.drawString("Velocity: " + velX + ", " + velY, x, y);
+
+        Utility.log("Velocity: " + velX + ", " + velY);
     }
 
     public Bullet checkCollision(Enemy enemy) {
@@ -169,22 +185,22 @@ public class Player extends MobileEntity {
         canShoot = b;
     }
 
-    public boolean checkCollision(Rectangle object) {
-        Rectangle rV = getBoundsVertical();
-        Rectangle rH = getBoundsHorizontal();
+    public boolean checkCollision(Rectangle2D object) {
+        Rectangle2D rV = getBoundsVertical();
+        Rectangle2D rH = getBoundsHorizontal();
         boolean collidesVertically = object.intersects(rV);
         boolean collidesHorizontally = object.intersects(rH);
 
         return collidesVertically || collidesHorizontally;
     }
 
-    public Rectangle getBoundsHorizontal() {
-        Rectangle bounds = new Rectangle(x, y + 2*height/3 - 2, width, height/3 + 2);
+    public Rectangle2D getBoundsHorizontal() {
+        Rectangle2D bounds = new Rectangle2D.Double(x, y + 2*height/3 - 2, width, height/3 + 2);
         return bounds;
     }
 
-    public Rectangle getBoundsVertical() {
-        Rectangle bounds = new Rectangle(x + (width / 4), y, (2 * width) / 4, height);
+    public Rectangle2D getBoundsVertical() {
+        Rectangle2D bounds = new Rectangle2D.Double(x + (width / 4), y, (2 * width) / 4, height);
         return bounds;
     }
 
@@ -219,13 +235,13 @@ public class Player extends MobileEntity {
     private void shoot() {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
-        int spawnLeftX = x + 4;
-        int spawnMidX = x + width / 2 - 2;
-        int spawnRightX = x + width - 8;
+        int spawnLeftX = (int) (x + 4);
+        int spawnMidX = (int) (x + width / 2 - 2);
+        int spawnRightX = (int) (x + width - 8);
 
 //        System.out.printf("Left to Mid: %d, Mid to Right: %d", spawnMidX-spawnLeftX, spawnRightX-spawnMidX);
 
-        int spawnY = y + height * 2 / 3;
+        int spawnY = (int) (y + height * 2 / 3);
 
         int power = VariableHandler.power.getValue();
 
@@ -237,7 +253,7 @@ public class Player extends MobileEntity {
         if (power == 5) {
             spawnBullet(spawnRightX, spawnY, shootAngleRight);
             spawnBullet(spawnRightX, spawnY, NORTH);
-            spawnBullet(spawnMidX, y, NORTH);
+            spawnBullet(spawnMidX, (int) y, NORTH);
             spawnBullet(spawnLeftX, spawnY, NORTH);
             spawnBullet(spawnLeftX, spawnY, shootAngleLeft);
         }
@@ -248,13 +264,13 @@ public class Player extends MobileEntity {
             spawnBullet(spawnLeftX, spawnY, shootAngleLeft);
         } else if (power == 3) {
             spawnBullet(spawnRightX, spawnY, shootAngleRight);
-            spawnBullet(spawnMidX, y, NORTH);
+            spawnBullet(spawnMidX, (int) y, NORTH);
             spawnBullet(spawnLeftX, spawnY, shootAngleLeft);
         } else if (power == 2) {
             spawnBullet(spawnRightX, spawnY, NORTH);
             spawnBullet(spawnLeftX, spawnY, NORTH);
         } else {
-            spawnBullet(spawnMidX, y, NORTH);
+            spawnBullet(spawnMidX, (int) y, NORTH);
         }
         // reset shoot timer to default
         shootTimer = shootTimerDefault;
@@ -287,11 +303,12 @@ public class Player extends MobileEntity {
 
         // Not Moving Left or Right
         else if (!moveLeft && !moveRight || (moveLeft && moveRight)) {
-            if (velX > 0) {
-                velX -= frictionalForce;
-            } if (velX < 0) {
-                velX += frictionalForce;
-            }
+//            if (velX > 0) {
+//                velX -= frictionalForce;
+//            } else if (velX < 0) {
+//                velX += frictionalForce;
+//            }
+            velX = 0;
         }
 
         // Moving Up
@@ -309,12 +326,13 @@ public class Player extends MobileEntity {
 
         // Not Moving Up or Down
         else if (!moveUp && !moveDown || (moveUp && moveDown)) {
-            if (velY > 0) {
-                velY -= frictionalForce;
-            }
-            if (velY < 0) {
-                velY += frictionalForce;
-            }
+//            if (velY > 0) {
+//                velY -= frictionalForce;
+//            }
+//            if (velY < 0) {
+//                velY += frictionalForce;
+//            }
+            velY = 0;
         }
     }
 

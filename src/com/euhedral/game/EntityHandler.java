@@ -5,6 +5,7 @@ import com.euhedral.game.Entities.*;
 import com.euhedral.game.Entities.Enemy.*;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
 // Manages all entities in game
@@ -103,7 +104,7 @@ public class EntityHandler {
         if (id == EntityID.EnemyBasic) {
             Enemy enemy = new EnemyBasic(x, y, ContactID.Air, color, levelHeight);
             enemy.setHMove(move);
-            enemy.setMovementTimer(time);
+            enemy.setMovementDistance(time);
             enemies.add(enemy);
 //                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
         } else if (id == EntityID.EnemyMove) {
@@ -217,11 +218,11 @@ public class EntityHandler {
 //    }
 
     // Temp Functions
-    public Rectangle getPlayerBounds() {
+    public Rectangle2D getPlayerBounds() {
         return player.getBounds();
     }
 
-    public int getPlayerY() {
+    public double getPlayerY() {
         return player.getY();
     }
 
@@ -358,13 +359,13 @@ public class EntityHandler {
 
     private void spawnEnemyBullet(Enemy enemy) {
         int x = enemy.getTurretX();
-        int y = enemy.getY();
+        double y = enemy.getY();
         int dir = 90;
         if (bullets.getPoolSize() > 0) {
-            bullets.spawnFromPool(x, y, dir);
+            bullets.spawnFromPool(x, (int) y, dir);
         }
         else
-            bullets.add(new BulletEnemy(x, y, dir));
+            bullets.add(new BulletEnemy(x, (int) y, dir));
     }
 
     public void clearEnemies() {
@@ -518,12 +519,12 @@ public class EntityHandler {
 
         // sets the camera's width to center the player horizontally, essentially to 0, and
         // adjust the height so that player is at the bottom of the screen
-        GameController.camera = new Camera(0,getPlayerY() - offsetVertical);
-        GameController.camera.setMarker(getPlayerY());
+        GameController.camera = new Camera(0,(int)getPlayerY() - offsetVertical);
+        GameController.camera.setMarker(((int)getPlayerY()));
     }
 
     /*******************************
-     * Entity Management Functions *
+     * Entity Management Functions *)
      ****************-**************/
 
     public void setLevelHeight(int levelHeight) {

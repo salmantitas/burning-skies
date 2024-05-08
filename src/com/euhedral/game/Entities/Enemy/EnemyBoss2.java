@@ -17,7 +17,8 @@ public class EnemyBoss2 extends EnemyBoss{
             max = Utility.percWidth(75) - (int) 1.8 * width;
     private Graphics g;
 
-    int midPoint, playerStart, playerMid, playerEnd, offset;
+    int midPoint, playerMid, playerEnd, offset;
+    double playerStart;
     int shootTimerSmall = 10;
 
     public EnemyBoss2(int x, int y, Player player, int levelHeight) {
@@ -32,8 +33,8 @@ public class EnemyBoss2 extends EnemyBoss{
 
         midPoint = x + width/2;
         playerStart = player.getX();
-        playerMid = playerStart + player.getWidth()/2;
-        playerEnd = playerStart + player.getWidth();
+        playerMid = (int) playerStart + player.getWidth()/2;
+        playerEnd = (int) playerStart + player.getWidth();
         offset = width/3;
     }
 
@@ -92,15 +93,15 @@ public class EnemyBoss2 extends EnemyBoss{
     // Private Methods
 
     private boolean isPlayerLeft() {
-        midPoint = x + width/2;
+        midPoint = (int) x + width/2;
         playerStart = player.getX();
-        playerEnd = playerStart + player.getWidth();
+        playerEnd = (int) playerStart + player.getWidth();
 
         return  (midPoint > playerEnd);
     }
 
     private boolean isPlayerRight() {
-        midPoint = x + width/2;
+        midPoint = (int) x + width/2;
         playerStart = player.getX();
 
         return midPoint < playerStart;
@@ -108,7 +109,7 @@ public class EnemyBoss2 extends EnemyBoss{
 
     private boolean isPlayerCenter() {
         playerStart = player.getX();
-        playerEnd = playerStart + player.getWidth();
+        playerEnd = (int) playerStart + player.getWidth();
 
         return (x + offset < playerStart) && ((x + width) - offset > playerEnd);
     }

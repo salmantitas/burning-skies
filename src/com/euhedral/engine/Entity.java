@@ -1,14 +1,14 @@
 package com.euhedral.engine;
 
-import com.euhedral.game.ContactID;
 import com.euhedral.game.EntityID;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 
-    protected int x, y;
+    protected double x, y;
     protected int width, height;
     protected EntityID id;
 
@@ -89,8 +89,12 @@ public abstract class Entity {
 
     // Getters & Setters
 
-    public int getX() {
+    public double getX() {
         return x;
+    }
+
+    public double getY() {
+        return y;
     }
 
     public void setX(int x) {
@@ -99,10 +103,6 @@ public abstract class Entity {
 
     public void setY(int y) {
         this.y = y;
-    }
-
-    public int getY() {
-        return y;
     }
 
     public int getWidth() {
@@ -129,7 +129,7 @@ public abstract class Entity {
         this.id = id;
     }
 
-    public Rectangle getBounds() {
+    public Rectangle2D getBounds() {
         return new Rectangle((int) x, (int) y, (int) width, (int) height);
     }
 
