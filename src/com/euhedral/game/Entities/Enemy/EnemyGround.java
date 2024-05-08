@@ -22,7 +22,7 @@ public class EnemyGround extends Enemy{
         minVelY = 1.8f;
         velY = minVelY;
         hMove = HorizontalMovement.RIGHT;
-        healthRange(4,6);
+        setHealth(4,6);
         score = 50;
         minVelX = 1.95f;
     }

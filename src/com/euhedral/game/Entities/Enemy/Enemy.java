@@ -146,8 +146,12 @@ public class Enemy extends MobileEntity {
         return health;
     }
 
-    public void setHealth(int health) {
+    protected void setHealth(int health) {
         this.health = health;
+    }
+
+    protected void setHealth(int min, int max) {
+        health = Utility.randomRange(min, max);
     }
 
     public boolean isInscreen() {
@@ -160,10 +164,6 @@ public class Enemy extends MobileEntity {
 
     protected void resetShooter() {
         shootTimer = shootTimerDefault;
-    }
-
-    protected void healthRange(int min, int max) {
-        health = Utility.randomRange(min, max);
     }
 
     public ContactID getContactId() {

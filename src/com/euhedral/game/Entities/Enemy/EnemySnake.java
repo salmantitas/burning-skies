@@ -24,7 +24,7 @@ public class EnemySnake extends Enemy {
         width = Utility.intAtWidth640(48);
         shootTimerDefault = 120;
         velY = 1.75f;
-        healthRange(8,12);
+        setHealth(8,12);
         score = 200;
         distance = width * 5;
         movementDistance = distance;

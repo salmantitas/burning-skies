@@ -70,7 +70,7 @@ public class EnemyBasic extends Enemy{
     }
 
     private void commonInit() {
-        healthRange(3, 3);
+        this.setHealth(2);
         velY = 2.5f;
     }
 

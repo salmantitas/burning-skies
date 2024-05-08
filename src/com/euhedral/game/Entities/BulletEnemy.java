@@ -14,7 +14,7 @@ public class BulletEnemy extends Bullet{
     public BulletEnemy(int x, int y, double angle) {
         super(x, y, angle);
         height = width * 6;
-        forwardVelocity = Utility.intAtWidth640(8);
+        forwardVelocity = Utility.intAtWidth640(7);
         initSound = SoundHandler.BULLET_ENEMY;
         color = Color.orange;
         impactColor = Color.red;

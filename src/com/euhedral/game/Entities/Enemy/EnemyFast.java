@@ -3,7 +3,6 @@ package com.euhedral.game.Entities.Enemy;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ContactID;
 import com.euhedral.game.EnemyID;
-import com.euhedral.game.Entities.BulletEnemy;
 
 import java.awt.*;
 
@@ -25,7 +24,7 @@ public class EnemyFast extends Enemy{
         power = 2;
         shootTimerDefault = 150;
         velY = 4f;
-        healthRange(2,4);
+        setHealth(2,4);
         score = 100;
     }
 
