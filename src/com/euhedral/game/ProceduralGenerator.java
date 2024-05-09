@@ -254,7 +254,7 @@ public class ProceduralGenerator {
             spawnZone = Utility.randomRangeInclusive(1, 3);
         }
 
-//        spawnZone = 3; // stub
+//        spawnZone = 2; // stub
 
         // choose spawn pattern
         if (wave == 1) {
@@ -265,7 +265,7 @@ public class ProceduralGenerator {
             nextPattern();
         }
 
-        pattern = PATTERN_LINE; // stub
+//        pattern = PATTERN_PINCER; // stub
 
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
@@ -273,7 +273,7 @@ public class ProceduralGenerator {
 
         int num = Utility.randomRangeInclusive(minEnemies, currentMax);
 
-        num = minEnemies + 1; // stub
+//        num = minEnemies; // stub
 
         // spawn enemies
         switch (pattern) {
@@ -365,39 +365,49 @@ public class ProceduralGenerator {
     private void spawnPincer(int num) {
 //        System.out.println(spawnZone + " " + num);
 
-//        double numD = num;
-//        double factor = ((enemyNumbers[pattern][ENEMY_MAX] + 1) - numD) / (enemyNumbers[pattern][ENEMY_MAX] - enemyNumbers[pattern][ENEMY_MIN]);
-//        int time = (int) (factor * TIME_MAX);
+
+
+        int distance = (MOVEMENT_MAX);
+
+        int dispersal = Utility.randomRangeInclusive(-1,1);
+        dispersal = 0; // stub
+
+        distance = (MOVEMENT_MAX) - (num-1)*4;
+
+        spawnFromDirection(num, spawnHeight, xStart, "right", distance, dispersal, LEFT);
+        spawnFromDirection(num, spawnHeight, xEnd, "left", distance, dispersal, RIGHT);
 //
-//        int dispersal = Utility.randomRangeInclusive(0,1);
-//        dispersal = 0; // stub
-//
-//        switch (spawnZone) {
-//            case 1:
-//                // 1 - > 1.7, 2-> 2, 3-> 1.9 4 -> 1.5
-//                double timeFactor = 1.7 - (num - 1)*0.18;
-//                time = (int) (time/timeFactor);
-//                if (num == 4) {
-//                    time += 2;
-//                }
-//                spawnFromDirection(num, spawnHeight, xStart, "", time, dispersal, LEFT);
-//                spawnFromDirection(num, spawnHeight, xEnd, "", time, dispersal, RIGHT);
-//                break;
-//            case 2:
-//                timeFactor = 3.5;
-//                time = (int) (time/timeFactor);
+        switch (spawnZone) {
+            case 1:
+//                num = 1; // 18
+//                num = 2; // 14
+//                num = 3; // 10
+//                num = 4; // 6
+                distance = (MOVEMENT_MAX) - (num-1)*4;
+
+                spawnFromDirection(num, spawnHeight, xStart, "right", distance, dispersal, LEFT);
+                spawnFromDirection(num, spawnHeight, xEnd, "left", distance, dispersal, RIGHT);
+                break;
+            case 2:
 //                int offset = spacing * 2;
-//                spawnFromDirection(num, spawnHeight, xStart + offset, "", time, dispersal, LEFT);
-//                spawnFromDirection(num, spawnHeight, xEnd - offset, "", time, dispersal, RIGHT);
+//                num = 1; // 10
+//                num = 2; // 7
+//                num = 3; // 3
+//                num = 4; // 0
+//
+//                distance = (MOVEMENT_MAX) - 17;
+//                Utility.log(distance+"");
+//                spawnFromDirection(num, spawnHeight, xStart + offset, "right", distance, dispersal, LEFT);
+//                spawnFromDirection(num, spawnHeight, xEnd - offset, "left", distance, dispersal, RIGHT);
 //                break;
-//            case 3:
+            case 3:
 //                timeFactor = 5.0;
 //                time = (int) (time/timeFactor);
 //                offset = spacing * 3;
 //                spawnFromDirection(num, spawnHeight, xStart + offset, "", time, dispersal, LEFT);
 //                spawnFromDirection(num, spawnHeight, xEnd - offset, "", time, dispersal, RIGHT);
 //                break;
-//        }
+        }
     }
 
     private void spawnV(int num) {
