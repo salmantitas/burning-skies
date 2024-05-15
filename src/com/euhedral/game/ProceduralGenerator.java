@@ -89,7 +89,7 @@ public class ProceduralGenerator {
     final int PATTERN_V = 2;
     final int PATTERN_SQUARE = 3;
     final int PATTERN_CROSS = 4;
-    final int maxPatterns = 2;
+    final int maxPatterns = 3;
 
     // basic enemy movement distance
     final int movementFactor = 6;
@@ -112,11 +112,11 @@ public class ProceduralGenerator {
         int minLine = 2;
         int maxLine = 8;
 
-        int minPincer = 1;
+        int minPincer = 2;
         int maxPincer = 4;
 
-        int minEnemiesV = 3;
-        int maxEnemiesV = 9;
+        int minV = 3;
+        int maxV = 9;
 
         int minEnemiesSquare = 2;
         int maxEnemiesSquare = 4; // MAX 8 possible but not fun
@@ -129,8 +129,8 @@ public class ProceduralGenerator {
         enemyNumbers[PATTERN_LINE][ENEMY_MAX] = maxLine;
         enemyNumbers[PATTERN_PINCER][ENEMY_MIN] = minPincer;
         enemyNumbers[PATTERN_PINCER][ENEMY_MAX] = maxPincer;
-//        enemyNumbers[PATTERN_V][ENEMY_MIN] = minEnemiesV;
-//        enemyNumbers[PATTERN_V][ENEMY_MAX] = maxEnemiesV;
+        enemyNumbers[PATTERN_V][ENEMY_MIN] = minV;
+        enemyNumbers[PATTERN_V][ENEMY_MAX] = maxV;
 //        enemyNumbers[PATTERN_SQUARE][ENEMY_MIN] = minEnemiesSquare;
 //        enemyNumbers[PATTERN_SQUARE][ENEMY_MAX] = maxEnemiesSquare;
 //        enemyNumbers[PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
@@ -265,7 +265,7 @@ public class ProceduralGenerator {
             nextPattern();
         }
 
-//        pattern = PATTERN_PINCER; // stub
+//        pattern = PATTERN_V; // stub
 
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
@@ -273,7 +273,7 @@ public class ProceduralGenerator {
 
         int num = Utility.randomRangeInclusive(minEnemies, currentMax);
 
-//        num = minEnemies; // stub
+//        num = maxEnemies; // stub
 
         // spawn enemies
         switch (pattern) {
@@ -706,32 +706,76 @@ public class ProceduralGenerator {
 
         int newY = y - spacing;
 
+        int distance = 0;
+        int dispersal = Utility.randomRangeInclusive(-1, 0);
+        dispersal = -1;
+
         boolean odd = (num % 2) != 0;
         if (odd) {
-            spawnHelper(x, y, "", 250);
+            spawnHelper(x, y, "", 0);
+
+            distance = incrementMIN;
 
             if (num > 1) {
                 num -= 1;
                 num = num / 2;
 
                 int xLeft = x + (incrementX);
-                spawnFromLeftV(num, newY, xLeft);
+                spawnFromLeftV(num, newY, xLeft, dispersal, distance);
 
                 int xRight = x - (incrementX);
-                spawnFromRightV(num, newY, xRight);
+                spawnFromRightV(num, newY, xRight, dispersal, distance);
             }
         } else {
+            distance = incrementMIN;
             num = num /2;
 
             incrementX = incrementMIN;
             int xLeft = x + (incrementX);
-            spawnFromLeftV(num, newY, xLeft);
-
             int xRight = x - (incrementX);
-            spawnFromRightV(num, newY, xRight);
 
+            spawnHelper(xLeft, y, "left", distance/2);
+            spawnHelper(xRight, y, "right", distance/2);
 
+            xLeft += incrementX;
+            xRight -= incrementX;
+            num -= 1;
+
+            spawnFromLeftV(num, newY, xLeft, dispersal, distance);
+            spawnFromRightV(num, newY, xRight, dispersal, distance);
         }
+    }
+
+    private void spawnFromLeftV(int num, int y, int x, int dispersal, int distance) {
+        int incrementX = 2*LEFT*incrementMIN;
+        String move = "right";
+        if (dispersal == -1) {
+            move = "left";
+        }
+        spawnVHelper(num, y, x, incrementX, move, dispersal, distance, 1);
+    }
+
+    private void spawnFromRightV(int num, int y, int x, int dispersal, int distance) {
+        int incrementX = 2*RIGHT*incrementMIN;
+        String move = "left";
+        if (dispersal == -1) {
+            move = "right";
+        }
+        spawnVHelper(num, y, x, incrementX, move, dispersal, distance, 1);
+    }
+
+    private void spawnVHelper(int num, int y, int x, int increment, String move, int dispersal, int distance, int spawnCount) {
+        // Base Case
+//        int spawnCount = 1;
+
+        int y0 = y - spacing;
+
+        if (num > 1) {
+            int x0 = x + (increment);
+            spawnVHelper(num - 1, y0, x0, increment, move, dispersal, distance + incrementMIN * spawnCount, spawnCount++);
+        }
+
+        spawnHelper(x, y, move, distance);
     }
 
     private void spawnFromTop(int num, int y, int x) {
@@ -754,29 +798,6 @@ public class ProceduralGenerator {
         }
 
         spawnHelper(x, y, "", 250);
-    }
-
-    private void spawnVHelper(int num, int y, int x, int increment) {
-        // Base Case
-
-        int y0 = y - spacing;
-
-        if (num > 1) {
-            int x0 = x + (increment);
-            spawnVHelper(num - 1, y0, x0, increment);
-        }
-
-        spawnHelper(x, y, "", 250);
-    }
-
-    private void spawnFromLeftV(int num, int y, int x) {
-        int incrementX = 2 * incrementMIN;
-        spawnVHelper(num, y, x, incrementX);
-    }
-
-    private void spawnFromRightV(int num, int y, int x) {
-        int incrementX = -2 * incrementMIN;
-        spawnVHelper(num, y, x, incrementX);
     }
 
     private void spawnHelper(int x, int y, String move, int distance) {
