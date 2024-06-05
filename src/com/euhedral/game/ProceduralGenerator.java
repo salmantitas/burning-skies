@@ -86,10 +86,12 @@ public class ProceduralGenerator {
 
     final int PATTERN_LINE = 0;
     final int PATTERN_PINCER = 1;
-    final int PATTERN_V = 2;
-    final int PATTERN_SQUARE = 3;
-    final int PATTERN_CROSS = 4;
-    final int maxPatterns = 3;
+    final int PATTERN_SLIDE = 2;
+    final int PATTERN_V = 3;
+    final int PATTERN_VERTICAL = 4;
+    final int PATTERN_SQUARE = 5;
+    final int PATTERN_CROSS = 6;
+    final int maxPatterns = PATTERN_VERTICAL + 1;
 
     // basic enemy movement distance
     final int movementFactor = 6;
@@ -118,8 +120,11 @@ public class ProceduralGenerator {
         int minV = 3;
         int maxV = 9;
 
-        int minEnemiesSquare = 2;
-        int maxEnemiesSquare = 4; // MAX 8 possible but not fun
+        int minVertical = 2;
+        int maxVertical = 4;
+
+        int minSquare = 2;
+        int maxSquare = 4; // MAX 8 possible but not fun
 
         int minEnemiesCross = 3;
         int maxEnemiesCross = 3;
@@ -129,10 +134,14 @@ public class ProceduralGenerator {
         enemyNumbers[PATTERN_LINE][ENEMY_MAX] = maxLine;
         enemyNumbers[PATTERN_PINCER][ENEMY_MIN] = minPincer;
         enemyNumbers[PATTERN_PINCER][ENEMY_MAX] = maxPincer;
+        enemyNumbers[PATTERN_SLIDE][ENEMY_MIN] = minPincer;
+        enemyNumbers[PATTERN_SLIDE][ENEMY_MAX] = maxPincer;
         enemyNumbers[PATTERN_V][ENEMY_MIN] = minV;
         enemyNumbers[PATTERN_V][ENEMY_MAX] = maxV;
-//        enemyNumbers[PATTERN_SQUARE][ENEMY_MIN] = minEnemiesSquare;
-//        enemyNumbers[PATTERN_SQUARE][ENEMY_MAX] = maxEnemiesSquare;
+        enemyNumbers[PATTERN_VERTICAL][ENEMY_MIN] = minVertical;
+        enemyNumbers[PATTERN_VERTICAL][ENEMY_MAX] = maxVertical;
+//        enemyNumbers[PATTERN_SQUARE][ENEMY_MIN] = minSquare;
+//        enemyNumbers[PATTERN_SQUARE][ENEMY_MAX] = maxSquare;
 //        enemyNumbers[PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
 //        enemyNumbers[PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
     }
@@ -265,7 +274,7 @@ public class ProceduralGenerator {
             nextPattern();
         }
 
-//        pattern = PATTERN_V; // stub
+//        pattern = PATTERN_VERTICAL; // stub
 
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
@@ -273,7 +282,7 @@ public class ProceduralGenerator {
 
         int num = Utility.randomRangeInclusive(minEnemies, currentMax);
 
-//        num = maxEnemies; // stub
+//        num = minEnemies; // stub
 
         // spawn enemies
         switch (pattern) {
@@ -283,8 +292,14 @@ public class ProceduralGenerator {
             case PATTERN_PINCER:
                 spawnPincer(num);
                 break;
+            case PATTERN_SLIDE:
+                spawnSlide(num);
+                break;
             case PATTERN_V:
                 spawnV(num);
+                break;
+            case PATTERN_VERTICAL:
+                spawnVertical(num);
                 break;
             case PATTERN_SQUARE:
                 spawnSquare(num);
@@ -333,7 +348,7 @@ public class ProceduralGenerator {
     // Pickup Spawner Helped
     private void spawnPickupHelper(EntityID id) {
         spawnZone = Utility.randomRange(1, 3);
-        entityHandler.spawnPickup(xMid * SCALE, spawnHeight * SCALE, id);
+        entityHandler.spawnPickup(playerX, spawnHeight * SCALE, id);
         wave++;
         System.out.println("Wave: " + wave);
         spawnInterval = spawnInterval_MIN;
@@ -364,9 +379,6 @@ public class ProceduralGenerator {
     // todo: zone 2 and 3
     private void spawnPincer(int num) {
 //        System.out.println(spawnZone + " " + num);
-
-
-
         int distance = (MOVEMENT_MAX);
 
         int dispersal = Utility.randomRangeInclusive(-1,1);
@@ -377,36 +389,57 @@ public class ProceduralGenerator {
         spawnFromDirection(num, spawnHeight, xStart, "right", distance, dispersal, LEFT);
         spawnFromDirection(num, spawnHeight, xEnd, "left", distance, dispersal, RIGHT);
 //
-        switch (spawnZone) {
-            case 1:
-//                num = 1; // 18
-//                num = 2; // 14
-//                num = 3; // 10
-//                num = 4; // 6
-                distance = (MOVEMENT_MAX) - (num-1)*4;
+//        switch (spawnZone) {
+//            case 1:
+////                num = 1; // 18
+////                num = 2; // 14
+////                num = 3; // 10
+////                num = 4; // 6
+////                distance = (MOVEMENT_MAX) - (num-1)*4;
+////
+////                spawnFromDirection(num, spawnHeight, xStart, "right", distance, dispersal, LEFT);
+////                spawnFromDirection(num, spawnHeight, xEnd, "left", distance, dispersal, RIGHT);
+//                break;
+//            case 2:
+////                int offset = spacing * 2;
+////                num = 1; // 10
+////                num = 2; // 7
+////                num = 3; // 3
+////                num = 4; // 0
+////
+////                distance = (MOVEMENT_MAX) - 17;
+////                Utility.log(distance+"");
+////                spawnFromDirection(num, spawnHeight, xStart + offset, "right", distance, dispersal, LEFT);
+////                spawnFromDirection(num, spawnHeight, xEnd - offset, "left", distance, dispersal, RIGHT);
+////                break;
+//            case 3:
+////                timeFactor = 5.0;
+////                time = (int) (time/timeFactor);
+////                offset = spacing * 3;
+////                spawnFromDirection(num, spawnHeight, xStart + offset, "", time, dispersal, LEFT);
+////                spawnFromDirection(num, spawnHeight, xEnd - offset, "", time, dispersal, RIGHT);
+////                break;
+//        }
+    }
 
-                spawnFromDirection(num, spawnHeight, xStart, "right", distance, dispersal, LEFT);
-                spawnFromDirection(num, spawnHeight, xEnd, "left", distance, dispersal, RIGHT);
-                break;
-            case 2:
-//                int offset = spacing * 2;
-//                num = 1; // 10
-//                num = 2; // 7
-//                num = 3; // 3
-//                num = 4; // 0
-//
-//                distance = (MOVEMENT_MAX) - 17;
-//                Utility.log(distance+"");
-//                spawnFromDirection(num, spawnHeight, xStart + offset, "right", distance, dispersal, LEFT);
-//                spawnFromDirection(num, spawnHeight, xEnd - offset, "left", distance, dispersal, RIGHT);
-//                break;
-            case 3:
-//                timeFactor = 5.0;
-//                time = (int) (time/timeFactor);
-//                offset = spacing * 3;
-//                spawnFromDirection(num, spawnHeight, xStart + offset, "", time, dispersal, LEFT);
-//                spawnFromDirection(num, spawnHeight, xEnd - offset, "", time, dispersal, RIGHT);
-//                break;
+    // todo: zone 2 and 3
+    private void spawnSlide(int num) {
+//        System.out.println(spawnZone + " " + num);
+
+        int distance = (MOVEMENT_MAX);
+
+        int dispersal = Utility.randomRangeInclusive(-1,1);
+        dispersal = 0; // stub
+
+        int yDiff = spacing;
+        int first = Utility.randomRangeInclusive(0,1);
+
+        if (first == 0) {
+            spawnFromDirection(num, spawnHeight - yDiff, xStart, "right", distance, dispersal, LEFT);
+            spawnFromDirection(num, spawnHeight, xEnd, "left", distance, dispersal, RIGHT);
+        } else {
+            spawnFromDirection(num, spawnHeight, xStart, "right", distance, dispersal, LEFT);
+            spawnFromDirection(num, spawnHeight - yDiff, xEnd, "left", distance, dispersal, RIGHT);
         }
     }
 
@@ -425,6 +458,27 @@ public class ProceduralGenerator {
                 spawnFromMiddleV(xEnd, num, spawnHeight);
                 break;
         }
+    }
+
+    private void spawnVertical(int num) {
+//        System.out.println(spawnZone + " " + num);
+
+        int distance = MOVEMENT_MAX - (num - 1)*2;
+        int dispersal = Utility.randomRangeInclusive(-1,1);
+        int x = 0;
+
+        switch (spawnZone) {
+            case 1:
+                x = xStart;
+                break;
+            case 2:
+                x = xMid;
+                break;
+            case 3:
+                x = xEnd;
+                break;
+        }
+        spawnFromBottom(num, spawnHeight, x);
     }
 
     private void spawnSquare(int num) {
@@ -450,10 +504,11 @@ public class ProceduralGenerator {
                 break;
         }
 
+        spawnFromDirection(num, y0, x0, "", 0, 0, LEFT);
 //        spawnFromLeft(num, y0, x0, "", 0, 0);
         spawnFromTop(num, y0, xFin);
         spawnFromBottom(num, spawnHeight, x0);
-//        spawnFromRight(num, spawnHeight, xFin, "", 0, 0);
+        spawnFromDirection(num, spawnHeight, xFin, "", 0, 0, RIGHT);
     }
 
     private void spawnCross(int num) {
@@ -489,8 +544,8 @@ public class ProceduralGenerator {
                 break;
         }
 
-//        spawnFromLeft(num, yMid, xLeft, "", TIME_MAX, 0);
-//        spawnFromRight(num, yMid, xRight, "", TIME_MAX, 0);
+        spawnFromDirection(num, yMid, xLeft, "", 0, 0, LEFT);
+        spawnFromDirection(num, yMid, xRight, "", 0, 0, RIGHT);
         spawnFromTop(num, yTop, x0);
         spawnFromBottom(num, yBottom, x0);
     }
