@@ -466,19 +466,23 @@ public class ProceduralGenerator {
         int distance = MOVEMENT_MAX - (num - 1)*2;
         int dispersal = Utility.randomRangeInclusive(-1,1);
         int x = 0;
+        int direction = 0;
 
         switch (spawnZone) {
             case 1:
                 x = xStart;
+                direction = LEFT;
                 break;
             case 2:
                 x = xMid;
+                direction = Utility.randomRangeInclusive(-1, 1);
                 break;
             case 3:
                 x = xEnd;
+                direction = RIGHT;
                 break;
         }
-        spawnFromBottom(num, spawnHeight, x);
+        spawnFromBottom(num, spawnHeight, x, distance, direction);
     }
 
     private void spawnSquare(int num) {
@@ -507,7 +511,7 @@ public class ProceduralGenerator {
         spawnFromDirection(num, y0, x0, "", 0, 0, LEFT);
 //        spawnFromLeft(num, y0, x0, "", 0, 0);
         spawnFromTop(num, y0, xFin);
-        spawnFromBottom(num, spawnHeight, x0);
+        spawnFromBottom(num, spawnHeight, x0, 0, 0);
         spawnFromDirection(num, spawnHeight, xFin, "", 0, 0, RIGHT);
     }
 
@@ -547,7 +551,7 @@ public class ProceduralGenerator {
         spawnFromDirection(num, yMid, xLeft, "", 0, 0, LEFT);
         spawnFromDirection(num, yMid, xRight, "", 0, 0, RIGHT);
         spawnFromTop(num, yTop, x0);
-        spawnFromBottom(num, yBottom, x0);
+        spawnFromBottom(num, yBottom, x0, 0, 0);
     }
 
     private String calculateMoveDirection(String move, int direction) {
@@ -556,7 +560,8 @@ public class ProceduralGenerator {
                 String result = "";
                 if (direction == -1*LEFT)
                     result = "left";
-                else result = "right";
+                else if (direction == -1*RIGHT)
+                    result = "right";
                 return result;
             }
         }
@@ -844,15 +849,16 @@ public class ProceduralGenerator {
         spawnHelper(x, y, "", 250);
     }
 
-    private void spawnFromBottom(int num, int y, int x) {
+    private void spawnFromBottom(int num, int y, int x, int distance, int direction) {
+        String move = calculateMoveDirection("", direction);
         // Base Case
 
         if (num > 1) {
             int y0 = y - (spacing);
-            spawnFromBottom(num - 1, y0, x);
+            spawnFromBottom(num - 1, y0, x, distance, direction);
         }
 
-        spawnHelper(x, y, "", 250);
+        spawnHelper(x, y, move, distance);
     }
 
     private void spawnHelper(int x, int y, String move, int distance) {
