@@ -490,6 +490,7 @@ public class EntityHandler {
                         if (enemy.getHealth() <= 0) {
                             destroy(enemy);
                             VariableHandler.increaseScore(enemy.getScore());
+//                            spawnPickup((int) enemy.getX(), (int) enemy.getY(), EntityID.PickupHealth);
                         }
                     }
 //                    player.increaseBullets();

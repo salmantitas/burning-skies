@@ -53,6 +53,7 @@ public class ProceduralGenerator {
     int MAX_WAVE_BETWEEN_POWER_SPAWN = 80;
 
     int difficulty = 1;
+    final int MAX_DIFF = 10;
 
     /*
     * Basic - 1/1
@@ -91,7 +92,7 @@ public class ProceduralGenerator {
     final int PATTERN_VERTICAL = 4;
     final int PATTERN_SQUARE = 5;
     final int PATTERN_CROSS = 6;
-    final int maxPatterns = PATTERN_VERTICAL + 1;
+    final int maxPatterns = PATTERN_CROSS + 1;
 
     // basic enemy movement distance
     final int movementFactor = 6;
@@ -114,8 +115,8 @@ public class ProceduralGenerator {
         int minLine = 2;
         int maxLine = 8;
 
-        int minPincer = 2;
-        int maxPincer = 4;
+        int minPincer = 4;
+        int maxPincer = 8;
 
         int minV = 3;
         int maxV = 9;
@@ -124,10 +125,10 @@ public class ProceduralGenerator {
         int maxVertical = 4;
 
         int minSquare = 2;
-        int maxSquare = 4; // MAX 8 possible but not fun
+        int maxSquare = 12; // MAX 8 possible but not fun
 
-        int minEnemiesCross = 3;
-        int maxEnemiesCross = 3;
+        int minEnemiesCross = 1;
+        int maxEnemiesCross = 8;
 
         enemyNumbers = new int[maxPatterns][2];
         enemyNumbers[PATTERN_LINE][ENEMY_MIN] = minLine;
@@ -140,10 +141,10 @@ public class ProceduralGenerator {
         enemyNumbers[PATTERN_V][ENEMY_MAX] = maxV;
         enemyNumbers[PATTERN_VERTICAL][ENEMY_MIN] = minVertical;
         enemyNumbers[PATTERN_VERTICAL][ENEMY_MAX] = maxVertical;
-//        enemyNumbers[PATTERN_SQUARE][ENEMY_MIN] = minSquare;
-//        enemyNumbers[PATTERN_SQUARE][ENEMY_MAX] = maxSquare;
-//        enemyNumbers[PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
-//        enemyNumbers[PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
+        enemyNumbers[PATTERN_SQUARE][ENEMY_MIN] = minSquare;
+        enemyNumbers[PATTERN_SQUARE][ENEMY_MAX] = maxSquare;
+        enemyNumbers[PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
+        enemyNumbers[PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
     }
 
     // generate a level using procedural generation // YEAH NO SHIT.
@@ -222,9 +223,9 @@ public class ProceduralGenerator {
 //                    spawnPower();
 //                else
                     if (waveSinceHealth >= (MAX_WAVE_BETWEEN_HEALTH_SPAWN - 1))
-                    spawnHealth();
-                else
-                    spawnEnemies();
+                        spawnHealth();
+                    else
+                        spawnEnemies();
             }
             lastSpawnTime = GameController.getCurrentTime();
         }
@@ -239,6 +240,7 @@ public class ProceduralGenerator {
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
         int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
+        Utility.log("Current Max: " + currentMax);
 
         int num = Utility.randomRangeInclusive(minEnemies, currentMax);
 
@@ -274,15 +276,25 @@ public class ProceduralGenerator {
             nextPattern();
         }
 
-//        pattern = PATTERN_VERTICAL; // stub
+//        pattern = PATTERN_CROSS; // stub
 
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
+
         int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
 
         int num = Utility.randomRangeInclusive(minEnemies, currentMax);
+//
+//        double factor = (double) difficulty/ (double) MAX_DIFF;
+//
+////        double inc = (double) minEnemies/((double)maxEnemies-(double)minEnemies);
+//        int currentMax = Math.min(minEnemies + (int) (factor*maxEnemies), maxEnemies);
+////        int currentMax = Math.max(minEnemies, (int) (difficulty/MAX_DIFF * maxEnemies));
+//
+//      Utility.log("Current Max: " + currentMax);
+//        int num = Utility.randomRangeInclusive(minEnemies, currentMax);
 
-//        num = minEnemies; // stub
+//        num = maxEnemies; // stub
 
         // spawn enemies
         switch (pattern) {
@@ -309,8 +321,10 @@ public class ProceduralGenerator {
                 break;
         }
 
-        if (wave % 10 == 0) {
+        int inc = 10;
+        if (wave % inc == 0) {
             difficulty++;
+            Utility.log("Diff: " + difficulty);
         }
 
 //        System.out.printf("Wave: %d, LastHeight: %d\n", wave, spawnHeight);
@@ -378,6 +392,13 @@ public class ProceduralGenerator {
 
     // todo: zone 2 and 3
     private void spawnPincer(int num) {
+        // Determine Number
+        double numD = num;
+        double numD1 = numD/2;
+//        Utility.log("Num2: " + numD1);
+        num = (int) Math.floor(numD1);
+
+        // Determine Distance
 //        System.out.println(spawnZone + " " + num);
         int distance = (MOVEMENT_MAX);
 
@@ -426,6 +447,13 @@ public class ProceduralGenerator {
     private void spawnSlide(int num) {
 //        System.out.println(spawnZone + " " + num);
 
+        // Determine Number
+        double numD = num;
+        double numD1 = numD/2;
+//        Utility.log("Num2: " + numD1);
+        num = (int) Math.floor(numD1);
+
+        // Determine Distance
         int distance = (MOVEMENT_MAX);
 
         int dispersal = Utility.randomRangeInclusive(-1,1);
@@ -486,7 +514,13 @@ public class ProceduralGenerator {
     }
 
     private void spawnSquare(int num) {
-        num--;
+//        Utility.log("Num: " + num);
+        double numD = num;
+        double numD1 = (numD - 1)/4;
+//        Utility.log("Num2: " + numD1);
+        num = (int) Math.ceil(numD1);
+
+//        num--;
         int x0 = 0;
         int y0 = spawnHeight - num* spacing;
         int xFin = 0;
@@ -516,6 +550,13 @@ public class ProceduralGenerator {
     }
 
     private void spawnCross(int num) {
+        // todo: Remove duplication
+        //        Utility.log("Num: " + num);
+        double numD = num;
+        double numD1 = (numD)/4;
+//        Utility.log("Num2: " + numD1);
+        num = (int) Math.ceil(numD1);
+
         int interval = spacing;
         int xLeft = 0;
         int xRight = 0;

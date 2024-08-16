@@ -51,7 +51,7 @@ public class Pickup extends MobileEntity {
 
     public void collision() {
         if (id == EntityID.PickupHealth)
-            VariableHandler.health.increase(25);
+            VariableHandler.health.increase(5);
         else if (id == EntityID.PickupShield)
             VariableHandler.shield.increase(25);
         else VariableHandler.power.increase(1);

@@ -42,6 +42,9 @@ public class Player extends MobileEntity {
     private float acceleration; //stub //todo:delete
     private float frictionalForce; //stub //todo:delete
 
+    // Decay
+    int decayCounter = 0;
+
     public Player(int x, int y, int levelHeight) {
         super(x,y, EntityID.Player);
         textureHandler = GameController.getTexture();
@@ -96,6 +99,8 @@ public class Player extends MobileEntity {
         checkDeathAnimationEnd();
 
         setImage();
+
+//        decay();
     }
 
     private void setAttributes() {
@@ -112,6 +117,15 @@ public class Player extends MobileEntity {
             image = textureHandler.player[2];
         }
         VariableHandler.setHealthColor();
+    }
+
+    private void decay() {
+        int maxDecay = 15;
+        decayCounter++;
+        if (decayCounter >= maxDecay) {
+            VariableHandler.health.decrease(1);
+            decayCounter = 0;
+        }
     }
 
     @Override
