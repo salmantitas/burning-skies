@@ -180,6 +180,9 @@ public class ProceduralGenerator {
 
         // create distance between player and first wave
         wave = 1;
+        resetWaveSinceHealth();
+        resetWaveSincePower();
+        resetWaveSinceShield();
         System.out.println("Wave: " + wave);
 
         // todo: use line for first wave here
@@ -344,18 +347,30 @@ public class ProceduralGenerator {
     private void spawnHealth() {
         spawnPickupHelper(EntityID.PickupHealth);
         System.out.println("Health Spawned");
-        waveSinceHealth = 0;
+        resetWaveSinceHealth();
     }
 
     private void spawnPower() {
         spawnPickupHelper(EntityID.PickupPower);
         System.out.println("Power-Up Spawned");
-        waveSincePower = 0;
+        resetWaveSincePower();
     }
 
     private void spawnShield() {
-        spawnPickupHelper( EntityID.PickupShield);
+        spawnPickupHelper(EntityID.PickupShield);
         System.out.println("Shield Spawned");
+        resetWaveSinceShield();
+    }
+
+    private void resetWaveSinceHealth() {
+        waveSinceHealth = 0;
+    }
+
+    private void resetWaveSincePower() {
+        waveSincePower = 0;
+    }
+
+    private void resetWaveSinceShield() {
         waveSinceShield = 0;
     }
 
@@ -364,7 +379,7 @@ public class ProceduralGenerator {
         spawnZone = Utility.randomRange(1, 3);
         entityHandler.spawnPickup(playerX, spawnHeight * SCALE, id);
         wave++;
-        System.out.println("Wave: " + wave);
+//        System.out.println("Wave: " + wave);
         spawnInterval = spawnInterval_MIN;
         lastSpawnTimePickup = GameController.getCurrentTime();
     }
