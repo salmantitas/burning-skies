@@ -70,10 +70,7 @@ public class Player extends MobileEntity {
         physics.setFrictionalForce(0.9f);
         frictionalForce = 0.9f; // todo: delete
 
-        moveRight = false;
-        moveLeft = false;
-        moveDown = false;
-        moveUp = false;
+        resetMovement();
 
         this.power = 1;
 
@@ -441,5 +438,12 @@ public class Player extends MobileEntity {
             }
         }
 
+    }
+
+    public void resetMovement() {
+        moveRight = false;
+        moveLeft = false;
+        moveDown = false;
+        moveUp = false;
     }
 }

@@ -193,6 +193,7 @@ public class EntityHandler {
         } else {
             player.setX(x);
             player.setY(y);
+            player.resetMovement();
         }
 //        player = new Player(x, y, levelHeight);
         player.setGround(VariableHandler.gotGround());
