@@ -77,6 +77,8 @@ public class Enemy extends MobileEntity {
                 }
             }
         } else if (state == STATE_EXPLODING) {
+//            super.update();
+            move();
 //            Utility.log("Exploding");
         }
     }
@@ -93,10 +95,15 @@ public class Enemy extends MobileEntity {
     public void move() {
         x = Utility.clamp(x, 0, Engine.WIDTH - Utility.intAtWidth640(width));
 
-        if (inscreen) {
-            moveInScreen();
-        } else {
-            y += offscreenVelY;
+        if (isActive()) {
+            if (inscreen) {
+                moveInScreen();
+            } else {
+                y += offscreenVelY;
+            }
+        } else if(isExploding()) {
+            velY = 1.5f;
+            y += velY;
         }
     }
 

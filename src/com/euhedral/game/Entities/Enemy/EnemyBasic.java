@@ -51,7 +51,6 @@ public class EnemyBasic extends Enemy{
 
         if (state == STATE_EXPLODING) {
             explosion.runAnimation();
-
             if (explosion.playedOnce) {
 //                disable();
             }

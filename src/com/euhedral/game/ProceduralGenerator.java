@@ -37,6 +37,8 @@ public class ProceduralGenerator {
     long spawnInterval_MIN = 2;
     long spawnInterval_MAX = 5;
 
+    int enemiesSpawned;
+
     final int SPAWN_ENEMY = 0;
     final int SPAWN_HEALTH = 10;
     int spawnNext = 0;
@@ -179,6 +181,7 @@ public class ProceduralGenerator {
         entityHandler.spawnPlayer(playerX, playerY);
 
         // create distance between player and first wave
+        enemiesSpawned = 0;
         wave = 1;
         resetWaveSinceHealth();
         resetWaveSincePower();
@@ -231,6 +234,7 @@ public class ProceduralGenerator {
                         spawnEnemies();
             }
             lastSpawnTime = GameController.getCurrentTime();
+            enemiesSpawned = 0;
         }
 //        System.out.println("Spawn Code: " + spawnNext);
     }
@@ -634,7 +638,8 @@ public class ProceduralGenerator {
 
         distance += dispersal*num;
         spawnHelper(x, y, move, distance);
-
+        enemiesSpawned++;
+        Utility.log("Spawned in Wave: " + enemiesSpawned);
     }
 
     private void spawnFromMiddle(int num, int spawnHeight, String moveLeft, String moveRight, int time, int dispersal) {
@@ -988,13 +993,29 @@ public class ProceduralGenerator {
         float spawnIntervalFloat = (maxPause - minPause) * (num - 1)/(maxEnemies - 1) + minPause;
         spawnInterval = (long) spawnIntervalFloat;
 
+        // todo: adjust
+        if (pattern == PATTERN_SLIDE) {
+            spawnInterval *= 1.5;
+        }
+
+        // todo: adjust
+        if (pattern == PATTERN_PINCER) {
+            spawnInterval *= 1.5;
+        }
+
+        // todo: adjust
+        if (pattern == PATTERN_LINE) {
+            spawnInterval *= 1.5;
+        }
+
+        // todo: adjust
         if (pattern == PATTERN_V) {
             spawnInterval *= 1.5;
         }
 
         // todo: adjust
         if (pattern == PATTERN_SQUARE) {
-            spawnInterval *= 1.8;
+            spawnInterval *= 2;
         }
 
         // todo: adjust
