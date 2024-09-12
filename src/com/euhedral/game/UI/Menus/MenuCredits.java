@@ -50,6 +50,9 @@ public class MenuCredits extends Menu {
         text.add("Explosion Sound Effect");
         text.add("- Pranus Production's Gun Sound Pack on itch.io");
         text.add("");
+        text.add("UI Sound Effect");
+        text.add("- JDSherbert");
+        text.add("");
 
         text.add("Sea Texture");
         text.add("Rafael Matos");
