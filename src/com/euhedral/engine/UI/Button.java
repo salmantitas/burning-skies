@@ -2,6 +2,7 @@ package com.euhedral.engine.UI;
 
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -136,6 +137,7 @@ public class Button extends UIItem{
 
     public void select() {
         setSelected(true);
+        SoundHandler.playSound(SoundHandler.UI);
     }
 
     public void deselect() {

@@ -3,6 +3,7 @@ package com.euhedral.engine.UI;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ActionTag;
+import com.euhedral.game.SoundHandler;
 import com.euhedral.game.UI.MessageBox;
 import com.euhedral.game.VariableHandler;
 
@@ -101,9 +102,29 @@ public class Menu {
             for (int i = 0; i < MAXBUTTON; i++) {
                 Button button = options[i];
                 if (button.mouseOverlap(mx, my)) {
-                    button.select();
-                    index = i;
+                    if (!button.isSelected()) {
+                        button.select();
+                        index = i;
+                    }
                 } else button.deselect();
+            }
+        }
+    }
+
+    /*
+     * Changes selected button by keypress
+     * */
+    public void keyboardSelection(char c) {
+        if (activeMessageBoxes == 0) {
+            if (c == 'r') {
+                options[index].deselect();
+                index = (index + 1) % MAXBUTTON;
+                options[index].select();
+            } else {
+                options[index].deselect();
+                index = (index - 1);
+                if (index < 0) index = MAXBUTTON - 1;
+                options[index].select();
             }
         }
     }
@@ -157,24 +178,6 @@ public class Menu {
     * */
     public ActionTag chooseSelected() {
         return activateButton(options[index]);
-    }
-
-    /*
-    * Changes selected button by keypress
-    * */
-    public void keyboardSelection(char c) {
-        if (activeMessageBoxes == 0) {
-            if (c == 'r') {
-                options[index].deselect();
-                index = (index + 1) % MAXBUTTON;
-                options[index].select();
-            } else {
-                options[index].deselect();
-                index = (index - 1);
-                if (index < 0) index = MAXBUTTON - 1;
-                options[index].select();
-            }
-        }
     }
 
     public GameState getState() {
