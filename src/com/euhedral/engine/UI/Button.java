@@ -116,7 +116,7 @@ public class Button extends UIItem{
 //    }
 
     public void activate() {
-
+        SoundHandler.playSound(SoundHandler.UI2);
     }
 
     public void enable() {
@@ -137,7 +137,7 @@ public class Button extends UIItem{
 
     public void select() {
         setSelected(true);
-        SoundHandler.playSound(SoundHandler.UI);
+        SoundHandler.playSound(SoundHandler.UI1);
     }
 
     public void deselect() {

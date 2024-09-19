@@ -36,7 +36,8 @@ public class SoundHandler {
     public static final int BGMPLAY = 5;
     public static final int IMPACT = 6;
     public static final int BULLET_ENEMY = 7;
-    public static final int UI = 8;
+    public static final int UI1 = 8;
+    public static final int UI2 = 9;
 
     private static int bgmID = -1;
 
@@ -53,8 +54,8 @@ public class SoundHandler {
         soundURL[BGMGAMEOVER] = getClass().getResource("/bgmGameOver.wav");
         soundURL[BGMPLAY] = getClass().getResource("/bgm1.wav");
         soundURL[IMPACT] = getClass().getResource("/impact.wav");
-        soundURL[UI] = getClass().getResource("/ui.wav");
-//        soundURL[UI] = getClass().getResource("/ui.wav");
+        soundURL[UI1] = getClass().getResource("/clip_ui_1.wav");
+        soundURL[UI2] = getClass().getResource("/clip_ui_2.wav");
     }
 
     public static void setFile(int i) {

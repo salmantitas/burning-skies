@@ -164,12 +164,20 @@ public class Menu {
     * */
     public ActionTag activateButton(Button button) {
         ActionTag returnAction = null;
-        if (button instanceof ButtonNav) {
-            button.activate();
-        } else {
+
+        button.activate();
+
+        if (button instanceof ButtonAction) {
             ButtonAction actButton = (ButtonAction) button;
             returnAction = actButton.getAction();
         }
+
+//        if (button instanceof ButtonNav) {
+//            button.activate();
+//        } else {
+//            ButtonAction actButton = (ButtonAction) button;
+//            returnAction = actButton.getAction();
+//        }
         return returnAction;
     }
 

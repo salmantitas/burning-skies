@@ -36,6 +36,7 @@ public class GameController {
     private static TextureHandler textureHandler;
     private SoundHandler soundHandler;
 
+    // Console todo
     public Scanner scanner;
     public static String cmd;
 
@@ -50,7 +51,7 @@ public class GameController {
 
     // Levels
     private int levelHeight;
-    private boolean loadMission = false; // levels will only loaded when this is true
+    private boolean missionLoaded = false; // levels will only loaded when this is true
 
     int count = 0;
     boolean reset = true;
@@ -179,7 +180,7 @@ public class GameController {
             uiHandler.update();
 
         if (Engine.stateIs(GameState.Menu)) {
-            loadMission = false;
+            missionLoaded = false;
 
             if (reset)
                 resetGame();
@@ -194,7 +195,7 @@ public class GameController {
              * Spawn if the level can loaded and has not already been spawned
              * */
 
-            if (loadMission) {
+            if (missionLoaded) {
                 if (!levelSpawned)
                     spawn();
             }
@@ -212,7 +213,7 @@ public class GameController {
 //                System.out.printf("Timer: %d\n", timeInSeconds);
 //            }
 
-            loadMission = false;
+            missionLoaded = false;
             boolean endGameCondition = variableHandler.health.getValue() <= 0;
 
             if (endGameCondition) {
@@ -261,14 +262,13 @@ public class GameController {
 
     public void render(Graphics g) {
 
+        renderScrollingBackground(g);
+
         if (Engine.currentState == GameState.Transition) {
             /*************
              * Game Code *
              *************/
         }
-
-        if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause ||
-                Engine.currentState == GameState.GameOver) {
 
             /*************
              * Game Code *
@@ -276,7 +276,6 @@ public class GameController {
 
             if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause) {
 
-                renderScrollingBackground(g);
                 renderInCamera(g);
 
                 if (VariableHandler.isHud()) {
@@ -286,7 +285,6 @@ public class GameController {
                 }
 
             }
-        }
 
         /***************
          * Engine Code *
@@ -468,7 +466,7 @@ public class GameController {
         if (action != null) {
             switch (action) {
                 case go:
-                    loadMission = true;
+                    missionLoaded = true;
                     break;
                 case tutorial:
                     VariableHandler.toggleTutorial();
@@ -772,13 +770,8 @@ public class GameController {
                     imageSea = GameController.getTexture().sea[count];
                 }
 
-
             }
         }
-    }
-
-    public static float getScrollRate() {
-        return scrollRate;
     }
 
     public static long getCurrentTime() {
