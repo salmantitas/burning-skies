@@ -34,6 +34,8 @@ public class UIHandler {
         MenuPause pauseMenu = new MenuPause();
         MenuGameOver gameOverMenu = new MenuGameOver();
 
+        Menu testMenu = new Menu(GameState.Test); //stub
+
         MenuPlay playMenu = new MenuPlay();
 
         menus.add(mainMenu);
@@ -46,7 +48,9 @@ public class UIHandler {
         menus.add(gameOverMenu);
         menus.add(playMenu);
 
-        currentMenu = mainMenu;
+//        currentMenu = testMenu;
+
+        findNewCurrent(Engine.currentState);
     }
 
     public void update() {

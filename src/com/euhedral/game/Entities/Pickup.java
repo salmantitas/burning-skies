@@ -9,9 +9,9 @@ import java.awt.*;
 
 public class Pickup extends MobileEntity {
 
-//    private PickupID pickupID;
+    private int value;
 
-    public Pickup(int x, int y, EntityID entityID) {
+    public Pickup(int x, int y, EntityID entityID, int value) {
         super(x, y, entityID);
         width = Utility.intAtWidth640(16);
         height = width * 2;
@@ -21,12 +21,13 @@ public class Pickup extends MobileEntity {
 //            color = Color.YELLOW;
 //        else color = Color.orange;
         velY = 1.8f;
+        setValue(value);
         selectImage();
 
     }
 
-    public Pickup(int x, int y, EntityID entityID, Color color) {
-        this(x, y, entityID);
+    public Pickup(int x, int y, EntityID entityID, Color color, int value) {
+        this(x, y, entityID, value);
         this.color = color;
     }
 
@@ -51,10 +52,10 @@ public class Pickup extends MobileEntity {
 
     public void collision() {
         if (id == EntityID.PickupHealth)
-            VariableHandler.health.increase(30);
+            VariableHandler.health.increase(value);
         else if (id == EntityID.PickupShield)
-            VariableHandler.shield.increase(25);
-        else VariableHandler.power.increase(1);
+            VariableHandler.shield.increase(value);
+        else VariableHandler.power.increase(value);
         SoundHandler.playSound(SoundHandler.PICKUP);
         disable();
     }
@@ -66,5 +67,9 @@ public class Pickup extends MobileEntity {
             image = GameController.getTexture().pickup[1];
         else
             image = GameController.getTexture().pickup[2];
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

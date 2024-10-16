@@ -1,6 +1,7 @@
 package com.euhedral.engine;
 
 import com.euhedral.game.Entities.Enemy.Enemy;
+import com.euhedral.game.Entities.Pickup;
 import com.euhedral.game.EntityID;
 import com.euhedral.game.GameController;
 
@@ -133,6 +134,14 @@ public class Pool {
         entity.resurrect(x, y, id);
         decrease();
 //        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
+    }
+
+    public void spawnFromPool(int x, int y, EntityID id, int value) {
+        Entity entity = findInList();
+        entity.resurrect(x, y);
+        Pickup pickup = (Pickup) entity;
+        pickup.setValue(value);
+        decrease();
     }
 
     public void spawnFromPool(int x, int y, double angle) {

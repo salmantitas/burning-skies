@@ -91,6 +91,13 @@ public class GameController {
     private static float scrollRate = 0.005f;
     private float maxScroll = 62f + 1;
 
+    /************
+     * Test *
+     ************/
+
+//    int testWaveSpeed = 1;
+//    Color testColor = new Color(128/3, 128/2, 128);
+
     public GameController() {
 
         /******************
@@ -101,12 +108,14 @@ public class GameController {
         Engine.setWIDTH(gameWidth);
         Engine.setBACKGROUND_COLOR(gameBackground);
         gameHeight = Engine.HEIGHT;
-        uiHandler = new UIHandler();
+//        Engine.setState(GameState.Test);
+        Engine.menuState();
 
+        initializeSound();
         initializeGraphics();
         initializeAnimations();
         initializeGame();
-        initializeSound();
+        uiHandler = new UIHandler();
         initializeLevel();
     }
 
@@ -119,12 +128,11 @@ public class GameController {
          * Game Code *
          *************/
 
-        Engine.menuState();
         variableHandler = new VariableHandler();
         entityHandler = new EntityHandler();
         shop = new Shop();
         scanner = new Scanner(System.in);
-        soundHandler = new SoundHandler();
+
         try {
             SaveLoad.loadSettings();
         } catch (Exception e) {
@@ -133,17 +141,18 @@ public class GameController {
     }
 
     private void initializeGraphics() {
+        textureHandler = new TextureHandler();
         /*************
          * Game Code *
          *************/
-        textureHandler = new TextureHandler();
     }
 
+    // Initializes SoundHandler Class and loads the volume settings to allow background music to play
     private void initializeSound() {
+        soundHandler = new SoundHandler();
         /*************
          * Game Code *
          *************/
-        soundHandler.playBGMMenu();
     }
 
     private void initializeAnimations() {
@@ -752,27 +761,46 @@ public class GameController {
         int minX = 0;
         int minY = (int) -maxScroll;
 
-        for (int i = minX; i < Engine.WIDTH; i += interval) {
-            for (int j = minY; j < Engine.HEIGHT; j += interval) {
-                g.drawImage(imageSea, i, j + (int) (backgroundScroll), interval + 1, interval + 1, null);
+//        if (!Engine.stateIs(GameState.Test)) {
 
-                if (Engine.stateIs(GameState.Game)) {
-                    backgroundScroll += scrollRate;
+            for (int i = minX; i < Engine.WIDTH; i += interval) {
+                for (int j = minY; j < Engine.HEIGHT; j += interval) {
+                    g.drawImage(imageSea, i, j + (int) (backgroundScroll), interval + 1, interval + 1, null);
 
-                    if (backgroundScroll >= maxScroll) {
-                        backgroundScroll = 0;
+                    if (Engine.stateIs(GameState.Game)) {
+                        backgroundScroll += scrollRate;
+
+                        if (backgroundScroll >= maxScroll) {
+                            backgroundScroll = 0;
+                        }
+
+                        currentImage++;
+                        if (currentImage > 7) {
+                            currentImage = 0;
+                        }
+
+                        imageSea = GameController.getTexture().sea[currentImage];
                     }
 
-                    currentImage++;
-                    if (currentImage > 7) {
-                        currentImage = 0;
-                    }
-
-                    imageSea = GameController.getTexture().sea[currentImage];
                 }
-
             }
-        }
+//        }
+
+//        // Test todo: delete
+//
+//        if (Engine.stateIs(GameState.Test)) {
+//            g.setColor(testColor);
+//            int yInterval = 20;
+//            for (int i = 0; i < Engine.WIDTH; i++) {
+//                for (int j = 0; j < Engine.HEIGHT; j += yInterval) {
+//                    int xCor = i;
+//                    int yCor = (j + testWaveSpeed) % Engine.HEIGHT;
+//                    yCor = (int) Math.sin(Math.toRadians(yCor));
+//                    g.fillRect(xCor, yCor ,4,4);
+//                }
+//            }
+//            testWaveSpeed++;
+//        }
     }
 
     public static long getCurrentTime() {

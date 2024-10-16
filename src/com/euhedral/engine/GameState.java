@@ -10,5 +10,6 @@ public enum GameState {
     Transition,
     GameOver,
     Highscore,
-    Quit
+    Quit,
+    Test
 }

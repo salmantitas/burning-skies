@@ -267,13 +267,30 @@ public class EntityHandler {
      * Pickup Functions *
      ********************/
 
+    // Spawns Pickup with default health value = 30
     public void spawnPickup(int x, int y, EntityID id) {
+        int value = 0;
+        switch (id) {
+            case PickupHealth:
+                value = 30;
+                break;
+            case PickupShield:
+                value = 100;
+                break;
+            case PickupPower:
+                value = 1;
+                break;
+        }
+        spawnPickup(x, y, id, value);
+    }
+
+    private void spawnPickup(int x, int y, EntityID id, int value) {
         if (pickups.getPoolSize() > 0) {
-            pickups.spawnFromPool(x, y, id);
+            pickups.spawnFromPool(x, y, id, value);
 //            spawnPickupsFromPool(x, y, id);
         }
         else
-            pickups.add(new Pickup(x, y, id));
+            pickups.add(new Pickup(x, y, id, value));
 //        System.out.println("Pickup spawned");
     }
 
@@ -380,6 +397,8 @@ public class EntityHandler {
 
     private void destroy(Enemy enemy) {
         enemy.destroy();
+        VariableHandler.increaseScore(enemy.getScore());
+//        spawnPickup((int) enemy.getX(), (int) enemy.getY(), EntityID.PickupHealth, 5);
     }
 
     private void destroy(Bullet bullet, MobileEntity entity) {
@@ -463,7 +482,6 @@ public class EntityHandler {
                     boolean collision1 = player.checkCollision(enemy.getBoundsHorizontal());
                     boolean collision2 = player.checkCollision(enemy.getBoundsVertical());
                     if (collision1 || collision2) {
-                        VariableHandler.increaseScore(enemy.getScore());
                         damagePlayer(30);
                         destroy(enemy);
                     }
@@ -490,8 +508,6 @@ public class EntityHandler {
                         enemy.damage();
                         if (enemy.getHealth() <= 0) {
                             destroy(enemy);
-                            VariableHandler.increaseScore(enemy.getScore());
-//                            spawnPickup((int) enemy.getX(), (int) enemy.getY(), EntityID.PickupHealth);
                         }
                     }
 //                    player.increaseBullets();
