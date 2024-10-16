@@ -20,12 +20,14 @@ public class Button extends UIItem{
     protected LinkedList<GameState> otherStates = new LinkedList<>();
     protected float transparency = 1;
     protected boolean fontSizeCalculated = false;
+    protected int originalWidth;
 
     protected Color disabledColor, disabledTextColor;
 
     public Button(int x, int y, int width, int height, String text) {
         this.x = x;
         this.y = y;
+        this.originalWidth = width;
         this.width = width;
         this.height = height;
         this.text = text;
@@ -79,8 +81,9 @@ public class Button extends UIItem{
                 g.drawRect(x, y, width, height);
             }
 
-            if (selected)
+            if (selected) {
                 g.setColor(selectedColor);
+            }
             else g.setColor(textColor);
 //            int stringX = x + Utility.perc(width, 5);
             int stringX = x + (width/2 - stringWidth/2);
@@ -138,10 +141,14 @@ public class Button extends UIItem{
     public void select() {
         setSelected(true);
         SoundHandler.playSound(SoundHandler.UI1);
+        int newWidth = originalWidth + 5;
+        font = new Font("arial", 1, newWidth);
     }
 
     public void deselect() {
         setSelected(false);
+        int newWidth = originalWidth;
+        font = new Font("arial", 1, newWidth);
     }
 
     public boolean isSelected() {

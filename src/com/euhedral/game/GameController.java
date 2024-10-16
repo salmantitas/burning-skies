@@ -51,13 +51,10 @@ public class GameController {
 
     // Levels
     private int levelHeight;
-    private boolean missionLoaded = false; // levels will only loaded when this is true
-
-    int count = 0;
+    private boolean levelLoaded = false; // levels will only loaded when this is true
     boolean reset = true;
 
     // Cheats
-
     public static boolean godMode = false;
 
     /************
@@ -72,20 +69,24 @@ public class GameController {
      ******************/
 
     // Objects
-    private Shop shop;
+    private Shop shop; // todo: Keep or delete?
 
     // LevelMap to automate level loading
     private HashMap<Integer, BufferedImage> levelMap;
 
     private boolean levelSpawned = false;
-    public static boolean rebinding = false;
 
+    // Keyboard Options
+    public static boolean rebinding = false;
     private boolean keyboardControl = true; // false means mouse Control
 
     /************
      * Graphics *
      ************/
 
+    // Background Scrolling
+    int currentImage = 0;
+    static int maxImage = 7;
     private float backgroundScroll = 0;
     private static float scrollRate = 0.005f;
     private float maxScroll = 62f + 1;
@@ -180,7 +181,7 @@ public class GameController {
             uiHandler.update();
 
         if (Engine.stateIs(GameState.Menu)) {
-            missionLoaded = false;
+            levelLoaded = false;
 
             if (reset)
                 resetGame();
@@ -195,7 +196,7 @@ public class GameController {
              * Spawn if the level can loaded and has not already been spawned
              * */
 
-            if (missionLoaded) {
+            if (levelLoaded) {
                 if (!levelSpawned)
                     spawn();
             }
@@ -213,7 +214,7 @@ public class GameController {
 //                System.out.printf("Timer: %d\n", timeInSeconds);
 //            }
 
-            missionLoaded = false;
+            levelLoaded = false;
             boolean endGameCondition = variableHandler.health.getValue() <= 0;
 
             if (endGameCondition) {
@@ -433,7 +434,7 @@ public class GameController {
     public void resetGame() {
         System.out.println("Game has been reset");
         reset = false;
-        Engine.timeInSeconds = 0;
+        Engine.timeInSeconds = 0; // might be unnecesary
         timeInSeconds = 0;
         variableHandler.resetScore();
 //        variableHandler.resetDifficulty();
@@ -466,7 +467,7 @@ public class GameController {
         if (action != null) {
             switch (action) {
                 case go:
-                    missionLoaded = true;
+                    levelLoaded = true;
                     break;
                 case tutorial:
                     VariableHandler.toggleTutorial();
@@ -744,8 +745,8 @@ public class GameController {
 
     // todo: speed up 'animation'
     private void renderScrollingBackground(Graphics g) {
-        count = 0;
-        BufferedImage imageSea = GameController.getTexture().sea[count];
+        currentImage = 0;
+        BufferedImage imageSea = GameController.getTexture().sea[currentImage];
         int interval = imageSea.getHeight() * 2;
 
         int minX = 0;
@@ -762,12 +763,12 @@ public class GameController {
                         backgroundScroll = 0;
                     }
 
-                    count++;
-                    if (count > 7) {
-                        count = 0;
+                    currentImage++;
+                    if (currentImage > 7) {
+                        currentImage = 0;
                     }
 
-                    imageSea = GameController.getTexture().sea[count];
+                    imageSea = GameController.getTexture().sea[currentImage];
                 }
 
             }
