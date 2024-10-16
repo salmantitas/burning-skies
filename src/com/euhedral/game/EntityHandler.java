@@ -6,6 +6,7 @@ import com.euhedral.game.Entities.Enemy.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 // Manages all entities in game
@@ -68,6 +69,7 @@ public class EntityHandler {
 //    }
 
     public void render(Graphics g) {
+        renderShadows(g);
         bullets.render(g);
         pickups.render(g);
         enemies.render(g);
@@ -330,6 +332,23 @@ public class EntityHandler {
         if (flag == null)
             return levelHeight;
         return flag.getY();
+    }
+
+    /******************
+     * Shadow Functions *
+     ******************/
+
+    private void renderShadows(Graphics g) {
+        player.renderShadow(g);
+        renderEnemyShadows(g);
+    }
+
+    private void renderEnemyShadows(Graphics g) {
+        LinkedList<Entity> list = enemies.getEntities();
+        for (Entity entity: list) {
+            Enemy enemy = (Enemy) entity;
+            enemy.renderShadow(g);
+        }
     }
 
     /*******************

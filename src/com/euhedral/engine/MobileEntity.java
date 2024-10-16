@@ -131,6 +131,10 @@ public abstract class MobileEntity extends Entity {
         this.angle = angle;
     }
 
+    protected double getCenterX() {
+        return (x + width / 2 - 2);
+    }
+
 //    private double cos(double angle) {
 //        double angleD = 0;
 //

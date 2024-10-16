@@ -128,4 +128,10 @@ public class Utility {
         }
     }
 
+    // Not very sure what's happening here
+    public static AlphaComposite makeTransparent(float alpha) {
+        int type = AlphaComposite.SRC_OVER;
+        return(AlphaComposite.getInstance(type, alpha));
+    }
+
 }

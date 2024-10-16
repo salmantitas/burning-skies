@@ -131,6 +131,21 @@ public class Enemy extends MobileEntity {
         super.render(g);
     }
 
+    public void renderShadow(Graphics g) {
+        if (state != STATE_INACTIVE) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setComposite(Utility.makeTransparent(0.5f));
+
+            int offsetX = (int) (Engine.WIDTH / 2 - getCenterX()) / 15;
+            int sizeOffset = 10;
+            int offsetY = 10 + (int) y / 500;
+            g.setColor(Color.DARK_GRAY);
+            g.fillRect((int) x - offsetX, (int) y + offsetY, width - sizeOffset, height - sizeOffset);
+
+            g2d.setComposite(Utility.makeTransparent(1f));
+        }
+    }
+
     protected void shoot() {
         shotNum++;
         resetShooter();

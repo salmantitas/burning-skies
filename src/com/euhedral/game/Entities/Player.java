@@ -3,13 +3,9 @@ package com.euhedral.game.Entities;
 import com.euhedral.engine.*;
 import com.euhedral.game.*;
 import com.euhedral.game.Entities.Enemy.Enemy;
-import jdk.jshell.execution.Util;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 public class Player extends MobileEntity {
 
@@ -27,6 +23,8 @@ public class Player extends MobileEntity {
     private int clampOffsetX;
     private int clampOffsetY;
     private int shootAngle = Utility.intAtWidth640(5);
+
+    private int center;
 
     private Attribute health;
     private Attribute shield;
@@ -138,6 +136,19 @@ public class Player extends MobileEntity {
 
 //        renderStats(g);
 //        renderBounds(g);
+    }
+
+    public void renderShadow(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setComposite(Utility.makeTransparent(0.5f));
+
+        int offsetX = (int) (Engine.WIDTH/2 - getCenterX()) / 15;
+        int sizeOffset = 10;
+        int offsetY = 10 + (int) y/500;
+        g.setColor(Color.DARK_GRAY);
+        g.fillRect((int) x - offsetX, (int) y - offsetY, width - sizeOffset, height - sizeOffset);
+
+        g2d.setComposite(Utility.makeTransparent(1f));
     }
 
     @Override
@@ -445,5 +456,13 @@ public class Player extends MobileEntity {
         moveLeft = false;
         moveDown = false;
         moveUp = false;
+    }
+
+//    private double getCenterX() {
+//        return (x + width / 2 - 2);
+//    }
+
+    private double getCenterY() {
+        return (y + height / 2 - 2);
     }
 }
