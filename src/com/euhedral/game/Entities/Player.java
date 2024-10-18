@@ -159,10 +159,10 @@ public class Player extends MobileEntity {
         g2d.setComposite(Utility.makeTransparent(1f));
     }
 
-    public void renderReflection(Graphics2D g2d) {
-        renderBulletReflections(g2d);
+    public void renderReflection(Graphics2D g2d, float transparency) {
+        renderBulletReflections(g2d, transparency);
 
-        g2d.setComposite(Utility.makeTransparent(0.4f));
+        g2d.setComposite(Utility.makeTransparent(transparency));
         double sizeOffset = 0.9;
 
         int xCorrection = 8;
@@ -176,11 +176,11 @@ public class Player extends MobileEntity {
         g2d.setComposite(Utility.makeTransparent(1f));
     }
 
-    private void renderBulletReflections(Graphics2D g2d) {
+    private void renderBulletReflections(Graphics2D g2d, float transparency) {
         LinkedList<Entity> list = bullets.getEntities();
         for (Entity entity : list) {
             Bullet bullet = (Bullet) entity;
-            bullet.renderReflection(g2d);
+            bullet.renderReflection(g2d, transparency);
         }
     }
 

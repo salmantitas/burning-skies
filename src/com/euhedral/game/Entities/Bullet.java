@@ -58,7 +58,7 @@ public class Bullet extends MobileEntity {
         drawDefault(g);
     }
 
-    public void renderReflection(Graphics2D g2d) {
+    public void renderReflection(Graphics2D g2d, float transparency) {
 
     }
 

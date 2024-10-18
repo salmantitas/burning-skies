@@ -51,8 +51,8 @@ public class BulletEnemy extends Bullet{
     }
 
     @Override
-    public void renderReflection(Graphics2D g2d) {
-        g2d.setComposite(Utility.makeTransparent(0.4f));
+    public void renderReflection(Graphics2D g2d, float transparency) {
+        g2d.setComposite(Utility.makeTransparent(transparency));
         double sizeOffset = 0.9;
         int xCorrection = 8;
         int yCorrection = 12;

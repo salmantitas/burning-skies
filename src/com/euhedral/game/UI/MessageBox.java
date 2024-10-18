@@ -108,7 +108,9 @@ public class MessageBox extends UIItem {
                         close.setX(x+width);
                     }
                 }
-                g.drawString(text, x + margin, y + (i*15) + height / 3);
+                int textStart = (int) (height*0.2);
+                int textSpacing = i*18;
+                g.drawString(text, x + margin, y + textSpacing + textStart);
             }
             close.render(g);
         }

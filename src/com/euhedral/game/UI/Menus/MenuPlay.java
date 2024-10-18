@@ -27,18 +27,16 @@ public class MenuPlay extends Menu {
         options = new Button[MAXBUTTON];
 
         tutorial = new MessageBox(500,150);
-        tutorial.addText("You can use WASD or the Arrow Keys");
-        tutorial.addText("for movement.");
+        tutorial.addText("Use WASD or the Arrow Keys to move.");
         tutorial.addText("");
-        tutorial.addText("SPACEBAR can be used for shooting.");
-//        a.addText("CTRL is used to switch to ground bullets.");
+        tutorial.addText("SPACEBAR can be used to shoot.");
         tutorial.addText("");
         tutorial.addText("Click the red square to dismiss this");
-        tutorial.addText("message and starts the game.");
+        tutorial.addText("message and start the game.");
         tutorial.addText("");
         tutorial.addText("You can disable tutorial in Settings.");
         tutorial.addText("");
-        tutorial.addText("Enjoy!");
+        tutorial.addText("Shoot as many enemies as you can and survive!");
         addMessageBox(tutorial);
 
         Panel topPane = new Panel(0,0, Engine.WIDTH, Utility.percHeight(12), GameState.Game);

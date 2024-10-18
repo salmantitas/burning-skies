@@ -359,24 +359,25 @@ public class EntityHandler {
 
     private void renderReflections(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        renderBulletReflections(g2d);
-        player.renderReflection(g2d);
-        renderEnemyReflections(g2d);
+        float transparency = 0.2f;
+        renderBulletReflections(g2d, transparency);
+        player.renderReflection(g2d, transparency);
+        renderEnemyReflections(g2d, transparency);
     }
 
-    private void renderEnemyReflections(Graphics2D g2d) {
+    private void renderEnemyReflections(Graphics2D g2d, float transparency) {
         LinkedList<Entity> list = enemies.getEntities();
         for (Entity entity: list) {
             Enemy enemy = (Enemy) entity;
-            enemy.renderReflection(g2d);
+            enemy.renderReflection(g2d, transparency);
         }
     }
 
-    private void renderBulletReflections(Graphics2D g2d) {
+    private void renderBulletReflections(Graphics2D g2d, float transparency) {
         LinkedList<Entity> list = bullets.getEntities();
         for (Entity entity : list) {
             Bullet bullet = (Bullet) entity;
-            bullet.renderReflection(g2d);
+            bullet.renderReflection(g2d, transparency);
         }
     }
 
