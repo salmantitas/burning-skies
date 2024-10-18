@@ -58,6 +58,10 @@ public class Bullet extends MobileEntity {
         drawDefault(g);
     }
 
+    public void renderReflection(Graphics2D g2d) {
+
+    }
+
     protected void move() {
         x += velX;
         y += velY;
@@ -102,5 +106,9 @@ public class Bullet extends MobileEntity {
             return true;
         }
         return impactTimer > impactTimerCheck;
+    }
+
+    protected double getCenterY() {
+        return (y + height / 2);
     }
 }

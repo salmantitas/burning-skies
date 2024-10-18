@@ -29,6 +29,7 @@ public class Enemy extends MobileEntity {
     protected int shotNum = 0;
     protected int movementDistance;
 
+    protected TextureHandler textureHandler;
     protected Animation explosion;
 
     protected int levelHeight;
@@ -124,6 +125,7 @@ public class Enemy extends MobileEntity {
                 GameController.getTexture().explosion[3],
                 GameController.getTexture().explosion[4]
         );
+
     }
 
     @Override
@@ -144,6 +146,26 @@ public class Enemy extends MobileEntity {
 
             g2d.setComposite(Utility.makeTransparent(1f));
         }
+    }
+
+    public void renderReflection(Graphics2D g2d) {
+        g2d.setComposite(Utility.makeTransparent(0.4f));
+        double sizeOffset = 0.9;
+
+        int xCorrection = 8;
+        int yCorrection = 12;
+        int offsetX = (int) (Engine.WIDTH / 2 - getCenterX()) / 15;
+        int offsetY = (int) (Engine.HEIGHT/2 - getCenterY()) / 15;
+
+        int reflectionX = xCorrection + (int) x - offsetX;
+        int reflectionY = yCorrection + (int) y + offsetY;
+
+        if (state == STATE_ACTIVE) {
+            g2d.drawImage(image, reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset), null);
+        } else if (state == STATE_EXPLODING) {
+            explosion.drawAnimation(g2d, reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset));
+        }
+        g2d.setComposite(Utility.makeTransparent(1f));
     }
 
     protected void shoot() {
@@ -294,5 +316,13 @@ public class Enemy extends MobileEntity {
         return state == STATE_EXPLODING;
     }
 
+    protected void commonInit() {
+
+    }
+
     // Private Methods
+
+    private double getCenterY() {
+        return (y + height / 2 + 2);
+    }
 }

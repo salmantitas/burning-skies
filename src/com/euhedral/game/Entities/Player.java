@@ -6,6 +6,7 @@ import com.euhedral.game.Entities.Enemy.Enemy;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.LinkedList;
 
 public class Player extends MobileEntity {
 
@@ -24,10 +25,11 @@ public class Player extends MobileEntity {
     private int clampOffsetY;
     private int shootAngle = Utility.intAtWidth640(5);
 
-    private int center;
-
     private Attribute health;
     private Attribute shield;
+
+    private final int HEALTH_HIGH = 66;
+    private final int HEALTH_MED = 33;
 
     // Test
     private int mx, my;
@@ -104,23 +106,29 @@ public class Player extends MobileEntity {
     }
 
     private void setImage() {
-        if (health.getValue() > 66) {
-            image = textureHandler.player[0];
-        } else if (health.getValue() > 33) {
-            image = textureHandler.player[1];
+        if (health.getValue() > HEALTH_HIGH) {
+            if (isMovingLeft()) {
+                image = textureHandler.player[6];
+            } else if (isMovingRight()) {
+                image = textureHandler.player[3];
+            } else
+                image = textureHandler.player[0];
+        } else if (health.getValue() > HEALTH_MED) {
+            if (isMovingLeft()) {
+                image = textureHandler.player[7];
+            } else if (isMovingRight()) {
+                image = textureHandler.player[4];
+            } else
+                image = textureHandler.player[1];
         } else {
-            image = textureHandler.player[2];
+            if (isMovingLeft()) {
+                image = textureHandler.player[8];
+            } else if (isMovingRight()) {
+                image = textureHandler.player[5];
+            } else
+                image = textureHandler.player[2];
         }
         VariableHandler.setHealthColor();
-    }
-
-    private void decay() {
-        int maxDecay = 15;
-        decayCounter++;
-        if (decayCounter >= maxDecay) {
-            VariableHandler.health.decrease(1);
-            decayCounter = 0;
-        }
     }
 
     @Override
@@ -138,17 +146,42 @@ public class Player extends MobileEntity {
 //        renderBounds(g);
     }
 
-    public void renderShadow(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setComposite(Utility.makeTransparent(0.5f));
+    public void renderShadow(Graphics2D g2d) {
+        g2d.setComposite(Utility.makeTransparent(0.4f));
 
-        int offsetX = (int) (Engine.WIDTH/2 - getCenterX()) / 15;
         int sizeOffset = 10;
+        int xCorrection = 8;
+        int offsetX = (int) (Engine.WIDTH/2 - getCenterX()) / 15;
         int offsetY = 10 + (int) y/500;
-        g.setColor(Color.DARK_GRAY);
-        g.fillRect((int) x - offsetX, (int) y - offsetY, width - sizeOffset, height - sizeOffset);
+        g2d.setColor(Color.DARK_GRAY);
+        g2d.fillRect(xCorrection + (int) x - offsetX, (int) y - offsetY, width - sizeOffset, height - sizeOffset);
 
         g2d.setComposite(Utility.makeTransparent(1f));
+    }
+
+    public void renderReflection(Graphics2D g2d) {
+        renderBulletReflections(g2d);
+
+        g2d.setComposite(Utility.makeTransparent(0.4f));
+        double sizeOffset = 0.9;
+
+        int xCorrection = 8;
+        int yCorrection = 12;
+        int offsetX = (int) (Engine.WIDTH/2 - getCenterX()) / 15;
+        int offsetY = (int) (Engine.HEIGHT/2 - getCenterY()) / 15;
+        int reflectionX = xCorrection + (int) x - offsetX;
+        int reflectionY = yCorrection + (int) y + offsetY;
+        g2d.drawImage(image, reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset), null);
+
+        g2d.setComposite(Utility.makeTransparent(1f));
+    }
+
+    private void renderBulletReflections(Graphics2D g2d) {
+        LinkedList<Entity> list = bullets.getEntities();
+        for (Entity entity : list) {
+            Bullet bullet = (Bullet) entity;
+            bullet.renderReflection(g2d);
+        }
     }
 
     @Override
@@ -312,19 +345,19 @@ public class Player extends MobileEntity {
 
     private void keyboardMove() {
         // Moving Left
-        if (moveLeft && !moveRight) {
+        if (isMovingLeft()) {
             velX -= acceleration;
             velX = Utility.clamp(velX, - maxVelX, - minVelX);
         }
 
         // Moving Right
-        else if (moveRight && !moveLeft) {
+        else if (isMovingRight()) {
             velX += acceleration;
             velX = Utility.clamp(velX, minVelX, maxVelX);
         }
 
         // Not Moving Left or Right
-        else if (!moveLeft && !moveRight || (moveLeft && moveRight)) {
+        else if ((!moveLeft && !moveRight) || (moveLeft && moveRight)) {
 //            if (velX > 0) {
 //                velX -= frictionalForce;
 //            } else if (velX < 0) {
@@ -448,7 +481,6 @@ public class Player extends MobileEntity {
                 }
             }
         }
-
     }
 
     public void resetMovement() {
@@ -458,11 +490,15 @@ public class Player extends MobileEntity {
         moveUp = false;
     }
 
-//    private double getCenterX() {
-//        return (x + width / 2 - 2);
-//    }
-
     private double getCenterY() {
         return (y + height / 2 - 2);
+    }
+
+    private boolean isMovingLeft() {
+        return (moveLeft && !moveRight);
+    }
+
+    private boolean isMovingRight() {
+        return (!moveLeft && moveRight);
     }
 }

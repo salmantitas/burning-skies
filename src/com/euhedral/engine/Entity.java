@@ -70,7 +70,7 @@ public abstract class Entity {
     }
 
     protected void drawAnimation(Graphics g) {
-
+        // todo: ???
     }
 
     protected void renderBounds(Graphics g) {

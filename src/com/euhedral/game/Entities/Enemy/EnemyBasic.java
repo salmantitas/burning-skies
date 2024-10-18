@@ -9,8 +9,6 @@ import java.awt.*;
 
 public class EnemyBasic extends Enemy{
 
-    private TextureHandler textureHandler;
-
     public EnemyBasic(int x, int y, ContactID contactID, int levelHeight) {
         super(x, y, contactID, levelHeight);
     }
@@ -63,12 +61,12 @@ public class EnemyBasic extends Enemy{
             super.render(g);
 //            renderBounds(g);
         } else {
-//            bullets.render(g);
             explosion.drawAnimation(g, (int) x, (int) y);
         }
     }
 
-    private void commonInit() {
+    @Override
+    protected void commonInit() {
         this.setHealth(2);
         velY = 2.5f;
     }

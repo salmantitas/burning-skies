@@ -17,7 +17,7 @@ public class ProceduralGenerator {
 
     final int SCALE = 32;
     public HashMap<Color, EntityID> colorMap;
-    int height, width = 35;
+    int height = Engine.HEIGHT/SCALE, width = 35;
     final int incrementMIN = Utility.intAtWidth640(1);
     int spacing = 3;
     int xStart = incrementMIN, xEnd = width;
@@ -152,23 +152,23 @@ public class ProceduralGenerator {
     // generate a level using procedural generation // YEAH NO SHIT.
     public void generateLevel() {
         level = VariableHandler.getLevel();
-        switch (level) {
-            case ENDLESS:
-                height = ENDLESS;
-                break;
-            case 1:
-                height = 150; // 100 = ~4 waves
-                break;
-            case 2:
-                height = 225;
-                break;
-            case 3:
-                height = 275;
-                break;
-            case 4:
-                height = 300;
-                break;
-        }
+//        switch (level) {
+//            case ENDLESS:
+//                height = ENDLESS;
+//                break;
+//            case 1:
+//                height = 150; // 100 = ~4 waves
+//                break;
+//            case 2:
+//                height = 225;
+//                break;
+//            case 3:
+//                height = 275;
+//                break;
+//            case 4:
+//                height = 300;
+//                break;
+//        }
 
 
         System.out.printf("Width: %d, Height: %d\n", width, height);
@@ -279,6 +279,8 @@ public class ProceduralGenerator {
             lastLastPattern = lastPattern;
             lastPattern = pattern;
             pattern = PATTERN_LINE;
+
+//            spawnHelperHeavy(xMid, spawnHeight);
         } else {
             nextPattern();
         }
@@ -948,6 +950,10 @@ public class ProceduralGenerator {
 
         entityHandler.spawnEntity(x*SCALE, y*SCALE, id, c, move, distance*SCALE);
 //        System.out.println("Enemy spawned");
+    }
+
+    private void spawnHelperHeavy(int x, int y) {
+        entityHandler.spawnEntity(x*SCALE, y*SCALE, EntityID.EnemyMove, Color.RED, "", 0);
     }
 
     private void spawnGround(int remainingHeight, int spawnHeight, int num, String spawnFrom) {

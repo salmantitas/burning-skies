@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.6.0";
+    public static String gameVersion = "0.6.05";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -95,8 +95,8 @@ public class GameController {
      * Test *
      ************/
 
-//    int testWaveSpeed = 1;
-//    Color testColor = new Color(128/3, 128/2, 128);
+    int testWaveSpeed = 1;
+    Color testColor = new Color(128/3, 128/2, 128);
 
     public GameController() {
 
@@ -761,7 +761,7 @@ public class GameController {
         int minX = 0;
         int minY = (int) -maxScroll;
 
-//        if (!Engine.stateIs(GameState.Test)) {
+        if (!Engine.stateIs(GameState.Test)) {
 
             for (int i = minX; i < Engine.WIDTH; i += interval) {
                 for (int j = minY; j < Engine.HEIGHT; j += interval) {
@@ -784,27 +784,45 @@ public class GameController {
 
                 }
             }
-//        }
+        }
 
-//        // Test todo: delete
-//
-//        if (Engine.stateIs(GameState.Test)) {
-//            g.setColor(testColor);
-//            int yInterval = 20;
-//            for (int i = 0; i < Engine.WIDTH; i++) {
-//                for (int j = 0; j < Engine.HEIGHT; j += yInterval) {
-//                    int xCor = i;
-//                    int yCor = (j + testWaveSpeed) % Engine.HEIGHT;
-//                    yCor = (int) Math.sin(Math.toRadians(yCor));
-//                    g.fillRect(xCor, yCor ,4,4);
-//                }
-//            }
-//            testWaveSpeed++;
-//        }
+        // Test todo: delete
+
+        if (Engine.stateIs(GameState.Test)) {
+            testFunction(g);
+        }
     }
 
     public static long getCurrentTime() {
         return timeInSeconds;
+    }
+
+    // Test Functions
+
+    private void testFunction(Graphics g) {
+        g.setColor(testColor);
+        int yInterval = 30;
+        for (int j = 0; j < Engine.HEIGHT; j += yInterval )
+                testSineLine(g, j);
+
+        testWaveSpeed++;
+    }
+
+    private void testDrawHorizontalLine(Graphics g, int j) {
+        for (int i = 0; i < Engine.WIDTH; i++)
+            g.fillRect(i, (j + testWaveSpeed) % Engine.HEIGHT, 4, 4);
+    }
+
+    private void testSineLine(Graphics g, int j) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setComposite(Utility.makeTransparent(0.75f));
+
+        for (int i = 0; i < Engine.WIDTH; i++) {
+            double iSin = Math.toDegrees(Math.sin(i));
+            double yCor = (j + iSin) + testWaveSpeed;
+            g.fillRect(i, (int) yCor % Engine.HEIGHT, 6, 2);
+        }
+        g2d.setComposite(Utility.makeTransparent(1f));
     }
 
 }

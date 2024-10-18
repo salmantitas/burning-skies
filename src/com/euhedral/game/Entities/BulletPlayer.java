@@ -1,5 +1,6 @@
 package com.euhedral.game.Entities;
 
+import com.euhedral.engine.Engine;
 import com.euhedral.engine.Entity;
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
@@ -45,6 +46,31 @@ public class BulletPlayer extends Bullet{
             g.setColor(impactColor);
             g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
         }
+    }
+
+    @Override
+    public void renderReflection(Graphics2D g2d) {
+        g2d.setComposite(Utility.makeTransparent(0.4f));
+        double sizeOffset = 0.9;
+        int xCorrection = 8;
+        int yCorrection = 12;
+        int offsetX = (int) (Engine.WIDTH / 2 - getCenterX()) / 15;
+        int offsetY = (int) (Engine.HEIGHT/2 - getCenterY()) / 15;
+        int reflectionX = xCorrection + (int) x - offsetX;
+        int reflectionY = yCorrection + (int) y + offsetY;
+
+        if (state == STATE_ACTIVE) {
+            g2d.setColor(color);
+            g2d.fillOval(reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset));
+        } else if (state == STATE_IMPACT) {
+            g2d.setColor(impactColor);
+            int impactX = (int) x - impactFactor;
+            int impactY = (int) y - impactFactor;
+            int impactWidth = width + impactFactor*2;
+            int impactHeight = height + impactFactor*2;
+            g2d.fillOval(xCorrection + impactX - offsetX, impactY + offsetY, (int) (impactWidth*sizeOffset), (int) (impactHeight*sizeOffset));
+        }
+        g2d.setComposite(Utility.makeTransparent(1f));
     }
 
     public ContactID getContactId() {

@@ -44,8 +44,8 @@ public class Animation {
         g.drawImage(curr, x, y, null);
     }
 
-    public void drawAnimation(Graphics g, int x, int y, int scaleX, int scaleY) {
-        g.drawImage(curr, x, y, scaleX, scaleY, null);
+    public void drawAnimation(Graphics g, int x, int y, int targetWidth, int targetHeight) {
+        g.drawImage(curr, x, y, targetWidth, targetHeight, null);
     }
 
     public boolean isFrame(int i) {

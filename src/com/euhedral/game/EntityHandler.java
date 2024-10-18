@@ -69,7 +69,8 @@ public class EntityHandler {
 //    }
 
     public void render(Graphics g) {
-        renderShadows(g);
+//        renderShadows(g);
+        renderReflections(g);
         bullets.render(g);
         pickups.render(g);
         enemies.render(g);
@@ -339,15 +340,43 @@ public class EntityHandler {
      ******************/
 
     private void renderShadows(Graphics g) {
-        player.renderShadow(g);
-        renderEnemyShadows(g);
+        Graphics2D g2d = (Graphics2D) g;
+        player.renderShadow(g2d);
+        renderEnemyShadows(g2d);
     }
 
-    private void renderEnemyShadows(Graphics g) {
+    private void renderEnemyShadows(Graphics2D g2d) {
         LinkedList<Entity> list = enemies.getEntities();
         for (Entity entity: list) {
             Enemy enemy = (Enemy) entity;
-            enemy.renderShadow(g);
+            enemy.renderShadow(g2d);
+        }
+    }
+
+    /******************
+     * Reflection Functions *
+     ******************/
+
+    private void renderReflections(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        renderBulletReflections(g2d);
+        player.renderReflection(g2d);
+        renderEnemyReflections(g2d);
+    }
+
+    private void renderEnemyReflections(Graphics2D g2d) {
+        LinkedList<Entity> list = enemies.getEntities();
+        for (Entity entity: list) {
+            Enemy enemy = (Enemy) entity;
+            enemy.renderReflection(g2d);
+        }
+    }
+
+    private void renderBulletReflections(Graphics2D g2d) {
+        LinkedList<Entity> list = bullets.getEntities();
+        for (Entity entity : list) {
+            Bullet bullet = (Bullet) entity;
+            bullet.renderReflection(g2d);
         }
     }
 

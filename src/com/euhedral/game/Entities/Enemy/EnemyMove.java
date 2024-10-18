@@ -3,6 +3,7 @@ package com.euhedral.game.Entities.Enemy;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ContactID;
 import com.euhedral.game.EnemyID;
+import com.euhedral.game.GameController;
 
 import java.awt.*;
 
@@ -10,23 +11,28 @@ public class EnemyMove extends Enemy {
     public EnemyMove(int x, int y, ContactID contactID, int levelHeight) {
         super(x, y, contactID, levelHeight);
         enemyID = EnemyID.Move;
+
+        textureHandler = GameController.getTexture();
+        setImage(textureHandler.enemyHeavy[0]);
     }
 
     public EnemyMove(int x, int y, ContactID contactID, Color color, int levelHeight) {
-        super(x, y, contactID, color, levelHeight);
-        enemyID = EnemyID.Move;
+        this(x,y, contactID, levelHeight);
+        this.color = color;
     }
 
     @Override
     public void initialize() {
         super.initialize();
 
+        width = width*2; // todo: check, it's being called twice
         shootTimerDefault = 60;
-        setHealth(6,10);
         score = 150;
-        velX = velY;
-        distance = width * 2;
+        velX = 0;
+        minVelY = 1.75f;
+        distance = 0; // stub ; width * 2;
         movementDistance = distance;
+        commonInit();
     }
 
     @Override
@@ -70,5 +76,11 @@ public class EnemyMove extends Enemy {
 //        } else if (movementTimer <= int1 && movementTimer > int0) {
 //            hMove = HorizontalMovement.NONE;
 //        }
+    }
+
+    @Override
+    protected void commonInit() {
+        this.setHealth(10);
+        velY = 2.5f;
     }
 }

@@ -10,7 +10,8 @@ public class TextureHandler {
 
     public BufferedImage
             playerImage,
-            enemyImage,
+            enemyBasicImage,
+            enemyHeavyImage,
             explosionImage,
             title,
             logo,
@@ -20,13 +21,15 @@ public class TextureHandler {
     public SpriteSheet
             playerSS,
             enemySS,
+            enemyHeavySS,
             explosionSS,
             seaSS,
             pickupSS;
 
 
-    public BufferedImage[] player = new BufferedImage[3];
+    public BufferedImage[] player = new BufferedImage[9];
     public BufferedImage[] enemy = new BufferedImage[1];
+    public BufferedImage[] enemyHeavy = new BufferedImage[1];
     public BufferedImage[] explosion = new BufferedImage[7];
     public BufferedImage[] sea = new BufferedImage[8];
     public BufferedImage[] pickup = new BufferedImage[3];
@@ -36,7 +39,8 @@ public class TextureHandler {
 
         try {
             playerImage = loader.loadImage("/player.png");
-            enemyImage = loader.loadImage("/enemy.png");
+            enemyBasicImage = loader.loadImage("/enemy1.png");
+            enemyHeavyImage = loader.loadImage("/enemy2.png");
             explosionImage = loader.loadImage("/explosion.png");
             title = loader.loadImage("/title.png");
             logo = loader.loadImage("/logo.png");
@@ -47,7 +51,8 @@ public class TextureHandler {
         }
 
         playerSS = new SpriteSheet(playerImage);
-        enemySS = new SpriteSheet(enemyImage);
+        enemySS = new SpriteSheet(enemyBasicImage);
+        enemyHeavySS = new SpriteSheet(enemyHeavyImage);
         explosionSS = new SpriteSheet(explosionImage);
         seaSS = new SpriteSheet(seaImage);
         pickupSS = new SpriteSheet(pickupImage);
@@ -61,14 +66,22 @@ public class TextureHandler {
         player[0] = playerSS.grabImage(1,1, w,h);
         player[1] = playerSS.grabImage(1,2, w,h);
         player[2] = playerSS.grabImage(1,3, w,h);
+        player[3] = playerSS.grabImage(2,1, w,h);
+        player[4] = playerSS.grabImage(2,2, w,h);
+        player[5] = playerSS.grabImage(2,3, w,h);
+        player[6] = playerSS.grabImage(3,1, w,h);
+        player[7] = playerSS.grabImage(3,2, w,h);
+        player[8] = playerSS.grabImage(3,3, w,h);
 
         enemy[0] = enemySS.grabImage(1,1,w,h);
 
-        explosion[0] = explosionSS.grabImage(1,1,w,h);
-        explosion[1] = explosionSS.grabImage(2,1,w,h);
-        explosion[2] = explosionSS.grabImage(3,1,w,h);
-        explosion[3] = explosionSS.grabImage(4,1,w,h);
-        explosion[4] = explosionSS.grabImage(5,1,w,h);
+        for (int i = 0; i < 5; i ++) {
+            explosion[i] = explosionSS.grabImage(i+1, 1, w, h);
+        }
+
+        w = 128;
+
+        enemyHeavy[0] = enemyHeavySS.grabImage(1,1,w,h);
 
         w = 32;
         h = 32;
