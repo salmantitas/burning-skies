@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.6.05";
+    public static String gameVersion = "0.6.06";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -85,10 +85,13 @@ public class GameController {
      ************/
 
     // Background Scrolling
+    int timesRenderedIn = 0;
+    int timesRenderedOut = 0;
     int currentImage = 0;
+    int imageAnimationSpeed = 1;
     static int maxImage = 7;
     private float backgroundScroll = 0;
-    private static float scrollRate = 0.005f;
+    private static float scrollRate = 0.01f;
     private float maxScroll = 62f + 1;
 
     /************
@@ -754,7 +757,6 @@ public class GameController {
 
     // todo: speed up 'animation'
     private void renderScrollingBackground(Graphics g) {
-        currentImage = 0;
         BufferedImage imageSea = GameController.getTexture().sea[currentImage];
         int interval = imageSea.getHeight() * 2;
 
@@ -765,6 +767,7 @@ public class GameController {
 
             for (int i = minX; i < Engine.WIDTH; i += interval) {
                 for (int j = minY; j < Engine.HEIGHT; j += interval) {
+
                     g.drawImage(imageSea, i, j + (int) (backgroundScroll), interval + 1, interval + 1, null);
 
                     if (Engine.stateIs(GameState.Game)) {
@@ -774,9 +777,13 @@ public class GameController {
                             backgroundScroll = 0;
                         }
 
-                        currentImage++;
-                        if (currentImage > 7) {
-                            currentImage = 0;
+                        timesRenderedIn++;
+
+                        if ((timesRenderedIn % 16) == 0) {
+                            currentImage++;
+                            if (currentImage > maxImage) {
+                                currentImage = 0;
+                            }
                         }
 
                         imageSea = GameController.getTexture().sea[currentImage];
@@ -784,13 +791,21 @@ public class GameController {
 
                 }
             }
+            timesRenderedOut++;
+
+            if ((timesRenderedOut % 16) == 0) {
+                currentImage++;
+                if (currentImage > maxImage) {
+                    currentImage = 0;
+                }
+            }
         }
 
         // Test todo: delete
 
-        if (Engine.stateIs(GameState.Test)) {
-            testFunction(g);
-        }
+//        if (Engine.stateIs(GameState.Menu)) {
+//            testFunction(g, 50);
+//        }
     }
 
     public static long getCurrentTime() {
@@ -799,9 +814,9 @@ public class GameController {
 
     // Test Functions
 
-    private void testFunction(Graphics g) {
+    private void testFunction(Graphics g, int gap) {
         g.setColor(testColor);
-        int yInterval = 30;
+        int yInterval = gap;
         for (int j = 0; j < Engine.HEIGHT; j += yInterval )
                 testSineLine(g, j);
 

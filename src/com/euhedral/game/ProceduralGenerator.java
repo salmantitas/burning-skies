@@ -280,7 +280,7 @@ public class ProceduralGenerator {
             lastPattern = pattern;
             pattern = PATTERN_LINE;
 
-//            spawnHelperHeavy(xMid, spawnHeight);
+//            spawnHeavyHelper(xMid, spawnHeight);
         } else {
             nextPattern();
         }
@@ -952,7 +952,7 @@ public class ProceduralGenerator {
 //        System.out.println("Enemy spawned");
     }
 
-    private void spawnHelperHeavy(int x, int y) {
+    private void spawnHeavyHelper(int x, int y) {
         entityHandler.spawnEntity(x*SCALE, y*SCALE, EntityID.EnemyMove, Color.RED, "", 0);
     }
 
