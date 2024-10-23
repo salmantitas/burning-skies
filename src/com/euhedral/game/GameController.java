@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.6.06";
+    public static String gameVersion = "0.6.07";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -787,7 +787,7 @@ public class GameController {
 //                    currentImage = (currentImage + 1) % (maxImage + 1);
 //                        }
 
-                    Utility.log("CurrentImage: " + currentImage);
+//                    Utility.log("CurrentImage: " + currentImage);
 //
                     imageSea = GameController.getTexture().sea[currentImage];
 //                    }

@@ -66,12 +66,12 @@ public class TextureHandler {
         player[0] = playerSS.grabImage(1,1, w,h);
         player[1] = playerSS.grabImage(1,2, w,h);
         player[2] = playerSS.grabImage(1,3, w,h);
-        player[3] = playerSS.grabImage(2,1, w,h);
-        player[4] = playerSS.grabImage(2,2, w,h);
-        player[5] = playerSS.grabImage(2,3, w,h);
-        player[6] = playerSS.grabImage(3,1, w,h);
-        player[7] = playerSS.grabImage(3,2, w,h);
-        player[8] = playerSS.grabImage(3,3, w,h);
+        player[6] = playerSS.grabImage(2,1, w,h);
+        player[7] = playerSS.grabImage(2,2, w,h);
+        player[8] = playerSS.grabImage(2,3, w,h);
+        player[3] = playerSS.grabImage(3,1, w,h);
+        player[4] = playerSS.grabImage(3,2, w,h);
+        player[5] = playerSS.grabImage(3,3, w,h);
 
         enemy[0] = enemySS.grabImage(1,1,w,h);
 
