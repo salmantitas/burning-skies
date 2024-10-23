@@ -85,14 +85,15 @@ public class GameController {
      ************/
 
     // Background Scrolling
-    int timesRenderedIn = 0;
+//    int timesRenderedIn = 0;
     int timesRenderedOut = 0;
     int currentImage = 0;
-    int imageAnimationSpeed = 1;
+//    int imageAnimationSpeed = 1;
     static int maxImage = 7;
     private float backgroundScroll = 0;
-    private static float scrollRate = 0.01f;
-    private float maxScroll = 62f + 1;
+//    private float backgroundScrollAcc = 0;
+    private float maxScroll = 64f;
+    private static float scrollRate = 64f/20; // MAX = 0.04f
 
     /************
      * Test *
@@ -760,6 +761,8 @@ public class GameController {
         BufferedImage imageSea = GameController.getTexture().sea[currentImage];
         int interval = imageSea.getHeight() * 2;
 
+//        scrollRate = 0.005f;
+
         int minX = 0;
         int minY = (int) -maxScroll;
 
@@ -770,36 +773,76 @@ public class GameController {
 
                     g.drawImage(imageSea, i, j + (int) (backgroundScroll), interval + 1, interval + 1, null);
 
-                    if (Engine.stateIs(GameState.Game)) {
-                        backgroundScroll += scrollRate;
+//                    if (backgroundScrollAcc >= maxScroll/2) {
+//                        backgroundScrollAcc = 0f;
+//                        currentImage = (currentImage - 1);
+//                        if (currentImage < 0) {
+//                            currentImage = maxImage + currentImage;
+//                        }
+//                    }
 
-                        if (backgroundScroll >= maxScroll) {
-                            backgroundScroll = 0;
-                        }
+//
+//
+//                        if ((timesRenderedIn % 16) == 0) {
+//                    currentImage = (currentImage + 1) % (maxImage + 1);
+//                        }
 
-                        timesRenderedIn++;
-
-                        if ((timesRenderedIn % 16) == 0) {
-                            currentImage++;
-                            if (currentImage > maxImage) {
-                                currentImage = 0;
-                            }
-                        }
-
-                        imageSea = GameController.getTexture().sea[currentImage];
-                    }
+                    Utility.log("CurrentImage: " + currentImage);
+//
+                    imageSea = GameController.getTexture().sea[currentImage];
+//                    }
 
                 }
-            }
-            timesRenderedOut++;
 
-            if ((timesRenderedOut % 16) == 0) {
-                currentImage++;
-                if (currentImage > maxImage) {
-                    currentImage = 0;
-                }
             }
-        }
+
+            if (Engine.stateIs(GameState.Game)) {
+                backgroundScroll += scrollRate;
+//                backgroundScrollAcc += scrollRate;
+            } else if (Engine.stateIs(GameState.Transition)) {
+                    backgroundScroll += scrollRate/4;
+                }
+
+            if (backgroundScroll >= maxScroll) {
+                backgroundScroll = 0;
+            }
+//
+//                Utility.log("Scroll: " + backgroundScroll);
+//                        timesRenderedIn++;
+//
+//                        if ((timesRenderedIn % 16) == 0) {
+//                            currentImage = (currentImage - 1);
+//                            if (currentImage < 0) {
+//                                currentImage = maxImage + currentImage;
+//                            }
+//                        }
+//            }
+
+//            if (!Engine.stateIs(GameState.Game)) {
+                timesRenderedOut++;
+
+//            if (!Engine.stateIs(GameState.Game)) {
+                if ((timesRenderedOut % 20) == 0) {
+                    currentImage = (currentImage + 1) % (maxImage + 1);
+//                    currentImage = (currentImage - 1);
+//                    if (currentImage < 0) {
+//                        currentImage = maxImage + currentImage;
+//                    }
+                }
+//            } else {
+//                if (backgroundScrollAcc >= maxScroll) {
+//                    backgroundScrollAcc = 0f;
+//                    currentImage = (currentImage - 1);
+//                    if (currentImage < 0) {
+//                        currentImage = maxImage + currentImage;
+//                    }
+//                }
+//            }
+
+
+//            Utility.log("CurrentImage: " + currentImage);
+            }
+//        }
 
         // Test todo: delete
 
