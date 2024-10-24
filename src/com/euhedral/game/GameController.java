@@ -149,6 +149,7 @@ public class GameController {
         /*************
          * Game Code *
          *************/
+
     }
 
     // Initializes SoundHandler Class and loads the volume settings to allow background music to play
@@ -163,6 +164,8 @@ public class GameController {
         /*************
          * Game Code *
          *************/
+
+
     }
 
     private void initializeLevel() {
@@ -231,9 +234,9 @@ public class GameController {
             boolean endGameCondition = variableHandler.health.getValue() <= 0;
 
             if (endGameCondition) {
-                soundHandler.playSound(soundHandler.EXPLOSION);
-                // todo: play explosion animation first
+
                 Engine.gameOverState();
+
                 System.out.println("Game Over");
                 VariableHandler.updateHighScore();
             }
@@ -272,6 +275,10 @@ public class GameController {
                     }
             }
         }
+
+        if (Engine.stateIs(GameState.GameOver)) {
+
+        }
     }
 
     public void render(Graphics g) {
@@ -288,15 +295,16 @@ public class GameController {
              * Game Code *
              *************/
 
-            if (Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause) {
+            boolean validState = Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause || Engine.stateIs(GameState.GameOver);
 
-                renderInCamera(g);
+            if (validState) {
+                    renderInCamera(g);
 
-                if (VariableHandler.isHud()) {
+                    if (VariableHandler.isHud()) {
 
-                    entityHandler.renderBossHealth(g);
+                        entityHandler.renderBossHealth(g);
 
-                }
+                    }
 
             }
 
@@ -322,12 +330,19 @@ public class GameController {
         /*************
          * Game Code *
          *************/
-        entityHandler.render(g);
 
         int inScreenMarker = (int) camera.getMarker() + 100;
 
-        g.setColor(Color.RED);
-        g.drawLine(0, inScreenMarker, Engine.WIDTH, inScreenMarker);
+
+        if (!Engine.stateIs(GameState.GameOver)) {
+            entityHandler.render(g);
+
+            g.setColor(Color.RED);
+            g.drawLine(0, inScreenMarker, Engine.WIDTH, inScreenMarker);
+
+        } else {
+
+        }
 
         /*****************
          * Engine Code *

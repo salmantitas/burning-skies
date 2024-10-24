@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 
 public class Animation {
 
+    // todo: the whole class desperately needs to be reworked
+
     private int speed, frames;
 
     private int index = 0;
@@ -23,6 +25,7 @@ public class Animation {
         frames = args.length;
     }
 
+    // todo: change so it only runs once, create a separate function called loopAnimation that loops
     public void runAnimation() {
         index++;
         if (index > speed) {

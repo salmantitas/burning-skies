@@ -11,6 +11,8 @@ import java.awt.*;
 
 public class MenuGameOver extends Menu {
 
+    Animation explosion;
+
     public MenuGameOver() {
         super(GameState.GameOver);
         MAXBUTTON = 2;
@@ -21,10 +23,30 @@ public class MenuGameOver extends Menu {
 
         options[0] = backToMenu;
         options[1] = quit;
+
+        explosion = new Animation(5, GameController.getTexture().explosion[0],
+                GameController.getTexture().explosion[1],
+                GameController.getTexture().explosion[2],
+                GameController.getTexture().explosion[3],
+                GameController.getTexture().explosion[4]
+        );
+    }
+
+    @Override
+    public void update() {
+        if (!explosion.playedOnce)
+        explosion.runAnimation();
     }
 
     @Override
     public void render(Graphics g) {
+
+        int inScreenMarker = (int) GameController.getCamera().getMarker() + 100;
+        int minSize = Math.min(Engine.WIDTH, Engine.HEIGHT - inScreenMarker);
+        int explodeX = (Engine.WIDTH - minSize)/2, explodeY = inScreenMarker/2;
+
+        explosion.drawAnimation(g, explodeX, explodeY, minSize, minSize);
+
         super.render(g);
         drawGameOverScreen(g);
         super.postRender(g);
@@ -42,6 +64,7 @@ public class MenuGameOver extends Menu {
 
     @Override
     public void onSwitch() {
+        SoundHandler.playSound(SoundHandler.EXPLOSION);
 //        GameController.getSound().bgm_Main.stop();
         SoundHandler.playBGMGameOver();
     }
