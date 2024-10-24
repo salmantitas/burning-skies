@@ -1,12 +1,10 @@
 package com.euhedral.game.Entities;
 
-import com.euhedral.engine.Engine;
-import com.euhedral.engine.Entity;
-import com.euhedral.engine.MobileEntity;
-import com.euhedral.engine.Utility;
+import com.euhedral.engine.*;
 import com.euhedral.game.ContactID;
 import com.euhedral.game.Entities.Enemy.Enemy;
 import com.euhedral.game.EntityID;
+import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
@@ -22,6 +20,12 @@ public class BulletPlayer extends Bullet{
         height = width * 3;
         impactColor = Color.GREEN;
         commonInit();
+
+//        impact = new Animation(10, GameController.getTexture().impactSmall[0],
+//                GameController.getTexture().impactSmall[1],
+//                GameController.getTexture().impactSmall[2],
+//                GameController.getTexture().impactSmall[3]
+//        );
     }
 
     @Override
@@ -29,7 +33,8 @@ public class BulletPlayer extends Bullet{
         if (state == STATE_ACTIVE) {
             super.update();
         } else if (state == STATE_IMPACT) {
-            impactTimer++;
+            impact.runAnimation();
+//            impactTimer++;
 //            Utility.log(state + " " + impactTimer);
             this.velX = entity.getVelX();
             this.velY = entity.getVelY();
@@ -43,8 +48,10 @@ public class BulletPlayer extends Bullet{
             g.setColor(color);
             g.fillOval((int) x, (int) y, width, height);
         } else if (state == STATE_IMPACT && entity.isActive()) {
-            g.setColor(impactColor);
-            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
+//            g.setColor(impactColor);
+//            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
+
+            impact.drawAnimation(g, (int) x, (int) y, 32, 32);
         }
     }
 
@@ -63,12 +70,18 @@ public class BulletPlayer extends Bullet{
             g2d.setColor(color);
             g2d.fillOval(reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset));
         } else if (state == STATE_IMPACT) {
-            g2d.setColor(impactColor);
-            int impactX = (int) x - impactFactor;
-            int impactY = (int) y - impactFactor;
-            int impactWidth = width + impactFactor*2;
-            int impactHeight = height + impactFactor*2;
-            g2d.fillOval(xCorrection + impactX - offsetX, impactY + offsetY, (int) (impactWidth*sizeOffset), (int) (impactHeight*sizeOffset));
+//            g2d.setColor(impactColor);
+//            int impactX = (int) x - impactFactor;
+//            int impactY = (int) y - impactFactor;
+//            int impactWidth = width + impactFactor*2;
+//            int impactHeight = height + impactFactor*2;
+//            g2d.fillOval(xCorrection + impactX - offsetX, impactY + offsetY, (int) (impactWidth*sizeOffset), (int) (impactHeight*sizeOffset));
+
+            int impactX = (int) x + xCorrection - offsetX;
+            int impactY = (int) y + yCorrection + offsetY;
+            int impactWidth = (int) ((double )height*sizeOffset);
+            int impactHeight = impactWidth;
+            impact.drawAnimation(g2d, impactX, impactY, impactWidth, impactHeight);
         }
         g2d.setComposite(Utility.makeTransparent(1f));
     }

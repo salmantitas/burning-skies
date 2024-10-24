@@ -13,6 +13,7 @@ public class TextureHandler {
             enemyBasicImage,
             enemyHeavyImage,
             explosionImage,
+            impactSmallImage,
             title,
             logo,
             seaImage,
@@ -23,6 +24,7 @@ public class TextureHandler {
             enemySS,
             enemyHeavySS,
             explosionSS,
+            impactSmallSS,
             seaSS,
             pickupSS;
 
@@ -31,6 +33,7 @@ public class TextureHandler {
     public BufferedImage[] enemy = new BufferedImage[1];
     public BufferedImage[] enemyHeavy = new BufferedImage[1];
     public BufferedImage[] explosion = new BufferedImage[7];
+    public BufferedImage[] impactSmall = new BufferedImage[4];
     public BufferedImage[] sea = new BufferedImage[8];
     public BufferedImage[] pickup = new BufferedImage[3];
 
@@ -42,6 +45,7 @@ public class TextureHandler {
             enemyBasicImage = loader.loadImage("/enemy1.png");
             enemyHeavyImage = loader.loadImage("/enemy2.png");
             explosionImage = loader.loadImage("/explosion.png");
+            impactSmallImage = loader.loadImage("/impactsmall.png");
             title = loader.loadImage("/title.png");
             logo = loader.loadImage("/logo.png");
             seaImage = loader.loadImage("/sea.png");
@@ -54,6 +58,7 @@ public class TextureHandler {
         enemySS = new SpriteSheet(enemyBasicImage);
         enemyHeavySS = new SpriteSheet(enemyHeavyImage);
         explosionSS = new SpriteSheet(explosionImage);
+        impactSmallSS = new SpriteSheet(impactSmallImage);
         seaSS = new SpriteSheet(seaImage);
         pickupSS = new SpriteSheet(pickupImage);
 
@@ -85,6 +90,10 @@ public class TextureHandler {
 
         w = 32;
         h = 32;
+
+        for (int i = 0; i < 4; i ++) {
+            impactSmall[i] = impactSmallSS.grabImage(i+1, 1, w, h);
+        }
 
         for (int i = 0; i < 8; i++) {
             sea[i] = seaSS.grabImage(i+1, 1, w, h);

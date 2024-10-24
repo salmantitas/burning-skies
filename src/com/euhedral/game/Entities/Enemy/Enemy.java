@@ -275,6 +275,7 @@ public class Enemy extends MobileEntity {
     @Override
     public void resurrect(int x, int y) {
         super.resurrect(x, y);
+        explosion.endAnimation();
         shootTimer = shootTimerDefault;
         inscreen = false;
     }

@@ -1,8 +1,10 @@
 package com.euhedral.game.Entities;
 
+import com.euhedral.engine.Animation;
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityID;
+import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
@@ -14,6 +16,7 @@ public class Bullet extends MobileEntity {
     protected Color color;
     protected Color impactColor;
     protected boolean calculated = false;
+    protected Animation impact;
 
     protected int initSound = SoundHandler.BULLET_PLAYER;
 
@@ -34,6 +37,12 @@ public class Bullet extends MobileEntity {
         width = Utility.intAtWidth640(8)/2;
         height = Utility.intAtWidth640(24)/2;
         forwardVelocity = Utility.intAtWidth640(5);
+
+        impact = new Animation(2, GameController.getTexture().impactSmall[0],
+                GameController.getTexture().impactSmall[1],
+                GameController.getTexture().impactSmall[2],
+                GameController.getTexture().impactSmall[3]
+        );
     }
 
     Bullet(int x, int y, double angle) {
@@ -89,6 +98,8 @@ public class Bullet extends MobileEntity {
     @Override
     public void resurrect(int x, int y) {
         super.resurrect(x, y);
+        impact.endAnimation();
+        impact.playedOnce = false;
     }
 
     public void destroy(MobileEntity entity) {
@@ -101,14 +112,17 @@ public class Bullet extends MobileEntity {
     }
 
     public boolean checkDeathAnimationEnd() {
-        if (impactTimer > impactTimerCheck) {
-            impactTimer = 0;
-            return true;
-        }
-        return impactTimer > impactTimerCheck;
+//        if (impactTimer > impactTimerCheck) {
+//            impactTimer = 0;
+//            return true;
+//        }
+//        return impactTimer > impactTimerCheck;
+
+        return impact.playedOnce;
     }
 
     protected double getCenterY() {
         return (y + height / 2);
     }
+
 }

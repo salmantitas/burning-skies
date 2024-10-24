@@ -32,7 +32,8 @@ public class BulletEnemy extends Bullet{
         if (state == STATE_ACTIVE) {
             super.update();
         } else if (state == STATE_IMPACT) {
-            impactTimer++;
+            impact.runAnimation();
+//            impactTimer++;
             this.velX = entity.getVelX();
             this.velY = entity.getVelY();
             super.update();
@@ -45,8 +46,10 @@ public class BulletEnemy extends Bullet{
             g.setColor(color);
             g.fillOval((int) x, (int) y, width, height);
         } else if (state == STATE_IMPACT) {
-            g.setColor(impactColor);
-            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
+//            g.setColor(impactColor);
+//            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
+
+            impact.drawAnimation(g, (int) x, (int) y, height, height);
         }
     }
 
@@ -68,16 +71,20 @@ public class BulletEnemy extends Bullet{
             g2d.setColor(color);
             g2d.fillOval(reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset));
         } else if (state == STATE_IMPACT) {
-            g2d.setColor(impactColor);
-            int impactX = (int) x - impactFactor;
-            int impactY = (int) y - impactFactor;
+//            g2d.setColor(impactColor);
+//            int impactX = (int) x - impactFactor;
+//            int impactY = (int) y - impactFactor;
+//            reflectionX = xCorrection + impactX - offsetX;
+//            reflectionY = yCorrection + impactY + offsetY;
+//            int impactWidth = width + impactFactor*2;
+//            int impactHeight = height + impactFactor*2;
+//            g2d.fillOval(reflectionX, reflectionY, (int) (impactWidth*sizeOffset), (int) (impactHeight*sizeOffset));
 
-            reflectionX = xCorrection + impactX - offsetX;
-            reflectionY = yCorrection + impactY + offsetY;
-
-            int impactWidth = width + impactFactor*2;
-            int impactHeight = height + impactFactor*2;
-            g2d.fillOval(reflectionX, reflectionY, (int) (impactWidth*sizeOffset), (int) (impactHeight*sizeOffset));
+            int impactX = (int) x + xCorrection - offsetX;
+            int impactY = (int) y + yCorrection + offsetY;
+            int impactWidth = (int) ((double )height*sizeOffset);
+            int impactHeight = impactWidth;
+            impact.drawAnimation(g2d, impactX, impactY, impactWidth, impactHeight);
         }
         g2d.setComposite(Utility.makeTransparent(1f));
     }
