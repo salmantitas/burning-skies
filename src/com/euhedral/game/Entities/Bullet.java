@@ -6,6 +6,7 @@ import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityID;
 import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
+import com.euhedral.game.TextureHandler;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -25,6 +26,7 @@ public class Bullet extends MobileEntity {
     protected final int impactTimerCheck = 10;
     protected int impactFactor = 2;
     protected MobileEntity entity;
+    protected TextureHandler textureHandler;
 
     // State Machine
     protected final int STATE_IMPACT = 2;
@@ -34,9 +36,11 @@ public class Bullet extends MobileEntity {
         this.x = x;
         this.y = y;
         collided = false;
-        width = Utility.intAtWidth640(8)/2;
+        width = Utility.intAtWidth640(4);
         height = Utility.intAtWidth640(24)/2;
-        forwardVelocity = Utility.intAtWidth640(5);
+        forwardVelocity = Utility.intAtWidth640(6);
+
+        textureHandler = GameController.getTexture();
 
         impact = new Animation(2, GameController.getTexture().impactSmall[0],
                 GameController.getTexture().impactSmall[1],

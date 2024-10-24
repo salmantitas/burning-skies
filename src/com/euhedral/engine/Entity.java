@@ -165,6 +165,14 @@ public abstract class Entity {
         g.drawImage(image, (int) x, (int) y, null);
     }
 
+    protected void drawImage(Graphics g, BufferedImage image, int targetWidth, int targetHeight) {
+        g.drawImage(image, (int) x, (int) y, targetWidth, targetHeight, null);
+    }
+
+//    protected void drawImage(Graphics g, BufferedImage image, int x, int y, int targetWidth, int targetHeight) {
+//        g.drawImage(image, x, y, targetWidth, targetHeight, null);
+//    }
+
     protected void drawRect(Graphics g) {
         g.fillRect((int) x, (int) y, width, height);
     }

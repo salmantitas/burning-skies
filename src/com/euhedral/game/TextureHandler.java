@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class TextureHandler {
 
-    public BufferedImage
+    private BufferedImage
             playerImage,
             enemyBasicImage,
             enemyHeavyImage,
@@ -17,16 +17,20 @@ public class TextureHandler {
             title,
             logo,
             seaImage,
-            pickupImage;
+            pickupImage,
+            bulletPlayerImage,
+            bulletEnemyImage;
 
-    public SpriteSheet
+    private SpriteSheet
             playerSS,
             enemySS,
             enemyHeavySS,
             explosionSS,
             impactSmallSS,
             seaSS,
-            pickupSS;
+            pickupSS,
+            bulletPlayerSS,
+            bulletEnemySS;
 
 
     public BufferedImage[] player = new BufferedImage[9];
@@ -36,6 +40,8 @@ public class TextureHandler {
     public BufferedImage[] impactSmall = new BufferedImage[4];
     public BufferedImage[] sea = new BufferedImage[8];
     public BufferedImage[] pickup = new BufferedImage[3];
+    public BufferedImage[] bulletPlayer = new BufferedImage[1];
+    public BufferedImage[] bulletEnemy = new BufferedImage[1];
 
     public TextureHandler() {
         BufferedImageLoader loader = new BufferedImageLoader();
@@ -50,6 +56,8 @@ public class TextureHandler {
             logo = loader.loadImage("/logo.png");
             seaImage = loader.loadImage("/sea.png");
             pickupImage = loader.loadImage("/pickup.png");
+            bulletPlayerImage = loader.loadImage("/bulletplayer.png");
+            bulletEnemyImage = loader.loadImage("/bulletenemy.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,6 +69,8 @@ public class TextureHandler {
         impactSmallSS = new SpriteSheet(impactSmallImage);
         seaSS = new SpriteSheet(seaImage);
         pickupSS = new SpriteSheet(pickupImage);
+        bulletPlayerSS = new SpriteSheet(bulletPlayerImage);
+        bulletEnemySS = new SpriteSheet(bulletEnemyImage);
 
         initializeTexture();
     }
@@ -105,6 +115,14 @@ public class TextureHandler {
         pickup[0] = pickupSS.grabImage(1,1, w, h);
         pickup[1] = pickupSS.grabImage(2,1, w, h);
         pickup[2] = pickupSS.grabImage(3,1, w, h);
+
+        w = 4;
+        h = 12;
+        bulletPlayer[0] = bulletPlayerSS.grabImage(1,1,w,h);
+
+        w = 8;
+        h = 48;
+        bulletEnemy[0] = bulletEnemySS.grabImage(1,1,w,h);
     }
 
 

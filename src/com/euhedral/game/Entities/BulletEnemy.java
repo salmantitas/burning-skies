@@ -14,11 +14,12 @@ public class BulletEnemy extends Bullet{
 
     public BulletEnemy(int x, int y, double angle) {
         super(x, y, angle);
-        height = width * 6;
+        height = width * 6; // 8, 48
         forwardVelocity = Utility.intAtWidth640(5);
         initSound = SoundHandler.BULLET_ENEMY;
-        color = Color.orange;
-        impactColor = Color.red;
+        image = textureHandler.bulletEnemy[0];
+//        color = Color.orange;
+//        impactColor = Color.red;
         SoundHandler.playSound(initSound);
     }
 
@@ -43,8 +44,9 @@ public class BulletEnemy extends Bullet{
     @Override
     protected void drawDefault(Graphics g) {
         if (state == STATE_ACTIVE) {
-            g.setColor(color);
-            g.fillOval((int) x, (int) y, width, height);
+            drawImage(g, image, width, height);
+//            g.setColor(color);
+//            g.fillOval((int) x, (int) y, width, height);
         } else if (state == STATE_IMPACT) {
 //            g.setColor(impactColor);
 //            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
@@ -62,14 +64,17 @@ public class BulletEnemy extends Bullet{
         int offsetX = (int) (Engine.WIDTH / 2 - getCenterX()) / 15;
         int offsetY = (int) (Engine.HEIGHT/2 - getCenterY()) / 15;
         int reflectionX, reflectionY;
+        int newWidth = (int) (width*sizeOffset);
+        int newHeight = (int) (height*sizeOffset);
 //        int reflectionX = xCorrection + (int) x - offsetX;
 //        int reflectionY = yCorrection + (int) y + offsetY;
 
         if (state == STATE_ACTIVE) {
             reflectionX = xCorrection + (int) x - offsetX;
             reflectionY = yCorrection + (int) y + offsetY;
-            g2d.setColor(color);
-            g2d.fillOval(reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset));
+            g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
+//            g2d.setColor(color);
+//            g2d.fillOval(reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset));
         } else if (state == STATE_IMPACT) {
 //            g2d.setColor(impactColor);
 //            int impactX = (int) x - impactFactor;

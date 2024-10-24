@@ -85,12 +85,12 @@ public class MenuMain extends Menu {
     }
 
     private void renderLogo(Graphics g) {
-        BufferedImage logo = GameController.getTexture().logo;
-        int imageWidth = logo.getWidth(), imageHeight = logo.getHeight();
-        int imageOffset = 20;
-        int imageX = Engine.WIDTH - imageWidth - imageOffset;
-        int imageY = Engine.HEIGHT - imageHeight - imageOffset;
-
-        g.drawImage(logo, imageX, imageY, null);
+//        BufferedImage logo = GameController.getTexture().logo;
+//        int imageWidth = logo.getWidth(), imageHeight = logo.getHeight();
+//        int imageOffset = 20;
+//        int imageX = Engine.WIDTH - imageWidth - imageOffset;
+//        int imageY = Engine.HEIGHT - imageHeight - imageOffset;
+//
+//        g.drawImage(logo, imageX, imageY, null);
     }
 }

@@ -16,9 +16,10 @@ public class BulletPlayer extends Bullet{
     BulletPlayer(int x, int y, ContactID contactId, double angle) {
         super(x, y, angle);
         this.contactId = contactId;
-        width = 5;
-        height = width * 3;
-        impactColor = Color.GREEN;
+        width = Utility.intAtWidth640(3); //6
+        height = width * 3; // 18
+        setImage(textureHandler.bulletPlayer[0]);
+//        impactColor = Color.GREEN;
         commonInit();
 
 //        impact = new Animation(10, GameController.getTexture().impactSmall[0],
@@ -45,8 +46,9 @@ public class BulletPlayer extends Bullet{
     @Override
     protected void drawDefault(Graphics g) {
         if (state == STATE_ACTIVE) {
-            g.setColor(color);
-            g.fillOval((int) x, (int) y, width, height);
+            drawImage(g, image, width, height);
+//            g.setColor(color);
+//            g.fillOval((int) x, (int) y, width, height);
         } else if (state == STATE_IMPACT && entity.isActive()) {
 //            g.setColor(impactColor);
 //            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
@@ -65,10 +67,13 @@ public class BulletPlayer extends Bullet{
         int offsetY = (int) (Engine.HEIGHT/2 - getCenterY()) / 15;
         int reflectionX = xCorrection + (int) x - offsetX;
         int reflectionY = yCorrection + (int) y + offsetY;
+        int newWidth = (int) (width*sizeOffset);
+        int newHeight = (int) (height*sizeOffset);
 
         if (state == STATE_ACTIVE) {
-            g2d.setColor(color);
-            g2d.fillOval(reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset));
+            g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
+//            g2d.setColor(color);
+//            g2d.fillOval(reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset));
         } else if (state == STATE_IMPACT) {
 //            g2d.setColor(impactColor);
 //            int impactX = (int) x - impactFactor;
