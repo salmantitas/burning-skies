@@ -67,6 +67,7 @@ public class MenuGameOver extends Menu {
         SoundHandler.playSound(SoundHandler.EXPLOSION);
 //        GameController.getSound().bgm_Main.stop();
         SoundHandler.playBGMGameOver();
+        super.onSwitch();
     }
 
 }

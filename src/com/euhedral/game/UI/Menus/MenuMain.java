@@ -59,6 +59,7 @@ public class MenuMain extends Menu {
     @Override
     public void onSwitch() {
         SoundHandler.playBGMMenu();
+        super.onSwitch();
     }
 
     /*

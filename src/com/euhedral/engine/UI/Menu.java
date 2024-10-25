@@ -103,10 +103,12 @@ public class Menu {
                 Button button = options[i];
                 if (button.mouseOverlap(mx, my)) {
                     if (!button.isSelected()) {
+                        options[index].deselect();
                         button.select();
                         index = i;
                     }
-                } else button.deselect();
+                }
+//                else button.deselect();
             }
         }
     }
@@ -201,6 +203,11 @@ public class Menu {
     }
 
     public void onSwitch() {
+        if (MAXBUTTON > 0) {
+            options[index].deselect();
+            index = 0;
+            options[index].select();
+        }
         resetMessageBoxes();
     }
 
