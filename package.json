@@ -5,7 +5,7 @@
     "main": "index.js",
     "preferGlobal": true,
     "repository": "",
-    "version": "0.6.1",
+    "version": "0.6.11",
     "jdeploy": {
         "jdk": false,
         "javaVersion": "17",

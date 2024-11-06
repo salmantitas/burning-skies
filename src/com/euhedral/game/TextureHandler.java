@@ -1,5 +1,6 @@
 package com.euhedral.game;
 
+import com.euhedral.engine.Animation;
 import com.euhedral.engine.BufferedImageLoader;
 import com.euhedral.engine.SpriteSheet;
 import com.euhedral.engine.Utility;
@@ -36,7 +37,7 @@ public class TextureHandler {
     public BufferedImage[] player = new BufferedImage[9];
     public BufferedImage[] enemy = new BufferedImage[1];
     public BufferedImage[] enemyHeavy = new BufferedImage[1];
-    public BufferedImage[] explosion = new BufferedImage[7];
+    public BufferedImage[] explosion = new BufferedImage[4];
     public BufferedImage[] impactSmall = new BufferedImage[4];
     public BufferedImage[] sea = new BufferedImage[8];
     public BufferedImage[] pickup = new BufferedImage[3];
@@ -90,16 +91,16 @@ public class TextureHandler {
 
         enemy[0] = enemySS.grabImage(1,1,w,h);
 
-        for (int i = 0; i < 5; i ++) {
-            explosion[i] = explosionSS.grabImage(i+1, 1, w, h);
-        }
-
         w = 128;
 
         enemyHeavy[0] = enemyHeavySS.grabImage(1,1,w,h);
 
         w = 32;
         h = 32;
+
+        for (int i = 0; i < 4; i ++) {
+            explosion[i] = explosionSS.grabImage(i+1, 1, w, h);
+        }
 
         for (int i = 0; i < 4; i ++) {
             impactSmall[i] = impactSmallSS.grabImage(i+1, 1, w, h);
@@ -123,6 +124,14 @@ public class TextureHandler {
         w = 8;
         h = 48;
         bulletEnemy[0] = bulletEnemySS.grabImage(1,1,w,h);
+    }
+
+    public static Animation initExplosion(int speed) {
+        return new Animation(speed, GameController.getTexture().explosion[0],
+                GameController.getTexture().explosion[1],
+                GameController.getTexture().explosion[2],
+                GameController.getTexture().explosion[3]
+        );
     }
 
 

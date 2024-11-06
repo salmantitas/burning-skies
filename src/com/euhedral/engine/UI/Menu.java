@@ -3,7 +3,6 @@ package com.euhedral.engine.UI;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ActionTag;
-import com.euhedral.game.SoundHandler;
 import com.euhedral.game.UI.MessageBox;
 import com.euhedral.game.VariableHandler;
 
@@ -48,6 +47,7 @@ public class Menu {
     protected int x75 = Utility.percWidth(75);
     protected int xLast = Utility.percWidth(90);
     protected int y20 = Utility.percHeight(20);
+    protected int y22 = Utility.percHeight(22);
     protected int y26 = Utility.percHeight(26);
     protected int y32 = Utility.percHeight(32);
     protected int y40 = Utility.percHeight(40);
@@ -119,14 +119,18 @@ public class Menu {
     public void keyboardSelection(char c) {
         if (activeMessageBoxes == 0) {
             if (c == 'r') {
-                options[index].deselect();
-                index = (index + 1) % MAXBUTTON;
-                options[index].select();
+                reassignSelected((index + 1) % MAXBUTTON);
+//                options[index].deselect();
+//                index = (index + 1) % MAXBUTTON;
+//                options[index].select();
             } else {
-                options[index].deselect();
-                index = (index - 1);
-                if (index < 0) index = MAXBUTTON - 1;
-                options[index].select();
+                int tempReassign = index - 1;
+                if (tempReassign < 0) tempReassign = MAXBUTTON - 1;
+//
+//                options[index].deselect();
+//                index = (index - 1);
+//                options[index].select();
+                reassignSelected(tempReassign);
             }
         }
     }
@@ -204,11 +208,15 @@ public class Menu {
 
     public void onSwitch() {
         if (MAXBUTTON > 0) {
-            options[index].deselect();
-            index = 0;
-            options[index].select();
+            reassignSelected(0);
         }
         resetMessageBoxes();
+    }
+
+    private void reassignSelected(int reassign) {
+        options[index].deselect();
+        index = reassign;
+        options[index].select();
     }
 
     private void resetMessageBoxes() {

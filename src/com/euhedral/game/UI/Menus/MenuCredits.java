@@ -35,13 +35,13 @@ public class MenuCredits extends Menu {
 
         g.drawString("Credits", x30, y20);
 
-        int creditFontSize = 25;
+        int creditFontSize = 20;
 
         g.setFont(new Font("arial", 1, creditFontSize));
         ArrayList<String> text = new ArrayList<>();
         text.add("Background Music");
-        text.add("Dar Golan");
-        text.add("Joshua McLean");
+        text.add("- Dar Golan");
+        text.add("- Joshua McLean");
         text.add("");
 
         text.add("Bullet Sound Effects");
@@ -55,13 +55,18 @@ public class MenuCredits extends Menu {
         text.add("");
 
         text.add("Sea Texture");
-        text.add("Rafael Matos");
+        text.add("- Rafael Matos");
+        text.add("");
 
-        int lineHeightInPixel = 35;
+        text.add("Explosion and Impact Animation");
+        text.add("- BDragon1727");
+        text.add("");
+
+        int lineHeightInPixel = 30;
         for (int i = 0; i < text.size(); i++)
         {
             String s = text.get(i);
-            g.drawString(s, x5, y26 + (i+1)*lineHeightInPixel);
+            g.drawString(s, x5, y22 + (i+1)*lineHeightInPixel);
         }
     }
 }

@@ -61,7 +61,9 @@ public class EnemyBasic extends Enemy{
             super.render(g);
 //            renderBounds(g);
         } else {
-            explosion.drawAnimation(g, (int) x, (int) y);
+            if (!explosion.playedOnce) {
+                explosion.drawAnimation(g, (int) x, (int) y, width, height);
+            }
         }
     }
 
