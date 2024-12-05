@@ -6,7 +6,6 @@ import com.euhedral.game.Entities.Enemy.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 // Manages all entities in game
@@ -111,7 +110,7 @@ public class EntityHandler {
             enemies.add(enemy);
 //                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
         } else if (id == EntityID.EnemyMove) {
-            Enemy enemy = new EnemyMove(x, y, ContactID.Air, color, levelHeight);
+            Enemy enemy = new EnemyHeavy(x, y, ContactID.Air, color, levelHeight);
             enemies.add(enemy);
         } else if (id == EntityID.EnemySnake) {
             Enemy enemy = new EnemySnake(x, y, ContactID.Air, color, levelHeight);
@@ -413,9 +412,10 @@ public class EntityHandler {
                 enemy.update();
                 checkDeathAnimationEnd(enemy);
                 if (enemy.hasShot()) {
-                    enemy.resetShot();
                     spawnEnemyBullet(enemy);
+                    enemy.decrementShot();
                 }
+
 //                addToBullets(enemy);
             }
 //            else {

@@ -22,6 +22,7 @@ public class ProceduralGenerator {
     int spacing = 3;
     int xStart = incrementMIN, xEnd = width;
     int xMid = (xEnd - xStart)/2 + xStart;
+    int enemytype;
     int spawnZone, lastZone, lastLastZone;
     int pattern, lastPattern, lastLastPattern;
     int wave, waveSinceHealth, waveSincePower, waveSinceShield;
@@ -58,16 +59,20 @@ public class ProceduralGenerator {
     final int MAX_DIFF = 10;
 
     /*
-    * Basic - 1/1
-    * Fast - 1/2
-    * Move - 1/3
-    * Snake - 1/4
+    * Basic - 2/3
+    * Heavy - 1/3
+    * Fast - 1/0
+    * Move - 1/0
+    * Snake - 1/0
     * */
 
-    // Enemy spawning chances
+    // Enemy spawning weights
+    int WEIGHT_BASIC = 2;
+    int WEIGHT_HEAVY = 1;
     int spawnFast = 5;
     int spawnMove = spawnFast * 3;
     int spawnSnake = spawnMove * 2;
+    int WEIGHT_TOTAL = WEIGHT_BASIC + WEIGHT_HEAVY;
 
     // Spawning pick-up, every 50 units of level height
     int spawnPickupRate = 50;
@@ -87,6 +92,12 @@ public class ProceduralGenerator {
     int minG = 1;
     int maxG = 2;
 
+    // Type
+    final int TYPE_BASIC = 0;
+    final int TYPE_HEAVY = 1;
+    final int maxTypes = TYPE_HEAVY + 1;
+
+    // Patterns
     final int PATTERN_LINE = 0;
     final int PATTERN_PINCER = 1;
     final int PATTERN_SLIDE = 2;
@@ -257,10 +268,12 @@ public class ProceduralGenerator {
     }
 
     private void spawnEnemies() {
-            // for every wave
+        // for every wave
         waveSinceHealth++;
         waveSincePower++;
         waveSinceShield++;
+
+        determineType();
 
         // for every zone
         lastLastZone = lastZone;
@@ -285,7 +298,7 @@ public class ProceduralGenerator {
             nextPattern();
         }
 
-//        pattern = PATTERN_CROSS; // stub
+        pattern = PATTERN_LINE; // stub
 
         int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
         int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
@@ -409,6 +422,14 @@ public class ProceduralGenerator {
                 spawnFromDirection(num, spawnHeight, xEnd, "", distance, dispersal, RIGHT);
                 break;
         }
+    }
+
+    private void spawnLineBasic(int num) {
+
+    }
+
+    private void spawnLineHeavy(int num) {
+        
     }
 
     // todo: zone 2 and 3
@@ -948,7 +969,13 @@ public class ProceduralGenerator {
 
         Color c = getKey(id);
 
-        entityHandler.spawnEntity(x*SCALE, y*SCALE, id, c, move, distance*SCALE);
+        int spawnX = x*SCALE, spawnY = y*SCALE, time = distance*SCALE;
+        if (enemytype == 0) {
+            id = EntityID.EnemyBasic;
+        } else if (enemytype == 1) {
+            id = EntityID.EnemyMove;
+        }
+        entityHandler.spawnEntity(spawnX, spawnY, id, c, move, time);
 //        System.out.println("Enemy spawned");
     }
 
@@ -1032,6 +1059,14 @@ public class ProceduralGenerator {
 
     private void determineSpawn() {
 //        if level
+    }
+
+    private void determineType() {
+        // determine type
+//        enemytype = TYPE_BASIC; // stub
+        enemytype = TYPE_HEAVY; // stub
+//        int temp = Utility.randomRangeInclusive(0, WEIGHT_TOTAL);
+//        enemytype = Utility.randomRangeInclusive(0,1); // type;
     }
 
     public int getLevelHeight() {

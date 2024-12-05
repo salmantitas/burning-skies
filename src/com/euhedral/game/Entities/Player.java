@@ -41,6 +41,7 @@ public class Player extends MobileEntity {
     // Lazy Physics
     private float acceleration; //stub //todo:delete
     private float frictionalForce; //stub //todo:delete
+    private Reflection reflection;
 
     // Decay
     int decayCounter = 0;
@@ -76,6 +77,8 @@ public class Player extends MobileEntity {
 
         clampOffsetX = - 5 * width / 4;
         clampOffsetY = height;
+
+        reflection = new Reflection();
     }
 
 //    public Player(int x, int y, int levelHeight, BufferedImage image) {
@@ -162,18 +165,17 @@ public class Player extends MobileEntity {
     public void renderReflection(Graphics2D g2d, float transparency) {
         renderBulletReflections(g2d, transparency);
 
-        g2d.setComposite(Utility.makeTransparent(transparency));
-        double sizeOffset = 0.9;
+//        g2d.setComposite(Utility.makeTransparent(transparency));
 
-        int xCorrection = 8;
-        int yCorrection = 12;
-        int offsetX = (int) (Engine.WIDTH/2 - getCenterX()) / 15;
-        int offsetY = (int) (Engine.HEIGHT/2 - getCenterY()) / 15;
-        int reflectionX = xCorrection + (int) x - offsetX;
-        int reflectionY = yCorrection + (int) y + offsetY;
-        g2d.drawImage(image, reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset), null);
+//        int reflectionX = reflection.calculateReflectionX(x, getCenterX());
+//        int reflectionY = reflection.calculateReflectionY(y, getCenterY());
+//        int newWidth = (int) (width * reflection.sizeOffset);
+//        int newHeight = (int) (height * reflection.sizeOffset);
+//
+//        g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
+        reflection.render(g2d, image, x, getCenterX(), y, getCenterY(), width, height, transparency);
 
-        g2d.setComposite(Utility.makeTransparent(1f));
+//        g2d.setComposite(Utility.makeTransparent(1f));
     }
 
     private void renderBulletReflections(Graphics2D g2d, float transparency) {

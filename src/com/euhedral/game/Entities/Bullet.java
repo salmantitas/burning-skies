@@ -3,10 +3,7 @@ package com.euhedral.game.Entities;
 import com.euhedral.engine.Animation;
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.EntityID;
-import com.euhedral.game.GameController;
-import com.euhedral.game.SoundHandler;
-import com.euhedral.game.TextureHandler;
+import com.euhedral.game.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -31,6 +28,9 @@ public class Bullet extends MobileEntity {
     // State Machine
     protected final int STATE_IMPACT = 2;
 
+    // Reflection
+    protected Reflection reflection;
+
     Bullet(int x, int y) {
         super(x ,y, EntityID.Bullet);
         this.x = x;
@@ -47,6 +47,8 @@ public class Bullet extends MobileEntity {
                 GameController.getTexture().impactSmall[2],
                 GameController.getTexture().impactSmall[3]
         );
+
+        reflection = new Reflection();
     }
 
     Bullet(int x, int y, double angle) {
@@ -72,7 +74,20 @@ public class Bullet extends MobileEntity {
     }
 
     public void renderReflection(Graphics2D g2d, float transparency) {
+        g2d.setComposite(Utility.makeTransparent(transparency));
 
+        int reflectionX = reflection.calculateReflectionX(x, getCenterX());
+        int reflectionY = reflection.calculateReflectionY(y, getCenterY());
+        int newWidth = (int) (width * reflection.sizeOffset);
+        int newHeight = (int) (height * reflection.sizeOffset);
+
+        if (state == STATE_ACTIVE) {
+            g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
+        } else if (state == STATE_IMPACT) {
+            int impactSize = Math.max(newWidth, newHeight);
+            impact.drawAnimation(g2d, reflectionX, reflectionY, impactSize, impactSize);
+        }
+        g2d.setComposite(Utility.makeTransparent(1f));
     }
 
     protected void move() {

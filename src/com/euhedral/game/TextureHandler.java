@@ -91,7 +91,7 @@ public class TextureHandler {
 
         enemy[0] = enemySS.grabImage(1,1,w,h);
 
-        w = 128;
+//        w = 128;
 
         enemyHeavy[0] = enemyHeavySS.grabImage(1,1,w,h);
 

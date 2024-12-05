@@ -35,10 +35,12 @@ public class Enemy extends MobileEntity {
     protected int levelHeight;
 //    protected boolean alive = true;
 
-    protected boolean shot = false;
+    protected int shot = 0;
 
     // State Machine
     protected final int STATE_EXPLODING = 2;
+
+    private Reflection reflection;
 
     public Enemy(int x, int y, ContactID contactID, int levelHeight) {
         super(x, y, EntityID.Enemy);
@@ -78,6 +80,7 @@ public class Enemy extends MobileEntity {
                 }
             }
         } else if (state == STATE_EXPLODING) {
+            explosion.runAnimation();
 //            super.update();
             move();
 //            Utility.log("Exploding");
@@ -120,12 +123,23 @@ public class Enemy extends MobileEntity {
             velY = minVelY;
         }
         explosion = GameController.getTexture().initExplosion(5);
+        reflection = new Reflection();
 
     }
 
     @Override
     public void render(Graphics g) {
-        super.render(g);
+        if (isActive()) {
+            super.render(g);
+//            renderBounds(g);
+        } else {
+            if (!explosion.playedOnce) {
+                int size = Math.max(width, height);
+                int expX = (int) x + (size - width)/2;
+                int expY = (int) y - (size - height)/2;
+                explosion.drawAnimation(g, expX, expY, size, size);
+            }
+        }
     }
 
     public void renderShadow(Graphics g) {
@@ -145,20 +159,16 @@ public class Enemy extends MobileEntity {
 
     public void renderReflection(Graphics2D g2d, float transparency) {
         g2d.setComposite(Utility.makeTransparent(transparency));
-        double sizeOffset = 0.9;
 
-        int xCorrection = 8;
-        int yCorrection = 12;
-        int offsetX = (int) (Engine.WIDTH / 2 - getCenterX()) / 15;
-        int offsetY = (int) (Engine.HEIGHT/2 - getCenterY()) / 15;
-
-        int reflectionX = xCorrection + (int) x - offsetX;
-        int reflectionY = yCorrection + (int) y + offsetY;
+        int reflectionX = reflection.calculateReflectionX(x, getCenterX());
+        int reflectionY = reflection.calculateReflectionY(y, getCenterY());
+        int newWidth = (int) (width * reflection.sizeOffset);
+        int newHeight = (int) (height * reflection.sizeOffset);
 
         if (state == STATE_ACTIVE) {
-            g2d.drawImage(image, reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset), null);
+            g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
         } else if (state == STATE_EXPLODING) {
-            explosion.drawAnimation(g2d, reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset));
+            explosion.drawAnimation(g2d, reflectionX, reflectionY, newWidth, newHeight);
         }
         g2d.setComposite(Utility.makeTransparent(1f));
     }
@@ -169,7 +179,7 @@ public class Enemy extends MobileEntity {
     }
 
     protected void shootDownDefault() {
-        shot = true;
+        shot++;
     }
 
     public void moveInScreen() {
@@ -296,11 +306,11 @@ public class Enemy extends MobileEntity {
     }
 
     public boolean hasShot() {
-        return shot;
+        return shot > 0;
     }
 
-    public void resetShot() {
-        shot = false;
+    public void decrementShot() {
+        shot--;
     }
 
     //stub

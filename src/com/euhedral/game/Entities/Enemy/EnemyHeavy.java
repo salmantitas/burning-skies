@@ -7,16 +7,16 @@ import com.euhedral.game.GameController;
 
 import java.awt.*;
 
-public class EnemyMove extends Enemy {
-    public EnemyMove(int x, int y, ContactID contactID, int levelHeight) {
+public class EnemyHeavy extends Enemy {
+    public EnemyHeavy(int x, int y, ContactID contactID, int levelHeight) {
         super(x, y, contactID, levelHeight);
-        enemyID = EnemyID.Move;
+        enemyID = EnemyID.Heavy;
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyHeavy[0]);
     }
 
-    public EnemyMove(int x, int y, ContactID contactID, Color color, int levelHeight) {
+    public EnemyHeavy(int x, int y, ContactID contactID, Color color, int levelHeight) {
         this(x,y, contactID, levelHeight);
         this.color = color;
     }
@@ -25,8 +25,8 @@ public class EnemyMove extends Enemy {
     public void initialize() {
         super.initialize();
 
-        width = width*2; // todo: check, it's being called twice
-        shootTimerDefault = 60;
+//        width = width*2; // todo: check, it's being called twice
+        shootTimerDefault = 250;
         score = 150;
         velX = 0;
         minVelY = 1.75f;
@@ -36,9 +36,34 @@ public class EnemyMove extends Enemy {
     }
 
     @Override
+    public void update() {
+        super.update();
+        if (state == STATE_ACTIVE && inscreen) {
+            if (movementDistance >= 0) {
+                movementDistance -= Math.abs(velX);
+            } else {
+                velX = 0;
+            }
+        }
+
+//        if (state == STATE_EXPLODING) {
+////            explosion.runAnimation();
+//            if (explosion.playedOnce) {
+////                disable();
+//            }
+//        }
+    }
+
+//    @Override
+//    public void render(Graphics g) {
+//        super.render(g);
+//    }
+
+    @Override
     protected void shoot() {
         super.shoot();
-        moveShoot();
+        shootDownDefault();
+//        moveShoot();
     }
 
     @Override
@@ -82,5 +107,17 @@ public class EnemyMove extends Enemy {
     protected void commonInit() {
         this.setHealth(10);
         velY = 2.5f;
+    }
+
+    @Override
+    public int getTurretX() {
+        return (int) x + width/2 - Utility.intAtWidth640(2);
+    }
+
+    @Override
+    public void resurrect(int x, int y) {
+        commonInit();
+        explosion.playedOnce = false;
+        super.resurrect(x, y);
     }
 }

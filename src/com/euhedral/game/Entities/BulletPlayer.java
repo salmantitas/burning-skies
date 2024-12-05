@@ -1,11 +1,8 @@
 package com.euhedral.game.Entities;
 
 import com.euhedral.engine.*;
-import com.euhedral.game.ContactID;
+import com.euhedral.game.*;
 import com.euhedral.game.Entities.Enemy.Enemy;
-import com.euhedral.game.EntityID;
-import com.euhedral.game.GameController;
-import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
 
@@ -55,40 +52,6 @@ public class BulletPlayer extends Bullet{
 
             impact.drawAnimation(g, (int) x, (int) y, 32, 32);
         }
-    }
-
-    @Override
-    public void renderReflection(Graphics2D g2d, float transparency) {
-        g2d.setComposite(Utility.makeTransparent(transparency));
-        double sizeOffset = 0.9;
-        int xCorrection = 8;
-        int yCorrection = 12;
-        int offsetX = (int) (Engine.WIDTH / 2 - getCenterX()) / 15;
-        int offsetY = (int) (Engine.HEIGHT/2 - getCenterY()) / 15;
-        int reflectionX = xCorrection + (int) x - offsetX;
-        int reflectionY = yCorrection + (int) y + offsetY;
-        int newWidth = (int) (width*sizeOffset);
-        int newHeight = (int) (height*sizeOffset);
-
-        if (state == STATE_ACTIVE) {
-            g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
-//            g2d.setColor(color);
-//            g2d.fillOval(reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset));
-        } else if (state == STATE_IMPACT) {
-//            g2d.setColor(impactColor);
-//            int impactX = (int) x - impactFactor;
-//            int impactY = (int) y - impactFactor;
-//            int impactWidth = width + impactFactor*2;
-//            int impactHeight = height + impactFactor*2;
-//            g2d.fillOval(xCorrection + impactX - offsetX, impactY + offsetY, (int) (impactWidth*sizeOffset), (int) (impactHeight*sizeOffset));
-
-            int impactX = (int) x + xCorrection - offsetX;
-            int impactY = (int) y + yCorrection + offsetY;
-            int impactWidth = (int) ((double )height*sizeOffset);
-            int impactHeight = impactWidth;
-            impact.drawAnimation(g2d, impactX, impactY, impactWidth, impactHeight);
-        }
-        g2d.setComposite(Utility.makeTransparent(1f));
     }
 
     public ContactID getContactId() {

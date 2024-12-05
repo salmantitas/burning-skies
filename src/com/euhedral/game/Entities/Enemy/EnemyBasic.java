@@ -47,25 +47,26 @@ public class EnemyBasic extends Enemy{
             }
         }
 
-        if (state == STATE_EXPLODING) {
-            explosion.runAnimation();
-            if (explosion.playedOnce) {
-//                disable();
-            }
-        }
+//        if (state == STATE_EXPLODING) {
+////            explosion.runAnimation();
+//            if (explosion.playedOnce) {
+////                disable();
+//            }
+//        }
     }
 
-    @Override
-    public void render(Graphics g) {
-        if (isActive()) {
-            super.render(g);
-//            renderBounds(g);
-        } else {
-            if (!explosion.playedOnce) {
-                explosion.drawAnimation(g, (int) x, (int) y, width, height);
-            }
-        }
-    }
+//    @Override
+//    public void render(Graphics g) {
+//        super.render(g);
+////        if (isActive()) {
+////            super.render(g);
+//////            renderBounds(g);
+////        } else {
+////            if (!explosion.playedOnce) {
+////                explosion.drawAnimation(g, (int) x, (int) y, width, height);
+////            }
+////        }
+//    }
 
     @Override
     protected void commonInit() {

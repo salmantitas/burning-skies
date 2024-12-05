@@ -2,6 +2,7 @@ package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.EntityHandler;
 import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
@@ -53,45 +54,6 @@ public class BulletEnemy extends Bullet{
 
             impact.drawAnimation(g, (int) x, (int) y, height, height);
         }
-    }
-
-    @Override
-    public void renderReflection(Graphics2D g2d, float transparency) {
-        g2d.setComposite(Utility.makeTransparent(transparency));
-        double sizeOffset = 0.9;
-        int xCorrection = 8;
-        int yCorrection = 12;
-        int offsetX = (int) (Engine.WIDTH / 2 - getCenterX()) / 15;
-        int offsetY = (int) (Engine.HEIGHT/2 - getCenterY()) / 15;
-        int reflectionX, reflectionY;
-        int newWidth = (int) (width*sizeOffset);
-        int newHeight = (int) (height*sizeOffset);
-//        int reflectionX = xCorrection + (int) x - offsetX;
-//        int reflectionY = yCorrection + (int) y + offsetY;
-
-        if (state == STATE_ACTIVE) {
-            reflectionX = xCorrection + (int) x - offsetX;
-            reflectionY = yCorrection + (int) y + offsetY;
-            g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
-//            g2d.setColor(color);
-//            g2d.fillOval(reflectionX, reflectionY, (int) (width*sizeOffset) ,  (int) (height*sizeOffset));
-        } else if (state == STATE_IMPACT) {
-//            g2d.setColor(impactColor);
-//            int impactX = (int) x - impactFactor;
-//            int impactY = (int) y - impactFactor;
-//            reflectionX = xCorrection + impactX - offsetX;
-//            reflectionY = yCorrection + impactY + offsetY;
-//            int impactWidth = width + impactFactor*2;
-//            int impactHeight = height + impactFactor*2;
-//            g2d.fillOval(reflectionX, reflectionY, (int) (impactWidth*sizeOffset), (int) (impactHeight*sizeOffset));
-
-            int impactX = (int) x + xCorrection - offsetX;
-            int impactY = (int) y + yCorrection + offsetY;
-            int impactWidth = (int) ((double )height*sizeOffset);
-            int impactHeight = impactWidth;
-            impact.drawAnimation(g2d, impactX, impactY, impactWidth, impactHeight);
-        }
-        g2d.setComposite(Utility.makeTransparent(1f));
     }
 
     @Override
