@@ -411,7 +411,7 @@ public class EntityHandler {
             if(true) {
                 enemy.update();
                 checkDeathAnimationEnd(enemy);
-                if (enemy.hasShot()) {
+                while (enemy.hasShot()) {
                     spawnEnemyBullet(enemy);
                     enemy.decrementShot();
                 }
@@ -427,12 +427,15 @@ public class EntityHandler {
     private void spawnEnemyBullet(Enemy enemy) {
         int x = enemy.getTurretX();
         double y = enemy.getY();
-        int dir = 90;
+        int dir = enemy.getBulletAngle();
+        int bulletVelocity = enemy.getBulletVelocity();
         if (bullets.getPoolSize() > 0) {
-            bullets.spawnFromPool(x, (int) y, dir);
+            bullets.spawnFromPool(x, (int) y, dir, bulletVelocity);
         }
-        else
-            bullets.add(new BulletEnemy(x, (int) y, dir));
+        else {
+
+            bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity));
+        }
     }
 
     public void clearEnemies() {

@@ -127,6 +127,10 @@ public abstract class MobileEntity extends Entity {
         physics.jumping = jumping;
     }
 
+    public void setForwardVelocity(float forwardVelocity) {
+        this.forwardVelocity = forwardVelocity;
+    }
+
     public void setAngle(double angle) {
         this.angle = angle;
     }

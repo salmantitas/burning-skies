@@ -169,6 +169,17 @@ public abstract class Entity {
         g.drawImage(image, (int) x, (int) y, targetWidth, targetHeight, null);
     }
 
+    protected void drawImage(Graphics g, BufferedImage image, int targetWidth, int targetHeight, double rotation) {
+        rotation = rotation % 90;
+        Graphics2D g2d = (Graphics2D) g;
+        int tX = 0, tY = 0;
+        g2d.translate(-tX, -tY);
+        g2d.rotate(Math.toRadians(rotation));
+        g2d.drawImage(image, (int) x, (int) y, targetWidth, targetHeight, null);
+        g2d.rotate(Math.toRadians(-rotation));
+        g2d.translate(tX, tY);
+    }
+
 //    protected void drawImage(Graphics g, BufferedImage image, int x, int y, int targetWidth, int targetHeight) {
 //        g.drawImage(image, x, y, targetWidth, targetHeight, null);
 //    }

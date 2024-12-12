@@ -26,7 +26,7 @@ public class Enemy extends MobileEntity {
     protected Random r;
     protected int score = 50;
     protected int distance;
-    protected int shotNum = 0;
+//    protected int shotNum = 0;
     protected int movementDistance;
 
     protected TextureHandler textureHandler;
@@ -36,6 +36,8 @@ public class Enemy extends MobileEntity {
 //    protected boolean alive = true;
 
     protected int shot = 0;
+    protected int bulletVelocity;
+    protected int bulletAngle;
 
     // State Machine
     protected final int STATE_EXPLODING = 2;
@@ -57,6 +59,8 @@ public class Enemy extends MobileEntity {
         this.contactId = contactID;
         r = new Random();
         setLevelHeight(levelHeight);
+        bulletVelocity = Utility.intAtWidth640(5);
+        bulletAngle = 90;
         initialize();
     }
 
@@ -174,7 +178,7 @@ public class Enemy extends MobileEntity {
     }
 
     protected void shoot() {
-        shotNum++;
+//        shotNum++;
         resetShooter();
     }
 
@@ -316,6 +320,14 @@ public class Enemy extends MobileEntity {
     //stub
     public int getTurretX() {
         return 0;
+    }
+
+    public int getBulletVelocity() {
+        return bulletVelocity;
+    }
+
+    public int getBulletAngle() {
+        return bulletAngle;
     }
 
     public boolean isExploding() {

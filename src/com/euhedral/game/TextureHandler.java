@@ -121,8 +121,8 @@ public class TextureHandler {
         h = 12;
         bulletPlayer[0] = bulletPlayerSS.grabImage(1,1,w,h);
 
-        w = 8;
-        h = 48;
+        w = 16;
+        h = 16;
         bulletEnemy[0] = bulletEnemySS.grabImage(1,1,w,h);
     }
 

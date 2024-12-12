@@ -65,11 +65,11 @@ public class EnemyBoss2 extends EnemyBoss{
 //        bullets.add(new BulletEnemy((int) (leftGun), y + height / 2, 90));
 //        bullets.add(new BulletEnemy((int) (rightGun) , y + height / 2, 90));
 
-        shotNum += 4;
-
-        if (shotNum % 12 == 0) {
-            shootTimer = shootTimerDefault;
-        } else shootTimer = shootTimerSmall;
+//        shotNum += 4;
+//
+//        if (shotNum % 12 == 0) {
+//            shootTimer = shootTimerDefault;
+//        } else shootTimer = shootTimerSmall;
 
 //        System.out.println("Shooting at (" + (x + width/2) + ", " + y + ")" );
     }

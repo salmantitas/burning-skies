@@ -15,7 +15,8 @@ public class BulletEnemy extends Bullet{
 
     public BulletEnemy(int x, int y, double angle) {
         super(x, y, angle);
-        height = width * 6; // 8, 48
+        width = 16;
+        height = width;
         forwardVelocity = Utility.intAtWidth640(5);
         initSound = SoundHandler.BULLET_ENEMY;
         image = textureHandler.bulletEnemy[0];
@@ -25,8 +26,8 @@ public class BulletEnemy extends Bullet{
     }
 
     public BulletEnemy(int x, int y, double angle, int vel) {
-        super(x, y, angle);
-//        this.vel = vel;
+        this(x, y, angle);
+        forwardVelocity = vel;
     }
 
     @Override

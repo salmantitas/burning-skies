@@ -84,7 +84,7 @@ public class ProceduralGenerator {
     int groundChance = 1; // in 10;
     int groundCount = 0;
 
-    int[][] enemyNumbers; // [Pattern][min/max numbers]
+    int[][][] enemyNumbers; // [Pattern][min/max numbers]
     final int ENEMY_MIN = 0;
     final int ENEMY_MAX = 1;
 
@@ -99,10 +99,10 @@ public class ProceduralGenerator {
 
     // Patterns
     final int PATTERN_LINE = 0;
-    final int PATTERN_PINCER = 1;
-    final int PATTERN_SLIDE = 2;
-    final int PATTERN_V = 3;
-    final int PATTERN_VERTICAL = 4;
+    final int PATTERN_VERTICAL = 1;
+    final int PATTERN_PINCER = 2;
+    final int PATTERN_SLIDE = 3;
+    final int PATTERN_V = 4;
     final int PATTERN_SQUARE = 5;
     final int PATTERN_CROSS = 6;
     final int maxPatterns = PATTERN_CROSS + 1;
@@ -113,7 +113,7 @@ public class ProceduralGenerator {
 
     // Spawn From Direction
     int LEFT = 1;
-    int RIGHT = -1;
+    int RIGHT = -1*LEFT;
 
     private EntityHandler entityHandler;
 
@@ -125,6 +125,13 @@ public class ProceduralGenerator {
     }
 
     private void buildMatrix() {
+        enemyNumbers = new int[maxTypes][maxPatterns][2];
+
+        buildMatrixBasic();
+        buildMatrixHeavy();
+    }
+
+    private void buildMatrixBasic() {
         int minLine = 2;
         int maxLine = 8;
 
@@ -143,21 +150,55 @@ public class ProceduralGenerator {
         int minEnemiesCross = 1;
         int maxEnemiesCross = 8;
 
-        enemyNumbers = new int[maxPatterns][2];
-        enemyNumbers[PATTERN_LINE][ENEMY_MIN] = minLine;
-        enemyNumbers[PATTERN_LINE][ENEMY_MAX] = maxLine;
-        enemyNumbers[PATTERN_PINCER][ENEMY_MIN] = minPincer;
-        enemyNumbers[PATTERN_PINCER][ENEMY_MAX] = maxPincer;
-        enemyNumbers[PATTERN_SLIDE][ENEMY_MIN] = minPincer;
-        enemyNumbers[PATTERN_SLIDE][ENEMY_MAX] = maxPincer;
-        enemyNumbers[PATTERN_V][ENEMY_MIN] = minV;
-        enemyNumbers[PATTERN_V][ENEMY_MAX] = maxV;
-        enemyNumbers[PATTERN_VERTICAL][ENEMY_MIN] = minVertical;
-        enemyNumbers[PATTERN_VERTICAL][ENEMY_MAX] = maxVertical;
-        enemyNumbers[PATTERN_SQUARE][ENEMY_MIN] = minSquare;
-        enemyNumbers[PATTERN_SQUARE][ENEMY_MAX] = maxSquare;
-        enemyNumbers[PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
-        enemyNumbers[PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
+        enemyNumbers[TYPE_BASIC][PATTERN_LINE][ENEMY_MIN] = minLine;
+        enemyNumbers[TYPE_BASIC][PATTERN_LINE][ENEMY_MAX] = maxLine;
+        enemyNumbers[TYPE_BASIC][PATTERN_PINCER][ENEMY_MIN] = minPincer;
+        enemyNumbers[TYPE_BASIC][PATTERN_PINCER][ENEMY_MAX] = maxPincer;
+        enemyNumbers[TYPE_BASIC][PATTERN_SLIDE][ENEMY_MIN] = minPincer;
+        enemyNumbers[TYPE_BASIC][PATTERN_SLIDE][ENEMY_MAX] = maxPincer;
+        enemyNumbers[TYPE_BASIC][PATTERN_V][ENEMY_MIN] = minV;
+        enemyNumbers[TYPE_BASIC][PATTERN_V][ENEMY_MAX] = maxV;
+        enemyNumbers[TYPE_BASIC][PATTERN_VERTICAL][ENEMY_MIN] = minVertical;
+        enemyNumbers[TYPE_BASIC][PATTERN_VERTICAL][ENEMY_MAX] = maxVertical;
+        enemyNumbers[TYPE_BASIC][PATTERN_SQUARE][ENEMY_MIN] = minSquare;
+        enemyNumbers[TYPE_BASIC][PATTERN_SQUARE][ENEMY_MAX] = maxSquare;
+        enemyNumbers[TYPE_BASIC][PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
+        enemyNumbers[TYPE_BASIC][PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
+    }
+
+    private void buildMatrixHeavy() {
+        int minLine = 1;
+        int maxLine = 2;
+
+        int minPincer = 1;
+        int maxPincer = 2;
+
+        int minV = 1;
+        int maxV = 2;
+
+        int minVertical = 1;
+        int maxVertical = 2;
+
+        int minSquare = 1;
+        int maxSquare = 2; // MAX 8 possible but not fun
+
+        int minEnemiesCross = 1;
+        int maxEnemiesCross = 2;
+
+        enemyNumbers[TYPE_HEAVY][PATTERN_LINE][ENEMY_MIN] = minLine;
+        enemyNumbers[TYPE_HEAVY][PATTERN_LINE][ENEMY_MAX] = maxLine;
+        enemyNumbers[TYPE_HEAVY][PATTERN_PINCER][ENEMY_MIN] = minPincer;
+        enemyNumbers[TYPE_HEAVY][PATTERN_PINCER][ENEMY_MAX] = maxPincer;
+        enemyNumbers[TYPE_HEAVY][PATTERN_SLIDE][ENEMY_MIN] = minPincer;
+        enemyNumbers[TYPE_HEAVY][PATTERN_SLIDE][ENEMY_MAX] = maxPincer;
+        enemyNumbers[TYPE_HEAVY][PATTERN_V][ENEMY_MIN] = minV;
+        enemyNumbers[TYPE_HEAVY][PATTERN_V][ENEMY_MAX] = maxV;
+        enemyNumbers[TYPE_HEAVY][PATTERN_VERTICAL][ENEMY_MIN] = minVertical;
+        enemyNumbers[TYPE_HEAVY][PATTERN_VERTICAL][ENEMY_MAX] = maxVertical;
+        enemyNumbers[TYPE_HEAVY][PATTERN_SQUARE][ENEMY_MIN] = minSquare;
+        enemyNumbers[TYPE_HEAVY][PATTERN_SQUARE][ENEMY_MAX] = maxSquare;
+        enemyNumbers[TYPE_HEAVY][PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
+        enemyNumbers[TYPE_HEAVY][PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
     }
 
     // generate a level using procedural generation // YEAH NO SHIT.
@@ -255,8 +296,8 @@ public class ProceduralGenerator {
         lastPattern = pattern;
         pattern = PATTERN_LINE;
 
-        int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
-        int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
+        int minEnemies = enemyNumbers[enemytype][pattern][ENEMY_MIN];
+        int maxEnemies = enemyNumbers[enemytype][pattern][ENEMY_MAX];
         int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
         Utility.log("Current Max: " + currentMax);
 
@@ -298,10 +339,10 @@ public class ProceduralGenerator {
             nextPattern();
         }
 
-        pattern = PATTERN_LINE; // stub
+//        pattern = PATTERN_SQUARE; // stub
 
-        int minEnemies = enemyNumbers[pattern][ENEMY_MIN];
-        int maxEnemies = enemyNumbers[pattern][ENEMY_MAX];
+        int minEnemies = enemyNumbers[enemytype][pattern][ENEMY_MIN];
+        int maxEnemies = enemyNumbers[enemytype][pattern][ENEMY_MAX];
 
         int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
 
@@ -752,7 +793,7 @@ public class ProceduralGenerator {
                 int factor = 16 - 2*(num - 2);
                 time = time/factor;
 
-                if (num == enemyNumbers[pattern][ENEMY_MAX]) {
+                if (num == enemyNumbers[enemytype][pattern][ENEMY_MAX]) {
                     time -= 1;
                 }
                 dispersal = 0;
@@ -818,7 +859,7 @@ public class ProceduralGenerator {
                 int factor = 16 - 2*(num - 2);
                 time = time/factor;
 
-                if (num == enemyNumbers[pattern][ENEMY_MAX]) {
+                if (num == enemyNumbers[enemytype][pattern][ENEMY_MAX]) {
                     time -= 1;
                 }
                 dispersal = 0;
@@ -1012,10 +1053,14 @@ public class ProceduralGenerator {
     private void nextPattern() {
         lastLastPattern = lastPattern;
         lastPattern = pattern;
-        pattern = Utility.randomRange(0, maxPatterns);
+        int max = maxPatterns;
+        if (enemytype == TYPE_HEAVY) {
+            max = 2;
+        }
+        pattern = Utility.randomRange(0, max);
 
         while (pattern == lastPattern && pattern == lastLastPattern) {
-            pattern = Utility.randomRange(0, maxPatterns);
+            pattern = Utility.randomRange(0,max);
         }
     }
 
@@ -1025,6 +1070,10 @@ public class ProceduralGenerator {
 
         float spawnIntervalFloat = (maxPause - minPause) * (num - 1)/(maxEnemies - 1) + minPause;
         spawnInterval = (long) spawnIntervalFloat;
+
+        if (enemytype == TYPE_HEAVY && spawnIntervalFloat > spawnInterval_MIN) {
+            spawnInterval = (long) (spawnIntervalFloat*0.9);
+        }
 
         // todo: adjust
         if (pattern == PATTERN_SLIDE) {
@@ -1062,9 +1111,11 @@ public class ProceduralGenerator {
     }
 
     private void determineType() {
+        int rand = Utility.randomRangeInclusive(0, 1);
+        enemytype = rand;
         // determine type
 //        enemytype = TYPE_BASIC; // stub
-        enemytype = TYPE_HEAVY; // stub
+//        enemytype = TYPE_HEAVY; // stub
 //        int temp = Utility.randomRangeInclusive(0, WEIGHT_TOTAL);
 //        enemytype = Utility.randomRangeInclusive(0,1); // type;
     }

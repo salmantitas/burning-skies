@@ -8,9 +8,14 @@ import com.euhedral.game.GameController;
 import java.awt.*;
 
 public class EnemyHeavy extends Enemy {
+
+    boolean turretLeft = true;
+
     public EnemyHeavy(int x, int y, ContactID contactID, int levelHeight) {
         super(x, y, contactID, levelHeight);
         enemyID = EnemyID.Heavy;
+        bulletVelocity = Utility.intAtWidth640(6);
+        bulletAngle = 60;
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyHeavy[0]);
@@ -26,7 +31,7 @@ public class EnemyHeavy extends Enemy {
         super.initialize();
 
 //        width = width*2; // todo: check, it's being called twice
-        shootTimerDefault = 250;
+        shootTimerDefault = 200;
         score = 150;
         velX = 0;
         minVelY = 1.75f;
@@ -64,6 +69,11 @@ public class EnemyHeavy extends Enemy {
         super.shoot();
         shootDownDefault();
 //        moveShoot();
+    }
+
+    @Override
+    protected void shootDownDefault() {
+        shot += 2;
     }
 
     @Override
@@ -105,13 +115,30 @@ public class EnemyHeavy extends Enemy {
 
     @Override
     protected void commonInit() {
-        this.setHealth(10);
+        this.setHealth(5);
         velY = 2.5f;
     }
 
     @Override
     public int getTurretX() {
-        return (int) x + width/2 - Utility.intAtWidth640(2);
+        if (turretLeft) {
+            turretLeft = !turretLeft;
+            return (int) x + width / 3 - Utility.intAtWidth640(2);
+        }
+        else {
+            turretLeft = !turretLeft;
+            return (int) x + 2 * width / 3 - Utility.intAtWidth640(2);
+        }
+    }
+
+    @Override
+    public int getBulletAngle() {
+        if (turretLeft) {
+            return bulletAngle;
+        }
+        else {
+            return 90 + (90 - bulletAngle);
+        }
     }
 
     @Override

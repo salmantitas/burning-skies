@@ -154,6 +154,19 @@ public class Pool {
         decrease();
 //        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
     }
+    public void spawnFromPool(int x, int y, double angle, int bulletVelocity) {
+        Entity entity = findInList();
+        entity.resurrect(x, y);
+        MobileEntity mob = (MobileEntity) entity;
+        if (mob.angle != angle) {
+            mob.setAngle(angle);
+        }
+        if (mob.forwardVelocity != bulletVelocity) {
+            mob.setForwardVelocity(bulletVelocity);
+        }
+        decrease();
+//        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
+    }
 
     public void printPool(String name) {
         System.out.println(name + " pool: " + getPoolSize() + " | Total: " + getEntities().size());
