@@ -13,32 +13,23 @@ import java.util.Objects;
 * todo: decrease pause after wave after difficulty rises
 * */
 
-public class ProceduralGenerator {
+public class ProceduralGenerator extends EnemyGenerator {
 
+    // Level
     final int SCALE = 32;
-    public HashMap<Color, EntityID> colorMap;
     int height = Engine.HEIGHT/SCALE, width = 35;
+    public HashMap<Color, EntityID> colorMap;
     final int incrementMIN = Utility.intAtWidth640(1);
     int spacing = 3;
     int xStart = incrementMIN, xEnd = width;
     int xMid = (xEnd - xStart)/2 + xStart;
-    int enemytype;
+
     int spawnZone, lastZone, lastLastZone;
     int pattern, lastPattern, lastLastPattern;
-    int wave, waveSinceHealth, waveSincePower, waveSinceShield;
-    int level;
-    int playerX = xMid*SCALE, playerY;
+
     final int ENDLESS = -1;
-    int spawnHeight;
 
-    long lastSpawnTime;
     long lastSpawnTimePickup;
-    long spawnInterval;
-    long spawnIntervalPickups;
-    long spawnInterval_MIN = 2;
-    long spawnInterval_MAX = 5;
-
-    int enemiesSpawned;
 
     final int SPAWN_ENEMY = 0;
     final int SPAWN_HEALTH = 10;
@@ -92,11 +83,6 @@ public class ProceduralGenerator {
     int minG = 1;
     int maxG = 2;
 
-    // Type
-    final int TYPE_BASIC = 0;
-    final int TYPE_HEAVY = 1;
-    final int maxTypes = TYPE_HEAVY + 1;
-
     // Patterns
     final int PATTERN_LINE = 0;
     final int PATTERN_VERTICAL = 1;
@@ -115,13 +101,14 @@ public class ProceduralGenerator {
     int LEFT = 1;
     int RIGHT = -1*LEFT;
 
-    private EntityHandler entityHandler;
-
     public ProceduralGenerator(EntityHandler entityHandler) {
-        this.entityHandler = entityHandler;
+        super(entityHandler);
         colorMap = VariableHandler.colorMap;
 
         buildMatrix();
+
+        spawnInterval_MIN = 2;
+        spawnInterval_MAX = 5;
     }
 
     private void buildMatrix() {
@@ -202,6 +189,7 @@ public class ProceduralGenerator {
     }
 
     // generate a level using procedural generation // YEAH NO SHIT.
+    @Override
     public void generateLevel() {
         level = VariableHandler.getLevel();
 //        switch (level) {
@@ -242,7 +230,7 @@ public class ProceduralGenerator {
 
         // todo: use line for first wave here
 
-        spawnHeight = (height - Engine.HEIGHT/SCALE) ;//- (wave * MIN_PAUSE);
+        spawnY = (height - Engine.HEIGHT/SCALE) ;//- (wave * MIN_PAUSE);
         lastSpawnTime = GameController.getCurrentTime();
         spawnInterval = spawnInterval_MIN;
         spawnIntervalPickups = spawnInterval_MAX;
@@ -251,6 +239,7 @@ public class ProceduralGenerator {
     }
 
     // Spawns an enemy or a pickup depending on how long ago the last one has been spawned
+    @Override
     public void update() {
         long timeNowMillis = GameController.getCurrentTime();
         long timeSinceLastSpawnMillis = timeNowMillis - lastSpawnTime;
@@ -301,30 +290,20 @@ public class ProceduralGenerator {
         int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
         Utility.log("Current Max: " + currentMax);
 
-        int num = Utility.randomRangeInclusive(minEnemies, currentMax);
+        num = Utility.randomRangeInclusive(minEnemies, currentMax);
 
         spawnLine(num);
         wave++;
         calculateSpawnInterval(num, maxEnemies);
     }
 
-    private void spawnEnemies() {
+    @Override
+    protected void spawnEnemies() {
         // for every wave
-        waveSinceHealth++;
-        waveSincePower++;
-        waveSinceShield++;
+        increment();
 
         determineType();
-
-        // for every zone
-        lastLastZone = lastZone;
-        lastZone = spawnZone;
-        spawnZone = Utility.randomRangeInclusive(1, 3);
-
-        // determine that no zone spawns more than twice in a row
-        while (spawnZone == lastZone && spawnZone == lastLastZone) {
-            spawnZone = Utility.randomRangeInclusive(1, 3);
-        }
+        determineZone();
 
 //        spawnZone = 2; // stub
 
@@ -346,7 +325,7 @@ public class ProceduralGenerator {
 
         int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
 
-        int num = Utility.randomRangeInclusive(minEnemies, currentMax);
+        num = Utility.randomRangeInclusive(minEnemies, currentMax);
 //
 //        double factor = (double) difficulty/ (double) MAX_DIFF;
 //
@@ -397,6 +376,13 @@ public class ProceduralGenerator {
         calculateSpawnInterval(num, maxEnemies);
     }
 
+    @Override
+    protected void increment() {
+        waveSinceHealth++;
+        waveSincePower++;
+        waveSinceShield++;
+    }
+
 //    private void spawnPickup() {
 //        /*
 //        * - start with health only
@@ -422,22 +408,10 @@ public class ProceduralGenerator {
         resetWaveSinceShield();
     }
 
-    private void resetWaveSinceHealth() {
-        waveSinceHealth = 0;
-    }
-
-    private void resetWaveSincePower() {
-        waveSincePower = 0;
-    }
-
-    private void resetWaveSinceShield() {
-        waveSinceShield = 0;
-    }
-
     // Pickup Spawner Helped
     private void spawnPickupHelper(EntityID id) {
         spawnZone = Utility.randomRange(1, 3);
-        entityHandler.spawnPickup(playerX, spawnHeight * SCALE, id);
+        entityHandler.spawnPickup(playerX, spawnY * SCALE, id);
         wave++;
 //        System.out.println("Wave: " + wave);
         spawnInterval = spawnInterval_MIN;
@@ -454,13 +428,13 @@ public class ProceduralGenerator {
 
         switch (spawnZone) {
             case 1:
-                spawnFromDirection(num, spawnHeight, xStart, "", distance, dispersal, LEFT);
+                spawnFromDirection(num, spawnY, xStart, "", distance, dispersal, LEFT);
                 break;
             case 2:
-                spawnFromMiddle(num, spawnHeight, "", "", distance, dispersal);
+                spawnFromMiddle(num, spawnY, "", "", distance, dispersal);
                 break;
             case 3:
-                spawnFromDirection(num, spawnHeight, xEnd, "", distance, dispersal, RIGHT);
+                spawnFromDirection(num, spawnY, xEnd, "", distance, dispersal, RIGHT);
                 break;
         }
     }
@@ -490,8 +464,8 @@ public class ProceduralGenerator {
 
         distance = (MOVEMENT_MAX) - (num-1)*4;
 
-        spawnFromDirection(num, spawnHeight, xStart, "right", distance, dispersal, LEFT);
-        spawnFromDirection(num, spawnHeight, xEnd, "left", distance, dispersal, RIGHT);
+        spawnFromDirection(num, spawnY, xStart, "right", distance, dispersal, LEFT);
+        spawnFromDirection(num, spawnY, xEnd, "left", distance, dispersal, RIGHT);
 //
 //        switch (spawnZone) {
 //            case 1:
@@ -546,11 +520,11 @@ public class ProceduralGenerator {
         int first = Utility.randomRangeInclusive(0,1);
 
         if (first == 0) {
-            spawnFromDirection(num, spawnHeight - yDiff, xStart, "right", distance, dispersal, LEFT);
-            spawnFromDirection(num, spawnHeight, xEnd, "left", distance, dispersal, RIGHT);
+            spawnFromDirection(num, spawnY - yDiff, xStart, "right", distance, dispersal, LEFT);
+            spawnFromDirection(num, spawnY, xEnd, "left", distance, dispersal, RIGHT);
         } else {
-            spawnFromDirection(num, spawnHeight, xStart, "right", distance, dispersal, LEFT);
-            spawnFromDirection(num, spawnHeight - yDiff, xEnd, "left", distance, dispersal, RIGHT);
+            spawnFromDirection(num, spawnY, xStart, "right", distance, dispersal, LEFT);
+            spawnFromDirection(num, spawnY - yDiff, xEnd, "left", distance, dispersal, RIGHT);
         }
     }
 
@@ -560,13 +534,13 @@ public class ProceduralGenerator {
 
         switch (spawnZone) {
             case 1:
-                spawnFromMiddleV(xStart, num, spawnHeight);
+                spawnFromMiddleV(xStart, num, spawnY);
                 break;
             case 2:
-                spawnFromMiddleV(xMid, num, spawnHeight);
+                spawnFromMiddleV(xMid, num, spawnY);
                 break;
             case 3:
-                spawnFromMiddleV(xEnd, num, spawnHeight);
+                spawnFromMiddleV(xEnd, num, spawnY);
                 break;
         }
     }
@@ -593,7 +567,7 @@ public class ProceduralGenerator {
                 direction = RIGHT;
                 break;
         }
-        spawnFromBottom(num, spawnHeight, x, distance, direction);
+        spawnFromBottom(num, spawnY, x, distance, direction);
     }
 
     private void spawnSquare(int num) {
@@ -605,31 +579,31 @@ public class ProceduralGenerator {
 
 //        num--;
         int x0 = 0;
-        int y0 = spawnHeight - num* spacing;
+        int y0 = spawnY - num* spacing;
         int xFin = 0;
         switch (spawnZone) {
             case 1:
                 x0 = xStart;
                 xFin = x0 + num* spacing;
-                y0 = spawnHeight - num* spacing;
+                y0 = spawnY - num* spacing;
                 break;
             case 2:
                 x0 = xMid;
                 xFin = x0 + num* spacing;
-                y0 = spawnHeight - num* spacing;
+                y0 = spawnY - num* spacing;
                 break;
             case 3:
                 x0 = xEnd - num* spacing;
                 xFin = x0 + num* spacing;
-                y0 = spawnHeight - num* spacing;
+                y0 = spawnY - num* spacing;
                 break;
         }
 
         spawnFromDirection(num, y0, x0, "", 0, 0, LEFT);
 //        spawnFromLeft(num, y0, x0, "", 0, 0);
         spawnFromTop(num, y0, xFin);
-        spawnFromBottom(num, spawnHeight, x0, 0, 0);
-        spawnFromDirection(num, spawnHeight, xFin, "", 0, 0, RIGHT);
+        spawnFromBottom(num, spawnY, x0, 0, 0);
+        spawnFromDirection(num, spawnY, xFin, "", 0, 0, RIGHT);
     }
 
     private void spawnCross(int num) {
@@ -643,7 +617,7 @@ public class ProceduralGenerator {
         int interval = spacing;
         int xLeft = 0;
         int xRight = 0;
-        int yMid = spawnHeight - interval*num;
+        int yMid = spawnY - interval*num;
         int yTop = 0;
         int yBottom = 0;
         int x0 = 0;
@@ -1110,19 +1084,30 @@ public class ProceduralGenerator {
 //        if level
     }
 
-    private void determineType() {
+    @Override
+    protected void determineZone() {
+        lastLastZone = lastZone;
+        lastZone = spawnZone;
+        spawnZone = Utility.randomRangeInclusive(1, 3);
+
+        // determine that no zone spawns more than twice in a row
+        while (spawnZone == lastZone && spawnZone == lastLastZone) {
+            spawnZone = Utility.randomRangeInclusive(1, 3);
+        }
+    }
+
+    @Override
+    protected void determineType() {
         int rand = Utility.randomRangeInclusive(0, 1);
         enemytype = rand;
         // determine type
-//        enemytype = TYPE_BASIC; // stub
+        enemytype = TYPE_BASIC; // stub
 //        enemytype = TYPE_HEAVY; // stub
 //        int temp = Utility.randomRangeInclusive(0, WEIGHT_TOTAL);
 //        enemytype = Utility.randomRangeInclusive(0,1); // type;
     }
 
-    public int getLevelHeight() {
-        return height * SCALE;
-    }
+
 
     private Color getKey(EntityID id) {
         for (Map.Entry<Color, EntityID> entry : colorMap.entrySet()) {

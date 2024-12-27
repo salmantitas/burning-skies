@@ -47,7 +47,7 @@ public class GameController {
 
     // Level Generation
 //    private LevelGenerator levelGenerator;
-    private ProceduralGenerator proceduralGenerator;
+    private EnemyGenerator enemyGenerator;
 
     // Levels
     private int levelHeight;
@@ -177,7 +177,7 @@ public class GameController {
         levelMap = new HashMap<>();
 //        loadCustomMap();
 //        levelGenerator = new LevelGenerator(entityManager);
-        proceduralGenerator = new ProceduralGenerator(entityHandler);
+        enemyGenerator = new ProceduralGenerator(entityHandler);
     }
 
     private void loadCustomMap() {
@@ -259,7 +259,7 @@ public class GameController {
                     if (activeMessageBoxes) {
 //                        System.out.println("Active Message Box");
                     }
-                    proceduralGenerator.update();
+                    enemyGenerator.update();
                     entityHandler.update();
                     checkLevelStatus();
 
@@ -714,8 +714,8 @@ public class GameController {
 //            levelGenerator.loadImageLevel(currentLevel);
 //            levelHeight = levelGenerator.getLevelHeight();
         } else {
-            proceduralGenerator.generateLevel();
-            levelHeight = proceduralGenerator.getLevelHeight();
+            enemyGenerator.generateLevel();
+            levelHeight = enemyGenerator.getLevelHeight();
         }
 
 //        entityHandler.spawnFlag();

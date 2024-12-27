@@ -52,7 +52,7 @@ public class Enemy extends MobileEntity {
         moveRight = false;
         moveLeft = false;
         cam = GameController.getCamera().getMarker();
-        power = 1;
+        power = 1; // todo: reconsider purpose
         width = Utility.intAtWidth640(32);
         height = width;
         color = Color.red;

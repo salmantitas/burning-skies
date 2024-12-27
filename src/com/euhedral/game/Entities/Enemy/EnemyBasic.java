@@ -11,12 +11,14 @@ public class EnemyBasic extends Enemy{
 
     public EnemyBasic(int x, int y, ContactID contactID, int levelHeight) {
         super(x, y, contactID, levelHeight);
+        textureHandler = GameController.getTexture();
+        setImage(textureHandler.enemy[0]);
     }
 
     public EnemyBasic(int x, int y, ContactID contactID, Color color, int levelHeight) {
-        super(x, y, contactID, color, levelHeight);
-        textureHandler = GameController.getTexture();
-        setImage(textureHandler.enemy[0]);
+        this(x, y, contactID, levelHeight);
+        this.color = color;
+
     }
 
     @Override

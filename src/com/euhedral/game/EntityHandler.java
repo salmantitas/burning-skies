@@ -102,6 +102,15 @@ public class EntityHandler {
         // todo: Boss
     }
 
+    public void spawnEntity(int x, int y, EntityID id, String move, int time) {
+        if (enemies.getPoolSize() > 0) {
+            enemies.spawnFromPool(x, y, move, time);
+        }
+        else {
+            spawnNew(x, y, id, move, time);
+        }
+    }
+
     private void spawnNew(int x, int y, EntityID id, Color color, String move, int time) {
         if (id == EntityID.EnemyBasic) {
             Enemy enemy = new EnemyBasic(x, y, ContactID.Air, color, levelHeight);
@@ -124,6 +133,25 @@ public class EntityHandler {
 
         else if (id == EntityID.EnemyGround) {
             spawnEnemy(x, y, EnemyID.Basic, ContactID.Ground, color);
+        }
+    }
+
+    private void spawnNew(int x, int y, EntityID id, String move, int time) {
+        if (id == EntityID.EnemyBasic) {
+            Enemy enemy = new EnemyBasic(x, y, ContactID.Air, levelHeight);
+            enemy.setHMove(move);
+            enemy.setMovementDistance(time);
+            enemies.add(enemy);
+//                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
+        } else if (id == EntityID.EnemyMove) {
+            Enemy enemy = new EnemyHeavy(x, y, ContactID.Air, levelHeight);
+            enemies.add(enemy);
+        } else if (id == EntityID.EnemySnake) {
+            Enemy enemy = new EnemySnake(x, y, ContactID.Air, levelHeight);
+            enemies.add(enemy);
+        } else if (id == EntityID.EnemyFast) {
+            Enemy enemy = new EnemyFast(x, y, ContactID.Air, levelHeight);
+            enemies.add(enemy);
         }
     }
 
@@ -408,7 +436,7 @@ public class EntityHandler {
         LinkedList<Entity> enemies = this.enemies.getEntities();
         for (Entity entity : enemies) {
             Enemy enemy = (Enemy) entity;
-            if(true) {
+            if(true) { // todo: Why?
                 enemy.update();
                 checkDeathAnimationEnd(enemy);
                 while (enemy.hasShot()) {
@@ -416,11 +444,7 @@ public class EntityHandler {
                     enemy.decrementShot();
                 }
 
-//                addToBullets(enemy);
             }
-//            else {
-//                enemy.updateBullets();
-//            }
         }
     }
 
