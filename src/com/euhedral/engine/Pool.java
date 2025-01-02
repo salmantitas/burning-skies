@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.LinkedList;
 
 public class Pool {
-    private LinkedList<Entity> entities;
+    protected LinkedList<Entity> entities;
     private int reusable;
     private float camMarker;
 
@@ -120,14 +120,14 @@ public class Pool {
         }
     }
 
-    public void spawnFromPool(int x, int y, String move, int time) {
-        Entity entity = findInList();
-        entity.resurrect(x, y);
-        Enemy enemy = (Enemy) entity;
-        enemy.setHMove(move);
-        enemy.setMovementDistance(time);
-        decrease();
-    }
+//    public void spawnFromPool(int x, int y, String move, int time) {
+//        Entity entity = findInList();
+//        entity.resurrect(x, y);
+//        Enemy enemy = (Enemy) entity;
+//        enemy.setHMove(move);
+//        enemy.setMovementDistance(time);
+//        decrease();
+//    }
 
     public void spawnFromPool(int x, int y, EntityID id) {
         Entity entity = findInList();
@@ -154,6 +154,7 @@ public class Pool {
         decrease();
 //        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
     }
+
     public void spawnFromPool(int x, int y, double angle, int bulletVelocity) {
         Entity entity = findInList();
         entity.resurrect(x, y);

@@ -2,6 +2,7 @@ package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.Entities.Enemy.Enemy;
 
 import java.awt.*;
 
@@ -37,8 +38,8 @@ public class EnemyGenerator {
 
     // Enemy Types
     int enemytype;
-    final int TYPE_BASIC = 0;
-    final int TYPE_HEAVY = 1;
+    final int TYPE_BASIC = EntityHandler.TYPE_BASIC;
+    final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
     final int maxTypes = TYPE_HEAVY + 1;
 
     public EnemyGenerator(EntityHandler entityHandler) {
@@ -62,7 +63,7 @@ public class EnemyGenerator {
 
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
-        difficulty = 1;
+        difficulty = 0;
         entityHandler.setLevelHeight(getLevelHeight());
 
         playerY = getLevelHeight();
@@ -94,6 +95,7 @@ public class EnemyGenerator {
         determineZone();
         spawnHelper();
 
+        incrementDifficulty();
         wave++;
     }
 
@@ -107,10 +109,14 @@ public class EnemyGenerator {
     }
 
     protected void determineType() {
-        int rand = Utility.randomRangeInclusive(0, 1);
+        if (difficulty == 1) {
+            Utility.log("Difficulty: " + difficulty);
+        }
+        int rand = Utility.randomRangeInclusive(0, difficulty);
         enemytype = rand;
+
         // determine type
-        enemytype = TYPE_BASIC; // stub
+//        enemytype = TYPE_BASIC; // stub
 //        enemytype = TYPE_HEAVY; // stub
 //        int temp = Utility.randomRangeInclusive(0, WEIGHT_TOTAL);
 //        enemytype = Utility.randomRangeInclusive(0,1); // type;
@@ -120,9 +126,17 @@ public class EnemyGenerator {
         spawnX = Utility.randomRangeInclusive(xStart, xEnd);
     }
 
-    private void spawnHelper() {
-        entityHandler.spawnEntity(spawnX, spawnY, EntityID.EnemyBasic,"", 0);
+    protected void spawnHelper() {
+        entityHandler.spawnEntity(spawnX, spawnY, enemytype);
 //        System.out.println("Enemy spawned");
+    }
+
+    protected void incrementDifficulty() {
+        int inc = 10;
+        if (wave % inc == 0) {
+            difficulty = Math.min(difficulty + 1, maxTypes - 1);
+            Utility.log("Diff: " + difficulty);
+        }
     }
 
     public int getLevelHeight() {

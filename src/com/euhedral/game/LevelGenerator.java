@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-public class LevelGenerator {
+public class LevelGenerator extends EnemyGenerator {
 
     public HashMap<Color, EntityID> colorMap;
     int height, width = 31;
@@ -12,7 +12,7 @@ public class LevelGenerator {
     private EntityHandler entityHandler;
 
     public LevelGenerator(EntityHandler entityHandler) {
-        this.entityHandler = entityHandler;
+        super(entityHandler);
         colorMap = VariableHandler.colorMap;
     }
 
@@ -39,7 +39,7 @@ public class LevelGenerator {
                     int y = j * 32;
 
                     EntityID id = colorMap.get(c);
-                    entityHandler.spawnEntity(x, y, id, c, "", 300);
+//                    entityHandler.spawnEntity(x, y, id, c, "", 300);
                 }
             }
         }

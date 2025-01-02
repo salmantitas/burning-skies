@@ -19,9 +19,14 @@ public class EntityHandler {
     // Player
     private Player player;// = new Player(0, 0, 0);
 
+    // Enemy Types
+    public static final int TYPE_BASIC = 0;
+    public static final int TYPE_HEAVY = 1;
+    public static final int enemyTypes = TYPE_HEAVY + 1;
+
     // Entity Lists
     private Flag flag;
-    private Pool enemies = new Pool();
+    private EnemyPool enemies = new EnemyPool();
     private Pool bullets = new Pool();
     private Pool pickups = new Pool();
 
@@ -77,15 +82,15 @@ public class EntityHandler {
         //renderFlag(g);
     }
 
-    public void spawnEntity(int x, int y, EntityID id, Color color, String move, int time) {
+    public void spawnEntity(int x, int y, int enemyType, Color color, String move, int time) {
         // todo: Player
 
         // Air Enemies
-        if (enemies.getPoolSize() > 0) {
-            enemies.spawnFromPool(x, y, move, time);
+        if (enemies.getPoolSize(enemyType) > 0) {
+            enemies.spawnFromPool(x, y, enemyType, move, time);
         }
         else {
-            spawnNew(x, y, id, color, move, time);
+            spawnNew(x, y, enemyType, color, move, time);
         }
 //        enemies.printPool("Enemy");
 
@@ -102,57 +107,56 @@ public class EntityHandler {
         // todo: Boss
     }
 
-    public void spawnEntity(int x, int y, EntityID id, String move, int time) {
+    public void spawnEntity(int x, int y, int enemyType) {
+        //todo: Check by enemyType
+        
         if (enemies.getPoolSize() > 0) {
-            enemies.spawnFromPool(x, y, move, time);
+            enemies.spawnFromPool(x, y, enemyType, "", 0);
         }
         else {
-            spawnNew(x, y, id, move, time);
+            spawnNew(x, y, enemyType);
         }
     }
 
-    private void spawnNew(int x, int y, EntityID id, Color color, String move, int time) {
-        if (id == EntityID.EnemyBasic) {
+    private void spawnNew(int x, int y, int enemyType, Color color, String move, int time) {
+        if (enemyType == TYPE_BASIC) {
             Enemy enemy = new EnemyBasic(x, y, ContactID.Air, color, levelHeight);
             enemy.setHMove(move);
             enemy.setMovementDistance(time);
             enemies.add(enemy);
 //                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
-        } else if (id == EntityID.EnemyMove) {
+        } else if (enemyType == TYPE_HEAVY) {
             Enemy enemy = new EnemyHeavy(x, y, ContactID.Air, color, levelHeight);
             enemies.add(enemy);
-        } else if (id == EntityID.EnemySnake) {
-            Enemy enemy = new EnemySnake(x, y, ContactID.Air, color, levelHeight);
-            enemies.add(enemy);
-        } else if (id == EntityID.EnemyFast) {
-            Enemy enemy = new EnemyFast(x, y, ContactID.Air, color, levelHeight);
-            enemies.add(enemy);
         }
+//        else if (id == EntityID.EnemySnake) {
+//            Enemy enemy = new EnemySnake(x, y, ContactID.Air, color, levelHeight);
+//            enemies.add(enemy);
+//        } else if (id == EntityID.EnemyFast) {
+//            Enemy enemy = new EnemyFast(x, y, ContactID.Air, color, levelHeight);
+//            enemies.add(enemy);
+//        }
 
         // Ground Enemies
 
-        else if (id == EntityID.EnemyGround) {
-            spawnEnemy(x, y, EnemyID.Basic, ContactID.Ground, color);
-        }
+//        else if (id == EntityID.EnemyGround) {
+//            spawnEnemy(x, y, TYPE_BASIC, ContactID.Ground, color);
+//        }
     }
 
-    private void spawnNew(int x, int y, EntityID id, String move, int time) {
-        if (id == EntityID.EnemyBasic) {
-            Enemy enemy = new EnemyBasic(x, y, ContactID.Air, levelHeight);
-            enemy.setHMove(move);
-            enemy.setMovementDistance(time);
+    private void spawnNew(int x, int y, int enemyType) {
+        Enemy enemy;
+        if (enemyType == TYPE_BASIC) {
+            enemy = new EnemyBasic(x, y, ContactID.Air, levelHeight);
             enemies.add(enemy);
 //                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
-        } else if (id == EntityID.EnemyMove) {
-            Enemy enemy = new EnemyHeavy(x, y, ContactID.Air, levelHeight);
+        } else if (enemyType == TYPE_HEAVY) {
+            enemy = new EnemyHeavy(x, y, ContactID.Air, levelHeight);
             enemies.add(enemy);
-        } else if (id == EntityID.EnemySnake) {
-            Enemy enemy = new EnemySnake(x, y, ContactID.Air, levelHeight);
-            enemies.add(enemy);
-        } else if (id == EntityID.EnemyFast) {
-            Enemy enemy = new EnemyFast(x, y, ContactID.Air, levelHeight);
-            enemies.add(enemy);
+        } else {
+            return;
         }
+        enemies.add(enemy);
     }
 
     /********************
@@ -244,7 +248,7 @@ public class EntityHandler {
         enemyVsPlayerBulletCollision();
     }
 
-//    private Bullet checkPlayerCollision(Enemy enemy) {
+//    prgaivate Bullet checkPlayerCollision(Enemy enemy) {
 //        return player.checkCollision(enemy);
 //    }
 
@@ -412,8 +416,8 @@ public class EntityHandler {
      * Enemy Functions *
      *******************/
 
-    public void spawnEnemy(int x, int y, EnemyID enemyID, ContactID contactId, Color color) {
-            addEnemy(x, y, enemyID, contactId, color);
+    public void spawnEnemy(int x, int y, int enemyType, ContactID contactId, Color color) {
+            addEnemy(x, y, enemyType, contactId, color);
     }
 
     public void addEnemy(Enemy enemy) {
@@ -421,12 +425,12 @@ public class EntityHandler {
         enemies.add(enemy);
     }
 
-    private void addEnemy(int x, int y, EnemyID eID, ContactID cID) {
+    private void addEnemy(int x, int y, int enemyType, ContactID cID) {
 //        Enemy enemy = new Enemy(x, y, eID, cID);
 //        enemies.add(enemy);
     }
 
-    private void addEnemy(int x, int y, EnemyID eID, ContactID cID, Color color) {
+    private void addEnemy(int x, int y, int enemyType, ContactID cID, Color color) {
         Enemy enemy = new Enemy(x, y, cID, color, levelHeight);
         addEnemy(enemy);
     }

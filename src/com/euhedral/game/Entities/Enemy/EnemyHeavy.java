@@ -2,7 +2,7 @@ package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ContactID;
-import com.euhedral.game.EnemyID;
+import com.euhedral.game.EntityHandler;
 import com.euhedral.game.GameController;
 
 import java.awt.*;
@@ -13,7 +13,8 @@ public class EnemyHeavy extends Enemy {
 
     public EnemyHeavy(int x, int y, ContactID contactID, int levelHeight) {
         super(x, y, contactID, levelHeight);
-        enemyID = EnemyID.Heavy;
+        enemyType = EntityHandler.TYPE_HEAVY;
+//        enemyID = EnemyID.Heavy;
         bulletVelocity = Utility.intAtWidth640(6);
         bulletAngle = 60;
 

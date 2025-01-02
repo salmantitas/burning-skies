@@ -1,6 +1,7 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.*;
+import com.euhedral.game.Entities.Enemy.Enemy;
 import com.euhedral.game.Entities.Shop;
 import com.euhedral.game.UI.UIHandler;
 
@@ -45,8 +46,7 @@ public class GameController {
     //    int offsetHorizontal;
     int offsetVertical;
 
-    // Level Generation
-//    private LevelGenerator levelGenerator;
+    // Enemy Generation
     private EnemyGenerator enemyGenerator;
 
     // Levels
@@ -176,8 +176,9 @@ public class GameController {
         // Initialize Manual Levels
         levelMap = new HashMap<>();
 //        loadCustomMap();
-//        levelGenerator = new LevelGenerator(entityManager);
+//        enemyGenerator = new LevelGenerator(entityHandler);
         enemyGenerator = new ProceduralGenerator(entityHandler);
+//        enemyGenerator = new EnemyGenerator(entityHandler);
     }
 
     private void loadCustomMap() {
@@ -711,8 +712,8 @@ public class GameController {
 
         BufferedImage currentLevel = levelMap.get(level);
         if (currentLevel != null) {
-//            levelGenerator.loadImageLevel(currentLevel);
-//            levelHeight = levelGenerator.getLevelHeight();
+//            enemyGenerator.loadImageLevel(currentLevel);
+//            levelHeight = enemyGenerator.getLevelHeight();
         } else {
             enemyGenerator.generateLevel();
             levelHeight = enemyGenerator.getLevelHeight();

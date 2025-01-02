@@ -3,7 +3,7 @@ package com.euhedral.game.Entities.Enemy;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ContactID;
-import com.euhedral.game.EnemyID;
+//import com.euhedral.game.EnemyID;
 
 import java.awt.*;
 
@@ -14,7 +14,7 @@ public abstract class EnemyBoss extends Enemy {
     public EnemyBoss(int x, int y, int levelHeight) {
         super(x,y, ContactID.Boss, levelHeight);
         shootTimerDefault = 150;
-        enemyID = EnemyID.Boss;
+//        enemyID = EnemyID.Boss;
     }
 
     public boolean isAlive() {

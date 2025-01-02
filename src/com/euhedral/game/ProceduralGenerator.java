@@ -363,11 +363,7 @@ public class ProceduralGenerator extends EnemyGenerator {
                 break;
         }
 
-        int inc = 10;
-        if (wave % inc == 0) {
-            difficulty++;
-            Utility.log("Diff: " + difficulty);
-        }
+        incrementDifficulty();
 
 //        System.out.printf("Wave: %d, LastHeight: %d\n", wave, spawnHeight);
 
@@ -985,17 +981,19 @@ public class ProceduralGenerator extends EnemyGenerator {
         Color c = getKey(id);
 
         int spawnX = x*SCALE, spawnY = y*SCALE, time = distance*SCALE;
-        if (enemytype == 0) {
-            id = EntityID.EnemyBasic;
-        } else if (enemytype == 1) {
-            id = EntityID.EnemyMove;
-        }
-        entityHandler.spawnEntity(spawnX, spawnY, id, c, move, time);
+
+//        if (enemytype == 0) {
+//            id = EntityID.EnemyBasic;
+//        } else if (enemytype == 1) {
+//            id = EntityID.EnemyMove;
+//        }
+
+        entityHandler.spawnEntity(spawnX, spawnY, enemytype, c, move, time);
 //        System.out.println("Enemy spawned");
     }
 
     private void spawnHeavyHelper(int x, int y) {
-        entityHandler.spawnEntity(x*SCALE, y*SCALE, EntityID.EnemyMove, Color.RED, "", 0);
+        entityHandler.spawnEntity(x*SCALE, y*SCALE, EntityHandler.TYPE_HEAVY, Color.RED, "", 0);
     }
 
     private void spawnGround(int remainingHeight, int spawnHeight, int num, String spawnFrom) {
@@ -1096,16 +1094,17 @@ public class ProceduralGenerator extends EnemyGenerator {
         }
     }
 
-    @Override
-    protected void determineType() {
-        int rand = Utility.randomRangeInclusive(0, 1);
-        enemytype = rand;
-        // determine type
-        enemytype = TYPE_BASIC; // stub
-//        enemytype = TYPE_HEAVY; // stub
-//        int temp = Utility.randomRangeInclusive(0, WEIGHT_TOTAL);
-//        enemytype = Utility.randomRangeInclusive(0,1); // type;
-    }
+//    @Override
+//    protected void determineType() {
+//        int rand = Utility.randomRangeInclusive(0, 1);
+//        enemytype = rand;
+//
+//        // determine type
+////        enemytype = TYPE_BASIC; // stub
+////        enemytype = TYPE_HEAVY; // stub
+////        int temp = Utility.randomRangeInclusive(0, WEIGHT_TOTAL);
+////        enemytype = Utility.randomRangeInclusive(0,1); // type;
+//    }
 
 
 

@@ -15,7 +15,7 @@ public class Enemy extends MobileEntity {
     protected int health;
     protected int power = 1;
     protected ContactID contactId;
-    protected EnemyID enemyID;
+    protected int enemyType;
     protected double offscreenVelY;
     protected boolean moveLeft, moveRight;
     protected Color color;
@@ -46,7 +46,7 @@ public class Enemy extends MobileEntity {
 
     public Enemy(int x, int y, ContactID contactID, int levelHeight) {
         super(x, y, EntityID.Enemy);
-        this.enemyID = EnemyID.Basic;
+        enemyType = EntityHandler.TYPE_BASIC;
         contactId = ContactID.Air;
         offscreenVelY = velY;
         moveRight = false;
@@ -336,6 +336,10 @@ public class Enemy extends MobileEntity {
 
     protected void commonInit() {
 
+    }
+
+    public int getEnemyType() {
+        return enemyType;
     }
 
     // Private Methods
