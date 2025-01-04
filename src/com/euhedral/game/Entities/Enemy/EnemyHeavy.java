@@ -1,7 +1,6 @@
 package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Utility;
-import com.euhedral.game.ContactID;
 import com.euhedral.game.EntityHandler;
 import com.euhedral.game.GameController;
 
@@ -11,8 +10,8 @@ public class EnemyHeavy extends Enemy {
 
     boolean turretLeft = true;
 
-    public EnemyHeavy(int x, int y, ContactID contactID, int levelHeight) {
-        super(x, y, contactID, levelHeight);
+    public EnemyHeavy(int x, int y, int levelHeight) {
+        super(x, y, levelHeight);
         enemyType = EntityHandler.TYPE_HEAVY;
 //        enemyID = EnemyID.Heavy;
         bulletVelocity = Utility.intAtWidth640(6);
@@ -22,8 +21,8 @@ public class EnemyHeavy extends Enemy {
         setImage(textureHandler.enemyHeavy[0]);
     }
 
-    public EnemyHeavy(int x, int y, ContactID contactID, Color color, int levelHeight) {
-        this(x,y, contactID, levelHeight);
+    public EnemyHeavy(int x, int y, Color color, int levelHeight) {
+        this(x,y, levelHeight);
         this.color = color;
     }
 

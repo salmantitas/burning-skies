@@ -8,11 +8,11 @@ import java.awt.*;
 
 public class BulletPlayer extends Bullet{
 
-    protected ContactID contactId;
+//    protected ContactID contactId;
 
-    BulletPlayer(int x, int y, ContactID contactId, double angle) {
+    BulletPlayer(int x, int y, double angle) {
         super(x, y, angle);
-        this.contactId = contactId;
+//        this.contactId = contactId;
         width = Utility.intAtWidth640(3); //6
         height = width * 3; // 18
         setImage(textureHandler.bulletPlayer[0]);
@@ -54,9 +54,9 @@ public class BulletPlayer extends Bullet{
         }
     }
 
-    public ContactID getContactId() {
-        return contactId;
-    }
+//    public ContactID getContactId() {
+//        return contactId;
+//    }
 
     @Override
     public void resurrect(int x, int y) {

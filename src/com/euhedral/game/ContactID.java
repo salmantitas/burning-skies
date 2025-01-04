@@ -1,3 +1,4 @@
+/*
 package com.euhedral.game;
 
 public enum ContactID {
@@ -5,3 +6,4 @@ public enum ContactID {
     Ground,
     Boss
 }
+*/

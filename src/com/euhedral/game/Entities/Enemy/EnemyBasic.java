@@ -1,7 +1,6 @@
 package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Utility;
-import com.euhedral.game.ContactID;
 import com.euhedral.game.GameController;
 import com.euhedral.game.TextureHandler;
 
@@ -9,14 +8,14 @@ import java.awt.*;
 
 public class EnemyBasic extends Enemy{
 
-    public EnemyBasic(int x, int y, ContactID contactID, int levelHeight) {
-        super(x, y, contactID, levelHeight);
+    public EnemyBasic(int x, int y, int levelHeight) {
+        super(x, y, levelHeight);
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[0]);
     }
 
-    public EnemyBasic(int x, int y, ContactID contactID, Color color, int levelHeight) {
-        this(x, y, contactID, levelHeight);
+    public EnemyBasic(int x, int y, Color color, int levelHeight) {
+        this(x, y, levelHeight);
         this.color = color;
 
     }

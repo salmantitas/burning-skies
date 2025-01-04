@@ -2,7 +2,6 @@ package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.Entities.Enemy.EnemyGround;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -988,35 +987,29 @@ public class ProceduralGenerator extends EnemyGenerator {
 //            id = EntityID.EnemyMove;
 //        }
 
-        entityHandler.spawnEntity(spawnX, spawnY, enemytype, c, move, time);
+        entityHandler.spawnEntity(spawnX, spawnY, enemytype, move, time);
 //        System.out.println("Enemy spawned");
     }
 
     private void spawnHeavyHelper(int x, int y) {
-        entityHandler.spawnEntity(x*SCALE, y*SCALE, EntityHandler.TYPE_HEAVY, Color.RED, "", 0);
+        entityHandler.spawnEntity(x*SCALE, y*SCALE, EntityHandler.TYPE_HEAVY,  "", 0);
     }
 
-    private void spawnGround(int remainingHeight, int spawnHeight, int num, String spawnFrom) {
-        if (groundCount == num && height - remainingHeight >= spawnHeight) {
-            EnemyGround eG = new EnemyGround(xStart * SCALE, remainingHeight * SCALE, getLevelHeight());
-            groundCount++;
-            if (spawnFrom == "left") {
-                eG.setHMove("right");
-            } else if (spawnFrom == "right") {
-                eG.setHMove("left");
-                eG.setX(xEnd*SCALE);
-            }
-            entityHandler.addEnemy(eG);
-        }
-    }
+//    private void spawnGround(int remainingHeight, int spawnHeight, int num, String spawnFrom) {
+//        if (groundCount == num && height - remainingHeight >= spawnHeight) {
+//            EnemyGround eG = new EnemyGround(xStart * SCALE, remainingHeight * SCALE, getLevelHeight());
+//            groundCount++;
+//            if (spawnFrom == "left") {
+//                eG.setHMove("right");
+//            } else if (spawnFrom == "right") {
+//                eG.setHMove("left");
+//                eG.setX(xEnd*SCALE);
+//            }
+//            entityHandler.addEnemy(eG);
+//        }
 
-    private void spawnGroundLeft(int remainingHeight, int spawnHeight, int num) {
-        spawnGround(remainingHeight, spawnHeight, num, "left");
-    }
-
-    private void spawnGroundRight(int remainingHeight, int spawnHeight, int num) {
-        spawnGround(remainingHeight, spawnHeight, num, "right");
-    }
+//    }
+//    pg
 
     private void spawnBoss(int x, int y) {
         entityHandler.spawnBoss(level, x*SCALE, y*SCALE);

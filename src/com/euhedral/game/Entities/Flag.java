@@ -3,7 +3,7 @@ package com.euhedral.game.Entities;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.Camera;
-import com.euhedral.game.ContactID;
+//import com.euhedral.game.ContactID;
 import com.euhedral.game.GameController;
 
 import java.awt.*;
@@ -11,20 +11,20 @@ import java.awt.*;
 public class Flag {
 
     protected int x, y;
-    protected ContactID contactId;
+//    protected ContactID contactId;
     protected float velX, velY;
     protected int width, height;
     protected Color color;
     protected Camera cam;
 
-    public Flag(int x, int y, ContactID contactId) {
+    public Flag(int x, int y) {
         this.x = x;
         this.y = y;
         width = Utility.intAtWidth640(32);
         height = width;
         velY = Utility.floatAtWidth640(2)/2;
         color = Color.YELLOW;
-        this.contactId = contactId;
+//        this.contactId = contactId;
         cam = GameController.getCamera();
     }
 
@@ -55,9 +55,9 @@ public class Flag {
         this.velY =  velY;
     }
 
-    public ContactID getID() {
-        return contactId;
-    }
+//    public ContactID getID() {
+//        return contactId;
+//    }
 
     // Private Methods
 

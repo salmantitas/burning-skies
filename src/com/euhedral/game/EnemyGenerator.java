@@ -2,7 +2,6 @@ package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.Entities.Enemy.Enemy;
 
 import java.awt.*;
 
@@ -46,10 +45,12 @@ public class EnemyGenerator {
         this.entityHandler = entityHandler;
     }
 
+    // todo: SpawnHealth
     public void update() {
         long timeNowMillis = GameController.getCurrentTime();
         long timeSinceLastSpawnMillis = timeNowMillis - lastSpawnTime;
         boolean canSpawn = spawnInterval <= timeSinceLastSpawnMillis;
+        // todo: SpawnInterval for different types
 
         if (canSpawn) {
             spawnEnemies();
@@ -109,9 +110,6 @@ public class EnemyGenerator {
     }
 
     protected void determineType() {
-        if (difficulty == 1) {
-            Utility.log("Difficulty: " + difficulty);
-        }
         int rand = Utility.randomRangeInclusive(0, difficulty);
         enemytype = rand;
 

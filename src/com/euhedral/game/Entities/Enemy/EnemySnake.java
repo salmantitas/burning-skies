@@ -1,19 +1,18 @@
 package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Utility;
-import com.euhedral.game.ContactID;
 //import com.euhedral.game.EnemyID;
 
 import java.awt.*;
 
 public class EnemySnake extends Enemy {
-    public EnemySnake(int x, int y, ContactID contactID, int levelHeight) {
-        super(x, y, contactID, levelHeight);
+    public EnemySnake(int x, int y, int levelHeight) {
+        super(x, y, levelHeight);
 //        enemyID = EnemyID.Snake;
     }
 
-    public EnemySnake(int x, int y, ContactID contactID, Color color, int levelHeight) {
-        super(x, y, contactID, color, levelHeight);
+    public EnemySnake(int x, int y, Color color, int levelHeight) {
+        super(x, y, color, levelHeight);
 //        enemyID = EnemyID.Snake;
     }
 

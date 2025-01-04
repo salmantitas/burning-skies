@@ -214,8 +214,9 @@ public class Player extends MobileEntity {
         Bullet bullet = null;
         for (Entity entity: bullets.getEntities()) {
             BulletPlayer bulletPlayer = (BulletPlayer) entity;
-            if (bulletPlayer.isActive() && bulletPlayer.getBounds().intersects(enemy.getBounds()) &&
-                    (bulletPlayer.getContactId() == enemy.getContactId() || bulletPlayer.getContactId() == ContactID.Air && enemy.getContactId() == ContactID.Boss)) {
+            if (bulletPlayer.isActive() && bulletPlayer.getBounds().intersects(enemy.getBounds()))
+//                    && (bulletPlayer.getContactId() == enemy.getContactId() || bulletPlayer.getContactId() == ContactID.Air && enemy.getContactId() == ContactID.Boss))
+            {
                 bullet = bulletPlayer;
             }
         }
@@ -334,15 +335,10 @@ public class Player extends MobileEntity {
     }
 
     private void spawnBullet(int x, int y, double dir) {
-        if (airBullet) {
-            if (bullets.getPoolSize() > 0) {
-                bullets.spawnFromPool(x, y, dir);
-            }
-            else
-                bullets.add(new BulletPlayerAir(x, y, dir));
-        } else {
-            bullets.add(new BulletPlayerGround(x, y, dir));
-        }
+        if (bullets.getPoolSize() > 0) {
+            bullets.spawnFromPool(x, y, dir);
+        } else
+            bullets.add(new BulletPlayer(x, y, dir));
     }
 
     private void keyboardMove() {

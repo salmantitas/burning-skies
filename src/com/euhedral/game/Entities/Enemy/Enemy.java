@@ -14,7 +14,6 @@ public class Enemy extends MobileEntity {
 
     protected int health;
     protected int power = 1;
-    protected ContactID contactId;
     protected int enemyType;
     protected double offscreenVelY;
     protected boolean moveLeft, moveRight;
@@ -44,10 +43,9 @@ public class Enemy extends MobileEntity {
 
     private Reflection reflection;
 
-    public Enemy(int x, int y, ContactID contactID, int levelHeight) {
+    public Enemy(int x, int y, int levelHeight) {
         super(x, y, EntityID.Enemy);
         enemyType = EntityHandler.TYPE_BASIC;
-        contactId = ContactID.Air;
         offscreenVelY = velY;
         moveRight = false;
         moveLeft = false;
@@ -56,7 +54,6 @@ public class Enemy extends MobileEntity {
         width = Utility.intAtWidth640(32);
         height = width;
         color = Color.red;
-        this.contactId = contactID;
         r = new Random();
         setLevelHeight(levelHeight);
         bulletVelocity = Utility.intAtWidth640(5);
@@ -64,8 +61,8 @@ public class Enemy extends MobileEntity {
         initialize();
     }
 
-    public Enemy(int x, int y, ContactID contactID, Color color, int levelHeight) {
-        this(x, y, contactID, levelHeight);
+    public Enemy(int x, int y, Color color, int levelHeight) {
+        this(x, y, levelHeight);
         this.color = color;
     }
 
@@ -117,15 +114,15 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void initialize() {
-        if (contactId == ContactID.Ground) {
-            width = Utility.intAtWidth640(32);
-            height = 2* width;
-            color = Color.pink;
-            r = new Random();
-            health = r.nextInt(3) + 2;
-            minVelY = 2f;
-            velY = minVelY;
-        }
+//        if (contactId == ContactID.Ground) {
+//            width = Utility.intAtWidth640(32);
+//            height = 2* width;
+//            color = Color.pink;
+//            r = new Random();
+//            health = r.nextInt(3) + 2;
+//            minVelY = 2f;
+//            velY = minVelY;
+//        }
         explosion = GameController.getTexture().initExplosion(5);
         reflection = new Reflection();
 
@@ -219,9 +216,9 @@ public class Enemy extends MobileEntity {
         shootTimer = shootTimerDefault;
     }
 
-    public ContactID getContactId() {
-        return contactId;
-    }
+//    public ContactID getContactId() {
+//        return contactId;
+//    }
 
     public int getScore() {
         return score;

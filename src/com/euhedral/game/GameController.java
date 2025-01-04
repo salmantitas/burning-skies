@@ -20,7 +20,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.6.12";
+    public static String gameVersion = "0.6.13";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -176,9 +176,9 @@ public class GameController {
         // Initialize Manual Levels
         levelMap = new HashMap<>();
 //        loadCustomMap();
+        enemyGenerator = new EnemyGenerator(entityHandler);
 //        enemyGenerator = new LevelGenerator(entityHandler);
-        enemyGenerator = new ProceduralGenerator(entityHandler);
-//        enemyGenerator = new EnemyGenerator(entityHandler);
+//        enemyGenerator = new ProceduralGenerator(entityHandler);
     }
 
     private void loadCustomMap() {

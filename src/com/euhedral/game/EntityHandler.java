@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
+// todo: Remove Contact ID
 // Manages all entities in game
 public class EntityHandler {
 
@@ -82,7 +83,7 @@ public class EntityHandler {
         //renderFlag(g);
     }
 
-    public void spawnEntity(int x, int y, int enemyType, Color color, String move, int time) {
+    public void spawnEntity(int x, int y, int enemyType, String move, int time) {
         // todo: Player
 
         // Air Enemies
@@ -90,7 +91,7 @@ public class EntityHandler {
             enemies.spawnFromPool(x, y, enemyType, move, time);
         }
         else {
-            spawnNew(x, y, enemyType, color, move, time);
+            spawnNew(x, y, enemyType, move, time);
         }
 //        enemies.printPool("Enemy");
 
@@ -110,23 +111,25 @@ public class EntityHandler {
     public void spawnEntity(int x, int y, int enemyType) {
         //todo: Check by enemyType
         
-        if (enemies.getPoolSize() > 0) {
+        if (enemies.getPoolSize(enemyType) > 0) {
             enemies.spawnFromPool(x, y, enemyType, "", 0);
         }
         else {
-            spawnNew(x, y, enemyType);
+            spawnNew(x, y, enemyType, "", 0);
         }
     }
 
-    private void spawnNew(int x, int y, int enemyType, Color color, String move, int time) {
+    private void spawnNew(int x, int y, int enemyType, String move, int time) {
+        // todo: Remove Color
+        Color color = Color.BLACK;
         if (enemyType == TYPE_BASIC) {
-            Enemy enemy = new EnemyBasic(x, y, ContactID.Air, color, levelHeight);
+            Enemy enemy = new EnemyBasic(x, y, color, levelHeight);
             enemy.setHMove(move);
             enemy.setMovementDistance(time);
             enemies.add(enemy);
 //                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
         } else if (enemyType == TYPE_HEAVY) {
-            Enemy enemy = new EnemyHeavy(x, y, ContactID.Air, color, levelHeight);
+            Enemy enemy = new EnemyHeavy(x, y, color, levelHeight);
             enemies.add(enemy);
         }
 //        else if (id == EntityID.EnemySnake) {
@@ -144,14 +147,15 @@ public class EntityHandler {
 //        }
     }
 
+    // todo: Causes issue with vertical movement
     private void spawnNew(int x, int y, int enemyType) {
         Enemy enemy;
         if (enemyType == TYPE_BASIC) {
-            enemy = new EnemyBasic(x, y, ContactID.Air, levelHeight);
+            enemy = new EnemyBasic(x, y, levelHeight);
             enemies.add(enemy);
 //                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
         } else if (enemyType == TYPE_HEAVY) {
-            enemy = new EnemyHeavy(x, y, ContactID.Air, levelHeight);
+            enemy = new EnemyHeavy(x, y, levelHeight);
             enemies.add(enemy);
         } else {
             return;
@@ -352,9 +356,9 @@ public class EntityHandler {
         flag.render(g);
     }
 
-    public void spawnFlag() {
-        flag = new Flag(Engine.WIDTH / 2, -Engine.HEIGHT / 2, ContactID.Air);
-    }
+//    public void spawnFlag() {
+//        flag = new Flag(Engine.WIDTH / 2, -Engine.HEIGHT / 2, ContactID.Air);
+//    }
 
     public void respawnFlag() {
         flag.reset();
@@ -416,24 +420,24 @@ public class EntityHandler {
      * Enemy Functions *
      *******************/
 
-    public void spawnEnemy(int x, int y, int enemyType, ContactID contactId, Color color) {
-            addEnemy(x, y, enemyType, contactId, color);
-    }
+//    public void spawnEnemy(int x, int y, int enemyType, ContactID contactId, Color color) {
+//            addEnemy(x, y, enemyType, contactId, color);
+//    }
 
     public void addEnemy(Enemy enemy) {
         enemy.setLevelHeight(levelHeight);
         enemies.add(enemy);
     }
 
-    private void addEnemy(int x, int y, int enemyType, ContactID cID) {
-//        Enemy enemy = new Enemy(x, y, eID, cID);
-//        enemies.add(enemy);
-    }
+//    private void addEnemy(int x, int y, int enemyType, ContactID cID) {
+////        Enemy enemy = new Enemy(x, y, eID, cID);
+////        enemies.add(enemy);
+//    }
 
-    private void addEnemy(int x, int y, int enemyType, ContactID cID, Color color) {
-        Enemy enemy = new Enemy(x, y, cID, color, levelHeight);
-        addEnemy(enemy);
-    }
+//    private void addEnemy(int x, int y, int enemyType, ContactID cID, Color color) {
+//        Enemy enemy = new Enemy(x, y, cID, color, levelHeight);
+//        addEnemy(enemy);
+//    }
 
     public void updateEnemies() {
         enemies.disableIfBelowScreen(levelHeight);
@@ -556,8 +560,8 @@ public class EntityHandler {
     private void playerVsEnemyCollision() {
         for (Entity entity : enemies.getEntities()) {
             Enemy enemy = (Enemy) entity;
-            boolean enemyInAir = enemy.getContactId() == ContactID.Air;
-            if (enemyInAir && enemy.isActive())
+//            boolean enemyInAir = enemy.getContactId() == ContactID.Air;
+            if (enemy.isActive())
                 if (enemy.isInscreen() && enemy.isActive()) {
                     boolean collision1 = player.checkCollision(enemy.getBoundsHorizontal());
                     boolean collision2 = player.checkCollision(enemy.getBoundsVertical());
@@ -565,9 +569,10 @@ public class EntityHandler {
                         damagePlayer(30);
                         destroy(enemy);
                     }
-                } else if (enemy.getContactId() == ContactID.Boss) {
-                    damagePlayer(10);
                 }
+//            else if (enemy.getContactId() == ContactID.Boss) {
+//                damagePlayer(10);
+//            }
         }
     }
 
@@ -578,7 +583,8 @@ public class EntityHandler {
                 Bullet bullet = player.checkCollision(enemy);
                 if (bullet != null) {
                     destroy(bullet, enemy);
-                    if (enemy.getContactId() == ContactID.Boss) {
+                    boolean isBoss = false;
+                    if (isBoss) {
                         boss.damage();
                         VariableHandler.setHealthBoss(boss.getHealth());
                         if (boss.getHealth() <= 0) {

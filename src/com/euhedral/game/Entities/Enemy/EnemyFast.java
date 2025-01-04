@@ -1,19 +1,17 @@
 package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Utility;
-import com.euhedral.game.ContactID;
-//import com.euhedral.game.EnemyID;
 
 import java.awt.*;
 
 public class EnemyFast extends Enemy{
-    public EnemyFast(int x, int y, ContactID contactID, int levelHeight) {
-        super(x, y, contactID, levelHeight);
+    public EnemyFast(int x, int y, int levelHeight) {
+        super(x, y, levelHeight);
 //        enemyID = EnemyID.Fast;
     }
 
-    public EnemyFast(int x, int y, ContactID contactID, Color color, int levelHeight) {
-        super(x, y, contactID, color, levelHeight);
+    public EnemyFast(int x, int y, Color color, int levelHeight) {
+        super(x, y, color, levelHeight);
 //        enemyID = EnemyID.Fast;
     }
 
