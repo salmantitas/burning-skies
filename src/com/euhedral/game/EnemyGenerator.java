@@ -95,9 +95,9 @@ public class EnemyGenerator {
         determineType();
         determineZone();
         spawnHelper();
-
         incrementDifficulty();
         wave++;
+        determineSpawnInterval();
     }
 
     // Increment Wave Count for Non-Enemy Spawns
@@ -110,6 +110,15 @@ public class EnemyGenerator {
     }
 
     protected void determineType() {
+        // experimental
+
+        int temp = 1;
+        int total = 0;
+        while (temp <= maxTypes) {
+            total += temp;
+            temp++;
+        }
+
         int rand = Utility.randomRangeInclusive(0, difficulty);
         enemytype = rand;
 
@@ -134,6 +143,16 @@ public class EnemyGenerator {
         if (wave % inc == 0) {
             difficulty = Math.min(difficulty + 1, maxTypes - 1);
             Utility.log("Diff: " + difficulty);
+        }
+    }
+
+    protected void determineSpawnInterval() {
+        spawnInterval = spawnInterval_MIN;
+        float spawnIntervalFloat = spawnInterval;
+
+        if (enemytype == TYPE_HEAVY) {
+//            if (spawnIntervalFloat > spawnInterval_MIN)
+                spawnInterval = (long) (spawnIntervalFloat*1.1);
         }
     }
 

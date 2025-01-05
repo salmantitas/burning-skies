@@ -77,6 +77,7 @@ public class ProceduralGenerator extends EnemyGenerator {
     int[][][] enemyNumbers; // [Pattern][min/max numbers]
     final int ENEMY_MIN = 0;
     final int ENEMY_MAX = 1;
+    int minEnemies, maxEnemies;
 
     // ground spawns
     int minG = 1;
@@ -188,54 +189,54 @@ public class ProceduralGenerator extends EnemyGenerator {
     }
 
     // generate a level using procedural generation // YEAH NO SHIT.
-    @Override
-    public void generateLevel() {
-        level = VariableHandler.getLevel();
-//        switch (level) {
-//            case ENDLESS:
-//                height = ENDLESS;
-//                break;
-//            case 1:
-//                height = 150; // 100 = ~4 waves
-//                break;
-//            case 2:
-//                height = 225;
-//                break;
-//            case 3:
-//                height = 275;
-//                break;
-//            case 4:
-//                height = 300;
-//                break;
-//        }
-
-
-        System.out.printf("Width: %d, Height: %d\n", width, height);
-
-        difficulty = 1;
-        entityHandler.setLevelHeight(getLevelHeight());
-
-        playerY = getLevelHeight();
-
-        entityHandler.spawnPlayer(playerX, playerY);
-
-        // create distance between player and first wave
-        enemiesSpawned = 0;
-        wave = 1;
-        resetWaveSinceHealth();
-        resetWaveSincePower();
-        resetWaveSinceShield();
-        System.out.println("Wave: " + wave);
-
-        // todo: use line for first wave here
-
-        spawnY = (height - Engine.HEIGHT/SCALE) ;//- (wave * MIN_PAUSE);
-        lastSpawnTime = GameController.getCurrentTime();
-        spawnInterval = spawnInterval_MIN;
-        spawnIntervalPickups = spawnInterval_MAX;
-
-//        spawnFirstWave();
-    }
+//    @Override
+//    public void generateLevel() {
+//        level = VariableHandler.getLevel();
+////        switch (level) {
+////            case ENDLESS:
+////                height = ENDLESS;
+////                break;
+////            case 1:
+////                height = 150; // 100 = ~4 waves
+////                break;
+////            case 2:
+////                height = 225;
+////                break;
+////            case 3:
+////                height = 275;
+////                break;
+////            case 4:
+////                height = 300;
+////                break;
+////        }
+//
+//
+//        System.out.printf("Width: %d, Height: %d\n", width, height);
+//
+//        difficulty = 1;
+//        entityHandler.setLevelHeight(getLevelHeight());
+//
+//        playerY = getLevelHeight();
+//
+//        entityHandler.spawnPlayer(playerX, playerY);
+//
+//        // create distance between player and first wave
+//        enemiesSpawned = 0;
+//        wave = 1;
+//        resetWaveSinceHealth();
+//        resetWaveSincePower();
+//        resetWaveSinceShield();
+//        System.out.println("Wave: " + wave);
+//
+//        // todo: use line for first wave here
+//
+//        spawnY = (height - Engine.HEIGHT/SCALE) ;//- (wave * MIN_PAUSE);
+//        lastSpawnTime = GameController.getCurrentTime();
+//        spawnInterval = spawnInterval_MIN;
+//        spawnIntervalPickups = spawnInterval_MAX;
+//
+////        spawnFirstWave();
+//    }
 
     // Spawns an enemy or a pickup depending on how long ago the last one has been spawned
     @Override
@@ -293,49 +294,17 @@ public class ProceduralGenerator extends EnemyGenerator {
 
         spawnLine(num);
         wave++;
-        calculateSpawnInterval(num, maxEnemies);
+        determineSpawnInterval();
     }
 
     @Override
     protected void spawnEnemies() {
         // for every wave
         increment();
-
+        determineNum();
         determineType();
         determineZone();
-
-//        spawnZone = 2; // stub
-
-        // choose spawn pattern
-        if (wave == 1) {
-            lastLastPattern = lastPattern;
-            lastPattern = pattern;
-            pattern = PATTERN_LINE;
-
-//            spawnHeavyHelper(xMid, spawnHeight);
-        } else {
-            nextPattern();
-        }
-
-//        pattern = PATTERN_SQUARE; // stub
-
-        int minEnemies = enemyNumbers[enemytype][pattern][ENEMY_MIN];
-        int maxEnemies = enemyNumbers[enemytype][pattern][ENEMY_MAX];
-
-        int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
-
-        num = Utility.randomRangeInclusive(minEnemies, currentMax);
-//
-//        double factor = (double) difficulty/ (double) MAX_DIFF;
-//
-////        double inc = (double) minEnemies/((double)maxEnemies-(double)minEnemies);
-//        int currentMax = Math.min(minEnemies + (int) (factor*maxEnemies), maxEnemies);
-////        int currentMax = Math.max(minEnemies, (int) (difficulty/MAX_DIFF * maxEnemies));
-//
-//      Utility.log("Current Max: " + currentMax);
-//        int num = Utility.randomRangeInclusive(minEnemies, currentMax);
-
-//        num = maxEnemies; // stub
+        determinePattern();
 
         // spawn enemies
         switch (pattern) {
@@ -368,7 +337,7 @@ public class ProceduralGenerator extends EnemyGenerator {
 
         wave++;
         System.out.println("Wave: " + wave);
-        calculateSpawnInterval(num, maxEnemies);
+        determineSpawnInterval();
     }
 
     @Override
@@ -376,6 +345,16 @@ public class ProceduralGenerator extends EnemyGenerator {
         waveSinceHealth++;
         waveSincePower++;
         waveSinceShield++;
+    }
+
+    @Override
+    protected void determineNum() {
+        minEnemies = enemyNumbers[enemytype][pattern][ENEMY_MIN];
+        maxEnemies = enemyNumbers[enemytype][pattern][ENEMY_MAX];
+
+        int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
+
+        num = Utility.randomRangeInclusive(minEnemies, currentMax);
     }
 
 //    private void spawnPickup() {
@@ -1015,21 +994,30 @@ public class ProceduralGenerator extends EnemyGenerator {
         entityHandler.spawnBoss(level, x*SCALE, y*SCALE);
     }
 
-    private void nextPattern() {
-        lastLastPattern = lastPattern;
-        lastPattern = pattern;
-        int max = maxPatterns;
-        if (enemytype == TYPE_HEAVY) {
-            max = 2;
-        }
-        pattern = Utility.randomRange(0, max);
+    private void determinePattern() {
+        if (wave == 1) {
+            lastLastPattern = lastPattern;
+            lastPattern = pattern;
+            pattern = PATTERN_LINE;
 
-        while (pattern == lastPattern && pattern == lastLastPattern) {
-            pattern = Utility.randomRange(0,max);
+//            spawnHeavyHelper(xMid, spawnHeight);
+        } else {
+            lastLastPattern = lastPattern;
+            lastPattern = pattern;
+            int max = maxPatterns;
+            if (enemytype == TYPE_HEAVY) {
+                max = 2;
+            }
+            pattern = Utility.randomRange(0, max);
+
+            while (pattern == lastPattern && pattern == lastLastPattern) {
+                pattern = Utility.randomRange(0,max);
+            }
         }
     }
 
-    private void calculateSpawnInterval(int num, int maxEnemies) {
+    @Override
+    protected void determineSpawnInterval() {
         float minPause = (float) spawnInterval_MIN;
         float maxPause = (float) spawnInterval_MAX;
 
