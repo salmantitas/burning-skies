@@ -38,6 +38,7 @@ public class EnemyHeavy extends Enemy {
         distance = 0; // stub ; width * 2;
         movementDistance = distance;
         commonInit();
+        damage = 60;
     }
 
     @Override

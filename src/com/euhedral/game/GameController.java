@@ -176,9 +176,9 @@ public class GameController {
         // Initialize Manual Levels
         levelMap = new HashMap<>();
 //        loadCustomMap();
-        enemyGenerator = new EnemyGenerator(entityHandler);
+//        enemyGenerator = new EnemyGenerator(entityHandler);
 //        enemyGenerator = new LevelGenerator(entityHandler);
-//        enemyGenerator = new ProceduralGenerator(entityHandler);
+        enemyGenerator = new ProceduralGenerator(entityHandler);
     }
 
     private void loadCustomMap() {

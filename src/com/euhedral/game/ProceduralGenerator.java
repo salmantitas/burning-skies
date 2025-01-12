@@ -20,7 +20,7 @@ public class ProceduralGenerator extends EnemyGenerator {
     public HashMap<Color, EntityID> colorMap;
     final int incrementMIN = Utility.intAtWidth640(1);
     int spacing = 3;
-    int xStart = incrementMIN, xEnd = width;
+    int xStart = incrementMIN/2, xEnd = width + incrementMIN/2;
     int xMid = (xEnd - xStart)/2 + xStart;
 
     int spawnZone, lastZone, lastLastZone;
@@ -1024,8 +1024,12 @@ public class ProceduralGenerator extends EnemyGenerator {
         float spawnIntervalFloat = (maxPause - minPause) * (num - 1)/(maxEnemies - 1) + minPause;
         spawnInterval = (long) spawnIntervalFloat;
 
-        if (enemytype == TYPE_HEAVY && spawnIntervalFloat > spawnInterval_MIN) {
+        if (enemytype == TYPE_DRONE && spawnIntervalFloat > spawnInterval_MIN) {
             spawnInterval = (long) (spawnIntervalFloat*0.9);
+        }
+
+        if (enemytype == TYPE_HEAVY && spawnIntervalFloat > spawnInterval_MIN) {
+            spawnInterval = (long) (spawnIntervalFloat*1.1);
         }
 
         // todo: adjust
@@ -1074,20 +1078,6 @@ public class ProceduralGenerator extends EnemyGenerator {
             spawnZone = Utility.randomRangeInclusive(1, 3);
         }
     }
-
-//    @Override
-//    protected void determineType() {
-//        int rand = Utility.randomRangeInclusive(0, 1);
-//        enemytype = rand;
-//
-//        // determine type
-////        enemytype = TYPE_BASIC; // stub
-////        enemytype = TYPE_HEAVY; // stub
-////        int temp = Utility.randomRangeInclusive(0, WEIGHT_TOTAL);
-////        enemytype = Utility.randomRangeInclusive(0,1); // type;
-//    }
-
-
 
     private Color getKey(EntityID id) {
         for (Map.Entry<Color, EntityID> entry : colorMap.entrySet()) {

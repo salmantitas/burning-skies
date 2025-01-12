@@ -19,10 +19,12 @@ public class EntityHandler {
 
     // Player
     private Player player;// = new Player(0, 0, 0);
+    public static double playerX, playerY;
 
     // Enemy Types
     public static final int TYPE_BASIC = 0;
-    public static final int TYPE_HEAVY = 1;
+    public static final int TYPE_DRONE = 1;
+    public static final int TYPE_HEAVY = 2;
     public static final int enemyTypes = TYPE_HEAVY + 1;
 
     // Entity Lists
@@ -128,6 +130,9 @@ public class EntityHandler {
             enemy.setMovementDistance(time);
             enemies.add(enemy);
 //                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
+        } else if (enemyType == TYPE_DRONE) {
+            Enemy enemy = new EnemyDrone(x, y, color, levelHeight);
+            enemies.add(enemy);
         } else if (enemyType == TYPE_HEAVY) {
             Enemy enemy = new EnemyHeavy(x, y, color, levelHeight);
             enemies.add(enemy);
@@ -170,6 +175,8 @@ public class EntityHandler {
     // Helper function exists because GameController needs to call on this during tutorial
     public void updatePlayer() {
         player.update();
+        playerX = player.getCenterX();
+        playerY = player.getCenterY();
     }
 
     public void renderPlayer(Graphics g) {
@@ -566,7 +573,8 @@ public class EntityHandler {
                     boolean collision1 = player.checkCollision(enemy.getBoundsHorizontal());
                     boolean collision2 = player.checkCollision(enemy.getBoundsVertical());
                     if (collision1 || collision2) {
-                        damagePlayer(30);
+                        int damage = enemy.getDamage();
+                        damagePlayer(damage);
                         destroy(enemy);
                     }
                 }

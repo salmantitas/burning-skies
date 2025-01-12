@@ -2,6 +2,7 @@ package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.Entities.Enemy.EnemyDrone;
 
 import java.awt.*;
 
@@ -14,9 +15,6 @@ public class EnemyGenerator {
     final int incrementMIN = Utility.intAtWidth640(1);
     int xStart = incrementMIN, xEnd = width;
     int xMid = (xEnd - xStart)/2 + xStart;
-
-    // Wave
-    int wave, waveSinceHealth, waveSincePower, waveSinceShield;
 
     // Player
     int playerX = xMid, playerY;
@@ -38,8 +36,14 @@ public class EnemyGenerator {
     // Enemy Types
     int enemytype;
     final int TYPE_BASIC = EntityHandler.TYPE_BASIC;
+    final int TYPE_DRONE = EntityHandler.TYPE_DRONE;
     final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
     final int maxTypes = TYPE_HEAVY + 1;
+
+    // Wave
+    int wave, waveSinceHealth, waveSincePower, waveSinceShield;
+    int waveSinceHeavy = 0;
+    final int MINWaveSinceHeavy = 1;
 
     public EnemyGenerator(EntityHandler entityHandler) {
         this.entityHandler = entityHandler;
@@ -64,7 +68,7 @@ public class EnemyGenerator {
 
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
-        difficulty = 0;
+        difficulty = 1;
         entityHandler.setLevelHeight(getLevelHeight());
 
         playerY = getLevelHeight();
@@ -119,23 +123,49 @@ public class EnemyGenerator {
             temp++;
         }
 
-        int rand = Utility.randomRangeInclusive(0, difficulty);
+        int calculatedDifficulty = difficulty;
+
+//        if (waveSinceHeavy > MINWaveSinceHeavy) {
+//            calculatedDifficulty -= 1;
+//        }
+
+        int rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
         enemytype = rand;
+
 
         // determine type
 //        enemytype = TYPE_BASIC; // stub
 //        enemytype = TYPE_HEAVY; // stub
+//        enemytype = TYPE_DRONE; // stub
 //        int temp = Utility.randomRangeInclusive(0, WEIGHT_TOTAL);
 //        enemytype = Utility.randomRangeInclusive(0,1); // type;
     }
 
     protected void determineZone() {
-        spawnX = Utility.randomRangeInclusive(xStart, xEnd);
+        if (enemytype == TYPE_DRONE) {
+            int adjustment = 32;
+            int zone = Utility.randomRangeInclusive(0, 1);
+            if (zone == 0) {
+                spawnX = -adjustment;
+            } else {
+                spawnX = width + adjustment;
+            }
+            spawnY = Utility.randomRangeInclusive(0, height * 2/3);
+        } else {
+            spawnX = Utility.randomRangeInclusive(xStart, xEnd);
+            spawnY = (height - Engine.HEIGHT) ;
+        }
     }
 
     protected void spawnHelper() {
         entityHandler.spawnEntity(spawnX, spawnY, enemytype);
 //        System.out.println("Enemy spawned");
+
+        if (enemytype != TYPE_HEAVY) {
+            waveSinceHeavy++;
+        } else {
+            waveSinceHeavy = 0;
+        }
     }
 
     protected void incrementDifficulty() {

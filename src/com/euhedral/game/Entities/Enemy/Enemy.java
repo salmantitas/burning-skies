@@ -27,6 +27,8 @@ public class Enemy extends MobileEntity {
     protected int distance;
 //    protected int shotNum = 0;
     protected int movementDistance;
+    protected int damage;
+    protected double explodingVelocity = 1.5f;
 
     protected TextureHandler textureHandler;
     protected Animation explosion;
@@ -50,11 +52,11 @@ public class Enemy extends MobileEntity {
         moveRight = false;
         moveLeft = false;
         cam = GameController.getCamera().getMarker();
-        power = 1; // todo: reconsider purpose
+//        power = 1; // todo: reconsider purpose
         width = Utility.intAtWidth640(32);
         height = width;
         color = Color.red;
-        r = new Random();
+//        r = new Random();
         setLevelHeight(levelHeight);
         bulletVelocity = Utility.intAtWidth640(5);
         bulletAngle = 90;
@@ -89,11 +91,15 @@ public class Enemy extends MobileEntity {
     }
 
     protected void updateActive() {
+        if (isActive()) {
 
+        }
     }
 
     protected void updateExploding() {
+        if (isExploding()) {
 
+        }
     }
 
     @Override
@@ -125,7 +131,7 @@ public class Enemy extends MobileEntity {
 //        }
         explosion = GameController.getTexture().initExplosion(5);
         reflection = new Reflection();
-
+        damage = 30;
     }
 
     @Override
@@ -183,7 +189,7 @@ public class Enemy extends MobileEntity {
         shot++;
     }
 
-    public void moveInScreen() {
+    protected void moveInScreen() {
         y += velY;
         x += velX;
     }
@@ -331,8 +337,13 @@ public class Enemy extends MobileEntity {
         return state == STATE_EXPLODING;
     }
 
-    protected void commonInit() {
+    public int getDamage() {
+        return damage;
+    }
 
+    protected void commonInit() {
+        velX = 0;
+        velY = explodingVelocity;
     }
 
     public int getEnemyType() {

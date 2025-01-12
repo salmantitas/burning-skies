@@ -87,6 +87,34 @@ public abstract class MobileEntity extends Entity {
         y += velY;
     }
 
+    // Triangle with vertices A, B, C
+    protected void calculateAngle(double bX, double bY) {
+        // Coordinates
+        double aX = x, aY = y;
+        double cX = aX + 1, cY = aY;
+
+        // Vectors
+        double vectorABx = aX - bX;
+        double vectorABy = (aY - bY);
+        double vectorACx = aX - cX;
+        double vectorACy = (aY - cY);
+
+        // Magnitudes
+        double magnitudeAB = Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
+        double magnitudeAC = Math.sqrt(Math.pow(vectorACx,2) + Math.pow(vectorACy, 2));
+
+        // Dot Product
+        double dotProduct = vectorABx * vectorACx + vectorABy * vectorACy;
+
+        // Final
+        double fraction = dotProduct/(magnitudeAB*magnitudeAC);
+        angle = Math.toDegrees(Math.acos(fraction));
+
+        if (bY < aY) {
+            angle = - angle;
+        }
+    }
+
     // Calculate the x and y components based on the angle and forward velocity of the entity
     protected void calculateVelocities() {
         double angleX;
@@ -97,6 +125,26 @@ public abstract class MobileEntity extends Entity {
 
         velX = (float) (forwardVelocity * Math.cos(angleX));
         velY = (float) (forwardVelocity * Math.sin(angleY));
+    }
+
+    // Calculate the x and y components based on the angle and forward velocity of the entity
+    protected void calculateVelocities(double destinationX, double destinationY) {
+//        calculateAngle(destinationX, destinationY);
+//        calculateVelocities();
+
+        // Vectors
+        double vectorABx = destinationX - x;
+        double vectorABy = destinationY - y;
+
+        // Magnitudes
+        double magnitudeAB = Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
+
+        // Normal Vector
+        double normX = vectorABx/magnitudeAB;
+        double normY = vectorABy/magnitudeAB;
+
+        velX = forwardVelocity * normX;
+        velY = forwardVelocity * normY;
     }
 
     public double getVelX() {
