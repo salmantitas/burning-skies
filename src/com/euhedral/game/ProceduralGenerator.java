@@ -280,65 +280,51 @@ public class ProceduralGenerator extends EnemyGenerator {
 //        System.out.println("Spawn Code: " + spawnNext);
     }
 
-    private void spawnFirstWave() {
-        lastLastPattern = lastPattern;
-        lastPattern = pattern;
-        pattern = PATTERN_LINE;
-
-        int minEnemies = enemyNumbers[enemytype][pattern][ENEMY_MIN];
-        int maxEnemies = enemyNumbers[enemytype][pattern][ENEMY_MAX];
-        int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
-        Utility.log("Current Max: " + currentMax);
-
-        num = Utility.randomRangeInclusive(minEnemies, currentMax);
-
-        spawnLine(num);
-        wave++;
-        determineSpawnInterval();
-    }
-
     @Override
     protected void spawnEnemies() {
-        // for every wave
-        increment();
-        determineNum();
-        determineType();
-        determineZone();
-        determinePattern();
-
-        // spawn enemies
-        switch (pattern) {
-            case PATTERN_LINE:
-                spawnLine(num);
-                break;
-            case PATTERN_PINCER:
-                spawnPincer(num);
-                break;
-            case PATTERN_SLIDE:
-                spawnSlide(num);
-                break;
-            case PATTERN_V:
-                spawnV(num);
-                break;
-            case PATTERN_VERTICAL:
-                spawnVertical(num);
-                break;
-            case PATTERN_SQUARE:
-                spawnSquare(num);
-                break;
-            case PATTERN_CROSS:
-                spawnCross(num);
-                break;
+        if (wave == 1) {
+            spawnFirstWave();
+        } else {
+            super.spawnEnemies();
         }
+    }
+
+    private void spawnFirstWave() {
+        increment();
+
+        determinePattern();
+//        determineNum();
+        minEnemies = enemyNumbers[enemytype][pattern][ENEMY_MIN];
+        maxEnemies = enemyNumbers[enemytype][pattern][ENEMY_MAX];
+        num = enemyNumbers[enemytype][pattern][ENEMY_MIN];
+
+//        determineType();
+        enemytype = TYPE_BASIC;
+
+//        determineZone();
+        spawnZone = 2;
+
+//        spawnEnemiesHelper();
+        spawnLine();
 
         incrementDifficulty();
-
-//        System.out.printf("Wave: %d, LastHeight: %d\n", wave, spawnHeight);
-
-        wave++;
-        System.out.println("Wave: " + wave);
+        incrementWave();
         determineSpawnInterval();
     }
+
+//    @Override
+//    protected void spawnEnemies() {
+//        // for every wave
+//        increment();
+//        determineNum();
+//        determineType();
+//        determineZone();
+//        determinePattern();
+//        spawnEnemiesHelper();
+//        incrementDifficulty();
+//        incrementWave();
+//        determineSpawnInterval();
+//    }
 
     @Override
     protected void increment() {
@@ -394,7 +380,7 @@ public class ProceduralGenerator extends EnemyGenerator {
 
     /* Spawn Pattern Functions*/
 
-    private void spawnLine(int num) {
+    private void spawnLine() {
 //        System.out.println(spawnZone + " " + num);
 
         int distance = MOVEMENT_MAX - (num - 1)*2;
@@ -422,7 +408,7 @@ public class ProceduralGenerator extends EnemyGenerator {
     }
 
     // todo: zone 2 and 3
-    private void spawnPincer(int num) {
+    private void spawnPincer() {
         // Determine Number
         double numD = num;
         double numD1 = numD/2;
@@ -475,7 +461,7 @@ public class ProceduralGenerator extends EnemyGenerator {
     }
 
     // todo: zone 2 and 3
-    private void spawnSlide(int num) {
+    private void spawnSlide() {
 //        System.out.println(spawnZone + " " + num);
 
         // Determine Number
@@ -502,7 +488,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         }
     }
 
-    private void spawnV(int num) {
+    private void spawnV() {
         int xStart = this.xStart + num/2 * spacing;
         int xEnd = this.xEnd - (num/2 + 1) * spacing;
 
@@ -519,7 +505,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         }
     }
 
-    private void spawnVertical(int num) {
+    private void spawnVertical() {
 //        System.out.println(spawnZone + " " + num);
 
         int distance = MOVEMENT_MAX - (num - 1)*2;
@@ -544,7 +530,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         spawnFromBottom(num, spawnY, x, distance, direction);
     }
 
-    private void spawnSquare(int num) {
+    private void spawnSquare() {
 //        Utility.log("Num: " + num);
         double numD = num;
         double numD1 = (numD - 1)/4;
@@ -580,7 +566,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         spawnFromDirection(num, spawnY, xFin, "", 0, 0, RIGHT);
     }
 
-    private void spawnCross(int num) {
+    private void spawnCross() {
         // todo: Remove duplication
         //        Utility.log("Num: " + num);
         double numD = num;
@@ -649,7 +635,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         }
 
         distance += dispersal*num;
-        spawnHelper(x, y, move, distance);
+        spawnOneEnemyHelper(x, y, move, distance);
         enemiesSpawned++;
         Utility.log("Spawned in Wave: " + enemiesSpawned);
     }
@@ -671,7 +657,7 @@ public class ProceduralGenerator extends EnemyGenerator {
                 moveDir = moveRight;
             }
 
-            spawnHelper(x, y, moveDir, time);
+            spawnOneEnemyHelper(x, y, moveDir, time);
 
             if (num > 1) {
                 num -= 1;
@@ -710,10 +696,10 @@ public class ProceduralGenerator extends EnemyGenerator {
             int move = Utility.randomRange(0, 2);
             if (move == 0) {
                 moveLeft = "right";
-                spawnHelper(x, y, moveLeft, time);
+                spawnOneEnemyHelper(x, y, moveLeft, time);
             } else if (move == 1) {
                 moveRight = "left";
-                spawnHelper(x, y, moveRight, time);
+                spawnOneEnemyHelper(x, y, moveRight, time);
             }
 
 //            spawnHelper(x, y, c, moveLeft);
@@ -777,10 +763,10 @@ public class ProceduralGenerator extends EnemyGenerator {
             int move = Utility.randomRange(0, 2);
             if (move == 0) {
                 moveLeft = "right";
-                spawnHelper(x, y, moveLeft, time);
+                spawnOneEnemyHelper(x, y, moveLeft, time);
             } else if (move == 1) {
                 moveRight = "left";
-                spawnHelper(x, y, moveRight, time);
+                spawnOneEnemyHelper(x, y, moveRight, time);
             }
 
 //            spawnHelper(x, y, c, moveLeft);
@@ -845,7 +831,7 @@ public class ProceduralGenerator extends EnemyGenerator {
 
         boolean odd = (num % 2) != 0;
         if (odd) {
-            spawnHelper(x, y, "", 0);
+            spawnOneEnemyHelper(x, y, "", 0);
 
             distance = incrementMIN;
 
@@ -867,8 +853,8 @@ public class ProceduralGenerator extends EnemyGenerator {
             int xLeft = x + (incrementX);
             int xRight = x - (incrementX);
 
-            spawnHelper(xLeft, y, "left", distance/2);
-            spawnHelper(xRight, y, "right", distance/2);
+            spawnOneEnemyHelper(xLeft, y, "left", distance/2);
+            spawnOneEnemyHelper(xRight, y, "right", distance/2);
 
             xLeft += incrementX;
             xRight -= incrementX;
@@ -908,7 +894,7 @@ public class ProceduralGenerator extends EnemyGenerator {
             spawnVHelper(num - 1, y0, x0, increment, move, dispersal, distance + incrementMIN * spawnCount, spawnCount++);
         }
 
-        spawnHelper(x, y, move, distance);
+        spawnOneEnemyHelper(x, y, move, distance);
     }
 
     private void spawnFromTop(int num, int y, int x) {
@@ -919,7 +905,7 @@ public class ProceduralGenerator extends EnemyGenerator {
             spawnFromTop(num - 1, y0, x);
         }
 
-        spawnHelper(x, y, "", 250);
+        spawnOneEnemyHelper(x, y, "", 250);
     }
 
     private void spawnFromBottom(int num, int y, int x, int distance, int direction) {
@@ -931,10 +917,10 @@ public class ProceduralGenerator extends EnemyGenerator {
             spawnFromBottom(num - 1, y0, x, distance, direction);
         }
 
-        spawnHelper(x, y, move, distance);
+        spawnOneEnemyHelper(x, y, move, distance);
     }
 
-    private void spawnHelper(int x, int y, String move, int distance) {
+    private void spawnOneEnemyHelper(int x, int y, String move, int distance) {
 
         EntityID id = colorMap.get(Color.RED);
 
@@ -956,7 +942,7 @@ public class ProceduralGenerator extends EnemyGenerator {
                 id = EntityID.EnemySnake;
         }
 
-        Color c = getKey(id);
+//        Color c = getKey(id);
 
         int spawnX = x*SCALE, spawnY = y*SCALE, time = distance*SCALE;
 
@@ -974,33 +960,17 @@ public class ProceduralGenerator extends EnemyGenerator {
         entityHandler.spawnEntity(x*SCALE, y*SCALE, EntityHandler.TYPE_HEAVY,  "", 0);
     }
 
-//    private void spawnGround(int remainingHeight, int spawnHeight, int num, String spawnFrom) {
-//        if (groundCount == num && height - remainingHeight >= spawnHeight) {
-//            EnemyGround eG = new EnemyGround(xStart * SCALE, remainingHeight * SCALE, getLevelHeight());
-//            groundCount++;
-//            if (spawnFrom == "left") {
-//                eG.setHMove("right");
-//            } else if (spawnFrom == "right") {
-//                eG.setHMove("left");
-//                eG.setX(xEnd*SCALE);
-//            }
-//            entityHandler.addEnemy(eG);
-//        }
-
-//    }
-//    pg
-
     private void spawnBoss(int x, int y) {
         entityHandler.spawnBoss(level, x*SCALE, y*SCALE);
     }
 
-    private void determinePattern() {
+    @Override
+    protected void determinePattern() {
         if (wave == 1) {
             lastLastPattern = lastPattern;
             lastPattern = pattern;
             pattern = PATTERN_LINE;
 
-//            spawnHeavyHelper(xMid, spawnHeight);
         } else {
             lastLastPattern = lastPattern;
             lastPattern = pattern;
@@ -1013,6 +983,35 @@ public class ProceduralGenerator extends EnemyGenerator {
             while (pattern == lastPattern && pattern == lastLastPattern) {
                 pattern = Utility.randomRange(0,max);
             }
+        }
+    }
+
+    // Spawn enemies according to the pattern and number
+    @Override
+    protected void spawnEnemiesHelper() {
+        // spawn enemies
+        switch (pattern) {
+            case PATTERN_LINE:
+                spawnLine();
+                break;
+            case PATTERN_PINCER:
+                spawnPincer();
+                break;
+            case PATTERN_SLIDE:
+                spawnSlide();
+                break;
+            case PATTERN_V:
+                spawnV();
+                break;
+            case PATTERN_VERTICAL:
+                spawnVertical();
+                break;
+            case PATTERN_SQUARE:
+                spawnSquare();
+                break;
+            case PATTERN_CROSS:
+                spawnCross();
+                break;
         }
     }
 
@@ -1079,12 +1078,12 @@ public class ProceduralGenerator extends EnemyGenerator {
         }
     }
 
-    private Color getKey(EntityID id) {
-        for (Map.Entry<Color, EntityID> entry : colorMap.entrySet()) {
-            if (Objects.equals(id, entry.getValue())) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
+//    private Color getKey(EntityID id) {
+//        for (Map.Entry<Color, EntityID> entry : colorMap.entrySet()) {
+//            if (Objects.equals(id, entry.getValue())) {
+//                return entry.getKey();
+//            }
+//        }
+//        return null;
+//    }
 }

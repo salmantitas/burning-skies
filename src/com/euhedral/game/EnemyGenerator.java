@@ -2,9 +2,6 @@ package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.Entities.Enemy.EnemyDrone;
-
-import java.awt.*;
 
 public class EnemyGenerator {
     // Level
@@ -95,12 +92,13 @@ public class EnemyGenerator {
 
     protected void spawnEnemies() {
         increment();
+        determinePattern(); // move down later
         determineNum();
         determineType();
         determineZone();
-        spawnHelper();
+        spawnEnemiesHelper();
         incrementDifficulty();
-        wave++;
+        incrementWave();
         determineSpawnInterval();
     }
 
@@ -157,9 +155,12 @@ public class EnemyGenerator {
         }
     }
 
-    protected void spawnHelper() {
-        entityHandler.spawnEntity(spawnX, spawnY, enemytype);
-//        System.out.println("Enemy spawned");
+    protected void determinePattern() {
+
+    }
+
+    protected void spawnEnemiesHelper() {
+        spawnOneEnemy();
 
         if (enemytype != TYPE_HEAVY) {
             waveSinceHeavy++;
@@ -174,6 +175,12 @@ public class EnemyGenerator {
             difficulty = Math.min(difficulty + 1, maxTypes - 1);
             Utility.log("Diff: " + difficulty);
         }
+    }
+
+    protected void incrementWave() {
+//        System.out.printf("Wave: %d, LastHeight: %d\n", wave, spawnHeight);
+        wave++;
+        System.out.println("Wave: " + wave);
     }
 
     protected void determineSpawnInterval() {
@@ -201,5 +208,10 @@ public class EnemyGenerator {
 
     protected void resetWaveSinceShield() {
         waveSinceShield = 0;
+    }
+
+    protected void spawnOneEnemy() {
+        entityHandler.spawnEntity(spawnX, spawnY, enemytype);
+//        System.out.println("Enemy spawned");
     }
 }
