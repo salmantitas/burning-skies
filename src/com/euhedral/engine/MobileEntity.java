@@ -82,6 +82,7 @@ public abstract class MobileEntity extends Entity {
 //        super.render(g);
 //    }
 
+    // Add velocity components to coordinates to update screen position
     protected void move() {
         x += velX;
         y += velY;
@@ -115,7 +116,7 @@ public abstract class MobileEntity extends Entity {
         }
     }
 
-    // Calculate the x and y components based on the angle and forward velocity of the entity
+    // Calculate the velX and velY using angle (of direction) and forward velocity
     protected void calculateVelocities() {
         double angleX;
         double angleY;
@@ -127,16 +128,14 @@ public abstract class MobileEntity extends Entity {
         velY = (float) (forwardVelocity * Math.sin(angleY));
     }
 
-    // Calculate the x and y components based on the angle and forward velocity of the entity
+    // Calculate the x and y components based on the forward velocity and normalized vector,
+    // using (x,y) as the base and (destinationX, destinationY) as the target angle
     protected void calculateVelocities(double destinationX, double destinationY) {
-//        calculateAngle(destinationX, destinationY);
-//        calculateVelocities();
-
-        // Vectors
+        // Vector
         double vectorABx = destinationX - x;
         double vectorABy = destinationY - y;
 
-        // Magnitudes
+        // Magnitude
         double magnitudeAB = Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
 
         // Normal Vector
@@ -186,50 +185,4 @@ public abstract class MobileEntity extends Entity {
     protected double getCenterX() {
         return (x + width / 2 - 2);
     }
-
-//    private double cos(double angle) {
-//        double angleD = 0;
-//
-//        if (angle > 0 && angle <= 90) {
-//            angleD = Math.toRadians(angle);
-//        } else if (angle > 90 && angle <= 180) {
-//            angleD = Math.toRadians(angle);
-//        } else if (angle > 180 && angle <= 270) {
-//            angleD = 360 - angle;
-//            if (angleD == 90) {
-//                angleD = Math.toRadians(angleD);
-//            } else {
-//                double difference = angleD - 90;
-//                angleD = angleD - 2*difference;
-//                angleD = Math.toRadians(angleD);
-//                double cosAngleD = Math.cos(angleD);
-//                return -cosAngleD;
-//            }
-//        } else if (angle > 270 && angle <= 360) {
-//            angleD = (360 - angle);
-//            angleD = Math.toRadians(angleD);
-//            double cosAngleD = Math.cos(angleD);
-//            return cosAngleD;
-//        }
-//
-//        return Math.cos(angleD);
-//    }
-//
-//    private double sin(double angle) {
-//        double angleD = 0;
-//
-//        if (angle > 0 && angle <= 90) {
-//            angleD = Math.toRadians(angle);
-//        } else if (angle > 90 && angle <= 180) {
-//            angleD = Math.toRadians(angle);
-//        } else if (angle > 180 && angle <= 270) {
-//            angleD = angle;
-//            angleD = Math.toRadians(angleD);
-//        } else if (angle > 270 && angle <= 360) {
-//            angleD = angle;
-//            angleD = Math.toRadians(angleD);
-//        }
-//
-//        return Math.sin(angleD);
-//    }
 }

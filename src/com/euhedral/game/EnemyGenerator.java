@@ -19,6 +19,7 @@ public class EnemyGenerator {
     // Enemy Spawning
     protected EntityHandler entityHandler;
     int difficulty;
+    int minWavesDifficultyIncrease;
     int num;
     long lastSpawnTime;
     long spawnInterval;
@@ -35,10 +36,11 @@ public class EnemyGenerator {
     final int TYPE_BASIC = EntityHandler.TYPE_BASIC;
     final int TYPE_DRONE = EntityHandler.TYPE_DRONE;
     final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
-    final int maxTypes = TYPE_HEAVY + 1;
+    final int maxTypes = TYPE_DRONE + 1;
 
     // Wave
     int wave, waveSinceHealth, waveSincePower, waveSinceShield;
+    int wavesSinceDifficultyIncrease = 0;
     int waveSinceHeavy = 0;
     final int MINWaveSinceHeavy = 1;
 
@@ -66,6 +68,7 @@ public class EnemyGenerator {
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
         difficulty = 1;
+        minWavesDifficultyIncrease = 10;
         entityHandler.setLevelHeight(getLevelHeight());
 
         playerY = getLevelHeight();
@@ -170,10 +173,15 @@ public class EnemyGenerator {
     }
 
     protected void incrementDifficulty() {
-        int inc = 10;
-        if (wave % inc == 0) {
-            difficulty = Math.min(difficulty + 1, maxTypes - 1);
+        if (wavesSinceDifficultyIncrease >= minWavesDifficultyIncrease) {
+//            difficulty = Math.min(difficulty + 1, maxTypes - 1);
+            difficulty = Math.min(difficulty + 1, 8);
+            minWavesDifficultyIncrease += 5;
+            wavesSinceDifficultyIncrease = 0;
             Utility.log("Diff: " + difficulty);
+            Utility.log("Level: " + (wave / minWavesDifficultyIncrease + 1));
+        } else {
+            wavesSinceDifficultyIncrease++;
         }
     }
 

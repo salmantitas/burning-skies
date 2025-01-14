@@ -45,7 +45,6 @@ public class ProceduralGenerator extends EnemyGenerator {
     int MIN_WAVE_BETWEEN_POWER_SPAWN = 30;
     int MAX_WAVE_BETWEEN_POWER_SPAWN = 80;
 
-    int difficulty = 1;
     final int MAX_DIFF = 10;
 
     /*
@@ -79,6 +78,8 @@ public class ProceduralGenerator extends EnemyGenerator {
     final int ENEMY_MAX = 1;
     int minEnemies, maxEnemies;
 
+    int[][] spawnIntervals;
+
     // ground spawns
     int minG = 1;
     int maxG = 2;
@@ -106,16 +107,14 @@ public class ProceduralGenerator extends EnemyGenerator {
         colorMap = VariableHandler.colorMap;
 
         buildMatrix();
-
-        spawnInterval_MIN = 2;
-        spawnInterval_MAX = 5;
+        buildSpawnIntervalMatrix();
     }
 
     private void buildMatrix() {
         enemyNumbers = new int[maxTypes][maxPatterns][2];
 
         buildMatrixBasic();
-        buildMatrixHeavy();
+//        buildMatrixHeavy();
     }
 
     private void buildMatrixBasic() {
@@ -186,6 +185,96 @@ public class ProceduralGenerator extends EnemyGenerator {
         enemyNumbers[TYPE_HEAVY][PATTERN_SQUARE][ENEMY_MAX] = maxSquare;
         enemyNumbers[TYPE_HEAVY][PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
         enemyNumbers[TYPE_HEAVY][PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
+    }
+
+    private void buildSpawnIntervalMatrix() {
+        spawnInterval_MIN = 2;
+        spawnInterval_MAX = 5;
+        spawnIntervals = new int[maxPatterns][12];
+
+        int tempPattern = PATTERN_LINE;
+
+//        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
+        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN;
+        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN + 1;
+
+        tempPattern = PATTERN_VERTICAL;
+
+//        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
+        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN + 2;
+//        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN + 1;
+
+        tempPattern = PATTERN_PINCER;
+
+//        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
+        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 3;
+//        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN + 1;
+
+        tempPattern = PATTERN_SLIDE;
+
+//        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
+        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 3;
+//        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN + 1;
+
+        tempPattern = PATTERN_V;
+
+//        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 3;
+        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN + 3;
+
+        tempPattern = PATTERN_SQUARE;
+
+        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 3;
+        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN + 4;
+        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN + 5;
+        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 6;
+//        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 2;
+//        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 2;
+//        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 3;
+//        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN + 3;
+
+        tempPattern = PATTERN_CROSS;
+
+        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 4;
+//        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN;
     }
 
     // generate a level using procedural generation // YEAH NO SHIT.
@@ -311,20 +400,6 @@ public class ProceduralGenerator extends EnemyGenerator {
         incrementWave();
         determineSpawnInterval();
     }
-
-//    @Override
-//    protected void spawnEnemies() {
-//        // for every wave
-//        increment();
-//        determineNum();
-//        determineType();
-//        determineZone();
-//        determinePattern();
-//        spawnEnemiesHelper();
-//        incrementDifficulty();
-//        incrementWave();
-//        determineSpawnInterval();
-//    }
 
     @Override
     protected void increment() {
@@ -560,10 +635,14 @@ public class ProceduralGenerator extends EnemyGenerator {
         }
 
         spawnFromDirection(num, y0, x0, "", 0, 0, LEFT);
-//        spawnFromLeft(num, y0, x0, "", 0, 0);
-        spawnFromTop(num, y0, xFin);
-        spawnFromBottom(num, spawnY, x0, 0, 0);
-        spawnFromDirection(num, spawnY, xFin, "", 0, 0, RIGHT);
+
+        if (num > 0) {
+
+//            spawnFromDirection(num, y0, x0, "", 0, 0, LEFT);
+            spawnFromTop(num, y0, xFin);
+            spawnFromBottom(num, spawnY, x0, 0, 0);
+            spawnFromDirection(num, spawnY, xFin, "", 0, 0, RIGHT);
+        }
     }
 
     private void spawnCross() {
@@ -637,7 +716,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         distance += dispersal*num;
         spawnOneEnemyHelper(x, y, move, distance);
         enemiesSpawned++;
-        Utility.log("Spawned in Wave: " + enemiesSpawned);
+//        Utility.log("Spawned in Wave: " + enemiesSpawned);
     }
 
     private void spawnFromMiddle(int num, int spawnHeight, String moveLeft, String moveRight, int time, int dispersal) {
@@ -1017,49 +1096,59 @@ public class ProceduralGenerator extends EnemyGenerator {
 
     @Override
     protected void determineSpawnInterval() {
-        float minPause = (float) spawnInterval_MIN;
-        float maxPause = (float) spawnInterval_MAX;
+//        float minPause = (float) spawnInterval_MIN;
+//        float maxPause = (float) spawnInterval_MAX;
+//
+//        float spawnIntervalFloat = (maxPause - minPause) * (num - 1)/(maxEnemies - 1) + minPause;
+//
+//
+////        if (enemytype == TYPE_DRONE) {
+////            spawnInterval = spawnInterval_MIN;
+////        } else if (enemytype == TYPE_BASIC) {
+////            spawnInterval = num;
+////
+////            if (pattern == PATTERN_SQUARE) {
+////                spawnInterval = num + 1;
+////            }
+////        } {
+//
+////            if (enemytype == TYPE_HEAVY && spawnIntervalFloat > spawnInterval_MIN) {
+////                spawnInterval = (long) (spawnIntervalFloat * 1.1);
+////            }
+//
+//            // todo: adjust
+//            if (pattern == PATTERN_SLIDE) {
+//                spawnIntervalFloat *= 1.5;
+//            }
+//
+//            // todo: adjust
+//            if (pattern == PATTERN_PINCER) {
+//                spawnIntervalFloat *= 1.5;
+//            }
+//
+//            // todo: adjust
+//            if (pattern == PATTERN_LINE) {
+//                spawnIntervalFloat *= 1.5;
+//            }
+//
+//            // todo: adjust
+//            if (pattern == PATTERN_V) {
+//                spawnIntervalFloat *= 1.5;
+//            }
+//
+//            // todo: adjust
+//            if (pattern == PATTERN_SQUARE) {
+//                spawnIntervalFloat *= 2;
+//            }
+//
+//            // todo: adjust
+//            if (pattern == PATTERN_CROSS) {
+//                spawnIntervalFloat *= 1.5;
+//            }
+////        }
+//        spawnInterval = (long) spawnIntervalFloat;
 
-        float spawnIntervalFloat = (maxPause - minPause) * (num - 1)/(maxEnemies - 1) + minPause;
-        spawnInterval = (long) spawnIntervalFloat;
-
-        if (enemytype == TYPE_DRONE && spawnIntervalFloat > spawnInterval_MIN) {
-            spawnInterval = (long) (spawnIntervalFloat*0.9);
-        }
-
-        if (enemytype == TYPE_HEAVY && spawnIntervalFloat > spawnInterval_MIN) {
-            spawnInterval = (long) (spawnIntervalFloat*1.1);
-        }
-
-        // todo: adjust
-        if (pattern == PATTERN_SLIDE) {
-            spawnInterval *= 1.5;
-        }
-
-        // todo: adjust
-        if (pattern == PATTERN_PINCER) {
-            spawnInterval *= 1.5;
-        }
-
-        // todo: adjust
-        if (pattern == PATTERN_LINE) {
-            spawnInterval *= 1.5;
-        }
-
-        // todo: adjust
-        if (pattern == PATTERN_V) {
-            spawnInterval *= 1.5;
-        }
-
-        // todo: adjust
-        if (pattern == PATTERN_SQUARE) {
-            spawnInterval *= 2;
-        }
-
-        // todo: adjust
-        if (pattern == PATTERN_CROSS) {
-            spawnInterval *= 1.5;
-        }
+            spawnInterval = spawnIntervals[pattern][num - 1];
     }
 
     private void determineSpawn() {
@@ -1078,7 +1167,13 @@ public class ProceduralGenerator extends EnemyGenerator {
         }
     }
 
-//    private Color getKey(EntityID id) {
+    @Override
+    protected void determineType() {
+        super.determineType();
+        enemytype = TYPE_BASIC;
+    }
+
+    //    private Color getKey(EntityID id) {
 //        for (Map.Entry<Color, EntityID> entry : colorMap.entrySet()) {
 //            if (Objects.equals(id, entry.getValue())) {
 //                return entry.getKey();
