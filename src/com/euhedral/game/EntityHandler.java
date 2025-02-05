@@ -23,15 +23,15 @@ public class EntityHandler {
 
     // Enemy Types
     public static final int TYPE_BASIC = 0;
-    public static final int TYPE_DRONE = 1;
-    public static final int TYPE_HEAVY = 2;
-    public static final int enemyTypes = TYPE_HEAVY + 1;
+    public static final int TYPE_HEAVY = 1;
+    public static final int TYPE_DRONE = 2;
+    public static final int enemyTypes = TYPE_DRONE + 1;
 
     // Entity Lists
     private Flag flag;
     private EnemyPool enemies = new EnemyPool();
-    private Pool bullets = new Pool();
-    private Pool pickups = new Pool();
+    private BulletPool bullets = new BulletPool();
+    private PickupPool pickups = new PickupPool();
 
     private EnemyBoss boss;
 
@@ -451,7 +451,7 @@ public class EntityHandler {
         LinkedList<Entity> enemies = this.enemies.getEntities();
         for (Entity entity : enemies) {
             Enemy enemy = (Enemy) entity;
-            if(true) { // todo: Why?
+            if(true) { // todo: Why tho?
                 enemy.update();
                 checkDeathAnimationEnd(enemy);
                 while (enemy.hasShot()) {
@@ -646,7 +646,7 @@ public class EntityHandler {
     private void checkDeathAnimationEnd(Enemy enemy) {
         if (enemy.isExploding()) {
             if (enemy.checkDeathAnimationEnd()) {
-                enemies.increase(enemy);
+                enemies.increase(enemy, enemy.getEnemyType());
             }
         }
     }

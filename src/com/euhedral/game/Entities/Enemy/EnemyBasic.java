@@ -25,7 +25,7 @@ public class EnemyBasic extends Enemy{
         super.initialize();
 
         power = 1;
-        shootTimerDefault = 250;
+        shootTimerDefault = 150;
         commonInit();
         score = 50;
         minVelX = 1.75f;
@@ -71,7 +71,7 @@ public class EnemyBasic extends Enemy{
 
     @Override
     protected void commonInit() {
-        this.setHealth(2);
+        this.setHealth(3);
         velY = 2.5f;
     }
 

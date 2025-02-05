@@ -178,8 +178,16 @@ public abstract class MobileEntity extends Entity {
         this.forwardVelocity = forwardVelocity;
     }
 
+    public float getForwardVelocity() {
+        return forwardVelocity;
+    }
+
     public void setAngle(double angle) {
         this.angle = angle;
+    }
+
+    public double getAngle() {
+        return angle;
     }
 
     protected double getCenterX() {

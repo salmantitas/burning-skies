@@ -14,7 +14,7 @@ public class Player extends MobileEntity {
     private boolean canShoot;
     private int shootTimer = 0;
     private final int shootTimerDefault = 7;
-    private Pool bullets = new Pool();
+    private BulletPool bullets = new BulletPool();
 
     // Personal
     private int levelHeight;

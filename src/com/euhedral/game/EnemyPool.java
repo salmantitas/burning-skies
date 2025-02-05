@@ -9,9 +9,11 @@ public class EnemyPool extends Pool {
 
     public EnemyPool() {
         super();
-        reusable = new int[EntityHandler.enemyTypes];
-        reusable[EntityHandler.TYPE_BASIC] = 0;
-        reusable[EntityHandler.TYPE_HEAVY] = 0;
+        int enemyTypes = EntityHandler.enemyTypes;
+        reusable = new int[enemyTypes];
+        for (int i = 0; i < enemyTypes; i++) {
+            reusable[i] = 0;
+        }
     }
 
     public int getPoolSize(int enemyType) {
@@ -62,7 +64,7 @@ public class EnemyPool extends Pool {
         Enemy enemy = (Enemy) entity;
         enemy.setHMove(move);
         enemy.setMovementDistance(time);
-        decrease();
+        decrease(enemy.getEnemyType());
     }
 
 }

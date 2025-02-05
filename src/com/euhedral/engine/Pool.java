@@ -120,53 +120,10 @@ public class Pool {
         }
     }
 
-//    public void spawnFromPool(int x, int y, String move, int time) {
-//        Entity entity = findInList();
-//        entity.resurrect(x, y);
-//        Enemy enemy = (Enemy) entity;
-//        enemy.setHMove(move);
-//        enemy.setMovementDistance(time);
-//        decrease();
-//    }
-
     public void spawnFromPool(int x, int y, EntityID id) {
         Entity entity = findInList();
         entity.resurrect(x, y, id);
         decrease();
-//        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
-    }
-
-    public void spawnFromPool(int x, int y, EntityID id, int value) {
-        Entity entity = findInList();
-        entity.resurrect(x, y);
-        Pickup pickup = (Pickup) entity;
-        pickup.setValue(value);
-        decrease();
-    }
-
-    public void spawnFromPool(int x, int y, double angle) {
-        Entity entity = findInList();
-        entity.resurrect(x, y);
-        MobileEntity mob = (MobileEntity) entity;
-        if (mob.angle != angle) {
-            mob.setAngle(angle);
-        }
-        decrease();
-//        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
-    }
-
-    public void spawnFromPool(int x, int y, double angle, int bulletVelocity) {
-        Entity entity = findInList();
-        entity.resurrect(x, y);
-        MobileEntity mob = (MobileEntity) entity;
-        if (mob.angle != angle) {
-            mob.setAngle(angle);
-        }
-        if (mob.forwardVelocity != bulletVelocity) {
-            mob.setForwardVelocity(bulletVelocity);
-        }
-        decrease();
-//        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
     }
 
     public void printPool(String name) {
