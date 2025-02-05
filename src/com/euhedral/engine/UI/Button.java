@@ -2,6 +2,7 @@ package com.euhedral.engine.UI;
 
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.ActionTag;
 import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
@@ -21,7 +22,6 @@ public class Button extends UIItem{
     protected float transparency = 1;
     protected boolean fontSizeCalculated = false;
     protected int originalWidth;
-
     protected Color disabledColor, disabledTextColor;
 
     public Button(int x, int y, int width, int height, String text) {
@@ -118,8 +118,9 @@ public class Button extends UIItem{
 //        otherStates.add(state);
 //    }
 
-    public void activate() {
+    public Object activate() {
         SoundHandler.playSound(SoundHandler.UI2);
+        return null;
     }
 
     public void enable() {

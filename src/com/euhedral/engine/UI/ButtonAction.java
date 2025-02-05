@@ -8,7 +8,7 @@ import com.euhedral.game.ActionTag;
 public class ButtonAction extends Button{
     private ActionTag action;
 
-    public ButtonAction(int x, int y, int width, int height, String text, ActionTag action) {
+        public ButtonAction(int x, int y, int width, int height, String text, ActionTag action) {
         super(x, y, width, height, text);
         this.action = action;
     }
@@ -23,8 +23,9 @@ public class ButtonAction extends Button{
     }
 
     @Override
-    public void activate() {
+    public Object activate() {
         super.activate();
+        return action;
         // todo: Cause the action to be updated to UIHandler
     }
 }

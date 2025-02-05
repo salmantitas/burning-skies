@@ -42,8 +42,9 @@ public class ButtonNav extends Button {
     }
 
     @Override
-    public void activate() {
+    public Object activate() {
         super.activate();
         Engine.setState(targetSate);
+        return null;
     }
 }

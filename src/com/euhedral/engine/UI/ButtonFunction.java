@@ -21,10 +21,11 @@ public class ButtonFunction extends Button{
     }
 
     @Override
-    public void activate() {
+    public Object activate() {
         super.activate();
         // todo: Cause the action to be updated to UIHandler
         runFunction();
+        return null;
     }
 
     public void runFunction() {

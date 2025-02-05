@@ -92,6 +92,7 @@ public class UIHandler {
 
                 // resets the notification for
                 if (currentMenu instanceof MenuTransition) {
+                    // todo: Inheritence
                     VariableHandler.resetSaveDataNotification();
                 }
 
