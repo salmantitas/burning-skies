@@ -28,16 +28,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="Difficulty Balancing">
+      <change afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyStatic.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.csv" beforeDir="false" afterPath="$PROJECT_DIR$/settings.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/MobileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/MobileEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/Pool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/Pool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EnemyGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EnemyGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EnemyPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EnemyPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyBasic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyBasic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyHeavy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyHeavy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -108,7 +107,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Engine.executor": "Debug",
+    "Application.Engine.executor": "Run",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
@@ -121,8 +120,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.euhedral.game" />
       <recent name="com.euhedral.game.Entities.Enemy" />
+      <recent name="com.euhedral.game" />
       <recent name="com.euhedral.engine.UI" />
       <recent name="com.euhedral.game.UI.Menus" />
       <recent name="com.euhedral.engine" />
@@ -240,7 +239,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/MobileEntity.java</url>
-          <line>173</line>
+          <line>175</line>
           <option name="timeStamp" value="341" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -290,12 +289,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone.java</url>
-          <line>74</line>
+          <line>75</line>
           <option name="timeStamp" value="555" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone.java</url>
-          <line>72</line>
+          <line>73</line>
           <option name="timeStamp" value="556" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -309,9 +308,19 @@
           <option name="timeStamp" value="575" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/game/EnemyGenerator.java</url>
-          <line>222</line>
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java</url>
+          <line>97</line>
           <option name="timeStamp" value="578" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/EnemyPool.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="586" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/EnemyGenerator.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="587" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />

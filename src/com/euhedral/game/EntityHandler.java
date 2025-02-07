@@ -6,6 +6,7 @@ import com.euhedral.game.Entities.Enemy.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 // todo: Remove Contact ID
@@ -25,11 +26,12 @@ public class EntityHandler {
     public static final int TYPE_BASIC = 0;
     public static final int TYPE_HEAVY = 1;
     public static final int TYPE_DRONE = 2;
-    public static final int enemyTypes = TYPE_DRONE + 1;
+    public static final int TYPE_STATIC = 3;
+    public static final int enemyTypes = TYPE_STATIC + 1;
 
     // Entity Lists
     private Flag flag;
-    private EnemyPool enemies = new EnemyPool();
+    private static EnemyPool enemies = new EnemyPool();
     private BulletPool bullets = new BulletPool();
     private PickupPool pickups = new PickupPool();
 
@@ -136,7 +138,11 @@ public class EntityHandler {
         } else if (enemyType == TYPE_HEAVY) {
             Enemy enemy = new EnemyHeavy(x, y, color, levelHeight);
             enemies.add(enemy);
+        } else if (enemyType == TYPE_STATIC) {
+            Enemy enemy = new EnemyStatic(x, y, color, levelHeight);
+            enemies.add(enemy);
         }
+//        enemies.increaseActive(enemyType);
 //        else if (id == EntityID.EnemySnake) {
 //            Enemy enemy = new EnemySnake(x, y, ContactID.Air, color, levelHeight);
 //            enemies.add(enemy);
@@ -466,7 +472,7 @@ public class EntityHandler {
     private void spawnEnemyBullet(Enemy enemy) {
         int x = enemy.getTurretX();
         double y = enemy.getY();
-        int dir = enemy.getBulletAngle();
+        double dir = enemy.getBulletAngle();
         int bulletVelocity = enemy.getBulletVelocity();
         if (bullets.getPoolSize() > 0) {
             bullets.spawnFromPool(x, (int) y, dir, bulletVelocity);
@@ -646,7 +652,8 @@ public class EntityHandler {
     private void checkDeathAnimationEnd(Enemy enemy) {
         if (enemy.isExploding()) {
             if (enemy.checkDeathAnimationEnd()) {
-                enemies.increase(enemy, enemy.getEnemyType());
+                int enemyType = enemy.getEnemyType();
+                enemies.increase(enemy, enemyType);
             }
         }
     }
@@ -663,6 +670,14 @@ public class EntityHandler {
             }
         }
 
+    }
+
+    public static int getActiveEnemies(int enemyType) {
+        return enemies.getActive(enemyType);
+    }
+
+    public static ArrayList<Integer> getExclusionZones() {
+        return enemies.getExclusionZones();
     }
 
 }

@@ -3,18 +3,22 @@ package com.euhedral.game;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
 
+import java.util.ArrayList;
+
 public class EnemyGenerator {
     // Level
     int level;
-    int cutoffHeight = 0, cutoffWidth = 0;
+    int cutoffHeight = 0, cutoffWidth = 64*2;
     int height = Engine.HEIGHT - cutoffHeight, width = Engine.WIDTH - cutoffWidth;
 
+    final int SCALE = 64;
+
     final int incrementMIN = Utility.intAtWidth640(1);
-    int xStart = incrementMIN, xEnd = width;
+    int xStart = 1, xEnd = width/64;
     int xMid = (xEnd - xStart)/2 + xStart;
 
     // Player
-    int playerX = xMid, playerY;
+    int playerX = xMid * 64, playerY;
 
     // Enemy Spawning
     protected EntityHandler entityHandler;
@@ -36,10 +40,13 @@ public class EnemyGenerator {
     final int TYPE_BASIC = EntityHandler.TYPE_BASIC;
     final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
     final int TYPE_DRONE = EntityHandler.TYPE_DRONE;
-    int maxTypes = TYPE_DRONE + 1;
+    final int TYPE_STATIC = EntityHandler.TYPE_STATIC;
+    int maxTypes = TYPE_STATIC + 1;
 
     // Wave
-    int wave, waveSinceHealth, waveSincePower, waveSinceShield;
+    int wave;
+    final int firstWave = 1;
+    int waveSinceHealth, waveSincePower, waveSinceShield;
     int wavesSinceDifficultyIncrease = 0;
     int waveSinceHeavy = 0;
     final int MINWaveSinceHeavy = 1;
@@ -77,7 +84,7 @@ public class EnemyGenerator {
 
         // create distance between player and first wave
         enemiesSpawned = 0;
-        wave = 1;
+        wave = firstWave;
         resetWaveSinceHealth();
         resetWaveSincePower();
         resetWaveSinceShield();
@@ -133,16 +140,36 @@ public class EnemyGenerator {
         int rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
         enemytype = rand;
 
-
-        // determine type
 //        enemytype = TYPE_BASIC; // stub
 //        enemytype = TYPE_HEAVY; // stub
 //        enemytype = TYPE_DRONE; // stub
+        enemytype = TYPE_STATIC; // stub
+
+        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
+
+//        if (enemytype == TYPE_DRONE || enemytype == TYPE_STATIC) {
+            while (EntityHandler.getActiveEnemies(enemytype) >= 10) {
+                rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
+                enemytype = rand;
+            }
+//        }
+
+//        if (wave == firstWave) {
+//            enemytype = TYPE_STATIC; // todo: remove, TEST only
+//        } else {
+//
+//            enemytype++;
+//            if (enemytype >= maxTypes) {
+//                enemytype = 0;
+//            }
+//        }
+
 //        int temp = Utility.randomRangeInclusive(0, WEIGHT_TOTAL);
 //        enemytype = Utility.randomRangeInclusive(0,1); // type;
     }
 
     protected void determineZone() {
+        // Vertical Zone
         if (enemytype == TYPE_DRONE) {
             int adjustment = 32;
             int zone = Utility.randomRangeInclusive(0, 1);
@@ -151,10 +178,27 @@ public class EnemyGenerator {
             } else {
                 spawnX = width + adjustment;
             }
-            spawnY = Utility.randomRangeInclusive(0, height * 2/3);
-        } else {
+            spawnY = Utility.randomRangeInclusive(0, height * 2 / 3);
+        }
+        // Horizontal Zone
+        else {
             spawnX = Utility.randomRangeInclusive(xStart, xEnd);
-            spawnY = (height - Engine.HEIGHT) ;
+
+            // check if coordinate is in exclusion list
+            ArrayList<Integer> exclusionZones = EntityHandler.getExclusionZones();
+
+            while (exclusionZones.contains(spawnX)) {
+                spawnX = Utility.randomRangeInclusive(xStart, xEnd);
+            }
+            
+            spawnY = (height - Engine.HEIGHT);
+
+//            if (wave == firstWave) {
+//                spawnX = xStart;
+//            } else {
+//                spawnX += 64;
+//            }
+
         }
     }
 
@@ -219,10 +263,7 @@ public class EnemyGenerator {
     }
 
     protected void spawnOneEnemy() {
-        if (enemytype == 3) {
-            Utility.log("1");
-        }
-        entityHandler.spawnEntity(spawnX, spawnY, enemytype);
+        entityHandler.spawnEntity(spawnX * 64, spawnY, enemytype);
 //        System.out.println("Enemy spawned");
     }
 }

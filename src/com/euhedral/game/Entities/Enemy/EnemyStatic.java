@@ -6,22 +6,21 @@ import com.euhedral.game.GameController;
 
 import java.awt.*;
 
-public class EnemyHeavy extends Enemy {
+public class EnemyStatic extends Enemy {
 
-    boolean turretLeft = true;
+    int verticalPosition = 400;
+    double destinationX, destinationY;
 
-    public EnemyHeavy(int x, int y, int levelHeight) {
+    public EnemyStatic(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
-        enemyType = EntityHandler.TYPE_HEAVY;
-//        enemyID = EnemyID.Heavy;
+        enemyType = EntityHandler.TYPE_STATIC;
         bulletVelocity = Utility.intAtWidth640(6);
-        bulletAngle = 60;
 
-        textureHandler = GameController.getTexture();
-        setImage(textureHandler.enemyHeavy[0]);
+//        textureHandler = GameController.getTexture();
+//        setImage(textureHandler.enemyHeavy[0]);
     }
 
-    public EnemyHeavy(int x, int y, Color color, int levelHeight) {
+    public EnemyStatic(int x, int y, Color color, int levelHeight) {
         this(x,y, levelHeight);
         this.color = color;
     }
@@ -30,21 +29,21 @@ public class EnemyHeavy extends Enemy {
     public void initialize() {
         super.initialize();
 
-//        width = width*2; // todo: check, it's being called twice
         shootTimerDefault = 200;
-        score = 150;
+        score = 200;
         velX = 0;
         minVelY = 1.75f;
         distance = 0; // stub ; width * 2;
         movementDistance = distance;
         commonInit();
-        damage = 60;
+        damage = 90;
     }
 
     @Override
     public void update() {
         super.update();
         if (state == STATE_ACTIVE && inscreen) {
+            updateDestination();
             if (movementDistance >= 0) {
                 movementDistance -= Math.abs(velX);
             } else {
@@ -60,32 +59,46 @@ public class EnemyHeavy extends Enemy {
 //        }
     }
 
-//    @Override
-//    public void render(Graphics g) {
-//        super.render(g);
-//    }
+    @Override
+    public void render(Graphics g) {
+        boolean secondsTillShotFire = (shootTimer < 10);
+        if (isActive() && secondsTillShotFire) {
+            g.setColor(Color.red);
+            int turretY = (int) y + height / 2;
+            g.drawLine(getTurretX(), turretY, (int) destinationX, (int) destinationY);
+        }
+
+        g.setColor(color);
+        super.render(g);
+    }
 
     @Override
     protected void shoot() {
         super.shoot();
         shootDownDefault();
-//        moveShoot();
     }
 
     @Override
     protected void shootDownDefault() {
-        shot += 2;
+        shot += 1;
     }
 
     @Override
     public void move() {
         super.move();
-        moveHorizontally();
+//        moveHorizontally();
     }
 
     private void moveShoot() {
 //        bullets.add(new BulletEnemy((int) (1.1 * x), y + height / 2, 90));
 //        bullets.add(new BulletEnemy(x + (int) (0.8 * width), y + height / 2, 90));
+    }
+
+    @Override
+    protected void moveInScreen() {
+        if (y < verticalPosition) {
+            y += velY;
+        }
     }
 
     public void moveHorizontally() {
@@ -122,24 +135,17 @@ public class EnemyHeavy extends Enemy {
 
     @Override
     public int getTurretX() {
-        if (turretLeft) {
-            turretLeft = !turretLeft;
-            return (int) x + width / 3 - Utility.intAtWidth640(2);
-        }
-        else {
-            turretLeft = !turretLeft;
-            return (int) x + 2 * width / 3 - Utility.intAtWidth640(2);
-        }
+        return (int) x + width/2 - Utility.intAtWidth640(2);
     }
 
     @Override
     public double getBulletAngle() {
-        if (turretLeft) {
-            return bulletAngle;
-        }
-        else {
-            return 90 + (90 - bulletAngle);
-        }
+        return calculateAngle(destinationX, destinationY); // stub
+    }
+
+    private void updateDestination() {
+        destinationX = EntityHandler.playerX;
+        destinationY = EntityHandler.playerY;
     }
 
     @Override

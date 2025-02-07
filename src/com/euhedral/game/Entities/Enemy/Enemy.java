@@ -38,7 +38,7 @@ public class Enemy extends MobileEntity {
 
     protected int shot = 0;
     protected int bulletVelocity;
-    protected int bulletAngle;
+    protected double bulletAngle;
 
     // State Machine
     protected final int STATE_EXPLODING = 2;
@@ -104,7 +104,7 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void move() {
-        x = Utility.clamp(x, 0, Engine.WIDTH - Utility.intAtWidth640(width));
+//        x = Utility.clamp(x, 0, Engine.WIDTH - Utility.intAtWidth640(width)); // todo: reconsider usefulness
 
         if (isActive()) {
             if (inscreen) {
@@ -329,7 +329,7 @@ public class Enemy extends MobileEntity {
         return bulletVelocity;
     }
 
-    public int getBulletAngle() {
+    public double getBulletAngle() {
         return bulletAngle;
     }
 

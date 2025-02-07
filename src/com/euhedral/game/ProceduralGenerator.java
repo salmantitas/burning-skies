@@ -5,8 +5,6 @@ import com.euhedral.engine.Utility;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 /*
 * todo: decrease pause after wave after difficulty rises
@@ -15,7 +13,7 @@ import java.util.Objects;
 public class ProceduralGenerator extends EnemyGenerator {
 
     // Level
-    final int SCALE = 32;
+
     int height = Engine.HEIGHT/SCALE, width = 35;
     public HashMap<Color, EntityID> colorMap;
     final int incrementMIN = Utility.intAtWidth640(1);
@@ -78,7 +76,7 @@ public class ProceduralGenerator extends EnemyGenerator {
     final int ENEMY_MAX = 1;
     int minEnemies, maxEnemies;
 
-    int[][] spawnIntervals;
+    int[][][] spawnIntervals;
 
     // ground spawns
     int minG = 1;
@@ -107,14 +105,23 @@ public class ProceduralGenerator extends EnemyGenerator {
         colorMap = VariableHandler.colorMap;
 
         buildMatrix();
-        buildSpawnIntervalMatrix();
+
+        spawnInterval_MIN = 2;
+        spawnInterval_MAX = 5;
+        int maxNum = 12;
+        spawnIntervals = new int[maxTypes][maxPatterns][maxNum];
+
+        buildBasicSpawnIntervalMatrix();
+        buildHeavySpawnIntervalMatrix();
+
+        maxTypes = TYPE_HEAVY + 1;
     }
 
     private void buildMatrix() {
         enemyNumbers = new int[maxTypes][maxPatterns][2];
 
         buildMatrixBasic();
-//        buildMatrixHeavy();
+        buildMatrixHeavy();
     }
 
     private void buildMatrixBasic() {
@@ -136,20 +143,22 @@ public class ProceduralGenerator extends EnemyGenerator {
         int minEnemiesCross = 1;
         int maxEnemiesCross = 8;
 
-        enemyNumbers[TYPE_BASIC][PATTERN_LINE][ENEMY_MIN] = minLine;
-        enemyNumbers[TYPE_BASIC][PATTERN_LINE][ENEMY_MAX] = maxLine;
-        enemyNumbers[TYPE_BASIC][PATTERN_PINCER][ENEMY_MIN] = minPincer;
-        enemyNumbers[TYPE_BASIC][PATTERN_PINCER][ENEMY_MAX] = maxPincer;
-        enemyNumbers[TYPE_BASIC][PATTERN_SLIDE][ENEMY_MIN] = minPincer;
-        enemyNumbers[TYPE_BASIC][PATTERN_SLIDE][ENEMY_MAX] = maxPincer;
-        enemyNumbers[TYPE_BASIC][PATTERN_V][ENEMY_MIN] = minV;
-        enemyNumbers[TYPE_BASIC][PATTERN_V][ENEMY_MAX] = maxV;
-        enemyNumbers[TYPE_BASIC][PATTERN_VERTICAL][ENEMY_MIN] = minVertical;
-        enemyNumbers[TYPE_BASIC][PATTERN_VERTICAL][ENEMY_MAX] = maxVertical;
-        enemyNumbers[TYPE_BASIC][PATTERN_SQUARE][ENEMY_MIN] = minSquare;
-        enemyNumbers[TYPE_BASIC][PATTERN_SQUARE][ENEMY_MAX] = maxSquare;
-        enemyNumbers[TYPE_BASIC][PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
-        enemyNumbers[TYPE_BASIC][PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
+        int tempType = TYPE_BASIC;
+
+        enemyNumbers[tempType][PATTERN_LINE][ENEMY_MIN] = minLine;
+        enemyNumbers[tempType][PATTERN_LINE][ENEMY_MAX] = maxLine;
+        enemyNumbers[tempType][PATTERN_PINCER][ENEMY_MIN] = minPincer;
+        enemyNumbers[tempType][PATTERN_PINCER][ENEMY_MAX] = maxPincer;
+        enemyNumbers[tempType][PATTERN_SLIDE][ENEMY_MIN] = minPincer;
+        enemyNumbers[tempType][PATTERN_SLIDE][ENEMY_MAX] = maxPincer;
+        enemyNumbers[tempType][PATTERN_V][ENEMY_MIN] = minV;
+        enemyNumbers[tempType][PATTERN_V][ENEMY_MAX] = maxV;
+        enemyNumbers[tempType][PATTERN_VERTICAL][ENEMY_MIN] = minVertical;
+        enemyNumbers[tempType][PATTERN_VERTICAL][ENEMY_MAX] = maxVertical;
+        enemyNumbers[tempType][PATTERN_SQUARE][ENEMY_MIN] = minSquare;
+        enemyNumbers[tempType][PATTERN_SQUARE][ENEMY_MAX] = maxSquare;
+        enemyNumbers[tempType][PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
+        enemyNumbers[tempType][PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
     }
 
     private void buildMatrixHeavy() {
@@ -187,29 +196,26 @@ public class ProceduralGenerator extends EnemyGenerator {
         enemyNumbers[TYPE_HEAVY][PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
     }
 
-    private void buildSpawnIntervalMatrix() {
-        spawnInterval_MIN = 2;
-        spawnInterval_MAX = 5;
-        spawnIntervals = new int[maxPatterns][12];
-
+    private void buildBasicSpawnIntervalMatrix() {
+        int tempType = TYPE_BASIC;
         int tempPattern = PATTERN_LINE;
 
 //        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN;
-        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][5] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][6] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][7] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][8] = (int) spawnInterval_MIN + 1;
 
         tempPattern = PATTERN_VERTICAL;
 
 //        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 2;
 //        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
@@ -219,10 +225,10 @@ public class ProceduralGenerator extends EnemyGenerator {
         tempPattern = PATTERN_PINCER;
 
 //        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN + 2;
-        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 3;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 3;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 1;
@@ -231,10 +237,10 @@ public class ProceduralGenerator extends EnemyGenerator {
         tempPattern = PATTERN_SLIDE;
 
 //        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN + 2;
-        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 3;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 3;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 1;
@@ -244,21 +250,21 @@ public class ProceduralGenerator extends EnemyGenerator {
 
 //        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
 //        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 2;
-        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 2;
-        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 3;
-        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN + 3;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][5] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempType][tempPattern][6] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempType][tempPattern][7] = (int) spawnInterval_MIN + 3;
+        spawnIntervals[tempType][tempPattern][8] = (int) spawnInterval_MIN + 3;
 
         tempPattern = PATTERN_SQUARE;
 
-        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN + 2;
-        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 3;
-        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN + 4;
-        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN + 5;
-        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 6;
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 3;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 4;
+        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 5;
+        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 6;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 2;
 //        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 2;
 //        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 3;
@@ -266,9 +272,96 @@ public class ProceduralGenerator extends EnemyGenerator {
 
         tempPattern = PATTERN_CROSS;
 
-        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 4;
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 4;
 //        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN;
+//        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN;
+    }
+
+    private void buildHeavySpawnIntervalMatrix() {
+        int tempType = TYPE_HEAVY;
+        int tempPattern = PATTERN_LINE;
+
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempType][tempPattern][5] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempType][tempPattern][6] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempType][tempPattern][7] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempType][tempPattern][8] = (int) spawnInterval_MIN + 1;
+
+        tempPattern = PATTERN_VERTICAL;
+
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 2;
+//        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN + 1;
+
+        tempPattern = PATTERN_PINCER;
+
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 2;
+//        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 3;
+//        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN + 1;
+
+        tempPattern = PATTERN_SLIDE;
+
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 2;
+//        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 2;
+//        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 3;
+//        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN + 1;
+
+        tempPattern = PATTERN_V;
+
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempType][tempPattern][5] = (int) spawnInterval_MIN + 2;
+//        spawnIntervals[tempType][tempPattern][6] = (int) spawnInterval_MIN + 2;
+//        spawnIntervals[tempType][tempPattern][7] = (int) spawnInterval_MIN + 3;
+//        spawnIntervals[tempType][tempPattern][8] = (int) spawnInterval_MIN + 3;
+
+        tempPattern = PATTERN_SQUARE;
+
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+//        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 5;
+//        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 6;
+//        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 2;
+//        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 2;
+//        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 3;
+//        spawnIntervals[tempPattern][8] = (int) spawnInterval_MIN + 3;
+
+        tempPattern = PATTERN_CROSS;
+
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN;
 //        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN;
@@ -371,7 +464,7 @@ public class ProceduralGenerator extends EnemyGenerator {
 
     @Override
     protected void spawnEnemies() {
-        if (wave == 1) {
+        if (wave == firstWave) {
             spawnFirstWave();
         } else {
             super.spawnEnemies();
@@ -416,6 +509,8 @@ public class ProceduralGenerator extends EnemyGenerator {
         int currentMax = Math.min(minEnemies + difficulty, maxEnemies);
 
         num = Utility.randomRangeInclusive(minEnemies, currentMax);
+
+        num = 1; // todo: remove
     }
 
 //    private void spawnPickup() {
@@ -1063,11 +1158,16 @@ public class ProceduralGenerator extends EnemyGenerator {
                 pattern = Utility.randomRange(0,max);
             }
         }
+//        pattern = PATTERN_SLIDE; todo: remove
     }
 
     // Spawn enemies according to the pattern and number
     @Override
     protected void spawnEnemiesHelper() {
+        if (enemytype == TYPE_DRONE) {
+            Utility.log("Drone");
+        }
+
         // spawn enemies
         switch (pattern) {
             case PATTERN_LINE:
@@ -1148,7 +1248,7 @@ public class ProceduralGenerator extends EnemyGenerator {
 ////        }
 //        spawnInterval = (long) spawnIntervalFloat;
 
-            spawnInterval = spawnIntervals[pattern][num - 1];
+            spawnInterval = spawnIntervals[enemytype][pattern][num - 1];
     }
 
     private void determineSpawn() {
@@ -1169,8 +1269,14 @@ public class ProceduralGenerator extends EnemyGenerator {
 
     @Override
     protected void determineType() {
-        super.determineType();
-        enemytype = TYPE_BASIC;
+//        super.determineType();
+
+        int calculatedDifficulty = Math.min(difficulty/2, maxTypes - 1);
+
+        int rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
+//        enemytype = rand;
+
+        enemytype = TYPE_BASIC; // stub, todo: remove
     }
 
     //    private Color getKey(EntityID id) {

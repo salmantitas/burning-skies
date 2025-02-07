@@ -89,7 +89,7 @@ public abstract class MobileEntity extends Entity {
     }
 
     // Triangle with vertices A, B, C
-    protected void calculateAngle(double bX, double bY) {
+    protected double calculateAngle(double bX, double bY) {
         // Coordinates
         double aX = x, aY = y;
         double cX = aX + 1, cY = aY;
@@ -109,11 +109,13 @@ public abstract class MobileEntity extends Entity {
 
         // Final
         double fraction = dotProduct/(magnitudeAB*magnitudeAC);
-        angle = Math.toDegrees(Math.acos(fraction));
+        double returnAngle = Math.toDegrees(Math.acos(fraction));
 
         if (bY < aY) {
-            angle = - angle;
+            returnAngle = - returnAngle;
         }
+
+        return returnAngle;
     }
 
     // Calculate the velX and velY using angle (of direction) and forward velocity
