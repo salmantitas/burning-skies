@@ -489,7 +489,7 @@ public class Player extends MobileEntity {
     }
 
     public double getCenterX() {
-        return x + width/2;
+        return x + width/2 - 22; // todo: find out why we need 22
     }
     public double getCenterY() {
         return (y + height / 2 - 2);

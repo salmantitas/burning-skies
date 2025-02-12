@@ -471,14 +471,13 @@ public class EntityHandler {
 
     private void spawnEnemyBullet(Enemy enemy) {
         int x = enemy.getTurretX();
-        double y = enemy.getY();
         double dir = enemy.getBulletAngle();
+        double y = enemy.getTurretY();
         int bulletVelocity = enemy.getBulletVelocity();
         if (bullets.getPoolSize() > 0) {
             bullets.spawnFromPool(x, (int) y, dir, bulletVelocity);
         }
         else {
-
             bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity));
         }
     }

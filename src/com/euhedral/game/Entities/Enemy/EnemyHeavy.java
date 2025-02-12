@@ -9,6 +9,9 @@ import java.awt.*;
 public class EnemyHeavy extends Enemy {
 
     boolean turretLeft = true;
+    int bulletAngleMIN = 60;
+    int bulletAngleMAX = 90;
+    int bulletAngleINC = 30;
 
     public EnemyHeavy(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
@@ -16,6 +19,7 @@ public class EnemyHeavy extends Enemy {
 //        enemyID = EnemyID.Heavy;
         bulletVelocity = Utility.intAtWidth640(6);
         bulletAngle = 60;
+        shootTimerDefault = 100;
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyHeavy[0]);
@@ -68,14 +72,24 @@ public class EnemyHeavy extends Enemy {
     @Override
     protected void shoot() {
         super.shoot();
-        shootDownDefault();
+        shot += 2;
+//        shootDownDefault();
 //        moveShoot();
     }
 
-    @Override
-    protected void shootDownDefault() {
-        shot += 2;
+    private void incrementBulletAngle() {
+        bulletAngle += bulletAngleINC;
+        if (bulletAngle > bulletAngleMAX)
+            bulletAngle = bulletAngleMIN;
     }
+
+//    @Override
+//    protected void shootDownDefault() {
+//        shot += 2;
+//        bulletAngle += bulletAngleINC;
+//        if (bulletAngle > bulletAngleMAX)
+//            bulletAngle = bulletAngleMIN;
+//    }
 
     @Override
     public void move() {
@@ -118,6 +132,7 @@ public class EnemyHeavy extends Enemy {
     protected void commonInit() {
         this.setHealth(5);
         velY = 2.5f;
+        bulletAngle = bulletAngleMIN;
     }
 
     @Override
@@ -134,12 +149,17 @@ public class EnemyHeavy extends Enemy {
 
     @Override
     public double getBulletAngle() {
+        double tempAngle;
         if (turretLeft) {
-            return bulletAngle;
+            tempAngle = bulletAngle;
         }
         else {
-            return 90 + (90 - bulletAngle);
+            tempAngle = 90 + (90 - bulletAngle);
         }
+        boolean bothShotsFired = (shot == 1);
+        if (bothShotsFired)
+            incrementBulletAngle();
+        return tempAngle;
     }
 
     @Override
