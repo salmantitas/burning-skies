@@ -75,7 +75,7 @@ public class EnemyGenerator {
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
         difficulty = 1;
-        minWavesDifficultyIncrease = 10;
+        minWavesDifficultyIncrease = 5;
         entityHandler.setLevelHeight(getLevelHeight());
 
         playerY = getLevelHeight();
@@ -143,16 +143,20 @@ public class EnemyGenerator {
 //        enemytype = TYPE_BASIC; // stub
 //        enemytype = TYPE_HEAVY; // stub
 //        enemytype = TYPE_DRONE; // stub
-        enemytype = TYPE_STATIC; // stub
+//        enemytype = TYPE_STATIC; // stub
 
-        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
+//        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
 
-//        if (enemytype == TYPE_DRONE || enemytype == TYPE_STATIC) {
-            while (EntityHandler.getActiveEnemies(enemytype) >= 10) {
+        int limit = 10;
+
+        if (enemytype == TYPE_STATIC) {
+            limit = 5;
+        }
+
+            while (EntityHandler.getActiveEnemies(enemytype) >= limit) {
                 rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
                 enemytype = rand;
             }
-//        }
 
 //        if (wave == firstWave) {
 //            enemytype = TYPE_STATIC; // todo: remove, TEST only
@@ -190,7 +194,7 @@ public class EnemyGenerator {
             while (exclusionZones.contains(spawnX)) {
                 spawnX = Utility.randomRangeInclusive(xStart, xEnd);
             }
-            
+
             spawnY = (height - Engine.HEIGHT);
 
 //            if (wave == firstWave) {
@@ -263,7 +267,7 @@ public class EnemyGenerator {
     }
 
     protected void spawnOneEnemy() {
-        entityHandler.spawnEntity(spawnX * 64, spawnY, enemytype);
+        entityHandler.spawnEntity(spawnX * (64 + incrementMIN), spawnY, enemytype);
 //        System.out.println("Enemy spawned");
     }
 }

@@ -105,6 +105,7 @@ public class EnemyDrone extends Enemy{
     @Override
     public void render(Graphics g) {
         super.render(g);
+        renderBounds(g);
 
 //        g.drawString("y-cord: " + y, (int) x, (int) y);
     }

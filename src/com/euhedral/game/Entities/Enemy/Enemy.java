@@ -6,6 +6,7 @@ import com.euhedral.game.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
+import com.euhedral.game.GameController;
 
 /*
  *  Standard Enemies, flies downwards and shoots a missile at intervals
@@ -40,6 +41,9 @@ public class Enemy extends MobileEntity {
     protected int bulletVelocity;
     protected double bulletAngle;
 
+    // todo: Experimental
+    protected boolean attackEffect;
+
     // State Machine
     protected final int STATE_EXPLODING = 2;
 
@@ -60,6 +64,8 @@ public class Enemy extends MobileEntity {
         setLevelHeight(levelHeight);
         bulletVelocity = Utility.intAtWidth640(5);
         bulletAngle = 90;
+        textureHandler = GameController.getTexture();
+        attackEffect = false;
         initialize();
     }
 
@@ -137,6 +143,7 @@ public class Enemy extends MobileEntity {
     @Override
     public void render(Graphics g) {
         if (isActive()) {
+            renderAttackPath(g);
             super.render(g);
 //            renderBounds(g);
         } else {
@@ -145,6 +152,28 @@ public class Enemy extends MobileEntity {
                 int expX = (int) x + (size - width)/2;
                 int expY = (int) y - (size - height)/2;
                 explosion.drawAnimation(g, expX, expY, size, size);
+            }
+        }
+    }
+
+    protected void renderAttackPath(Graphics g) {
+        if (attackEffect) {
+            boolean secondsTillShotFire = (shootTimer < 20);
+            if (isActive() && secondsTillShotFire) {
+                g.setColor(Color.red);
+
+                Graphics2D g2d = (Graphics2D) g;
+                g.setColor(Color.RED);
+
+
+                double drawX = x - (0.5) * (double) width;
+                double drawY = getTurretY() - (0.5) * (double) height;
+//                double drawY = y - (0.5) * (double) height;
+                int arcAngle = 20;
+
+                g2d.setComposite(Utility.makeTransparent(0.5f));
+                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(getBulletAngle()) - arcAngle / 2, arcAngle);
+                g2d.setComposite(Utility.makeTransparent(1f));
             }
         }
     }
@@ -322,7 +351,11 @@ public class Enemy extends MobileEntity {
 
     //stub
     public int getTurretX() {
-        return 0;
+        return ((int) x + width)/2;
+    }
+
+    public int getTurretY() {
+        return (int) y + Utility.intAtWidth640(2);
     }
 
     public int getBulletVelocity() {

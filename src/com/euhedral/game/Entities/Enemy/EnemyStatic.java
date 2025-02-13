@@ -10,14 +10,22 @@ public class EnemyStatic extends Enemy {
 
     int verticalPosition = 400;
     double destinationX, destinationY;
+    double deceleration;
 
     public EnemyStatic(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         enemyType = EntityHandler.TYPE_STATIC;
         bulletVelocity = Utility.intAtWidth640(6);
 
-//        textureHandler = GameController.getTexture();
-//        setImage(textureHandler.enemyHeavy[0]);
+        double decelerationMAX = 0.030;
+        double decelerationMIN = 0.005;
+        int randMAX = (int) (decelerationMAX / decelerationMIN);
+        int decelerationInt = Utility.randomRangeInclusive(1, randMAX);
+        deceleration = (double) (decelerationInt) * decelerationMIN;
+
+        attackEffect = true;
+
+        setImage(textureHandler.enemyStatic[0]);
     }
 
     public EnemyStatic(int x, int y, Color color, int levelHeight) {
@@ -44,11 +52,16 @@ public class EnemyStatic extends Enemy {
         super.update();
         if (state == STATE_ACTIVE && inscreen) {
             updateDestination();
-            if (movementDistance >= 0) {
-                movementDistance -= Math.abs(velX);
-            } else {
-                velX = 0;
-            }
+//            if (movementDistance >= 0) {
+//                movementDistance -= Math.abs(velX);
+//            } else {
+//                velX = 0;
+//            }
+
+//            boolean secondsTillShotFire = (shootTimer < 20);
+//            if (secondsTillShotFire) {
+//
+//            }
         }
 
 //        if (state == STATE_EXPLODING) {
@@ -59,18 +72,30 @@ public class EnemyStatic extends Enemy {
 //        }
     }
 
-    @Override
-    public void render(Graphics g) {
-        boolean secondsTillShotFire = (shootTimer < 10);
-        if (isActive() && secondsTillShotFire) {
-            g.setColor(Color.red);
-            int turretY = (int) y + height / 2;
-            g.drawLine(getTurretX(), turretY, (int) destinationX, (int) destinationY);
-        }
-
-        g.setColor(color);
-        super.render(g);
-    }
+//    @Override
+//    public void render(Graphics g) {
+//        if (attackEffect) {
+//            boolean secondsTillShotFire = (shootTimer < 20);
+//            if (isActive() && secondsTillShotFire) {
+//                g.setColor(Color.red);
+//
+//                Graphics2D g2d = (Graphics2D) g;
+//                g.setColor(Color.RED);
+//
+//
+//                double drawX = x - (0.5) * (double) width;
+//                double drawY = y - (0.5) * (double) height;
+//                int arcAngle = 20;
+//
+//                g2d.setComposite(Utility.makeTransparent(0.5f));
+//                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(getBulletAngle()) - arcAngle / 2, arcAngle);
+//                g2d.setComposite(Utility.makeTransparent(1f));
+//            }
+//        }
+//
+//        g.setColor(color);
+//        super.render(g);
+//    }
 
     @Override
     protected void shoot() {
@@ -96,9 +121,10 @@ public class EnemyStatic extends Enemy {
 
     @Override
     protected void moveInScreen() {
-        if (y < verticalPosition) {
+//        if (y < verticalPosition) {
+            velY = Math.max(0, velY- deceleration);
             y += velY;
-        }
+//        }
     }
 
     public void moveHorizontally() {
@@ -129,7 +155,7 @@ public class EnemyStatic extends Enemy {
 
     @Override
     protected void commonInit() {
-        this.setHealth(5);
+        this.setHealth(7);
         velY = 2.5f;
     }
 

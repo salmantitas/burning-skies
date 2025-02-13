@@ -16,10 +16,10 @@ public class EnemyHeavy extends Enemy {
     public EnemyHeavy(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         enemyType = EntityHandler.TYPE_HEAVY;
-//        enemyID = EnemyID.Heavy;
-        bulletVelocity = Utility.intAtWidth640(6);
+        bulletVelocity = Utility.intAtWidth640(5);
         bulletAngle = 60;
         shootTimerDefault = 100;
+        attackEffect = true;
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyHeavy[0]);
@@ -66,8 +66,60 @@ public class EnemyHeavy extends Enemy {
 
 //    @Override
 //    public void render(Graphics g) {
+//        if (attackEffect) {
+//            boolean secondsTillShotFire = (shootTimer < 20);
+//            if (isActive() && secondsTillShotFire) {
+//                g.setColor(Color.red);
+//
+//                Graphics2D g2d = (Graphics2D) g;
+//                g.setColor(Color.RED);
+//
+//
+//                double drawX = x - (0.5) * (double) width;
+//                double drawY = y - (0.5) * (double) height;
+//                int arcAngle = 20;
+//
+//                g2d.setComposite(Utility.makeTransparent(0.5f));
+//                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(getBulletAngle()) - arcAngle / 2, arcAngle);
+//
+//                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(90 + (90 - getBulletAngle())) - arcAngle / 2, arcAngle);
+//                g2d.setComposite(Utility.makeTransparent(1f));
+//            }
+//        }
+//
+//        g.setColor(color);
 //        super.render(g);
 //    }
+
+    @Override
+    protected void renderAttackPath(Graphics g) {
+        if (attackEffect) {
+            boolean secondsTillShotFire = (shootTimer < 20);
+            if (isActive() && secondsTillShotFire) {
+                g.setColor(Color.red);
+
+                Graphics2D g2d = (Graphics2D) g;
+                g.setColor(Color.RED);
+
+
+                double drawX = x - (0.5) * (double) width;
+                double drawY;
+                if (bulletAngle == bulletAngleMIN) {
+                    drawY = getTurretY() - (double) height;
+                } else {
+                    drawY = getTurretY() - (0.5) * (double) height;
+                }
+                int arcAngle = 20;
+
+                g2d.setComposite(Utility.makeTransparent(0.5f));
+                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(getBulletAngle()) - arcAngle / 2, arcAngle);
+
+                if (bulletAngle == bulletAngleMIN)
+                    g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(90 + (90 - getBulletAngle())) - arcAngle / 2, arcAngle);
+                g2d.setComposite(Utility.makeTransparent(1f));
+            }
+        }
+    }
 
     @Override
     protected void shoot() {

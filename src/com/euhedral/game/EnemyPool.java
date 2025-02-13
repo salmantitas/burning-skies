@@ -36,14 +36,14 @@ public class EnemyPool extends Pool {
     public void render(Graphics g) {
         super.render(g);
 
-        // render exclusion zone
-        g.setColor(Color.RED);
-        for (int i = 0; i < 10; i++) {
-            int x = exclusionZones.get(i);
-            if (x != -100) {
-                g.drawRect((int) x*64, 400, 64, 64);
-            }
-        }
+//        // render exclusion zone
+//        g.setColor(Color.RED);
+//        for (int i = 0; i < 10; i++) {
+//            int x = exclusionZones.get(i);
+//            if (x != -100) {
+//                g.drawRect((int) x*64, 400, 64, 64);
+//            }
+//        }
     }
 
     public int getPoolSize(int enemyType) {
