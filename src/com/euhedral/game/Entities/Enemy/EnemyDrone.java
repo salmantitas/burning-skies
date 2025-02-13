@@ -5,6 +5,7 @@ import com.euhedral.game.EntityHandler;
 import com.euhedral.game.GameController;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class EnemyDrone extends Enemy{
 
@@ -102,12 +103,28 @@ public class EnemyDrone extends Enemy{
         destinationY = EntityHandler.playerY;
     }
 
-    @Override
-    public void render(Graphics g) {
-        super.render(g);
-        renderBounds(g);
+//    @Override
+//    public void render(Graphics g) {
+//        super.render(g);
+//        renderBounds(g);
+//
+////        g.drawString("y-cord: " + y, (int) x, (int) y);
+//    }
 
-//        g.drawString("y-cord: " + y, (int) x, (int) y);
+
+    @Override
+    protected void renderBounds(Graphics g) {
+        g.setColor(Color.green);
+        Rectangle2D r = getBounds();
+
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.draw(r);
+    }
+
+    public boolean checkCollision(Rectangle2D object) {
+        Rectangle2D r = getBounds();
+        return object.intersects(r);
     }
 
 //    @Override

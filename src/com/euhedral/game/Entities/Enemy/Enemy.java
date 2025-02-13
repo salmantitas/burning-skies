@@ -145,7 +145,7 @@ public class Enemy extends MobileEntity {
         if (isActive()) {
             renderAttackPath(g);
             super.render(g);
-//            renderBounds(g);
+            renderBounds(g);
         } else {
             if (!explosion.playedOnce) {
                 int size = Math.max(width, height);
@@ -387,5 +387,14 @@ public class Enemy extends MobileEntity {
 
     private double getCenterY() {
         return (y + height / 2 + 2);
+    }
+
+    public boolean checkCollision(Rectangle2D object) {
+        Rectangle2D rV = getBoundsVertical();
+        Rectangle2D rH = getBoundsHorizontal();
+        boolean collidesVertically = object.intersects(rV);
+        boolean collidesHorizontally = object.intersects(rH);
+
+        return collidesVertically || collidesHorizontally;
     }
 }

@@ -5,6 +5,7 @@ import com.euhedral.game.EntityHandler;
 import com.euhedral.game.GameController;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class EnemyStatic extends Enemy {
 
@@ -179,5 +180,20 @@ public class EnemyStatic extends Enemy {
         commonInit();
         explosion.playedOnce = false;
         super.resurrect(x, y);
+    }
+
+    @Override
+    protected void renderBounds(Graphics g) {
+        g.setColor(Color.green);
+        Rectangle2D r = getBounds();
+
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.draw(r);
+    }
+
+    public boolean checkCollision(Rectangle2D object) {
+        Rectangle2D r = getBounds();
+        return object.intersects(r);
     }
 }

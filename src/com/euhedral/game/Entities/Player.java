@@ -210,11 +210,12 @@ public class Player extends MobileEntity {
         Utility.log("Velocity: " + velX + ", " + velY);
     }
 
-    public Bullet checkCollision(Enemy enemy) {
+    public Bullet checkCollisionBullet(Enemy enemy) {
         Bullet bullet = null;
         for (Entity entity: bullets.getEntities()) {
             BulletPlayer bulletPlayer = (BulletPlayer) entity;
-            if (bulletPlayer.isActive() && bulletPlayer.getBounds().intersects(enemy.getBounds()))
+            boolean intersectsEnemy = bulletPlayer.getBounds().intersects(enemy.getBoundsHorizontal()) || bulletPlayer.getBounds().intersects(enemy.getBoundsVertical());
+            if (bulletPlayer.isActive() && intersectsEnemy)
 //                    && (bulletPlayer.getContactId() == enemy.getContactId() || bulletPlayer.getContactId() == ContactID.Air && enemy.getContactId() == ContactID.Boss))
             {
                 bullet = bulletPlayer;
@@ -248,6 +249,15 @@ public class Player extends MobileEntity {
         Rectangle2D rH = getBoundsHorizontal();
         boolean collidesVertically = object.intersects(rV);
         boolean collidesHorizontally = object.intersects(rH);
+
+        return collidesVertically || collidesHorizontally;
+    }
+
+    public boolean checkCollision(Enemy enemy) {
+        Rectangle2D rV = getBoundsVertical();
+        Rectangle2D rH = getBoundsHorizontal();
+        boolean collidesVertically = enemy.checkCollision(rV);
+        boolean collidesHorizontally = enemy.checkCollision(rH);
 
         return collidesVertically || collidesHorizontally;
     }
