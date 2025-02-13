@@ -15,7 +15,7 @@ public class BulletEnemy extends Bullet{
 
     public BulletEnemy(int x, int y, double angle) {
         super(x, y, angle);
-        width = 16;
+        width = Utility.intAtWidth640(8);
         height = width;
         forwardVelocity = Utility.intAtWidth640(5);
         initSound = SoundHandler.BULLET_ENEMY;
@@ -43,19 +43,19 @@ public class BulletEnemy extends Bullet{
         }
     }
 
-    @Override
-    protected void drawDefault(Graphics g) {
-        if (state == STATE_ACTIVE) {
-            drawImage(g, image, width, height);
-//            g.setColor(color);
-//            g.fillOval((int) x, (int) y, width, height);
-        } else if (state == STATE_IMPACT) {
-//            g.setColor(impactColor);
-//            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
-
-            impact.drawAnimation(g, (int) x, (int) y, height, height);
-        }
-    }
+//    @Override
+//    protected void drawDefault(Graphics g) {
+//        if (state == STATE_ACTIVE) {
+//            drawImage(g, image, width, height);
+////            g.setColor(color);
+////            g.fillOval((int) x, (int) y, width, height);
+//        } else if (state == STATE_IMPACT) {
+////            g.setColor(impactColor);
+////            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
+//
+//            impact.drawAnimation(g, (int) x, (int) y, impactSize, impactSize);
+//        }
+//    }
 
     @Override
     public void resurrect(int x, int y) {

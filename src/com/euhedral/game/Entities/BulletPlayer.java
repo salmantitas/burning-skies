@@ -40,19 +40,19 @@ public class BulletPlayer extends Bullet{
         }
     }
 
-    @Override
-    protected void drawDefault(Graphics g) {
-        if (state == STATE_ACTIVE) {
-            drawImage(g, image, width, height);
-//            g.setColor(color);
-//            g.fillOval((int) x, (int) y, width, height);
-        } else if (state == STATE_IMPACT && entity.isActive()) {
-//            g.setColor(impactColor);
-//            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
-
-            impact.drawAnimation(g, (int) x, (int) y, 32, 32);
-        }
-    }
+//    @Override
+//    protected void drawDefault(Graphics g) {
+//        if (state == STATE_ACTIVE) {
+//            drawImage(g, image, width, height);
+////            g.setColor(color);
+////            g.fillOval((int) x, (int) y, width, height);
+//        } else if (state == STATE_IMPACT && entity.isActive()) {
+////            g.setColor(impactColor);
+////            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
+//
+//            impact.drawAnimation(g, (int) x, (int) y, impactSize, impactSize);
+//        }
+//    }
 
 //    public ContactID getContactId() {
 //        return contactId;

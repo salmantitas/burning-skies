@@ -15,6 +15,7 @@ public class Bullet extends MobileEntity {
     protected Color impactColor;
     protected boolean calculated = false;
     protected Animation impact;
+    protected int impactSize = 32;
 
     protected int initSound = SoundHandler.BULLET_PLAYER;
 
@@ -71,6 +72,20 @@ public class Bullet extends MobileEntity {
     @Override
     public void render(Graphics g) {
         drawDefault(g);
+    }
+
+    @Override
+    protected void drawDefault(Graphics g) {
+        if (state == STATE_ACTIVE) {
+            drawImage(g, image, width, height);
+//            g.setColor(color);
+//            g.fillOval((int) x, (int) y, width, height);
+        } else if (state == STATE_IMPACT && entity.isActive()) {
+//            g.setColor(impactColor);
+//            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
+
+            impact.drawAnimation(g, (int) x, (int) y, impactSize, impactSize);
+        }
     }
 
     public void renderReflection(Graphics2D g2d, float transparency) {
