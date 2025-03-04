@@ -178,14 +178,13 @@ public class EnemyPool extends Pool {
                 }
             }
 
-            for (int i = 0; i < 10; i++) {
-                Utility.log("Ex " + i + ": " + exclusionZones.get(i));
-            }
+//            for (int i = 0; i < 10; i++) {
+//                Utility.log("Ex " + i + ": " + exclusionZones.get(i));
+//            }
         }
     }
 
     public ArrayList<Integer> getExclusionZones() {
         return exclusionZones;
     }
-
 }

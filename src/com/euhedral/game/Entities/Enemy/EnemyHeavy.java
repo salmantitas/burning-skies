@@ -19,7 +19,7 @@ public class EnemyHeavy extends Enemy {
         bulletVelocity = Utility.intAtWidth640(5);
         bulletAngle = 60;
         shootTimerDefault = 100;
-        attackEffect = true;
+//        attackEffect = true;
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyHeavy[0]);
@@ -214,10 +214,10 @@ public class EnemyHeavy extends Enemy {
         return tempAngle;
     }
 
-    @Override
-    public void resurrect(int x, int y) {
-        commonInit();
-        explosion.playedOnce = false;
-        super.resurrect(x, y);
-    }
+//    @Override
+//    public void resurrect(int x, int y) {
+//        commonInit();
+//        explosion.playedOnce = false;
+//        super.resurrect(x, y);
+//    }
 }

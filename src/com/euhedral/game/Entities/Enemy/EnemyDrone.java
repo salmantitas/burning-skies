@@ -32,7 +32,7 @@ public class EnemyDrone extends Enemy{
 
 //        power = 1;
 //        shootTimerDefault = 250;
-        minVelX = 1.75f;
+//        minVelX = 2f;
         score = 25;
         damage = 15;
         commonInit();
@@ -46,20 +46,13 @@ public class EnemyDrone extends Enemy{
     @Override
     public void update() {
         super.update();
-        if (updateSkip == 20) {
+        if (updateSkip == 10) {
             updateDestination();
             calculateVelocities(destinationX, destinationY);
             updateSkip = 0;
         } else {
             updateSkip++;
         }
-//        if (state == STATE_ACTIVE && inscreen) {
-//            if (movementDistance >= 0) {
-//                movementDistance -= Math.abs(velX);
-//            } else {
-//                velX = 0;
-//            }
-//        }
     }
 
     @Override
@@ -86,17 +79,17 @@ public class EnemyDrone extends Enemy{
     @Override
     protected void commonInit() {
         this.setHealth(1);
-        forwardVelocity = 3f;
+        forwardVelocity = 4f;
 //        velX = minVelX;
         updateDestination();
     }
 
-    @Override
-    public void resurrect(int x, int y) {
-        commonInit();
-        explosion.playedOnce = false;
-        super.resurrect(x, y);
-    }
+//    @Override
+//    public void resurrect(int x, int y) {
+//        commonInit();
+//        explosion.playedOnce = false;
+//        super.resurrect(x, y);
+//    }
 
     private void updateDestination() {
         destinationX = EntityHandler.playerX;

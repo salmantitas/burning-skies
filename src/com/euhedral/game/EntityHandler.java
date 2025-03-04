@@ -27,7 +27,8 @@ public class EntityHandler {
     public static final int TYPE_HEAVY = 1;
     public static final int TYPE_DRONE = 2;
     public static final int TYPE_STATIC = 3;
-    public static final int enemyTypes = TYPE_STATIC + 1;
+    public static final int TYPE_SIDE = 4;
+    public static final int enemyTypes = TYPE_SIDE + 1;
 
     // Entity Lists
     private Flag flag;
@@ -121,25 +122,31 @@ public class EntityHandler {
         else {
             spawnNew(x, y, enemyType, "", 0);
         }
+        enemies.printPool("Enemy");
     }
 
     private void spawnNew(int x, int y, int enemyType, String move, int time) {
-        // todo: Remove Color
-        Color color = Color.BLACK;
+        Enemy enemy = null;
         if (enemyType == TYPE_BASIC) {
-            Enemy enemy = new EnemyBasic(x, y, color, levelHeight);
+            enemy = new EnemyBasic(x, y, levelHeight);
             enemy.setHMove(move);
             enemy.setMovementDistance(time);
-            enemies.add(enemy);
+//            enemies.add(enemy);
 //                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
         } else if (enemyType == TYPE_DRONE) {
-            Enemy enemy = new EnemyDrone(x, y, color, levelHeight);
-            enemies.add(enemy);
+            enemy = new EnemyDrone(x, y, levelHeight);
+//            enemies.add(enemy);
         } else if (enemyType == TYPE_HEAVY) {
-            Enemy enemy = new EnemyHeavy(x, y, color, levelHeight);
-            enemies.add(enemy);
+            enemy = new EnemyHeavy(x, y, levelHeight);
+//            enemies.add(enemy);
         } else if (enemyType == TYPE_STATIC) {
-            Enemy enemy = new EnemyStatic(x, y, color, levelHeight);
+            enemy = new EnemyStatic(x, y, levelHeight);
+//            enemies.add(enemy);
+        } else if (enemyType == TYPE_SIDE) {
+            enemy = new EnemySide(x, y, levelHeight);
+//            enemies.add(enemy);
+        }
+        if (enemy != null) {
             enemies.add(enemy);
         }
 //        enemies.increaseActive(enemyType);

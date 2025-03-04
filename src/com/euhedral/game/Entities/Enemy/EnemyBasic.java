@@ -13,7 +13,7 @@ public class EnemyBasic extends Enemy{
         super(x, y, levelHeight);
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[0]);
-        attackEffect = true;
+//        attackEffect = true;
     }
 
     public EnemyBasic(int x, int y, Color color, int levelHeight) {
@@ -92,12 +92,12 @@ public class EnemyBasic extends Enemy{
         velY = 2.5f;
     }
 
-    @Override
-    public void resurrect(int x, int y) {
-        commonInit();
-        explosion.playedOnce = false;
-        super.resurrect(x, y);
-    }
+//    @Override
+//    public void resurrect(int x, int y) {
+//        commonInit();
+//        explosion.playedOnce = false;
+//        super.resurrect(x, y);
+//    }
 
     @Override
     public int getTurretX() {

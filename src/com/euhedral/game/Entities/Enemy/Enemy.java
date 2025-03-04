@@ -145,7 +145,7 @@ public class Enemy extends MobileEntity {
         if (isActive()) {
             renderAttackPath(g);
             super.render(g);
-            renderBounds(g);
+//            renderBounds(g);
         } else {
             if (!explosion.playedOnce) {
                 int size = Math.max(width, height);
@@ -315,6 +315,8 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void resurrect(int x, int y) {
+        commonInit();
+        explosion.playedOnce = false;
         super.resurrect(x, y);
         explosion.endAnimation();
         shootTimer = shootTimerDefault;
