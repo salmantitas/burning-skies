@@ -62,11 +62,15 @@ public class Enemy extends MobileEntity {
         color = Color.red;
 //        r = new Random();
         setLevelHeight(levelHeight);
+
+        shootTimerDefault = 150;
+
         bulletVelocity = Utility.intAtWidth640(5);
         bulletAngle = 90;
         textureHandler = GameController.getTexture();
         attackEffect = false;
         initialize();
+        shootTimer = shootTimerDefault;
     }
 
     public Enemy(int x, int y, Color color, int levelHeight) {
@@ -110,8 +114,6 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void move() {
-//        x = Utility.clamp(x, 0, Engine.WIDTH - Utility.intAtWidth640(width)); // todo: reconsider usefulness
-
         if (isActive()) {
             if (inscreen) {
                 moveInScreen();
@@ -267,7 +269,7 @@ public class Enemy extends MobileEntity {
             hMove = HorizontalMovement.RIGHT;
             velX = minVelX;//*1.45f;//1.95f;
         } else {
-            velX = 0;
+//            velX = 0;
         }
     }
 
@@ -353,7 +355,7 @@ public class Enemy extends MobileEntity {
 
     //stub
     public int getTurretX() {
-        return ((int) x + width)/2;
+        return ((int) x + width/2);
     }
 
     public int getTurretY() {

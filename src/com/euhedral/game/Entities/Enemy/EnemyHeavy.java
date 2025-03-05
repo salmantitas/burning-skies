@@ -36,6 +36,7 @@ public class EnemyHeavy extends Enemy {
 
 //        width = width*2; // todo: check, it's being called twice
         shootTimerDefault = 200;
+//        shootTimer = shootTimerDefault;
         score = 150;
         velX = 0;
         minVelY = 1.75f;
