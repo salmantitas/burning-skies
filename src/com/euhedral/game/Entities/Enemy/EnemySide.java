@@ -26,11 +26,11 @@ public class EnemySide extends Enemy{
         super.initialize();
 
 //        power = 2;
-        minVelX = 4f;
+        minVelX = 6f;
         shootTimerDefault = 50;
 //        shootTimer = shootTimerDefault;
         commonInit();
-        score = 500;
+        score = 350;
     }
 
     @Override

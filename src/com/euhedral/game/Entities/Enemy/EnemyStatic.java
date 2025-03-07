@@ -19,10 +19,11 @@ public class EnemyStatic extends Enemy {
         bulletVelocity = Utility.intAtWidth640(6);
 
         double decelerationMAX = 0.030;
-        double decelerationMIN = 0.005;
+        double decelerationMIN = 0.010;
         int randMAX = (int) (decelerationMAX / decelerationMIN);
         int decelerationInt = Utility.randomRangeInclusive(1, randMAX);
         deceleration = (double) (decelerationInt) * decelerationMIN;
+//        deceleration = decelerationMAX;
 
         attackEffect = true;
 
