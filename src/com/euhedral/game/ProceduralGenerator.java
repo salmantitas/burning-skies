@@ -541,7 +541,7 @@ public class ProceduralGenerator extends EnemyGenerator {
     // Pickup Spawner Helped
     private void spawnPickupHelper(EntityID id) {
         spawnZone = Utility.randomRange(1, 3);
-        entityHandler.spawnPickup(playerX, spawnY * SCALE, id);
+        entityHandler.spawnPickup(playerX * SCALE, spawnY * SCALE, id);
         wave++;
 //        System.out.println("Wave: " + wave);
         spawnInterval = spawnInterval_MIN;

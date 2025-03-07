@@ -18,7 +18,7 @@ public class EnemyGenerator {
     int xMid = (xEnd - xStart)/2 + xStart;
 
     // Player
-    int playerX = xMid * 64, playerY;
+    int playerX = xMid, playerY;
 
     // Enemy Spawning
     protected EntityHandler entityHandler;
@@ -41,7 +41,8 @@ public class EnemyGenerator {
     final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
     final int TYPE_DRONE = EntityHandler.TYPE_DRONE;
     final int TYPE_STATIC = EntityHandler.TYPE_STATIC;
-    int maxTypes = TYPE_STATIC + 1;
+    final int TYPE_SIDE = EntityHandler.TYPE_SIDE;
+    int maxTypes = TYPE_SIDE + 1;
 
     // Wave
     int wave;
@@ -78,9 +79,9 @@ public class EnemyGenerator {
         minWavesDifficultyIncrease = 5;
         entityHandler.setLevelHeight(getLevelHeight());
 
-        playerY = getLevelHeight();
+        playerY = getLevelHeight() / SCALE;
 
-        entityHandler.spawnPlayer(playerX, playerY);
+        entityHandler.spawnPlayer(playerX * SCALE, playerY * SCALE);
 
         // create distance between player and first wave
         enemiesSpawned = 0;
@@ -92,7 +93,7 @@ public class EnemyGenerator {
 
         // todo: use line for first wave here
 
-        spawnY = (height - Engine.HEIGHT) ;//- (wave * MIN_PAUSE);
+        spawnY = (height - Engine.HEIGHT)/SCALE ;//- (wave * MIN_PAUSE);
         lastSpawnTime = GameController.getCurrentTime();
         spawnInterval = spawnInterval_MIN;
         spawnIntervalPickups = spawnInterval_MAX;
@@ -144,6 +145,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_HEAVY; // stub
 //        enemytype = TYPE_DRONE; // stub
 //        enemytype = TYPE_STATIC; // stub
+//        enemytype = TYPE_SIDE; // stub
 
 //        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
 
@@ -153,9 +155,22 @@ public class EnemyGenerator {
             limit = 5;
         }
 
+        if (enemytype == TYPE_SIDE) {
+            limit = 4;
+        }
+
+//        if (enemytype == TYPE_BASIC) {
+//            limit = 20;
+//        }
+
             while (EntityHandler.getActiveEnemies(enemytype) >= limit) {
                 rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
                 enemytype = rand;
+                // calculate limit
+//                if (enemytype == TYPE_BASIC) {
+//                    limit = 20;
+//                }
+                Utility.log("Type: " + enemytype + " | Limit: " + limit + " | Looping");
             }
 
 //        if (wave == firstWave) {
@@ -174,15 +189,19 @@ public class EnemyGenerator {
 
     protected void determineZone() {
         // Vertical Zone
-        if (enemytype == TYPE_DRONE) {
-            int adjustment = 32;
+        if (enemytype == TYPE_DRONE || enemytype == TYPE_SIDE) {
+            int adjustment = 1;
             int zone = Utility.randomRangeInclusive(0, 1);
             if (zone == 0) {
                 spawnX = -adjustment;
             } else {
-                spawnX = width + adjustment;
+                spawnX = xEnd + adjustment;
             }
-            spawnY = Utility.randomRangeInclusive(0, height * 2 / 3);
+            if (enemytype == TYPE_DRONE) {
+                spawnY = Utility.randomRangeInclusive(0, height / SCALE * 2 / 3);
+            } else if (enemytype == TYPE_SIDE) {
+                spawnY = Utility.randomRangeInclusive(5, 10);
+            }
         }
         // Horizontal Zone
         else {
@@ -195,7 +214,7 @@ public class EnemyGenerator {
                 spawnX = Utility.randomRangeInclusive(xStart, xEnd);
             }
 
-            spawnY = (height - Engine.HEIGHT);
+            spawnY = (height - Engine.HEIGHT) / SCALE;
 
 //            if (wave == firstWave) {
 //                spawnX = xStart;
@@ -267,7 +286,7 @@ public class EnemyGenerator {
     }
 
     protected void spawnOneEnemy() {
-        entityHandler.spawnEntity(spawnX * (64 + incrementMIN), spawnY, enemytype);
+        entityHandler.spawnEntity(spawnX * (64 + incrementMIN), spawnY * (64 + incrementMIN), enemytype);
 //        System.out.println("Enemy spawned");
     }
 }

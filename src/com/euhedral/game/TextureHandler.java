@@ -15,6 +15,7 @@ public class TextureHandler {
             enemyBasicImage,
             enemyHeavyImage,
             enemyStaticImage,
+            enemySideImage,
             explosionImage,
             impactSmallImage,
             title,
@@ -30,6 +31,7 @@ public class TextureHandler {
             enemySS,
             enemyHeavySS,
             enemyStaticSS,
+            enemySideSS,
             explosionSS,
             impactSmallSS,
             seaSS,
@@ -42,6 +44,7 @@ public class TextureHandler {
     public BufferedImage[] enemy = new BufferedImage[1];
     public BufferedImage[] enemyHeavy = new BufferedImage[1];
     public BufferedImage[] enemyStatic = new BufferedImage[1];
+    public BufferedImage[] enemySide = new BufferedImage[2];
     public BufferedImage[] enemyDrone = new BufferedImage[1];
     public BufferedImage[] explosion = new BufferedImage[4];
     public BufferedImage[] impactSmall = new BufferedImage[4];
@@ -59,6 +62,7 @@ public class TextureHandler {
             enemyBasicImage = loader.loadImage("/enemy1.png");
             enemyHeavyImage = loader.loadImage("/enemy2.png");
             enemyStaticImage = loader.loadImage("/enemy3.png");
+            enemySideImage = loader.loadImage("/enemy4.png");
             explosionImage = loader.loadImage("/explosion.png");
             impactSmallImage = loader.loadImage("/impactsmall.png");
             title = loader.loadImage("/title.png");
@@ -75,6 +79,7 @@ public class TextureHandler {
         enemySS = new SpriteSheet(enemyBasicImage);
         enemyHeavySS = new SpriteSheet(enemyHeavyImage);
         enemyStaticSS = new SpriteSheet(enemyStaticImage);
+        enemySideSS = new SpriteSheet(enemySideImage);
         enemyDroneSS = new SpriteSheet(enemyDroneImage);
         explosionSS = new SpriteSheet(explosionImage);
         impactSmallSS = new SpriteSheet(impactSmallImage);
@@ -105,6 +110,8 @@ public class TextureHandler {
 
         enemyHeavy[0] = enemyHeavySS.grabImage(1,1,w,h);
         enemyStatic[0] = enemyStaticSS.grabImage(1,1,w,h);
+        enemySide[0] = enemySideSS.grabImage(1,1,w,h);
+        enemySide[1] = enemySideSS.grabImage(2,1,w,h);
 
         w = 32;
         h = 32;
