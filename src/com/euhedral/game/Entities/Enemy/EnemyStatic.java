@@ -18,12 +18,12 @@ public class EnemyStatic extends Enemy {
         enemyType = EntityHandler.TYPE_STATIC;
         bulletVelocity = Utility.intAtWidth640(6);
 
-        double decelerationMAX = 0.030;
+        double decelerationMAX = 0.012;
         double decelerationMIN = 0.010;
-        int randMAX = (int) (decelerationMAX / decelerationMIN);
-        int decelerationInt = Utility.randomRangeInclusive(1, randMAX);
-        deceleration = (double) (decelerationInt) * decelerationMIN;
-//        deceleration = decelerationMAX;
+//        int randMAX = (int) (decelerationMAX / decelerationMIN);
+//        int decelerationInt = Utility.randomRangeInclusive(1, randMAX);
+//        deceleration = (double) (decelerationInt) * decelerationMIN;
+        deceleration = decelerationMAX;
 
         attackEffect = true;
 

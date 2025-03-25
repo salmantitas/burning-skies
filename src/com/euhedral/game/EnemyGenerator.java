@@ -156,7 +156,7 @@ public class EnemyGenerator {
         }
 
         if (enemytype == TYPE_SIDE) {
-            limit = 4;
+            limit = 3;
         }
 
 //        if (enemytype == TYPE_BASIC) {
@@ -200,7 +200,8 @@ public class EnemyGenerator {
             if (enemytype == TYPE_DRONE) {
                 spawnY = Utility.randomRangeInclusive(0, height / SCALE * 2 / 3);
             } else if (enemytype == TYPE_SIDE) {
-                spawnY = Utility.randomRangeInclusive(5, 10);
+                spawnY = Utility.randomRangeInclusive(5, 7);
+//                spawnY = 7;
             }
         }
         // Horizontal Zone
