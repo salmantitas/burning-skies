@@ -52,8 +52,8 @@ public abstract class MobileEntity extends Entity {
     protected double NORTH_WEST = 315;
 
 //    protected double turn = SOUTH_WEST - WEST;
-    protected float forwardVelocity = 0;
-    protected double angle = 0;
+    protected float forwardVelocity;
+    protected double angle;
     protected double velX, velY;
     protected float minVelX, minVelY;
     protected float maxVelX, maxVelY;
@@ -67,7 +67,8 @@ public abstract class MobileEntity extends Entity {
 
     @Override
     protected void initialize() {
-
+        forwardVelocity = 0;
+        angle = 0;
     }
 
     @Override

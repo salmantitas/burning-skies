@@ -15,7 +15,7 @@ public class EnemyStatic extends Enemy {
 
     public EnemyStatic(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
-        enemyType = EntityHandler.TYPE_STATIC;
+
         bulletVelocity = Utility.intAtWidth640(6);
 
         double decelerationMAX = 0.012;
@@ -38,6 +38,8 @@ public class EnemyStatic extends Enemy {
     @Override
     public void initialize() {
         super.initialize();
+
+//        enemyType = EntityHandler.TYPE_STATIC;
 
         shootTimerDefault = 200;
         score = 200;
@@ -191,6 +193,11 @@ public class EnemyStatic extends Enemy {
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.draw(r);
+    }
+
+    @Override
+    protected void setEnemyType() {
+        enemyType = EntityHandler.TYPE_STATIC;
     }
 
     public boolean checkCollision(Rectangle2D object) {

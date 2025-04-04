@@ -12,10 +12,11 @@ import com.euhedral.game.GameController;
  *  Standard Enemies, flies downwards and shoots a missile at intervals
  * */
 public class Enemy extends MobileEntity {
+    protected int enemyType;
 
     protected int health;
-    protected int power = 1;
-    protected int enemyType;
+    protected int healthMAX;
+
     protected double offscreenVelY;
     protected boolean moveLeft, moveRight;
     protected Color color;
@@ -23,10 +24,10 @@ public class Enemy extends MobileEntity {
     protected int shootTimer = shootTimerDefault;
     protected boolean inscreen = false;
     protected float cam;
-    protected Random r;
+
     protected int score = 50;
     protected int distance;
-//    protected int shotNum = 0;
+
     protected int movementDistance;
     protected int damage;
     protected double explodingVelocity = 1.5f;
@@ -35,13 +36,11 @@ public class Enemy extends MobileEntity {
     protected Animation explosion;
 
     protected int levelHeight;
-//    protected boolean alive = true;
 
     protected int shot = 0;
     protected int bulletVelocity;
     protected double bulletAngle;
 
-    // todo: Experimental
     protected boolean attackEffect;
 
     // State Machine
@@ -51,16 +50,16 @@ public class Enemy extends MobileEntity {
 
     public Enemy(int x, int y, int levelHeight) {
         super(x, y, EntityID.Enemy);
-        enemyType = EntityHandler.TYPE_BASIC;
+
         offscreenVelY = velY;
         moveRight = false;
         moveLeft = false;
         cam = GameController.getCamera().getMarker();
-//        power = 1; // todo: reconsider purpose
+
         width = Utility.intAtWidth640(32);
         height = width;
         color = Color.red;
-//        r = new Random();
+
         setLevelHeight(levelHeight);
 
         shootTimerDefault = 150;
@@ -69,8 +68,7 @@ public class Enemy extends MobileEntity {
         bulletAngle = 90;
         textureHandler = GameController.getTexture();
         attackEffect = false;
-        initialize();
-        shootTimer = shootTimerDefault;
+//        initialize();
     }
 
     public Enemy(int x, int y, Color color, int levelHeight) {
@@ -128,18 +126,12 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void initialize() {
-//        if (contactId == ContactID.Ground) {
-//            width = Utility.intAtWidth640(32);
-//            height = 2* width;
-//            color = Color.pink;
-//            r = new Random();
-//            health = r.nextInt(3) + 2;
-//            minVelY = 2f;
-//            velY = minVelY;
-//        }
+        setEnemyType();
+        forwardVelocity = 2.4f;
         explosion = GameController.getTexture().initExplosion(5);
         reflection = new Reflection();
         damage = 30;
+        shootTimer = shootTimerDefault;
     }
 
     @Override
@@ -329,6 +321,10 @@ public class Enemy extends MobileEntity {
         return explosion.playedOnce;
     }
 
+    protected void setEnemyType() {
+
+    }
+
     public void setMovementDistance(int time) {
         this.movementDistance = time;
     }
@@ -378,7 +374,9 @@ public class Enemy extends MobileEntity {
         return damage;
     }
 
+    // todo: Find better name
     protected void commonInit() {
+        setHealth(healthMAX);
         velX = 0;
         velY = explodingVelocity;
     }

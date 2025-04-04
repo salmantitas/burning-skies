@@ -8,6 +8,9 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 
+    // todo: DELETE, test only
+    protected int initCount = 0;
+
     protected double x, y;
     protected int width, height;
     protected EntityID id;

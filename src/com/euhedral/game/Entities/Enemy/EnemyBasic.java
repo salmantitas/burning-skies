@@ -2,6 +2,7 @@ package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.EntityHandler;
 import com.euhedral.game.GameController;
 import com.euhedral.game.TextureHandler;
 
@@ -26,8 +27,9 @@ public class EnemyBasic extends Enemy{
     public void initialize() {
         super.initialize();
 
-        power = 1;
+//        enemyType = EntityHandler.TYPE_BASIC;
         shootTimerDefault = 150;
+        healthMAX = 3;
         commonInit();
         score = 50;
         minVelX = 1.75f;
@@ -88,8 +90,8 @@ public class EnemyBasic extends Enemy{
 
     @Override
     protected void commonInit() {
-        this.setHealth(3);
-        velY = 2.5f;
+        this.setHealth(healthMAX);
+        velY = forwardVelocity;
     }
 
 //    @Override
@@ -112,5 +114,10 @@ public class EnemyBasic extends Enemy{
         for (int i = 0; i < pathLength; i ++) {
             g.drawLine(originX, originY, originX + 0, originY + i);
         }
+    }
+
+    @Override
+    protected void setEnemyType() {
+        enemyType = EntityHandler.TYPE_BASIC;
     }
 }

@@ -14,7 +14,7 @@ public class EnemyDrone extends Enemy{
 
     public EnemyDrone(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
-        enemyType = EntityHandler.TYPE_DRONE;
+//        enemyType = EntityHandler.TYPE_DRONE;
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyDrone[0]);
         width = 32;
@@ -29,6 +29,8 @@ public class EnemyDrone extends Enemy{
     @Override
     public void initialize() {
         super.initialize();
+
+//        enemyType = EntityHandler.TYPE_DRONE;
 
 //        power = 1;
 //        shootTimerDefault = 250;
@@ -118,6 +120,11 @@ public class EnemyDrone extends Enemy{
     public boolean checkCollision(Rectangle2D object) {
         Rectangle2D r = getBounds();
         return object.intersects(r);
+    }
+
+    @Override
+    protected void setEnemyType() {
+        enemyType = EntityHandler.TYPE_DRONE;
     }
 
 //    @Override

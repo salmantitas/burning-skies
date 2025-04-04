@@ -10,7 +10,7 @@ import java.awt.*;
 public class EnemySide extends Enemy{
     public EnemySide(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
-        enemyType = EntityHandler.TYPE_SIDE;
+
 //        velX = minVelX;
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemySide[0]);
@@ -24,6 +24,8 @@ public class EnemySide extends Enemy{
     @Override
     public void initialize() {
         super.initialize();
+
+//        enemyType = EntityHandler.TYPE_SIDE;
 
 //        power = 2;
         minVelX = 6f;
@@ -78,6 +80,11 @@ public class EnemySide extends Enemy{
         setHealth(3);
         velX = minVelX;
         velY = 0;
+    }
+
+    @Override
+    protected void setEnemyType() {
+        enemyType = EntityHandler.TYPE_SIDE;
     }
 
     @Override

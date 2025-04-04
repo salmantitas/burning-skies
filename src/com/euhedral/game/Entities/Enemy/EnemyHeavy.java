@@ -15,7 +15,7 @@ public class EnemyHeavy extends Enemy {
 
     public EnemyHeavy(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
-        enemyType = EntityHandler.TYPE_HEAVY;
+
         bulletVelocity = Utility.intAtWidth640(5);
         bulletAngle = 60;
         shootTimerDefault = 100;
@@ -34,6 +34,8 @@ public class EnemyHeavy extends Enemy {
     public void initialize() {
         super.initialize();
 
+//        enemyType = EntityHandler.TYPE_HEAVY;
+
 //        width = width*2; // todo: check, it's being called twice
         shootTimerDefault = 200;
 //        shootTimer = shootTimerDefault;
@@ -42,6 +44,7 @@ public class EnemyHeavy extends Enemy {
         minVelY = 1.75f;
         distance = 0; // stub ; width * 2;
         movementDistance = distance;
+        healthMAX = 6;
         commonInit();
         damage = 60;
     }
@@ -183,8 +186,8 @@ public class EnemyHeavy extends Enemy {
 
     @Override
     protected void commonInit() {
-        this.setHealth(5);
-        velY = 2.5f;
+        this.setHealth(healthMAX);
+        velY = forwardVelocity;
         bulletAngle = bulletAngleMIN;
     }
 
@@ -213,6 +216,11 @@ public class EnemyHeavy extends Enemy {
         if (bothShotsFired)
             incrementBulletAngle();
         return tempAngle;
+    }
+
+    @Override
+    protected void setEnemyType() {
+        enemyType = EntityHandler.TYPE_HEAVY;
     }
 
 //    @Override
