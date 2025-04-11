@@ -41,7 +41,8 @@ public class EntityHandler {
 
 
     // Background Scrolling
-    public static final double backgroundScrollingSpeed = 1.5;
+    private static double scrollRate = 64d/20;
+    public static final double backgroundScrollingSpeed = scrollRate/2;
 
     EntityHandler() {
 //        this.variableHandler = variableHandler;

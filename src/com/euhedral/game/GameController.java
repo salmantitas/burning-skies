@@ -90,10 +90,10 @@ public class GameController {
     int currentImage = 0;
 //    int imageAnimationSpeed = 1;
     static int maxImage = 7;
-    private float backgroundScroll = 0;
+    private double backgroundScroll = 0;
 //    private float backgroundScrollAcc = 0;
-    private float maxScroll = 64f;
-    private static float scrollRate = 64f/20; // MAX = 0.04f
+    private static double maxScroll = 64;
+    private static double scrollRate = maxScroll/20; // MAX = 0.04
 
     /************
      * Test *
