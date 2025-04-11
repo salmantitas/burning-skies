@@ -5,7 +5,7 @@ import com.euhedral.game.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.Random;
+
 import com.euhedral.game.GameController;
 
 /*
@@ -30,7 +30,7 @@ public class Enemy extends MobileEntity {
 
     protected int movementDistance;
     protected int damage;
-    protected double explodingVelocity = 1.5f;
+    protected double explodingVelocity = EntityHandler.backgroundScrollingSpeed;
 
     protected TextureHandler textureHandler;
     protected Animation explosion;
@@ -38,7 +38,7 @@ public class Enemy extends MobileEntity {
     protected int levelHeight;
 
     protected int shot = 0;
-    protected int bulletVelocity;
+    protected double bulletVelocity;
     protected double bulletAngle;
 
     protected boolean attackEffect;
@@ -359,7 +359,7 @@ public class Enemy extends MobileEntity {
         return (int) y + Utility.intAtWidth640(2);
     }
 
-    public int getBulletVelocity() {
+    public double getBulletVelocity() {
         return bulletVelocity;
     }
 

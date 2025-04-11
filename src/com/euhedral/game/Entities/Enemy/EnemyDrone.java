@@ -1,6 +1,5 @@
 package com.euhedral.game.Entities.Enemy;
 
-import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
 import com.euhedral.game.GameController;
 

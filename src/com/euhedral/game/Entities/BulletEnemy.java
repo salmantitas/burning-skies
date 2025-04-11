@@ -9,6 +9,8 @@ import java.awt.*;
 
 public class BulletEnemy extends Bullet{
 
+    private boolean tracking;
+
     BulletEnemy(int x, int y) {
         super(x, y);
     }
@@ -25,8 +27,9 @@ public class BulletEnemy extends Bullet{
         SoundHandler.playSound(initSound);
     }
 
-    public BulletEnemy(int x, int y, double angle, int vel) {
+    public BulletEnemy(int x, int y, double angle, double vel, boolean tracking) {
         this(x, y, angle);
+        this.tracking = tracking;
         forwardVelocity = vel;
     }
 
@@ -41,6 +44,21 @@ public class BulletEnemy extends Bullet{
             this.velY = entity.getVelY();
             super.update();
         }
+    }
+
+    @Override
+    protected void move() {
+        x += velX;
+        if (state == STATE_ACTIVE) {
+            if (isTracking()) {
+                y += velY;
+            } else {
+                y += velY + EntityHandler.backgroundScrollingSpeed;
+            }
+        } else if (state == STATE_IMPACT) {
+            y += velY;
+        }
+
     }
 
 //    @Override
@@ -62,5 +80,13 @@ public class BulletEnemy extends Bullet{
         this.calculated = false;
         super.resurrect(x, y);
         SoundHandler.playSound(initSound);
+    }
+
+    public boolean isTracking() {
+        return tracking;
+    }
+
+    public void setTracking(boolean tracking) {
+        this.tracking = tracking;
     }
 }

@@ -39,6 +39,10 @@ public class EntityHandler {
 
     private EnemyBoss boss;
 
+
+    // Background Scrolling
+    public static final double backgroundScrollingSpeed = 1.5;
+
     EntityHandler() {
 //        this.variableHandler = variableHandler;
         initializeAnimations();
@@ -477,12 +481,16 @@ public class EntityHandler {
         int x = enemy.getTurretX();
         double dir = enemy.getBulletAngle();
         double y = enemy.getTurretY();
-        int bulletVelocity = enemy.getBulletVelocity();
+        double bulletVelocity = enemy.getBulletVelocity();
+        boolean tracking = false;
+        if (enemy.getEnemyType() == TYPE_STATIC) {
+            tracking = true;
+        }
         if (bullets.getPoolSize() > 0) {
-            bullets.spawnFromPool(x, (int) y, dir, bulletVelocity);
+            bullets.spawnFromPool(x, (int) y, dir, bulletVelocity, tracking);
         }
         else {
-            bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity));
+            bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity, tracking));
         }
     }
 

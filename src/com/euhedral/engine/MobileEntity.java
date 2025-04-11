@@ -52,11 +52,13 @@ public abstract class MobileEntity extends Entity {
     protected double NORTH_WEST = 315;
 
 //    protected double turn = SOUTH_WEST - WEST;
-    protected float forwardVelocity;
+
+    // Velocities will always be double, because doubles store more decimal points than floats
+    protected double forwardVelocity;
     protected double angle;
     protected double velX, velY;
-    protected float minVelX, minVelY;
-    protected float maxVelX, maxVelY;
+    protected double minVelX, minVelY;
+    protected double maxVelX, maxVelY;
     protected boolean moveLeft, moveRight, moveUp, moveDown;
     protected HorizontalMovement hMove = HorizontalMovement.NONE;
     protected VerticalMovement vMove = VerticalMovement.NONE;
@@ -177,11 +179,11 @@ public abstract class MobileEntity extends Entity {
         physics.jumping = jumping;
     }
 
-    public void setForwardVelocity(float forwardVelocity) {
+    public void setForwardVelocity(double forwardVelocity) {
         this.forwardVelocity = forwardVelocity;
     }
 
-    public float getForwardVelocity() {
+    public double getForwardVelocity() {
         return forwardVelocity;
     }
 
