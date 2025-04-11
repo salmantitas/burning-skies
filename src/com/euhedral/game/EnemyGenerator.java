@@ -37,7 +37,8 @@ public class EnemyGenerator {
 
     // Enemy Types
     int enemytype;
-    final int TYPE_BASIC = EntityHandler.TYPE_BASIC;
+    final int TYPE_BASIC_DOWN = EntityHandler.TYPE_BASIC_DOWN;
+    final int TYPE_BASIC_SIDE = EntityHandler.TYPE_BASIC_SIDE;
     final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
     final int TYPE_DRONE = EntityHandler.TYPE_DRONE;
     final int TYPE_STATIC = EntityHandler.TYPE_STATIC;
@@ -141,7 +142,8 @@ public class EnemyGenerator {
         int rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
         enemytype = rand;
 
-//        enemytype = TYPE_BASIC; // stub
+//        enemytype = TYPE_BASIC_DOWN; // stub
+//        enemytype = TYPE_BASIC_SIDE; // stub
 //        enemytype = TYPE_HEAVY; // stub
 //        enemytype = TYPE_DRONE; // stub
 //        enemytype = TYPE_STATIC; // stub

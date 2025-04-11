@@ -23,11 +23,12 @@ public class EntityHandler {
     public static double playerX, playerY;
 
     // Enemy Types
-    public static final int TYPE_BASIC = 0;
-    public static final int TYPE_HEAVY = 1;
-    public static final int TYPE_DRONE = 2;
-    public static final int TYPE_STATIC = 3;
-    public static final int TYPE_SIDE = 4;
+    public static final int TYPE_BASIC_DOWN = 0;
+    public static final int TYPE_BASIC_SIDE = TYPE_BASIC_DOWN + 1;
+    public static final int TYPE_HEAVY = TYPE_BASIC_SIDE + 1;
+    public static final int TYPE_DRONE = TYPE_HEAVY + 1;
+    public static final int TYPE_STATIC = TYPE_DRONE + 1;
+    public static final int TYPE_SIDE = TYPE_STATIC + 1;
     public static final int enemyTypes = TYPE_SIDE + 1;
 
     // Entity Lists
@@ -127,24 +128,20 @@ public class EntityHandler {
 
     private void spawnNew(int x, int y, int enemyType, String move, int time) {
         Enemy enemy = null;
-        if (enemyType == TYPE_BASIC) {
-            enemy = new EnemyBasic(x, y, levelHeight);
+        if (enemyType == TYPE_BASIC_DOWN) {
+            enemy = new EnemyBasicDown(x, y, levelHeight);
             enemy.setHMove(move);
             enemy.setMovementDistance(time);
-//            enemies.add(enemy);
-//                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
+        } else if (enemyType == TYPE_BASIC_SIDE) {
+            enemy = new EnemyBasicSide(x, y, levelHeight);
         } else if (enemyType == TYPE_DRONE) {
             enemy = new EnemyDrone(x, y, levelHeight);
-//            enemies.add(enemy);
         } else if (enemyType == TYPE_HEAVY) {
             enemy = new EnemyHeavy(x, y, levelHeight);
-//            enemies.add(enemy);
         } else if (enemyType == TYPE_STATIC) {
             enemy = new EnemyStatic(x, y, levelHeight);
-//            enemies.add(enemy);
         } else if (enemyType == TYPE_SIDE) {
             enemy = new EnemySide(x, y, levelHeight);
-//            enemies.add(enemy);
         }
         if (enemy != null) {
             enemies.add(enemy);
@@ -168,8 +165,8 @@ public class EntityHandler {
     // todo: Causes issue with vertical movement
     private void spawnNew(int x, int y, int enemyType) {
         Enemy enemy;
-        if (enemyType == TYPE_BASIC) {
-            enemy = new EnemyBasic(x, y, levelHeight);
+        if (enemyType == TYPE_BASIC_DOWN) {
+            enemy = new EnemyBasicDown(x, y, levelHeight);
             enemies.add(enemy);
 //                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
         } else if (enemyType == TYPE_HEAVY) {

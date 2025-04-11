@@ -4,20 +4,19 @@ import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
 import com.euhedral.game.GameController;
-import com.euhedral.game.TextureHandler;
 
 import java.awt.*;
 
-public class EnemyBasic extends Enemy{
+public class EnemyBasicDown extends Enemy{
 
-    public EnemyBasic(int x, int y, int levelHeight) {
+    public EnemyBasicDown(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[0]);
 //        attackEffect = true;
     }
 
-    public EnemyBasic(int x, int y, Color color, int levelHeight) {
+    public EnemyBasicDown(int x, int y, Color color, int levelHeight) {
         this(x, y, levelHeight);
         this.color = color;
 
@@ -118,6 +117,6 @@ public class EnemyBasic extends Enemy{
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_BASIC;
+        enemyType = EntityHandler.TYPE_BASIC_DOWN;
     }
 }

@@ -50,8 +50,6 @@ public class Enemy extends MobileEntity {
 
     public Enemy(int x, int y, int levelHeight) {
         super(x, y, EntityID.Enemy);
-
-        offscreenVelY = velY;
         moveRight = false;
         moveLeft = false;
         cam = GameController.getCamera().getMarker();
@@ -65,7 +63,7 @@ public class Enemy extends MobileEntity {
         shootTimerDefault = 150;
 
         bulletVelocity = Utility.intAtWidth640(5);
-        bulletAngle = 90;
+
         textureHandler = GameController.getTexture();
         attackEffect = false;
 //        initialize();
@@ -128,6 +126,10 @@ public class Enemy extends MobileEntity {
     public void initialize() {
         setEnemyType();
         forwardVelocity = 2.4f;
+        offscreenVelY = forwardVelocity;
+
+        bulletAngle = 90;
+
         explosion = GameController.getTexture().initExplosion(5);
         reflection = new Reflection();
         damage = 30;
@@ -349,7 +351,6 @@ public class Enemy extends MobileEntity {
         shot--;
     }
 
-    //stub
     public int getTurretX() {
         return ((int) x + width/2);
     }

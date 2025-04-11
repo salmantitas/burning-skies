@@ -143,7 +143,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         int minEnemiesCross = 1;
         int maxEnemiesCross = 8;
 
-        int tempType = TYPE_BASIC;
+        int tempType = TYPE_BASIC_DOWN;
 
         enemyNumbers[tempType][PATTERN_LINE][ENEMY_MIN] = minLine;
         enemyNumbers[tempType][PATTERN_LINE][ENEMY_MAX] = maxLine;
@@ -197,7 +197,7 @@ public class ProceduralGenerator extends EnemyGenerator {
     }
 
     private void buildBasicSpawnIntervalMatrix() {
-        int tempType = TYPE_BASIC;
+        int tempType = TYPE_BASIC_DOWN;
         int tempPattern = PATTERN_LINE;
 
 //        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
@@ -481,7 +481,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         num = enemyNumbers[enemytype][pattern][ENEMY_MIN];
 
 //        determineType();
-        enemytype = TYPE_BASIC;
+        enemytype = TYPE_BASIC_DOWN;
 
 //        determineZone();
         spawnZone = 2;
@@ -1276,7 +1276,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         int rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
 //        enemytype = rand;
 
-        enemytype = TYPE_BASIC; // stub, todo: remove
+        enemytype = TYPE_BASIC_DOWN; // stub, todo: remove
     }
 
     //    private Color getKey(EntityID id) {
