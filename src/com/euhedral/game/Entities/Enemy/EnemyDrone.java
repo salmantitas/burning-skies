@@ -50,7 +50,7 @@ public class EnemyDrone extends Enemy{
         if (updateSkip == 10) {
             updateDestination();
             calculateVelocities(destinationX, destinationY);
-            forwardVelocity += 0.2; // too high = 0.5 // too low = 0.1
+//            forwardVelocity += 0.2; todo: Use for future drones // too high = 0.5 // too low = 0.1
             updateSkip = 0;
         } else {
             updateSkip++;

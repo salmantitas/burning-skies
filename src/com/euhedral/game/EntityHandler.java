@@ -29,14 +29,14 @@ public class EntityHandler {
     public static final int TYPE_DRONE = TYPE_HEAVY + 1;
     public static final int TYPE_STATIC = TYPE_DRONE + 1;
     public static final int TYPE_SIDE = TYPE_STATIC + 1;
+    public static final int TYPE_DRONE2 = TYPE_SIDE + 1;
 
     // todo: Complete Implementation
-    public static final int TYPE_7 = TYPE_STATIC + 1;
     public static final int TYPE_8 = TYPE_STATIC + 1;
     public static final int TYPE_9 = TYPE_STATIC + 1;
     public static final int TYPE_10 = TYPE_STATIC + 1;
 
-    public static final int enemyTypes = TYPE_SIDE + 1;
+    public static final int enemyTypes = TYPE_DRONE2 + 1;
 
     // Entity Lists
     private Flag flag; // todo: Remove
@@ -167,7 +167,10 @@ public class EntityHandler {
             enemy = new EnemyStatic(x, y, levelHeight);
         } else if (enemyType == TYPE_SIDE) {
             enemy = new EnemySide(x, y, levelHeight);
+        } else if (enemyType == TYPE_DRONE2) {
+            enemy = new EnemyDrone2(x, y, levelHeight);
         }
+
         if (enemy != null) {
             enemies.add(enemy);
         }

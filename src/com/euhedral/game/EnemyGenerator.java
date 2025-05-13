@@ -51,7 +51,8 @@ public class EnemyGenerator {
     final int TYPE_DRONE = EntityHandler.TYPE_DRONE;
     final int TYPE_STATIC = EntityHandler.TYPE_STATIC;
     final int TYPE_SIDE = EntityHandler.TYPE_SIDE;
-    int maxTypes = TYPE_SIDE + 1;
+    final int TYPE_DRONE2 = EntityHandler.TYPE_DRONE2;
+    int maxTypes = TYPE_DRONE2 + 1;
 
     // Wave
     int wave;
@@ -155,9 +156,10 @@ public class EnemyGenerator {
 //        enemytype = TYPE_BASIC_DOWN; // stub
 //        enemytype = TYPE_BASIC_SIDE; // stub
 //        enemytype = TYPE_HEAVY; // stub
-        enemytype = TYPE_DRONE; // stub
+//        enemytype = TYPE_DRONE; // stub
 //        enemytype = TYPE_STATIC; // stub
 //        enemytype = TYPE_SIDE; ga// stub
+        enemytype = TYPE_DRONE2; // stub
 
 //        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
 
