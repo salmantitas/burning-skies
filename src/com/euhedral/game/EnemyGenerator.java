@@ -158,7 +158,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_HEAVY; // stub
 //        enemytype = TYPE_DRONE; // stub
 //        enemytype = TYPE_STATIC; // stub
-//        enemytype = TYPE_SIDE; ga// stub
+//        enemytype = TYPE_SIDE; // stub
 //        enemytype = TYPE_DRONE2; // stub
 
 //        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));

@@ -38,6 +38,7 @@ public class EnemyStatic extends Enemy {
     public void initialize() {
         super.initialize();
 
+        healthMAX = 6;
         shootTimerDefault = 200;
         score = 200;
         velX = 0;
@@ -108,7 +109,7 @@ public class EnemyStatic extends Enemy {
 
     @Override
     protected void commonInit() {
-        this.setHealth(7);
+        this.setHealth(healthMAX);
         velY = 2.5f;
     }
 

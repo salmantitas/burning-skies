@@ -10,6 +10,21 @@ public class EnemyDrone2 extends EnemyDrone{
     }
 
     @Override
+    public void initialize() {
+        super.initialize();
+
+//        enemyType = EntityHandler.TYPE_DRONE;
+
+//        power = 1;
+//        shootTimerDefault = 250;
+//        minVelX = 2f;
+        healthMAX = 2;
+        score = 50;
+        damage = 30;
+        commonInit();
+    }
+
+    @Override
     protected void shoot() {
         resetShootTimer();
         shootDefault();
@@ -42,9 +57,9 @@ public class EnemyDrone2 extends EnemyDrone{
         return calculateAngle(destinationX, destinationY); // stub
     }
 
-    @Override
-    protected void commonInit() {
-        super.commonInit();
-        this.setHealth(2);
-    }
+//    @Override
+//    protected void commonInit() {
+//        super.commonInit();
+//        this.setHealth(2);
+//    }
 }
