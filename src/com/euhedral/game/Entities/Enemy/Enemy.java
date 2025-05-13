@@ -206,11 +206,11 @@ public class Enemy extends MobileEntity {
     }
 
     protected void shoot() {
-//        shotNum++;
-        resetShooter();
+        resetShootTimer();
+        shootDefault();
     }
 
-    protected void shootDownDefault() {
+    protected void shootDefault() {
         shot++;
     }
 
@@ -243,7 +243,7 @@ public class Enemy extends MobileEntity {
         this.inscreen = inscreen;
     }
 
-    protected void resetShooter() {
+    protected void resetShootTimer() {
         shootTimer = shootTimerDefault;
     }
 

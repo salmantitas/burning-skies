@@ -11,8 +11,8 @@ public class EnemyDrone2 extends EnemyDrone{
 
     @Override
     protected void shoot() {
-        resetShooter();
-        shootDownDefault();
+        resetShootTimer();
+        shootDefault();
     }
 
     @Override
@@ -40,5 +40,11 @@ public class EnemyDrone2 extends EnemyDrone{
     @Override
     public double getBulletAngle() {
         return calculateAngle(destinationX, destinationY); // stub
+    }
+
+    @Override
+    protected void commonInit() {
+        super.commonInit();
+        this.setHealth(2);
     }
 }

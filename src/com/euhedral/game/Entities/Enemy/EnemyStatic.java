@@ -2,7 +2,6 @@ package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
-import com.euhedral.game.GameController;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -39,8 +38,6 @@ public class EnemyStatic extends Enemy {
     public void initialize() {
         super.initialize();
 
-//        enemyType = EntityHandler.TYPE_STATIC;
-
         shootTimerDefault = 200;
         score = 200;
         velX = 0;
@@ -56,59 +53,11 @@ public class EnemyStatic extends Enemy {
         super.update();
         if (state == STATE_ACTIVE && inscreen) {
             updateDestination();
-//            if (movementDistance >= 0) {
-//                movementDistance -= Math.abs(velX);
-//            } else {
-//                velX = 0;
-//            }
-
-//            boolean secondsTillShotFire = (shootTimer < 20);
-//            if (secondsTillShotFire) {
-//
-//            }
         }
-
-//        if (state == STATE_EXPLODING) {
-////            explosion.runAnimation();
-//            if (explosion.playedOnce) {
-////                disable();
-//            }
-//        }
-    }
-
-//    @Override
-//    public void render(Graphics g) {
-//        if (attackEffect) {
-//            boolean secondsTillShotFire = (shootTimer < 20);
-//            if (isActive() && secondsTillShotFire) {
-//                g.setColor(Color.red);
-//
-//                Graphics2D g2d = (Graphics2D) g;
-//                g.setColor(Color.RED);
-//
-//
-//                double drawX = x - (0.5) * (double) width;
-//                double drawY = y - (0.5) * (double) height;
-//                int arcAngle = 20;
-//
-//                g2d.setComposite(Utility.makeTransparent(0.5f));
-//                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(getBulletAngle()) - arcAngle / 2, arcAngle);
-//                g2d.setComposite(Utility.makeTransparent(1f));
-//            }
-//        }
-//
-//        g.setColor(color);
-//        super.render(g);
-//    }
-
-    @Override
-    protected void shoot() {
-        super.shoot();
-        shootDownDefault();
     }
 
     @Override
-    protected void shootDownDefault() {
+    protected void shootDefault() {
         shot += 1;
     }
 

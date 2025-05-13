@@ -54,12 +54,12 @@ public class EnemySide extends Enemy{
         moveInScreen();
     }
 
-    @Override
-    protected void shoot() {
-        super.shoot();
-        shot += 1;
-//        fastShoot();
-    }
+//    @Override
+//    protected void shoot() {
+//        super.shoot();
+//        shot += 1;
+////        fastShoot();
+//    }
 
     @Override
     public void update() {

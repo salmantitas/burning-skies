@@ -126,12 +126,18 @@ public class EnemyHeavy extends Enemy {
     }
 
     @Override
-    protected void shoot() {
-        super.shoot();
+    protected void shootDefault() {
         shot += 2;
-//        shootDownDefault();
-//        moveShoot();
     }
+
+//    @Override
+//    protected void shoot() {
+//        super.shoot();
+//        shot += 2;
+////        shootDownDefault();
+////        moveShoot();
+//    }
+
 
     private void incrementBulletAngle() {
         bulletAngle += bulletAngleINC;

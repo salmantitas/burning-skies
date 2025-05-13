@@ -54,7 +54,7 @@ public class EnemySnake extends Enemy {
 //            bullets.add(new BulletEnemy(x + width/2,y, angle + 2 * (90 - angle), newVel));
 //        }
 
-        resetShooter();
+        resetShootTimer();
     }
 
     public void moveLikeSnake() {

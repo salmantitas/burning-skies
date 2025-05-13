@@ -37,9 +37,14 @@ public class EnemyBasicSide extends Enemy{
         minVelX = 1.75f;
     }
 
+//    @Override
+//    protected void shoot() {
+//        super.shoot();
+//        shot += 2;
+//    }
+
     @Override
-    protected void shoot() {
-        super.shoot();
+    protected void shootDefault() {
         shot += 2;
     }
 

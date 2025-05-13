@@ -34,11 +34,11 @@ public class EnemyBasicDown extends Enemy{
         minVelX = 1.75f;
     }
 
-    @Override
-    protected void shoot() {
-        super.shoot();
-        shootDownDefault();
-    }
+//    @Override
+//    protected void shoot() {
+//        super.shoot();
+//        shootDefault();
+//    }
 
     @Override
     public void update() {
