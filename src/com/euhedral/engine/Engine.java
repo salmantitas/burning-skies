@@ -19,7 +19,7 @@ public class Engine extends Canvas implements Runnable{
      */
 
     public static double VERSION = 0.245;
-    public static String TITLE = "Simian Framework " + VERSION;
+    public static String TITLE = "Simian Framework";
     public static double SCREEN_RATIO = 4.0/3.0;
     public static int WIDTH = 640;
     public static int HEIGHT = (int) (WIDTH / SCREEN_RATIO);
@@ -154,7 +154,7 @@ public class Engine extends Canvas implements Runnable{
     }
 
     public static void main(String[] args) {
-        System.out.println("Euhedral Engine " + VERSION + " Started");
+        System.out.println(TITLE + " " + VERSION + " Started");
         new Engine();
     }
 

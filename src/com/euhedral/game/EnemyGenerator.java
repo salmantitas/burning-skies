@@ -32,6 +32,14 @@ public class EnemyGenerator {
     int enemiesSpawned; // todo: Why do we need this?
     int spawnX, spawnY;
 
+    // Movement
+    int minDifficultyForMovement;
+    int movementDistance;
+    int movementDirection;
+    int MOVE_NONE = 0;
+    int MOVE_LEFT = 1;
+    int MOVE_RIGHT = -MOVE_LEFT;
+
     // Pickup
     long spawnIntervalPickups;
 
@@ -78,6 +86,7 @@ public class EnemyGenerator {
 
         difficulty = 1;
         minWavesDifficultyIncrease = 5;
+        minDifficultyForMovement = 2;
         entityHandler.setLevelHeight(getLevelHeight());
 
         playerY = getLevelHeight() / SCALE;
@@ -108,6 +117,7 @@ public class EnemyGenerator {
         determineNum();
         determineType();
         determineZone();
+        determineMovement();
         spawnEnemiesHelper();
         incrementDifficulty();
         incrementWave();
@@ -145,7 +155,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_BASIC_DOWN; // stub
 //        enemytype = TYPE_BASIC_SIDE; // stub
 //        enemytype = TYPE_HEAVY; // stub
-//        enemytype = TYPE_DRONE; // stub
+        enemytype = TYPE_DRONE; // stub
 //        enemytype = TYPE_STATIC; // stub
 //        enemytype = TYPE_SIDE; ga// stub
 
@@ -228,6 +238,30 @@ public class EnemyGenerator {
         }
     }
 
+    protected void determineMovement() {
+        if (difficulty < minDifficultyForMovement) {
+            movementDistance = 0;
+            movementDirection = MOVE_NONE;
+            return;
+        }
+
+        int chance = Utility.randomRangeInclusive(0, 1);
+
+        if (chance == 0) {
+
+            movementDistance = xMid;
+
+            if (spawnX < xMid) {
+                movementDirection = MOVE_RIGHT;
+            } else {
+                movementDirection = MOVE_LEFT;
+            }
+        } else {
+            movementDistance = 0;
+            movementDirection = MOVE_NONE;
+        }
+    }
+
     protected void determinePattern() {
 
     }
@@ -289,7 +323,7 @@ public class EnemyGenerator {
     }
 
     protected void spawnOneEnemy() {
-        entityHandler.spawnEntity(spawnX * (64 + incrementMIN), spawnY * (64 + incrementMIN), enemytype);
+        entityHandler.spawnEntity(spawnX * (64 + incrementMIN), spawnY * (64 + incrementMIN), enemytype, movementDistance * SCALE, movementDirection);
 //        System.out.println("Enemy spawned");
     }
 }

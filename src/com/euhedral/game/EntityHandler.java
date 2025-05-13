@@ -29,10 +29,17 @@ public class EntityHandler {
     public static final int TYPE_DRONE = TYPE_HEAVY + 1;
     public static final int TYPE_STATIC = TYPE_DRONE + 1;
     public static final int TYPE_SIDE = TYPE_STATIC + 1;
+
+    // todo: Complete Implementation
+    public static final int TYPE_7 = TYPE_STATIC + 1;
+    public static final int TYPE_8 = TYPE_STATIC + 1;
+    public static final int TYPE_9 = TYPE_STATIC + 1;
+    public static final int TYPE_10 = TYPE_STATIC + 1;
+
     public static final int enemyTypes = TYPE_SIDE + 1;
 
     // Entity Lists
-    private Flag flag;
+    private Flag flag; // todo: Remove
     private static EnemyPool enemies = new EnemyPool();
     private BulletPool bullets = new BulletPool();
     private PickupPool pickups = new PickupPool();
@@ -94,48 +101,61 @@ public class EntityHandler {
         //renderFlag(g);
     }
 
-    public void spawnEntity(int x, int y, int enemyType, String move, int time) {
-        // todo: Player
-
-        // Air Enemies
-        if (enemies.getPoolSize(enemyType) > 0) {
-            enemies.spawnFromPool(x, y, enemyType, move, time);
-        }
-        else {
-            spawnNew(x, y, enemyType, move, time);
-        }
-//        enemies.printPool("Enemy");
-
-        // Pickups
-
-//        else if (id == EntityID.Pickup) {
-//            spawnPickup(x, y, PickupID.Health, color);
-//        }
+//    public void spawnEntity(int x, int y, int enemyType, int direction, int time) {
+//        // todo: Player
 //
-//        else if (id == EntityID.PickupShield) {
-//            spawnPickup(x, y, PickupID.Shield, color);
+//        // Air Enemies
+//        if (enemies.getPoolSize(enemyType) > 0) {
+//            enemies.spawnFromPool(x, y, enemyType, direction, time);
 //        }
+//        else {
+//            spawnNew(x, y, enemyType, direction, time);
+//        }
+////        enemies.printPool("Enemy");
+//
+//        // Pickups
+//
+////        else if (id == EntityID.Pickup) {
+////            spawnPickup(x, y, PickupID.Health, color);
+////        }
+////
+////        else if (id == EntityID.PickupShield) {
+////            spawnPickup(x, y, PickupID.Shield, color);
+////        }
+//
+//        // todo: Boss
+//    }
 
-        // todo: Boss
-    }
+//    public void spawnEntity(int x, int y, int enemyType) {
+//        //todo: Check by enemyType
+//
+//        if (enemies.getPoolSize(enemyType) > 0) {
+//            enemies.spawnFromPool(x, y, enemyType, "", 0);
+//        }
+//        else {
+//            spawnNew(x, y, enemyType, "", 0);
+//        }
+//        enemies.printPool("Enemy");
+//    }
 
-    public void spawnEntity(int x, int y, int enemyType) {
+    public void spawnEntity(int x, int y, int enemyType, int distance, int direction) {
         //todo: Check by enemyType
-        
+
         if (enemies.getPoolSize(enemyType) > 0) {
-            enemies.spawnFromPool(x, y, enemyType, "", 0);
+            enemies.spawnFromPool(x, y, enemyType, direction, distance);
         }
         else {
-            spawnNew(x, y, enemyType, "", 0);
+            spawnNew(x, y, enemyType, direction, distance);
         }
         enemies.printPool("Enemy");
     }
 
-    private void spawnNew(int x, int y, int enemyType, String move, int time) {
+    private void spawnNew(int x, int y, int enemyType, int direction, int time) {
         Enemy enemy = null;
+
         if (enemyType == TYPE_BASIC_DOWN) {
             enemy = new EnemyBasicDown(x, y, levelHeight);
-            enemy.setHMove(move);
+            enemy.setHMove(direction);
             enemy.setMovementDistance(time);
         } else if (enemyType == TYPE_BASIC_SIDE) {
             enemy = new EnemyBasicSide(x, y, levelHeight);

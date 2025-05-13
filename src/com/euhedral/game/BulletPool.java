@@ -1,7 +1,6 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.Entity;
-import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Pool;
 import com.euhedral.game.Entities.Bullet;
 import com.euhedral.game.Entities.BulletEnemy;
@@ -32,6 +31,8 @@ public class BulletPool extends Pool {
         if (bullet.getForwardVelocity() != bulletVelocity) {
             bullet.setForwardVelocity(bulletVelocity);
         }
+
+        // todo: find a better way than InstanceOf
         if (bullet instanceof BulletEnemy) {
             BulletEnemy bulletEnemy = (BulletEnemy) bullet;
             if (bulletEnemy.isTracking() != tracking) {

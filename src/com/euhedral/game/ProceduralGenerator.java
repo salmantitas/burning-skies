@@ -1126,12 +1126,13 @@ public class ProceduralGenerator extends EnemyGenerator {
 //            id = EntityID.EnemyMove;
 //        }
 
-        entityHandler.spawnEntity(spawnX, spawnY, enemytype, move, time);
+        // todo: fix
+//        entityHandler.spawnEntity(spawnX, spawnY, enemytype, move, time);
 //        System.out.println("Enemy spawned");
     }
 
     private void spawnHeavyHelper(int x, int y) {
-        entityHandler.spawnEntity(x*SCALE, y*SCALE, EntityHandler.TYPE_HEAVY,  "", 0);
+        entityHandler.spawnEntity(x*SCALE, y*SCALE, EntityHandler.TYPE_HEAVY,  0, 0);
     }
 
     private void spawnBoss(int x, int y) {

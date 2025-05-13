@@ -26,6 +26,5 @@ public class ButtonAction extends Button{
     public Object activate() {
         super.activate();
         return action;
-        // todo: Cause the action to be updated to UIHandler
     }
 }

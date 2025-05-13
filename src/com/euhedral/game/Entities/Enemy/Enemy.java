@@ -255,11 +255,11 @@ public class Enemy extends MobileEntity {
         return score;
     }
 
-    public void setHMove(String move) {
-        if (move == "left") {
+    public void setHMove(int direction) {
+        if (direction == 1) {
             hMove = HorizontalMovement.LEFT;
             velX = -minVelX;
-        } else if (move == "right") {
+        } else if (direction == -1) {
             hMove = HorizontalMovement.RIGHT;
             velX = minVelX;//*1.45f;//1.95f;
         } else {

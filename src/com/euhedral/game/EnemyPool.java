@@ -113,11 +113,11 @@ public class EnemyPool extends Pool {
         return null;
     }
 
-    public void spawnFromPool(int x, int y, int enemyType, String move, int time) {
+    public void spawnFromPool(int x, int y, int enemyType, int direction, int time) {
         Entity entity = findInList(enemyType);
         entity.resurrect(x, y);
         Enemy enemy = (Enemy) entity;
-        enemy.setHMove(move);
+        enemy.setHMove(direction);
         enemy.setMovementDistance(time);
         decrease(enemy.getEnemyType());
 
