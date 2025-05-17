@@ -13,7 +13,9 @@ public class EnemyDrone extends Enemy{
 
     public EnemyDrone(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
-//        enemyType = EntityHandler.TYPE_DRONE;
+
+        score = 25;
+
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyDrone[0]);
         width = 32;
@@ -35,7 +37,6 @@ public class EnemyDrone extends Enemy{
 //        shootTimerDefault = 250;
 //        minVelX = 2f;
         healthMAX = 1;
-        score = 25;
         damage = 15;
         commonInit();
     }

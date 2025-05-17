@@ -45,12 +45,13 @@ public class EnemyGenerator {
 
     // Enemy Types
     int enemytype;
-    final int TYPE_BASIC_DOWN = EntityHandler.TYPE_BASIC_DOWN;
-    final int TYPE_BASIC_SIDE = EntityHandler.TYPE_BASIC_SIDE;
+    final int TYPE_BASIC1 = EntityHandler.TYPE_BASIC1;
+    final int TYPE_BASIC2 = EntityHandler.TYPE_BASIC2;
+    final int TYPE_SIDE1 = EntityHandler.TYPE_SIDE1;
     final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
     final int TYPE_DRONE = EntityHandler.TYPE_DRONE;
     final int TYPE_STATIC = EntityHandler.TYPE_STATIC;
-    final int TYPE_SIDE = EntityHandler.TYPE_SIDE;
+    final int TYPE_SIDE2 = EntityHandler.TYPE_SIDE2;
     final int TYPE_DRONE2 = EntityHandler.TYPE_DRONE2;
     int maxTypes = TYPE_DRONE2 + 1;
 
@@ -153,10 +154,11 @@ public class EnemyGenerator {
         int rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
         enemytype = rand;
 
-//        enemytype = TYPE_BASIC_DOWN; // stub
-//        enemytype = TYPE_BASIC_SIDE; // stub
+//        enemytype = TYPE_BASIC1; // stub
+//        enemytype = TYPE_BASIC2; // stub
 //        enemytype = TYPE_HEAVY; // stub
 //        enemytype = TYPE_DRONE; // stub
+//        enemytype = TYPE_SIDE1; // stub
 //        enemytype = TYPE_STATIC; // stub
 //        enemytype = TYPE_SIDE; // stub
 //        enemytype = TYPE_DRONE2; // stub
@@ -164,13 +166,18 @@ public class EnemyGenerator {
 //        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
 
         int limit = 10;
+        int limitSide = 4;
+
+        if (enemytype == TYPE_SIDE1) {
+            limit = limitSide;
+        }
 
         if (enemytype == TYPE_STATIC) {
             limit = 5;
         }
 
-        if (enemytype == TYPE_SIDE) {
-            limit = 3;
+        if (enemytype == TYPE_SIDE2) {
+            limit = limitSide;
         }
 
 //        if (enemytype == TYPE_BASIC) {
@@ -203,7 +210,7 @@ public class EnemyGenerator {
 
     protected void determineZone() {
         // Vertical Zone
-        if (enemytype == TYPE_DRONE || enemytype == TYPE_SIDE) {
+        if (enemytype == TYPE_DRONE || enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2) {
             int adjustment = 1;
             int zone = Utility.randomRangeInclusive(0, 1);
             if (zone == 0) {
@@ -213,9 +220,10 @@ public class EnemyGenerator {
             }
             if (enemytype == TYPE_DRONE) {
                 spawnY = Utility.randomRangeInclusive(0, height / SCALE * 2 / 3);
-            } else if (enemytype == TYPE_SIDE) {
+            } else if (enemytype == TYPE_SIDE1) {
                 spawnY = Utility.randomRangeInclusive(5, 7);
-//                spawnY = 7;
+            } else if (enemytype == TYPE_SIDE2) {
+                spawnY = (int) (EntityHandler.playerY/SCALE);
             }
         }
         // Horizontal Zone
@@ -241,26 +249,12 @@ public class EnemyGenerator {
     }
 
     protected void determineMovement() {
-        if (difficulty < minDifficultyForMovement) {
-            movementDistance = 0;
-            movementDirection = MOVE_NONE;
-            return;
-        }
+        movementDistance = xMid;
 
-        int chance = Utility.randomRangeInclusive(0, 1);
-
-        if (chance == 0) {
-
-            movementDistance = xMid;
-
-            if (spawnX < xMid) {
-                movementDirection = MOVE_RIGHT;
-            } else {
-                movementDirection = MOVE_LEFT;
-            }
+        if (spawnX < xMid) {
+            movementDirection = MOVE_RIGHT;
         } else {
-            movementDistance = 0;
-            movementDirection = MOVE_NONE;
+            movementDirection = MOVE_LEFT;
         }
     }
 
@@ -282,7 +276,7 @@ public class EnemyGenerator {
         if (wavesSinceDifficultyIncrease >= minWavesDifficultyIncrease) {
             difficulty = Math.min(difficulty + 1, maxTypes);
 //            difficulty = Math.min(difficulty + 1, 8);
-            minWavesDifficultyIncrease += 5;
+//            minWavesDifficultyIncrease += 5;
             wavesSinceDifficultyIncrease = 0;
             Utility.log("Diff: " + difficulty);
             Utility.log("Level: " + (wave / minWavesDifficultyIncrease + 1));

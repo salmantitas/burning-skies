@@ -5,46 +5,46 @@ import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
 import com.euhedral.game.GameController;
 
-import java.awt.*;
+public class EnemySide2 extends Enemy{
 
-public class EnemySide extends Enemy{
-    public EnemySide(int x, int y, int levelHeight) {
+    double destinationX, destinationY;
+
+    public EnemySide2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
-//        velX = minVelX;
+        score = 100;
+
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemySide[0]);
     }
 
-    public EnemySide(int x, int y, Color color, int levelHeight) {
-        super(x, y, color, levelHeight);
-//        enemyID = EnemyID.Fast;
-    }
 
     @Override
     public void initialize() {
         super.initialize();
 
-//        enemyType = EntityHandler.TYPE_SIDE;
-
-//        power = 2;
-        minVelX = 6f;
-        shootTimerDefault = 50;
+        healthMAX = 2;
+        minVelX = 3f;
+        shootTimerDefault = 20;
 //        shootTimer = shootTimerDefault;
         commonInit();
-        score = 350;
     }
 
     @Override
     public void move() {
         if (isActive()) {
             double xMin = -width, xMax = Engine.WIDTH;
+            double angleCorrection = 7;
 
             velY = 0;
             if (x <= xMin) {
+                bulletAngle = 0 - angleCorrection;
                 velX = minVelX;
+                y = destinationY;
             } else if (x >= xMax) {
                 velX = -minVelX;
+                bulletAngle = 180 + angleCorrection;
+                y = destinationY;
             }
         } else if (isExploding()) {
             velY = explodingVelocity;
@@ -64,6 +64,7 @@ public class EnemySide extends Enemy{
     @Override
     public void update() {
         super.update();
+        updateDestination();
         setImage();
     }
 
@@ -75,16 +76,22 @@ public class EnemySide extends Enemy{
         }
     }
 
+    private void updateDestination() {
+        int offsetY = -32;
+        destinationX = EntityHandler.playerX;
+        destinationY = EntityHandler.playerY + offsetY;
+    }
+
     @Override
     protected void commonInit() {
-        setHealth(3);
+        setHealth(healthMAX);
         velX = minVelX;
         velY = 0;
     }
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_SIDE;
+        enemyType = EntityHandler.TYPE_SIDE2;
     }
 
     @Override

@@ -48,17 +48,17 @@ public class EnemyBasicSide extends Enemy{
         shot += 2;
     }
 
-    @Override
-    public void update() {
-        super.update();
-        if (state == STATE_ACTIVE && inscreen) {
-            if (movementDistance >= 0) {
-                movementDistance -= Math.abs(velX);
-            } else {
-                velX = 0;
-            }
-        }
-    }
+//    @Override
+//    public void update() {
+//        super.update();
+//        if (state == STATE_ACTIVE && inscreen) {
+//            if (movementDistance >= 0) {
+//                movementDistance -= Math.abs(velX);
+//            } else {
+//                velX = 0;
+//            }
+//        }
+//    }
 
     @Override
     protected void commonInit() {
@@ -95,6 +95,6 @@ public class EnemyBasicSide extends Enemy{
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_BASIC_DOWN;
+        enemyType = EntityHandler.TYPE_BASIC1;
     }
 }

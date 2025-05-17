@@ -7,16 +7,16 @@ import com.euhedral.game.GameController;
 
 import java.awt.*;
 
-public class EnemyBasicDown extends Enemy{
+public class EnemyBasic1 extends Enemy{
 
-    public EnemyBasicDown(int x, int y, int levelHeight) {
+    public EnemyBasic1(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[0]);
 //        attackEffect = true;
     }
 
-    public EnemyBasicDown(int x, int y, Color color, int levelHeight) {
+    public EnemyBasic1(int x, int y, Color color, int levelHeight) {
         this(x, y, levelHeight);
         this.color = color;
 
@@ -40,17 +40,17 @@ public class EnemyBasicDown extends Enemy{
 //        shootDefault();
 //    }
 
-    @Override
-    public void update() {
-        super.update();
-        if (state == STATE_ACTIVE && inscreen) {
-            if (movementDistance >= 0) {
-                movementDistance -= Math.abs(velX);
-            } else {
-                velX = 0;
-            }
-        }
-    }
+//    @Override
+//    public void update() {
+//        super.update();
+//        if (state == STATE_ACTIVE && inscreen) {
+//            if (movementDistance >= 0) {
+//                movementDistance -= Math.abs(velX);
+//            } else {
+//                velX = 0;
+//            }
+//        }
+//    }
 
 //    @Override
 //    public void render(Graphics g) {
@@ -116,7 +116,12 @@ public class EnemyBasicDown extends Enemy{
     }
 
     @Override
+    public void setHMove(int direction) {
+
+    }
+
+    @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_BASIC_DOWN;
+        enemyType = EntityHandler.TYPE_BASIC1;
     }
 }

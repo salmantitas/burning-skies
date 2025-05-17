@@ -26,7 +26,7 @@ public class EnemySnake extends Enemy {
         setHealth(8,12);
         score = 200;
         distance = width * 5;
-        movementDistance = distance;
+//        movementDistance = distance;
     }
 
     @Override
@@ -58,27 +58,27 @@ public class EnemySnake extends Enemy {
     }
 
     public void moveLikeSnake() {
-        if (movementDistance > 0) {
-            movementDistance--;
-        } else {
-            movementDistance = distance;
-        }
-
-        int
-                int0 = 0,
-                int1 = Utility.perc(distance, 30),
-                int2 = Utility.perc(distance, 50),
-                int3 = Utility.perc(distance, 80);
-
-
-        if (movementDistance <= distance && movementDistance > int3) {
-            hMove = HorizontalMovement.LEFT;
-        } else if (movementDistance <= int3 && movementDistance > int2 || movementDistance <= int2 && movementDistance > int1) {
-            hMove = HorizontalMovement.RIGHT;
-//        } else if (movementTimer <= int2 && movementTimer > int1) {
+//        if (movementDistance > 0) {
+//            movementDistance--;
+//        } else {
+//            movementDistance = distance;
+//        }
+//
+//        int
+//                int0 = 0,
+//                int1 = Utility.perc(distance, 30),
+//                int2 = Utility.perc(distance, 50),
+//                int3 = Utility.perc(distance, 80);
+//
+//
+//        if (movementDistance <= distance && movementDistance > int3) {
+//            hMove = HorizontalMovement.LEFT;
+//        } else if (movementDistance <= int3 && movementDistance > int2 || movementDistance <= int2 && movementDistance > int1) {
 //            hMove = HorizontalMovement.RIGHT;
-        } else if (movementDistance <= int1 && movementDistance > int0) {
-            hMove = HorizontalMovement.LEFT;
-        }
+////        } else if (movementTimer <= int2 && movementTimer > int1) {
+////            hMove = HorizontalMovement.RIGHT;
+//        } else if (movementDistance <= int1 && movementDistance > int0) {
+//            hMove = HorizontalMovement.LEFT;
+//        }
     }
 }

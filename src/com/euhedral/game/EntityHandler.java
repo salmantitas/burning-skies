@@ -23,18 +23,18 @@ public class EntityHandler {
     public static double playerX, playerY;
 
     // Enemy Types
-    public static final int TYPE_BASIC_DOWN = 0;
-    public static final int TYPE_BASIC_SIDE = TYPE_BASIC_DOWN + 1;
-    public static final int TYPE_HEAVY = TYPE_BASIC_SIDE + 1;
+    public static final int TYPE_BASIC1 = 0;
+    public static final int TYPE_BASIC2 = TYPE_BASIC1 + 1;
+    public static final int TYPE_HEAVY = TYPE_BASIC2 + 1;
     public static final int TYPE_DRONE = TYPE_HEAVY + 1;
     public static final int TYPE_STATIC = TYPE_DRONE + 1;
-    public static final int TYPE_SIDE = TYPE_STATIC + 1;
-    public static final int TYPE_DRONE2 = TYPE_SIDE + 1;
+    public static final int TYPE_SIDE1 = TYPE_STATIC + 1;
+    public static final int TYPE_SIDE2 = TYPE_SIDE1 + 1;
+    public static final int TYPE_DRONE2 = TYPE_SIDE1 + 1;
 
     // todo: Complete Implementation
-    public static final int TYPE_8 = TYPE_STATIC + 1;
-    public static final int TYPE_9 = TYPE_STATIC + 1;
-    public static final int TYPE_10 = TYPE_STATIC + 1;
+    public static final int TYPE_9 = TYPE_SIDE2 + 1;
+    public static final int TYPE_10 = TYPE_SIDE2 + 1;
 
     public static final int enemyTypes = TYPE_DRONE2 + 1;
 
@@ -45,7 +45,6 @@ public class EntityHandler {
     private PickupPool pickups = new PickupPool();
 
     private EnemyBoss boss;
-
 
     // Background Scrolling
     private static double scrollRate = 64d/20;
@@ -150,23 +149,25 @@ public class EntityHandler {
         enemies.printPool("Enemy");
     }
 
-    private void spawnNew(int x, int y, int enemyType, int direction, int time) {
+    private void spawnNew(int x, int y, int enemyType, int direction, int distance) {
         Enemy enemy = null;
 
-        if (enemyType == TYPE_BASIC_DOWN) {
-            enemy = new EnemyBasicDown(x, y, levelHeight);
+        if (enemyType == TYPE_BASIC1) {
+            enemy = new EnemyBasic1(x, y, levelHeight);
+        } else if (enemyType == TYPE_BASIC2) {
+            enemy = new EnemyBasic2(x, y, levelHeight);
             enemy.setHMove(direction);
-            enemy.setMovementDistance(time);
-        } else if (enemyType == TYPE_BASIC_SIDE) {
-            enemy = new EnemyBasicSide(x, y, levelHeight);
+            enemy.setMovementDistance(distance);
+        } else if (enemyType == TYPE_SIDE1) {
+            enemy = new EnemySide1(x, y, levelHeight);
         } else if (enemyType == TYPE_DRONE) {
             enemy = new EnemyDrone(x, y, levelHeight);
         } else if (enemyType == TYPE_HEAVY) {
             enemy = new EnemyHeavy(x, y, levelHeight);
         } else if (enemyType == TYPE_STATIC) {
             enemy = new EnemyStatic(x, y, levelHeight);
-        } else if (enemyType == TYPE_SIDE) {
-            enemy = new EnemySide(x, y, levelHeight);
+        } else if (enemyType == TYPE_SIDE2) {
+            enemy = new EnemySide2(x, y, levelHeight);
         } else if (enemyType == TYPE_DRONE2) {
             enemy = new EnemyDrone2(x, y, levelHeight);
         }
@@ -193,8 +194,8 @@ public class EntityHandler {
     // todo: Causes issue with vertical movement
     private void spawnNew(int x, int y, int enemyType) {
         Enemy enemy;
-        if (enemyType == TYPE_BASIC_DOWN) {
-            enemy = new EnemyBasicDown(x, y, levelHeight);
+        if (enemyType == TYPE_BASIC1) {
+            enemy = new EnemyBasic1(x, y, levelHeight);
             enemies.add(enemy);
 //                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
         } else if (enemyType == TYPE_HEAVY) {

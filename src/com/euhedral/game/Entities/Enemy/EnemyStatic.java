@@ -16,6 +16,9 @@ public class EnemyStatic extends Enemy {
         super(x, y, levelHeight);
 
         bulletVelocity = Utility.intAtWidth640(6);
+        shootTimerDefault = 200;
+        shootTimer = shootTimerDefault;
+        score = 150;
 
         double decelerationMAX = 0.012;
         double decelerationMIN = 0.010;
@@ -39,12 +42,11 @@ public class EnemyStatic extends Enemy {
         super.initialize();
 
         healthMAX = 6;
-        shootTimerDefault = 200;
-        score = 200;
+
         velX = 0;
         minVelY = 1.75f;
-        distance = 0; // stub ; width * 2;
-        movementDistance = distance;
+//        distance = 0; // stub ; width * 2;
+//        movementDistance = distance;
         commonInit();
         damage = 90;
     }
@@ -81,31 +83,31 @@ public class EnemyStatic extends Enemy {
 //        }
     }
 
-    public void moveHorizontally() {
-        if (movementDistance > 0) {
-            movementDistance--;
-        } else {
-            movementDistance = distance;
-        }
-
-        int
-                int0 = 0,
-                int1 = Utility.perc(distance, 30),
-                int2 = Utility.perc(distance, 50),
-                int3 = Utility.perc(distance, 80);
-
-
-        if (movementDistance <= distance && movementDistance > int3) {
-            hMove = HorizontalMovement.LEFT;
-        } else if (movementDistance <= int3 && movementDistance > int2 || movementDistance <= int1 && movementDistance > int0) {
-            hMove = HorizontalMovement.NONE;
-        } else if (movementDistance <= int2 && movementDistance > int1) {
-            hMove = HorizontalMovement.RIGHT;
-        }
-//        } else if (movementTimer <= int1 && movementTimer > int0) {
-//            hMove = HorizontalMovement.NONE;
+//    public void moveHorizontally() {
+//        if (movementDistance > 0) {
+//            movementDistance--;
+//        } else {
+//            movementDistance = distance;
 //        }
-    }
+//
+//        int
+//                int0 = 0,
+//                int1 = Utility.perc(distance, 30),
+//                int2 = Utility.perc(distance, 50),
+//                int3 = Utility.perc(distance, 80);
+//
+//
+//        if (movementDistance <= distance && movementDistance > int3) {
+//            hMove = HorizontalMovement.LEFT;
+//        } else if (movementDistance <= int3 && movementDistance > int2 || movementDistance <= int1 && movementDistance > int0) {
+//            hMove = HorizontalMovement.NONE;
+//        } else if (movementDistance <= int2 && movementDistance > int1) {
+//            hMove = HorizontalMovement.RIGHT;
+//        }
+////        } else if (movementTimer <= int1 && movementTimer > int0) {
+////            hMove = HorizontalMovement.NONE;
+////        }
+//    }
 
     @Override
     protected void commonInit() {

@@ -20,12 +20,12 @@ public class Enemy extends MobileEntity {
     protected double offscreenVelY;
     protected boolean moveLeft, moveRight;
     protected Color color;
-    protected int shootTimerDefault = 150;
-    protected int shootTimer = shootTimerDefault;
+    protected int shootTimerDefault;
+    protected int shootTimer;
     protected boolean inscreen = false;
     protected float cam;
 
-    protected int score = 50;
+    protected int score;
     protected int distance;
 
     protected int movementDistance;
@@ -60,7 +60,9 @@ public class Enemy extends MobileEntity {
 
         setLevelHeight(levelHeight);
 
+        score = 50;
         shootTimerDefault = 150;
+        shootTimer = shootTimerDefault;
 
         bulletVelocity = Utility.intAtWidth640(5);
 
@@ -327,8 +329,8 @@ public class Enemy extends MobileEntity {
 
     }
 
-    public void setMovementDistance(int time) {
-        this.movementDistance = time;
+    public void setMovementDistance(int distance) {
+        this.movementDistance = distance;
     }
 
     @Override

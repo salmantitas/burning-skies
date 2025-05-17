@@ -19,6 +19,7 @@ public class EnemyHeavy extends Enemy {
         bulletVelocity = Utility.intAtWidth640(5);
         bulletAngle = 60;
         shootTimerDefault = 100;
+        score = 100;
 //        attackEffect = true;
 
         textureHandler = GameController.getTexture();
@@ -34,31 +35,25 @@ public class EnemyHeavy extends Enemy {
     public void initialize() {
         super.initialize();
 
-//        enemyType = EntityHandler.TYPE_HEAVY;
-
-//        width = width*2; // todo: check, it's being called twice
-        shootTimerDefault = 200;
-//        shootTimer = shootTimerDefault;
-        score = 150;
         velX = 0;
         minVelY = 1.75f;
         distance = 0; // stub ; width * 2;
-        movementDistance = distance;
+//        movementDistance = distance;
         healthMAX = 6;
         commonInit();
         damage = 60;
     }
 
-    @Override
-    public void update() {
-        super.update();
-        if (state == STATE_ACTIVE && inscreen) {
-            if (movementDistance >= 0) {
-                movementDistance -= Math.abs(velX);
-            } else {
-                velX = 0;
-            }
-        }
+//    @Override
+//    public void update() {
+//        super.update();
+//        if (state == STATE_ACTIVE && inscreen) {
+//            if (movementDistance >= 0) {
+//                movementDistance -= Math.abs(velX);
+//            } else {
+//                velX = 0;
+//            }
+//        }
 
 //        if (state == STATE_EXPLODING) {
 ////            explosion.runAnimation();
@@ -66,7 +61,7 @@ public class EnemyHeavy extends Enemy {
 ////                disable();
 //            }
 //        }
-    }
+//    }
 
 //    @Override
 //    public void render(Graphics g) {
@@ -153,42 +148,42 @@ public class EnemyHeavy extends Enemy {
 //            bulletAngle = bulletAngleMIN;
 //    }
 
-    @Override
-    public void move() {
-        super.move();
-        moveHorizontally();
-    }
+//    @Override
+//    public void move() {
+//        super.move();
+////        moveHorizontally();
+//    }
 
     private void moveShoot() {
 //        bullets.add(new BulletEnemy((int) (1.1 * x), y + height / 2, 90));
 //        bullets.add(new BulletEnemy(x + (int) (0.8 * width), y + height / 2, 90));
     }
 
-    public void moveHorizontally() {
-        if (movementDistance > 0) {
-            movementDistance--;
-        } else {
-            movementDistance = distance;
-        }
-
-        int
-                int0 = 0,
-                int1 = Utility.perc(distance, 30),
-                int2 = Utility.perc(distance, 50),
-                int3 = Utility.perc(distance, 80);
-
-
-        if (movementDistance <= distance && movementDistance > int3) {
-            hMove = HorizontalMovement.LEFT;
-        } else if (movementDistance <= int3 && movementDistance > int2 || movementDistance <= int1 && movementDistance > int0) {
-            hMove = HorizontalMovement.NONE;
-        } else if (movementDistance <= int2 && movementDistance > int1) {
-            hMove = HorizontalMovement.RIGHT;
-        }
-//        } else if (movementTimer <= int1 && movementTimer > int0) {
-//            hMove = HorizontalMovement.NONE;
+//    public void moveHorizontally() {
+//        if (movementDistance > 0) {
+//            movementDistance--;
+//        } else {
+//            movementDistance = distance;
 //        }
-    }
+//
+//        int
+//                int0 = 0,
+//                int1 = Utility.perc(distance, 30),
+//                int2 = Utility.perc(distance, 50),
+//                int3 = Utility.perc(distance, 80);
+//
+//
+//        if (movementDistance <= distance && movementDistance > int3) {
+//            hMove = HorizontalMovement.LEFT;
+//        } else if (movementDistance <= int3 && movementDistance > int2 || movementDistance <= int1 && movementDistance > int0) {
+//            hMove = HorizontalMovement.NONE;
+//        } else if (movementDistance <= int2 && movementDistance > int1) {
+//            hMove = HorizontalMovement.RIGHT;
+//        }
+////        } else if (movementTimer <= int1 && movementTimer > int0) {
+////            hMove = HorizontalMovement.NONE;
+////        }
+//    }
 
     @Override
     protected void commonInit() {

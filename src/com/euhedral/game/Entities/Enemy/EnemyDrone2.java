@@ -1,6 +1,7 @@
 package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Utility;
+import com.euhedral.game.EntityHandler;
 
 public class EnemyDrone2 extends EnemyDrone{
 
@@ -57,9 +58,8 @@ public class EnemyDrone2 extends EnemyDrone{
         return calculateAngle(destinationX, destinationY); // stub
     }
 
-//    @Override
-//    protected void commonInit() {
-//        super.commonInit();
-//        this.setHealth(2);
-//    }
+    @Override
+    protected void setEnemyType() {
+        enemyType = EntityHandler.TYPE_DRONE2;
+    }
 }
