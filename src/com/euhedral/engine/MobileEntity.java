@@ -92,9 +92,9 @@ public abstract class MobileEntity extends Entity {
     }
 
     // Triangle with vertices A, B, C
-    protected double calculateAngle(double bX, double bY) {
+    protected double calculateAngle(double aX, double aY, double bX, double bY) {
+
         // Coordinates
-        double aX = x, aY = y;
         double cX = aX + 1, cY = aY;
 
         // Vectors
@@ -119,6 +119,11 @@ public abstract class MobileEntity extends Entity {
         }
 
         return returnAngle;
+    }
+
+    // Triangle with vertices A, B, C
+    protected double calculateAngle(double bX, double bY) {
+        return calculateAngle(x, y, bX, bY);
     }
 
     // Calculate the velX and velY using angle (of direction) and forward velocity

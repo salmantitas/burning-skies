@@ -29,7 +29,7 @@ public class EnemyGenerator {
     long spawnInterval;
     long spawnInterval_MIN = 2;
     long spawnInterval_MAX = 5;
-    int enemiesSpawned; // todo: Why do we need this?
+//    int enemiesSpawned; // todo: Why do we need this?
     int spawnX, spawnY;
 
     // Movement
@@ -77,7 +77,7 @@ public class EnemyGenerator {
         if (canSpawn) {
             spawnEnemies();
             lastSpawnTime = GameController.getCurrentTime();
-            enemiesSpawned = 0;
+//            enemiesSpawned = 0;
         }
     }
 
@@ -96,7 +96,7 @@ public class EnemyGenerator {
         entityHandler.spawnPlayer(playerX * SCALE, playerY * SCALE);
 
         // create distance between player and first wave
-        enemiesSpawned = 0;
+//        enemiesSpawned = 0;
         wave = firstWave;
         resetWaveSinceHealth();
         resetWaveSincePower();
@@ -160,8 +160,8 @@ public class EnemyGenerator {
 //        enemytype = TYPE_DRONE; // stub
 //        enemytype = TYPE_SIDE1; // stub
 //        enemytype = TYPE_STATIC; // stub
-//        enemytype = TYPE_SIDE; // stub
 //        enemytype = TYPE_DRONE2; // stub
+//        enemytype = TYPE_SIDE2; // stub
 
 //        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
 

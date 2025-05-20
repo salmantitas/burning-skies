@@ -24,12 +24,12 @@ public class MenuMain extends Menu {
         int creditsY = helpY + Utility.percHeight(11);
         int quitY = y80;
 
-        ButtonNav play = new ButtonNav(x43, playY, buttonSize, "Play", GameState.Transition);
-        ButtonNav settings = new ButtonNav(x40, settingsY, buttonSize, "Settings", GameState.Settings);
-        ButtonNav highScore = new ButtonNav(x36, highScoreY, buttonSize, "High Score", GameState.Highscore);
-        ButtonNav help = new ButtonNav(x43, helpY, buttonSize, "Help", GameState.Help);
-        ButtonNav credits = new ButtonNav(x40, creditsY, buttonSize, "Credits", GameState.Credits);
-        ButtonNav quit = new ButtonNav(x43, quitY, buttonSize, "Quit", GameState.Quit);
+        ButtonNav play = new ButtonNav(x10, playY, buttonSize, "Play", GameState.Transition);
+        ButtonNav settings = new ButtonNav(x10, settingsY, buttonSize, "Settings", GameState.Settings);
+        ButtonNav highScore = new ButtonNav(x10, highScoreY, buttonSize, "High Score", GameState.Highscore);
+        ButtonNav help = new ButtonNav(x10, helpY, buttonSize, "Help", GameState.Help);
+        ButtonNav credits = new ButtonNav(x10, creditsY, buttonSize, "Credits", GameState.Credits);
+        ButtonNav quit = new ButtonNav(x10, quitY, buttonSize, "Quit", GameState.Quit);
 
         options[0] = play;
         options[1] = settings;

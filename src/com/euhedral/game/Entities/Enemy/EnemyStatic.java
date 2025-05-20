@@ -33,7 +33,7 @@ public class EnemyStatic extends Enemy {
     }
 
     public EnemyStatic(int x, int y, Color color, int levelHeight) {
-        this(x,y, levelHeight);
+        this(x, y, levelHeight);
         this.color = color;
     }
 
@@ -78,8 +78,8 @@ public class EnemyStatic extends Enemy {
     @Override
     protected void moveInScreen() {
 //        if (y < verticalPosition) {
-            velY = Math.max(0, velY- deceleration);
-            y += velY;
+        velY = Math.max(0, velY - deceleration);
+        y += velY;
 //        }
     }
 
@@ -104,11 +104,11 @@ public class EnemyStatic extends Enemy {
 //        } else if (movementDistance <= int2 && movementDistance > int1) {
 //            hMove = HorizontalMovement.RIGHT;
 //        }
-////        } else if (movementTimer <= int1 && movementTimer > int0) {
-////            hMove = HorizontalMovement.NONE;
-////        }
-//    }
 
+    /// /        } else if (movementTimer <= int1 && movementTimer > int0) {
+    /// /            hMove = HorizontalMovement.NONE;
+    /// /        }
+//    }
     @Override
     protected void commonInit() {
         this.setHealth(healthMAX);
@@ -117,12 +117,12 @@ public class EnemyStatic extends Enemy {
 
     @Override
     public int getTurretX() {
-        return (int) x + width/2 - Utility.intAtWidth640(2);
+        return (int) x + width / 2 - Utility.intAtWidth640(2);
     }
 
     @Override
     public double getBulletAngle() {
-        return calculateAngle(destinationX, destinationY); // stub
+        return calculateAngle(getTurretX(), getTurretY(), destinationX, destinationY); // stub
     }
 
     private void updateDestination() {
@@ -136,6 +136,15 @@ public class EnemyStatic extends Enemy {
         explosion.playedOnce = false;
         super.resurrect(x, y);
     }
+
+//    @Override
+//    public void render(Graphics g) {
+//        g.setColor(Color.BLACK);
+//
+//        g.fillRect((int) destinationX, (int) destinationY, 10, 10);
+//
+//        super.render(g);
+//    }
 
     @Override
     protected void renderBounds(Graphics g) {

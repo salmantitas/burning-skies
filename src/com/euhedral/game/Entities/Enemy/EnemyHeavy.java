@@ -8,18 +8,27 @@ import java.awt.*;
 
 public class EnemyHeavy extends Enemy {
 
+    int leftTurret, rightTurret;
+
     boolean turretLeft = true;
     int bulletAngleMIN = 60;
     int bulletAngleMAX = 90;
     int bulletAngleINC = 30;
+
+    double destinationX, destinationY;
+    int offsetLeft = 8, offsetRight = 2;
+    boolean playerInRange;
 
     public EnemyHeavy(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
         bulletVelocity = Utility.intAtWidth640(5);
         bulletAngle = 60;
-        shootTimerDefault = 100;
+        shootTimerDefault = 90;
+        shootTimer = shootTimerDefault;
         score = 100;
+        leftTurret = width / 3 - Utility.intAtWidth640(2);
+        rightTurret = 2 * width / 3 - Utility.intAtWidth640(2);
 //        attackEffect = true;
 
         textureHandler = GameController.getTexture();
@@ -36,35 +45,51 @@ public class EnemyHeavy extends Enemy {
         super.initialize();
 
         velX = 0;
-        minVelY = 1.75f;
-        distance = 0; // stub ; width * 2;
+        minVelY = 1.7f;
+        forwardVelocity = minVelY;
+//        distance = 0; // stub ; width * 2;
 //        movementDistance = distance;
         healthMAX = 6;
         commonInit();
         damage = 60;
     }
 
-//    @Override
-//    public void update() {
-//        super.update();
-//        if (state == STATE_ACTIVE && inscreen) {
+    @Override
+    public void update() {
+        super.update();
+        if (state == STATE_ACTIVE && inscreen) {
+            updateDestination();
+
 //            if (movementDistance >= 0) {
 //                movementDistance -= Math.abs(velX);
 //            } else {
 //                velX = 0;
 //            }
-//        }
-
+        }
+//
 //        if (state == STATE_EXPLODING) {
 ////            explosion.runAnimation();
 //            if (explosion.playedOnce) {
 ////                disable();
 //            }
 //        }
-//    }
+    }
 
 //    @Override
 //    public void render(Graphics g) {
+//        g.setColor(Color.BLACK);
+//        g.fillRect((int) destinationX-offsetLeft, (int) destinationY, 32 + offsetRight, 10);
+//
+//        g.setColor(Color.RED);
+//
+//        if (playerInRange) {
+//            if (isActive()) {
+//                g.setColor(Color.GREEN);
+//            }
+//        }
+//
+//        g.drawRect((int) x, (int) y, width, height * 2);
+
 //        if (attackEffect) {
 //            boolean secondsTillShotFire = (shootTimer < 20);
 //            if (isActive() && secondsTillShotFire) {
@@ -85,7 +110,7 @@ public class EnemyHeavy extends Enemy {
 //                g2d.setComposite(Utility.makeTransparent(1f));
 //            }
 //        }
-//
+
 //        g.setColor(color);
 //        super.render(g);
 //    }
@@ -192,6 +217,11 @@ public class EnemyHeavy extends Enemy {
         bulletAngle = bulletAngleMIN;
     }
 
+    private void updateDestination() {
+        destinationX = EntityHandler.playerX;
+        destinationY = EntityHandler.playerY;
+    }
+
     @Override
     public int getTurretX() {
         if (turretLeft) {
@@ -213,9 +243,16 @@ public class EnemyHeavy extends Enemy {
         else {
             tempAngle = 90 + (90 - bulletAngle);
         }
-        boolean bothShotsFired = (shot == 1);
-        if (bothShotsFired)
-            incrementBulletAngle();
+//        boolean bothShotsFired = (shot == 1);
+//        if (bothShotsFired)
+//            incrementBulletAngle();
+
+        boolean rangeCheck1 = (destinationX - offsetLeft > x) && (destinationX - offsetLeft < x + width);
+        boolean rangeCheck2 = (destinationX + 32 + offsetRight < x + width) && (destinationX + 32 + offsetRight > x);
+        playerInRange = rangeCheck1 || rangeCheck2;
+
+        if (playerInRange)
+            tempAngle = 90;
         return tempAngle;
     }
 

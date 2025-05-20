@@ -31,7 +31,7 @@ public class EnemySide1 extends Enemy{
 //        enemyType = EntityHandler.TYPE_SIDE;
 
         healthMAX = 3;
-        minVelX = 7f;
+        minVelX = 10f;
 
 //        shootTimer = shootTimerDefault;
         commonInit();

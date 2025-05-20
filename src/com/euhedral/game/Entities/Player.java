@@ -60,8 +60,8 @@ public class Player extends MobileEntity {
         velY = 0;
         physics.setAcceleration(0.05f);
         acceleration = 0.1f; // todo: delete
-        minVelY = 4;
-        minVelX = 5;
+        minVelY = 5;
+        minVelX = 4.5;
 //        velY = minVelY;
 //        velX = minVelX;
         maxVelY = 2 * minVelY;
@@ -499,7 +499,7 @@ public class Player extends MobileEntity {
     }
 
     public double getCenterX() {
-        return x + width/2 - 22; // todo: find out why we need 22
+        return x + width/2 - 9; // todo: find out why we need 12
     }
     public double getCenterY() {
         return (y + height / 2 - 2);

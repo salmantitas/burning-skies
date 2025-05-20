@@ -25,7 +25,7 @@ public class EnemySnake extends Enemy {
         velY = 1.75f;
         setHealth(8,12);
         score = 200;
-        distance = width * 5;
+//        distance = width * 5;
 //        movementDistance = distance;
     }
 

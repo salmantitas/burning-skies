@@ -34,16 +34,16 @@ public class EnemySide2 extends Enemy{
     public void move() {
         if (isActive()) {
             double xMin = -width, xMax = Engine.WIDTH;
-            double angleCorrection = 7;
+//            double angleCorrection = 7;
 
             velY = 0;
             if (x <= xMin) {
-                bulletAngle = 0 - angleCorrection;
+//                bulletAngle = 0 - angleCorrection;
                 velX = minVelX;
                 y = destinationY;
             } else if (x >= xMax) {
                 velX = -minVelX;
-                bulletAngle = 180 + angleCorrection;
+//                bulletAngle = 180 + angleCorrection;
                 y = destinationY;
             }
         } else if (isExploding()) {
@@ -80,6 +80,11 @@ public class EnemySide2 extends Enemy{
         int offsetY = -32;
         destinationX = EntityHandler.playerX;
         destinationY = EntityHandler.playerY + offsetY;
+    }
+
+    @Override
+    public double getBulletAngle() {
+        return calculateAngle(destinationX, destinationY); // stub
     }
 
     @Override

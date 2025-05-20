@@ -28,6 +28,8 @@ public class ProceduralGenerator extends EnemyGenerator {
 
     long lastSpawnTimePickup;
 
+    int enemiesSpawned;
+
     final int SPAWN_ENEMY = 0;
     final int SPAWN_HEALTH = 10;
     int spawnNext = 0;

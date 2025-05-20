@@ -9,6 +9,9 @@ import java.awt.*;
 
 public class EnemyBasic2 extends Enemy{
 
+    double acceleration = 0.1;
+    double destinationX, destinationY;
+
     public EnemyBasic2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         textureHandler = GameController.getTexture();
@@ -19,6 +22,7 @@ public class EnemyBasic2 extends Enemy{
         shootTimerDefault = 50; // too low: 10, too high: 100
         shootTimer = shootTimerDefault;
         score = 75;
+        determineMovement();
     }
 
     public EnemyBasic2(int x, int y, Color color, int levelHeight) {
@@ -33,7 +37,11 @@ public class EnemyBasic2 extends Enemy{
 
         healthMAX = 4;
         commonInit();
-        minVelX = 1.75f;
+        minVelX = 1.75;
+        maxVelX = 4.75;
+
+//        minVelX = maxVelX;
+
     }
 
     @Override
@@ -45,6 +53,9 @@ public class EnemyBasic2 extends Enemy{
             } else {
                 velX = 0;
             }
+            double factor = 10;
+            velY *= (1 + acceleration/factor);
+            velX *= (1 + acceleration/(factor + 9) );
         }
     }
 
@@ -52,6 +63,24 @@ public class EnemyBasic2 extends Enemy{
     protected void commonInit() {
         this.setHealth(healthMAX);
         velY = forwardVelocity;
+        minVelX = 1.75f;
+
+        determineMovement();
+    }
+
+    private void determineMovement() {
+        updateDestination();
+//        if (destinationX > x) {
+//            setHMove(-1);
+//        } else {
+//            setHMove(1);
+//        }
+        movementDistance = Engine.WIDTH; // Math.abs((int) (x - destinationX));
+    }
+
+    private void updateDestination() {
+        destinationX = EntityHandler.playerX;
+        destinationY = EntityHandler.playerY;
     }
 
 //    @Override

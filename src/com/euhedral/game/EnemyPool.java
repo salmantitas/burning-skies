@@ -120,7 +120,7 @@ public class EnemyPool extends Pool {
         entity.resurrect(x, y);
         Enemy enemy = (Enemy) entity;
         enemy.setHMove(direction);
-        enemy.setMovementDistance(distance);
+//        enemy.setMovementDistance(distance);
         decrease(enemy.getEnemyType());
 
 //        int tempNum = active[enemyType];

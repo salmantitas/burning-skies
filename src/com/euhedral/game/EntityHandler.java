@@ -29,14 +29,14 @@ public class EntityHandler {
     public static final int TYPE_DRONE = TYPE_HEAVY + 1;
     public static final int TYPE_STATIC = TYPE_DRONE + 1;
     public static final int TYPE_SIDE1 = TYPE_STATIC + 1;
-    public static final int TYPE_SIDE2 = TYPE_SIDE1 + 1;
     public static final int TYPE_DRONE2 = TYPE_SIDE1 + 1;
+    public static final int TYPE_SIDE2 = TYPE_DRONE2 + 1;
 
     // todo: Complete Implementation
     public static final int TYPE_9 = TYPE_SIDE2 + 1;
     public static final int TYPE_10 = TYPE_SIDE2 + 1;
 
-    public static final int enemyTypes = TYPE_DRONE2 + 1;
+    public static final int enemyTypes = TYPE_SIDE2 + 1;
 
     // Entity Lists
     private Flag flag; // todo: Remove
@@ -157,19 +157,19 @@ public class EntityHandler {
         } else if (enemyType == TYPE_BASIC2) {
             enemy = new EnemyBasic2(x, y, levelHeight);
             enemy.setHMove(direction);
-            enemy.setMovementDistance(distance);
-        } else if (enemyType == TYPE_SIDE1) {
-            enemy = new EnemySide1(x, y, levelHeight);
+//            enemy.setMovementDistance(distance);
         } else if (enemyType == TYPE_DRONE) {
             enemy = new EnemyDrone(x, y, levelHeight);
+        } else if (enemyType == TYPE_SIDE1) {
+            enemy = new EnemySide1(x, y, levelHeight);
         } else if (enemyType == TYPE_HEAVY) {
             enemy = new EnemyHeavy(x, y, levelHeight);
         } else if (enemyType == TYPE_STATIC) {
             enemy = new EnemyStatic(x, y, levelHeight);
-        } else if (enemyType == TYPE_SIDE2) {
-            enemy = new EnemySide2(x, y, levelHeight);
         } else if (enemyType == TYPE_DRONE2) {
             enemy = new EnemyDrone2(x, y, levelHeight);
+        } else if (enemyType == TYPE_SIDE2) {
+            enemy = new EnemySide2(x, y, levelHeight);
         }
 
         if (enemy != null) {

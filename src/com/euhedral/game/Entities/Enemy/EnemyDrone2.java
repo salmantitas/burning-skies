@@ -8,6 +8,9 @@ public class EnemyDrone2 extends EnemyDrone{
     public EnemyDrone2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         setImage(textureHandler.enemyDrone[1]);
+
+        shootTimerDefault = 100;
+        shootTimer = shootTimerDefault;
     }
 
     @Override
@@ -19,7 +22,7 @@ public class EnemyDrone2 extends EnemyDrone{
 //        power = 1;
 //        shootTimerDefault = 250;
 //        minVelX = 2f;
-        healthMAX = 2;
+        healthMAX = 3;
         score = 50;
         damage = 30;
         commonInit();
@@ -40,6 +43,7 @@ public class EnemyDrone2 extends EnemyDrone{
                 forwardVelocity -= deceleration;
             } else {
                 forwardVelocity = 4f;
+//                forwardVelocity += 0.2; // todo: Use for future drones // too high = 0.5 // too low = 0.1
             }
         } else if (isExploding()) {
             velY = explodingVelocity;

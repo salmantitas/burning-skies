@@ -26,7 +26,7 @@ public class Enemy extends MobileEntity {
     protected float cam;
 
     protected int score;
-    protected int distance;
+//    protected int distance;
 
     protected int movementDistance;
     protected int damage;
@@ -127,7 +127,7 @@ public class Enemy extends MobileEntity {
     @Override
     public void initialize() {
         setEnemyType();
-        forwardVelocity = 2.4f;
+        forwardVelocity = 2.4;
         offscreenVelY = forwardVelocity;
 
         bulletAngle = 90;
@@ -263,7 +263,7 @@ public class Enemy extends MobileEntity {
             velX = -minVelX;
         } else if (direction == -1) {
             hMove = HorizontalMovement.RIGHT;
-            velX = minVelX;//*1.45f;//1.95f;
+            velX = minVelX;
         } else {
 //            velX = 0;
         }
