@@ -1167,7 +1167,7 @@ public class ProceduralGenerator extends EnemyGenerator {
     // Spawn enemies according to the pattern and number
     @Override
     protected void spawnEnemiesHelper() {
-        if (enemytype == TYPE_DRONE) {
+        if (enemytype == TYPE_DRONE1) {
             Utility.log("Drone");
         }
 

@@ -147,12 +147,7 @@ public class Enemy extends MobileEntity {
             super.render(g);
 //            renderBounds(g);
         } else {
-            if (!explosion.playedOnce) {
-                int size = Math.max(width, height);
-                int expX = (int) x + (size - width)/2;
-                int expY = (int) y - (size - height)/2;
-                explosion.drawAnimation(g, expX, expY, size, size);
-            }
+            renderExplosion(g);
         }
     }
 
@@ -160,7 +155,7 @@ public class Enemy extends MobileEntity {
         if (attackEffect) {
             boolean secondsTillShotFire = (shootTimer < 20);
             if (isActive() && secondsTillShotFire) {
-                g.setColor(Color.red);
+                g.setColor(Color.red); // todo: Redundancy?
 
                 Graphics2D g2d = (Graphics2D) g;
                 g.setColor(Color.RED);
@@ -175,6 +170,15 @@ public class Enemy extends MobileEntity {
                 g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(getBulletAngle()) - arcAngle / 2, arcAngle);
                 g2d.setComposite(Utility.makeTransparent(1f));
             }
+        }
+    }
+
+    protected void renderExplosion(Graphics g) {
+        if (!explosion.playedOnce) {
+            int size = Math.max(width, height);
+            int expX = (int) x + (size - width)/2;
+            int expY = (int) y - (size - height)/2;
+            explosion.drawAnimation(g, expX, expY, size, size);
         }
     }
 

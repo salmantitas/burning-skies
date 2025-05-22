@@ -10,6 +10,9 @@ public class EnemyDrone2 extends EnemyDrone{
         setImage(textureHandler.enemyDrone[1]);
 
         shootTimerDefault = 100;
+        score = 50;
+        damage = 30;
+
         attackEffect = true;
 //        shootTimer = shootTimerDefault;
     }
@@ -24,10 +27,14 @@ public class EnemyDrone2 extends EnemyDrone{
 //        shootTimerDefault = 250;
 //        minVelX = 2f;
         health_MAX = 3;
-        score = 50;
-        damage = 30;
+
         commonInit();
     }
+
+//    @Override
+//    public void update() {
+//        super.update();
+//    }
 
     @Override
     protected void shoot() {
@@ -37,13 +44,14 @@ public class EnemyDrone2 extends EnemyDrone{
 
     @Override
     public void move() {
-        if (isActive()) {
+//        super.move();
+        if (isActive() && inscreen) {
             int recoilPause = 25; // too low: 20, too high: 50
             double deceleration = 0.1;
             if (shootTimer < recoilPause) {
                 forwardVelocity -= deceleration;
             } else {
-                forwardVelocity = 4f;
+                forwardVelocity = 4;
 //                forwardVelocity += 0.2; // todo: Use for future drones // too high = 0.5 // too low = 0.1
             }
         } else if (isExploding()) {

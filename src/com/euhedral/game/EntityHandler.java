@@ -26,17 +26,15 @@ public class EntityHandler {
     public static final int TYPE_BASIC1 = 0;
     public static final int TYPE_BASIC2 = TYPE_BASIC1 + 1;
     public static final int TYPE_HEAVY = TYPE_BASIC2 + 1;
-    public static final int TYPE_DRONE = TYPE_HEAVY + 1;
-    public static final int TYPE_STATIC1 = TYPE_DRONE + 1;
+    public static final int TYPE_DRONE1 = TYPE_HEAVY + 1;
+    public static final int TYPE_STATIC1 = TYPE_DRONE1 + 1;
     public static final int TYPE_SIDE1 = TYPE_STATIC1 + 1;
     public static final int TYPE_DRONE2 = TYPE_SIDE1 + 1;
     public static final int TYPE_SIDE2 = TYPE_DRONE2 + 1;
     public static final int TYPE_STATIC2 = TYPE_SIDE2 + 1;
+    public static final int TYPE_DRONE3 = TYPE_STATIC2 + 1;
 
-    // todo: Complete Implementation
-    public static final int TYPE_10 = TYPE_SIDE2 + 1;
-
-    public static final int enemyTypes = TYPE_STATIC2 + 1;
+    public static final int enemyTypes = TYPE_DRONE3 + 1;
 
     // Entity Lists
     private Flag flag; // todo: Remove
@@ -158,7 +156,7 @@ public class EntityHandler {
             enemy = new EnemyBasic2(x, y, levelHeight);
             enemy.setHMove(direction);
 //            enemy.setMovementDistance(distance);
-        } else if (enemyType == TYPE_DRONE) {
+        } else if (enemyType == TYPE_DRONE1) {
             enemy = new EnemyDrone(x, y, levelHeight);
         } else if (enemyType == TYPE_SIDE1) {
             enemy = new EnemySide1(x, y, levelHeight);
@@ -172,6 +170,8 @@ public class EntityHandler {
             enemy = new EnemySide2(x, y, levelHeight);
         } else if (enemyType == TYPE_STATIC2) {
             enemy = new EnemyStatic2(x, y, levelHeight);
+        } else if (enemyType == TYPE_DRONE3) {
+            enemy = new EnemyDrone3(x, y, levelHeight);
         }
 
         if (enemy != null) {
@@ -452,6 +452,10 @@ public class EntityHandler {
         LinkedList<Entity> list = enemies.getEntities();
         for (Entity entity: list) {
             Enemy enemy = (Enemy) entity;
+            // todo: fix bad code
+            if (enemy.getEnemyType() == TYPE_DRONE3) {
+                transparency = 0.1f;
+            }
             enemy.renderReflection(g2d, transparency);
         }
     }
