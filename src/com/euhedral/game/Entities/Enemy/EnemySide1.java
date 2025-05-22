@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class EnemySide1 extends Enemy{
     public EnemySide1(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+        super(x, y,  levelHeight);
 
         shootTimerDefault = 50;
         shootTimer = 50;
@@ -51,8 +51,8 @@ public class EnemySide1 extends Enemy{
         } else if (isExploding()) {
             velY = explodingVelocity;
         }
-        if (!inscreen)
-            Utility.log("min: " + minVelX + "| vel: " + velX);
+//        if (!inscreen)
+//            Utility.log("min: " + minVelX + "| vel: " + velX);
         moveInScreen();
     }
 

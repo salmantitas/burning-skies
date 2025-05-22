@@ -49,8 +49,8 @@ public class EnemySide2 extends Enemy{
         } else if (isExploding()) {
             velY = explodingVelocity;
         }
-        if (!inscreen)
-            Utility.log("min: " + minVelX + "| vel: " + velX);
+//        if (!inscreen)
+//            Utility.log("min: " + minVelX + "| vel: " + velX);
         moveInScreen();
     }
 

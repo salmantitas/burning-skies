@@ -8,9 +8,11 @@ import java.awt.*;
 
 public class EnemyHeavy extends Enemy {
 
-    int leftTurret, rightTurret;
+    int movementDistance_MAX = 3*64;
 
+    int leftTurret, rightTurret;
     boolean turretLeft = true;
+
     int bulletAngleMIN = 60;
     int bulletAngleMAX = 90;
     int bulletAngleINC = 30;
@@ -29,6 +31,12 @@ public class EnemyHeavy extends Enemy {
         score = 100;
         leftTurret = width / 3 - Utility.intAtWidth640(2);
         rightTurret = 2 * width / 3 - Utility.intAtWidth640(2);
+
+        // stub
+        minVelX = 1;
+        movementDistance = movementDistance_MAX;
+        setHMove(1);
+
 //        attackEffect = true;
 
         textureHandler = GameController.getTexture();
@@ -60,11 +68,17 @@ public class EnemyHeavy extends Enemy {
         if (state == STATE_ACTIVE && inscreen) {
             updateDestination();
 
-//            if (movementDistance >= 0) {
-//                movementDistance -= Math.abs(velX);
-//            } else {
+            if (movementDistance >= 0) {
+                movementDistance -= Math.abs(velX);
+            } else {
 //                velX = 0;
-//            }
+                if (hMove.equals(HorizontalMovement.LEFT)) {
+                    setHMove(-1);
+                } else {
+                    setHMove(1);
+                }
+                movementDistance = movementDistance_MAX;
+            }
         }
 //
 //        if (state == STATE_EXPLODING) {

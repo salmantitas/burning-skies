@@ -202,7 +202,7 @@ public class VariableHandler {
 
     public static void renderHUD(Graphics g) {
         renderScore(g);
-        power.renderValue(g);
+//        power.renderValue(g);
         health.renderBar(g);
         if (shield.getValue() > 0)
             shield.renderBar(g);

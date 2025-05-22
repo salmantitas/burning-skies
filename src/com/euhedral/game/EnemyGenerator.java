@@ -51,9 +51,9 @@ public class EnemyGenerator {
     final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
     final int TYPE_DRONE = EntityHandler.TYPE_DRONE;
     final int TYPE_STATIC = EntityHandler.TYPE_STATIC;
-    final int TYPE_SIDE2 = EntityHandler.TYPE_SIDE2;
     final int TYPE_DRONE2 = EntityHandler.TYPE_DRONE2;
-    int maxTypes = TYPE_DRONE2 + 1;
+    final int TYPE_SIDE2 = EntityHandler.TYPE_SIDE2;
+    int maxTypes = TYPE_SIDE2 + 1;
 
     // Wave
     int wave;
@@ -228,13 +228,24 @@ public class EnemyGenerator {
         }
         // Horizontal Zone
         else {
-            spawnX = Utility.randomRangeInclusive(xStart, xEnd);
+            if (enemytype == TYPE_HEAVY) {
+                spawnX = Utility.randomRangeInclusive(xStart + 3, xEnd - 3);
 
-            // check if coordinate is in exclusion list
-            ArrayList<Integer> exclusionZones = EntityHandler.getExclusionZones();
+                // check if coordinate is in exclusion list
+                ArrayList<Integer> exclusionZones = EntityHandler.getExclusionZones();
 
-            while (exclusionZones.contains(spawnX)) {
+                while (exclusionZones.contains(spawnX)) {
+                    spawnX = Utility.randomRangeInclusive(xStart + 3, xEnd - 3);
+                }
+            } else {
                 spawnX = Utility.randomRangeInclusive(xStart, xEnd);
+
+                // check if coordinate is in exclusion list
+                ArrayList<Integer> exclusionZones = EntityHandler.getExclusionZones();
+
+                while (exclusionZones.contains(spawnX)) {
+                    spawnX = Utility.randomRangeInclusive(xStart, xEnd);
+                }
             }
 
             spawnY = (height - Engine.HEIGHT) / SCALE;
