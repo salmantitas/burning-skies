@@ -2,7 +2,6 @@ package com.euhedral.game;
 
 import com.euhedral.engine.Entity;
 import com.euhedral.engine.Pool;
-import com.euhedral.engine.Utility;
 import com.euhedral.game.Entities.Enemy.Enemy;
 
 import java.awt.*;
@@ -63,7 +62,7 @@ public class EnemyPool extends Pool {
 
         int entityX = (int) entity.getX()/64;
 
-        if (enemyType == EntityHandler.TYPE_STATIC) {
+        if (enemyType == EntityHandler.TYPE_STATIC1 || enemyType == EntityHandler.TYPE_STATIC2) {
             // find spot in exclusion zone
             for (int i = 0; i < 10; i++) {
                 if (exclusionZones.get(i) == entityX) {
@@ -168,7 +167,7 @@ public class EnemyPool extends Pool {
     }
 
     private void addExclusionZone(Entity entity, int enemyType) {
-        if (enemyType == EntityHandler.TYPE_STATIC) {
+        if (enemyType == EntityHandler.TYPE_STATIC1 || enemyType == EntityHandler.TYPE_STATIC2) {
             boolean done = false;
             for (int i = 0; i < 10; i++) {
                 if (done) { }

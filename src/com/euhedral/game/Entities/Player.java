@@ -60,12 +60,12 @@ public class Player extends MobileEntity {
         velY = 0;
         physics.setAcceleration(0.05f);
         acceleration = 0.1f; // todo: delete
-        minVelY = 5;
-        minVelX = 4.5;
+        velY_MIN = 5;
+        velX_MIN = 4.5;
 //        velY = minVelY;
 //        velX = minVelX;
-        maxVelY = 2 * minVelY;
-        maxVelX = 2 * minVelX;
+        velY_MAX = 2 * velY_MIN;
+        velX_MAX = 2 * velX_MIN;
 
         physics.enableFriction();
         physics.setFrictionalForce(0.9f);
@@ -355,13 +355,13 @@ public class Player extends MobileEntity {
         // Moving Left
         if (isMovingLeft()) {
             velX -= acceleration;
-            velX = Utility.clamp(velX, - maxVelX, - minVelX);
+            velX = Utility.clamp(velX, -velX_MAX, -velX_MIN);
         }
 
         // Moving Right
         else if (isMovingRight()) {
             velX += acceleration;
-            velX = Utility.clamp(velX, minVelX, maxVelX);
+            velX = Utility.clamp(velX, velX_MIN, velX_MAX);
         }
 
         // Not Moving Left or Right
@@ -377,13 +377,13 @@ public class Player extends MobileEntity {
         // Moving Up
         if (moveUp && !moveDown) {
             velY -= acceleration;
-            velY = Utility.clamp(velY, - maxVelY, - minVelY);
+            velY = Utility.clamp(velY, -velY_MAX, -velY_MIN);
         }
 
         // Moving Down
         else if (moveDown && !moveUp) {
             velY += acceleration;
-            velY = Utility.clamp(velY, minVelY, maxVelY);
+            velY = Utility.clamp(velY, velY_MIN, velY_MAX);
 
         }
 

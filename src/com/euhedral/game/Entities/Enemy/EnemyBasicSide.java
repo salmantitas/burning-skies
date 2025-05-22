@@ -31,10 +31,10 @@ public class EnemyBasicSide extends Enemy{
         bulletAngle = 0;
 
         shootTimerDefault = 150;
-        healthMAX = 3;
+        health_MAX = 3;
         commonInit();
         score = 50;
-        minVelX = 1.75f;
+        velX_MIN = 1.75f;
     }
 
 //    @Override
@@ -45,7 +45,7 @@ public class EnemyBasicSide extends Enemy{
 
     @Override
     protected void shootDefault() {
-        shot += 2;
+        bulletsPerShot += 2;
     }
 
 //    @Override
@@ -62,7 +62,7 @@ public class EnemyBasicSide extends Enemy{
 
     @Override
     protected void commonInit() {
-        this.setHealth(healthMAX);
+        this.setHealth(health_MAX);
         velY = forwardVelocity;
     }
 

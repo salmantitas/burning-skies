@@ -2,8 +2,6 @@ package com.euhedral.engine;
 
 import com.euhedral.game.EntityID;
 
-import java.awt.*;
-
 public abstract class MobileEntity extends Entity {
 
     protected class Physics {
@@ -57,8 +55,8 @@ public abstract class MobileEntity extends Entity {
     protected double forwardVelocity;
     protected double angle;
     protected double velX, velY;
-    protected double minVelX, minVelY;
-    protected double maxVelX, maxVelY;
+    protected double velX_MIN, velY_MIN;
+    protected double velX_MAX, velY_MAX;
     protected boolean moveLeft, moveRight, moveUp, moveDown;
     protected HorizontalMovement hMove = HorizontalMovement.NONE;
     protected VerticalMovement vMove = VerticalMovement.NONE;

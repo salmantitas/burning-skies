@@ -27,16 +27,16 @@ public class EntityHandler {
     public static final int TYPE_BASIC2 = TYPE_BASIC1 + 1;
     public static final int TYPE_HEAVY = TYPE_BASIC2 + 1;
     public static final int TYPE_DRONE = TYPE_HEAVY + 1;
-    public static final int TYPE_STATIC = TYPE_DRONE + 1;
-    public static final int TYPE_SIDE1 = TYPE_STATIC + 1;
+    public static final int TYPE_STATIC1 = TYPE_DRONE + 1;
+    public static final int TYPE_SIDE1 = TYPE_STATIC1 + 1;
     public static final int TYPE_DRONE2 = TYPE_SIDE1 + 1;
     public static final int TYPE_SIDE2 = TYPE_DRONE2 + 1;
+    public static final int TYPE_STATIC2 = TYPE_SIDE2 + 1;
 
     // todo: Complete Implementation
-    public static final int TYPE_9 = TYPE_SIDE2 + 1;
     public static final int TYPE_10 = TYPE_SIDE2 + 1;
 
-    public static final int enemyTypes = TYPE_SIDE2 + 1;
+    public static final int enemyTypes = TYPE_STATIC2 + 1;
 
     // Entity Lists
     private Flag flag; // todo: Remove
@@ -164,12 +164,14 @@ public class EntityHandler {
             enemy = new EnemySide1(x, y, levelHeight);
         } else if (enemyType == TYPE_HEAVY) {
             enemy = new EnemyHeavy(x, y, levelHeight);
-        } else if (enemyType == TYPE_STATIC) {
-            enemy = new EnemyStatic(x, y, levelHeight);
+        } else if (enemyType == TYPE_STATIC1) {
+            enemy = new EnemyStatic1(x, y, levelHeight);
         } else if (enemyType == TYPE_DRONE2) {
             enemy = new EnemyDrone2(x, y, levelHeight);
         } else if (enemyType == TYPE_SIDE2) {
             enemy = new EnemySide2(x, y, levelHeight);
+        } else if (enemyType == TYPE_STATIC2) {
+            enemy = new EnemyStatic2(x, y, levelHeight);
         }
 
         if (enemy != null) {
@@ -508,7 +510,7 @@ public class EntityHandler {
         double y = enemy.getTurretY();
         double bulletVelocity = enemy.getBulletVelocity();
         boolean tracking = false;
-        if (enemy.getEnemyType() == TYPE_STATIC) {
+        if (enemy.getEnemyType() == TYPE_STATIC1 || enemy.getEnemyType() == TYPE_STATIC2) {
             tracking = true;
         }
         if (bullets.getPoolSize() > 0) {

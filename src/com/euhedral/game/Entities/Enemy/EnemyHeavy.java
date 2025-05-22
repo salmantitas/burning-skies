@@ -27,13 +27,13 @@ public class EnemyHeavy extends Enemy {
         bulletVelocity = Utility.intAtWidth640(5);
         bulletAngle = 60;
         shootTimerDefault = 90;
-        shootTimer = shootTimerDefault;
+//        shootTimer = shootTimerDefault;
         score = 100;
         leftTurret = width / 3 - Utility.intAtWidth640(2);
         rightTurret = 2 * width / 3 - Utility.intAtWidth640(2);
 
         // stub
-        minVelX = 1;
+        velX_MIN = 1;
         movementDistance = movementDistance_MAX;
         setHMove(1);
 
@@ -53,11 +53,11 @@ public class EnemyHeavy extends Enemy {
         super.initialize();
 
         velX = 0;
-        minVelY = 1.7f;
-        forwardVelocity = minVelY;
+        velY_MIN = 1.7f;
+        forwardVelocity = velY_MIN;
 //        distance = 0; // stub ; width * 2;
 //        movementDistance = distance;
-        healthMAX = 6;
+        health_MAX = 6;
         commonInit();
         damage = 60;
     }
@@ -161,7 +161,7 @@ public class EnemyHeavy extends Enemy {
 
     @Override
     protected void shootDefault() {
-        shot += 2;
+        bulletsPerShot += 2;
     }
 
 //    @Override
@@ -226,7 +226,7 @@ public class EnemyHeavy extends Enemy {
 
     @Override
     protected void commonInit() {
-        this.setHealth(healthMAX);
+        this.setHealth(health_MAX);
         velY = forwardVelocity;
         bulletAngle = bulletAngleMIN;
     }

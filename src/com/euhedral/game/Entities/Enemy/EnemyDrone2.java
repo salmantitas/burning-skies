@@ -10,7 +10,8 @@ public class EnemyDrone2 extends EnemyDrone{
         setImage(textureHandler.enemyDrone[1]);
 
         shootTimerDefault = 100;
-        shootTimer = shootTimerDefault;
+        attackEffect = true;
+//        shootTimer = shootTimerDefault;
     }
 
     @Override
@@ -22,7 +23,7 @@ public class EnemyDrone2 extends EnemyDrone{
 //        power = 1;
 //        shootTimerDefault = 250;
 //        minVelX = 2f;
-        healthMAX = 3;
+        health_MAX = 3;
         score = 50;
         damage = 30;
         commonInit();

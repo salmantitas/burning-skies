@@ -13,6 +13,8 @@ public class EnemyBasic1 extends Enemy{
         super(x, y, levelHeight);
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[0]);
+
+        shootTimerDefault = 150;
 //        attackEffect = true;
     }
 
@@ -27,11 +29,11 @@ public class EnemyBasic1 extends Enemy{
         super.initialize();
 
 //        enemyType = EntityHandler.TYPE_BASIC;
-        shootTimerDefault = 150;
-        healthMAX = 3;
+
+        health_MAX = 3;
         commonInit();
         score = 50;
-        minVelX = 1.75f;
+        velX_MIN = 1.75f;
     }
 
 //    @Override
@@ -89,7 +91,7 @@ public class EnemyBasic1 extends Enemy{
 
     @Override
     protected void commonInit() {
-        this.setHealth(healthMAX);
+        this.setHealth(health_MAX);
         velY = forwardVelocity;
     }
 

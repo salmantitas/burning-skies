@@ -12,7 +12,7 @@ public class EnemySide1 extends Enemy{
         super(x, y,  levelHeight);
 
         shootTimerDefault = 50;
-        shootTimer = 50;
+//        shootTimer = 50;
         score = 200;
 
         textureHandler = GameController.getTexture();
@@ -30,8 +30,8 @@ public class EnemySide1 extends Enemy{
 
 //        enemyType = EntityHandler.TYPE_SIDE;
 
-        healthMAX = 3;
-        minVelX = 10f;
+        health_MAX = 3;
+        velX_MIN = 10f;
 
 //        shootTimer = shootTimerDefault;
         commonInit();
@@ -44,9 +44,9 @@ public class EnemySide1 extends Enemy{
 
             velY = 0;
             if (x <= xMin) {
-                velX = minVelX;
+                velX = velX_MIN;
             } else if (x >= xMax) {
-                velX = -minVelX;
+                velX = -velX_MIN;
             }
         } else if (isExploding()) {
             velY = explodingVelocity;
@@ -79,8 +79,8 @@ public class EnemySide1 extends Enemy{
 
     @Override
     protected void commonInit() {
-        setHealth(healthMAX);
-        velX = minVelX;
+        setHealth(health_MAX);
+        velX = velX_MIN;
         velY = 0;
     }
 

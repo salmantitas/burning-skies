@@ -20,7 +20,7 @@ public class EnemyBasic2 extends Enemy{
 
         // todo: These happen last
         shootTimerDefault = 50; // too low: 10, too high: 100
-        shootTimer = shootTimerDefault;
+//        shootTimer = shootTimerDefault;
         score = 75;
         determineMovement();
     }
@@ -35,10 +35,10 @@ public class EnemyBasic2 extends Enemy{
     public void initialize() {
         super.initialize();
 
-        healthMAX = 4;
+        health_MAX = 4;
         commonInit();
-        minVelX = 1.75;
-        maxVelX = 4.75;
+        velX_MIN = 1.75;
+        velX_MAX = 4.75;
 
 //        minVelX = maxVelX;
 
@@ -61,9 +61,9 @@ public class EnemyBasic2 extends Enemy{
 
     @Override
     protected void commonInit() {
-        this.setHealth(healthMAX);
+        this.setHealth(health_MAX);
         velY = forwardVelocity;
-        minVelX = 1.75f;
+        velX_MIN = 1.75f;
 
         determineMovement();
     }

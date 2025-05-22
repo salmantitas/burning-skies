@@ -13,6 +13,8 @@ public class EnemySide2 extends Enemy{
         super(x, y, levelHeight);
 
         score = 100;
+//        shootTimerDefault = 200;
+        attackEffect = true;
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemySide[0]);
@@ -23,10 +25,9 @@ public class EnemySide2 extends Enemy{
     public void initialize() {
         super.initialize();
 
-        healthMAX = 2;
-        minVelX = 3f;
-        shootTimerDefault = 20;
-//        shootTimer = shootTimerDefault;
+        health_MAX = 2;
+        velX_MIN = 3f;
+
         commonInit();
     }
 
@@ -39,10 +40,10 @@ public class EnemySide2 extends Enemy{
             velY = 0;
             if (x <= xMin) {
 //                bulletAngle = 0 - angleCorrection;
-                velX = minVelX;
+                velX = velX_MIN;
                 y = destinationY;
             } else if (x >= xMax) {
-                velX = -minVelX;
+                velX = -velX_MIN;
 //                bulletAngle = 180 + angleCorrection;
                 y = destinationY;
             }
@@ -89,8 +90,8 @@ public class EnemySide2 extends Enemy{
 
     @Override
     protected void commonInit() {
-        setHealth(healthMAX);
-        velX = minVelX;
+        setHealth(health_MAX);
+        velX = velX_MIN;
         velY = 0;
     }
 

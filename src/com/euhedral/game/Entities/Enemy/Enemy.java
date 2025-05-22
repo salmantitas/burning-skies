@@ -15,12 +15,13 @@ public class Enemy extends MobileEntity {
     protected int enemyType;
 
     protected int health;
-    protected int healthMAX;
+    protected int health_MAX;
 
     protected double offscreenVelY;
     protected boolean moveLeft, moveRight;
     protected Color color;
     protected int shootTimerDefault;
+    protected int shootTimerFirst = 50;
     protected int shootTimer;
     protected boolean inscreen = false;
     protected float cam;
@@ -37,7 +38,8 @@ public class Enemy extends MobileEntity {
 
     protected int levelHeight;
 
-    protected int shot = 0;
+    protected int bulletsPerShot_MAX = 0;
+    protected int bulletsPerShot = 0;
     protected double bulletVelocity;
     protected double bulletAngle;
 
@@ -62,7 +64,7 @@ public class Enemy extends MobileEntity {
 
         score = 50;
         shootTimerDefault = 150;
-        shootTimer = shootTimerDefault;
+        shootTimer = shootTimerFirst;
 
         bulletVelocity = Utility.intAtWidth640(5);
 
@@ -213,7 +215,7 @@ public class Enemy extends MobileEntity {
     }
 
     protected void shootDefault() {
-        shot++;
+        bulletsPerShot++;
     }
 
     protected void moveInScreen() {
@@ -260,10 +262,10 @@ public class Enemy extends MobileEntity {
     public void setHMove(int direction) {
         if (direction == 1) {
             hMove = HorizontalMovement.LEFT;
-            velX = -minVelX;
+            velX = -velX_MIN;
         } else if (direction == -1) {
             hMove = HorizontalMovement.RIGHT;
-            velX = minVelX;
+            velX = velX_MIN;
         } else {
 //            velX = 0;
         }
@@ -317,7 +319,7 @@ public class Enemy extends MobileEntity {
         explosion.playedOnce = false;
         super.resurrect(x, y);
         explosion.endAnimation();
-        shootTimer = shootTimerDefault;
+        shootTimer = shootTimerFirst;
         inscreen = false;
     }
 
@@ -346,11 +348,11 @@ public class Enemy extends MobileEntity {
     }
 
     public boolean hasShot() {
-        return shot > 0;
+        return bulletsPerShot > 0;
     }
 
     public void decrementShot() {
-        shot--;
+        bulletsPerShot--;
     }
 
     public int getTurretX() {
@@ -379,7 +381,7 @@ public class Enemy extends MobileEntity {
 
     // todo: Find better name
     protected void commonInit() {
-        setHealth(healthMAX);
+        setHealth(health_MAX);
         velX = 0;
         velY = explodingVelocity;
     }

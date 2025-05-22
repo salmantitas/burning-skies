@@ -50,10 +50,11 @@ public class EnemyGenerator {
     final int TYPE_SIDE1 = EntityHandler.TYPE_SIDE1;
     final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
     final int TYPE_DRONE = EntityHandler.TYPE_DRONE;
-    final int TYPE_STATIC = EntityHandler.TYPE_STATIC;
+    final int TYPE_STATIC1 = EntityHandler.TYPE_STATIC1;
     final int TYPE_DRONE2 = EntityHandler.TYPE_DRONE2;
     final int TYPE_SIDE2 = EntityHandler.TYPE_SIDE2;
-    int maxTypes = TYPE_SIDE2 + 1;
+    final int TYPE_STATIC2 = EntityHandler.TYPE_STATIC2;
+    int maxTypes = TYPE_STATIC2 + 1;
 
     // Wave
     int wave;
@@ -159,9 +160,12 @@ public class EnemyGenerator {
 //        enemytype = TYPE_HEAVY; // stub
 //        enemytype = TYPE_DRONE; // stub
 //        enemytype = TYPE_SIDE1; // stub
-//        enemytype = TYPE_STATIC; // stub
+//        enemytype = TYPE_STATIC1; // stub
 //        enemytype = TYPE_DRONE2; // stub
 //        enemytype = TYPE_SIDE2; // stub
+//        enemytype = TYPE_STATIC2; // stub
+
+//        difficulty = maxTypes; // stub
 
 //        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
 
@@ -172,11 +176,15 @@ public class EnemyGenerator {
             limit = limitSide;
         }
 
-        if (enemytype == TYPE_STATIC) {
+        if (enemytype == TYPE_STATIC1 || enemytype == TYPE_STATIC2) {
             limit = 5;
         }
 
         if (enemytype == TYPE_SIDE2) {
+            limit = limitSide;
+        }
+
+        if (enemytype == TYPE_STATIC2) {
             limit = limitSide;
         }
 

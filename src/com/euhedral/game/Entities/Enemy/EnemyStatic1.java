@@ -6,18 +6,18 @@ import com.euhedral.game.EntityHandler;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class EnemyStatic extends Enemy {
+public class EnemyStatic1 extends Enemy {
 
     int verticalPosition = 400;
     double destinationX, destinationY;
     double deceleration;
 
-    public EnemyStatic(int x, int y, int levelHeight) {
+    public EnemyStatic1(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
         bulletVelocity = Utility.intAtWidth640(6);
         shootTimerDefault = 200;
-        shootTimer = shootTimerDefault;
+//        shootTimer = shootTimerDefault;
         score = 150;
 
         double decelerationMAX = 0.012;
@@ -32,7 +32,7 @@ public class EnemyStatic extends Enemy {
         setImage(textureHandler.enemyStatic[0]);
     }
 
-    public EnemyStatic(int x, int y, Color color, int levelHeight) {
+    public EnemyStatic1(int x, int y, Color color, int levelHeight) {
         this(x, y, levelHeight);
         this.color = color;
     }
@@ -41,10 +41,10 @@ public class EnemyStatic extends Enemy {
     public void initialize() {
         super.initialize();
 
-        healthMAX = 6;
+        health_MAX = 6;
 
         velX = 0;
-        minVelY = 1.75f;
+        velY_MIN = 1.75f;
 //        distance = 0; // stub ; width * 2;
 //        movementDistance = distance;
         commonInit();
@@ -54,14 +54,14 @@ public class EnemyStatic extends Enemy {
     @Override
     public void update() {
         super.update();
-        if (state == STATE_ACTIVE && inscreen) {
+        if (state == STATE_ACTIVE && shootTimer <= 50) {
             updateDestination();
         }
     }
 
     @Override
     protected void shootDefault() {
-        shot += 1;
+        bulletsPerShot += 1;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class EnemyStatic extends Enemy {
 //    }
     @Override
     protected void commonInit() {
-        this.setHealth(healthMAX);
+        this.setHealth(health_MAX);
         velY = 2.5f;
     }
 
@@ -158,7 +158,7 @@ public class EnemyStatic extends Enemy {
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_STATIC;
+        enemyType = EntityHandler.TYPE_STATIC1;
     }
 
     public boolean checkCollision(Rectangle2D object) {
