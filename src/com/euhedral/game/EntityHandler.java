@@ -24,11 +24,13 @@ public class EntityHandler {
 
     // Enemy Types
     public static final int TYPE_BASIC1 = 0;
-    public static final int TYPE_BASIC2 = TYPE_BASIC1 + 1;
-    public static final int TYPE_HEAVY = TYPE_BASIC2 + 1;
-    public static final int TYPE_DRONE1 = TYPE_HEAVY + 1;
+    public static final int TYPE_HEAVY = TYPE_BASIC1 + 1;
+    public static final int TYPE_BASIC2 = TYPE_HEAVY + 1;
+    public static final int TYPE_BASIC3 = TYPE_BASIC2 + 1;
+    public static final int TYPE_DRONE1 = TYPE_BASIC3 + 1;
     public static final int TYPE_STATIC1 = TYPE_DRONE1 + 1;
-    public static final int TYPE_SIDE1 = TYPE_STATIC1 + 1;
+    public static final int TYPE_FAST2 = TYPE_STATIC1 + 1;
+    public static final int TYPE_SIDE1 = TYPE_FAST2 + 1;
     public static final int TYPE_DRONE2 = TYPE_SIDE1 + 1;
     public static final int TYPE_SIDE2 = TYPE_DRONE2 + 1;
     public static final int TYPE_STATIC2 = TYPE_SIDE2 + 1;
@@ -152,16 +154,22 @@ public class EntityHandler {
 
         if (enemyType == TYPE_BASIC1) {
             enemy = new EnemyBasic1(x, y, levelHeight);
+        } else if (enemyType == TYPE_HEAVY) {
+            enemy = new EnemyHeavy(x, y, levelHeight);
         } else if (enemyType == TYPE_BASIC2) {
             enemy = new EnemyBasic2(x, y, levelHeight);
             enemy.setHMove(direction);
-//            enemy.setMovementDistance(distance);
+            enemy.setMovementDistance(distance);
+        } else if (enemyType == TYPE_BASIC3) {
+            enemy = new EnemyBasic3(x, y, levelHeight);
+            enemy.setHMove(direction);
+        } else if (enemyType == TYPE_FAST2) {
+            enemy = new EnemyFast2(x, y, levelHeight);
+            enemy.setHMove(direction);
         } else if (enemyType == TYPE_DRONE1) {
             enemy = new EnemyDrone(x, y, levelHeight);
         } else if (enemyType == TYPE_SIDE1) {
             enemy = new EnemySide1(x, y, levelHeight);
-        } else if (enemyType == TYPE_HEAVY) {
-            enemy = new EnemyHeavy(x, y, levelHeight);
         } else if (enemyType == TYPE_STATIC1) {
             enemy = new EnemyStatic1(x, y, levelHeight);
         } else if (enemyType == TYPE_DRONE2) {

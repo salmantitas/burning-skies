@@ -8,6 +8,7 @@ import com.euhedral.game.GameController;
 public class EnemySide2 extends Enemy{
 
     double destinationX, destinationY;
+    boolean firstEntry;
 
     public EnemySide2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
@@ -34,19 +35,19 @@ public class EnemySide2 extends Enemy{
     @Override
     public void move() {
         if (isActive()) {
-            double xMin = -width, xMax = Engine.WIDTH;
-//            double angleCorrection = 7;
+            double xMin = -2*width, xMax = Engine.WIDTH + width;
 
             velY = 0;
-            if (x <= xMin) {
-//                bulletAngle = 0 - angleCorrection;
+            if (x <= xMin && velX < 0) {
                 velX = velX_MIN;
-                y = destinationY;
-            } else if (x >= xMax) {
+                if (!firstEntry)
+                    y = destinationY;
+            } else if (x >= xMax && velX > 0) {
                 velX = -velX_MIN;
-//                bulletAngle = 180 + angleCorrection;
-                y = destinationY;
+                if (!firstEntry)
+                    y = destinationY;
             }
+
         } else if (isExploding()) {
             velY = explodingVelocity;
         }
@@ -85,6 +86,7 @@ public class EnemySide2 extends Enemy{
 
     @Override
     public double getBulletAngle() {
+        firstEntry = false; // todo: move somewhere else
         return calculateAngle(destinationX, destinationY); // stub
     }
 
@@ -93,6 +95,7 @@ public class EnemySide2 extends Enemy{
         setHealth(health_MAX);
         velX = velX_MIN;
         velY = 0;
+        firstEntry = true;
     }
 
     @Override

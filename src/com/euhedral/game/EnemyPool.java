@@ -25,8 +25,8 @@ public class EnemyPool extends Pool {
             active[i] = 0;
         }
 
-        exclusionZones = new ArrayList<>(10);
-        for (int i = 0; i < 10; i++) {
+        exclusionZones = new ArrayList<>(enemyTypes);
+        for (int i = 0; i < enemyTypes; i++) {
             exclusionZones.add(-100);
         }
     }

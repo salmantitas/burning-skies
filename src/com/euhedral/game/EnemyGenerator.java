@@ -46,9 +46,11 @@ public class EnemyGenerator {
     // Enemy Types
     int enemytype;
     final int TYPE_BASIC1 = EntityHandler.TYPE_BASIC1;
-    final int TYPE_BASIC2 = EntityHandler.TYPE_BASIC2;
-    final int TYPE_SIDE1 = EntityHandler.TYPE_SIDE1;
     final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
+    final int TYPE_BASIC2 = EntityHandler.TYPE_BASIC2;
+    final int TYPE_FAST1 = EntityHandler.TYPE_BASIC3;
+    final int TYPE_FAST2 = EntityHandler.TYPE_FAST2;
+    final int TYPE_SIDE1 = EntityHandler.TYPE_SIDE1;
     final int TYPE_DRONE1 = EntityHandler.TYPE_DRONE1;
     final int TYPE_STATIC1 = EntityHandler.TYPE_STATIC1;
     final int TYPE_DRONE2 = EntityHandler.TYPE_DRONE2;
@@ -157,17 +159,19 @@ public class EnemyGenerator {
         enemytype = rand;
 
 //        enemytype = TYPE_BASIC1; // stub
-//        enemytype = TYPE_BASIC2; // stub
 //        enemytype = TYPE_HEAVY; // stub
+//        enemytype = TYPE_BASIC2; // stub
+//        enemytype = TYPE_FAST1; // stub
+//        enemytype = TYPE_FAST2; // stub
 //        enemytype = TYPE_DRONE1; // stub
 //        enemytype = TYPE_SIDE1; // stub
 //        enemytype = TYPE_STATIC1; // stub
 //        enemytype = TYPE_DRONE2; // stub
 //        enemytype = TYPE_SIDE2; // stub
 //        enemytype = TYPE_STATIC2; // stub
-        enemytype = TYPE_DRONE3; // stub
+//        enemytype = TYPE_DRONE3; // stub
 
-        difficulty = maxTypes; // stub
+//        difficulty = maxTypes; // stub
 
 //        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
 
@@ -231,11 +235,12 @@ public class EnemyGenerator {
             }
             if (enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3) {
                 spawnY = Utility.randomRangeInclusive(0, height / SCALE * 2 / 3);
-            } else if (enemytype == TYPE_SIDE1) {
+            } else if (enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2) {
                 spawnY = Utility.randomRangeInclusive(5, 7);
-            } else if (enemytype == TYPE_SIDE2) {
-                spawnY = (int) (EntityHandler.playerY/SCALE);
             }
+//            else if (enemytype == TYPE_SIDE2) {
+//                spawnY = (int) (EntityHandler.playerY/SCALE);
+//            }
         }
         // Horizontal Zone
         else {

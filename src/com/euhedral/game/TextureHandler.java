@@ -43,8 +43,9 @@ public class TextureHandler {
 
 
     public BufferedImage[] player = new BufferedImage[9];
-    public BufferedImage[] enemy = new BufferedImage[2];
+    public BufferedImage[] enemy = new BufferedImage[3];
     public BufferedImage[] enemyHeavy = new BufferedImage[1];
+    public BufferedImage[] enemyFast = new BufferedImage[1];
     public BufferedImage[] enemyStatic = new BufferedImage[2];
     public BufferedImage[] enemySide = new BufferedImage[4];
     public BufferedImage[] enemyDrone = new BufferedImage[3];
@@ -60,8 +61,8 @@ public class TextureHandler {
 
         try {
             playerImage = loader.loadImage("/player.png");
-            enemyDroneImage = loader.loadImage("/enemydrone.png");
-            enemyBasicImage = loader.loadImage("/enemyBasic.png");
+            enemyBasicImage = loader.loadImage("/enemyDown.png");
+            enemyDroneImage = loader.loadImage("/enemyDrone.png");
             enemySide1Image = loader.loadImage("/enemySide1.png");
             enemyHeavyImage = loader.loadImage("/enemy2.png");
             enemyStaticImage = loader.loadImage("/enemyStatic.png");
@@ -108,12 +109,17 @@ public class TextureHandler {
         player[4] = playerSS.grabImage(3,2, w,h);
         player[5] = playerSS.grabImage(3,3, w,h);
 
-        enemy[0] = enemyBasicDownSS.grabImage(1,1,w,h);
-        enemy[1] = enemyBasicDownSS.grabImage(2,1,w,h);
+        for (int i = 0; i < 3; i ++) {
+            enemy[i] = enemyBasicDownSS.grabImage(i + 1, 1, w, h);
+//            enemy[0] = enemyBasicDownSS.grabImage(1, 1, w, h);
+//            enemy[1] = enemyBasicDownSS.grabImage(2, 1, w, h);
+//            enemy[2] = enemyBasicDownSS.grabImage(3, 1, w, h);
+        }
 
 //        w = 128;
 
-        enemyHeavy[0] = enemyHeavySS.grabImage(1,1,w,h);
+        enemyHeavy[0] = enemyBasicDownSS.grabImage(1,2,w,h);
+        enemyFast[0] = enemyBasicDownSS.grabImage(2,2,w,h);
         enemyStatic[0] = enemyStaticSS.grabImage(1,1,w,h);
         enemyStatic[1] = enemyStaticSS.grabImage(2,1,w,h);
         enemySide[0] = enemySide1SS.grabImage(1,1,w,h);

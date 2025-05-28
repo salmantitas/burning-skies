@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Burning Skies:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/Burning_Skies_jar</output-path>
-    <root id="archive" name="Burning Skies.jar">
-      <element id="module-output" name="Burning Skies" />
-    </root>
-  </artifact>
-</component>

@@ -7,52 +7,59 @@ import com.euhedral.game.GameController;
 
 import java.awt.*;
 
-public class EnemyBasic2 extends Enemy{
+public class EnemyFast2 extends Enemy{
 
-    public EnemyBasic2(int x, int y, int levelHeight) {
+    double acceleration = 0.1;
+    double destinationX, destinationY;
+
+    public EnemyFast2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         textureHandler = GameController.getTexture();
-        setImage(textureHandler.enemy[1]);
-//        setImage(textureHandler.enemy[1]); // todo: Create new image
-
-        shootTimerDefault = 125;
-        score = 60;
+        setImage(textureHandler.enemyFast[0]);
 //        attackEffect = true;
+
+        // todo: These happen last
+        shootTimerDefault = 40; // too low: 10, too high: 100
+//        shootTimer = shootTimerDefault;
+        score = 125;
+        determineMovement();
     }
 
-    public EnemyBasic2(int x, int y, Color color, int levelHeight) {
+    public EnemyFast2(int x, int y, Color color, int levelHeight) {
         this(x, y, levelHeight);
         this.color = color;
+
     }
 
     @Override
     public void initialize() {
         super.initialize();
 
-//        enemyType = EntityHandler.TYPE_BASIC;
-
         health_MAX = 3;
         commonInit();
+        velX_MIN = 1.75;
+        velX_MAX = 4.75;
 
-        velX_MIN = 1.75f;
+//        minVelX = maxVelX;
+
     }
 
     @Override
     public void update() {
         super.update();
         if (state == STATE_ACTIVE && inscreen) {
-
             if (movementDistance >= 0) {
                 movementDistance -= Math.abs(velX);
             } else {
-//                velX = 0;
-                if (hMove.equals(HorizontalMovement.LEFT)) {
-                    setHMove(-1);
-                } else {
-                    setHMove(1);
-                }
-                movementDistance = 100;
+                velX = 0;
             }
+            // x = k*y^2
+
+            double factor = 2;
+            velY += acceleration;
+            velX_MIN = factor * Math.pow(velY, 0.5);
+
+            setHMove(hMove);
         }
     }
 
@@ -60,6 +67,24 @@ public class EnemyBasic2 extends Enemy{
     protected void commonInit() {
         this.setHealth(health_MAX);
         velY = forwardVelocity;
+        velX_MIN = 1.75f;
+
+        determineMovement();
+    }
+
+    private void determineMovement() {
+        updateDestination();
+//        if (destinationX > x) {
+//            setHMove(-1);
+//        } else {
+//            setHMove(1);
+//        }
+        movementDistance = Engine.WIDTH; // Math.abs((int) (x - destinationX));
+    }
+
+    private void updateDestination() {
+        destinationX = EntityHandler.playerX;
+        destinationY = EntityHandler.playerY;
     }
 
 //    @Override
@@ -86,6 +111,6 @@ public class EnemyBasic2 extends Enemy{
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_BASIC2;
+        enemyType = EntityHandler.TYPE_BASIC3;
     }
 }

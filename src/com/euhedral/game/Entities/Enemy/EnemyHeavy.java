@@ -26,9 +26,9 @@ public class EnemyHeavy extends Enemy {
 
         bulletVelocity = Utility.intAtWidth640(5);
         bulletAngle = 60;
-        shootTimerDefault = 90;
+        shootTimerDefault = 80;
 //        shootTimer = shootTimerDefault;
-        score = 100;
+        score = 75;
         leftTurret = width / 3 - Utility.intAtWidth640(2);
         rightTurret = 2 * width / 3 - Utility.intAtWidth640(2);
 
@@ -57,7 +57,7 @@ public class EnemyHeavy extends Enemy {
         forwardVelocity = velY_MIN;
 //        distance = 0; // stub ; width * 2;
 //        movementDistance = distance;
-        health_MAX = 6;
+        health_MAX = 5;
         commonInit();
         damage = 60;
     }

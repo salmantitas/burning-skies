@@ -136,7 +136,7 @@ public class Enemy extends MobileEntity {
 
         explosion = GameController.getTexture().initExplosion(5);
         reflection = new Reflection();
-        damage = 30;
+        damage = 35;
         shootTimer = shootTimerDefault;
     }
 
@@ -273,6 +273,14 @@ public class Enemy extends MobileEntity {
         } else {
 //            velX = 0;
         }
+    }
+
+    protected void setHMove(HorizontalMovement hMove) {
+        if (hMove == HorizontalMovement.LEFT)
+            velX = -velX_MIN;
+        else if (hMove == HorizontalMovement.RIGHT)
+            velX = velX_MIN;
+
     }
 
     public void setLevelHeight(int levelHeight) {
