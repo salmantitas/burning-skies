@@ -39,6 +39,11 @@ public class MenuCredits extends Menu {
 
         g.setFont(new Font("arial", 1, creditFontSize));
         ArrayList<String> text = new ArrayList<>();
+
+        text.add("Game Development and Design");
+        text.add("- Salman Mehedy Titas");
+        text.add("");
+
         text.add("Background Music");
         text.add("- Dar Golan");
         text.add("- Joshua McLean");

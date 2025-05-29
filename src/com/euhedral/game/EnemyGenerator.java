@@ -48,7 +48,7 @@ public class EnemyGenerator {
     final int TYPE_BASIC1 = EntityHandler.TYPE_BASIC1;
     final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
     final int TYPE_BASIC2 = EntityHandler.TYPE_BASIC2;
-    final int TYPE_FAST1 = EntityHandler.TYPE_BASIC3;
+    final int TYPE_BASIC3 = EntityHandler.TYPE_BASIC3;
     final int TYPE_FAST2 = EntityHandler.TYPE_FAST2;
     final int TYPE_SIDE1 = EntityHandler.TYPE_SIDE1;
     final int TYPE_DRONE1 = EntityHandler.TYPE_DRONE1;
@@ -161,7 +161,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_BASIC1; // stub
 //        enemytype = TYPE_HEAVY; // stub
 //        enemytype = TYPE_BASIC2; // stub
-//        enemytype = TYPE_FAST1; // stub
+//        enemytype = TYPE_BASIC3; // stub
 //        enemytype = TYPE_FAST2; // stub
 //        enemytype = TYPE_DRONE1; // stub
 //        enemytype = TYPE_SIDE1; // stub

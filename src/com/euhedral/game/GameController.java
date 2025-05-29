@@ -20,7 +20,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.6.91";
+    public static String gameVersion = "0.6.913";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -649,8 +649,8 @@ public class GameController {
             if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
                 shootPlayer();
 
-            if (key == KeyEvent.VK_CONTROL)
-                entityHandler.switchPlayerBullet();
+//            if (key == KeyEvent.VK_CONTROL)
+//                entityHandler.switchPlayerBullet();
 
             if (Engine.stateIs(GameState.Game)) {
                 if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
