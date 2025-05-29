@@ -16,6 +16,7 @@ public class EnemyBasic3 extends Enemy{
         shootTimerDefault = 50; // too low: 10, too high: 100
         score = 100;
         angle = SOUTH;
+//        forwardVelocity = 5;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class EnemyBasic3 extends Enemy{
     @Override
     public void update() {
         super.update();
-        double increment = 0.25;
+        double increment = 0.50;
         if (state == STATE_ACTIVE && inscreen) {
             if (hMove == HorizontalMovement.LEFT)
                 angle = Math.min(angle + increment, EAST);
@@ -61,8 +62,8 @@ public class EnemyBasic3 extends Enemy{
     @Override
     protected void commonInit() {
         this.setHealth(health_MAX);
-        velY = forwardVelocity;
-        velX_MIN = 0;
+//        velY = forwardVelocity;
+//        velX_MIN = 0;
         angle = SOUTH;
     }
 
