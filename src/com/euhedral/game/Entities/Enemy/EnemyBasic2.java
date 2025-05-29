@@ -9,6 +9,8 @@ import java.awt.*;
 
 public class EnemyBasic2 extends Enemy{
 
+    int movementDistance_MAX = 2*64;
+
     public EnemyBasic2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         textureHandler = GameController.getTexture();
@@ -17,6 +19,7 @@ public class EnemyBasic2 extends Enemy{
 
         shootTimerDefault = 125;
         score = 60;
+        movementDistance = movementDistance_MAX;
 //        attackEffect = true;
     }
 
@@ -34,7 +37,7 @@ public class EnemyBasic2 extends Enemy{
         health_MAX = 3;
         commonInit();
 
-        velX_MIN = 1.75f;
+        velX_MIN = 1.5;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class EnemyBasic2 extends Enemy{
                 } else {
                     setHMove(1);
                 }
-                movementDistance = 100;
+                movementDistance = movementDistance_MAX;
             }
         }
     }
