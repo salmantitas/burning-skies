@@ -13,14 +13,14 @@ public class Player extends MobileEntity {
     // Shooting Entity
     private boolean canShoot;
     private int shootTimer = 0;
-    private final int shootTimerDefault = 7;
+    private final int shootTimerDefault = 8;
     private BulletPool bullets = new BulletPool();
 
     // Personal
     private int levelHeight;
     private int power;
-    private boolean ground = false;
-    private boolean airBullet = true;
+//    private boolean ground = false;
+//    private boolean airBullet = true;
     private int clampOffsetX;
     private int clampOffsetY;
     private int shootAngle = Utility.intAtWidth640(5);
@@ -276,10 +276,10 @@ public class Player extends MobileEntity {
         this.x = x;
     }
 
-    public void switchBullet() {
-        if (ground)
-            airBullet = !airBullet;
-    }
+//    public void switchBullet() {
+//        if (ground)
+//            airBullet = !airBullet;
+//    }
 
     // Private Methods
 
@@ -309,7 +309,9 @@ public class Player extends MobileEntity {
 
 //        System.out.printf("Left to Mid: %d, Mid to Right: %d", spawnMidX-spawnLeftX, spawnRightX-spawnMidX);
 
-        int spawnY = (int) (y + height * 2 / 3);
+        int spawnY = (int) (y + height * 2 / 3 - velY);
+
+//        Utility.log("VelY:" + velY);
 
         int power = VariableHandler.power.getValue();
 
@@ -338,7 +340,7 @@ public class Player extends MobileEntity {
             spawnBullet(spawnRightX, spawnY, NORTH);
             spawnBullet(spawnLeftX, spawnY, NORTH);
         } else {
-            spawnBullet(spawnMidX, (int) y, NORTH);
+            spawnBullet(spawnMidX, spawnY, NORTH);
         }
         // reset shoot timer to default
         shootTimer = shootTimerDefault;
@@ -452,9 +454,9 @@ public class Player extends MobileEntity {
         return power;
     }
 
-    public void setGround(Boolean ground) {
-        this.ground = ground;
-    }
+//    public void setGround(Boolean ground) {
+//        this.ground = ground;
+//    }
 
     public void damage(int num) {
         if (shield.getValue() > 0) {
