@@ -211,7 +211,7 @@ public class Menu {
         if (MAXBUTTON > 0) {
             reassignSelected(0);
         }
-        resetMessageBoxes();
+//        resetMessageBoxes();
     }
 
     private void reassignSelected(int reassign) {
@@ -220,7 +220,7 @@ public class Menu {
         options[index].select();
     }
 
-    private void resetMessageBoxes() {
+    public void resetMessageBoxes() {
         if (activeMessageBoxes == 0) {
             for (MessageBox m : messageBoxes) {
                 m.enable();

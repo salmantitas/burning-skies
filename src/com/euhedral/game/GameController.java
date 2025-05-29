@@ -482,6 +482,7 @@ public class GameController {
         entityHandler.clearEnemies();
         entityHandler.clearPickups();
         levelSpawned = false;
+        uiHandler.resetActiveMessageBoxes();
 
 //        testingCheat();
     }

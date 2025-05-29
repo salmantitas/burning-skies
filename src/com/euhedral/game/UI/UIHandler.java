@@ -131,6 +131,10 @@ public class UIHandler {
         currentMenu.keyPressed(key);
     }
 
+    public void resetActiveMessageBoxes() {
+        menus.getLast().resetMessageBoxes();
+    }
+
     /***************************
      * Render Helper Functions *
      ***************************/
