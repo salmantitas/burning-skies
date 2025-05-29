@@ -50,6 +50,8 @@ public class Enemy extends MobileEntity {
 
     private Reflection reflection;
 
+    int jitter = 0;
+
     public Enemy(int x, int y, int levelHeight) {
         super(x, y, EntityID.Enemy);
         moveRight = false;
@@ -91,6 +93,9 @@ public class Enemy extends MobileEntity {
                 if (shootTimer <= 0) {
                     shoot();
                 }
+
+                if (health < health_MAX && health == 1)
+                    jitter = Utility.randomRange(-5, 5);
             }
         } else if (state == STATE_EXPLODING) {
             explosion.runAnimation();
@@ -144,7 +149,7 @@ public class Enemy extends MobileEntity {
     public void render(Graphics g) {
         if (isActive()) {
             renderAttackPath(g);
-            super.render(g);
+            g.drawImage(image, (int) x + jitter, (int) y + jitter, null);
 //            renderBounds(g);
         } else {
             renderExplosion(g);
@@ -396,6 +401,7 @@ public class Enemy extends MobileEntity {
         setHealth(health_MAX);
         velX = 0;
         velY = explodingVelocity;
+        jitter = 0;
     }
 
     public int getEnemyType() {
