@@ -159,7 +159,7 @@ public class EntityHandler {
         } else if (enemyType == TYPE_BASIC2) {
             enemy = new EnemyBasic2(x, y, levelHeight);
             enemy.setHMove(direction);
-            enemy.setMovementDistance(distance);
+//            enemy.setMovementDistance(distance);
         } else if (enemyType == TYPE_BASIC3) {
             enemy = new EnemyBasic3(x, y, levelHeight);
             enemy.setHMove(direction);
@@ -264,9 +264,9 @@ public class EntityHandler {
         return !(player.getMx() == mx && player.getMy() == my);
     }
 
-    public void switchPlayerBullet() {
-        player.switchBullet();
-    }
+//    public void switchPlayerBullet() {
+//        player.switchBullet();
+//    }
 
     public int getPlayerPower() {
         return player.getPower();
@@ -290,14 +290,14 @@ public class EntityHandler {
             player.resetMovement();
         }
 //        player = new Player(x, y, levelHeight);
-        player.setGround(VariableHandler.gotGround());
+//        player.setGround(VariableHandler.gotGround());
         player.setPower(VariableHandler.power.getValue());
         setCameraToPlayer();
     }
 
     public void spawnPlayer(int width, int height, int power, boolean ground) {
         player = new Player(width, height, levelHeight);
-        player.setGround(ground);
+//        player.setGround(ground);
         player.setPower(power);
         setCameraToPlayer();
     }
