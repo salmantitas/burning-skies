@@ -54,7 +54,7 @@ public class EnemyStatic2 extends Enemy {
     public void initialize() {
         super.initialize();
 
-        health_MAX = 6;
+        health_MAX = 5;
 
         velX = 0;
         velY_MIN = 1.75;
@@ -143,10 +143,15 @@ public class EnemyStatic2 extends Enemy {
     }
 
     @Override
+    public double calculateShotTrajectory() {
+        return calculateAngle(getTurretX(), getTurretY(), destinationX, destinationY);
+    }
+
+    @Override
     public double getBulletAngle() {
-        double tempAngle = calculateAngle(getTurretX(), getTurretY(), destinationX, destinationY);
-        double maxArc = tempAngle + 20;
-        return tempAngle + (bulletsPerShot - 1) * 10 * (bulletsPerShot % 2 == 0 ? 1 : -1); // stub
+        double tempAngle = calculateShotTrajectory();
+//        double maxArc = tempAngle + 20;
+        return tempAngle - 20 + (bulletsPerShot - 1) * 10; // * (bulletsPerShot % 2 == 0 ? 1 : -1); // stub
     }
 
     private void updateDestination() {
@@ -160,15 +165,6 @@ public class EnemyStatic2 extends Enemy {
         explosion.playedOnce = false;
         super.resurrect(x, y);
     }
-
-//    @Override
-//    public void render(Graphics g) {
-//        g.setColor(Color.BLACK);
-//
-//        g.fillRect((int) destinationX, (int) destinationY, 10, 10);
-//
-//        super.render(g);
-//    }
 
     @Override
     protected void renderBounds(Graphics g) {

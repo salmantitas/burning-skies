@@ -180,7 +180,7 @@ public class Enemy extends MobileEntity {
                 int arcAngle = 20;
 
                 g2d.setComposite(Utility.makeTransparent(0.5f));
-                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(getBulletAngle()) - arcAngle / 2, arcAngle);
+                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(calculateShotTrajectory()) - arcAngle / 2, arcAngle);
                 g2d.setComposite(Utility.makeTransparent(1f));
             }
         }
@@ -397,6 +397,10 @@ public class Enemy extends MobileEntity {
 
     public double getBulletVelocity() {
         return bulletVelocity;
+    }
+
+    public double calculateShotTrajectory() {
+        return bulletAngle;
     }
 
     public double getBulletAngle() {
