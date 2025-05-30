@@ -13,8 +13,7 @@ import java.util.LinkedList;
 // Manages all entities in game
 public class EntityHandler {
 
-//    private VariableHandler variableHandler;
-    private int levelHeight;
+    private static int levelHeight;
 
 //    private Pool entities;
 
@@ -146,7 +145,7 @@ public class EntityHandler {
         else {
             spawnNew(x, y, enemyType, direction, distance);
         }
-        enemies.printPool("Enemy");
+//        enemies.printPool("Enemy");
     }
 
     private void spawnNew(int x, int y, int enemyType, int direction, int distance) {
@@ -264,10 +263,6 @@ public class EntityHandler {
         return !(player.getMx() == mx && player.getMy() == my);
     }
 
-//    public void switchPlayerBullet() {
-//        player.switchBullet();
-//    }
-
     public int getPlayerPower() {
         return player.getPower();
     }
@@ -340,7 +335,7 @@ public class EntityHandler {
 
     private void updateBullets() {
         bullets.update();
-        bullets.disableIfBelowScreen(levelHeight);
+        bullets.disableIfOutsideBounds(levelHeight);
         checkDeathAnimationEnd();
 
         if (boss != null) {
@@ -500,7 +495,7 @@ public class EntityHandler {
 //    }
 
     public void updateEnemies() {
-        enemies.disableIfBelowScreen(levelHeight);
+        enemies.disableIfOutsideBounds(levelHeight);
         LinkedList<Entity> enemies = this.enemies.getEntities();
         for (Entity entity : enemies) {
             Enemy enemy = (Enemy) entity;
@@ -522,7 +517,7 @@ public class EntityHandler {
         double y = enemy.getTurretY();
         double bulletVelocity = enemy.getBulletVelocity();
         boolean tracking = false;
-        if (enemy.getEnemyType() == TYPE_STATIC1 || enemy.getEnemyType() == TYPE_STATIC2) {
+        if (enemy.getEnemyType() == TYPE_STATIC1 || enemy.getEnemyType() == TYPE_STATIC2 || enemy.getEnemyType() == TYPE_SIDE2 || enemy.getEnemyType() == TYPE_DRONE2) {
             tracking = true;
         }
         if (bullets.getPoolSize() > 0) {
@@ -531,6 +526,7 @@ public class EntityHandler {
         else {
             bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity, tracking));
         }
+        bullets.printPool("Bullet");
     }
 
     public void clearEnemies() {
@@ -728,6 +724,10 @@ public class EntityHandler {
 
     public static ArrayList<Integer> getExclusionZones() {
         return enemies.getExclusionZones();
+    }
+
+    public static int getLevelHeight() {
+        return levelHeight;
     }
 
 }

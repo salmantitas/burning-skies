@@ -207,6 +207,10 @@ public abstract class Entity {
         setActive(false);
     }
 
+    public boolean canDisable() {
+        return false;
+    }
+
     public void clear() {
         setActive(false);
     }

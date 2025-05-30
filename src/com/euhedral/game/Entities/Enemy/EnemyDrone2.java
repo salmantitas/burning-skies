@@ -13,6 +13,7 @@ public class EnemyDrone2 extends EnemyDrone{
         score = 50;
         damage = 30;
 
+//        jitter_MAX = width/Utility.intAtWidth640(8);
         attackEffect = true;
 //        shootTimer = shootTimerDefault;
     }

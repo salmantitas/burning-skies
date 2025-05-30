@@ -1,7 +1,5 @@
 package com.euhedral.engine;
 
-import com.euhedral.game.Entities.Enemy.Enemy;
-import com.euhedral.game.Entities.Pickup;
 import com.euhedral.game.EntityID;
 import com.euhedral.game.GameController;
 
@@ -91,16 +89,16 @@ public class Pool {
         this.entities.addAll(entities);
     }
 
-    public void disableIfBelowScreen(int levelHeight) {
+    public void disableIfOutsideBounds(int levelHeight) {
         for (Entity entity: entities) {
             if (entity.isActive())
-                disableIfBelowScreen(entity, levelHeight);
+                disableIfOutsideBounds(entity, levelHeight);
         }
     }
 
-    public void disableIfBelowScreen(Entity entity, int levelHeight) {
-        int offset = 200;
-        if (entity.getY() > levelHeight + offset ) {
+    public void disableIfOutsideBounds(Entity entity, int levelHeight) {
+
+        if (entity.canDisable()) {
             entity.disable();
             reusable++;
         }

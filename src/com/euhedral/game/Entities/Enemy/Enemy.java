@@ -5,6 +5,7 @@ import com.euhedral.game.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 import com.euhedral.game.GameController;
 
@@ -51,6 +52,7 @@ public class Enemy extends MobileEntity {
     private Reflection reflection;
 
     int jitter = 0;
+    int jitter_MAX;
 
     public Enemy(int x, int y, int levelHeight) {
         super(x, y, EntityID.Enemy);
@@ -60,6 +62,7 @@ public class Enemy extends MobileEntity {
 
         width = Utility.intAtWidth640(32);
         height = width;
+        jitter_MAX = Utility.intAtWidth640(2);
         color = Color.red;
 
         setLevelHeight(levelHeight);
@@ -95,7 +98,7 @@ public class Enemy extends MobileEntity {
                 }
 
                 if (health < health_MAX && health == 1)
-                    jitter = Utility.randomRange(-5, 5);
+                    jitter = Utility.randomRange(-jitter_MAX, jitter_MAX);
             }
         } else if (state == STATE_EXPLODING) {
             explosion.runAnimation();
@@ -149,11 +152,16 @@ public class Enemy extends MobileEntity {
     public void render(Graphics g) {
         if (isActive()) {
             renderAttackPath(g);
-            g.drawImage(image, (int) x + jitter, (int) y + jitter, null);
+            super.render(g);
 //            renderBounds(g);
         } else {
             renderExplosion(g);
         }
+    }
+
+    @Override
+    protected void drawImage(Graphics g, BufferedImage image) {
+        g.drawImage(image, (int) x + jitter, (int) y + jitter, null);
     }
 
     protected void renderAttackPath(Graphics g) {
@@ -211,7 +219,7 @@ public class Enemy extends MobileEntity {
         int newHeight = (int) (height * reflection.sizeOffset);
 
         if (state == STATE_ACTIVE) {
-            g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
+            g2d.drawImage(image, reflectionX + jitter, reflectionY + jitter, newWidth, newHeight, null);
         } else if (state == STATE_EXPLODING) {
             explosion.drawAnimation(g2d, reflectionX, reflectionY, newWidth, newHeight);
         }
@@ -350,6 +358,13 @@ public class Enemy extends MobileEntity {
 
     public void setMovementDistance(int distance) {
         this.movementDistance = distance;
+    }
+
+    @Override
+    public boolean canDisable() {
+        int offset = 64*3;
+        int bottomBounds = levelHeight + offset;
+        return getY() > bottomBounds;
     }
 
     @Override

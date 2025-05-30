@@ -128,17 +128,26 @@ public class EnemyPool extends Pool {
     }
 
     @Override
-    public void disableIfBelowScreen(Entity entity, int levelHeight) {
-        int offset = 200;
+    public void disableIfOutsideBounds(Entity entity, int levelHeight) {
+//        int offset = 200;
 
         Enemy enemy = (Enemy) entity;
         int enemyType = enemy.getEnemyType();
 
-        if (enemy.getY() > levelHeight + offset ) {
+        if (enemy.canDisable()) {
             enemy.disable();
             increase(enemyType);
         }
     }
+
+//    @Override
+//    public void disableIfOutsideBounds(Entity entity, int levelHeight) {
+//
+//        if (entity.canDisable()) {
+//            entity.disable();
+//            reusable++;
+//        }
+//    }
 
     public int getActive(int enemyType) {
         return active[enemyType];

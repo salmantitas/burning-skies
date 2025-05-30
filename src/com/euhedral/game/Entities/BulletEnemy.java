@@ -82,6 +82,20 @@ public class BulletEnemy extends Bullet{
         SoundHandler.playSound(initSound);
     }
 
+    @Override
+    public boolean canDisable() {
+        int offset = 64*3;
+        int bottomBounds = EntityHandler.getLevelHeight() + offset;
+        int rightBounds = Engine.WIDTH + offset;
+
+        boolean belowScreen = y > bottomBounds;
+        boolean aboveScreen = y < 0;
+        boolean leftOfScreen = x < 0;
+        boolean rightOfScreen = x > rightBounds;
+
+        return belowScreen || aboveScreen || leftOfScreen || rightOfScreen;
+    }
+
     public boolean isTracking() {
         return tracking;
     }

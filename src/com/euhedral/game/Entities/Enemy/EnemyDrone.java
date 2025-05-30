@@ -19,8 +19,8 @@ public class EnemyDrone extends Enemy{
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyDrone[0]);
-        width = 32;
-        height = 32;
+        width = Utility.intAtWidth640(16);
+        height = width;
     }
 
     public EnemyDrone(int x, int y, Color color, int levelHeight) {
