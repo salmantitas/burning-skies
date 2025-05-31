@@ -172,7 +172,8 @@ public class Menu {
     public ActionTag activateButton(Button button) {
         ActionTag returnAction = null;
 
-        returnAction = (ActionTag) button.activate();
+        if (activeMessageBoxes == 0)
+            returnAction = (ActionTag) button.activate();
 
 //        if (button instanceof ButtonAction) {
 //            ButtonAction actButton = (ButtonAction) button;
@@ -192,7 +193,14 @@ public class Menu {
     * Activates the button that is selected
     * */
     public ActionTag chooseSelected() {
-        return activateButton(options[index]);
+        ActionTag selected = null;
+        if (activeMessageBoxes > 0) {
+            messageBoxes.getFirst().disable();
+            activeMessageBoxes--;
+        } else if (options != null)
+            selected = activateButton(options[index]);
+
+        return selected;
     }
 
     public GameState getState() {

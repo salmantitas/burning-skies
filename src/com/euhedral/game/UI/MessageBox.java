@@ -95,7 +95,7 @@ public class MessageBox extends UIItem {
     public void render(Graphics g) {
         g.setFont(font);
 
-        if (texts.size() != 0 && isEnabled()) {
+        if (isEnabled()) {// && texts.size() != 0) {
 
             Graphics2D g2d = (Graphics2D) g;
             g2d.setComposite(makeTransparent(transparency));
@@ -109,6 +109,9 @@ public class MessageBox extends UIItem {
 //            g.setColor(backColor);
 //            g.fillRect(x, y, width, height);
             g.setColor(textColor);
+            int yPos = y;
+            int textStart = (int) (height*0.2);
+
             for (int i = 0; i < texts.size(); i++) {
                 String text = texts.get(i);
                 int textSize = Utility.perc((g.getFontMetrics().stringWidth(text)), 110);
@@ -122,15 +125,22 @@ public class MessageBox extends UIItem {
                         close.setX(x+width);
                     }
                 }
-                int textStart = (int) (height*0.2);
+
                 int textSpacing = i*18;
-                g.drawString(text, x + margin, y + textSpacing + textStart);
+                yPos = y + textSpacing + textStart;
+                g.drawString(text, x + margin, yPos);
             }
+
+            String dismissalText = "Press ENTER or E to start";
+            int textSize = g.getFontMetrics().stringWidth(dismissalText);
+            // Dismissal
+            g.setColor(Color.RED);
+            g.drawString(dismissalText, x + width/2 - textSize/2, yPos + textStart);
             close.render(g);
         }
     }
 
-    private void disable() {
+    public void disable() {
         enable = false;
     }
 

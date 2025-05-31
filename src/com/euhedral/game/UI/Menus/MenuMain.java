@@ -6,6 +6,8 @@ import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.*;
 import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
+import com.euhedral.game.UI.MessageBox;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -38,6 +40,10 @@ public class MenuMain extends Menu {
         options[4] = credits;
         options[5] = quit;
 
+        MessageBox start = new MessageBox( 500, 300);
+
+        addMessageBox(start);
+
 //        try {
 //            importButtons();
 //        } catch (IOException e) {
@@ -53,7 +59,13 @@ public class MenuMain extends Menu {
         drawTitle(g);
 //        renderLogo(g);
 
-        super.postRender(g);
+        postRender(g);
+    }
+
+    protected void postRender(Graphics g) {
+        for (MessageBox messageBox : messageBoxes) {
+                messageBox.render(g);
+            }
     }
 
     @Override

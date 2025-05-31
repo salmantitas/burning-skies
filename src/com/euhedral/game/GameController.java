@@ -20,7 +20,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.6.915";
+    public static String gameVersion = "0.6.916";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -611,12 +611,6 @@ public class GameController {
         if (Engine.currentState != GameState.Game) {
             // Keyboard to Navigate buttons
 
-            // Enter/Spacebar to select selected
-            if (key == KeyEvent.VK_ENTER || key == KeyInput.getKeyEvent(SHOOT)) {
-                uiHandler.chooseSelected();
-                performAction();
-            }
-
             if (key == KeyEvent.VK_RIGHT || key == KeyInput.getKeyEvent(RIGHT) || key == KeyEvent.VK_DOWN || key == KeyInput.getKeyEvent(DOWN)) {
                 uiHandler.keyboardSelection('r');
             }
@@ -624,6 +618,12 @@ public class GameController {
             if (key == KeyEvent.VK_LEFT || key == KeyInput.getKeyEvent(LEFT) || key == KeyEvent.VK_UP || key == KeyInput.getKeyEvent(UP)) {
                 uiHandler.keyboardSelection('l');
             }
+        }
+
+        // Enter/Spacebar to select selected
+        if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_E ) {
+            uiHandler.chooseSelected();
+            performAction();
         }
 
         if (key == KeyEvent.VK_G) {

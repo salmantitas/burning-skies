@@ -6,6 +6,7 @@ import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.ActionTag;
 import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
 import com.euhedral.game.UI.MessageBox;
@@ -24,19 +25,17 @@ public class MenuPlay extends Menu {
     public MenuPlay() {
         super(GameState.Game);
         MAXBUTTON = 0;
-        options = new Button[MAXBUTTON];
+//        options = new Button[MAXBUTTON];
 
         tutorial = new MessageBox(500,150);
         tutorial.addText("Use WASD or the Arrow Keys to move.");
         tutorial.addText("");
         tutorial.addText("       SPACEBAR to shoot.");
         tutorial.addText("");
-        tutorial.addText("Click the red square to dismiss this");
-        tutorial.addText("message and start the game.");
-        tutorial.addText("");
         tutorial.addText("You can disable tutorial in Settings.");
         tutorial.addText("");
         tutorial.addText("Shoot as many enemies as you can and survive!");
+        tutorial.addText("");
 
         tutorial.setTransparency(0.8f);
         addMessageBox(tutorial);
