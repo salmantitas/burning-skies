@@ -13,9 +13,11 @@ public class Window extends Canvas {
     public Window(int width, int height, String title, Engine engine) {
         JFrame frame = new JFrame(title);
         System.out.println("Window created");
+
         Dimension dimension = new Dimension(width, height);
         System.out.println("Dimensions set");
 
+        frame.setUndecorated(true);
         frame.setPreferredSize(dimension);
         frame.setMaximumSize(dimension);
         frame.setMinimumSize(dimension);
@@ -34,6 +36,7 @@ public class Window extends Canvas {
         System.out.println("Engine added to window");
 
 //        frame.requestFocus();
+//        frame.pack();
         frame.setVisible(true);
         engine.start();
     }
