@@ -540,7 +540,8 @@ public class EntityHandler {
 
     private void destroy(Enemy enemy) {
         enemy.destroy();
-        VariableHandler.increaseScore(enemy.getScore());
+        if (!GameController.godMode)
+            VariableHandler.increaseScore(enemy.getScore());
 //        spawnPickup((int) enemy.getX(), (int) enemy.getY(), EntityID.PickupHealth, 5);
     }
 
