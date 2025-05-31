@@ -6,6 +6,8 @@ import com.euhedral.engine.Utility;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static com.euhedral.engine.Utility.makeTransparent;
+
 public class MessageBox extends UIItem {
 
     private class Close extends UIItem{
@@ -50,14 +52,15 @@ public class MessageBox extends UIItem {
 
     private ArrayList<String> texts;
     private Color
-            backColor = Color.GRAY,
-            textColor = Color.BLACK,
+            backColor = Color.BLACK,
+            textColor = Color.WHITE,
             textColorError = Color.red;
     private boolean enable = true;
     private Close close;
     private int margin = Utility.intAtWidth640(10);
     private int fontSize = Utility.intAtWidth640(10);
     private Font font = new Font("arial", 0, fontSize);
+    private float transparency;
 
     private double SCALE_FACTOR;
 
@@ -72,6 +75,7 @@ public class MessageBox extends UIItem {
         width = 300;
         height = (int) (width * SCALE_FACTOR);
         heightMax = (int) (widthMax * SCALE_FACTOR);
+        transparency = 1;
         close = new Close(x+width,y, margin);
     }
 
@@ -92,8 +96,18 @@ public class MessageBox extends UIItem {
         g.setFont(font);
 
         if (texts.size() != 0 && isEnabled()) {
+
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setComposite(makeTransparent(transparency));
+
             g.setColor(backColor);
             g.fillRect(x, y, width, height);
+
+            // Ensure that nothing on top of the transparent panel is rendered transparent
+            g2d.setComposite(makeTransparent(1));
+
+//            g.setColor(backColor);
+//            g.fillRect(x, y, width, height);
             g.setColor(textColor);
             for (int i = 0; i < texts.size(); i++) {
                 String text = texts.get(i);
@@ -139,5 +153,9 @@ public class MessageBox extends UIItem {
         } else {
             close.deselect();
         }
+    }
+
+    public void setTransparency(float transparency) {
+        this.transparency = transparency;
     }
 }
