@@ -57,7 +57,7 @@ public class EnemyHeavy extends Enemy {
         forwardVelocity = velY_MIN;
 //        distance = 0; // stub ; width * 2;
 //        movementDistance = distance;
-        health_MAX = 5;
+        health_MAX = 4;
         commonInit();
         damage = 60;
     }

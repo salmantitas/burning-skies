@@ -169,7 +169,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_DRONE2; // stub
 //        enemytype = TYPE_SIDE2; // stub
 //        enemytype = TYPE_STATIC2; // stub
-//        enemytype = TYPE_DRONE3; // stub
+//        enemytype = TYPE_DReONE3; // stub
 
 //        difficulty = maxTypes; // stub
 
@@ -178,35 +178,51 @@ public class EnemyGenerator {
         int limit = 5;
         int limitSide = 4;
 
-        if (enemytype == TYPE_SIDE1) {
-            limit = limitSide;
+        switch (enemytype) {
+            case TYPE_SIDE1:
+                limit = limitSide;
+                break;
+            case TYPE_STATIC2:
+                limit = limitSide;
+                break;
+            case TYPE_SIDE2:
+                limit = limitSide - 1;
+                break;
+            case TYPE_DRONE3:
+                limit = 1;
+                break;
         }
 
-        if (enemytype == TYPE_STATIC1 || enemytype == TYPE_STATIC2) {
-            limit = 5;
-        }
+//        if (enemytype == TYPE_SIDE1) {
+//            limit = limitSide;
+//        }
+//
+//        if (enemytype == TYPE_STATIC1 || enemytype == TYPE_STATIC2) {
+//            limit = 5;
+//        }
 
-        if (enemytype == TYPE_SIDE2) {
-            limit = limitSide;
-        }
-
-        if (enemytype == TYPE_STATIC2) {
-            limit = limitSide;
-        }
+//        if (enemytype == TYPE_SIDE2) {
+//            limit = limitSide - 1;
+//        }
+//
+//        if (enemytype == TYPE_STATIC2) {
+//            limit = limitSide - 1;
+//        }
 
 //        if (enemytype == TYPE_BASIC) {
 //            limit = 20;
 //        }
 
             while (EntityHandler.getActiveEnemies(enemytype) >= limit) {
-                rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
-                enemytype = rand;
+                enemytype = TYPE_BASIC1;
+//                rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
+//                enemytype = rand;
                 // calculate limit
 //                if (enemytype == TYPE_BASIC) {
 //                    limit = 20;
 //                }
 
-                Utility.log("Type: " + enemytype + " | Limit: " + limit + " | Looping");
+//                Utility.log("Type: " + enemytype + " | Limit: " + limit + " | Looping");
             }
 
 //        if (wave == firstWave) {

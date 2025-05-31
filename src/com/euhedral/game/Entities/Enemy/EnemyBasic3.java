@@ -23,7 +23,7 @@ public class EnemyBasic3 extends Enemy{
     public void initialize() {
         super.initialize();
 
-        health_MAX = 3;
+        health_MAX = 4;
         commonInit();
 
     }

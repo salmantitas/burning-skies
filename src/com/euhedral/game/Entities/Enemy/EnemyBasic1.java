@@ -30,7 +30,7 @@ public class EnemyBasic1 extends Enemy{
 
 //        enemyType = EntityHandler.TYPE_BASIC;
 
-        health_MAX = 3;
+        health_MAX = 2;
         commonInit();
         score = 50;
         velX_MIN = 1.75f;
