@@ -7,6 +7,10 @@ import java.awt.*;
 
 public class Window extends Canvas {
 
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    double widthTest = screenSize.getWidth();
+    double heightTest = screenSize.getHeight();
+
     // Creates a window for the game with the given width and height. The string title is used as the window's title.
     // Locks the screen at the specified dimension so that it cannot be resized. The game is added to the screen and
     // is started.
@@ -14,30 +18,43 @@ public class Window extends Canvas {
         JFrame frame = new JFrame(title);
         System.out.println("Window created");
 
-        Dimension dimension = new Dimension(width, height);
+        Engine.SCALE = heightTest / Engine.HEIGHT;
+
+//        Dimension dimension = new Dimension((int) (width*scale), (int) (height * scale));
+        Dimension dimension = new Dimension((int) (width * Engine.SCALE), (int) heightTest);
         System.out.println("Dimensions set");
 
-        frame.setUndecorated(true);
+//        frame.setUndecorated(true);
+//        System.out.println("Window undecorated");
+
         frame.setPreferredSize(dimension);
         frame.setMaximumSize(dimension);
         frame.setMinimumSize(dimension);
         System.out.println("Screen forced to set dimensions");
 
-        frame.setLocationRelativeTo(null);
-        System.out.println("Screen centered");
-
         frame.setResizable(false);
-        System.out.println("Disable resize");
+//        System.out.println("Disable resize");
 
         frame.setFocusable(true); // not sure yet
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(engine);
+
+        frame.setLayout(new BorderLayout());
+        frame.add(engine, BorderLayout.CENTER);
         System.out.println("Engine added to window");
 
 //        frame.requestFocus();
-//        frame.pack();
+        frame.pack();
+
+        frame.setLocationRelativeTo(null);
+        System.out.println("Screen centered");
+
         frame.setVisible(true);
+
+        // Test
+//        Engine.SCALE = widthTest / Engine.WIDTH;
+
+
         engine.start();
     }
 }

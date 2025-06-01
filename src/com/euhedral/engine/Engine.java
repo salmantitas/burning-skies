@@ -23,6 +23,7 @@ public class Engine extends Canvas implements Runnable{
     public static double SCREEN_RATIO = 4.0/3.0;
     public static int WIDTH = 640;
     public static int HEIGHT = (int) (WIDTH / SCREEN_RATIO);
+    public static double SCALE = 1;
     public static Color BACKGROUND_COLOR = Color.BLACK;
 
     private final double UPDATE_CAP = 1.0/60.0; // determines the frequency of game-updates. 1/60 means once every 60 seconds
@@ -145,8 +146,11 @@ public class Engine extends Canvas implements Runnable{
         Graphics g = bs.getDrawGraphics(); //
 
         g.setColor(BACKGROUND_COLOR);
-        g.fillRect(0, 0, WIDTH, WIDTH);
+        g.fillRect(0, 0, WIDTH, HEIGHT);
 
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.scale(SCALE, SCALE);
         gameController.render(g);
 
         g.dispose();
