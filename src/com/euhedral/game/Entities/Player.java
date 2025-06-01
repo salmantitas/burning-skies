@@ -477,6 +477,7 @@ public class Player extends MobileEntity {
 
     @Override
     public void clear() {
+        canShoot(false);
         bullets.clear();
     }
 

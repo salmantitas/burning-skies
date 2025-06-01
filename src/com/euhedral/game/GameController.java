@@ -20,10 +20,11 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.6.916";
+    public static String gameVersion = "0.6.917";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
+    private double gameScale = Engine.SCALE;
     private Color gameBackground = new Color(0,0,128);
 
     // Game Timer
@@ -647,7 +648,7 @@ public class GameController {
                 movePlayer('d');
 
             if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
-                shootPlayer();
+                entityHandler.playerCanShoot();
 
 //            if (key == KeyEvent.VK_CONTROL)
 //                entityHandler.switchPlayerBullet();
@@ -687,7 +688,7 @@ public class GameController {
     }
 
     public void shootPlayer() {
-        entityHandler.playerCanShoot();
+
 
 //        if (!MenuPlay.shot) {
 //            MenuPlay.shot = true;
