@@ -363,7 +363,7 @@ public class GameController {
          * Game Code *
          *************/
 
-        uiHandler.checkHover(mx, my);
+//        uiHandler.checkHover(mx, my);
         giveDestination(mx, my);
     }
 
@@ -489,8 +489,8 @@ public class GameController {
     }
 
     public void checkButtonAction(int mx, int my) {
-        uiHandler.checkButtonAction(mx, my);
-        performAction();
+//        uiHandler.checkButtonAction(mx, my);
+//        performAction();
     }
 
     public void performAction() {

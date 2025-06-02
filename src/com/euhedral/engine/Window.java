@@ -4,6 +4,7 @@ package com.euhedral.engine;/*
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Window extends Canvas {
 
@@ -34,7 +35,13 @@ public class Window extends Canvas {
         System.out.println("Screen forced to set dimensions");
 
         frame.setResizable(false);
-//        System.out.println("Disable resize");
+        System.out.println("Disable resize");
+
+//        frame.setCursor( frame.getToolkit().createCustomCursor(
+//                new BufferedImage( 1, 1, BufferedImage.TYPE_INT_ARGB ),
+//                new Point(),
+//                null ) );
+//        System.out.println("Cursor invisible");
 
         frame.setFocusable(true); // not sure yet
 

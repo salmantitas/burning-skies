@@ -97,12 +97,13 @@ public class Menu {
     * Everything else is deselected.
     * */
     public void checkHover(int mx, int my) {
-        for (int i = 0; i < messageBoxes.size(); i++) {
-            MessageBox messageBox = messageBoxes.get(i);
-            if (messageBox.mouseOverlap(mx, my)) {
-                messageBox.checkHover(mx, my);
-            }
-        }
+//        for (int i = 0; i < messageBoxes.size(); i++) {
+//            MessageBox messageBox = messageBoxes.get(i);
+//            if (messageBox.mouseOverlap(mx, my)) {
+//                messageBox.checkHover(mx, my);
+//            }
+//        }
+
         if (activeMessageBoxes == 0) {
             for (int i = 0; i < MAXBUTTON; i++) {
                 Button button = options[i];
@@ -147,14 +148,14 @@ public class Menu {
         ActionTag returnAction = null;
         for (int i = 0; i < messageBoxes.size(); i++) {
             MessageBox messageBox = messageBoxes.get(i);
-            if (messageBox.mouseOverlap(mx, my)) {
-                if (messageBox.isEnabled()) {
-                    messageBox.checkButtonAction(mx, my);
-                    if (!messageBox.isEnabled())
-                        activeMessageBoxes--;
-                    // todo: else drag
-                }
-            }
+//            if (messageBox.mouseOverlap(mx, my)) {
+//                if (messageBox.isEnabled()) {
+//                    messageBox.checkButtonAction(mx, my);
+//                    if (!messageBox.isEnabled())
+//                        activeMessageBoxes--;
+//                    // todo: else drag
+//                }
+//            }
         }
         for (int i = 0; i < MAXBUTTON; i++) {
             if (activeMessageBoxes == 0) {

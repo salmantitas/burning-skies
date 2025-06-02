@@ -10,45 +10,45 @@ import static com.euhedral.engine.Utility.makeTransparent;
 
 public class MessageBox extends UIItem {
 
-    private class Close extends UIItem{
-        Color color, selectColor;
-        boolean selected = false;
-
-        public Close(int x, int y, int margin) {
-            setX(x);
-            this.y = y;
-            this.width = margin;
-            height = width;
-            color = Color.red;
-            selectColor = Color.green;
-        }
-
-        public void setX(int x) {
-            this.x = x;
-        }
-
-        public void render(Graphics g) {
-            if (!selected)
-                g.setColor(color);
-            else g.setColor(selectColor);
-            g.fillRect(x - this.width,y,width,height);
-        }
-
-        @Override
-        public boolean mouseOverlap(int mx, int my) {
-            int minX = x - margin, minY = y;
-            int maxX = minX + width, maxY = minY + height;
-            return (mx >= minX && mx <= maxX && my >= minY && my <= maxY);
-        }
-
-        public void select() {
-            selected = true;
-        }
-
-        public void deselect() {
-            selected = false;
-        }
-    }
+//    private class Close extends UIItem{
+//        Color color, selectColor;
+//        boolean selected = false;
+//
+//        public Close(int x, int y, int margin) {
+//            setX(x);
+//            this.y = y;
+//            this.width = margin;
+//            height = width;
+//            color = Color.red;
+//            selectColor = Color.green;
+//        }
+//
+//        public void setX(int x) {
+//            this.x = x;
+//        }
+//
+//        public void render(Graphics g) {
+//            if (!selected)
+//                g.setColor(color);
+//            else g.setColor(selectColor);
+//            g.fillRect(x - this.width,y,width,height);
+//        }
+//
+//        @Override
+//        public boolean mouseOverlap(int mx, int my) {
+//            int minX = x - margin, minY = y;
+//            int maxX = minX + width, maxY = minY + height;
+//            return (mx >= minX && mx <= maxX && my >= minY && my <= maxY);
+//        }
+//
+//        public void select() {
+//            selected = true;
+//        }
+//
+//        public void deselect() {
+//            selected = false;
+//        }
+//    }
 
     private ArrayList<String> texts;
     private Color
@@ -56,7 +56,7 @@ public class MessageBox extends UIItem {
             textColor = Color.WHITE,
             textColorError = Color.red;
     private boolean enable = true;
-    private Close close;
+//    private Close close;
     private int margin = Utility.intAtWidth640(10);
     private int fontSize = Utility.intAtWidth640(10);
     private Font font = new Font("arial", 0, fontSize);
@@ -76,7 +76,21 @@ public class MessageBox extends UIItem {
         height = (int) (width * SCALE_FACTOR);
         heightMax = (int) (widthMax * SCALE_FACTOR);
         transparency = 1;
-        close = new Close(x+width,y, margin);
+//        close = new Close(x+width,y, margin);
+    }
+
+    public MessageBox(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        texts = new ArrayList<>();
+//        SCALE_FACTOR = 2.00/2.50;
+//        width = 300;
+//        height = (int) (width * SCALE_FACTOR);
+//        heightMax = (int) (widthMax * SCALE_FACTOR);
+        transparency = 1;
+//        close = new Close(x+width,y, margin);
     }
 
     public void addText(String text) {
@@ -122,7 +136,7 @@ public class MessageBox extends UIItem {
                     }
                     else {
                         width = textSize + margin;
-                        close.setX(x+width);
+//                        close.setX(x+width);
                     }
                 }
 
@@ -136,7 +150,7 @@ public class MessageBox extends UIItem {
             // Dismissal
             g.setColor(Color.RED);
             g.drawString(dismissalText, x + width/2 - textSize/2, yPos + textStart);
-            close.render(g);
+//            close.render(g);
         }
     }
 
@@ -152,18 +166,18 @@ public class MessageBox extends UIItem {
         return enable;
     }
 
-    public void checkButtonAction(int mx, int my) {
-        if (close.mouseOverlap(mx, my))
-            disable();
-    }
-
-    public void checkHover(int mx, int my) {
-        if (close.mouseOverlap(mx, my)) {
-            close.select();
-        } else {
-            close.deselect();
-        }
-    }
+//    public void checkButtonAction(int mx, int my) {
+//        if (close.mouseOverlap(mx, my))
+//            disable();
+//    }
+//
+//    public void checkHover(int mx, int my) {
+//        if (close.mouseOverlap(mx, my)) {
+//            close.select();
+//        } else {
+//            close.deselect();
+//        }
+//    }
 
     public void setTransparency(float transparency) {
         this.transparency = transparency;

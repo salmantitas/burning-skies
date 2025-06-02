@@ -4,6 +4,7 @@ import com.euhedral.engine.GameState;
 import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
+import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.VariableHandler;
 
@@ -16,8 +17,15 @@ public class MenuHighScore extends Menu {
         MAXBUTTON = 1;
         options = new Button[MAXBUTTON];
 
-        ButtonNav backToMenu = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
-        options[0] = backToMenu;
+        ButtonNav back = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+        options[0] = back;
+
+        int panelWidth = 300;
+        int panelHeight = Utility.percHeight(40);
+
+        com.euhedral.engine.UI.Panel backPane = new Panel(Utility.percWidth(6), Utility.percHeight(25), panelWidth, panelHeight, GameState.Game);
+        backPane.setTransparency(0.7f);
+        menuItems.add(backPane);
     }
 
     @Override
@@ -33,8 +41,8 @@ public class MenuHighScore extends Menu {
         g.setFont(new Font("arial", 1, titleSize));
         g.setColor(Color.WHITE);
 
-        g.drawString("High Score", x30, y20);
+        g.drawString("High Score", x5, y20);
 
-        VariableHandler.drawHighScore(g, x5, y26);
+        VariableHandler.drawHighScore(g, x10, y26);
     }
 }

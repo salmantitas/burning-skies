@@ -4,6 +4,7 @@ import com.euhedral.engine.GameState;
 import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
+import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.Utility;
 
 import java.awt.*;
@@ -16,8 +17,15 @@ public class MenuCredits extends Menu {
         MAXBUTTON = 1;
         options = new Button[MAXBUTTON];
 
-        ButtonNav backToMenu = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
-        options[0] = backToMenu;
+        ButtonNav back = new ButtonNav(x52, Utility.percHeight(85), Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+        options[0] = back;
+
+        int panelWidth = Utility.percWidth(40);
+        int panelHeight = Utility.percHeight(70);
+
+        Panel backPane = new Panel(Utility.percWidth(4), Utility.percHeight(22), panelWidth, panelHeight, GameState.Game);
+        backPane.setTransparency(0.7f);
+        menuItems.add(backPane);
     }
 
     @Override

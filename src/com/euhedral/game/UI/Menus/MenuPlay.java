@@ -27,10 +27,12 @@ public class MenuPlay extends Menu {
         MAXBUTTON = 0;
 //        options = new Button[MAXBUTTON];
 
-        tutorial = new MessageBox(400,150);
+        tutorial = new MessageBox(400,150, 200, 300);
         tutorial.addText("Use WASD or the Arrow Keys to move.");
         tutorial.addText("");
-        tutorial.addText("       SPACEBAR to shoot.");
+        tutorial.addText("        SPACEBAR to shoot.");
+        tutorial.addText("");
+        tutorial.addText("        ESCAPE or P to pause.");
         tutorial.addText("");
         tutorial.addText("You can disable tutorial in Settings.");
         tutorial.addText("");

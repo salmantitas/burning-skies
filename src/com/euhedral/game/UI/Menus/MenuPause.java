@@ -5,8 +5,6 @@ import com.euhedral.engine.UI.*;
 import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
-import com.euhedral.game.ActionTag;
-import com.euhedral.game.SoundHandler;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
@@ -16,19 +14,25 @@ public class MenuPause extends Menu {
     int pauseX = Utility.percWidth(16), pauseY = Utility.percHeight(50);
     int buttonX = pauseX + Utility.percWidth(1);
 
-    int volY = y62;
-
 //    ButtonAction volumeMasterDown = new ButtonAction(x36, volY, optionSize, optionSize, "-", ActionTag.volumeMasterDown);
 //    ButtonAction volumeMaster = new ButtonAction(x40, volY, optionSize, "Master Volume", ActionTag.volumeMaster);
 //    ButtonAction volumeMasterUp = new ButtonAction(x62, volY, optionSize, optionSize,"+", ActionTag.volumeMasterUp);
 
     public MenuPause() {
         super(GameState.Pause);
-        MAXBUTTON = 3;
+        MAXBUTTON = 4;
         options = new Button[MAXBUTTON];
-        ButtonNav settings = new ButtonNav(buttonX, volY, Utility.perc(buttonSize, 80), "Settings", GameState.Settings);
-        ButtonNav backToMenu = new ButtonNav(buttonX, y71, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
-        ButtonNav quit = new ButtonNav(buttonX, y80, buttonSize, "Quit", GameState.Quit);
+
+        int spacingY =  Utility.percHeight(9);
+        int resumeY = pauseY + spacingY;
+        int settingsY = resumeY + spacingY;
+        int backY = settingsY + spacingY;
+        int quitY = backY + spacingY;
+
+        ButtonNav resume = new ButtonNav(buttonX, resumeY, Utility.perc(buttonSize, 80), "Resume", GameState.Game);
+        ButtonNav settings = new ButtonNav(buttonX, settingsY, Utility.perc(buttonSize, 80), "Settings", GameState.Settings);
+        ButtonNav back = new ButtonNav(buttonX, backY, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+        ButtonNav quit = new ButtonNav(buttonX, quitY, buttonSize, "Quit", GameState.Quit);
 
         float hudTransparencyTop = 1f;
         float hudTransparencySide = 0.2f;
@@ -46,11 +50,11 @@ public class MenuPause extends Menu {
         rightPane.setTransparency(hudTransparencySide);
         menuItems.add(rightPane);
 
-        options[0] = settings;
-//        options[1] = volumeMaster;
+        options[0] = resume;
+        options[1] = settings;
 //        options[2] = volumeMasterUp;
 
-        options[1] = backToMenu;
+        options[2] = back;
         options[MAXBUTTON - 1] = quit;
     }
 

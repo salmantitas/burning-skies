@@ -4,6 +4,7 @@ import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.*;
+import com.euhedral.engine.UI.Panel;
 import com.euhedral.game.ActionTag;
 import com.euhedral.game.GameController;
 
@@ -11,6 +12,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class MenuHelp extends Menu {
+
+    int helpX = 300;
+    int helpY = 200;
 
 //    private class Bindable extends UIItem{
 //        String str;
@@ -65,8 +69,15 @@ public class MenuHelp extends Menu {
         MAXBUTTON = 1;
         options = new Button[MAXBUTTON];
 
-        ButtonNav backToMenu = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
-        options[0] = backToMenu;
+        ButtonNav back = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+        options[0] = back;
+
+        int panelWidth = Utility.percWidth(55);
+        int panelHeight = Utility.percHeight(49);
+
+        Panel backPane = new Panel(helpX - Utility.percWidth(1), helpY + Utility.percHeight(4), panelWidth, panelHeight, GameState.Game);
+        backPane.setTransparency(0.7f);
+        menuItems.add(backPane);
 
 //        createBindable(GameController.UP, 100, 100);
 
@@ -119,15 +130,15 @@ public class MenuHelp extends Menu {
         help.add(GameController.SHOOT + " to shoot");
         help.add("ESC or " + GameController.PAUSE + " in-game to pause or resume");
         help.add("");
-        help.add("You can use Settings Menu to permanently");
-        help.add("enable or disable the tutorial message-boxes");
+        help.add("You can toggle tutorial message-boxes");
+        help.add("in Settings");
 //        help.add("ESC from menu to quit");
         int lineHeightInPixel = 80;
-        int helpX = 200;
+
         for (int i = 0; i < help.size(); i++)
         {
             String s = help.get(i);
-            g.drawString(s, helpX, (i+1)*lineHeightInPixel);
+            g.drawString(s, helpX, helpY + (i+1)*lineHeightInPixel);
         }
     }
 

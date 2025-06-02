@@ -4,6 +4,7 @@ import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.*;
+import com.euhedral.engine.UI.Panel;
 import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
 import com.euhedral.game.UI.MessageBox;
@@ -19,12 +20,14 @@ public class MenuMain extends Menu {
         MAXBUTTON = 6;
         options = new Button[MAXBUTTON];
 
+        int spacingY =  Utility.percHeight(9);
+
         int playY = y32;
-        int settingsY = playY + Utility.percHeight(12);
-        int highScoreY = settingsY + Utility.percHeight(9);
-        int helpY = highScoreY + Utility.percHeight(8);
-        int creditsY = helpY + Utility.percHeight(11);
-        int quitY = y80;
+        int settingsY = playY + spacingY;
+        int highScoreY = settingsY + spacingY;
+        int helpY = highScoreY + spacingY;
+        int creditsY = helpY + spacingY;
+        int quitY = creditsY + spacingY;
 
         ButtonNav play = new ButtonNav(x10, playY, buttonSize, "Play", GameState.Transition);
         ButtonNav settings = new ButtonNav(x10, settingsY, buttonSize, "Settings", GameState.Settings);

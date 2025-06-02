@@ -29,7 +29,7 @@ public class MenuSettings extends Menu {
 //    ButtonAction volumeEffectsDown = new ButtonAction(x36, y62, optionSize, optionSize, "-", ActionTag.volumeEffectsDown);
 //    ButtonAction volumeEffects = new ButtonAction(x40, y62, optionSize, "Effects Volume", ActionTag.volumeEffects);
 //    ButtonAction volumeEffectsUp = new ButtonAction(x62, y62, optionSize, optionSize,"+", ActionTag.volumeEffectsUp);
-    ButtonNav backToMenu = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+    ButtonNav back = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
 
     public MenuSettings() {
         super(GameState.Settings);
@@ -46,7 +46,7 @@ public class MenuSettings extends Menu {
 //        options[7] = volumeEffectsDown;
 //        options[8] = volumeEffects;
 //        options[9] = volumeEffectsUp;
-        options[MAXBUTTON - 1] = backToMenu;
+        options[MAXBUTTON - 1] = back;
     }
 
 //    @Override
@@ -84,7 +84,7 @@ public class MenuSettings extends Menu {
 
 //        Utility.log("Previous: " + previous);
 
-        backToMenu.setTargetSate(Engine.previousState);
+        back.setTargetSate(Engine.previousState);
     }
 
     /*******************

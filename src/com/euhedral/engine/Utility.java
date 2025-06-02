@@ -34,6 +34,7 @@ public class Utility {
 
     /*
      * Scales the input integer up from what it would have been at screen width of 640
+     * todo: Revisit and recalculate, reconsider usefulness
      * */
     public static int intAtWidth640(int var) {
         float factor = 640/var;
