@@ -103,6 +103,7 @@ public class UIHandler {
             }
         }
 
+        // I no longer remember the purpose of this, or my own
         if (!menuChanged)
             currentMenu = nullMenu;
     }

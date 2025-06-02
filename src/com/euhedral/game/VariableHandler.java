@@ -87,6 +87,10 @@ public class VariableHandler {
 
     private static boolean tutorial = true;
 
+    // Deadzones
+    public static int deadzoneWidth = Utility.intAtWidth640(32);
+    public static int deadzoneLeftX = 0, deadzoneRightX = Engine.WIDTH - deadzoneWidth - Utility.intAtWidth640(8);
+
     // Shop Costs
 
 //    public static final int costPower = 1000;

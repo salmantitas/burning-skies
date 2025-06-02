@@ -13,7 +13,7 @@ public class Player extends MobileEntity {
     // Shooting Entity
     private boolean canShoot;
     private int shootTimer = 0;
-    private final int shootTimerDefault = 8;
+    private final int shootTimerDefault = 9;
     private BulletPool bullets = new BulletPool();
 
     // Personal
@@ -42,9 +42,6 @@ public class Player extends MobileEntity {
     private float acceleration; //stub //todo:delete
     private float frictionalForce; //stub //todo:delete
     private Reflection reflection;
-
-    // Decay
-    int decayCounter = 0;
 
     public Player(int x, int y, int levelHeight) {
         super(x,y, EntityID.Player);
@@ -291,8 +288,8 @@ public class Player extends MobileEntity {
 //        System.out.printf("VelX: %f | VelY: %f\n", velX, velY);
 
         // Clamp
-        x = Utility.clamp(x, 0, Engine.WIDTH + clampOffsetX);
-        y = Utility.clamp(y, levelHeight - 600, levelHeight + clampOffsetY);
+        x = Utility.clamp(x, VariableHandler.deadzoneWidth, VariableHandler.deadzoneRightX - VariableHandler.deadzoneWidth);
+        y = Utility.clamp(y, levelHeight - 640, levelHeight + clampOffsetY);
 
         // movement
         mouseMove();

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class EnemyGenerator {
     // Level
     int level;
-    int cutoffHeight = 0, cutoffWidth = 64*2;
-    int height = Engine.HEIGHT - cutoffHeight, width = Engine.WIDTH - cutoffWidth;
+    int cutoffHeight = 0, cutoffWidth = Utility.intAtWidth640(24);
+    int height = Engine.HEIGHT - cutoffHeight, width = VariableHandler.deadzoneRightX - cutoffWidth;
 
     final int SCALE = 64;
 
@@ -169,7 +169,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_DRONE2; // stub
 //        enemytype = TYPE_SIDE2; // stub
 //        enemytype = TYPE_STATIC2; // stub
-//        enemytype = TYPE_DReONE3; // stub
+//        enemytype = TYPE_DRONE3; // stub
 
 //        difficulty = maxTypes; // stub
 
@@ -213,7 +213,7 @@ public class EnemyGenerator {
 //            limit = 20;
 //        }
 
-            while (EntityHandler.getActiveEnemies(enemytype) >= limit) {
+            if (EntityHandler.getActiveEnemies(enemytype) >= limit) {
                 enemytype = TYPE_BASIC1;
 //                rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
 //                enemytype = rand;
@@ -240,18 +240,25 @@ public class EnemyGenerator {
     }
 
     protected void determineZone() {
+
+        boolean entersFromSide = enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3 || enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2;
+
         // Vertical Zone
-        if (enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3 || enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2) {
+        if (entersFromSide) {
             int adjustment = 1;
             int zone = Utility.randomRangeInclusive(0, 1);
             if (zone == 0) {
                 spawnX = -adjustment;
             } else {
-                spawnX = xEnd + adjustment;
+                spawnX = xEnd + 2*adjustment;
             }
-            if (enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3) {
+
+            boolean isDrone = enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3;
+            boolean isSideFlyer = enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2;
+
+            if (isDrone) {
                 spawnY = Utility.randomRangeInclusive(0, height / SCALE * 2 / 3);
-            } else if (enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2) {
+            } else if (isSideFlyer) {
                 spawnY = Utility.randomRangeInclusive(5, 7);
             }
 //            else if (enemytype == TYPE_SIDE2) {
@@ -287,6 +294,8 @@ public class EnemyGenerator {
 //            } else {
 //                spawnX += 64;
 //            }
+
+//            spawnX = xEnd; // stub
 
         }
     }

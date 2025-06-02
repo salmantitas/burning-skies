@@ -1,5 +1,6 @@
 package com.euhedral.game.UI.Menus;
 
+import com.euhedral.engine.Engine;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.UI.*;
 import com.euhedral.engine.UI.Button;
@@ -28,7 +29,7 @@ public class MenuSettings extends Menu {
 //    ButtonAction volumeEffectsDown = new ButtonAction(x36, y62, optionSize, optionSize, "-", ActionTag.volumeEffectsDown);
 //    ButtonAction volumeEffects = new ButtonAction(x40, y62, optionSize, "Effects Volume", ActionTag.volumeEffects);
 //    ButtonAction volumeEffectsUp = new ButtonAction(x62, y62, optionSize, optionSize,"+", ActionTag.volumeEffectsUp);
-    ButtonNav backToMenu = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+    ButtonNav backToMenu = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
 
     public MenuSettings() {
         super(GameState.Settings);
@@ -75,6 +76,15 @@ public class MenuSettings extends Menu {
 //        renderValue(g, volumeEffectsUp, SoundHandler.getVolumeEffects(), SoundHandler.isVolumeEffects());
 
         super.postRender(g);
+    }
+
+    @Override
+    public void onSwitch() {
+        super.onSwitch();
+
+//        Utility.log("Previous: " + previous);
+
+        backToMenu.setTargetSate(Engine.previousState);
     }
 
     /*******************
