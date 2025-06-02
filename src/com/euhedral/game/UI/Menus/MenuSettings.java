@@ -24,7 +24,7 @@ public class MenuSettings extends Menu {
     ButtonAction volumeMaster = new ButtonAction(x40, y48, optionSize, "Master Volume", ActionTag.volumeMaster);
     ButtonAction volumeMasterUp = new ButtonAction(x62, y48, optionSize, optionSize,"+", ActionTag.volumeMasterUp);
 //    ButtonAction volumeMusicDown = new ButtonAction(x36, y56, optionSize, optionSize, "-", ActionTag.volumeMusicDown);
-//    ButtonAction volumeMusic = new ButtonAction(x40, y56, optionSize, "Music Volume", ActionTag.volumeMusic);
+    ButtonAction volumeMusic = new ButtonAction(x40, y56, optionSize, "Music Volume", ActionTag.volumeMusic);
 //    ButtonAction volumeMusicUp = new ButtonAction(x62, y56, optionSize, optionSize,"+", ActionTag.volumeMusicUp);
 //    ButtonAction volumeEffectsDown = new ButtonAction(x36, y62, optionSize, optionSize, "-", ActionTag.volumeEffectsDown);
 //    ButtonAction volumeEffects = new ButtonAction(x40, y62, optionSize, "Effects Volume", ActionTag.volumeEffects);
@@ -33,7 +33,7 @@ public class MenuSettings extends Menu {
 
     public MenuSettings() {
         super(GameState.Settings);
-        MAXBUTTON = 5; //11;
+        MAXBUTTON = 6; //11;
         options = new Button[MAXBUTTON];
 
         options[0] = tutorial;
@@ -41,7 +41,7 @@ public class MenuSettings extends Menu {
         options[2] = volumeMaster;
         options[3] = volumeMasterUp;
 //        options[4] = volumeMusicDown;
-//        options[5] = volumeMusic;
+        options[4] = volumeMusic;
 //        options[6] = volumeMusicUp;
 //        options[7] = volumeEffectsDown;
 //        options[8] = volumeEffects;
@@ -72,7 +72,8 @@ public class MenuSettings extends Menu {
 
         renderIcon(g, tutorial, VariableHandler.isTutorial());
         renderValue(g, volumeMasterUp, SoundHandler.getVolumeMaster(), SoundHandler.isVolumeMaster());
-//        renderValue(g, volumeMusicUp, SoundHandler.getVolumeMusic(), SoundHandler.isVolumeMusic());
+        renderIcon(g, volumeMusic, SoundHandler.isVolumeMusic());
+//        renderValue(g, volumeMusic, SoundHandler.getVolumeMusic(), SoundHandler.isVolumeMusic());
 //        renderValue(g, volumeEffectsUp, SoundHandler.getVolumeEffects(), SoundHandler.isVolumeEffects());
 
         super.postRender(g);

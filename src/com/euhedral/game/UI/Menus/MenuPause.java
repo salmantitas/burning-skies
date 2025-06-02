@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class MenuPause extends Menu {
 
-    int pauseX = Utility.percWidth(16), pauseY = Utility.percHeight(50);
+    int pauseX = Utility.percWidth(16), pauseY = Utility.percHeight(40);
     int buttonX = pauseX + Utility.percWidth(1);
 
 //    ButtonAction volumeMasterDown = new ButtonAction(x36, volY, optionSize, optionSize, "-", ActionTag.volumeMasterDown);
@@ -32,7 +32,7 @@ public class MenuPause extends Menu {
         ButtonNav resume = new ButtonNav(buttonX, resumeY, Utility.perc(buttonSize, 80), "Resume", GameState.Game);
         ButtonNav settings = new ButtonNav(buttonX, settingsY, Utility.perc(buttonSize, 80), "Settings", GameState.Settings);
         ButtonNav back = new ButtonNav(buttonX, backY, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
-        ButtonNav quit = new ButtonNav(buttonX, quitY, buttonSize, "Quit", GameState.Quit);
+        ButtonNav quit = new ButtonNav(buttonX, quitY, Utility.perc(buttonSize, 95), "Quit", GameState.Quit);
 
         float hudTransparencyTop = 1f;
         float hudTransparencySide = 0.2f;

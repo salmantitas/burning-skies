@@ -8,6 +8,7 @@ import com.euhedral.game.UI.MessageBox;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -346,7 +347,7 @@ public class Menu {
         int bx = button.getX() + button.getWidth();
         int by = button.getY() + button.getHeight();
 
-        g.setFont(new Font("arial", 1, 50));
+        g.setFont(new Font("arial", 1, 45));
 
         Color c = condition ? Color.GREEN : Color.GRAY;
         g.setColor(c);

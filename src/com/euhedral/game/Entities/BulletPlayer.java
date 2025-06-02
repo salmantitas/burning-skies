@@ -8,8 +8,6 @@ import java.awt.*;
 
 public class BulletPlayer extends Bullet{
 
-//    protected ContactID contactId;
-
     BulletPlayer(int x, int y, double angle) {
         super(x, y, angle);
 //        this.contactId = contactId;

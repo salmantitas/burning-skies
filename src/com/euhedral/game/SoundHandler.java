@@ -56,6 +56,10 @@ public class SoundHandler {
         soundURL[IMPACT] = getClass().getResource("/impact.wav");
         soundURL[UI1] = getClass().getResource("/clip_ui_1.wav");
         soundURL[UI2] = getClass().getResource("/clip_ui_2.wav");
+
+        // stub todo: Load from settings
+        volumeEffects = VOLUME_MAX;
+        volumeMusic = VOLUME_MAX;
     }
 
     public static void setFile(int i) {
@@ -118,12 +122,24 @@ public class SoundHandler {
         if (!volumeMasterOn) {
             volumeF = 0;
         }
+//        if (!volumeMusicOn) {
+//            volumeF = 0;
+//        }
+//        if (!volumeEffectsOn) {
+//            volumeF = 0;
+//        }
+
         if (volumeF < 0f || volumeF > 1f)
             throw new IllegalArgumentException("Volume not valid: " + volumeF);
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        Utility.log("gainControl: " + gainControl);
         FloatControl bgmGainControl = (FloatControl) bgm.getControl(FloatControl.Type.MASTER_GAIN);
+        Utility.log("bgmGainControl: " + bgmGainControl);
 
         gainControl.setValue(20f * (float) Math.log10(volumeF));
+        if (!isVolumeMusic()) {
+            volumeF = 0;
+        }
         bgmGainControl.setValue(20f * (float) Math.log10(volumeF));
 
 //        Utility.log("Master Volume set to " + (int) (volumeF*100) + "%");
