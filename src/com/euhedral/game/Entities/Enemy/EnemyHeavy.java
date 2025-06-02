@@ -24,7 +24,7 @@ public class EnemyHeavy extends Enemy {
     public EnemyHeavy(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
-        bulletVelocity = Utility.intAtWidth640(5);
+//        bulletVelocity = Utility.intAtWidth640(5);
         bulletAngle = 60;
         shootTimerDefault = 80;
 //        shootTimer = shootTimerDefault;

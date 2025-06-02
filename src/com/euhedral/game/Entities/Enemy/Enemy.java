@@ -39,10 +39,11 @@ public class Enemy extends MobileEntity {
 
     protected int levelHeight;
 
-    protected int bulletsPerShot_MAX = 0;
+    protected int bulletsPerShot_MAX = 1;
     protected int bulletsPerShot = 0;
     protected double bulletVelocity;
     protected double bulletAngle;
+    protected int bulletArcAngle;;
 
     protected boolean attackEffect;
 
@@ -71,7 +72,8 @@ public class Enemy extends MobileEntity {
         shootTimerDefault = 150;
         shootTimer = shootTimerFirst;
 
-        bulletVelocity = Utility.intAtWidth640(5);
+        bulletVelocity = Utility.intAtWidth640(4);
+        bulletArcAngle = 15;
 
         textureHandler = GameController.getTexture();
         attackEffect = false;
@@ -177,10 +179,9 @@ public class Enemy extends MobileEntity {
                 double drawX = x - (0.5) * (double) width;
                 double drawY = getTurretY() - (0.5) * (double) height;
 //                double drawY = y - (0.5) * (double) height;
-                int arcAngle = 20;
 
                 g2d.setComposite(Utility.makeTransparent(0.5f));
-                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(calculateShotTrajectory()) - arcAngle / 2, arcAngle);
+                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(calculateShotTrajectory()) - bulletArcAngle / 2, bulletArcAngle);
                 g2d.setComposite(Utility.makeTransparent(1f));
             }
         }

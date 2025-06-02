@@ -163,7 +163,7 @@ public class EntityHandler {
             enemy = new EnemyBasic3(x, y, levelHeight);
             enemy.setHMove(direction);
         } else if (enemyType == TYPE_FAST2) {
-            enemy = new EnemyFast2(x, y, levelHeight);
+            enemy = new EnemyFast(x, y, levelHeight);
             enemy.setHMove(direction);
         } else if (enemyType == TYPE_DRONE1) {
             enemy = new EnemyDrone(x, y, levelHeight);

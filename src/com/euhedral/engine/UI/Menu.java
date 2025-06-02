@@ -1,5 +1,6 @@
 package com.euhedral.engine.UI;
 
+import com.euhedral.engine.Engine;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ActionTag;
@@ -18,7 +19,8 @@ import java.util.List;
 public class Menu {
 
     private int index = 0; // for buttons
-    private GameState state;
+    private GameState state; // why is this private?
+//    protected GameState previous;
     protected LinkedList<MenuItem> menuItems = new LinkedList<>();
 
     protected Button[] options;
@@ -56,12 +58,14 @@ public class Menu {
     protected int y56 = Utility.percHeight(56);
     protected int y62 = Utility.percHeight(62);
     protected int y70 = Utility.percHeight(70);
+    protected int y71 = Utility.percHeight(71);
     protected int y80 = Utility.percHeight(80);
 
     public Menu(GameState state) {
         this.state = state;
         messageBoxes = new ArrayList<>();
         activeMessageBoxes = 0;
+//        previous = null;
     }
 
     public void update() {
@@ -172,8 +176,10 @@ public class Menu {
     public ActionTag activateButton(Button button) {
         ActionTag returnAction = null;
 
-        if (activeMessageBoxes == 0)
+        if (activeMessageBoxes == 0) {
+//            previous = Engine.currentState;
             returnAction = (ActionTag) button.activate();
+        }
 
 //        if (button instanceof ButtonAction) {
 //            ButtonAction actButton = (ButtonAction) button;
@@ -186,6 +192,7 @@ public class Menu {
 //            ButtonAction actButton = (ButtonAction) button;
 //            returnAction = actButton.getAction();
 //        }
+
         return returnAction;
     }
 
@@ -219,6 +226,7 @@ public class Menu {
         if (MAXBUTTON > 0) {
             reassignSelected(0);
         }
+
 //        resetMessageBoxes();
     }
 

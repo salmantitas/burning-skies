@@ -7,25 +7,25 @@ import com.euhedral.game.GameController;
 
 import java.awt.*;
 
-public class EnemyFast2 extends Enemy{
+public class EnemyFast extends Enemy{
 
-    double acceleration = 0.1;
+    double acceleration = 0.08;
     double destinationX, destinationY;
 
-    public EnemyFast2(int x, int y, int levelHeight) {
+    public EnemyFast(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyFast[0]);
 //        attackEffect = true;
 
         // todo: These happen last
-        shootTimerDefault = 40; // too low: 10, too high: 100
+        shootTimerDefault = 35; // too low: 10, too high: 100
 //        shootTimer = shootTimerDefault;
         score = 125;
         determineMovement();
     }
 
-    public EnemyFast2(int x, int y, Color color, int levelHeight) {
+    public EnemyFast(int x, int y, Color color, int levelHeight) {
         this(x, y, levelHeight);
         this.color = color;
 

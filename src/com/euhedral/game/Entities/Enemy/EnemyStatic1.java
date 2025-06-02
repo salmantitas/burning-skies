@@ -15,7 +15,7 @@ public class EnemyStatic1 extends Enemy {
     public EnemyStatic1(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
-        bulletVelocity = Utility.intAtWidth640(6);
+//        bulletVelocity = Utility.intAtWidth640(6);
         shootTimerDefault = 200;
 //        shootTimer = shootTimerDefault;
         score = 150;

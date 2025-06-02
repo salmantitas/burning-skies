@@ -22,7 +22,7 @@ public class EnemyStatic2 extends Enemy {
     public EnemyStatic2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
-        bulletVelocity = Utility.intAtWidth640(6);
+//        bulletVelocity = Utility.intAtWidth640(6);
         shootTimerDefault = 300;
         shootTimer = 50;
         score = 150;
@@ -35,6 +35,7 @@ public class EnemyStatic2 extends Enemy {
         deceleration = decelerationMAX;
 
         bulletsPerShot_MAX = 5;
+        bulletArcAngle = 15 * bulletsPerShot_MAX;
 
         attackEffect = true;
 
