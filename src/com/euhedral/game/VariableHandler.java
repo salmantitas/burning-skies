@@ -1,6 +1,7 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
+import com.euhedral.engine.Entity;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 
@@ -90,6 +91,15 @@ public class VariableHandler {
     // Deadzones
     public static int deadzoneWidth = Utility.intAtWidth640(32);
     public static int deadzoneLeftX = 0, deadzoneRightX = Engine.WIDTH - deadzoneWidth - Utility.intAtWidth640(8);
+
+    // Difficulty
+
+    static int DIFFICULTY_NORMAL = 0;
+//    static int DIFFICULTY_CUSTOM = DIFFICULTY_NORMAL + 1;
+    static int DIFFICULTY_CHALLENGE = DIFFICULTY_NORMAL + 1;
+
+    public static int difficultyType = DIFFICULTY_NORMAL;
+    public static int difficultyLevel = 1;
 
     // Shop Costs
 
@@ -397,5 +407,12 @@ public class VariableHandler {
             outputList.add(highScore.get(i).toString());
         }
         return outputList;
+    }
+
+    public static int getDifficultyLevel() {
+        if (difficultyType == DIFFICULTY_CHALLENGE)
+            return EntityHandler.enemyTypes;
+        else
+            return 1;
     }
 }

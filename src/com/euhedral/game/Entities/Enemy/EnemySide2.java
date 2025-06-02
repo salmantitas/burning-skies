@@ -5,6 +5,8 @@ import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
 import com.euhedral.game.GameController;
 
+import java.awt.geom.Rectangle2D;
+
 public class EnemySide2 extends Enemy{
 
     double destinationX, destinationY;
@@ -106,5 +108,21 @@ public class EnemySide2 extends Enemy{
     @Override
     public int getTurretY() {
         return (int) y + Utility.intAtWidth640(3);
+    }
+
+    @Override
+    public Rectangle2D getBoundsHorizontal() {
+        Rectangle2D bounds = new Rectangle2D.Double(x, y + 20, width, 1*height/3 + 2);
+        return bounds;
+    }
+
+    @Override
+    public Rectangle2D getBoundsVertical() {
+        Rectangle2D bounds = null;
+        if (velX > 0)
+            bounds = new Rectangle2D.Double(x + (width / 4) - 10, y, (2 * width) / 4, height);
+        else
+            bounds = new Rectangle2D.Double(x + (width / 4) + 10, y, (2 * width) / 4, height);
+        return bounds;
     }
 }

@@ -88,9 +88,9 @@ public class EnemyDrone3 extends EnemyDrone{
     @Override
     public Rectangle2D getBounds() {
         int size = Math.max(explosionTimer, explosionTimer);
-        int expX = (int) x - (size - width)/2;
-        int expY = (int) y - (size - height)/2;
-        return new Rectangle(expX, expY, size, size);
+        int expX = (int) x - (size - width)/3;
+        int expY = (int) y - (size - height)/3;
+        return new Rectangle(expX, expY, 2*size/3, 2*size/3);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.6.92";
+    public static String gameVersion = "0.6.921";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -546,6 +546,12 @@ public class GameController {
                 case volumeEffectsDown: {
                     soundHandler.volumeEffectsDown();
                     SaveLoad.saveSettings();
+                    break;
+                }
+                case toggleDifficulty: {
+                    VariableHandler.difficultyType++;
+                    if (VariableHandler.difficultyType > 1)
+                        VariableHandler.difficultyType = 0;
                     break;
                 }
                 case health:

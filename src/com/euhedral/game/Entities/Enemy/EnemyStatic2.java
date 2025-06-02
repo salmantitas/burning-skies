@@ -165,16 +165,6 @@ public class EnemyStatic2 extends Enemy {
     }
 
     @Override
-    protected void renderBounds(Graphics g) {
-        g.setColor(Color.green);
-        Rectangle2D r = getBounds();
-
-        Graphics2D g2d = (Graphics2D) g;
-
-        g2d.draw(r);
-    }
-
-    @Override
     protected void setEnemyType() {
         enemyType = EntityHandler.TYPE_STATIC2;
     }

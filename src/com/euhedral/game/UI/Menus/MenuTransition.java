@@ -15,21 +15,32 @@ public class MenuTransition extends Menu {
     int optionSize = buttonSize/2;
     int shopSize = buttonSize/2;
 
-    // Shop
+    String text1 = "";
+    String text2 = "";
+    Font font1 = new Font("arial", 1, Utility.percWidth(4));
+    Font font2 = new Font("arial", 1, Utility.percWidth(2));
 
-    ButtonAction health = new ButtonAction(x5, y48, shopSize, "Buy Health", ActionTag.health);
-
-    ButtonAction ground = new ButtonAction(x5, y56, shopSize, "Ground Bullets", ActionTag.ground);
-
-    ButtonAction power = new ButtonAction(x5, y62, shopSize, "Upgrade Power", ActionTag.power);
-
-    ButtonAction shield = new ButtonAction(x5, y70, shopSize, "Buy Shield", ActionTag.shield);
+//    // Shop
+//
+//    ButtonAction health = new ButtonAction(x5, y48, shopSize, "Buy Health", ActionTag.health);
+//
+//    ButtonAction ground = new ButtonAction(x5, y56, shopSize, "Ground Bullets", ActionTag.ground);
+//
+//    ButtonAction power = new ButtonAction(x5, y62, shopSize, "Upgrade Power", ActionTag.power);
+//
+//    ButtonAction shield = new ButtonAction(x5, y70, shopSize, "Buy Shield", ActionTag.shield);
 
     // Navigation
 
-    ButtonAction start = new ButtonAction(x43, y40, buttonSize, "Start", ActionTag.go);
+    int difficultyY = y40;
+    int difficultyX = x20;
+    int startY = difficultyY + spacingY;
 
-    ButtonNav back = new ButtonNav(x43, y70, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+    ButtonAction difficulty = new ButtonAction(difficultyX, difficultyY, Utility.perc(buttonSize, 80), "Difficulty", ActionTag.toggleDifficulty);
+
+    ButtonAction start = new ButtonAction(difficultyX, startY, buttonSize, "Start", ActionTag.go);
+
+    ButtonNav back = new ButtonNav(difficultyX, y70, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
 
 //    ButtonNav quit = new ButtonNav(x43, y80, buttonSize, "Quit", GameState.Quit);
 
@@ -42,11 +53,12 @@ public class MenuTransition extends Menu {
 
     public MenuTransition() {
         super(GameState.Transition);
-        MAXBUTTON = 2;
+        MAXBUTTON = 3;
         options = new Button[MAXBUTTON];
 
-        options[0] = start;
-        options[1] = back;
+        options[0] = difficulty;
+        options[1] = start;
+        options[2] = back;
 //        options[2] = quit;
 
 //        options[4] = health;
@@ -71,10 +83,10 @@ public class MenuTransition extends Menu {
         boolean minShieldScore = score > VariableHandler.shield.getCost();
         boolean fullShield = VariableHandler.shield.getValue() >= VariableHandler.shield.getMAX();
 
-        checkConditionAndDisable(health, minHealthScore && !fullHealth);
-        checkConditionAndDisable(power, minPowerScore && !maxPower);
-        checkConditionAndDisable(ground, minGroundScore && !VariableHandler.gotGround());
-        checkConditionAndDisable(shield, minShieldScore && !fullShield);
+//        checkConditionAndDisable(health, minHealthScore && !fullHealth);
+//        checkConditionAndDisable(power, minPowerScore && !maxPower);
+//        checkConditionAndDisable(ground, minGroundScore && !VariableHandler.gotGround());
+//        checkConditionAndDisable(shield, minShieldScore && !fullShield);
 
         if (Engine.timer > VariableHandler.notificationSet + 100) {
             VariableHandler.resetSaveDataNotification();
@@ -115,7 +127,27 @@ public class MenuTransition extends Menu {
         g.setFont(new Font("arial", 1, Utility.percWidth(1)));
         g.drawString(VariableHandler.saveDataNotification, x40, y70);
 
+        renderDifficulty(g);
+
         super.postRender(g);
+    }
+
+    private void renderDifficulty(Graphics g) {
+        if (VariableHandler.difficultyType == 0) {
+            text1 = "Normal";
+            text2 = "Enemies will progressively get more difficult";
+        } else {
+            text1 = "Challenge";
+            text2 = "All enemies available from the start";
+        }
+
+        g.setColor(Color.BLACK);
+        g.setFont(font1);
+        g.drawString(text1, difficultyX + 300, difficultyY + Utility.percHeight(5));
+
+        g.setColor(Color.BLACK);
+        g.setFont(font2);
+        g.drawString(text2, difficultyX + 300, difficultyY + Utility.percHeight(10));
     }
 
 }

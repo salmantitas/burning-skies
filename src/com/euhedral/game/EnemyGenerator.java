@@ -91,7 +91,7 @@ public class EnemyGenerator {
 
         System.out.printf("Width: %d, Height: %d\n", width, height);
 
-        difficulty = 1;
+        difficulty = VariableHandler.getDifficultyLevel();
         minWavesDifficultyIncrease = 5;
         minDifficultyForMovement = 2;
         entityHandler.setLevelHeight(getLevelHeight());

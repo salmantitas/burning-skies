@@ -20,8 +20,6 @@ public class MenuMain extends Menu {
         MAXBUTTON = 6;
         options = new Button[MAXBUTTON];
 
-        int spacingY =  Utility.percHeight(9);
-
         int playY = y32;
         int settingsY = playY + spacingY;
         int highScoreY = settingsY + spacingY;
