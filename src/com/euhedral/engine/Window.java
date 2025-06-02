@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class Window extends Canvas {
 
+    JFrame frame;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     double widthTest = screenSize.getWidth();
     double heightTest = screenSize.getHeight();
@@ -15,7 +16,7 @@ public class Window extends Canvas {
     // Locks the screen at the specified dimension so that it cannot be resized. The game is added to the screen and
     // is started.
     public Window(int width, int height, String title, Engine engine) {
-        JFrame frame = new JFrame(title);
+        frame = new JFrame(title);
         System.out.println("Window created");
 
         Engine.SCALE = heightTest / Engine.HEIGHT;

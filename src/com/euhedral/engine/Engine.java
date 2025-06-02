@@ -25,6 +25,7 @@ public class Engine extends Canvas implements Runnable{
     public static int HEIGHT = (int) (WIDTH / SCREEN_RATIO);
     public static double SCALE = 1;
     public static Color BACKGROUND_COLOR = Color.BLACK;
+    private static Window window;
 
     private final double UPDATE_CAP = 1.0/60.0; // determines the frequency of game-updates. 1/60 means once every 60 seconds
     private static boolean running = false;
@@ -38,6 +39,7 @@ public class Engine extends Canvas implements Runnable{
 
     // todo: change to private
     public static GameState currentState = GameState.Game;
+    public static GameState previousState;
 
     public EngineKeyboard keyInput;
     public EngineMouse mouseInput;
@@ -62,7 +64,7 @@ public class Engine extends Canvas implements Runnable{
         addMouseMotionListener(mouseInput);
         addMouseWheelListener(mouseInput);
         System.out.println("Game initialized");
-        new Window(WIDTH, HEIGHT, TITLE, this);
+        window = new Window(WIDTH, HEIGHT, TITLE, this);
     }
 
     public void start() {
@@ -248,6 +250,7 @@ public class Engine extends Canvas implements Runnable{
      * Manually set the GameState
      * */
     public static void setState(GameState state) {
+        previousState = currentState;
         currentState = state;
         notifyUIHandler();
     }
