@@ -83,7 +83,7 @@ public class EnemyDrone extends Enemy{
     @Override
     protected void commonInit() {
         this.setHealth(health_MAX);
-        forwardVelocity = 4f;
+        forwardVelocity = 5;
 //        velX = minVelX;
         updateDestination();
     }

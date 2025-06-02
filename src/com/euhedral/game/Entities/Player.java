@@ -260,12 +260,12 @@ public class Player extends MobileEntity {
     }
 
     public Rectangle2D getBoundsHorizontal() {
-        Rectangle2D bounds = new Rectangle2D.Double(x, y + 2*height/3 - 2, width, height/3 + 2);
+        Rectangle2D bounds = new Rectangle2D.Double(x + 1, y + 2*height/3 - 2, width - 3, height/3 - 6);
         return bounds;
     }
 
     public Rectangle2D getBoundsVertical() {
-        Rectangle2D bounds = new Rectangle2D.Double(x + (width / 4), y, (2 * width) / 4, height);
+        Rectangle2D bounds = new Rectangle2D.Double(x + (width / 4) + 1, y - 1, (2 * width) / 4 - 3, height - 1);
         return bounds;
     }
 

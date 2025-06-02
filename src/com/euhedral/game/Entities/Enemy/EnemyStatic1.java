@@ -41,7 +41,7 @@ public class EnemyStatic1 extends Enemy {
     public void initialize() {
         super.initialize();
 
-        health_MAX = 5;
+        health_MAX = 4;
 
         velX = 0;
         velY_MIN = 1.75f;

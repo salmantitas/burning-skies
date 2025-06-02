@@ -57,7 +57,8 @@ public class EnemyGenerator {
     final int TYPE_SIDE2 = EntityHandler.TYPE_SIDE2;
     final int TYPE_STATIC2 = EntityHandler.TYPE_STATIC2;
     final int TYPE_DRONE3 = EntityHandler.TYPE_DRONE3;
-    int maxTypes = TYPE_DRONE3 + 1;
+    final int TYPE_STATIC3 = EntityHandler.TYPE_STATIC3;
+    int maxTypes = TYPE_STATIC3 + 1;
 
     // Wave
     int wave;
@@ -170,6 +171,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_SIDE2; // stub
 //        enemytype = TYPE_STATIC2; // stub
 //        enemytype = TYPE_DRONE3; // stub
+//        enemytype = TYPE_STATIC3; // stub
 
 //        difficulty = maxTypes; // stub
 
@@ -182,36 +184,22 @@ public class EnemyGenerator {
             case TYPE_SIDE1:
                 limit = limitSide;
                 break;
-            case TYPE_STATIC2:
+            case TYPE_STATIC1:
                 limit = limitSide;
                 break;
             case TYPE_SIDE2:
                 limit = limitSide - 1;
                 break;
+            case TYPE_STATIC2:
+                limit = limitSide - 1;
+                break;
             case TYPE_DRONE3:
                 limit = 1;
                 break;
+            case TYPE_STATIC3:
+                limit = limitSide - 2;
+                break;
         }
-
-//        if (enemytype == TYPE_SIDE1) {
-//            limit = limitSide;
-//        }
-//
-//        if (enemytype == TYPE_STATIC1 || enemytype == TYPE_STATIC2) {
-//            limit = 5;
-//        }
-
-//        if (enemytype == TYPE_SIDE2) {
-//            limit = limitSide - 1;
-//        }
-//
-//        if (enemytype == TYPE_STATIC2) {
-//            limit = limitSide - 1;
-//        }
-
-//        if (enemytype == TYPE_BASIC) {
-//            limit = 20;
-//        }
 
             if (EntityHandler.getActiveEnemies(enemytype) >= limit) {
                 enemytype = TYPE_BASIC1;
@@ -267,7 +255,8 @@ public class EnemyGenerator {
         }
         // Horizontal Zone
         else {
-            if (enemytype == TYPE_HEAVY) {
+            boolean movesHorizontally = enemytype == TYPE_HEAVY || enemytype == TYPE_BASIC2 || enemytype == TYPE_STATIC2 || enemytype == TYPE_STATIC3;
+            if (movesHorizontally) {
                 spawnX = Utility.randomRangeInclusive(xStart + 3, xEnd - 3);
 
                 // check if coordinate is in exclusion list

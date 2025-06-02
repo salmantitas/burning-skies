@@ -6,7 +6,7 @@ import com.euhedral.game.EntityHandler;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class EnemyStatic2 extends Enemy {
+public class EnemyStatic3 extends Enemy {
 
     double destinationX, destinationY;
     double deceleration;
@@ -19,13 +19,13 @@ public class EnemyStatic2 extends Enemy {
 
     boolean first;
 
-    public EnemyStatic2(int x, int y, int levelHeight) {
+    public EnemyStatic3(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
 //        bulletVelocity = Utility.intAtWidth640(6);
-        shootTimerDefault = 250;
+        shootTimerDefault = 300;
         shootTimer = 50;
-        score = 175;
+        score = 200;
 
         double decelerationMAX = 0.012;
         double decelerationMIN = 0.010;
@@ -34,7 +34,7 @@ public class EnemyStatic2 extends Enemy {
         deceleration = (double) (decelerationInt) * decelerationMIN;
         deceleration = decelerationMAX;
 
-        bulletsPerShot_MAX = 3;
+        bulletsPerShot_MAX = 5;
         bulletArcAngle = 15 * bulletsPerShot_MAX;
 
         attackEffect = true;
@@ -43,10 +43,10 @@ public class EnemyStatic2 extends Enemy {
         angle = 90;
         forwardVelocity = 1;
 
-        setImage(textureHandler.enemyStatic[1]);
+        setImage(textureHandler.enemyStatic[2]);
     }
 
-    public EnemyStatic2(int x, int y, Color color, int levelHeight) {
+    public EnemyStatic3(int x, int y, Color color, int levelHeight) {
         this(x, y, levelHeight);
         this.color = color;
     }
@@ -55,7 +55,7 @@ public class EnemyStatic2 extends Enemy {
     public void initialize() {
         super.initialize();
 
-        health_MAX = 5;
+        health_MAX = 6;
 
         velX = 0;
         velY_MIN = 1.75;
@@ -95,33 +95,36 @@ public class EnemyStatic2 extends Enemy {
             }
         } else if (movementState == MOVING_CIRCLE) {
 
-            if (vMove == VerticalMovement.UP) {
-                velY -= deceleration;
-                if (Math.abs(velY) >= velY_MAX / 2) {
-                    vMove = VerticalMovement.DOWN;
-                }
-            }
+//            if (vMove == VerticalMovement.UP) {
+//                velY -= deceleration;
+//                if (Math.abs(velY) >= velY_MAX / 2) {
+//                    vMove = VerticalMovement.DOWN;
+//                }
+//            }
+//
+//            if (vMove == VerticalMovement.DOWN) {
+//                velY += deceleration;
+//                if (Math.abs(velY) >= velY_MAX / 2) {
+//                    vMove = VerticalMovement.UP;
+//                }
+//            }
+//
+//            if (hMove == HorizontalMovement.RIGHT) {
+//                velX += deceleration;
+//                if (Math.abs(velX) >= velY_MAX) {
+//                    hMove = HorizontalMovement.LEFT;
+//                }
+//            }
+//
+//            if (hMove == HorizontalMovement.LEFT) {
+//                velX -= deceleration;
+//                if (Math.abs(velX) >= velY_MAX) {
+//                    hMove = HorizontalMovement.RIGHT;
+//                }
+//            }
 
-            if (vMove == VerticalMovement.DOWN) {
-                velY += deceleration;
-                if (Math.abs(velY) >= velY_MAX / 2) {
-                    vMove = VerticalMovement.UP;
-                }
-            }
-
-            if (hMove == HorizontalMovement.RIGHT) {
-                velX += deceleration;
-                if (Math.abs(velX) >= velY_MAX) {
-                    hMove = HorizontalMovement.LEFT;
-                }
-            }
-
-            if (hMove == HorizontalMovement.LEFT) {
-                velX -= deceleration;
-                if (Math.abs(velX) >= velY_MAX) {
-                    hMove = HorizontalMovement.RIGHT;
-                }
-            }
+            calculateVelocities();
+            angle = (angle + 1) % 360;
 
             super.moveInScreen();
         }
@@ -176,7 +179,7 @@ public class EnemyStatic2 extends Enemy {
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_STATIC2;
+        enemyType = EntityHandler.TYPE_STATIC3;
     }
 
     public boolean checkCollision(Rectangle2D object) {

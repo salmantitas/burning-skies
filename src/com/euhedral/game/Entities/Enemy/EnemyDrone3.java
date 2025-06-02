@@ -106,7 +106,7 @@ public class EnemyDrone3 extends EnemyDrone{
     @Override
     protected void commonInit() {
         super.commonInit();
-        forwardVelocity = 3f;
+        forwardVelocity = 3;
         explosionTimer = 0;
     }
 

@@ -46,7 +46,7 @@ public class TextureHandler {
     public BufferedImage[] enemy = new BufferedImage[3];
     public BufferedImage[] enemyHeavy = new BufferedImage[1];
     public BufferedImage[] enemyFast = new BufferedImage[1];
-    public BufferedImage[] enemyStatic = new BufferedImage[2];
+    public BufferedImage[] enemyStatic = new BufferedImage[3];
     public BufferedImage[] enemySide = new BufferedImage[4];
     public BufferedImage[] enemyDrone = new BufferedImage[3];
     public BufferedImage[] explosion = new BufferedImage[4];
@@ -122,6 +122,7 @@ public class TextureHandler {
         enemyFast[0] = enemyDownSS.grabImage(2,2,w,h);
         enemyStatic[0] = enemyDownSS.grabImage(1,3,w,h);
         enemyStatic[1] = enemyDownSS.grabImage(2,3,w,h);
+        enemyStatic[2] = enemyDownSS.grabImage(3,3,w,h);
         enemySide[0] = enemySide1SS.grabImage(1,1,w,h);
         enemySide[1] = enemySide1SS.grabImage(2,1,w,h);
         enemySide[2] = enemySide2SS.grabImage(1,1,w,h);

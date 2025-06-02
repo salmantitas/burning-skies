@@ -182,4 +182,9 @@ public class MessageBox extends UIItem {
     public void setTransparency(float transparency) {
         this.transparency = transparency;
     }
+
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
+        font = new Font("arial", 0, fontSize);
+    }
 }

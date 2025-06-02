@@ -43,7 +43,11 @@ public class MenuMain extends Menu {
         options[4] = credits;
         options[5] = quit;
 
-        MessageBox start = new MessageBox( 500, 400);
+        MessageBox start = new MessageBox( 100, 400, 1070, 200);
+        start.addText("");
+        start.addText("");
+        start.addText("");
+        start.setFontSize(90);
 
         addMessageBox(start);
 

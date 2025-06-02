@@ -63,6 +63,12 @@ public class EnemyDrone2 extends EnemyDrone{
     }
 
     @Override
+    protected void commonInit() {
+        super.commonInit();
+        forwardVelocity = 4;
+    }
+
+    @Override
     public int getTurretX() {
         return (int) x + width/2 - Utility.intAtWidth640(2);
     }
