@@ -21,10 +21,10 @@ public class MenuHighScore extends Menu {
         options[0] = back;
 
         int panelWidth = 300;
-        int panelHeight = Utility.percHeight(40);
+        int panelHeight = Utility.percHeight(41);
 
-        com.euhedral.engine.UI.Panel backPane = new Panel(Utility.percWidth(6), Utility.percHeight(25), panelWidth, panelHeight, GameState.Game);
-        backPane.setTransparency(0.7f);
+        Panel backPane = new Panel(Utility.percWidth(6), Utility.percHeight(25), panelWidth, panelHeight, GameState.Game);
+        backPane.setTransparency(0.8f);
         menuItems.add(backPane);
     }
 

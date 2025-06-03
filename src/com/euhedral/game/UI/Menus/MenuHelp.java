@@ -73,10 +73,10 @@ public class MenuHelp extends Menu {
         options[0] = back;
 
         int panelWidth = Utility.percWidth(55);
-        int panelHeight = Utility.percHeight(49);
+        int panelHeight = 470;
 
-        Panel backPane = new Panel(helpX - Utility.percWidth(1), helpY + Utility.percHeight(4), panelWidth, panelHeight, GameState.Game);
-        backPane.setTransparency(0.7f);
+        Panel backPane = new Panel(helpX - Utility.percWidth(1), helpY + 40, panelWidth, panelHeight, GameState.Game);
+        backPane.setTransparency(0.8f);
         menuItems.add(backPane);
 
 //        createBindable(GameController.UP, 100, 100);

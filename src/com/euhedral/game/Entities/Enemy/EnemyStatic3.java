@@ -35,7 +35,7 @@ public class EnemyStatic3 extends Enemy {
         deceleration = decelerationMAX;
 
         bulletsPerShot_MAX = 5;
-        bulletArcAngle = 15 * bulletsPerShot_MAX;
+        bulletArcAngle = 10 * bulletsPerShot_MAX;
 
         attackEffect = true;
 
@@ -151,8 +151,9 @@ public class EnemyStatic3 extends Enemy {
     @Override
     public double getBulletAngle() {
         double tempAngle = calculateShotTrajectory();
+        int a = bulletArcAngle / bulletsPerShot_MAX;
 //        double maxArc = tempAngle + 20;
-        return tempAngle - 20 + (bulletsPerShot - 1) * 10; // * (bulletsPerShot % 2 == 0 ? 1 : -1); // stub
+        return tempAngle - (2 * a) + (bulletsPerShot - 1) * a; // * (bulletsPerShot % 2 == 0 ? 1 : -1); // stub
     }
 
     private void updateDestination() {

@@ -405,7 +405,7 @@ public class Enemy extends MobileEntity {
     }
 
     public double calculateShotTrajectory() {
-        return  getBulletAngle();
+        return getBulletAngle();
     }
 
     public boolean isExploding() {
