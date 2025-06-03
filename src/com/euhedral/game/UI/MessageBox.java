@@ -2,6 +2,7 @@ package com.euhedral.game.UI;
 
 import com.euhedral.engine.UI.UIItem;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -155,6 +156,7 @@ public class MessageBox extends UIItem {
     }
 
     public void disable() {
+        SoundHandler.playSound(SoundHandler.UI2);
         enable = false;
     }
 
