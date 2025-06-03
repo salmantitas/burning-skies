@@ -1,7 +1,6 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.*;
-import com.euhedral.game.Entities.Enemy.Enemy;
 import com.euhedral.game.Entities.Shop;
 import com.euhedral.game.UI.UIHandler;
 
@@ -20,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.6.923";
+    public static String gameVersion = "0.6.925";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -96,6 +95,12 @@ public class GameController {
     private static double maxScroll = 64;
     private static double scrollRate = maxScroll/20; // MAX = 0.04
 
+    BufferedImage imageSea; // = GameController.getTexture().sea[currentImage];
+    int imageScrollinginterval; // = imageSea.getHeight() * 2;
+
+    int minX = 0;
+    int minY = (int) -maxScroll;
+
     /************
      * Test *
      ************/
@@ -147,6 +152,9 @@ public class GameController {
 
     private void initializeGraphics() {
         textureHandler = new TextureHandler();
+
+        imageSea = GameController.getTexture().sea[currentImage];
+        imageScrollinginterval = imageSea.getHeight() * 2;
         /*************
          * Game Code *
          *************/
@@ -782,20 +790,15 @@ public class GameController {
 
     // todo: speed up 'animation'
     private void renderScrollingBackground(Graphics g) {
-        BufferedImage imageSea = GameController.getTexture().sea[currentImage];
-        int interval = imageSea.getHeight() * 2;
-
 //        scrollRate = 0.005f;
 
-        int minX = 0;
-        int minY = (int) -maxScroll;
 
         if (!Engine.stateIs(GameState.Test)) {
 
-            for (int i = minX; i < Engine.WIDTH; i += interval) {
-                for (int j = minY; j < Engine.HEIGHT; j += interval) {
+            for (int i = minX; i < Engine.WIDTH; i += imageScrollinginterval) {
+                for (int j = minY; j < Engine.HEIGHT; j += imageScrollinginterval) {
 
-                    g.drawImage(imageSea, i, j + (int) (backgroundScroll), interval + 1, interval + 1, null);
+                    g.drawImage(imageSea, i, j + (int) (backgroundScroll), imageScrollinginterval + 1, imageScrollinginterval + 1, null);
 
 //                    if (backgroundScrollAcc >= maxScroll/2) {
 //                        backgroundScrollAcc = 0f;

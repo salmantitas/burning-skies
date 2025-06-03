@@ -36,7 +36,7 @@ public class EnemyDrone3 extends EnemyDrone{
     @Override
     public void update() {
         super.update();
-        if (isActive() && inscreen) {
+        if (isActive() && inscreenY) {
             explosionTimer++;
             if (explosionTimer >= explosionTimer_MAX) {
                 state = STATE_EXPLODING;
@@ -76,7 +76,7 @@ public class EnemyDrone3 extends EnemyDrone{
 
     @Override
     public void move() {
-        if (isActive() && inscreen) {
+        if (isActive() && inscreenY) {
 
         } else if (isExploding()) {
             velY = explodingVelocity;

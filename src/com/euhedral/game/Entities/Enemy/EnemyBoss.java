@@ -44,7 +44,7 @@ public abstract class EnemyBoss extends Enemy {
 
     @Override
     public void move() {
-        if (inscreen) {
+        if (inscreenY) {
             moveInScreen();
         } else {
             y += velY;

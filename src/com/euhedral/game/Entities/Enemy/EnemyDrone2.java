@@ -46,7 +46,7 @@ public class EnemyDrone2 extends EnemyDrone{
     @Override
     public void move() {
 //        super.move();
-        if (isActive() && inscreen) {
+        if (isActive() && inscreenY) {
             int recoilPause = 25; // too low: 20, too high: 50
             double deceleration = 0.1;
             if (shootTimer < recoilPause) {

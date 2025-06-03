@@ -19,7 +19,7 @@ public class Player extends MobileEntity {
     // Personal
     private int levelHeight;
     private int power;
-//    private boolean ground = false;
+    //    private boolean ground = false;
 //    private boolean airBullet = true;
     private int clampOffsetX;
     private int clampOffsetY;
@@ -38,13 +38,10 @@ public class Player extends MobileEntity {
     // Graphics
     private TextureHandler textureHandler;
 
-    // Lazy Physics
-    private float acceleration; //stub //todo:delete
-    private float frictionalForce; //stub //todo:delete
     private Reflection reflection;
 
     public Player(int x, int y, int levelHeight) {
-        super(x,y, EntityID.Player);
+        super(x, y, EntityID.Player);
         textureHandler = GameController.getTexture();
         setAttributes();
         setImage();
@@ -55,25 +52,20 @@ public class Player extends MobileEntity {
 
         velX = 0;
         velY = 0;
-        physics.setAcceleration(0.05f);
-        acceleration = 0.1f; // todo: delete
-        velY_MIN = 5;
-        velX_MIN = 4.5;
-//        velY = minVelY;
-//        velX = minVelX;
-        velY_MAX = 2 * velY_MIN;
-        velX_MAX = 2 * velX_MIN;
+        physics.acceleration = 0.1;
+        velY_MIN = 4;
+        velX_MIN = 4;
+        velY_MAX = 10;
+        velX_MAX = 9;
 
-        physics.enableFriction();
-        physics.setFrictionalForce(0.9f);
-        frictionalForce = 0.9f; // todo: delete
+//        physics.friction = 1; // instantenous is equal to (minVel - 2)
 
         resetMovement();
 
         this.power = 1;
 
-        clampOffsetX = - 5 * width / 4;
-        clampOffsetY = height;
+        clampOffsetX = -5 * width / 4;
+        clampOffsetY = height - 20;
 
         reflection = new Reflection();
     }
@@ -139,7 +131,7 @@ public class Player extends MobileEntity {
 
         if (shield.getValue() > 0) {
             g.setColor(Color.yellow);
-            g.drawOval((int) x-width/2, (int) y-height/2, width*2, height*2);
+            g.drawOval((int) x - width / 2, (int) y - height / 2, width * 2, height * 2);
         }
 
 //        renderStats(g);
@@ -151,8 +143,8 @@ public class Player extends MobileEntity {
 
         int sizeOffset = 10;
         int xCorrection = 8;
-        int offsetX = (int) (Engine.WIDTH/2 - getCenterX()) / 15;
-        int offsetY = 10 + (int) y/500;
+        int offsetX = (int) (Engine.WIDTH / 2 - getCenterX()) / 15;
+        int offsetY = 10 + (int) y / 500;
         g2d.setColor(Color.DARK_GRAY);
         g2d.fillRect(xCorrection + (int) x - offsetX, (int) y - offsetY, width - sizeOffset, height - sizeOffset);
 
@@ -209,7 +201,7 @@ public class Player extends MobileEntity {
 
     public Bullet checkCollisionBullet(Enemy enemy) {
         Bullet bullet = null;
-        for (Entity entity: bullets.getEntities()) {
+        for (Entity entity : bullets.getEntities()) {
             BulletPlayer bulletPlayer = (BulletPlayer) entity;
             boolean intersectsEnemy = bulletPlayer.getBounds().intersects(enemy.getBoundsHorizontal()) || bulletPlayer.getBounds().intersects(enemy.getBoundsVertical());
             if (bulletPlayer.isActive() && intersectsEnemy)
@@ -260,7 +252,7 @@ public class Player extends MobileEntity {
     }
 
     public Rectangle2D getBoundsHorizontal() {
-        Rectangle2D bounds = new Rectangle2D.Double(x + 1, y + 2*height/3 - 2, width - 3, height/3 - 6);
+        Rectangle2D bounds = new Rectangle2D.Double(x + 1, y + 2 * height / 3 - 2, width - 3, height / 3 - 6);
         return bounds;
     }
 
@@ -288,8 +280,8 @@ public class Player extends MobileEntity {
 //        System.out.printf("VelX: %f | VelY: %f\n", velX, velY);
 
         // Clamp
-        x = Utility.clamp(x, VariableHandler.deadzoneWidth, VariableHandler.deadzoneRightX - VariableHandler.deadzoneWidth);
-        y = Utility.clamp(y, levelHeight - 640, levelHeight + clampOffsetY);
+//        x = Utility.clamp(x, VariableHandler.deadzoneWidth, VariableHandler.deadzoneRightX - VariableHandler.deadzoneWidth);
+//        y = Utility.clamp(y, levelHeight - 640, levelHeight + clampOffsetY);
 
         // movement
         mouseMove();
@@ -314,7 +306,7 @@ public class Player extends MobileEntity {
 
         // tempSolution
         double correctionFactor = .715;
-        double shootAngleLeft = NORTH - shootAngle*correctionFactor;
+        double shootAngleLeft = NORTH - shootAngle * correctionFactor;
         double shootAngleRight = NORTH + shootAngle;
 
         if (power == 5) {
@@ -323,8 +315,7 @@ public class Player extends MobileEntity {
             spawnBullet(spawnMidX, (int) y, NORTH);
             spawnBullet(spawnLeftX, spawnY, NORTH);
             spawnBullet(spawnLeftX, spawnY, shootAngleLeft);
-        }
-        else if (power == 4) {
+        } else if (power == 4) {
             spawnBullet(spawnRightX, spawnY, shootAngleRight);
             spawnBullet(spawnRightX, spawnY, NORTH);
             spawnBullet(spawnLeftX, spawnY, NORTH);
@@ -351,48 +342,70 @@ public class Player extends MobileEntity {
     }
 
     private void keyboardMove() {
-        // Moving Left
+
         if (isMovingLeft()) {
-            velX -= acceleration;
-            velX = Utility.clamp(velX, -velX_MAX, -velX_MIN);
+            if (x < VariableHandler.deadzoneWidth) {
+                velX += Math.abs(velX) / 4;
+                velX = Utility.clamp(velX, -velX_MAX, 0);
+            } else {
+                velX -= physics.acceleration;
+                velX = Utility.clamp(velX, -velX_MAX, -velX_MIN);
+            }
+//            Utility.log("VelX: " + velX);
         }
 
-        // Moving Right
         else if (isMovingRight()) {
-            velX += acceleration;
-            velX = Utility.clamp(velX, velX_MIN, velX_MAX);
+            if (x > VariableHandler.deadzoneRightX - VariableHandler.deadzoneWidth) {
+                velX -= Math.abs(velX) / 4;
+                velX = Utility.clamp(velX, 0, velX_MAX);
+            } else {
+                velX += physics.acceleration;
+                velX = Utility.clamp(velX, velX_MIN, velX_MAX);
+            }
         }
 
         // Not Moving Left or Right
         else if ((!moveLeft && !moveRight) || (moveLeft && moveRight)) {
 //            if (velX > 0) {
-//                velX -= frictionalForce;
+//                velX -= physics.friction;
+//                velX = Utility.clamp(velX, 0, velX_MAX);
 //            } else if (velX < 0) {
-//                velX += frictionalForce;
+//                velX += physics.friction;
+//                velX = Utility.clamp(velX, -velX_MAX, 0);
 //            }
             velX = 0;
         }
 
-        // Moving Up
-        if (moveUp && !moveDown) {
-            velY -= acceleration;
-            velY = Utility.clamp(velY, -velY_MAX, -velY_MIN);
+//        y = Utility.clamp(y, levelHeight - 640, levelHeight + clampOffsetY);
+
+        if (isMovingUp()) {
+            if (y < levelHeight - 600) {
+                velY += Math.abs(velY) / 4;
+                velY = Utility.clamp(velY, -velY_MAX, 0);
+            } else {
+                velY -= physics.acceleration;
+                velY = Utility.clamp(velY, -velY_MAX, -velY_MIN);
+            }
         }
 
-        // Moving Down
-        else if (moveDown && !moveUp) {
-            velY += acceleration;
-            velY = Utility.clamp(velY, velY_MIN, velY_MAX);
-
+        else if (isMovingDown()) {
+            if (y > levelHeight + clampOffsetY) {
+                velY -= Math.abs(velY) / 4;
+                velY = Utility.clamp(velY, 0, velY_MAX);
+            } else {
+                velY += physics.acceleration;
+                velY = Utility.clamp(velY, velY_MIN, velY_MAX);
+            }
         }
 
         // Not Moving Up or Down
         else if (!moveUp && !moveDown || (moveUp && moveDown)) {
 //            if (velY > 0) {
-//                velY -= frictionalForce;
-//            }
-//            if (velY < 0) {
-//                velY += frictionalForce;
+//                velY -= physics.friction;
+//                velY = Utility.clamp(velY, 0, velY_MAX);
+//            } else if (velY < 0) {
+//                velY += physics.friction;
+//                velY = Utility.clamp(velY, -velY_MAX, 0);
 //            }
             velY = 0;
         }
@@ -462,8 +475,7 @@ public class Player extends MobileEntity {
             if (temp > 0) {
                 health.decrease(temp);
             }
-        }
-        else health.decrease(num);
+        } else health.decrease(num);
     }
 
     // Bullet Functions
@@ -479,7 +491,7 @@ public class Player extends MobileEntity {
     }
 
     private void checkDeathAnimationEnd() {
-        for (Entity entity: bullets.getEntities()) {
+        for (Entity entity : bullets.getEntities()) {
 
             Bullet bullet = (Bullet) entity;
 
@@ -499,8 +511,9 @@ public class Player extends MobileEntity {
     }
 
     public double getCenterX() {
-        return x + width/2 - 9; // todo: find out why we need 12
+        return x + width / 2 - 9; // todo: find out why we need 12
     }
+
     public double getCenterY() {
         return (y + height / 2 - 2);
     }
@@ -511,5 +524,13 @@ public class Player extends MobileEntity {
 
     private boolean isMovingRight() {
         return (!moveLeft && moveRight);
+    }
+
+    private boolean isMovingUp() {
+        return (moveUp && !moveDown);
+    }
+
+    private boolean isMovingDown() {
+        return (moveDown && !moveUp);
     }
 }

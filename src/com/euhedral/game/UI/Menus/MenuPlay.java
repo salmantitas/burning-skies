@@ -73,7 +73,7 @@ public class MenuPlay extends Menu {
         super.render(g);
 
         VariableHandler.renderHUD(g);
-//        VariableHandler.renderLevel(g); // todo: disabled unless levels are reimplemented
+//        VariableHandler.renderLevel(g);
 //        if (VariableHandler.isTutorial() && activeMessageBoxes > 0)
 //            renderTutorials(g);
 

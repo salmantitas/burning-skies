@@ -65,7 +65,7 @@ public class EnemyHeavy extends Enemy {
     @Override
     public void update() {
         super.update();
-        if (state == STATE_ACTIVE && inscreen) {
+        if (state == STATE_ACTIVE && inscreenY) {
             updateDestination();
 
             if (movementDistance >= 0) {

@@ -32,7 +32,7 @@ public class EnemyBasic3 extends Enemy{
     public void update() {
         super.update();
         double increment = 0.50;
-        if (state == STATE_ACTIVE && inscreen) {
+        if (state == STATE_ACTIVE && inscreenY) {
             if (hMove == HorizontalMovement.LEFT)
                 angle = Math.min(angle + increment, EAST);
             else if (hMove == HorizontalMovement.RIGHT) {

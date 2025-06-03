@@ -58,6 +58,7 @@ public class VariableHandler {
 
     // Timer
     private static int timerX = Utility.percWidth(85);
+    private static int timerY;
 
     // Notifications
     public static String saveText = "Game Saved Successfully.";
@@ -71,7 +72,7 @@ public class VariableHandler {
 
     private static int STARTLEVEL = 1;
     private static int level;
-    private static final int MAXLEVEL = 1;
+    private static final int MAXLEVEL = EntityHandler.enemyTypes;
 //    public static int difficulty = 1;
 
     private static int healthBossDef, healthBoss;
@@ -142,7 +143,8 @@ public class VariableHandler {
         health.setY(Utility.percHeight(5));
         health.setForegroundColor(healthHigh);
 
-        levelY = Utility.percHeight(7);
+        levelY = Utility.percHeight(4);
+        timerY = Utility.percHeight(7);// levelY + Utility.percHeight(5);
 
         power = new Attribute(1, false, 1000);
         power.setMAX(5);
@@ -233,14 +235,14 @@ public class VariableHandler {
 
     public static void renderLevel(Graphics g) {
         g.setFont(new Font("arial", 1, levelSize));
-        g.setColor(Color.WHITE);
-        g.drawString("Level " + level, levelX, levelY);
+        g.setColor(Color.YELLOW);
+        g.drawString("Level " + level, timerX, levelY);
     }
 
     public static void renderTimer(Graphics g) {
         g.setFont(new Font("arial", 1, levelSize));
         g.setColor(Color.YELLOW);
-        g.drawString("Timer: " + GameController.getCurrentTime(), timerX, levelY);
+        g.drawString("Timer: " + GameController.getCurrentTime(), timerX, timerY);
     }
 
 //    public static void renderFPS(Graphics g) {

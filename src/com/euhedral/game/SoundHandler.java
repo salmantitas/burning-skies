@@ -16,7 +16,11 @@ public class SoundHandler {
     static Clip clip;
     public static Clip effect;
     private static Clip bgm;
+    static Clip newClip = null;
     static URL soundURL[] = new URL[MAX_CLIP];
+
+    static FloatControl gainControl;
+    static FloatControl bgmGainControl;
 
     private static int volumeMaster;
     private static int volumeEffects;
@@ -27,6 +31,9 @@ public class SoundHandler {
     private static boolean volumeMasterOn = true;
     private static boolean volumeEffectsOn = true;
     private static boolean volumeMusicOn = true;
+
+    static float volumeF;
+    static AudioInputStream ais;
 
     public static final int BGMMAINMENU = 0;
     public static final int BULLET_PLAYER = 1;
@@ -40,6 +47,9 @@ public class SoundHandler {
     public static final int UI2 = 9;
 
     private static int bgmID = -1;
+
+    static boolean noBgmPlaying;
+    static boolean sameBgmPlaying;
 
     public SoundHandler() {
         initializeSounds();
@@ -57,30 +67,33 @@ public class SoundHandler {
         soundURL[UI1] = getClass().getResource("/clip_ui_1.wav");
         soundURL[UI2] = getClass().getResource("/clip_ui_2.wav");
 
-        // stub todo: Load from settings
         volumeEffects = VOLUME_MAX;
         volumeMusic = VOLUME_MAX;
+
+        Utility.log("Initializing sounds");
     }
 
     public static void setFile(int i) {
         try {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
+            ais = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
             clip.open(ais);
         } catch (Exception e) {
 
         }
+        Utility.log("Set File");
     }
 
     public static Clip setClip(int i) {
-        Clip newClip = null;
+        newClip = null;
         try {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
+            ais = AudioSystem.getAudioInputStream(soundURL[i]);
             newClip = AudioSystem.getClip();
             newClip.open(ais);
         } catch (Exception e) {
 
         }
+        Utility.log("Set Clip");
         return newClip;
     }
 
@@ -95,11 +108,13 @@ public class SoundHandler {
     }
 
     public static void playSound(int i) {
+        Utility.log("Play Sound");
         setFile(i);
         play();
     }
 
     static private void play() {
+        Utility.log("Play");
         clip.start();
         gainControlVolumeMaster();
     }
@@ -118,7 +133,7 @@ public class SoundHandler {
     public static void gainControlVolumeMaster() {
         if (clip == null)
             return;
-        float volumeF = (float) volumeMaster/10;
+        volumeF = (float) volumeMaster/10;
         if (!volumeMasterOn) {
             volumeF = 0;
         }
@@ -131,10 +146,10 @@ public class SoundHandler {
 
         if (volumeF < 0f || volumeF > 1f)
             throw new IllegalArgumentException("Volume not valid: " + volumeF);
-        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        Utility.log("gainControl: " + gainControl);
-        FloatControl bgmGainControl = (FloatControl) bgm.getControl(FloatControl.Type.MASTER_GAIN);
-        Utility.log("bgmGainControl: " + bgmGainControl);
+        gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        bgmGainControl = (FloatControl) bgm.getControl(FloatControl.Type.MASTER_GAIN);
+//        Utility.log("gainControl: " + gainControl);
+//        Utility.log("bgmGainControl: " + bgmGainControl);
 
         gainControl.setValue(20f * (float) Math.log10(volumeF));
         if (!isVolumeMusic()) {
@@ -142,19 +157,19 @@ public class SoundHandler {
         }
         bgmGainControl.setValue(20f * (float) Math.log10(volumeF));
 
-//        Utility.log("Master Volume set to " + (int) (volumeF*100) + "%");
+        Utility.log("Master Volume set to " + (int) (volumeF*100) + "%");
     }
 
     public static void gainControlVolumeMusic() {
         if (bgm == null)
             return;
-        float volumeF = (float) volumeMusic/10;
+        volumeF = (float) volumeMusic/10;
         if (!volumeMusicOn) {
             volumeF = 0;
         }
         if (volumeF < 0f || volumeF > 1f)
             throw new IllegalArgumentException("Volume not valid: " + volumeF);
-        FloatControl gainControl = (FloatControl) bgm.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl = (FloatControl) bgm.getControl(FloatControl.Type.MASTER_GAIN);
 
         gainControl.setValue(20f * (float) Math.log10(volumeF));
 
@@ -167,19 +182,22 @@ public class SoundHandler {
 
     public static void playBGMMenu() {
         playBGM(BGMMAINMENU);
+        Utility.log("Play BGM Menu");
     }
 
     public static void playBGMPlay() {
         playBGM(BGMPLAY);
+        Utility.log("Play BGM Game");
     }
 
     public static void playBGMGameOver() {
         playBGM(BGMGAMEOVER);
+        Utility.log("Play BGM GameOver");
     }
 
     private static void playBGM(int soundID) {
-        boolean noBgmPlaying = bgm == null;
-        boolean sameBgmPlaying = bgmID == soundID;
+        noBgmPlaying = bgm == null;
+        sameBgmPlaying = bgmID == soundID;
 
         if (noBgmPlaying) {
             bgmHelper(soundID);
@@ -198,6 +216,7 @@ public class SoundHandler {
         bgm.start();
         bgm.loop(Clip.LOOP_CONTINUOUSLY);
         bgmID = soundID;
+        Utility.log("BGM Helper");
     }
 
 //    public boolean playingBGMMenu() {
@@ -321,5 +340,4 @@ public class SoundHandler {
         volumeEffects = volume;
         Utility.log(Integer.toString(volumeEffects));
     }
-
 }

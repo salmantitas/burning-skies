@@ -47,7 +47,7 @@ public class EnemyFast extends Enemy{
     @Override
     public void update() {
         super.update();
-        if (state == STATE_ACTIVE && inscreen) {
+        if (state == STATE_ACTIVE && inscreenY) {
             if (movementDistance >= 0) {
                 movementDistance -= Math.abs(velX);
             } else {

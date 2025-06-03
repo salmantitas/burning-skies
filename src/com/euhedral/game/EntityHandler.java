@@ -529,7 +529,7 @@ public class EntityHandler {
         else {
             bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity, tracking));
         }
-        bullets.printPool("Bullet");
+//        bullets.printPool("Bullet");
     }
 
     public void clearEnemies() {
@@ -594,7 +594,7 @@ public class EntityHandler {
 
     public void renderBossHealth(Graphics g) {
         if (boss != null) {
-            if (boss.isInscreen() && boss.isAlive())
+            if (boss.isInscreenY() && boss.isAlive())
                 VariableHandler.drawBossHealth(g);
         }
     }
@@ -625,7 +625,7 @@ public class EntityHandler {
             Enemy enemy = (Enemy) entity;
 //            boolean enemyInAir = enemy.getContactId() == ContactID.Air;
             if (enemy.isActive())
-                if (enemy.isInscreen() && enemy.isActive()) {
+                if (enemy.isInscreenY() && enemy.isActive()) {
                     boolean collision = player.checkCollision(enemy);
 //                    boolean collision2 = player.checkCollision(enemy.getBoundsVertical());
                     if (collision) {
@@ -643,7 +643,7 @@ public class EntityHandler {
     private void enemyVsPlayerBulletCollision() {
         for (Entity entity : enemies.getEntities()) {
             Enemy enemy = (Enemy) entity;
-            if (enemy.isInscreen() && enemy.isActive()) {
+            if (enemy.isInscreenY() && enemy.isActive()) {
                 Bullet bullet = player.checkCollisionBullet(enemy);
                 if (bullet != null) {
                     destroy(bullet, enemy);

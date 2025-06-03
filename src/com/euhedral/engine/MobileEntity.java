@@ -11,23 +11,23 @@ public abstract class MobileEntity extends Entity {
 
         // this can be completely commented out if the
         // game has no functional use of physics
-        protected float gravity = 1f, terminalVel = 0;
-        protected float acceleration = 0, frictionalForce = 0;
+        public double gravity = 1, terminalVel = 0, acceleration = 0;
+        public double friction = 0, friction_MAX, friction_MIN;
 
         // every object is initialized to be not jumping or affected by gravity
-        protected boolean gravityAffected = false, jumping = false, friction = false;
+//        protected boolean gravityAffected = false, jumping = false; //, friction = false;
 
-        public void enableFriction() {
-            friction = true;
-        }
-
-        public void setFrictionalForce(float frictionalForce) {
-            this.frictionalForce = frictionalForce;
-        }
-
-        public void setAcceleration(float acceleration) {
-            this.acceleration = acceleration;
-        }
+//        public void enableFriction() {
+//            friction = true;
+//        }
+//
+//        public void setFrictionalForce(float frictionalForce) {
+//            this.frictionalForce = frictionalForce;
+//        }
+//
+//        public void setAcceleration(float acceleration) {
+//            this.acceleration = acceleration;
+//        }
     }
 
     protected Physics physics = new Physics();
@@ -74,6 +74,7 @@ public abstract class MobileEntity extends Entity {
     @Override
     public void update() {
         if (isActive()) {
+            // todo: active check might be redundant
             move();
         }
     }
@@ -166,21 +167,21 @@ public abstract class MobileEntity extends Entity {
     * Physics Function
     * */
 
-    public boolean isGravityAffected() {
-        return physics.gravityAffected;
-    }
+//    public boolean isGravityAffected() {
+//        return physics.gravityAffected;
+//    }
 
-    public void setGravityAffected(boolean gravityAffected) {
-        physics.gravityAffected = gravityAffected;
-    }
+//    public void setGravityAffected(boolean gravityAffected) {
+//        physics.gravityAffected = gravityAffected;
+//    }
 
-    public boolean isJumping() {
-        return physics.jumping;
-    }
+//    public boolean isJumping() {
+//        return physics.jumping;
+//    }
 
-    public void setJumping(boolean jumping) {
-        physics.jumping = jumping;
-    }
+//    public void setJumping(boolean jumping) {
+//        physics.jumping = jumping;
+//    }
 
     public void setForwardVelocity(double forwardVelocity) {
         this.forwardVelocity = forwardVelocity;

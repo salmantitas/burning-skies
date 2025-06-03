@@ -167,7 +167,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_DRONE1; // stub
 //        enemytype = TYPE_SIDE1; // stub
 //        enemytype = TYPE_STATIC1; // stub
-//        enemytype = TYPE_DRONE2; // stub
+        enemytype = TYPE_DRONE2; // stub
 //        enemytype = TYPE_SIDE2; // stub
 //        enemytype = TYPE_STATIC2; // stub
 //        enemytype = TYPE_DRONE3; // stub
@@ -284,6 +284,7 @@ public class EnemyGenerator {
 //                spawnX += 64;
 //            }
 
+//            spawnX = xStart; // stub
 //            spawnX = xEnd; // stub
 
         }
@@ -320,7 +321,9 @@ public class EnemyGenerator {
 //            minWavesDifficultyIncrease += 5;
             wavesSinceDifficultyIncrease = 0;
             Utility.log("Diff: " + difficulty);
-            Utility.log("Level: " + (wave / minWavesDifficultyIncrease + 1));
+            level = wave / minWavesDifficultyIncrease + 1;
+            Utility.log("Level: " + (level));
+            VariableHandler.setLevel(level);
         } else {
             wavesSinceDifficultyIncrease++;
         }

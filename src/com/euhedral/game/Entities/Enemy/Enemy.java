@@ -24,7 +24,8 @@ public class Enemy extends MobileEntity {
     protected int shootTimerDefault;
     protected int shootTimerFirst = 50;
     protected int shootTimer;
-    protected boolean inscreen = false;
+    protected boolean inscreenY = false;
+//    protected boolean inscreenX = false;
     protected float cam;
 
     protected int score;
@@ -43,7 +44,8 @@ public class Enemy extends MobileEntity {
     protected int bulletsPerShot = 0;
     protected double bulletVelocity;
     protected double bulletAngle;
-    protected int bulletArcAngle;;
+    protected int bulletArcAngle;
+    ;
 
     protected boolean attackEffect;
 
@@ -90,17 +92,21 @@ public class Enemy extends MobileEntity {
 //        updateActive();
         if (state == STATE_ACTIVE) {
             super.update();
-            shootTimer--;
-            if (!inscreen) {
-                inscreen = y > cam + Utility.percHeight(30);
+            shootTimer--; // todo: maybe move to when in screen
+            if (!inscreenY) {
+                inscreenY = y > cam + Utility.percHeight(30);
             }
-            if (inscreen && isActive()) {
-                if (shootTimer <= 0) {
-                    shoot();
-                }
+            if (inscreenY && isActive()) { // todo: potential redundant check for active
+//                if (inscreenX) {
+                    if (shootTimer <= 0) {
+                        shoot();
+                    }
+//                }
 
                 if (health < health_MAX && health == 1)
                     jitter = Utility.randomRange(-jitter_MAX, jitter_MAX);
+
+//                inscreenX =!(x < VariableHandler.deadzoneWidth) && !(x > VariableHandler.deadzoneRightX - VariableHandler.deadzoneWidth);
             }
         } else if (state == STATE_EXPLODING) {
             explosion.runAnimation();
@@ -125,12 +131,12 @@ public class Enemy extends MobileEntity {
     @Override
     public void move() {
         if (isActive()) {
-            if (inscreen) {
+            if (inscreenY) {
                 moveInScreen();
             } else {
                 y += offscreenVelY;
             }
-        } else if(isExploding()) {
+        } else if (isExploding()) {
             velY = 1.5f;
             y += velY;
         }
@@ -156,6 +162,10 @@ public class Enemy extends MobileEntity {
             renderAttackPath(g);
             super.render(g);
 //            renderBounds(g);
+//            if (inscreenX)
+//                g.setColor(Color.green);
+//            else g.setColor(Color.red);
+//            g.drawString("InscreenX", (int) x, (int) y);
         } else {
             renderExplosion(g);
         }
@@ -190,8 +200,8 @@ public class Enemy extends MobileEntity {
     protected void renderExplosion(Graphics g) {
         if (!explosion.playedOnce) {
             int size = Math.max(width, height);
-            int expX = (int) x + (size - width)/2;
-            int expY = (int) y - (size - height)/2;
+            int expX = (int) x + (size - width) / 2;
+            int expY = (int) y - (size - height) / 2;
             explosion.drawAnimation(g, expX, expY, size, size);
         }
     }
@@ -257,12 +267,12 @@ public class Enemy extends MobileEntity {
         health = Utility.randomRange(min, max);
     }
 
-    public boolean isInscreen() {
-        return inscreen;
+    public boolean isInscreenY() {
+        return inscreenY;
     }
 
-    public void setInscreen(boolean inscreen) {
-        this.inscreen = inscreen;
+    public void setInscreenY(boolean inscreenY) {
+        this.inscreenY = inscreenY;
     }
 
     protected void resetShootTimer() {
@@ -312,7 +322,7 @@ public class Enemy extends MobileEntity {
 //    }
 
     public Rectangle2D getBoundsHorizontal() {
-        Rectangle2D bounds = new Rectangle2D.Double(x, y, width, 1*height/3 + 2);
+        Rectangle2D bounds = new Rectangle2D.Double(x, y, width, 1 * height / 3 + 2);
 //        Rectangle bounds = new Rectangle(x, y, width, 1*height/3 + 2);
         return bounds;
     }
@@ -346,7 +356,7 @@ public class Enemy extends MobileEntity {
         super.resurrect(x, y);
         explosion.endAnimation();
         shootTimer = shootTimerFirst;
-        inscreen = false;
+        inscreenY = false;
     }
 
     public boolean checkDeathAnimationEnd() {
@@ -363,7 +373,7 @@ public class Enemy extends MobileEntity {
 
     @Override
     public boolean canDisable() {
-        int offset = 64*3;
+        int offset = 64 * 3;
         int bottomBounds = levelHeight + offset;
         return getY() > bottomBounds;
     }
@@ -381,7 +391,9 @@ public class Enemy extends MobileEntity {
     }
 
     public boolean hasShot() {
-        return bulletsPerShot > 0;
+//        if (inscreenX)
+            return bulletsPerShot > 0;
+//        else return false;
     }
 
     public void decrementShot() {
@@ -389,7 +401,7 @@ public class Enemy extends MobileEntity {
     }
 
     public int getTurretX() {
-        return ((int) x + width/2);
+        return ((int) x + width / 2);
     }
 
     public int getTurretY() {
