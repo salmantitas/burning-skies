@@ -49,7 +49,7 @@ public class EnemyGenerator {
     final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
     final int TYPE_BASIC2 = EntityHandler.TYPE_BASIC2;
     final int TYPE_BASIC3 = EntityHandler.TYPE_BASIC3;
-    final int TYPE_FAST2 = EntityHandler.TYPE_FAST2;
+    final int TYPE_FAST2 = EntityHandler.TYPE_FAST;
     final int TYPE_SIDE1 = EntityHandler.TYPE_SIDE1;
     final int TYPE_DRONE1 = EntityHandler.TYPE_DRONE1;
     final int TYPE_STATIC1 = EntityHandler.TYPE_STATIC1;
@@ -59,6 +59,8 @@ public class EnemyGenerator {
     final int TYPE_DRONE3 = EntityHandler.TYPE_DRONE3;
     final int TYPE_STATIC3 = EntityHandler.TYPE_STATIC3;
     int maxTypes = TYPE_STATIC3 + 1;
+
+    boolean difficultyIncreased = false;
 
     // Wave
     int wave;
@@ -106,7 +108,7 @@ public class EnemyGenerator {
         resetWaveSinceHealth();
         resetWaveSincePower();
         resetWaveSinceShield();
-        System.out.println("Wave: " + wave);
+//        System.out.println("Wave: " + wave);
 
         // todo: use line for first wave here
 
@@ -119,6 +121,7 @@ public class EnemyGenerator {
     }
 
     protected void spawnEnemies() {
+        System.out.println("Wave: " + wave);
         increment();
         determinePattern(); // move down later
         determineNum();
@@ -126,8 +129,8 @@ public class EnemyGenerator {
         determineZone();
         determineMovement();
         spawnEnemiesHelper();
-        incrementDifficulty();
         incrementWave();
+        incrementDifficulty();
         determineSpawnInterval();
     }
 
@@ -143,21 +146,26 @@ public class EnemyGenerator {
     protected void determineType() {
         // experimental
 
-        int temp = 1;
-        int total = 0;
-        while (temp <= maxTypes) {
-            total += temp;
-            temp++;
-        }
-
+//        int temp = 1;
+//        int total = 0;
+//        while (temp <= maxTypes) {
+//            total += temp;
+//            temp++;
+//        }
         int calculatedDifficulty = difficulty - 1;
+
+        if (difficultyIncreased) {
+            difficultyIncreased = false;
+            enemytype = calculatedDifficulty;
+        } else {
 
 //        if (waveSinceHeavy > MINWaveSinceHeavy) {
 //            calculatedDifficulty -= 1;
 //        }
 
-        int rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
-        enemytype = rand;
+            int rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
+            enemytype = rand;
+        }
 
 //        enemytype = TYPE_BASIC1; // stub
 //        enemytype = TYPE_HEAVY; // stub
@@ -315,15 +323,19 @@ public class EnemyGenerator {
     }
 
     protected void incrementDifficulty() {
-        if (wavesSinceDifficultyIncrease >= minWavesDifficultyIncrease) {
-            difficulty = Math.min(difficulty + 1, maxTypes);
-//            difficulty = Math.min(difficulty + 1, 8);
+        if (wavesSinceDifficultyIncrease + 1 >= minWavesDifficultyIncrease) {
+            if (difficulty < maxTypes) {
+                difficulty++;
+                difficultyIncreased = true;
+                wavesSinceDifficultyIncrease = 0;
+                Utility.log("Diff: " + difficulty);
+            }
 //            minWavesDifficultyIncrease += 5;
-            wavesSinceDifficultyIncrease = 0;
-            Utility.log("Diff: " + difficulty);
-            level = wave / minWavesDifficultyIncrease + 1;
-            Utility.log("Level: " + (level));
-            VariableHandler.setLevel(level);
+            if (wave / minWavesDifficultyIncrease + 1 > level) {
+                level++;
+                Utility.log("Level: " + (level));
+                VariableHandler.setLevel(level);
+            }
         } else {
             wavesSinceDifficultyIncrease++;
         }
@@ -332,7 +344,6 @@ public class EnemyGenerator {
     protected void incrementWave() {
 //        System.out.printf("Wave: %d, LastHeight: %d\n", wave, spawnHeight);
         wave++;
-        System.out.println("Wave: " + wave);
     }
 
     protected void determineSpawnInterval() {

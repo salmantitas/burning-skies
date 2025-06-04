@@ -111,6 +111,6 @@ public class EnemyFast extends Enemy{
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_BASIC3;
+        enemyType = EntityHandler.TYPE_FAST;
     }
 }

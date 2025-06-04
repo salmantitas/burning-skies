@@ -70,7 +70,7 @@ public class SoundHandler {
         volumeEffects = VOLUME_MAX;
         volumeMusic = VOLUME_MAX;
 
-        Utility.log("Initializing sounds");
+//        Utility.log("Initializing sounds");
     }
 
     public static void setFile(int i) {
@@ -81,7 +81,7 @@ public class SoundHandler {
         } catch (Exception e) {
 
         }
-        Utility.log("Set File");
+//        Utility.log("Set File");
     }
 
     public static Clip setClip(int i) {
@@ -93,7 +93,7 @@ public class SoundHandler {
         } catch (Exception e) {
 
         }
-        Utility.log("Set Clip");
+//        Utility.log("Set Clip");
         return newClip;
     }
 
@@ -108,13 +108,13 @@ public class SoundHandler {
     }
 
     public static void playSound(int i) {
-        Utility.log("Play Sound");
+//        Utility.log("Play Sound");
         setFile(i);
         play();
     }
 
     static private void play() {
-        Utility.log("Play");
+//        Utility.log("Play");
         clip.start();
         gainControlVolumeMaster();
     }
@@ -157,7 +157,7 @@ public class SoundHandler {
         }
         bgmGainControl.setValue(20f * (float) Math.log10(volumeF));
 
-        Utility.log("Master Volume set to " + (int) (volumeF*100) + "%");
+//        Utility.log("Master Volume set to " + (int) (volumeF*100) + "%");
     }
 
     public static void gainControlVolumeMusic() {
@@ -173,7 +173,7 @@ public class SoundHandler {
 
         gainControl.setValue(20f * (float) Math.log10(volumeF));
 
-        Utility.log("Music Volume set to " + (int) (volumeF*100) + "%");
+//        Utility.log("Music Volume set to " + (int) (volumeF*100) + "%");
     }
 
     public static void gainControlVolumeEffects() {
@@ -182,17 +182,17 @@ public class SoundHandler {
 
     public static void playBGMMenu() {
         playBGM(BGMMAINMENU);
-        Utility.log("Play BGM Menu");
+//        Utility.log("Play BGM Menu");
     }
 
     public static void playBGMPlay() {
         playBGM(BGMPLAY);
-        Utility.log("Play BGM Game");
+//        Utility.log("Play BGM Game");
     }
 
     public static void playBGMGameOver() {
         playBGM(BGMGAMEOVER);
-        Utility.log("Play BGM GameOver");
+//        Utility.log("Play BGM GameOver");
     }
 
     private static void playBGM(int soundID) {
@@ -216,7 +216,7 @@ public class SoundHandler {
         bgm.start();
         bgm.loop(Clip.LOOP_CONTINUOUSLY);
         bgmID = soundID;
-        Utility.log("BGM Helper");
+//        Utility.log("BGM Helper");
     }
 
 //    public boolean playingBGMMenu() {
@@ -328,16 +328,16 @@ public class SoundHandler {
 
     public static void setVolumeMaster(int volume) {
         volumeMaster = volume;
-        Utility.log(Integer.toString(volumeMaster));
+//        Utility.log(Integer.toString(volumeMaster));
     }
 
     public static void setVolumeMusic(int volume) {
         volumeMusic = volume;
-        Utility.log(Integer.toString(volumeMusic));
+//        Utility.log(Integer.toString(volumeMusic));
     }
 
     public static void setVolumeEffects(int volume) {
         volumeEffects = volume;
-        Utility.log(Integer.toString(volumeEffects));
+//        Utility.log(Integer.toString(volumeEffects));
     }
 }

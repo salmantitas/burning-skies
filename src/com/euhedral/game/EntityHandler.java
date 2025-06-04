@@ -28,9 +28,9 @@ public class EntityHandler {
     public static final int TYPE_BASIC3 = TYPE_BASIC2 + 1;
     public static final int TYPE_DRONE1 = TYPE_BASIC3 + 1;
     public static final int TYPE_STATIC1 = TYPE_DRONE1 + 1;
-    public static final int TYPE_FAST2 = TYPE_STATIC1 + 1;
-    public static final int TYPE_SIDE1 = TYPE_FAST2 + 1;
-    public static final int TYPE_DRONE2 = TYPE_SIDE1 + 1;
+    public static final int TYPE_SIDE1 = TYPE_STATIC1 + 1;
+    public static final int TYPE_FAST = TYPE_SIDE1 + 1;
+    public static final int TYPE_DRONE2 = TYPE_FAST + 1;
     public static final int TYPE_SIDE2 = TYPE_DRONE2 + 1;
     public static final int TYPE_STATIC2 = TYPE_SIDE2 + 1;
     public static final int TYPE_DRONE3 = TYPE_STATIC2 + 1;
@@ -163,7 +163,7 @@ public class EntityHandler {
         } else if (enemyType == TYPE_BASIC3) {
             enemy = new EnemyBasic3(x, y, levelHeight);
             enemy.setHMove(direction);
-        } else if (enemyType == TYPE_FAST2) {
+        } else if (enemyType == TYPE_FAST) {
             enemy = new EnemyFast(x, y, levelHeight);
             enemy.setHMove(direction);
         } else if (enemyType == TYPE_DRONE1) {
