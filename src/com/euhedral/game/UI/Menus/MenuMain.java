@@ -44,7 +44,7 @@ public class MenuMain extends Menu {
         options[4] = credits;
         options[5] = quit;
 
-        MessageBox start = new MessageBox( 100, 400, 1070, 260);
+        MessageBox start = new MessageBox( 100, 400, 1070, 300);
 //        start.addText("");
         start.addText("");
         start.addText("This game requires a keyboard to play");
@@ -65,7 +65,8 @@ public class MenuMain extends Menu {
 
     @Override
     public void render(Graphics g) {
-        super.render(g);
+        if (activeMessageBoxes == 0)
+            super.render(g);
 
         drawTitle(g);
 //        renderLogo(g);

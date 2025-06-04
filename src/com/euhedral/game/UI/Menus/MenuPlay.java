@@ -27,7 +27,7 @@ public class MenuPlay extends Menu {
         MAXBUTTON = 0;
 //        options = new Button[MAXBUTTON];
 
-        tutorial = new MessageBox(300,150, 660, 300);
+        tutorial = new MessageBox(300,250, 660, 300);
         tutorial.addText("Use WASD or the Arrow Keys to move.");
 //        tutorial.addText("");
         tutorial.addText("        SPACEBAR to shoot.");
