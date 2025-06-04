@@ -27,7 +27,7 @@ public class EnemyDrone2 extends EnemyDrone{
 //        power = 1;
 //        shootTimerDefault = 250;
 //        minVelX = 2f;
-        health_MAX = 3;
+        health_MAX = 2;
 
         commonInit();
     }
