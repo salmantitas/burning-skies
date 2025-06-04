@@ -2,9 +2,12 @@ package com.euhedral.engine;/*
  * Do not modify this class
  * */
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Window extends Canvas {
 
@@ -58,6 +61,13 @@ public class Window extends Canvas {
         System.out.println("Screen centered");
 
         frame.setVisible(true);
+
+        try {
+            frame.setIconImage(ImageIO.read(new File("res/icon.png")));
+        }
+        catch (IOException exc) {
+            exc.printStackTrace();
+        }
 
         // Test
 //        Engine.SCALE = widthTest / Engine.WIDTH;
