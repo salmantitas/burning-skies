@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.6.927";
+    public static String gameVersion = "0.6.928";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -558,7 +558,7 @@ public class GameController {
                 }
                 case toggleDifficulty: {
                     VariableHandler.difficultyType++;
-                    if (VariableHandler.difficultyType > 1)
+                    if (VariableHandler.difficultyType > VariableHandler.DIFFICULTY_CHALLENGE)
                         VariableHandler.difficultyType = 0;
                     break;
                 }

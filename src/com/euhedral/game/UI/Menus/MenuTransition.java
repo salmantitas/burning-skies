@@ -17,6 +17,7 @@ public class MenuTransition extends Menu {
 
     String text1 = "";
     String text2 = "";
+    String text3 = "";
     Font font1 = new Font("arial", 1, Utility.percWidth(4));
     Font font2 = new Font("arial", 1, Utility.percWidth(2));
 
@@ -134,10 +135,16 @@ public class MenuTransition extends Menu {
 
     private void renderDifficulty(Graphics g) {
         if (VariableHandler.difficultyType == 0) {
+            text1 = "Easy";
+            text2 = "Only start with basic enemies.";
+            text3 = "Enemies will progressively get more difficult";
+        } else if (VariableHandler.difficultyType == 1) {
             text1 = "Normal";
-            text2 = "Enemies will progressively get more difficult";
+            text2 = "The intended experience.";
+            text3 = "Enemies will progressively get more difficult";
         } else {
-            text1 = "Challenge";
+            text1 = "Master";
+            text3 = "For the experienced player.";
             text2 = "All enemies available from the start";
         }
 
@@ -145,9 +152,13 @@ public class MenuTransition extends Menu {
         g.setFont(font1);
         g.drawString(text1, difficultyX + 300, difficultyY + Utility.percHeight(5));
 
-        g.setColor(Color.BLACK);
+//        g.setColor(Color.BLACK);
         g.setFont(font2);
-        g.drawString(text2, difficultyX + 300, difficultyY + Utility.percHeight(10));
+        g.drawString(text2, difficultyX + 305, difficultyY + Utility.percHeight(10));
+
+//        g.setColor(Color.BLACK);
+//        g.setFont(font2);
+        g.drawString(text3, difficultyX + 305, difficultyY + Utility.percHeight(13));
     }
 
 }

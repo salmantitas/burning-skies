@@ -95,7 +95,8 @@ public class VariableHandler {
 
     // Difficulty
 
-    static int DIFFICULTY_NORMAL = 0;
+    static int DIFFICULTY_EASY = 0;
+    static int DIFFICULTY_NORMAL = 1;
 //    static int DIFFICULTY_CUSTOM = DIFFICULTY_NORMAL + 1;
     static int DIFFICULTY_CHALLENGE = DIFFICULTY_NORMAL + 1;
 
@@ -397,7 +398,7 @@ public class VariableHandler {
         g.setFont(new Font("arial", 1, fontSize));
 
         int lineHeightInPixel = 35;
-        for (int i = 0; i < highScore.size(); i++) {
+        for (int i = 0; i < HIGH_SCORE_NUMBERS_MAX; i++) {
             int val = highScore.get(i);
             g.drawString(Integer.toString(val), x0, y0 + (i + 1) * lineHeightInPixel);
         }
@@ -414,7 +415,11 @@ public class VariableHandler {
     public static int getDifficultyLevel() {
         if (difficultyType == DIFFICULTY_CHALLENGE)
             return EntityHandler.enemyTypes;
+//        todo: Custom Difficulty
+//        else if () {
+//
+//        }
         else
-            return 1;
+            return (difficultyType + 1);
     }
 }
