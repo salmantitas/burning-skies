@@ -6,12 +6,14 @@ import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 
 public class MenuGameOver extends Menu {
 
     Animation explosion;
+    int scoreX =Utility.percWidth(14);
 
     public MenuGameOver() {
         super(GameState.GameOver);
@@ -45,6 +47,7 @@ public class MenuGameOver extends Menu {
 
         super.render(g);
         drawGameOverScreen(g);
+        drawScore(g);
         super.postRender(g);
     }
 
@@ -55,7 +58,14 @@ public class MenuGameOver extends Menu {
     public void drawGameOverScreen(Graphics g) {
         g.setFont(new Font("arial", 1, 150));
         g.setColor(Color.WHITE);
-        g.drawString("GAME OVER", Utility.percWidth(13), Engine.HEIGHT/2);
+        g.drawString("GAME OVER", Utility.percWidth(13), Utility.percHeight(50));
+    }
+
+    public void drawScore(Graphics g) {
+        g.setFont(new Font("arial", 1, 40));
+        g.setColor(Color.WHITE);
+        g.drawString("Score: " + VariableHandler.getScore(), scoreX, Utility.percHeight(60));
+        g.drawString("Highest Score: " + VariableHandler.getHighScoreList().get(0), scoreX , Utility.percHeight(66));
     }
 
     @Override
