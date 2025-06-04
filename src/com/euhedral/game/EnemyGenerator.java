@@ -167,7 +167,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_DRONE1; // stub
 //        enemytype = TYPE_SIDE1; // stub
 //        enemytype = TYPE_STATIC1; // stub
-        enemytype = TYPE_DRONE2; // stub
+//        enemytype = TYPE_DRONE2; // stub
 //        enemytype = TYPE_SIDE2; // stub
 //        enemytype = TYPE_STATIC2; // stub
 //        enemytype = TYPE_DRONE3; // stub

@@ -65,7 +65,7 @@ public class MessageBox extends UIItem {
 
     private double SCALE_FACTOR;
 
-    private int widthMax = 500;
+//    private int widthMax = 500;
     private int heightMax;
 
     public MessageBox(int x, int y) {
@@ -75,7 +75,7 @@ public class MessageBox extends UIItem {
         SCALE_FACTOR = 2.00/2.50;
         width = 300;
         height = (int) (width * SCALE_FACTOR);
-        heightMax = (int) (widthMax * SCALE_FACTOR);
+//        heightMax = (int) (widthMax * SCALE_FACTOR);
         transparency = 1;
 //        close = new Close(x+width,y, margin);
     }
@@ -129,19 +129,19 @@ public class MessageBox extends UIItem {
 
             for (int i = 0; i < texts.size(); i++) {
                 String text = texts.get(i);
-                int textSize = Utility.perc((g.getFontMetrics().stringWidth(text)), 110);
+                int textSize = g.getFontMetrics().stringWidth(text);
                 if (textSize > width - margin) {
-                    if (textSize > widthMax - margin) {
-                        g.setColor(textColorError);
+//                    if (textSize > width - margin) {
+//                        g.setColor(textColorError);
                         text += "Text too long, please reformat.";
-                    }
-                    else {
-                        width = textSize + margin;
-//                        close.setX(x+width);
-                    }
+//                    }
+//                    else {
+//                        width = textSize + margin;
+////                        close.setX(x+width);
+//                    }
                 }
 
-                int textSpacing = i*18;
+                int textSpacing = i * fontSize;
                 yPos = y + textSpacing + textStart;
                 g.drawString(text, x + margin, yPos);
             }

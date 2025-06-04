@@ -15,6 +15,9 @@ import java.awt.image.BufferedImage;
 
 public class MenuMain extends Menu {
 
+    Font titleFont = new Font("arial", 1, titleSize);
+    Font versionFont = new Font("arial", 1, titleSize/10);
+
     public MenuMain() {
         super(GameState.Menu);
         MAXBUTTON = 6;
@@ -41,11 +44,14 @@ public class MenuMain extends Menu {
         options[4] = credits;
         options[5] = quit;
 
-        MessageBox start = new MessageBox( 100, 400, 1070, 200);
+        MessageBox start = new MessageBox( 100, 400, 1070, 260);
+//        start.addText("");
         start.addText("");
+        start.addText("This game requires a keyboard to play");
         start.addText("");
-        start.addText("");
-        start.setFontSize(90);
+//        start.addText("");
+//        start.addText("");
+        start.setFontSize(61);
 
         addMessageBox(start);
 
@@ -84,14 +90,12 @@ public class MenuMain extends Menu {
     * */
 
     private void drawTitle(Graphics g) {
-        Font font = new Font("arial", 1, titleSize);
-        g.setFont(font);
+        g.setFont(titleFont);
         g.setColor(titleColor);
         g.drawString(Engine.TITLE, titleX, y26);
 
-        font = new Font("arial", 1, titleSize/10);
-        g.setFont(font);
-        g.setColor(Color.WHITE);
+        g.setFont(versionFont);
+        g.setColor(Color.BLACK);
         g.drawString("v " + GameController.gameVersion, xLast, y26);
 //        BufferedImage image = GameController.getTexture().title;
 //        int imageWidth = image.getWidth(), imageHeight = image.getHeight();
