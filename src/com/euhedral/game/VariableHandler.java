@@ -397,7 +397,7 @@ public class VariableHandler {
         int fontSize = 25;
         g.setFont(new Font("arial", 1, fontSize));
 
-        int lineHeightInPixel = 35;
+        int lineHeightInPixel = Utility.intAtWidth640(18);
         for (int i = 0; i < HIGH_SCORE_NUMBERS_MAX; i++) {
             int val = highScore.get(i);
             g.drawString(Integer.toString(val), x0, y0 + (i + 1) * lineHeightInPixel);
