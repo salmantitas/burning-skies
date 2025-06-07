@@ -4,19 +4,16 @@ import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.*;
-import com.euhedral.engine.UI.Panel;
 import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
 import com.euhedral.game.UI.MessageBox;
-import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class MenuMain extends Menu {
 
     Font titleFont = new Font("arial", 1, titleSize);
-    Font versionFont = new Font("arial", 1, titleSize/10);
+    Font versionFont = new Font("arial", 1, titleSize/8);
 
     public MenuMain() {
         super(GameState.Menu);
@@ -47,7 +44,7 @@ public class MenuMain extends Menu {
         MessageBox start = new MessageBox( 100, 400, 1070, 300);
 //        start.addText("");
         start.addText("");
-        start.addText("This game requires a keyboard to play");
+//        start.addText("This game requires a keyboard to play");
         start.addText("");
 //        start.addText("");
 //        start.addText("");
@@ -59,6 +56,21 @@ public class MenuMain extends Menu {
 //            importButtons();
 //        } catch (IOException e) {
 //            e.printStackTrace();
+//        }
+
+        // Custom Font
+//        try {
+////            URL fontURL = new URL("file:///D:/Programming/burning-skies/res/magz.otf");
+//            URL fontURL = getClass().getResource("/Magz.otf");//"/mags.otf");
+//            titleFont = Font.createFont(Font.TRUETYPE_FONT, fontURL.openStream());
+//            titleFont = titleFont.deriveFont(1, titleSize);
+//        } catch (MalformedURLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        catch (FontFormatException e) {
+//            throw new RuntimeException(e);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
 //        }
 
     }
@@ -93,11 +105,11 @@ public class MenuMain extends Menu {
     private void drawTitle(Graphics g) {
         g.setFont(titleFont);
         g.setColor(titleColor);
-        g.drawString(Engine.TITLE, titleX, y26);
+        g.drawString(Engine.TITLE, titleX, headingY);
 
         g.setFont(versionFont);
         g.setColor(Color.BLACK);
-        g.drawString("v " + GameController.gameVersion, xLast, y26);
+        g.drawString("v " + GameController.gameVersion, xLast - Utility.percWidth(2), headingY);
 //        BufferedImage image = GameController.getTexture().title;
 //        int imageWidth = image.getWidth(), imageHeight = image.getHeight();
 //        int imageOffset = 50;

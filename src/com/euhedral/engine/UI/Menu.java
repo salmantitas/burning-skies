@@ -1,6 +1,5 @@
 package com.euhedral.engine.UI;
 
-import com.euhedral.engine.Engine;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ActionTag;
@@ -8,7 +7,6 @@ import com.euhedral.game.UI.MessageBox;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +53,7 @@ public class Menu {
     protected int xLast = Utility.percWidth(90);
     protected int y20 = Utility.percHeight(20);
     protected int y22 = Utility.percHeight(22);
-    protected int y26 = Utility.percHeight(26);
+    protected int y25 = Utility.percHeight(25);
     protected int y32 = Utility.percHeight(32);
     protected int y40 = Utility.percHeight(40);
     protected int y48 = Utility.percHeight(48);
@@ -64,6 +62,8 @@ public class Menu {
     protected int y70 = Utility.percHeight(70);
     protected int y71 = Utility.percHeight(71);
     protected int y80 = Utility.percHeight(80);
+
+    protected int headingY = Utility.percHeight(19);
 
     public Menu(GameState state) {
         this.state = state;

@@ -39,7 +39,7 @@ public class MenuTransition extends Menu {
 
     ButtonAction difficulty = new ButtonAction(difficultyX, difficultyY, Utility.perc(buttonSize, 80), "Difficulty", ActionTag.toggleDifficulty);
 
-    ButtonAction start = new ButtonAction(difficultyX, startY, buttonSize, "Start", ActionTag.go);
+    ButtonAction start = new ButtonAction(difficultyX, startY, Utility.perc(buttonSize, 90), "Start", ActionTag.go);
 
     ButtonNav back = new ButtonNav(difficultyX, y70, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
 

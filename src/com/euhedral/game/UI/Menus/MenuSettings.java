@@ -29,7 +29,7 @@ public class MenuSettings extends Menu {
 //    ButtonAction volumeEffectsDown = new ButtonAction(x36, y62, optionSize, optionSize, "-", ActionTag.volumeEffectsDown);
 //    ButtonAction volumeEffects = new ButtonAction(x40, y62, optionSize, "Effects Volume", ActionTag.volumeEffects);
 //    ButtonAction volumeEffectsUp = new ButtonAction(x62, y62, optionSize, optionSize,"+", ActionTag.volumeEffectsUp);
-    ButtonNav back = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+    ButtonNav back = new ButtonNav(x43, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
 
     public MenuSettings() {
         super(GameState.Settings);

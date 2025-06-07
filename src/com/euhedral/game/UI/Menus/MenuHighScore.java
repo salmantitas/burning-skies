@@ -12,18 +12,21 @@ import java.awt.*;
 
 public class MenuHighScore extends Menu {
 
+    int highScoreX = titleX + Utility.percWidth(1);
+//    int highScoreY = Utility.percHeight(25);
+
     public MenuHighScore() {
         super(GameState.Highscore);
         MAXBUTTON = 1;
         options = new Button[MAXBUTTON];
 
-        ButtonNav back = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+        ButtonNav back = new ButtonNav(x43, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
         options[0] = back;
 
         int panelWidth = 300;
-        int panelHeight = Utility.percHeight(41);
+        int panelHeight = Utility.percHeight(41.5);
 
-        Panel backPane = new Panel(Utility.percWidth(6), Utility.percHeight(25), panelWidth, panelHeight, GameState.Game);
+        Panel backPane = new Panel(highScoreX, y25, panelWidth, panelHeight, GameState.Game);
         backPane.setTransparency(0.8f);
         menuItems.add(backPane);
     }
@@ -39,10 +42,12 @@ public class MenuHighScore extends Menu {
 
     private void drawText(Graphics g) {
         g.setFont(new Font("arial", 1, titleSize));
+        g.setColor(Color.BLACK);
+
+        g.drawString("High Score", titleX, headingY);
+
         g.setColor(Color.WHITE);
 
-        g.drawString("High Score", x5, y20);
-
-        VariableHandler.drawHighScore(g, x10, y26);
+        VariableHandler.drawHighScore(g, highScoreX + Utility.percWidth(2), y25 + Utility.percHeight(1));
     }
 }

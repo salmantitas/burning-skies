@@ -69,7 +69,7 @@ public class MenuHelp extends Menu {
         MAXBUTTON = 1;
         options = new Button[MAXBUTTON];
 
-        ButtonNav back = new ButtonNav(x40, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+        ButtonNav back = new ButtonNav(x43, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
         options[0] = back;
 
         int panelWidth = Utility.percWidth(55);
@@ -138,7 +138,7 @@ public class MenuHelp extends Menu {
         for (int i = 0; i < help.size(); i++)
         {
             String s = help.get(i);
-            g.drawString(s, helpX, helpY + (i+1)*lineHeightInPixel);
+            g.drawString(s, helpX + Utility.percWidth(3), helpY + (i+1)*lineHeightInPixel);
         }
     }
 
