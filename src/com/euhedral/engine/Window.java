@@ -2,19 +2,16 @@ package com.euhedral.engine;/*
  * Do not modify this class
  * */
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Window extends Canvas {
 
     JFrame frame;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    double widthTest = screenSize.getWidth();
-    double heightTest = screenSize.getHeight();
+    double screenWidth = screenSize.getWidth();
+    double screenHeight = screenSize.getHeight();
+//    BufferedImage icon;
 
     // Creates a window for the game with the given width and height. The string title is used as the window's title.
     // Locks the screen at the specified dimension so that it cannot be resized. The game is added to the screen and
@@ -23,10 +20,10 @@ public class Window extends Canvas {
         frame = new JFrame(title);
         System.out.println("Window created");
 
-        Engine.SCALE = heightTest / Engine.HEIGHT;
+        Engine.SCALE = screenHeight / Engine.HEIGHT;
 
 //        Dimension dimension = new Dimension((int) (width*scale), (int) (height * scale));
-        Dimension dimension = new Dimension((int) (width * Engine.SCALE), (int) heightTest);
+        Dimension dimension = new Dimension((int) (width * Engine.SCALE), (int) screenHeight);
         System.out.println("Dimensions set");
 
 //        frame.setUndecorated(true);
@@ -62,12 +59,12 @@ public class Window extends Canvas {
 
         frame.setVisible(true);
 
-        try {
-            frame.setIconImage(ImageIO.read(new File("res/icon.png")));
-        }
-        catch (IOException exc) {
-            exc.printStackTrace();
-        }
+        frame.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("icon.png")).getImage());
+//        try {
+//        }
+//        catch (IOException exc) {
+//            exc.printStackTrace();
+//        }
 
         // Test
 //        Engine.SCALE = widthTest / Engine.WIDTH;

@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.7v.0";
+    public static String gameVersion = "0.7.01";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -36,6 +36,10 @@ public class GameController {
     private EntityHandler entityHandler;
     private static TextureHandler textureHandler;
     private SoundHandler soundHandler;
+
+    // Mouse
+    double mxD;
+    double myD;
 
     // Console todo
     public Scanner scanner;
@@ -371,8 +375,15 @@ public class GameController {
          * Game Code *
          *************/
 
-//        uiHandler.checkHover(mx, my);
-        giveDestination(mx, my);
+        // Convert Screen Space Coordinates to World Space Coordiantes
+        mxD = (double) mx;
+        myD = (double) my;
+
+        mxD /= Engine.SCALE;
+        myD /= Engine.SCALE;
+
+        uiHandler.checkHover((int) mxD, (int) myD);
+//        giveDestination(mx, my);
     }
 
     public void mouseDragged(int mx, int my) {
@@ -497,8 +508,14 @@ public class GameController {
     }
 
     public void checkButtonAction(int mx, int my) {
-//        uiHandler.checkButtonAction(mx, my);
-//        performAction();
+        mxD = (double) mx;
+        myD = (double) my;
+
+        mxD /= Engine.SCALE;
+        myD /= Engine.SCALE;
+
+        uiHandler.checkButtonAction((int) mxD, (int) myD);
+        performAction();
     }
 
     public void performAction() {
