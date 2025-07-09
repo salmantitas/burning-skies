@@ -6,7 +6,6 @@ import com.euhedral.game.Entities.Enemy.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 // todo: Remove Contact ID
@@ -39,20 +38,28 @@ public class EntityHandler {
     public static final int enemyTypes = TYPE_STATIC3 + 1;
 
     // Entity Lists
+    private Enemy enemy;
     private Flag flag; // todo: Remove
-    private static EnemyPool enemies = new EnemyPool();
-    private BulletPool bullets = new BulletPool();
-    private PickupPool pickups = new PickupPool();
+    private static EnemyPool enemies;
+    private BulletPool bullets;
+    private PickupPool pickups;
+    int pickupValue = 0;
 
     private EnemyBoss boss;
+
+    Graphics2D g2d;
+    float transparency;
 
     // Background Scrolling
     private static double scrollRate = 64d/20;
     public static final double backgroundScrollingSpeed = scrollRate/2;
 
     EntityHandler() {
+        bullets = new BulletPool();
+        pickups = new PickupPool();
+        enemies = new EnemyPool(bullets);
 //        this.variableHandler = variableHandler;
-        initializeAnimations();
+//        initializeAnimations();
     }
 
     public void initializeGraphics() {
@@ -146,11 +153,11 @@ public class EntityHandler {
         else {
             spawnNew(x, y, enemyType, direction, distance);
         }
-//        enemies.printPool("Enemy");
+        enemies.printPool("Enemy");
     }
 
     private void spawnNew(int x, int y, int enemyType, int direction, int distance) {
-        Enemy enemy = null;
+        enemy = null;
 
         if (enemyType == TYPE_BASIC1) {
             enemy = new EnemyBasic1(x, y, levelHeight);
@@ -361,19 +368,19 @@ public class EntityHandler {
 
     // Spawns Pickup with default health value = 30
     public void spawnPickup(int x, int y, EntityID id) {
-        int value = 0;
+        pickupValue = 0;
         switch (id) {
             case PickupHealth:
-                value = 30;
+                pickupValue = 30;
                 break;
             case PickupShield:
-                value = 100;
+                pickupValue = 100;
                 break;
             case PickupPower:
-                value = 1;
+                pickupValue = 1;
                 break;
         }
-        spawnPickup(x, y, id, value);
+        spawnPickup(x, y, id, pickupValue);
     }
 
     private void spawnPickup(int x, int y, EntityID id, int value) {
@@ -447,31 +454,34 @@ public class EntityHandler {
      ******************/
 
     private void renderReflections(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        float transparency = 0.2f;
+        g2d = (Graphics2D) g;
+        transparency = 0.2f;
         renderBulletReflections(g2d, transparency);
         player.renderReflection(g2d, transparency);
         renderEnemyReflections(g2d, transparency);
     }
 
     private void renderEnemyReflections(Graphics2D g2d, float transparency) {
-        LinkedList<Entity> list = enemies.getEntities();
-        for (Entity entity: list) {
-            Enemy enemy = (Enemy) entity;
-            // todo: fix bad code
-            if (enemy.getEnemyType() == TYPE_DRONE3) {
-                transparency = 0.1f;
-            }
-            enemy.renderReflection(g2d, transparency);
-        }
+        enemies.renderReflections(g2d, transparency);
+//        LinkedList<Entity> list = enemies.getEntities();
+//        for (Entity entity: list) {
+//            Enemy enemy = (Enemy) entity;
+//            // todo: fix bad code
+//            if (enemy.getEnemyType() == TYPE_DRONE3) {
+//                transparency = 0.1f;
+//            }
+//            enemy.renderReflection(g2d, transparency);
+//        }
     }
 
     private void renderBulletReflections(Graphics2D g2d, float transparency) {
-        LinkedList<Entity> list = bullets.getEntities();
-        for (Entity entity : list) {
-            Bullet bullet = (Bullet) entity;
-            bullet.renderReflection(g2d, transparency);
-        }
+        bullets.renderReflections(g2d, transparency);
+
+//        LinkedList<Entity> list = bullets.getEntities();
+//        for (Entity entity : list) {
+//            Bullet bullet = (Bullet) entity;
+//            bullet.renderReflection(g2d, transparency);
+//        }
     }
 
     /*******************
@@ -498,39 +508,43 @@ public class EntityHandler {
 //    }
 
     public void updateEnemies() {
-        enemies.disableIfOutsideBounds(levelHeight);
-        LinkedList<Entity> enemies = this.enemies.getEntities();
-        for (Entity entity : enemies) {
-            Enemy enemy = (Enemy) entity;
-            if(true) { // todo: Why tho?
-                enemy.update();
-                checkDeathAnimationEnd(enemy);
-                while (enemy.hasShot()) {
-                    spawnEnemyBullet(enemy);
-                    enemy.decrementShot();
-                }
+        enemies.disableIfOutsideBounds(levelHeight); // todo: Move within update loop
 
-            }
-        }
+        enemies.update();
+
+//        LinkedList<Entity> enemies = this.enemies.getEntities();
+//        for (Entity entity : enemies) {
+//            Enemy enemy = (Enemy) entity;
+//            if(true) { // todo: Why tho?
+//                enemy.update();
+//                checkDeathAnimationEnd(enemy);
+//                while (enemy.hasShot()) {
+//                    spawnEnemyBullet(enemy);
+//                    enemy.decrementShot();
+//                }
+//
+//            }
+//        }
     }
 
-    private void spawnEnemyBullet(Enemy enemy) {
-        int x = enemy.getTurretX();
-        double dir = enemy.getBulletAngle();
-        double y = enemy.getTurretY();
-        double bulletVelocity = enemy.getBulletVelocity();
-        boolean tracking = false;
-        if (enemy.getEnemyType() == TYPE_STATIC1 || enemy.getEnemyType() == TYPE_STATIC2 || enemy.getEnemyType() == TYPE_SIDE2 || enemy.getEnemyType() == TYPE_DRONE2) {
-            tracking = true;
-        }
-        if (bullets.getPoolSize() > 0) {
-            bullets.spawnFromPool(x, (int) y, dir, bulletVelocity, tracking);
-        }
-        else {
-            bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity, tracking));
-        }
-//        bullets.printPool("Bullet");
-    }
+//    private void spawnEnemyBullet(Enemy enemy) {
+//        int x = enemy.getTurretX();
+//        double dir = enemy.getBulletAngle();
+//        double y = enemy.getTurretY();
+//        double bulletVelocity = enemy.getBulletVelocity();
+//        boolean tracking = false;
+//        if (enemy.getEnemyType() == TYPE_STATIC1 || enemy.getEnemyType() == TYPE_STATIC2 || enemy.getEnemyType() == TYPE_SIDE2 || enemy.getEnemyType() == TYPE_DRONE2) {
+//            tracking = true;
+//        }
+//
+//        if (bullets.getPoolSize() > 0) {
+//            bullets.spawnFromPool(x, (int) y, dir, bulletVelocity, tracking);
+//        }
+//        else {
+//            bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity, tracking));
+//        }
+////        bullets.printPool("Enemy Bullet");
+//    }
 
     public void clearEnemies() {
         enemies.clear();
@@ -609,76 +623,83 @@ public class EntityHandler {
     }
 
     private void playerVsEnemyBulletCollision() {
-        for (Entity entity: bullets.getEntities()) {
-            Bullet bullet = (Bullet) entity;
+        bullets.checkCollision(player);
 
-            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
-//                bullets.increase(bullet);
-                destroy(bullet, player);
-                damagePlayer(10);
-            }
-        }
+//        for (Entity entity: bullets.getEntities()) {
+//            Bullet bullet = (Bullet) entity;
+//
+//            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
+////                bullets.increase(bullet);
+//                destroy(bullet, player);
+//                damagePlayer(10);
+//            }
+//        }
     }
 
     private void playerVsEnemyCollision() {
-        for (Entity entity : enemies.getEntities()) {
-            Enemy enemy = (Enemy) entity;
-//            boolean enemyInAir = enemy.getContactId() == ContactID.Air;
-            if (enemy.isActive())
-                if (enemy.isInscreenY() && enemy.isActive()) {
-                    boolean collision = player.checkCollision(enemy);
-//                    boolean collision2 = player.checkCollision(enemy.getBoundsVertical());
-                    if (collision) {
-                        int damage = enemy.getDamage();
-                        damagePlayer(damage);
-                        destroy(enemy);
-                    }
-                }
-//            else if (enemy.getContactId() == ContactID.Boss) {
-//                damagePlayer(10);
-//            }
-        }
+        enemies.checkCollisions(player);
+
+//        for (Entity entity : enemies.getEntities()) {
+//            Enemy enemy = (Enemy) entity;
+////            boolean enemyInAir = enemy.getContactId() == ContactID.Air;
+//            if (enemy.isActive())
+//                if (enemy.isInscreenY() && enemy.isActive()) {
+//                    boolean collision = player.checkCollision(enemy);
+////                    boolean collision2 = player.checkCollision(enemy.getBoundsVertical());
+//                    if (collision) {
+//                        int damage = enemy.getDamage();
+//                        damagePlayer(damage);
+//                        destroy(enemy);
+//                    }
+//                }
+////            else if (enemy.getContactId() == ContactID.Boss) {
+////                damagePlayer(10);
+////            }
+//        }
     }
 
     private void enemyVsPlayerBulletCollision() {
-        for (Entity entity : enemies.getEntities()) {
-            Enemy enemy = (Enemy) entity;
-            if (enemy.isInscreenY() && enemy.isActive()) {
-                Bullet bullet = player.checkCollisionBullet(enemy);
-                if (bullet != null) {
-                    destroy(bullet, enemy);
-                    boolean isBoss = false;
-                    if (isBoss) {
-                        boss.damage();
-                        VariableHandler.setHealthBoss(boss.getHealth());
-                        if (boss.getHealth() <= 0) {
-                            destroyBoss();
-                        }
-                    } else {
-                        enemy.damage();
-                        if (enemy.getHealth() <= 0) {
-                            destroy(enemy);
-                        }
-                    }
-//                    player.increaseBullets();
-                }
-            }
-        }
+        enemies.checkCollisionBullet(player);
+
+//        for (Entity entity : enemies.getEntities()) {
+//            Enemy enemy = (Enemy) entity;
+//            if (enemy.isInscreenY() && enemy.isActive()) {
+//                Bullet bullet = player.checkCollisionBullet(enemy);
+//                if (bullet != null) {
+//                    destroy(bullet, enemy);
+//                    boolean isBoss = false;
+//                    if (isBoss) {
+//                        boss.damage();
+//                        VariableHandler.setHealthBoss(boss.getHealth());
+//                        if (boss.getHealth() <= 0) {
+//                            destroyBoss();
+//                        }
+//                    } else {
+//                        enemy.damage();
+//                        if (enemy.getHealth() <= 0) {
+//                            destroy(enemy);
+//                        }
+//                    }
+////                    player.increaseBullets();
+//                }
+//            }
+//        }
     }
 
     public void playerVsPickupCollision() {
+        pickups.checkCollisions(player);
         // Player vs pickup collision
-        LinkedList<Entity> entities = pickups.getEntities();
-        for (Entity entity: entities) {
-            Pickup pickup = (Pickup) entity;
-            if (pickup.isActive()) {
-                if (pickup.getBounds().intersects(getPlayerBounds())) {
-                    pickup.collision();
-                    pickups.increase();
-//                    Utility.log("Pool: " + pickups.getPoolSize());
-                }
-            }
-        }
+//        LinkedList<Entity> entities = pickups.getEntities();
+//        for (Entity entity: entities) {
+//            Pickup pickup = (Pickup) entity;
+//            if (pickup.isActive()) {
+//                if (pickup.getBounds().intersects(getPlayerBounds())) {
+//                    pickup.collision();
+//                    pickups.increase();
+////                    Utility.log("Pool: " + pickups.getPoolSize());
+//                }
+//            }
+//        }
     }
 
     // Creates an instance of the player and sets the camera to follow it
@@ -699,26 +720,28 @@ public class EntityHandler {
         this.levelHeight = levelHeight;
     }
 
-    private void checkDeathAnimationEnd(Enemy enemy) {
-        if (enemy.isExploding()) {
-            if (enemy.checkDeathAnimationEnd()) {
-                int enemyType = enemy.getEnemyType();
-                enemies.increase(enemy, enemyType);
-            }
-        }
-    }
+//    private void checkDeathAnimationEnd(Enemy enemy) {
+//        if (enemy.isExploding()) {
+//            if (enemy.checkDeathAnimationEnd()) {
+//                int enemyType = enemy.getEnemyType();
+//                enemies.increase(enemy, enemyType);
+//            }
+//        }
+//    }
 
     private void checkDeathAnimationEnd() {
-        for (Entity entity: bullets.getEntities()) {
+        bullets.checkDeathAnimationEnd();
 
-            Bullet bullet = (Bullet) entity;
-
-            if (bullet.isImpacting()) {
-                if (bullet.checkDeathAnimationEnd()) {
-                    bullets.increase(bullet);
-                }
-            }
-        }
+//        for (Entity entity: bullets.getEntities()) {
+//
+//            Bullet bullet = (Bullet) entity;
+//
+//            if (bullet.isImpacting()) {
+//                if (bullet.checkDeathAnimationEnd()) {
+//                    bullets.increase(bullet);
+//                }
+//            }
+//        }
 
     }
 
@@ -726,8 +749,12 @@ public class EntityHandler {
         return enemies.getActive(enemyType);
     }
 
-    public static ArrayList<Integer> getExclusionZones() {
-        return enemies.getExclusionZones();
+//    public static ArrayList<Integer> getExclusionZones() {
+//        return enemies.getExclusionZones();
+//    }
+
+    public static boolean exclusionZonesContains(int x) {
+        return enemies.exclusionZonesContains(x);
     }
 
     public static int getLevelHeight() {

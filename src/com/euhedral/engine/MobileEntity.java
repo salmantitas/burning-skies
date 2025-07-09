@@ -52,14 +52,23 @@ public abstract class MobileEntity extends Entity {
 //    protected double turn = SOUTH_WEST - WEST;
 
     // Velocities will always be double, because doubles store more decimal points than floats
-    protected double forwardVelocity;
-    protected double angle;
     protected double velX, velY;
     protected double velX_MIN, velY_MIN;
     protected double velX_MAX, velY_MAX;
     protected boolean moveLeft, moveRight, moveUp, moveDown;
     protected HorizontalMovement hMove = HorizontalMovement.NONE;
     protected VerticalMovement vMove = VerticalMovement.NONE;
+
+    // Angle
+    protected double forwardVelocity;
+    protected double angle;
+    private double angleX;
+    private double angleY;
+    double vectorABx;
+    double vectorABy;
+    double magnitudeAB;
+    double normX;
+    double normY;
 
     public MobileEntity(int x, int y, EntityID id) {
         super(x, y, id);
@@ -127,9 +136,6 @@ public abstract class MobileEntity extends Entity {
 
     // Calculate the velX and velY using angle (of direction) and forward velocity
     protected void calculateVelocities() {
-        double angleX;
-        double angleY;
-
         angleX = Math.toRadians(360 - angle);
         angleY = Math.toRadians(angle);
 
@@ -141,15 +147,15 @@ public abstract class MobileEntity extends Entity {
     // using (x,y) as the base and (destinationX, destinationY) as the target angle
     protected void calculateVelocities(double destinationX, double destinationY) {
         // Vector
-        double vectorABx = destinationX - x;
-        double vectorABy = destinationY - y;
+        vectorABx = destinationX - x;
+        vectorABy = destinationY - y;
 
         // Magnitude
-        double magnitudeAB = Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
+        magnitudeAB = Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
 
         // Normal Vector
-        double normX = vectorABx/magnitudeAB;
-        double normY = vectorABy/magnitudeAB;
+        normX = vectorABx/magnitudeAB;
+        normY = vectorABy/magnitudeAB;
 
         velX = forwardVelocity * normX;
         velY = forwardVelocity * normY;

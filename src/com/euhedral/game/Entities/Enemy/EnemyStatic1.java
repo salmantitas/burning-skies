@@ -152,7 +152,7 @@ public class EnemyStatic1 extends Enemy {
     }
 
     public boolean checkCollision(Rectangle2D object) {
-        Rectangle2D r = getBounds();
-        return object.intersects(r);
+        bounds.setRect(getBounds());
+        return object.intersects(bounds);
     }
 }

@@ -21,7 +21,10 @@ public abstract class Entity {
 
     protected int state = STATE_ACTIVE;
 
+    protected Rectangle2D bounds;
+
     protected Color color;
+    Color boundColor = Color.green;
     protected BufferedImage image;
     protected BufferedImage images[];
 
@@ -32,6 +35,9 @@ public abstract class Entity {
         this.x = x;
         this.y = y;
         this.id = id;
+
+        bounds = new Rectangle();
+
         initialize();
     }
 
@@ -78,8 +84,6 @@ public abstract class Entity {
 
     protected void renderBounds(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-
-        Color boundColor = Color.green;
 
         g.setColor(boundColor);
         g2d.draw(getBounds());
@@ -133,7 +137,8 @@ public abstract class Entity {
     }
 
     public Rectangle2D getBounds() {
-        return new Rectangle((int) x, (int) y, (int) width, (int) height);
+        bounds.setRect( x, y, width, height);
+        return bounds;
     }
 
     public Rectangle getBoundsTop() {

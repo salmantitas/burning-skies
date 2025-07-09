@@ -4,7 +4,6 @@ package com.euhedral.engine.UI;/*
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.GameState;
-import com.euhedral.engine.Utility;
 
 import java.awt.*;
 

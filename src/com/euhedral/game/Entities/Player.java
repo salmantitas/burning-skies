@@ -15,6 +15,8 @@ public class Player extends MobileEntity {
     private int shootTimer = 0;
     private final int shootTimerDefault = 9;
     private BulletPool bullets = new BulletPool();
+    int turretY;
+    int turretMidX;
 
     // Personal
     private int levelHeight;
@@ -31,11 +33,20 @@ public class Player extends MobileEntity {
     private final int HEALTH_HIGH = 66;
     private final int HEALTH_MED = 33;
 
+    // Bounds
+    Rectangle2D boundsVertical;
+    Rectangle2D boundsHorizontal;
+
+    // Collisions
+    boolean collidesVertically;
+    boolean collidesHorizontally;
+
     // Test
     private int mx, my;
     private boolean destinationGiven = false;
 
     // Graphics
+    Graphics2D g2d;
     private TextureHandler textureHandler;
 
     private Reflection reflection;
@@ -64,10 +75,14 @@ public class Player extends MobileEntity {
 
         this.power = 1;
 
+        boundsVertical = new Rectangle2D.Double();
+        boundsHorizontal = new Rectangle2D.Double();
+
         clampOffsetX = -5 * width / 4;
         clampOffsetY = height - 20;
 
         reflection = new Reflection();
+
     }
 
 //    public Player(int x, int y, int levelHeight, BufferedImage image) {
@@ -168,22 +183,23 @@ public class Player extends MobileEntity {
     }
 
     private void renderBulletReflections(Graphics2D g2d, float transparency) {
-        LinkedList<Entity> list = bullets.getEntities();
-        for (Entity entity : list) {
-            Bullet bullet = (Bullet) entity;
-            bullet.renderReflection(g2d, transparency);
-        }
+        bullets.renderReflections(g2d, transparency);
+//        LinkedList<Entity> list = bullets.getEntities();
+//        for (Entity entity : list) {
+//            Bullet bullet = (Bullet) entity;
+//            bullet.renderReflection(g2d, transparency);
+//        }
     }
 
     @Override
     protected void renderBounds(Graphics g) {
         g.setColor(Color.green);
-        Rectangle2D r1 = getBoundsVertical();
-        Rectangle2D r2 = getBoundsHorizontal();
-        Graphics2D g2d = (Graphics2D) g;
+        boundsVertical.setRect(getBoundsVertical());
+        boundsHorizontal.setRect(getBoundsHorizontal());
+        g2d = (Graphics2D) g;
 
-        g2d.draw(r1);
-        g2d.draw(r2);
+        g2d.draw(boundsVertical);
+        g2d.draw(boundsHorizontal);
 //        g.drawRect(r1.x, r1.y, r1.width, r1.height);
 //        g.drawRect(r2.x, r2.y, r2.width, r2.height);
 
@@ -200,17 +216,18 @@ public class Player extends MobileEntity {
     }
 
     public Bullet checkCollisionBullet(Enemy enemy) {
-        Bullet bullet = null;
-        for (Entity entity : bullets.getEntities()) {
-            BulletPlayer bulletPlayer = (BulletPlayer) entity;
-            boolean intersectsEnemy = bulletPlayer.getBounds().intersects(enemy.getBoundsHorizontal()) || bulletPlayer.getBounds().intersects(enemy.getBoundsVertical());
-            if (bulletPlayer.isActive() && intersectsEnemy)
-//                    && (bulletPlayer.getContactId() == enemy.getContactId() || bulletPlayer.getContactId() == ContactID.Air && enemy.getContactId() == ContactID.Boss))
-            {
-                bullet = bulletPlayer;
-            }
-        }
-        return bullet;
+//        Bullet bullet = null;
+//        for (Entity entity : bullets.getEntities()) {
+//            BulletPlayer bulletPlayer = (BulletPlayer) entity;
+//            boolean intersectsEnemy = bulletPlayer.getBounds().intersects(enemy.getBoundsHorizontal()) || bulletPlayer.getBounds().intersects(enemy.getBoundsVertical());
+//            if (bulletPlayer.isActive() && intersectsEnemy)
+////                    && (bulletPlayer.getContactId() == enemy.getContactId() || bulletPlayer.getContactId() == ContactID.Air && enemy.getContactId() == ContactID.Boss))
+//            {
+//                bullet = bulletPlayer;
+//            }
+//        }
+//        return bullet;
+        return bullets.checkCollision(enemy);
     }
 
     public void moveLeft(boolean b) {
@@ -234,31 +251,31 @@ public class Player extends MobileEntity {
     }
 
     public boolean checkCollision(Rectangle2D object) {
-        Rectangle2D rV = getBoundsVertical();
-        Rectangle2D rH = getBoundsHorizontal();
-        boolean collidesVertically = object.intersects(rV);
-        boolean collidesHorizontally = object.intersects(rH);
+        boundsVertical.setRect(getBoundsVertical());
+        boundsHorizontal.setRect(getBoundsHorizontal());
+        collidesVertically = object.intersects(boundsVertical);
+        collidesHorizontally = object.intersects(boundsHorizontal);
 
         return collidesVertically || collidesHorizontally;
     }
 
     public boolean checkCollision(Enemy enemy) {
-        Rectangle2D rV = getBoundsVertical();
-        Rectangle2D rH = getBoundsHorizontal();
-        boolean collidesVertically = enemy.checkCollision(rV);
-        boolean collidesHorizontally = enemy.checkCollision(rH);
+        boundsVertical.setRect(getBoundsVertical());
+        boundsHorizontal.setRect(getBoundsHorizontal());
+        collidesVertically = enemy.checkCollision(boundsVertical);
+        collidesHorizontally = enemy.checkCollision(boundsHorizontal);
 
         return collidesVertically || collidesHorizontally;
     }
 
     public Rectangle2D getBoundsHorizontal() {
-        Rectangle2D bounds = new Rectangle2D.Double(x + 1, y + 2 * height / 3 - 2, width - 3, height / 3 - 6);
-        return bounds;
+        boundsHorizontal.setRect(x + 1, y + 2 * height / 3 - 2, width - 3, height / 3 - 6);
+        return boundsHorizontal;
     }
 
     public Rectangle2D getBoundsVertical() {
-        Rectangle2D bounds = new Rectangle2D.Double(x + (width / 4) + 1, y - 1, (2 * width) / 4 - 3, height - 1);
-        return bounds;
+        boundsVertical.setRect(x + (width / 4) + 1, y - 1, (2 * width) / 4 - 3, height - 1);
+        return boundsVertical;
     }
 
     public void setX(int x) {
@@ -292,53 +309,57 @@ public class Player extends MobileEntity {
     private void shoot() {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
-        int spawnLeftX = (int) (x + 4);
-        int spawnMidX = (int) (x + width / 2 - 2);
-        int spawnRightX = (int) (x + width - 8);
+        turretMidX = (int) (x + width / 2 - 2);
+        turretY = (int) (y + height * 2 / 3 - velY);
+
+//        int spawnLeftX = (int) (x + 4);
+//        int spawnRightX = (int) (x + width - 8);
 
 //        System.out.printf("Left to Mid: %d, Mid to Right: %d", spawnMidX-spawnLeftX, spawnRightX-spawnMidX);
 
-        int spawnY = (int) (y + height * 2 / 3 - velY);
 
 //        Utility.log("VelY:" + velY);
 
-        int power = VariableHandler.power.getValue();
+//        int power = VariableHandler.power.getValue();
+//
+//        // tempSolution
+//        double correctionFactor = .715;
+//        double shootAngleLeft = NORTH - shootAngle * correctionFactor;
+//        double shootAngleRight = NORTH + shootAngle;
 
-        // tempSolution
-        double correctionFactor = .715;
-        double shootAngleLeft = NORTH - shootAngle * correctionFactor;
-        double shootAngleRight = NORTH + shootAngle;
+//        if (power == 5) {
+//            spawnBullet(spawnRightX, turretY, shootAngleRight);
+//            spawnBullet(spawnRightX, turretY, NORTH);
+//            spawnBullet(spawnMidX, (int) y, NORTH);
+//            spawnBullet(spawnLeftX, turretY, NORTH);
+//            spawnBullet(spawnLeftX, turretY, shootAngleLeft);
+//        } else if (power == 4) {
+//            spawnBullet(spawnRightX, turretY, shootAngleRight);
+//            spawnBullet(spawnRightX, turretY, NORTH);
+//            spawnBullet(spawnLeftX, turretY, NORTH);
+//            spawnBullet(spawnLeftX, turretY, shootAngleLeft);
+//        } else if (power == 3) {
+//            spawnBullet(spawnRightX, turretY, shootAngleRight);
+//            spawnBullet(spawnMidX, (int) y, NORTH);
+//            spawnBullet(spawnLeftX, turretY, shootAngleLeft);
+//        } else if (power == 2) {
+//            spawnBullet(spawnRightX, turretY, NORTH);
+//            spawnBullet(spawnLeftX, turretY, NORTH);
+//        } else {
+//        }
 
-        if (power == 5) {
-            spawnBullet(spawnRightX, spawnY, shootAngleRight);
-            spawnBullet(spawnRightX, spawnY, NORTH);
-            spawnBullet(spawnMidX, (int) y, NORTH);
-            spawnBullet(spawnLeftX, spawnY, NORTH);
-            spawnBullet(spawnLeftX, spawnY, shootAngleLeft);
-        } else if (power == 4) {
-            spawnBullet(spawnRightX, spawnY, shootAngleRight);
-            spawnBullet(spawnRightX, spawnY, NORTH);
-            spawnBullet(spawnLeftX, spawnY, NORTH);
-            spawnBullet(spawnLeftX, spawnY, shootAngleLeft);
-        } else if (power == 3) {
-            spawnBullet(spawnRightX, spawnY, shootAngleRight);
-            spawnBullet(spawnMidX, (int) y, NORTH);
-            spawnBullet(spawnLeftX, spawnY, shootAngleLeft);
-        } else if (power == 2) {
-            spawnBullet(spawnRightX, spawnY, NORTH);
-            spawnBullet(spawnLeftX, spawnY, NORTH);
-        } else {
-            spawnBullet(spawnMidX, spawnY, NORTH);
-        }
+        spawnBullet(turretMidX, turretY, NORTH);
         // reset shoot timer to default
         shootTimer = shootTimerDefault;
     }
 
     private void spawnBullet(int x, int y, double dir) {
-        if (bullets.getPoolSize() > 0) {
-            bullets.spawnFromPool(x, y, dir);
-        } else
-            bullets.add(new BulletPlayer(x, y, dir));
+//        if (bullets.getPoolSize() > 0) {
+//            bullets.spawnFromPool(x, y, dir);
+//        } else
+//            bullets.add(new BulletPlayer(x, y, dir));
+        bullets.spawn(x, y, dir);
+//        bullets.printPool("Player Bullets");
     }
 
     private void keyboardMove() {
@@ -491,16 +512,17 @@ public class Player extends MobileEntity {
     }
 
     private void checkDeathAnimationEnd() {
-        for (Entity entity : bullets.getEntities()) {
-
-            Bullet bullet = (Bullet) entity;
-
-            if (bullet.isImpacting()) {
-                if (bullet.checkDeathAnimationEnd()) {
-                    bullets.increase(bullet);
-                }
-            }
-        }
+        bullets.checkDeathAnimationEnd();
+//        for (Entity entity : bullets.getEntities()) {
+//
+//            Bullet bullet = (Bullet) entity;
+//
+//            if (bullet.isImpacting()) {
+//                if (bullet.checkDeathAnimationEnd()) {
+//                    bullets.increase(bullet);
+//                }
+//            }
+//        }
     }
 
     public void resetMovement() {

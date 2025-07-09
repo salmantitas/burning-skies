@@ -65,7 +65,7 @@ public class MenuSettings extends Menu {
     public void render(Graphics g) {
         super.render(g);
 
-        g.setFont(new Font("arial", 1, Utility.percWidth(5)));
+//        g.setFont(new Font("arial", 1, Utility.percWidth(5)));
         g.setColor(Color.WHITE);
 
         // Render Toggle Icons
@@ -93,12 +93,12 @@ public class MenuSettings extends Menu {
     ********************/
 
     private void renderIcon(Graphics g, Button button, boolean bool) {
-        int bx = button.getX() + button.getWidth();
-        int by = button.getY() + ((button.getHeight() - toggleIconSize)/2);
+        buttonOffsetX = button.getX() + button.getWidth();
+        buttonOffsetY = button.getY() + ((button.getHeight() - toggleIconSize)/2);
 
-        Color c = bool ? Color.GREEN : Color.RED;
-        g.setColor(c);
-        g.fillOval(10 + bx, by ,toggleIconSize,toggleIconSize);
+        buttonValueColor = bool ? Color.GREEN : Color.RED;
+        g.setColor(buttonValueColor);
+        g.fillOval(10 + buttonOffsetX, buttonOffsetY ,toggleIconSize,toggleIconSize);
     }
 
 }

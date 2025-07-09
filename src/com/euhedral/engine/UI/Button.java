@@ -2,7 +2,6 @@ package com.euhedral.engine.UI;
 
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.ActionTag;
 import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
@@ -12,7 +11,7 @@ import java.util.LinkedList;
 public class Button extends UIItem{
     protected int size;
     protected String text;
-    protected Font font;
+    protected Font font, fontSelected, fontUnselected;
     protected boolean selected = false;
     protected Color backColor, textColor, selectedColor;
     protected boolean fill = false;
@@ -21,17 +20,24 @@ public class Button extends UIItem{
     protected LinkedList<GameState> otherStates = new LinkedList<>();
     protected float transparency = 1;
     protected boolean fontSizeCalculated = false;
-    protected int originalWidth;
+    protected int originalWidth, newWidth;
     protected Color disabledColor, disabledTextColor;
+
+    Graphics2D g2d;
+    int stringWidth;
+    int stringXSelected;
 
     public Button(int x, int y, int width, int height, String text) {
         this.x = x;
         this.y = y;
         this.originalWidth = width;
+        this.newWidth = width + 5;
         this.width = width;
         this.height = height;
         this.text = text;
-        font = new Font("arial", 1, width);
+        fontSelected = new Font("arial", 1, newWidth);
+        fontUnselected = new Font("arial", 1, width);
+        font = fontUnselected;
         backColor = Color.BLUE;
         selectedColor = Color.RED;
         textColor = new Color(128, 0 , 32);
@@ -45,17 +51,17 @@ public class Button extends UIItem{
 
     public void render(Graphics g) {
 
-        Graphics2D g2d = (Graphics2D) g;
+        g2d = (Graphics2D) g;
 
         // make it transparent whether the button is enabled or disabled
 
         if (transparency < 1) {
-            g2d.setComposite(makeTransparent(transparency));
+            g2d.setComposite(Utility.makeTransparent(transparency));
         }
 
         g.setFont(font);
 
-        int stringWidth = (g.getFontMetrics().stringWidth(text));
+        stringWidth = (g.getFontMetrics().stringWidth(text));
 
         if (!fontSizeCalculated) {
             // Adjusts the width and height of the button to fit the text
@@ -86,12 +92,12 @@ public class Button extends UIItem{
             }
             else g.setColor(textColor);
 //            int stringX = x + Utility.perc(width, 5);
-            int stringX = x + (width/2 - stringWidth/2);
-            g.drawString(text, stringX, y + Utility.perc(height, 75));
+            stringXSelected = x + (width/2 - stringWidth/2);
+            g.drawString(text, stringXSelected, y + Utility.perc(height, 75));
         }
 
         if (transparency < 1) {
-            g2d.setComposite(makeTransparent(1));
+            g2d.setComposite(Utility.makeTransparent(1));
         }
     }
 
@@ -107,11 +113,11 @@ public class Button extends UIItem{
         this.fill = true;
     }
 
-    // Not very sure what's happening here
-    private AlphaComposite makeTransparent(float alpha) {
-        int type = AlphaComposite.SRC_OVER;
-        return(AlphaComposite.getInstance(type, alpha));
-    }
+//    // Not very sure what's happening here
+//    private AlphaComposite makeTransparent(float alpha) {
+//        int type = AlphaComposite.SRC_OVER;
+//        return(AlphaComposite.getInstance(type, alpha));
+//    }
 
 //    // todo: removal
 //    public void addOtherState(GameState state) {
@@ -142,14 +148,12 @@ public class Button extends UIItem{
     public void select() {
         setSelected(true);
         SoundHandler.playSound(SoundHandler.UI1);
-        int newWidth = originalWidth + 5;
-        font = new Font("arial", 1, newWidth);
+        font = fontSelected;
     }
 
     public void deselect() {
         setSelected(false);
-        int newWidth = originalWidth;
-        font = new Font("arial", 1, newWidth);
+        font = fontUnselected;
     }
 
     public boolean isSelected() {

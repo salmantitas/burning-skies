@@ -19,6 +19,9 @@ public class EnemyStatic3 extends Enemy {
 
     boolean first;
 
+    double tempAngle;
+    int degreesPerBullet;
+
     public EnemyStatic3(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
@@ -95,34 +98,6 @@ public class EnemyStatic3 extends Enemy {
             }
         } else if (movementState == MOVING_CIRCLE) {
 
-//            if (vMove == VerticalMovement.UP) {
-//                velY -= deceleration;
-//                if (Math.abs(velY) >= velY_MAX / 2) {
-//                    vMove = VerticalMovement.DOWN;
-//                }
-//            }
-//
-//            if (vMove == VerticalMovement.DOWN) {
-//                velY += deceleration;
-//                if (Math.abs(velY) >= velY_MAX / 2) {
-//                    vMove = VerticalMovement.UP;
-//                }
-//            }
-//
-//            if (hMove == HorizontalMovement.RIGHT) {
-//                velX += deceleration;
-//                if (Math.abs(velX) >= velY_MAX) {
-//                    hMove = HorizontalMovement.LEFT;
-//                }
-//            }
-//
-//            if (hMove == HorizontalMovement.LEFT) {
-//                velX -= deceleration;
-//                if (Math.abs(velX) >= velY_MAX) {
-//                    hMove = HorizontalMovement.RIGHT;
-//                }
-//            }
-
             calculateVelocities();
             angle = (angle + 1) % 360;
 
@@ -150,10 +125,10 @@ public class EnemyStatic3 extends Enemy {
 
     @Override
     public double getBulletAngle() {
-        double tempAngle = calculateShotTrajectory();
-        int a = bulletArcAngle / bulletsPerShot_MAX;
+        tempAngle = calculateShotTrajectory();
+        degreesPerBullet = bulletArcAngle / bulletsPerShot_MAX;
 //        double maxArc = tempAngle + 20;
-        return tempAngle - (2 * a) + (bulletsPerShot - 1) * a; // * (bulletsPerShot % 2 == 0 ? 1 : -1); // stub
+        return tempAngle - (2 * degreesPerBullet) + (bulletsPerShot - 1) * degreesPerBullet; // * (bulletsPerShot % 2 == 0 ? 1 : -1); // stub
     }
 
     private void updateDestination() {
@@ -174,7 +149,7 @@ public class EnemyStatic3 extends Enemy {
     }
 
     public boolean checkCollision(Rectangle2D object) {
-        Rectangle2D r = getBounds();
-        return object.intersects(r);
+        bounds.setRect(getBounds());
+        return object.intersects(bounds);
     }
 }

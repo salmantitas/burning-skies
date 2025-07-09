@@ -7,6 +7,8 @@ import com.euhedral.game.GameController;
 
 public class EnemyBasic3 extends Enemy{
 
+    double angleIncrement = 0.50;
+
     public EnemyBasic3(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         textureHandler = GameController.getTexture();
@@ -31,12 +33,11 @@ public class EnemyBasic3 extends Enemy{
     @Override
     public void update() {
         super.update();
-        double increment = 0.50;
         if (state == STATE_ACTIVE && inscreenY) {
             if (hMove == HorizontalMovement.LEFT)
-                angle = Math.min(angle + increment, EAST);
+                angle = Math.min(angle + angleIncrement, EAST);
             else if (hMove == HorizontalMovement.RIGHT) {
-                angle = Math.max(angle - increment, WEST);
+                angle = Math.max(angle - angleIncrement, WEST);
             }
 
             if (x < -width || x > Engine.WIDTH -0*width) {

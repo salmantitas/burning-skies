@@ -11,6 +11,9 @@ import static com.euhedral.engine.Engine.WIDTH;
 
 public class Utility {
 
+    private static Font debugFont = new Font("arial", 1, Utility.percWidth(1.5));
+    private static int alphaCompositeType = AlphaComposite.SRC_OVER;
+
     /*
      * Returns the given percentage of a given parameter
      * */
@@ -104,7 +107,7 @@ public class Utility {
      *******************/
 
     private static void debugSettings(Graphics g) {
-        g.setFont(new Font("arial", 1, Utility.percWidth(1.5)));
+        g.setFont(debugFont);
         g.setColor(Color.WHITE);
     }
 
@@ -131,8 +134,7 @@ public class Utility {
 
     // Not very sure what's happening here
     public static AlphaComposite makeTransparent(float alpha) {
-        int type = AlphaComposite.SRC_OVER;
-        return(AlphaComposite.getInstance(type, alpha));
+        return(AlphaComposite.getInstance(alphaCompositeType, alpha));
     }
 
 }

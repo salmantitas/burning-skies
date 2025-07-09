@@ -1,12 +1,13 @@
 package com.euhedral.engine;/*
-* Do not modify
-* */
+ * Do not modify
+ * */
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+
 import com.euhedral.game.GameController;
 
-public class Engine extends Canvas implements Runnable{
+public class Engine extends Canvas implements Runnable {
 
     /*
      * By Default:
@@ -20,14 +21,14 @@ public class Engine extends Canvas implements Runnable{
 
     public static double VERSION = 0.245;
     public static String TITLE = "Simian Framework";
-    public static double SCREEN_RATIO = 4.0/3.0;
+    public static double SCREEN_RATIO = 4.0 / 3.0;
     public static int WIDTH = 640;
     public static int HEIGHT = (int) (WIDTH / SCREEN_RATIO);
     public static double SCALE = 1;
     public static Color BACKGROUND_COLOR = Color.BLACK;
     private static Window window;
 
-    private final double UPDATE_CAP = 1.0/60.0; // determines the frequency of game-updates. 1/60 means once every 60 seconds
+    private final double UPDATE_CAP = 1.0 / 60.0; // determines the frequency of game-updates. 1/60 means once every 60 seconds
     private static boolean running = false;
     public static int timeInSeconds = 0;
     public static int timer = 0;
@@ -36,6 +37,8 @@ public class Engine extends Canvas implements Runnable{
 
     public static GameController gameController;
     public static BufferedImageLoader loader;
+
+    BufferStrategy bs;
 
     // todo: change to private
     public static GameState currentState = GameState.Game;
@@ -68,13 +71,15 @@ public class Engine extends Canvas implements Runnable{
     }
 
     public void start() {
-        if (running) return;
+        if (running)
+            return;
         running = true;
         new Thread(this, "EngineMain-Thread").start();
     }
 
     public static void stop() {
-        if (!running) return;
+        if (!running)
+            return;
         running = false;
     }
 
@@ -82,12 +87,14 @@ public class Engine extends Canvas implements Runnable{
     public void run() {
         requestFocus();
         double target = 60.0;
-        double millisecondsPerCycle =  1000000.0;
-        double nanosecondsPerCycle =  1000000000.0;
-        double drawInterval = nanosecondsPerCycle/target;
+        double millisecondsPerCycle = 1000000.0;
+        double nanosecondsPerCycle = 1000000000.0;
+        double drawInterval = nanosecondsPerCycle / target;
         double nextDrawTime = System.nanoTime() + drawInterval;
         long timer = System.currentTimeMillis();
         int tps = 0;
+
+        double remainingTime = 0;
 
         // Sleep Based Game Loop
         // todo: Replace with timestep based loop
@@ -98,8 +105,8 @@ public class Engine extends Canvas implements Runnable{
             fps++;
 
             try {
-                double remainingTime = nextDrawTime - System.nanoTime();
-                remainingTime = remainingTime/millisecondsPerCycle;
+                remainingTime = nextDrawTime - System.nanoTime();
+                remainingTime = remainingTime / millisecondsPerCycle;
 
                 if (remainingTime < 0) {
                     remainingTime = 0;
@@ -139,7 +146,7 @@ public class Engine extends Canvas implements Runnable{
      * Fills the screen with the background color and calls the gameController's render function
      * */
     public void render() {
-        BufferStrategy bs = getBufferStrategy(); // BufferStrategy loads the upcoming frames in memory (prerenders them)
+        bs = getBufferStrategy(); // BufferStrategy loads the upcoming frames in memory (prerenders them)
         if (bs == null) {
             createBufferStrategy(3); // pre-renders three frames
             return;

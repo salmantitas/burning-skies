@@ -10,7 +10,7 @@ import com.euhedral.game.GameController;
 import com.euhedral.game.KeyInput;
 
 public class  EngineKeyboard extends KeyAdapter {
-    public GameController gameController;
+//    public GameController gameController;
     private KeyInput keyInput;
 
     private static HashMap<String, Integer> keyMap;
@@ -19,7 +19,7 @@ public class  EngineKeyboard extends KeyAdapter {
     private int keyReleased;
 
     public EngineKeyboard(GameController gameController) {
-        this.gameController = gameController;
+//        this.gameController = gameController;
         keyInput = new KeyInput(this, gameController);
         keyMap = new HashMap<>();
         initKeyMap();

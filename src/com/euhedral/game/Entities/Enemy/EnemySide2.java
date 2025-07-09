@@ -12,12 +12,17 @@ public class EnemySide2 extends Enemy{
     double destinationX, destinationY;
     boolean firstEntry;
 
+    double xMin, xMax;
+
     public EnemySide2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
         score = 100;
 //        shootTimerDefault = 200;
         attackEffect = true;
+
+        xMin = -2*width;
+        xMax = Engine.WIDTH + width;
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemySide[0]);
@@ -112,17 +117,17 @@ public class EnemySide2 extends Enemy{
 
     @Override
     public Rectangle2D getBoundsHorizontal() {
-        Rectangle2D bounds = new Rectangle2D.Double(x, y + 20, width, 1*height/3 + 2);
-        return bounds;
+        boundsHorizontal.setRect(x, y + 20, width, 1*height/3 + 2);
+        return boundsHorizontal;
     }
 
     @Override
     public Rectangle2D getBoundsVertical() {
-        Rectangle2D bounds = null;
+//        Rectangle2D bounds = null;
         if (velX > 0)
-            bounds = new Rectangle2D.Double(x + (width / 4) - 10, y, (2 * width) / 4, height);
+            boundsVertical.setRect(x + (width / 4) - 10, y, (2 * width) / 4, height);
         else
-            bounds = new Rectangle2D.Double(x + (width / 4) + 10, y, (2 * width) / 4, height);
-        return bounds;
+            boundsVertical.setRect(x + (width / 4) + 10, y, (2 * width) / 4, height);
+        return boundsVertical;
     }
 }

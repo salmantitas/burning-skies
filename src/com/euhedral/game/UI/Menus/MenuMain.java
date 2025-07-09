@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class MenuMain extends Menu {
 
-    Font titleFont = new Font("arial", 1, titleSize);
+//    Font titleFont = new Font("arial", 1, titleSize);
     Font versionFont = new Font("arial", 1, titleSize/8);
 
     public MenuMain() {
@@ -103,7 +103,7 @@ public class MenuMain extends Menu {
     * */
 
     private void drawTitle(Graphics g) {
-        g.setFont(titleFont);
+        g.setFont(headingFont);
         g.setColor(titleColor);
         g.drawString(Engine.TITLE, titleX, headingY);
 

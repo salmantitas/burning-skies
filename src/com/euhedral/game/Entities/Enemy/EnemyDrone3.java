@@ -12,6 +12,9 @@ public class EnemyDrone3 extends EnemyDrone{
     int explosionTimer_MAX = 400; // too high = 1000; too low = 100
     int explosionOffset;
 
+    float minOpacity = 0.1f;
+    float explosionRadiusOpacity;
+
     public EnemyDrone3(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         setImage(textureHandler.enemyDrone[2]);
@@ -50,13 +53,13 @@ public class EnemyDrone3 extends EnemyDrone{
         // Render Explsion Radius
         if (isActive()) {
             g.setColor(Color.RED);
-            Graphics2D g2d = (Graphics2D) g;
+            g2d = (Graphics2D) g;
 
 //            maxOpacity = 0.4f;
-            float minOpacity = 0.1f;
-            float opacity = (float) explosionTimer / 1000;
+//            float minOpacity = 0.1f;
+            explosionRadiusOpacity = (float) explosionTimer / 1000;
 
-            g2d.setComposite(Utility.makeTransparent(Math.max(minOpacity, opacity)));
+            g2d.setComposite(Utility.makeTransparent(Math.max(minOpacity, explosionRadiusOpacity)));
             g.fillOval((int) x - explosionOffset, (int) y - explosionOffset, explosionTimer, explosionTimer);
             g2d.setComposite(Utility.makeTransparent(1f));
         }
@@ -67,9 +70,9 @@ public class EnemyDrone3 extends EnemyDrone{
     @Override
     protected void renderExplosion(Graphics g) {
         if (!explosion.playedOnce) {
-            int size = Math.max(explosionTimer, explosionTimer);
-            int expX = (int) x - (size - width)/2;
-            int expY = (int) y - (size - height)/2;
+            size = Math.max(explosionTimer, explosionTimer);
+            expX = (int) x - (size - width)/2;
+            expY = (int) y - (size - height)/2;
             explosion.drawAnimation(g, expX, expY, size, size);
         }
     }
@@ -87,10 +90,11 @@ public class EnemyDrone3 extends EnemyDrone{
 
     @Override
     public Rectangle2D getBounds() {
-        int size = Math.max(explosionTimer, explosionTimer);
-        int expX = (int) x - (size - width)/3;
-        int expY = (int) y - (size - height)/3;
-        return new Rectangle(expX, expY, 2*size/3, 2*size/3);
+        size = Math.max(explosionTimer, explosionTimer);
+        expX = (int) x - (size - width)/3;
+        expY = (int) y - (size - height)/3;
+        bounds.setRect(expX, expY, 2*size/3, 2*size/3);
+        return bounds;
     }
 
     @Override

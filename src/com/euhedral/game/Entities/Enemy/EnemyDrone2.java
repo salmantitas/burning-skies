@@ -5,6 +5,9 @@ import com.euhedral.game.EntityHandler;
 
 public class EnemyDrone2 extends EnemyDrone{
 
+    int recoilPause = 25; // too low: 20, too high: 50
+    double deceleration = 0.1;
+
     public EnemyDrone2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         setImage(textureHandler.enemyDrone[1]);
@@ -13,20 +16,13 @@ public class EnemyDrone2 extends EnemyDrone{
         score = 50;
         damage = 30;
 
-//        jitter_MAX = width/Utility.intAtWidth640(8);
         attackEffect = true;
-//        shootTimer = shootTimerDefault;
     }
 
     @Override
     public void initialize() {
         super.initialize();
 
-//        enemyType = EntityHandler.TYPE_DRONE;
-
-//        power = 1;
-//        shootTimerDefault = 250;
-//        minVelX = 2f;
         health_MAX = 2;
 
         commonInit();
@@ -45,10 +41,7 @@ public class EnemyDrone2 extends EnemyDrone{
 
     @Override
     public void move() {
-//        super.move();
         if (isActive() && inscreenY) {
-            int recoilPause = 25; // too low: 20, too high: 50
-            double deceleration = 0.1;
             if (shootTimer < recoilPause) {
                 forwardVelocity -= deceleration;
             } else {

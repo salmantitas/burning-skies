@@ -23,16 +23,9 @@ public class EnemyBasic2 extends Enemy{
 //        attackEffect = true;
     }
 
-    public EnemyBasic2(int x, int y, Color color, int levelHeight) {
-        this(x, y, levelHeight);
-        this.color = color;
-    }
-
     @Override
     public void initialize() {
         super.initialize();
-
-//        enemyType = EntityHandler.TYPE_BASIC;
 
         health_MAX = 2;
         commonInit();
@@ -75,16 +68,6 @@ public class EnemyBasic2 extends Enemy{
     @Override
     public int getTurretX() {
         return (int) x + width/2 - Utility.intAtWidth640(2);
-    }
-
-    private void renderPath(Graphics g) {
-        g.setColor(Color.RED);
-        int pathLength = Engine.HEIGHT;
-        int originX = (int) x + width/2;
-        int originY = (int) y + height/2;
-        for (int i = 0; i < pathLength; i ++) {
-            g.drawLine(originX, originY, originX + 0, originY + i);
-        }
     }
 
     @Override

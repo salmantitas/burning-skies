@@ -32,11 +32,6 @@ public class EnemyDrone extends Enemy{
     public void initialize() {
         super.initialize();
 
-//        enemyType = EntityHandler.TYPE_DRONE;
-
-//        power = 1;
-//        shootTimerDefault = 250;
-//        minVelX = 2f;
         health_MAX = 1;
         damage = 15;
         commonInit();
@@ -112,16 +107,16 @@ public class EnemyDrone extends Enemy{
     @Override
     protected void renderBounds(Graphics g) {
         g.setColor(Color.green);
-        Rectangle2D r = getBounds();
+        bounds = getBounds();
 
-        Graphics2D g2d = (Graphics2D) g;
+        g2d = (Graphics2D) g;
 
-        g2d.draw(r);
+        g2d.draw(bounds);
     }
 
     public boolean checkCollision(Rectangle2D object) {
-        Rectangle2D r = getBounds();
-        return object.intersects(r);
+        bounds = getBounds();
+        return object.intersects(bounds);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class MenuHighScore extends Menu {
     }
 
     private void drawText(Graphics g) {
-        g.setFont(new Font("arial", 1, titleSize));
+        g.setFont(headingFont);
         g.setColor(Color.BLACK);
 
         g.drawString("High Score", titleX, headingY);

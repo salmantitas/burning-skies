@@ -14,19 +14,22 @@ public class Attribute {
     private int value;
     private int cost;
     private boolean active = false, binary;
+    Font font;
 
     // Render Properties
 
     Color backgroundColor = Color.lightGray;
     Color foregroundColor;
-
     int fontSize;
+    int width;
+    int height;
 
     public Attribute(int defaultValue, boolean binary) {
         setDefaultValue(defaultValue);
         setMAX(defaultValue);
         setValue(defaultValue);
         this.binary = binary;
+        font = new Font("arial", 1, fontSize);
     }
 
     Attribute(int defaultValue, boolean binary, int cost) {
@@ -113,8 +116,8 @@ public class Attribute {
     }
 
     public void renderBar(Graphics g) {
-        int width = Utility.intAtWidth640(2);
-        int height = width * 6;
+        width = Utility.intAtWidth640(2);
+        height = width * 6;
         g.setColor(backgroundColor);
         g.fillRect(x, y, MAX * width, height);
         g.setColor(foregroundColor);
@@ -122,7 +125,7 @@ public class Attribute {
     }
 
     public void renderValue(Graphics g) {
-        g.setFont(new Font("arial", 1, fontSize));
+        g.setFont(font);
         g.setColor(Color.WHITE);
         g.drawString("Power: " + value, x, y);
     }

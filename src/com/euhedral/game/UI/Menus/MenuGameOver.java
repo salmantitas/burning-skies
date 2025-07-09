@@ -13,7 +13,12 @@ import java.awt.*;
 public class MenuGameOver extends Menu {
 
     Animation explosion;
-    int scoreX =Utility.percWidth(14);
+    int scoreX = Utility.percWidth(14);
+
+    Font gameOverFont = new Font("arial", 1, 150);
+    Font scoreFont = new Font("arial", 1, 40);
+
+    int inScreenMarker, minSize, explodeX, explodeY;
 
     public MenuGameOver() {
         super(GameState.GameOver);
@@ -27,20 +32,20 @@ public class MenuGameOver extends Menu {
         options[1] = quit;
 
         explosion = GameController.getTexture().initExplosion(10);
+        minSize = Math.min(Engine.WIDTH, Engine.HEIGHT - VariableHandler.deadzoneTop);
+        explodeX = (Engine.WIDTH - minSize) / 2;
+        explodeY = inScreenMarker / 2;
     }
 
     @Override
     public void update() {
         if (!explosion.playedOnce)
-        explosion.runAnimation();
+            explosion.runAnimation();
     }
 
     @Override
     public void render(Graphics g) {
 
-        int inScreenMarker = (int) GameController.getCamera().getMarker() + 100;
-        int minSize = Math.min(Engine.WIDTH, Engine.HEIGHT - inScreenMarker);
-        int explodeX = (Engine.WIDTH - minSize)/2, explodeY = inScreenMarker/2;
         if (!explosion.playedOnce) {
             explosion.drawAnimation(g, explodeX, explodeY, minSize, minSize);
         }
@@ -52,20 +57,20 @@ public class MenuGameOver extends Menu {
     }
 
     /*
-    *
-    * */
+     *
+     * */
 
     public void drawGameOverScreen(Graphics g) {
-        g.setFont(new Font("arial", 1, 150));
+        g.setFont(gameOverFont);
         g.setColor(Color.WHITE);
         g.drawString("GAME OVER", Utility.percWidth(13), Utility.percHeight(50));
     }
 
     public void drawScore(Graphics g) {
-        g.setFont(new Font("arial", 1, 40));
+        g.setFont(scoreFont);
         g.setColor(Color.WHITE);
-        g.drawString("Score: " + VariableHandler.getScore(), scoreX, Utility.percHeight(60));
-        g.drawString("Highest Score: " + VariableHandler.getHighScoreList().get(0), scoreX , Utility.percHeight(66));
+//        g.drawString("Score: " + VariableHandler.getScore(), scoreX, Utility.percHeight(60));
+//        g.drawString("Highest Score: " + VariableHandler.getHighScoreList().get(0), scoreX , Utility.percHeight(66));
     }
 
     @Override

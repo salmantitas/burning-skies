@@ -9,12 +9,18 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class EnemySide1 extends Enemy{
+
+    double xMin, xMax;
+
     public EnemySide1(int x, int y, int levelHeight) {
         super(x, y,  levelHeight);
 
         shootTimerDefault = 50;
 //        shootTimer = 50;
         score = 200;
+
+        xMin = -width;
+        xMax = Engine.WIDTH;
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemySide[2]);
@@ -41,7 +47,6 @@ public class EnemySide1 extends Enemy{
     @Override
     public void move() {
         if (isActive()) {
-            double xMin = -width, xMax = Engine.WIDTH;
 
             velY = 0;
             if (x <= xMin) {
@@ -97,17 +102,17 @@ public class EnemySide1 extends Enemy{
 
     @Override
     public Rectangle2D getBoundsHorizontal() {
-        Rectangle2D bounds = new Rectangle2D.Double(x, y + 20, width, 1*height/3 + 2);
-        return bounds;
+        boundsHorizontal.setRect(x, y + 20, width, 1*height/3 + 2);
+        return boundsHorizontal;
     }
 
     @Override
     public Rectangle2D getBoundsVertical() {
-        Rectangle2D bounds = null;
+//        Rectangle2D bounds = null;
         if (velX > 0)
-            bounds = new Rectangle2D.Double(x + (width / 4) - 10, y, (2 * width) / 4, height);
+            boundsVertical.setRect(x + (width / 4) - 10, y, (2 * width) / 4, height);
         else
-            bounds = new Rectangle2D.Double(x + (width / 4) + 10, y, (2 * width) / 4, height);
-        return bounds;
+            boundsVertical.setRect(x + (width / 4) + 10, y, (2 * width) / 4, height);
+        return boundsVertical;
     }
 }

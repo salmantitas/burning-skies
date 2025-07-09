@@ -55,10 +55,10 @@ public abstract class MenuItem {
         return temp;
     }
 
-    // Not very sure what's happening here
-    protected AlphaComposite makeTransparent(float alpha) {
-        int type = AlphaComposite.SRC_OVER;
-        return(AlphaComposite.getInstance(type, alpha));
-    }
+//    // Not very sure what's happening here
+//    protected AlphaComposite makeTransparent(float alpha) {
+//        int type = AlphaComposite.SRC_OVER;
+//        return(AlphaComposite.getInstance(type, alpha));
+//    }
 
 }

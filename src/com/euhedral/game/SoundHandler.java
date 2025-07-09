@@ -12,12 +12,24 @@ public class SoundHandler {
 
     static int volTest = 0;
 
-    static int MAX_CLIP = 30;
+    public static final int BGMMAINMENU = 0;
+    public static final int BULLET_PLAYER = 1;
+    public static final int PICKUP = 2;
+    public static final int EXPLOSION = 3;
+    public static final int BGMGAMEOVER = 4;
+    public static final int BGMPLAY = 5;
+    public static final int IMPACT = 6;
+    public static final int BULLET_ENEMY = 7;
+    public static final int UI1 = 8;
+    public static final int UI2 = 9;
+
+    static int MAX_CLIP = UI2 + 1;
     static Clip clip;
     public static Clip effect;
     private static Clip bgm;
     static Clip newClip = null;
     static URL soundURL[] = new URL[MAX_CLIP];
+    static Clip clips[] = new Clip[MAX_CLIP];
 
     static FloatControl gainControl;
     static FloatControl bgmGainControl;
@@ -34,17 +46,6 @@ public class SoundHandler {
 
     static float volumeF;
     static AudioInputStream ais;
-
-    public static final int BGMMAINMENU = 0;
-    public static final int BULLET_PLAYER = 1;
-    public static final int PICKUP = 2;
-    public static final int EXPLOSION = 3;
-    public static final int BGMGAMEOVER = 4;
-    public static final int BGMPLAY = 5;
-    public static final int IMPACT = 6;
-    public static final int BULLET_ENEMY = 7;
-    public static final int UI1 = 8;
-    public static final int UI2 = 9;
 
     private static int bgmID = -1;
 
@@ -67,21 +68,41 @@ public class SoundHandler {
         soundURL[UI1] = getClass().getResource("/clip_ui_1.wav");
         soundURL[UI2] = getClass().getResource("/clip_ui_2.wav");
 
+        for (int i = 0; i < MAX_CLIP; i ++) {
+            clips[i] = setClip(i);
+        }
+
         volumeEffects = VOLUME_MAX;
         volumeMusic = VOLUME_MAX;
 
 //        Utility.log("Initializing sounds");
     }
 
-    public static void setFile(int i) {
-        try {
-            ais = AudioSystem.getAudioInputStream(soundURL[i]);
-            clip = AudioSystem.getClip();
-            clip.open(ais);
-        } catch (Exception e) {
-
+    public void update() {
+        for (int i = 0; i < MAX_CLIP; i ++) {
+//            Utility.log("Index: " + i);
+            if (!clips[i].isRunning()) {
+//                clips[i].close();
+                // remove
+            }
         }
-//        Utility.log("Set File");
+    }
+
+//    public static void setFile(int i) {
+//        try {
+//            ais = AudioSystem.getAudioInputStream(soundURL[i]);
+//            clip = AudioSystem.getClip();
+//            clip.open(ais);
+//        } catch (Exception e) {
+//
+//        }
+////        Utility.log("Set File");
+//    }
+
+    // Assumes all clips have already been loaded
+    public static void setFile(int i) {
+        clip = clips[i];
+        clip.setFramePosition(0);
     }
 
     public static Clip setClip(int i) {
@@ -117,6 +138,7 @@ public class SoundHandler {
 //        Utility.log("Play");
         clip.start();
         gainControlVolumeMaster();
+//        clip.
     }
 
     private void loop() {
@@ -210,8 +232,8 @@ public class SoundHandler {
     }
 
     private static void bgmHelper(int soundID) {
-        bgm = setClip(soundID);
-        clip = bgm;
+        setFile(soundID);
+        bgm = clip;
         gainControlVolumeMaster();
         bgm.start();
         bgm.loop(Clip.LOOP_CONTINUOUSLY);

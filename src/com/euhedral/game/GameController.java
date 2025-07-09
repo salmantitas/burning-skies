@@ -19,14 +19,13 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.7.01";
+    public static String gameVersion = "0.7.02";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
     private double gameScale = Engine.SCALE;
     private Color gameBackground = new Color(0,0,128);
 
-    // Game Timer
     long timer = System.currentTimeMillis();
     public static long timeInSeconds;
 
@@ -36,6 +35,13 @@ public class GameController {
     private EntityHandler entityHandler;
     private static TextureHandler textureHandler;
     private SoundHandler soundHandler;
+
+    ActionTag action;
+
+    boolean endGameCondition;
+    boolean activeMessageBoxes;
+    boolean tutorialDisabled;
+    boolean validCameraRenderState;
 
     // Mouse
     double mxD;
@@ -49,6 +55,8 @@ public class GameController {
     public static Camera camera;
     //    int offsetHorizontal;
     int offsetVertical;
+    float camX, camY;
+    int inScreenMarker;
 
     // Enemy Generation
     private EnemyGenerator enemyGenerator;
@@ -57,6 +65,8 @@ public class GameController {
     private int levelHeight;
     private boolean levelLoaded = false; // levels will only loaded when this is true
     boolean reset = true;
+    boolean levelEndCondition;
+    BufferedImage level;
 
     // Cheats
     public static boolean godMode = false;
@@ -202,6 +212,8 @@ public class GameController {
     public void update() {
         Engine.timer++;
 
+        soundHandler.update(); // runs in all states
+
         if (Engine.stateIs(GameState.Quit))
             Engine.stop();
 
@@ -245,7 +257,7 @@ public class GameController {
 //            }
 
             levelLoaded = false;
-            boolean endGameCondition = variableHandler.health.getValue() <= 0;
+            endGameCondition = variableHandler.health.getValue() <= 0;
 
             if (endGameCondition) {
 
@@ -264,8 +276,8 @@ public class GameController {
                 // Game only runs if either tutorials are disabled, or no message boxes are active
                 // Player can move when the tutorial box is up.
 
-                boolean activeMessageBoxes = !uiHandler.noActiveMessageBoxes();
-                boolean tutorialDisabled = !VariableHandler.isTutorial();
+                activeMessageBoxes = !uiHandler.noActiveMessageBoxes();
+                tutorialDisabled = !VariableHandler.isTutorial();
 
                 // if tutorial is disabled or there are no active message boxes, just run the game
 
@@ -309,9 +321,9 @@ public class GameController {
              * Game Code *
              *************/
 
-            boolean validState = Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause || Engine.stateIs(GameState.GameOver);
+            validCameraRenderState = Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause || Engine.stateIs(GameState.GameOver);
 
-            if (validState) {
+            if (validCameraRenderState) {
                     renderInCamera(g);
 
                     if (VariableHandler.isHud()) {
@@ -334,18 +346,19 @@ public class GameController {
          * Engine Code *
          ***************/
 
-        Graphics2D g2d = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g; // consider writing the whole renderer in g2d
 
         // Camera start
         // Camera Translation Variables
-        float camX = camera.getX(), camY = camera.getY();
+        camX = camera.getX();
+        camY = camera.getY();
         g2d.translate(-camX, -camY);
 
         /*************
          * Game Code *
          *************/
 
-        int inScreenMarker = (int) camera.getMarker() + 100;
+        inScreenMarker = (int) camera.getMarker() + 100;
 
 
         if (!Engine.stateIs(GameState.GameOver)) {
@@ -452,6 +465,7 @@ public class GameController {
 
         if (Engine.stateIs(GameState.Game) || Engine.stateIs(GameState.Pause)) {
 
+            // todo: Move all player movement functions to Entity Handler
             if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
                 stopMovePlayer('l');
 
@@ -486,7 +500,7 @@ public class GameController {
         Engine.timeInSeconds = 0; // might be unnecesary
         timeInSeconds = 0;
         variableHandler.resetScore();
-//        variableHandler.resetDifficulty();
+//        variableHandler.resetDifficulty(); todo: reset
         variableHandler.resetPower();
         VariableHandler.shield.reset();
         variableHandler.health.reset();
@@ -519,7 +533,7 @@ public class GameController {
     }
 
     public void performAction() {
-        ActionTag action = uiHandler.getAction();
+        action = uiHandler.getAction();
         if (action != null) {
             switch (action) {
                 case go:
@@ -635,9 +649,9 @@ public class GameController {
      * User functions *
      ******************/
 
-    /********************************
-     * Keyboard Functions functions *
-     ********************************/
+    /**********************
+     * Keyboard Functions *
+     **********************/
 
     private void keyboardMenuNavigation(int key) {
         if (Engine.currentState != GameState.Game) {
@@ -741,9 +755,9 @@ public class GameController {
         levelSpawned = !levelSpawned;
         Engine.gameState();
 
-        int level = variableHandler.getLevel();
+//        int level = variableHandler.getLevel();
 
-        BufferedImage currentLevel = levelMap.get(level);
+        BufferedImage currentLevel = levelMap.get(variableHandler.getLevel());
         if (currentLevel != null) {
 //            enemyGenerator.loadImageLevel(currentLevel);
 //            levelHeight = enemyGenerator.getLevelHeight();
@@ -765,9 +779,9 @@ public class GameController {
         // If the boss is killed, updates the boolean variable
         entityHandler.checkBoss();
 
-        boolean condition = entityHandler.getFlagY() > levelHeight && !variableHandler.isBossLives();
+        levelEndCondition = entityHandler.getFlagY() > levelHeight && !variableHandler.isBossLives();
 
-        if (condition) {
+        if (levelEndCondition) {
             variableHandler.nextLevel();
             levelSpawned = false;
             variableHandler.setBossLives(false);
@@ -801,7 +815,7 @@ public class GameController {
 //    }
 
     private void addLevel(int num, String path) {
-        BufferedImage level = Engine.loader.loadImage(path);
+        level = Engine.loader.loadImage(path);
         levelMap.put(num, level);
     }
 

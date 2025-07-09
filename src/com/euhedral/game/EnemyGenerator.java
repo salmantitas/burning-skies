@@ -13,7 +13,7 @@ public class EnemyGenerator {
 
     final int SCALE = 64;
 
-    final int incrementMIN = Utility.intAtWidth640(1);
+    final int incrementMIN = Utility.intAtWidth640(2);
     int xStart = 1, xEnd = width/64;
     int xMid = (xEnd - xStart)/2 + xStart;
 
@@ -29,8 +29,13 @@ public class EnemyGenerator {
     long spawnInterval;
     long spawnInterval_MIN = 2;
     long spawnInterval_MAX = 5;
+    float spawnIntervalFloat;
 //    int enemiesSpawned; // todo: Why do we need this?
     int spawnX, spawnY;
+
+    long timeNowMillis;
+    long timeSinceLastSpawnMillis;
+    boolean canSpawn;
 
     // Movement
     int minDifficultyForMovement;
@@ -62,6 +67,10 @@ public class EnemyGenerator {
 
     boolean difficultyIncreased = false;
 
+    // Enemy Limits
+    int limit = 5;
+    int limitSide = 4;
+
     // Wave
     int wave;
     final int firstWave = 1;
@@ -70,15 +79,23 @@ public class EnemyGenerator {
     int waveSinceHeavy = 0;
     final int MINWaveSinceHeavy = 1;
 
+    // Zone
+    boolean entersFromSide;
+    boolean isDrone;
+    boolean isSideFlyer;
+    boolean movesHorizontally;
+    int adjustment = 1;
+    int zone;
+
     public EnemyGenerator(EntityHandler entityHandler) {
         this.entityHandler = entityHandler;
     }
 
     // todo: SpawnHealth
     public void update() {
-        long timeNowMillis = GameController.getCurrentTime();
-        long timeSinceLastSpawnMillis = timeNowMillis - lastSpawnTime;
-        boolean canSpawn = spawnInterval <= timeSinceLastSpawnMillis;
+        timeNowMillis = GameController.getCurrentTime();
+        timeSinceLastSpawnMillis = timeNowMillis - lastSpawnTime;
+        canSpawn = spawnInterval <= timeSinceLastSpawnMillis;
         // todo: SpawnInterval for different types
 
         if (canSpawn) {
@@ -91,7 +108,7 @@ public class EnemyGenerator {
     public void generateLevel() {
         level = VariableHandler.getLevel();
 
-        System.out.printf("Width: %d, Height: %d\n", width, height);
+        System.out.printf("levelWidth: %d, levelHeight: %d\n", width, height);
 
         difficulty = VariableHandler.getDifficultyLevel();
         minWavesDifficultyIncrease = 5;
@@ -152,19 +169,19 @@ public class EnemyGenerator {
 //            total += temp;
 //            temp++;
 //        }
-        int calculatedDifficulty = difficulty - 1;
+//        int calculatedDifficulty = difficulty - 1;
 
         if (difficultyIncreased) {
             difficultyIncreased = false;
-            enemytype = calculatedDifficulty;
+            enemytype = difficulty - 1;
         } else {
 
 //        if (waveSinceHeavy > MINWaveSinceHeavy) {
 //            calculatedDifficulty -= 1;
 //        }
 
-            int rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
-            enemytype = rand;
+            enemytype = Utility.randomRangeInclusive(0, difficulty - 1);
+//            enemytype = rand;
         }
 
 //        enemytype = TYPE_BASIC1; // stub
@@ -185,8 +202,8 @@ public class EnemyGenerator {
 
 //        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
 
-        int limit = 5;
-        int limitSide = 4;
+        limit = 5;
+//        int limitSide = 4;
 
         switch (enemytype) {
             case TYPE_SIDE1:
@@ -237,20 +254,20 @@ public class EnemyGenerator {
 
     protected void determineZone() {
 
-        boolean entersFromSide = enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3 || enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2;
+        entersFromSide = enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3 || enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2;
 
         // Vertical Zone
         if (entersFromSide) {
-            int adjustment = 1;
-            int zone = Utility.randomRangeInclusive(0, 1);
+            adjustment = 1;
+            zone = Utility.randomRangeInclusive(0, 1);
             if (zone == 0) {
                 spawnX = -adjustment;
             } else {
                 spawnX = xEnd + 2*adjustment;
             }
 
-            boolean isDrone = enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3;
-            boolean isSideFlyer = enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2;
+            isDrone = enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3;
+            isSideFlyer = enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2;
 
             if (isDrone) {
                 spawnY = Utility.randomRangeInclusive(0, height / SCALE * 2 / 3);
@@ -263,23 +280,23 @@ public class EnemyGenerator {
         }
         // Horizontal Zone
         else {
-            boolean movesHorizontally = enemytype == TYPE_HEAVY || enemytype == TYPE_BASIC2 || enemytype == TYPE_STATIC2 || enemytype == TYPE_STATIC3;
+            movesHorizontally = enemytype == TYPE_HEAVY || enemytype == TYPE_BASIC2 || enemytype == TYPE_STATIC2 || enemytype == TYPE_STATIC3;
             if (movesHorizontally) {
                 spawnX = Utility.randomRangeInclusive(xStart + 3, xEnd - 3);
 
-                // check if coordinate is in exclusion list
-                ArrayList<Integer> exclusionZones = EntityHandler.getExclusionZones();
+//                // check if coordinate is in exclusion list
+//                ArrayList<Integer> exclusionZones = EntityHandler.getExclusionZones();
 
-                while (exclusionZones.contains(spawnX)) {
+                while (EntityHandler.exclusionZonesContains(spawnX)) {
                     spawnX = Utility.randomRangeInclusive(xStart + 3, xEnd - 3);
                 }
             } else {
                 spawnX = Utility.randomRangeInclusive(xStart, xEnd);
 
-                // check if coordinate is in exclusion list
-                ArrayList<Integer> exclusionZones = EntityHandler.getExclusionZones();
+//                // check if coordinate is in exclusion list
+//                ArrayList<Integer> exclusionZones = EntityHandler.getExclusionZones();
 
-                while (exclusionZones.contains(spawnX)) {
+                while (EntityHandler.exclusionZonesContains(spawnX)) {
                     spawnX = Utility.randomRangeInclusive(xStart, xEnd);
                 }
             }
@@ -348,7 +365,7 @@ public class EnemyGenerator {
 
     protected void determineSpawnInterval() {
         spawnInterval = spawnInterval_MIN;
-        float spawnIntervalFloat = spawnInterval;
+        spawnIntervalFloat = (float) spawnInterval;
 
         if (enemytype == TYPE_HEAVY) {
 //            if (spawnIntervalFloat > spawnInterval_MIN)

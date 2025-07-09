@@ -11,6 +11,13 @@ public class BulletEnemy extends Bullet{
 
     private boolean tracking;
 
+    // Disabling
+    int offset;
+    int bottomBounds;
+    int rightBounds;
+
+    boolean belowScreen, aboveScreen, leftOfScreen, rightOfScreen;
+
     BulletEnemy(int x, int y) {
         super(x, y);
     }
@@ -25,6 +32,15 @@ public class BulletEnemy extends Bullet{
 //        color = Color.orange;
 //        impactColor = Color.red;
         SoundHandler.playSound(initSound);
+
+        newWidth = (int) (width * reflection.sizeOffset);
+        newHeight = (int) (height * reflection.sizeOffset);
+
+        impactSize = Math.max(newWidth, newHeight);
+
+        offset = 64*3;
+        bottomBounds = EntityHandler.getLevelHeight() + offset;
+        rightBounds = Engine.WIDTH + offset;
     }
 
     public BulletEnemy(int x, int y, double angle, double vel, boolean tracking) {
@@ -84,14 +100,14 @@ public class BulletEnemy extends Bullet{
 
     @Override
     public boolean canDisable() {
-        int offset = 64*3;
-        int bottomBounds = EntityHandler.getLevelHeight() + offset;
-        int rightBounds = Engine.WIDTH + offset;
+//        int offset = 64*3;
+//        int bottomBounds = EntityHandler.getLevelHeight() + offset;
+//        int rightBounds = Engine.WIDTH + offset;
 
-        boolean belowScreen = y > bottomBounds;
-        boolean aboveScreen = y < 0;
-        boolean leftOfScreen = x < 0;
-        boolean rightOfScreen = x > rightBounds;
+        belowScreen = y > bottomBounds;
+        aboveScreen = y < 0;
+        leftOfScreen = x < 0;
+        rightOfScreen = x > rightBounds;
 
         return belowScreen || aboveScreen || leftOfScreen || rightOfScreen;
     }

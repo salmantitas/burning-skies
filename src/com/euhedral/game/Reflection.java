@@ -11,6 +11,8 @@ public class Reflection {
     public static final int xCorrection = 8;
     public static final int yCorrection = 12;
 
+    int reflectionX, reflectionY, newWidth, newHeight;
+
     double offsetX, offsetY;
 
     public double calculateOffsetX(double centerX) {
@@ -32,10 +34,10 @@ public class Reflection {
     public void render(Graphics2D g, Image image, double x, double centerX, double y, double centerY, int width, int height, float transparency) {
         g.setComposite(Utility.makeTransparent(transparency));
 
-        int reflectionX = calculateReflectionX(x, centerX);
-        int reflectionY = calculateReflectionY(y, centerY);
-        int newWidth = (int) (width * sizeOffset);
-        int newHeight = (int) (height * sizeOffset);
+        reflectionX = calculateReflectionX(x, centerX);
+        reflectionY = calculateReflectionY(y, centerY);
+        newWidth = (int) (width * sizeOffset);
+        newHeight = (int) (height * sizeOffset);
 
         g.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
 

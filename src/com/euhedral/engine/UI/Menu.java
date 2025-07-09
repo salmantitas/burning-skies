@@ -64,6 +64,16 @@ public class Menu {
     protected int y80 = Utility.percHeight(80);
 
     protected int headingY = Utility.percHeight(19);
+    protected Font headingFont = new Font("arial", 1, titleSize);
+
+    protected int buttonOffsetX, buttonOffsetY;
+    protected Font buttonValueFont = new Font("arial", 1, 45);
+    protected Color buttonValueColor;
+
+    Button button;
+    int tempReassign;
+    ActionTag returnAction;
+    MessageBox messageBox;
 
     public Menu(GameState state) {
         this.state = state;
@@ -82,7 +92,7 @@ public class Menu {
         }
 
         for (int i = 0; i < MAXBUTTON; i++) {
-            Button button = options[i];
+            button = options[i];
             button.render(g);
         }
     }
@@ -110,7 +120,7 @@ public class Menu {
 
         if (activeMessageBoxes == 0) {
             for (int i = 0; i < MAXBUTTON; i++) {
-                Button button = options[i];
+                button = options[i];
                 if (button.mouseOverlap(mx, my)) {
                     if (!button.isSelected()) {
                         options[index].deselect();
@@ -134,7 +144,7 @@ public class Menu {
 //                index = (index + 1) % MAXBUTTON;
 //                options[index].select();
             } else {
-                int tempReassign = index - 1;
+                tempReassign = index - 1;
                 if (tempReassign < 0) tempReassign = MAXBUTTON - 1;
 //
 //                options[index].deselect();
@@ -149,9 +159,9 @@ public class Menu {
     * Checks whether the mouse has clicked on a button. If true, the button is activated.
     * */
     public ActionTag checkButtonAction(int mx, int my) {
-        ActionTag returnAction = null;
+        returnAction = null;
         for (int i = 0; i < messageBoxes.size(); i++) {
-            MessageBox messageBox = messageBoxes.get(i);
+            messageBox = messageBoxes.get(i);
 //            if (messageBox.mouseOverlap(mx, my)) {
 //                if (messageBox.isEnabled()) {
 //                    messageBox.checkButtonAction(mx, my);
@@ -163,7 +173,7 @@ public class Menu {
         }
         for (int i = 0; i < MAXBUTTON; i++) {
             if (activeMessageBoxes == 0) {
-                Button button = options[i];
+                button = options[i];
                 if (button.mouseOverlap(mx, my)) {
                     if (button.isEnabled()) {
                         returnAction = activateButton(button);
@@ -179,7 +189,7 @@ public class Menu {
     * If the selected button is a navigation button, the GameState is changed. Otherwise, the ActionTag is applied.
     * */
     public ActionTag activateButton(Button button) {
-        ActionTag returnAction = null;
+        returnAction = null;
 
         if (activeMessageBoxes == 0) {
 //            previous = Engine.currentState;
@@ -205,14 +215,14 @@ public class Menu {
     * Activates the button that is selected
     * */
     public ActionTag chooseSelected() {
-        ActionTag selected = null;
+        returnAction = null;
         if (activeMessageBoxes > 0) {
             messageBoxes.getFirst().disable();
             activeMessageBoxes--;
         } else if (options != null)
-            selected = activateButton(options[index]);
+            returnAction = activateButton(options[index]);
 
-        return selected;
+        return returnAction;
     }
 
     public GameState getState() {
@@ -347,14 +357,14 @@ public class Menu {
      *****************/
 
     protected void renderValue(Graphics g, Button button, int value, boolean condition) {
-        int bx = button.getX() + button.getWidth();
-        int by = button.getY() + button.getHeight();
+        buttonOffsetX = button.getX() + button.getWidth();
+        buttonOffsetY = button.getY() + button.getHeight();
 
-        g.setFont(new Font("arial", 1, 45));
+        g.setFont(buttonValueFont);
 
-        Color c = condition ? Color.GREEN : Color.GRAY;
-        g.setColor(c);
-        g.drawString(Integer.toString(value), 10 + bx, by);
+        buttonValueColor = condition ? Color.GREEN : Color.GRAY;
+        g.setColor(buttonValueColor);
+        g.drawString(Integer.toString(value), 10 + buttonOffsetX, buttonOffsetY);
     }
 
 }

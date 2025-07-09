@@ -19,7 +19,11 @@ public class EnemyHeavy extends Enemy {
 
     double destinationX, destinationY;
     int offsetLeft = 8, offsetRight = 2;
+
+    boolean secondsTillShotFire;
+    double tempAngle;
     boolean playerInRange;
+    boolean rangeCheck1, rangeCheck2;
 
     public EnemyHeavy(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
@@ -89,71 +93,29 @@ public class EnemyHeavy extends Enemy {
 //        }
     }
 
-//    @Override
-//    public void render(Graphics g) {
-//        g.setColor(Color.BLACK);
-//        g.fillRect((int) destinationX-offsetLeft, (int) destinationY, 32 + offsetRight, 10);
-//
-//        g.setColor(Color.RED);
-//
-//        if (playerInRange) {
-//            if (isActive()) {
-//                g.setColor(Color.GREEN);
-//            }
-//        }
-//
-//        g.drawRect((int) x, (int) y, width, height * 2);
-
-//        if (attackEffect) {
-//            boolean secondsTillShotFire = (shootTimer < 20);
-//            if (isActive() && secondsTillShotFire) {
-//                g.setColor(Color.red);
-//
-//                Graphics2D g2d = (Graphics2D) g;
-//                g.setColor(Color.RED);
-//
-//
-//                double drawX = x - (0.5) * (double) width;
-//                double drawY = y - (0.5) * (double) height;
-//                int arcAngle = 20;
-//
-//                g2d.setComposite(Utility.makeTransparent(0.5f));
-//                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(getBulletAngle()) - arcAngle / 2, arcAngle);
-//
-//                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(90 + (90 - getBulletAngle())) - arcAngle / 2, arcAngle);
-//                g2d.setComposite(Utility.makeTransparent(1f));
-//            }
-//        }
-
-//        g.setColor(color);
-//        super.render(g);
-//    }
-
     @Override
     protected void renderAttackPath(Graphics g) {
         if (attackEffect) {
-            boolean secondsTillShotFire = (shootTimer < 20);
+            secondsTillShotFire = (shootTimer < 20);
             if (isActive() && secondsTillShotFire) {
                 g.setColor(Color.red);
 
-                Graphics2D g2d = (Graphics2D) g;
+                g2d = (Graphics2D) g;
                 g.setColor(Color.RED);
 
 
-                double drawX = x - (0.5) * (double) width;
-                double drawY;
+                attackPathX = x - (0.5) * (double) width;
                 if (bulletAngle == bulletAngleMIN) {
-                    drawY = getTurretY() - (double) height;
+                    attackPathY = getTurretY() - (double) height;
                 } else {
-                    drawY = getTurretY() - (0.5) * (double) height;
+                    attackPathY = getTurretY() - (0.5) * (double) height;
                 }
-                int arcAngle = 20;
 
                 g2d.setComposite(Utility.makeTransparent(0.5f));
-                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(getBulletAngle()) - arcAngle / 2, arcAngle);
+                g2d.fillArc((int) attackPathX, (int) attackPathY, 2 * width, 2 * height, (int) -(getBulletAngle()) - bulletArcAngle / 2, bulletArcAngle);
 
                 if (bulletAngle == bulletAngleMIN)
-                    g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(90 + (90 - getBulletAngle())) - arcAngle / 2, arcAngle);
+                    g2d.fillArc((int) attackPathX, (int) attackPathY, 2 * width, 2 * height, (int) -(90 + (90 - getBulletAngle())) - bulletArcAngle / 2, bulletArcAngle);
                 g2d.setComposite(Utility.makeTransparent(1f));
             }
         }
@@ -250,7 +212,7 @@ public class EnemyHeavy extends Enemy {
 
     @Override
     public double getBulletAngle() {
-        double tempAngle;
+
         if (turretLeft) {
             tempAngle = bulletAngle;
         }
@@ -261,8 +223,8 @@ public class EnemyHeavy extends Enemy {
 //        if (bothShotsFired)
 //            incrementBulletAngle();
 
-        boolean rangeCheck1 = (destinationX - offsetLeft > x) && (destinationX - offsetLeft < x + width);
-        boolean rangeCheck2 = (destinationX + 32 + offsetRight < x + width) && (destinationX + 32 + offsetRight > x);
+        rangeCheck1 = (destinationX - offsetLeft > x) && (destinationX - offsetLeft < x + width);
+        rangeCheck2 = (destinationX + 32 + offsetRight < x + width) && (destinationX + 32 + offsetRight > x);
         playerInRange = rangeCheck1 || rangeCheck2;
 
         if (playerInRange)

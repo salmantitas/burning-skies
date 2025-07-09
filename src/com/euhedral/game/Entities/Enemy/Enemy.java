@@ -45,17 +45,32 @@ public class Enemy extends MobileEntity {
     protected double bulletVelocity;
     protected double bulletAngle;
     protected int bulletArcAngle;
-    ;
 
+    Graphics2D g2d;
     protected boolean attackEffect;
+    double attackPathX;
+    double attackPathY;
 
     // State Machine
     protected final int STATE_EXPLODING = 2;
 
+    // Explosions
+    int size;
+    int expX;
+    int expY;
+
     private Reflection reflection;
+    int reflectionX, reflectionY, newWidth, newHeight;
 
     int jitter = 0;
     int jitter_MAX;
+
+    // Bounds
+    Rectangle2D boundsVertical, boundsHorizontal;
+    boolean collidesVertically, collidesHorizontally;
+
+    int disableOffset = 64 * 3;
+    int bottomBounds;
 
     public Enemy(int x, int y, int levelHeight) {
         super(x, y, EntityID.Enemy);
@@ -65,10 +80,12 @@ public class Enemy extends MobileEntity {
 
         width = Utility.intAtWidth640(32);
         height = width;
+        size = Math.max(width, height);
         jitter_MAX = Utility.intAtWidth640(2);
         color = Color.red;
 
         setLevelHeight(levelHeight);
+        bottomBounds = levelHeight + disableOffset;
 
         score = 50;
         shootTimerDefault = 150;
@@ -79,6 +96,9 @@ public class Enemy extends MobileEntity {
 
         textureHandler = GameController.getTexture();
         attackEffect = false;
+
+        boundsVertical = new Rectangle2D.Double();
+        boundsHorizontal = new Rectangle2D.Double();
 //        initialize();
     }
 
@@ -182,16 +202,16 @@ public class Enemy extends MobileEntity {
             if (isActive() && secondsTillShotFire) {
                 g.setColor(Color.red); // todo: Redundancy?
 
-                Graphics2D g2d = (Graphics2D) g;
+                g2d = (Graphics2D) g;
                 g.setColor(Color.RED);
 
 
-                double drawX = x - (0.5) * (double) width;
-                double drawY = getTurretY() - (0.5) * (double) height;
+                attackPathX = x - (0.5) * (double) width;
+                attackPathY = getTurretY() - (0.5) * (double) height;
 //                double drawY = y - (0.5) * (double) height;
 
                 g2d.setComposite(Utility.makeTransparent(0.5f));
-                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(calculateShotTrajectory()) - bulletArcAngle / 2, bulletArcAngle);
+                g2d.fillArc((int) attackPathX, (int) attackPathY, 2 * width, 2 * height, (int) -(calculateShotTrajectory()) - bulletArcAngle / 2, bulletArcAngle);
                 g2d.setComposite(Utility.makeTransparent(1f));
             }
         }
@@ -199,16 +219,16 @@ public class Enemy extends MobileEntity {
 
     protected void renderExplosion(Graphics g) {
         if (!explosion.playedOnce) {
-            int size = Math.max(width, height);
-            int expX = (int) x + (size - width) / 2;
-            int expY = (int) y - (size - height) / 2;
+            size = Math.max(width, height);
+            expX = (int) x + (size - width) / 2;
+            expY = (int) y - (size - height) / 2;
             explosion.drawAnimation(g, expX, expY, size, size);
         }
     }
 
     public void renderShadow(Graphics g) {
         if (state != STATE_INACTIVE) {
-            Graphics2D g2d = (Graphics2D) g;
+            g2d = (Graphics2D) g;
             g2d.setComposite(Utility.makeTransparent(0.5f));
 
             int offsetX = (int) (Engine.WIDTH / 2 - getCenterX()) / 15;
@@ -224,10 +244,10 @@ public class Enemy extends MobileEntity {
     public void renderReflection(Graphics2D g2d, float transparency) {
         g2d.setComposite(Utility.makeTransparent(transparency));
 
-        int reflectionX = reflection.calculateReflectionX(x, getCenterX());
-        int reflectionY = reflection.calculateReflectionY(y, getCenterY());
-        int newWidth = (int) (width * reflection.sizeOffset);
-        int newHeight = (int) (height * reflection.sizeOffset);
+        reflectionX = reflection.calculateReflectionX(x, getCenterX());
+        reflectionY = reflection.calculateReflectionY(y, getCenterY());
+        newWidth = (int) (width * reflection.sizeOffset);
+        newHeight = (int) (height * reflection.sizeOffset);
 
         if (state == STATE_ACTIVE) {
             g2d.drawImage(image, reflectionX + jitter, reflectionY + jitter, newWidth, newHeight, null);
@@ -322,15 +342,15 @@ public class Enemy extends MobileEntity {
 //    }
 
     public Rectangle2D getBoundsHorizontal() {
-        Rectangle2D bounds = new Rectangle2D.Double(x, y, width, 1 * height / 3 + 2);
+        boundsHorizontal.setRect(x, y, width, 1 * height / 3 + 2);
 //        Rectangle bounds = new Rectangle(x, y, width, 1*height/3 + 2);
-        return bounds;
+        return boundsHorizontal;
     }
 
     public Rectangle2D getBoundsVertical() {
-        Rectangle2D bounds = new Rectangle2D.Double(x + (width / 4), y, (2 * width) / 4, height);
+        boundsVertical.setRect(x + (width / 4), y, (2 * width) / 4, height);
 //        Rectangle bounds = new Rectangle(x + (width / 4), y, (2 * width) / 4, height);
-        return bounds;
+        return boundsVertical;
     }
 
     @Override
@@ -339,7 +359,7 @@ public class Enemy extends MobileEntity {
         Rectangle2D r1 = getBoundsVertical();
         Rectangle2D r2 = getBoundsHorizontal();
 
-        Graphics2D g2d = (Graphics2D) g;
+        g2d = (Graphics2D) g;
 
         g2d.draw(r1);
         g2d.draw(r2);
@@ -373,8 +393,6 @@ public class Enemy extends MobileEntity {
 
     @Override
     public boolean canDisable() {
-        int offset = 64 * 3;
-        int bottomBounds = levelHeight + offset;
         return getY() > bottomBounds;
     }
 
@@ -447,10 +465,10 @@ public class Enemy extends MobileEntity {
     }
 
     public boolean checkCollision(Rectangle2D object) {
-        Rectangle2D rV = getBoundsVertical();
-        Rectangle2D rH = getBoundsHorizontal();
-        boolean collidesVertically = object.intersects(rV);
-        boolean collidesHorizontally = object.intersects(rH);
+        boundsVertical = getBoundsVertical();
+        boundsHorizontal = getBoundsHorizontal();
+        collidesVertically = object.intersects(boundsVertical);
+        collidesHorizontally = object.intersects(getBoundsHorizontal());
 
         return collidesVertically || collidesHorizontally;
     }

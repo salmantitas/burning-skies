@@ -46,15 +46,22 @@ public class VariableHandler {
     private static int scoreX = Utility.percWidth(2.5);
     private static int scoreY = Utility.percHeight(4);
     private static int scoreSize = Utility.percWidth(2);
+    private static Font scoreFont = new Font("arial", 1, scoreSize);
 
     // High Score
     public static final int HIGH_SCORE_NUMBERS_MAX = 10;
     private static LinkedList<Integer> highScore;
+    private static int baseScore;
+    private static int highScoreFontSize = 25;
+    private static Font highScoreFont = new Font("arial", 1, highScoreFontSize);
+
+    private static int lineHeightInPixel = Utility.intAtWidth640(18);
 
     // Level
     private static int levelX = Utility.percWidth(90);
     private static int levelY;
     private static int levelSize = scoreSize;
+    private static Font levelFont = new Font("arial", 1, levelSize);
 
     // Timer
     private static int timerX = Utility.percWidth(85);
@@ -91,7 +98,7 @@ public class VariableHandler {
 
     // Deadzones
     public static int deadzoneWidth = Utility.intAtWidth640(32);
-    public static int deadzoneLeftX = 0, deadzoneRightX = Engine.WIDTH - deadzoneWidth - Utility.intAtWidth640(8);
+    public static int deadzoneLeftX = 0, deadzoneRightX = Engine.WIDTH - deadzoneWidth - Utility.intAtWidth640(8), deadzoneTop = Utility.intAtWidth640(50);
 
     // Difficulty
 
@@ -190,7 +197,7 @@ public class VariableHandler {
         }
 
         for (int i = 0; i < highScore.size(); i++) {
-            int baseScore = highScore.get(i);
+            baseScore = highScore.get(i);
 
             if (score >= baseScore) {
                 highScore.add(i, score);
@@ -229,19 +236,19 @@ public class VariableHandler {
     }
 
     public static void renderScore(Graphics g) {
-        g.setFont(new Font("arial", 1, scoreSize));
+        g.setFont(scoreFont);
         g.setColor(Color.WHITE);
         g.drawString("Score: " + score, scoreX, scoreY);
     }
 
     public static void renderLevel(Graphics g) {
-        g.setFont(new Font("arial", 1, levelSize));
+        g.setFont(levelFont);
         g.setColor(Color.YELLOW);
         g.drawString("Level " + level, timerX, levelY);
     }
 
     public static void renderTimer(Graphics g) {
-        g.setFont(new Font("arial", 1, levelSize));
+        g.setFont(levelFont);
         g.setColor(Color.YELLOW);
         g.drawString("Timer: " + GameController.getCurrentTime(), timerX, timerY);
     }
@@ -394,17 +401,17 @@ public class VariableHandler {
     }
 
     public static void drawHighScore(Graphics g, int x0, int y0) {
-        int fontSize = 25;
-        g.setFont(new Font("arial", 1, fontSize));
 
-        int lineHeightInPixel = Utility.intAtWidth640(18);
+        g.setFont(highScoreFont);
+
         for (int i = 0; i < HIGH_SCORE_NUMBERS_MAX; i++) {
-            int val = highScore.get(i);
-            g.drawString(Integer.toString(val), x0, y0 + (i + 1) * lineHeightInPixel);
+            baseScore = highScore.get(i);
+            g.drawString(Integer.toString(baseScore), x0, y0 + (i + 1) * lineHeightInPixel);
         }
     }
 
     public static LinkedList<String> getHighScoreList() {
+        // why not just return highscore?
         LinkedList outputList = new LinkedList();
         for (int i = 0; i < HIGH_SCORE_NUMBERS_MAX; i++) {
             outputList.add(highScore.get(i).toString());

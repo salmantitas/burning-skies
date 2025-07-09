@@ -18,11 +18,12 @@ public class Animation {
 
     public Animation(int speed, BufferedImage... args) {
         this.speed = speed;
-        images = new BufferedImage[args.length];
-        for(int i = 0; i < args.length; i++) {
+        frames = args.length;
+
+        images = new BufferedImage[frames];
+        for(int i = 0; i < frames; i++) {
             images[i] = args[i];
         }
-        frames = args.length;
     }
 
     // todo: change so it only runs once, create a separate function called loopAnimation that loops

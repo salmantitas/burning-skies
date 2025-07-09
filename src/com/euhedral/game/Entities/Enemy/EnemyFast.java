@@ -9,8 +9,10 @@ import java.awt.*;
 
 public class EnemyFast extends Enemy{
 
-    double acceleration = 0.08;
     double destinationX, destinationY;
+
+    double velXCoefficient = 2;
+    double acceleration = 0.08;
 
     public EnemyFast(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
@@ -55,9 +57,8 @@ public class EnemyFast extends Enemy{
             }
             // x = k*y^2
 
-            double factor = 2;
             velY += acceleration;
-            velX_MIN = factor * Math.pow(velY, 0.5);
+            velX_MIN = velXCoefficient * Math.pow(velY, 0.5);
 
             setHMove(hMove);
         }
@@ -97,16 +98,6 @@ public class EnemyFast extends Enemy{
     @Override
     public int getTurretX() {
         return (int) x + width/2 - Utility.intAtWidth640(2);
-    }
-
-    private void renderPath(Graphics g) {
-        g.setColor(Color.RED);
-        int pathLength = Engine.HEIGHT;
-        int originX = (int) x + width/2;
-        int originY = (int) y + height/2;
-        for (int i = 0; i < pathLength; i ++) {
-            g.drawLine(originX, originY, originX + 0, originY + i);
-        }
     }
 
     @Override

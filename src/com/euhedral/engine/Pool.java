@@ -11,6 +11,8 @@ public class Pool {
     private int reusable;
     private float camMarker;
 
+    Entity entity;
+
     public Pool() {
         entities = new LinkedList<>();
         reusable = 0;
@@ -72,7 +74,8 @@ public class Pool {
     public void clear() {
         reusable = 0;
         for (Entity entity: entities) {
-            entity.clear();
+            entity.clear(); // todo: instead of clearing, destroy them
+//            increase(entity);
         }
 //        entities.clear();
     }
@@ -119,7 +122,7 @@ public class Pool {
     }
 
     public void spawnFromPool(int x, int y, EntityID id) {
-        Entity entity = findInList();
+        entity = findInList();
         entity.resurrect(x, y, id);
         decrease();
     }

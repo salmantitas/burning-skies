@@ -31,6 +31,7 @@ public class Bullet extends MobileEntity {
 
     // Reflection
     protected Reflection reflection;
+    int reflectionX, reflectionY, newWidth, newHeight;
 
     Bullet(int x, int y) {
         super(x ,y, EntityID.Bullet);
@@ -50,6 +51,11 @@ public class Bullet extends MobileEntity {
         );
 
         reflection = new Reflection();
+
+        newWidth = (int) (width * reflection.sizeOffset);
+        newHeight = (int) (height * reflection.sizeOffset);
+
+        impactSize = Math.max(newWidth, newHeight);
     }
 
     Bullet(int x, int y, double angle) {
@@ -91,15 +97,13 @@ public class Bullet extends MobileEntity {
     public void renderReflection(Graphics2D g2d, float transparency) {
         g2d.setComposite(Utility.makeTransparent(transparency));
 
-        int reflectionX = reflection.calculateReflectionX(x, getCenterX());
-        int reflectionY = reflection.calculateReflectionY(y, getCenterY());
-        int newWidth = (int) (width * reflection.sizeOffset);
-        int newHeight = (int) (height * reflection.sizeOffset);
+        reflectionX = reflection.calculateReflectionX(x, getCenterX());
+        reflectionY = reflection.calculateReflectionY(y, getCenterY());
 
         if (state == STATE_ACTIVE) {
             g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
         } else if (state == STATE_IMPACT) {
-            int impactSize = Math.max(newWidth, newHeight);
+//            int impactSize = Math.max(newWidth, newHeight);
             impact.drawAnimation(g2d, reflectionX, reflectionY, impactSize, impactSize);
         }
         g2d.setComposite(Utility.makeTransparent(1f));

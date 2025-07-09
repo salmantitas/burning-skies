@@ -16,6 +16,8 @@ public class MenuCredits extends Menu {
     int leftPaneX = Utility.percWidth(3), rightPaneX = Utility.percWidth(56);
     int lineHeightInPixel = 30;
 
+    Font creditFont = new Font("arial", 1, creditFontSize);
+
     public MenuCredits() {
         super(GameState.Credits);
         MAXBUTTON = 1;
@@ -91,11 +93,11 @@ public class MenuCredits extends Menu {
     }
 
     private void drawText(Graphics g) {
-        g.setFont(new Font("arial", 1, titleSize));
+        g.setFont(headingFont);
         g.setColor(Color.BLACK);
         g.drawString("Credits", x30, headingY);
 
-        g.setFont(new Font("arial", 1, creditFontSize));
+        g.setFont(creditFont);
 
         g.setColor(Color.WHITE);
 

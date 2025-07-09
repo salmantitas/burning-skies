@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class BulletPlayer extends Bullet{
 
-    BulletPlayer(int x, int y, double angle) {
+    public BulletPlayer(int x, int y, double angle) {
         super(x, y, angle);
 //        this.contactId = contactId;
         width = Utility.intAtWidth640(3); //6

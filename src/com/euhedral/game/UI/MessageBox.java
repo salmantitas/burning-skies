@@ -68,6 +68,14 @@ public class MessageBox extends UIItem {
 //    private int widthMax = 500;
     private int heightMax;
 
+    boolean clicked;
+    int yPos;
+    int textStart;
+    String text;
+    int textSize;
+    int textSpacing;
+    String dismissalText = "Press ENTER or E to start";
+
     public MessageBox(int x, int y) {
         this.x = x;
         this.y = y;
@@ -102,7 +110,7 @@ public class MessageBox extends UIItem {
     }
 
     public void update() {
-        boolean clicked = false;
+        clicked = false;
         if (clicked)
             disable();
     }
@@ -124,12 +132,12 @@ public class MessageBox extends UIItem {
 //            g.setColor(backColor);
 //            g.fillRect(x, y, width, height);
             g.setColor(textColor);
-            int yPos = y;
-            int textStart = (int) (height*0.2);
+            yPos = y;
+            textStart = (int) (height*0.2);
 
             for (int i = 0; i < texts.size(); i++) {
-                String text = texts.get(i);
-                int textSize = g.getFontMetrics().stringWidth(text);
+                text = texts.get(i);
+                textSize = g.getFontMetrics().stringWidth(text);
                 if (textSize > width - margin) {
 //                    if (textSize > width - margin) {
 //                        g.setColor(textColorError);
@@ -141,13 +149,13 @@ public class MessageBox extends UIItem {
 //                    }
                 }
 
-                int textSpacing = i * fontSize;
+                textSpacing = i * fontSize;
                 yPos = y + textSpacing + textStart;
                 g.drawString(text, x + margin, yPos);
             }
 
             String dismissalText = "Press ENTER or E to start";
-            int textSize = g.getFontMetrics().stringWidth(dismissalText);
+            textSize = g.getFontMetrics().stringWidth(dismissalText);
             // Dismissal
             g.setColor(Color.RED);
             g.drawString(dismissalText, x + width/2 - textSize/2, yPos + textStart);

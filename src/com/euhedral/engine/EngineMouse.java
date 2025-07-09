@@ -8,7 +8,7 @@ import com.euhedral.game.GameController;
 import com.euhedral.game.MouseInput;
 
 public class EngineMouse extends MouseAdapter {
-    private GameController gameController;
+//    private GameController gameController;
     private MouseInput mouseInput;
 
     private int mxMove, myMove;
@@ -18,7 +18,7 @@ public class EngineMouse extends MouseAdapter {
     private int buttonPressed, buttonReleased;
 
     public EngineMouse(GameController gameController) {
-        this.gameController = gameController;
+//        this.gameController = gameController;
         mouseInput = new MouseInput(this, gameController);
     }
 

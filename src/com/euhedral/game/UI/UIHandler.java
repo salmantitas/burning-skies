@@ -14,6 +14,7 @@ public class UIHandler {
     private Menu currentMenu;
     private ArrayList<Menu> menus;
     ActionTag action = null;
+    boolean menuChanged = false;
 
     // Common game variables
 
@@ -85,14 +86,14 @@ public class UIHandler {
     * Changes the menu to match the current gameState. If no matching menu is found, it's set to an empty menu.
     * */
     private void findNewCurrent(GameState state) {
-        boolean menuChanged = false;
+        menuChanged = false;
 
         for (Menu menu: menus) {
             if (menu.getState() == state) {
 
                 // resets the notification for
                 if (currentMenu instanceof MenuTransition) {
-                    // todo: Inheritence
+                    // todo: Move to onSwitch
                     VariableHandler.resetSaveDataNotification();
                 }
 

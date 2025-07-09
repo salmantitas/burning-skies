@@ -19,6 +19,8 @@ public class EnemyStatic2 extends Enemy {
 
     boolean first;
 
+    double tempAngle;
+
     public EnemyStatic2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
@@ -147,7 +149,7 @@ public class EnemyStatic2 extends Enemy {
 
     @Override
     public double getBulletAngle() {
-        double tempAngle = calculateShotTrajectory();
+        tempAngle = calculateShotTrajectory();
 //        double maxArc = tempAngle + 20;
         return tempAngle - 20 + (bulletsPerShot - 1) * 10; // * (bulletsPerShot % 2 == 0 ? 1 : -1); // stub
     }
@@ -170,7 +172,7 @@ public class EnemyStatic2 extends Enemy {
     }
 
     public boolean checkCollision(Rectangle2D object) {
-        Rectangle2D r = getBounds();
-        return object.intersects(r);
+        bounds.setRect(getBounds());
+        return object.intersects(bounds);
     }
 }

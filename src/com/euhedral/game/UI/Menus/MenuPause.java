@@ -14,6 +14,8 @@ public class MenuPause extends Menu {
     int pauseX = Utility.percWidth(16), pauseY = Utility.percHeight(40);
     int buttonX = pauseX + Utility.percWidth(1);
 
+    Font textFont = new Font("arial", 1, Utility.percWidth(20));
+
 //    ButtonAction volumeMasterDown = new ButtonAction(x36, volY, optionSize, optionSize, "-", ActionTag.volumeMasterDown);
 //    ButtonAction volumeMaster = new ButtonAction(x40, volY, optionSize, "Master Volume", ActionTag.volumeMaster);
 //    ButtonAction volumeMasterUp = new ButtonAction(x62, volY, optionSize, optionSize,"+", ActionTag.volumeMasterUp);
@@ -75,7 +77,7 @@ public class MenuPause extends Menu {
     * */
 
     public void drawPause(Graphics g) {
-        g.setFont(new Font("arial", 1, Utility.percWidth(20)));
+        g.setFont(textFont);
         g.setColor(Color.WHITE);
         g.drawString("PAUSE", pauseX, pauseY);
     }

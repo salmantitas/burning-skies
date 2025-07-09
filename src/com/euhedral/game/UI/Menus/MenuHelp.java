@@ -16,6 +16,10 @@ public class MenuHelp extends Menu {
     int helpX = 300;
     int helpY = 200;
 
+    Font textFont = new Font("arial", 1, 30);
+    ArrayList<String> help;
+    int lineHeightInPixel = 80;
+
 //    private class Bindable extends UIItem{
 //        String str;
 //        boolean selected = false;
@@ -81,6 +85,16 @@ public class MenuHelp extends Menu {
 
 //        createBindable(GameController.UP, 100, 100);
 
+        help = new ArrayList<>();
+        help.add(GameController.UP + "-" + GameController.LEFT + "-" + GameController.DOWN + "-"
+                + GameController.RIGHT + " or the Arrow Keys for movement");
+        help.add(GameController.SHOOT + " to shoot");
+        help.add("ESC or " + GameController.PAUSE + " in-game to pause or resume");
+        help.add("");
+        help.add("You can toggle tutorial message-boxes");
+        help.add("in Settings");
+//        help.add("ESC from menu to quit");
+
     }
 
     @Override
@@ -122,18 +136,8 @@ public class MenuHelp extends Menu {
     }
 
     private void drawHelpText(Graphics g) {
-        g.setFont(new Font("arial", 1, 30));
+        g.setFont(textFont);
         g.setColor(Color.WHITE);
-        ArrayList<String> help = new ArrayList<>();
-        help.add(GameController.UP + "-" + GameController.LEFT + "-" + GameController.DOWN + "-"
-                + GameController.RIGHT + " or the Arrow Keys for movement");
-        help.add(GameController.SHOOT + " to shoot");
-        help.add("ESC or " + GameController.PAUSE + " in-game to pause or resume");
-        help.add("");
-        help.add("You can toggle tutorial message-boxes");
-        help.add("in Settings");
-//        help.add("ESC from menu to quit");
-        int lineHeightInPixel = 80;
 
         for (int i = 0; i < help.size(); i++)
         {
