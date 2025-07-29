@@ -21,6 +21,10 @@ public class EnemyDrone extends Enemy{
         setImage(textureHandler.enemyDrone[0]);
         width = Utility.intAtWidth640(16);
         height = width;
+
+        health_MAX = 1;
+        damage = 15;
+        commonInit();
     }
 
     public EnemyDrone(int x, int y, Color color, int levelHeight) {
@@ -28,14 +32,12 @@ public class EnemyDrone extends Enemy{
         this.color = color;
     }
 
-    @Override
-    public void initialize() {
-        super.initialize();
-
-        health_MAX = 1;
-        damage = 15;
-        commonInit();
-    }
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+//
+//    }
 
     @Override
     protected void shoot() {

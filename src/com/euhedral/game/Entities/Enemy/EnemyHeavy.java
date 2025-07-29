@@ -45,16 +45,6 @@ public class EnemyHeavy extends Enemy {
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyHeavy[0]);
-    }
-
-    public EnemyHeavy(int x, int y, Color color, int levelHeight) {
-        this(x,y, levelHeight);
-        this.color = color;
-    }
-
-    @Override
-    public void initialize() {
-        super.initialize();
 
         velX = 0;
         velY_MIN = 1.7f;
@@ -65,6 +55,18 @@ public class EnemyHeavy extends Enemy {
         commonInit();
         damage = 60;
     }
+
+    public EnemyHeavy(int x, int y, Color color, int levelHeight) {
+        this(x,y, levelHeight);
+        this.color = color;
+    }
+
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+//
+//    }
 
     @Override
     public void update() {

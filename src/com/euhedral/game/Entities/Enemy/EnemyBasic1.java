@@ -16,6 +16,13 @@ public class EnemyBasic1 extends Enemy{
 
         shootTimerDefault = 150;
 //        attackEffect = true;
+
+        //        enemyType = EntityHandler.TYPE_BASIC;
+
+        health_MAX = 2;
+        commonInit();
+        score = 50;
+        velX_MIN = 1.75f;
     }
 
     public EnemyBasic1(int x, int y, Color color, int levelHeight) {
@@ -24,17 +31,12 @@ public class EnemyBasic1 extends Enemy{
 
     }
 
-    @Override
-    public void initialize() {
-        super.initialize();
-
-//        enemyType = EntityHandler.TYPE_BASIC;
-
-        health_MAX = 2;
-        commonInit();
-        score = 50;
-        velX_MIN = 1.75f;
-    }
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+//
+//    }
 
 //    @Override
 //    protected void shoot() {

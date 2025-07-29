@@ -24,18 +24,6 @@ public class EnemySide1 extends Enemy{
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemySide[2]);
-    }
-
-    public EnemySide1(int x, int y, Color color, int levelHeight) {
-        super(x, y, color, levelHeight);
-//        enemyID = EnemyID.Fast;
-    }
-
-    @Override
-    public void initialize() {
-        super.initialize();
-
-//        enemyType = EntityHandler.TYPE_SIDE;
 
         health_MAX = 3;
         velX_MIN = 10f;
@@ -43,6 +31,20 @@ public class EnemySide1 extends Enemy{
 //        shootTimer = shootTimerDefault;
         commonInit();
     }
+
+    public EnemySide1(int x, int y, Color color, int levelHeight) {
+        super(x, y, color, levelHeight);
+//        enemyID = EnemyID.Fast;
+    }
+
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+////        enemyType = EntityHandler.TYPE_SIDE;
+//
+//
+//    }
 
     @Override
     public void move() {

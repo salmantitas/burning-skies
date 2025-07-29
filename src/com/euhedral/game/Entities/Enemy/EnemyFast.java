@@ -25,6 +25,11 @@ public class EnemyFast extends Enemy{
 //        shootTimer = shootTimerDefault;
         score = 125;
         determineMovement();
+
+        health_MAX = 3;
+        commonInit();
+        velX_MIN = 1.75;
+        velX_MAX = 4.75;
     }
 
     public EnemyFast(int x, int y, Color color, int levelHeight) {
@@ -33,18 +38,15 @@ public class EnemyFast extends Enemy{
 
     }
 
-    @Override
-    public void initialize() {
-        super.initialize();
-
-        health_MAX = 3;
-        commonInit();
-        velX_MIN = 1.75;
-        velX_MAX = 4.75;
-
-//        minVelX = maxVelX;
-
-    }
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+//
+//
+////        minVelX = maxVelX;
+//
+//    }
 
     @Override
     public void update() {

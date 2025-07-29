@@ -14,21 +14,21 @@ public class EnemyBasic3 extends Enemy{
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[2]);
 
-        // todo: These happen last
         shootTimerDefault = 50; // too low: 10, too high: 100
         score = 100;
         angle = SOUTH;
-//        forwardVelocity = 5;
-    }
-
-    @Override
-    public void initialize() {
-        super.initialize();
 
         health_MAX = 4;
         commonInit();
-
     }
+
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+//
+//
+//    }
 
     @Override
     public void update() {

@@ -17,16 +17,18 @@ public class EnemyDrone2 extends EnemyDrone{
         damage = 30;
 
         attackEffect = true;
-    }
-
-    @Override
-    public void initialize() {
-        super.initialize();
 
         health_MAX = 2;
 
         commonInit();
     }
+
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+//
+//    }
 
 //    @Override
 //    public void update() {

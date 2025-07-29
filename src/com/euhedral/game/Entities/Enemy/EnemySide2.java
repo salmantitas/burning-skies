@@ -26,18 +26,20 @@ public class EnemySide2 extends Enemy{
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemySide[0]);
-    }
-
-
-    @Override
-    public void initialize() {
-        super.initialize();
 
         health_MAX = 2;
         velX_MIN = 3f;
 
         commonInit();
     }
+
+
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+//
+//    }
 
     @Override
     public void move() {

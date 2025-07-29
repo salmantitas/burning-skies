@@ -30,16 +30,7 @@ public class EnemyStatic1 extends Enemy {
         attackEffect = true;
 
         setImage(textureHandler.enemyStatic[0]);
-    }
 
-    public EnemyStatic1(int x, int y, Color color, int levelHeight) {
-        this(x, y, levelHeight);
-        this.color = color;
-    }
-
-    @Override
-    public void initialize() {
-        super.initialize();
 
         health_MAX = 4;
 
@@ -50,6 +41,17 @@ public class EnemyStatic1 extends Enemy {
         commonInit();
         damage = 90;
     }
+
+    public EnemyStatic1(int x, int y, Color color, int levelHeight) {
+        this(x, y, levelHeight);
+        this.color = color;
+    }
+
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+//    }
 
     @Override
     public void update() {

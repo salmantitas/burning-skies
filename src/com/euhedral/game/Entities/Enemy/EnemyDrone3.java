@@ -21,13 +21,8 @@ public class EnemyDrone3 extends EnemyDrone{
 
         score = 75;
         damage = 30;
-    }
 
-    @Override
-    public void initialize() {
-        super.initialize();
-
-//        enemyType = EntityHandler.TYPE_DRONE;
+        //        enemyType = EntityHandler.TYPE_DRONE;
 
 //        power = 1;
 //        shootTimerDefault = 250;
@@ -35,6 +30,13 @@ public class EnemyDrone3 extends EnemyDrone{
         health_MAX = 1;
         commonInit();
     }
+
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+//
+//    }
 
     @Override
     public void update() {

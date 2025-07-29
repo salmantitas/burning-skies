@@ -38,7 +38,7 @@ public abstract class Entity {
 
         bounds = new Rectangle();
 
-        initialize();
+//        initialize();
     }
 
     public Entity(int x, int y, EntityID id, BufferedImage image) {
@@ -52,7 +52,7 @@ public abstract class Entity {
 
     }
 
-    protected abstract void initialize();
+//    protected abstract void initialize();
 
     public abstract void update();
 

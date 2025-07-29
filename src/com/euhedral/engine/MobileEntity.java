@@ -72,13 +72,15 @@ public abstract class MobileEntity extends Entity {
 
     public MobileEntity(int x, int y, EntityID id) {
         super(x, y, id);
-    }
 
-    @Override
-    protected void initialize() {
         forwardVelocity = 0;
         angle = 0;
     }
+
+//    @Override
+//    protected void initialize() {
+//
+//    }
 
     @Override
     public void update() {

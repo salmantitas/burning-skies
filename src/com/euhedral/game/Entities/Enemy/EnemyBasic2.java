@@ -21,17 +21,19 @@ public class EnemyBasic2 extends Enemy{
         score = 60;
         movementDistance = movementDistance_MAX;
 //        attackEffect = true;
-    }
-
-    @Override
-    public void initialize() {
-        super.initialize();
 
         health_MAX = 2;
         commonInit();
 
         velX_MIN = 1.5;
     }
+
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+//
+//    }
 
     @Override
     public void update() {

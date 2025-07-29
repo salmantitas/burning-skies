@@ -99,7 +99,17 @@ public class Enemy extends MobileEntity {
 
         boundsVertical = new Rectangle2D.Double();
         boundsHorizontal = new Rectangle2D.Double();
-//        initialize();
+
+        setEnemyType();
+        forwardVelocity = 2.4;
+        offscreenVelY = forwardVelocity;
+
+        bulletAngle = 90;
+
+        explosion = GameController.getTexture().initExplosion(5);
+        reflection = new Reflection();
+        damage = 35;
+        shootTimer = shootTimerDefault;
     }
 
     public Enemy(int x, int y, Color color, int levelHeight) {
@@ -162,19 +172,10 @@ public class Enemy extends MobileEntity {
         }
     }
 
-    @Override
-    public void initialize() {
-        setEnemyType();
-        forwardVelocity = 2.4;
-        offscreenVelY = forwardVelocity;
-
-        bulletAngle = 90;
-
-        explosion = GameController.getTexture().initExplosion(5);
-        reflection = new Reflection();
-        damage = 35;
-        shootTimer = shootTimerDefault;
-    }
+//    @Override
+//    public void initialize() {
+//
+//    }
 
     @Override
     public void render(Graphics g) {
