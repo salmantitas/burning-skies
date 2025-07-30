@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "Burning Skies";
-    public static String gameVersion = "0.7.04";
+    public static String gameVersion = "0.7.05";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -138,8 +138,8 @@ public class GameController {
         initializeSound();
         initializeGraphics();
         initializeAnimations();
-        initializeGame();
         uiHandler = new UIHandler();
+        initializeGame();
         initializeLevel();
     }
 

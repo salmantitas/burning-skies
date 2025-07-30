@@ -6,24 +6,25 @@ import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.UI.UIHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class MenuCredits extends Menu {
     ArrayList<String> assets, testers;
-    int creditFontSize = 20;
+    int creditFontSize = Utility.intAtWidth640(6);
     int leftPaneX = Utility.percWidth(3), rightPaneX = Utility.percWidth(56);
     int lineHeightInPixel = 30;
 
-    Font creditFont = new Font("arial", 1, creditFontSize);
+    Font creditFont = UIHandler.customFont.deriveFont(0, creditFontSize);
 
     public MenuCredits() {
         super(GameState.Credits);
         MAXBUTTON = 1;
         options = new Button[MAXBUTTON];
 
-        ButtonNav back = new ButtonNav(x43, Utility.percHeight(86), Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+        ButtonNav back = new ButtonNav(x43, Utility.percHeight(86), optionSize, "Back", GameState.Menu);
         options[0] = back;
 
         int panelWidth = Utility.percWidth(40);
@@ -52,7 +53,8 @@ public class MenuCredits extends Menu {
         assets.add("- The Premiere Edition 10 on videvo.com");
         assets.add("- Michel Baradari");
         assets.add("Explosion Sound Effect");
-        assets.add("- Pranus Production's Gun Sound Pack on itch.io");
+        assets.add("- Pranus Production's Gun Sound Pack");
+        assets.add("on itch.io");
         assets.add("");
         assets.add("UI Sound Effect");
         assets.add("- JDSherbert");
@@ -79,8 +81,8 @@ public class MenuCredits extends Menu {
         testers.add("- Andres Prieto");
         testers.add("- RobotAsking");
         testers.add("- The people from Full Indie");
-        testers.add("- And all the other wonderful people I might have");
-        testers.add("missed. Sorry :(");
+        testers.add("- And all the other wonderful people I");
+        testers.add("might have missed. Sorry :(");
     }
 
     @Override

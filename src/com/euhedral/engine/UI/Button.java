@@ -3,6 +3,7 @@ package com.euhedral.engine.UI;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.SoundHandler;
+import com.euhedral.game.UI.UIHandler;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -35,8 +36,8 @@ public class Button extends UIItem{
         this.width = width;
         this.height = height;
         this.text = text;
-        fontSelected = new Font("arial", 1, newWidth);
-        fontUnselected = new Font("arial", 1, width);
+        fontSelected = UIHandler.customFont.deriveFont(1, newWidth); // new Font("arial", 1, newWidth);
+        fontUnselected = UIHandler.customFont.deriveFont(1, width); // new Font("arial", 1, width);
         font = fontUnselected;
         backColor = Color.BLUE;
         selectedColor = Color.RED;
@@ -46,7 +47,7 @@ public class Button extends UIItem{
     }
 
     public Button(int x, int y, int size, String text) {
-        this(x, y, size, (size * 11)/10, text);
+        this(x, y, size, (size * 14)/10, text);
     }
 
     public void render(Graphics g) {

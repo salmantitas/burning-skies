@@ -6,6 +6,7 @@ import com.euhedral.engine.UI.ButtonAction;
 import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.game.ActionTag;
+import com.euhedral.game.UI.UIHandler;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
@@ -15,11 +16,21 @@ public class MenuTransition extends Menu {
     int optionSize = buttonSize/2;
     int shopSize = buttonSize/2;
 
+    String difficultyName = "";
     String text1 = "";
     String text2 = "";
-    String text3 = "";
-    Font font1 = new Font("arial", 1, Utility.percWidth(4));
-    Font font2 = new Font("arial", 1, Utility.percWidth(2));
+    int size1 = Utility.intAtWidth640(25);
+    int size2 = Utility.intAtWidth640(10);
+    Font font1 = UIHandler.customFont.deriveFont(1, size1);
+    Font font2 = UIHandler.customFont.deriveFont(1, size2);
+
+    int lineSpace = Utility.intAtWidth640(25);
+    int difficultyNameX = 500;
+    int difficultyNameY = 300;
+    int text1X = 200;
+    int text1Y = difficultyNameY + lineSpace;
+    int text2X = text1X;
+    int text2Y = text1Y + lineSpace;
 
 //    // Shop
 //
@@ -33,13 +44,13 @@ public class MenuTransition extends Menu {
 
     // Navigation
 
-    int difficultyY = y40;
-    int difficultyX = x20;
+    int difficultyY = y48;
+    int difficultyX = x10;
     int startY = difficultyY + spacingY;
 
-    ButtonAction difficulty = new ButtonAction(difficultyX, difficultyY, Utility.perc(buttonSize, 80), "Difficulty", ActionTag.toggleDifficulty);
+    ButtonAction difficulty = new ButtonAction(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty", ActionTag.toggleDifficulty);
 
-    ButtonAction start = new ButtonAction(difficultyX, startY, Utility.perc(buttonSize, 90), "Start", ActionTag.go);
+    ButtonAction start = new ButtonAction(difficultyX, startY, Utility.perc(buttonSize, 80), "Start", ActionTag.go);
 
     ButtonNav back = new ButtonNav(difficultyX, y70, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
 
@@ -135,30 +146,30 @@ public class MenuTransition extends Menu {
 
     private void renderDifficulty(Graphics g) {
         if (VariableHandler.difficultyType == 0) {
-            text1 = "Easy";
-            text2 = "Only start with basic enemies.";
-            text3 = "Enemies will progressively get more difficult";
+            difficultyName = "Easy";
+            text1 = "Only start with basic enemies.";
+            text2 = "Enemies will progressively get more difficult";
         } else if (VariableHandler.difficultyType == 1) {
-            text1 = "Normal";
-            text2 = "The intended experience.";
-            text3 = "Enemies will progressively get more difficult";
+            difficultyName = "Normal";
+            text1 = "The intended experience.";
+            text2 = "Enemies will progressively get more difficult";
         } else {
-            text1 = "Master";
-            text3 = "For the experienced player.";
+            difficultyName = "Master";
+            text1 = "For the experienced player.";
             text2 = "All enemies available from the start";
         }
 
         g.setColor(Color.BLACK);
         g.setFont(font1);
-        g.drawString(text1, difficultyX + 300, difficultyY + Utility.percHeight(5));
+        g.drawString(difficultyName, difficultyNameX, difficultyNameY);
 
 //        g.setColor(Color.BLACK);
         g.setFont(font2);
-        g.drawString(text2, difficultyX + 305, difficultyY + Utility.percHeight(10));
+        g.drawString(text1, text1X, text1Y);
 
 //        g.setColor(Color.BLACK);
 //        g.setFont(font2);
-        g.drawString(text3, difficultyX + 305, difficultyY + Utility.percHeight(13));
+        g.drawString(text2, text2X, text2Y);
     }
 
 }

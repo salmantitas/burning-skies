@@ -7,9 +7,14 @@ import com.euhedral.game.UI.Menus.*;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class UIHandler {
+
+    public static Font customFont;
 
     private Menu currentMenu;
     private ArrayList<Menu> menus;
@@ -18,12 +23,25 @@ public class UIHandler {
 
     // Common game variables
 
-    Menu nullMenu = new Menu(GameState.Quit);
+    Menu nullMenu;
 
     // User Variables
 
     public UIHandler() {
 
+        try {
+//            URL fontURL = new URL("file:///D:/Programming/burning-skies/res/magz.otf");
+            URL fontURL = getClass().getResource("/PublicPixel-rv0pA.ttf");//"/mags.otf");
+            customFont = Font.createFont(Font.TRUETYPE_FONT, fontURL.openStream());
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        nullMenu = new Menu(GameState.Quit);
         menus = new ArrayList<>();
 
         MenuMain mainMenu = new MenuMain();

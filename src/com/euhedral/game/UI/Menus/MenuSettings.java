@@ -19,17 +19,19 @@ public class MenuSettings extends Menu {
 
     // Options
 
-    ButtonAction tutorial = new ButtonAction(x40, y40, optionSize, "Tutorial", ActionTag.tutorial);
-    ButtonAction volumeMasterDown = new ButtonAction(x36, y48, optionSize, optionSize, "-", ActionTag.volumeMasterDown);
-    ButtonAction volumeMaster = new ButtonAction(x40, y48, optionSize, "Master Volume", ActionTag.volumeMaster);
-    ButtonAction volumeMasterUp = new ButtonAction(x62, y48, optionSize, optionSize,"+", ActionTag.volumeMasterUp);
+    int volOffset = 2;
+
+    ButtonAction tutorial = new ButtonAction(x36, y40, optionSize, "Tutorial", ActionTag.tutorial);
+    ButtonAction volumeMasterDown = new ButtonAction(x30, y48 + volOffset, optionSize, optionSize, "-", ActionTag.volumeMasterDown);
+    ButtonAction volumeMaster = new ButtonAction(x36, y48, optionSize, "Master Volume", ActionTag.volumeMaster);
+    ButtonAction volumeMasterUp = new ButtonAction(x70, y48 + volOffset, optionSize, optionSize,"+", ActionTag.volumeMasterUp);
 //    ButtonAction volumeMusicDown = new ButtonAction(x36, y56, optionSize, optionSize, "-", ActionTag.volumeMusicDown);
-    ButtonAction volumeMusic = new ButtonAction(x40, y56, optionSize, "Music Volume", ActionTag.volumeMusic);
+    ButtonAction volumeMusic = new ButtonAction(x36, y56, optionSize, "Music Volume", ActionTag.volumeMusic);
 //    ButtonAction volumeMusicUp = new ButtonAction(x62, y56, optionSize, optionSize,"+", ActionTag.volumeMusicUp);
 //    ButtonAction volumeEffectsDown = new ButtonAction(x36, y62, optionSize, optionSize, "-", ActionTag.volumeEffectsDown);
 //    ButtonAction volumeEffects = new ButtonAction(x40, y62, optionSize, "Effects Volume", ActionTag.volumeEffects);
 //    ButtonAction volumeEffectsUp = new ButtonAction(x62, y62, optionSize, optionSize,"+", ActionTag.volumeEffectsUp);
-    ButtonNav back = new ButtonNav(x43, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+    ButtonNav back = new ButtonNav(x43, y80, optionSize, "Back", GameState.Menu);
 
     public MenuSettings() {
         super(GameState.Settings);
@@ -98,6 +100,7 @@ public class MenuSettings extends Menu {
 
         buttonValueColor = bool ? Color.GREEN : Color.RED;
         g.setColor(buttonValueColor);
+
         g.fillOval(10 + buttonOffsetX, buttonOffsetY ,toggleIconSize,toggleIconSize);
     }
 

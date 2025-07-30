@@ -4,6 +4,7 @@ import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ActionTag;
 import com.euhedral.game.UI.MessageBox;
+import com.euhedral.game.UI.UIHandler;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
@@ -33,22 +34,26 @@ public class Menu {
     // Title Variables
 
     protected int titleX = Utility.percWidth(10);
-    protected int titleSize = Utility.percWidth(11.5);
+    protected int titleSize = Utility.intAtWidth640(37);
+    protected int versionSize = Utility.percWidth(2);
     protected Color titleColor = Color.BLACK;
 
-    protected int buttonSize = Utility.percWidth(5);
-    protected int optionSize = buttonSize/2;
+    protected int buttonSize = Utility.intAtWidth640(24);
+    protected int optionSize = Utility.intAtWidth640(13);
     protected int toggleIconSize = optionSize;
 
     protected int x5 = Utility.percWidth(5);
     protected int x10 = Utility.percWidth(10);
     protected int x20 = Utility.percWidth(20);
     protected int x30 = Utility.percWidth(30);
+    protected int x33 = Utility.percWidth(33);
     protected int x36 = Utility.percWidth(36);
     protected int x40 = Utility.percWidth(40);
+    protected int x41 = Utility.percWidth(41);
     protected int x43 = Utility.percWidth(43) + 10;
     protected int x52 = Utility.percWidth(52);
     protected int x62 = Utility.percWidth(62);
+    protected int x70 = Utility.percWidth(70);
     protected int x75 = Utility.percWidth(75);
     protected int xLast = Utility.percWidth(90);
     protected int y20 = Utility.percHeight(20);
@@ -64,10 +69,10 @@ public class Menu {
     protected int y80 = Utility.percHeight(80);
 
     protected int headingY = Utility.percHeight(19);
-    protected Font headingFont = new Font("arial", 1, titleSize);
+    protected Font headingFont;
 
     protected int buttonOffsetX, buttonOffsetY;
-    protected Font buttonValueFont = new Font("arial", 1, 45);
+    protected Font buttonValueFont = UIHandler.customFont.deriveFont(0, Utility.intAtWidth640(18));
     protected Color buttonValueColor;
 
     Button button;
@@ -79,6 +84,8 @@ public class Menu {
         this.state = state;
         messageBoxes = new ArrayList<>();
         activeMessageBoxes = 0;
+
+        headingFont = UIHandler.customFont.deriveFont(1, titleSize);
 //        previous = null;
     }
 
@@ -358,7 +365,7 @@ public class Menu {
 
     protected void renderValue(Graphics g, Button button, int value, boolean condition) {
         buttonOffsetX = button.getX() + button.getWidth();
-        buttonOffsetY = button.getY() + button.getHeight();
+        buttonOffsetY = button.getY() + button.getHeight() + Utility.intAtWidth640(2);
 
         g.setFont(buttonValueFont);
 

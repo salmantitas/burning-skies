@@ -5,16 +5,17 @@ import com.euhedral.engine.UI.*;
 import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
+import com.euhedral.game.UI.UIHandler;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 
 public class MenuPause extends Menu {
 
-    int pauseX = Utility.percWidth(16), pauseY = Utility.percHeight(40);
+    int pauseX = Utility.percWidth(15), pauseY = Utility.percHeight(40);
     int buttonX = pauseX + Utility.percWidth(1);
 
-    Font textFont = new Font("arial", 1, Utility.percWidth(20));
+    Font textFont = UIHandler.customFont.deriveFont(0, Utility.intAtWidth640(90));
 
 //    ButtonAction volumeMasterDown = new ButtonAction(x36, volY, optionSize, optionSize, "-", ActionTag.volumeMasterDown);
 //    ButtonAction volumeMaster = new ButtonAction(x40, volY, optionSize, "Master Volume", ActionTag.volumeMaster);

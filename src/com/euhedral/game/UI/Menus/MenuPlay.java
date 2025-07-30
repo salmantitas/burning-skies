@@ -27,18 +27,20 @@ public class MenuPlay extends Menu {
         MAXBUTTON = 0;
 //        options = new Button[MAXBUTTON];
 
-        tutorial = new MessageBox(300,250, 660, 300);
+        tutorial = new MessageBox(230,250, 800, 450);
         tutorial.addText("Use WASD or the Arrow Keys to move.");
-//        tutorial.addText("");
+        tutorial.addText("");
         tutorial.addText("        SPACEBAR to shoot.");
-//        tutorial.addText("");
+        tutorial.addText("");
         tutorial.addText("        ESCAPE or P to pause.");
-//        tutorial.addText("");
+        tutorial.addText("");
         tutorial.addText("You can disable tutorial in Settings.");
-//        tutorial.addText("");
-        tutorial.addText("Shoot as many enemies as you can and survive!");
-//        tutorial.addText("");
-        tutorial.setFontSize(30);
+        tutorial.addText("");
+        tutorial.addText("Shoot as many enemies as you can.");
+        tutorial.addText("");
+        tutorial.addText("Survive!");
+        tutorial.addText("");
+        tutorial.setFontSize(Utility.intAtWidth640(10));
 
         tutorial.setTransparency(0.8f);
         addMessageBox(tutorial);

@@ -7,13 +7,17 @@ import com.euhedral.engine.*;
 import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
 import com.euhedral.game.UI.MessageBox;
+import com.euhedral.game.UI.UIHandler;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MenuMain extends Menu {
 
-//    Font titleFont = new Font("arial", 1, titleSize);
-    Font versionFont = new Font("arial", 1, titleSize/8);
+    Font titleFont, versionFont;
+    int versionX, versionY;
 
     public MenuMain() {
         super(GameState.Menu);
@@ -26,6 +30,9 @@ public class MenuMain extends Menu {
         int helpY = highScoreY + spacingY;
         int creditsY = helpY + spacingY;
         int quitY = creditsY + spacingY;
+
+        versionX = xLast - 228;// Utility.intAtWidth640(106);
+        versionY = headingY + Utility.intAtWidth640(20);
 
         ButtonNav play = new ButtonNav(x10, playY, buttonSize, "Play", GameState.Transition);
         ButtonNav settings = new ButtonNav(x10, settingsY, buttonSize, "Settings", GameState.Settings);
@@ -48,7 +55,7 @@ public class MenuMain extends Menu {
         start.addText("");
 //        start.addText("");
 //        start.addText("");
-        start.setFontSize(61);
+        start.setFontSize(Utility.intAtWidth640(16));
 
         addMessageBox(start);
 
@@ -58,21 +65,8 @@ public class MenuMain extends Menu {
 //            e.printStackTrace();
 //        }
 
-        // Custom Font
-//        try {
-////            URL fontURL = new URL("file:///D:/Programming/burning-skies/res/magz.otf");
-//            URL fontURL = getClass().getResource("/Magz.otf");//"/mags.otf");
-//            titleFont = Font.createFont(Font.TRUETYPE_FONT, fontURL.openStream());
-//            titleFont = titleFont.deriveFont(1, titleSize);
-//        } catch (MalformedURLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        catch (FontFormatException e) {
-//            throw new RuntimeException(e);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
+        titleFont = UIHandler.customFont.deriveFont(1, titleSize);
+        versionFont = UIHandler.customFont.deriveFont(1, versionSize);
     }
 
     @Override
@@ -103,13 +97,13 @@ public class MenuMain extends Menu {
     * */
 
     private void drawTitle(Graphics g) {
-        g.setFont(headingFont);
+        g.setFont(titleFont);
         g.setColor(titleColor);
         g.drawString(Engine.TITLE, titleX, headingY);
 
         g.setFont(versionFont);
         g.setColor(Color.BLACK);
-        g.drawString("v " + GameController.gameVersion, xLast - Utility.percWidth(2), headingY);
+        g.drawString("v " + GameController.gameVersion, versionX, versionY);
 //        BufferedImage image = GameController.getTexture().title;
 //        int imageWidth = image.getWidth(), imageHeight = image.getHeight();
 //        int imageOffset = 50;

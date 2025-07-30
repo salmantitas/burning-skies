@@ -4,6 +4,7 @@ import com.euhedral.engine.Engine;
 import com.euhedral.engine.Entity;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.UI.UIHandler;
 
 import java.awt.*;
 import java.io.IOException;
@@ -46,14 +47,14 @@ public class VariableHandler {
     private static int scoreX = Utility.percWidth(2.5);
     private static int scoreY = Utility.percHeight(4);
     private static int scoreSize = Utility.percWidth(2);
-    private static Font scoreFont = new Font("arial", 1, scoreSize);
+    private static Font scoreFont = UIHandler.customFont.deriveFont(0, scoreSize);
 
     // High Score
     public static final int HIGH_SCORE_NUMBERS_MAX = 10;
     private static LinkedList<Integer> highScore;
     private static int baseScore;
     private static int highScoreFontSize = 25;
-    private static Font highScoreFont = new Font("arial", 1, highScoreFontSize);
+    private static Font highScoreFont = UIHandler.customFont.deriveFont(1, highScoreFontSize);
 
     private static int lineHeightInPixel = Utility.intAtWidth640(18);
 
@@ -61,10 +62,10 @@ public class VariableHandler {
     private static int levelX = Utility.percWidth(90);
     private static int levelY;
     private static int levelSize = scoreSize;
-    private static Font levelFont = new Font("arial", 1, levelSize);
+    private static Font levelFont = UIHandler.customFont.deriveFont(0, levelSize);
 
     // Timer
-    private static int timerX = Utility.percWidth(85);
+    private static int timerX = Utility.percWidth(75);
     private static int timerY;
 
     // Notifications

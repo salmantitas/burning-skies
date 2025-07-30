@@ -7,6 +7,7 @@ import com.euhedral.engine.*;
 import com.euhedral.engine.UI.Panel;
 import com.euhedral.game.ActionTag;
 import com.euhedral.game.GameController;
+import com.euhedral.game.UI.UIHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class MenuHelp extends Menu {
     int helpX = 300;
     int helpY = 200;
 
-    Font textFont = new Font("arial", 1, 30);
+    Font textFont = UIHandler.customFont.deriveFont(0, Utility.intAtWidth640(8));
     ArrayList<String> help;
     int lineHeightInPixel = 80;
 
@@ -73,7 +74,7 @@ public class MenuHelp extends Menu {
         MAXBUTTON = 1;
         options = new Button[MAXBUTTON];
 
-        ButtonNav back = new ButtonNav(x43, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+        ButtonNav back = new ButtonNav(x43, y80, optionSize, "Back", GameState.Menu);
         options[0] = back;
 
         int panelWidth = Utility.percWidth(55);

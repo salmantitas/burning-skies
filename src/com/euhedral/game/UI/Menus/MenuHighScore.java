@@ -20,7 +20,7 @@ public class MenuHighScore extends Menu {
         MAXBUTTON = 1;
         options = new Button[MAXBUTTON];
 
-        ButtonNav back = new ButtonNav(x43, y80, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+        ButtonNav back = new ButtonNav(x43, y80, optionSize, "Back", GameState.Menu);
         options[0] = back;
 
         int panelWidth = 300;

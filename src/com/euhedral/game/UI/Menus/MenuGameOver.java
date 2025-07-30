@@ -6,6 +6,7 @@ import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
+import com.euhedral.game.UI.UIHandler;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
@@ -13,9 +14,10 @@ import java.awt.*;
 public class MenuGameOver extends Menu {
 
     Animation explosion;
+    int gameOverX = Utility.percWidth(5);
     int scoreX = Utility.percWidth(14);
 
-    Font gameOverFont = new Font("arial", 1, 150);
+    Font gameOverFont = UIHandler.customFont.deriveFont(0, Utility.intAtWidth640(60));
     Font scoreFont = new Font("arial", 1, 40);
 
     int inScreenMarker, minSize, explodeX, explodeY;
@@ -25,8 +27,8 @@ public class MenuGameOver extends Menu {
         MAXBUTTON = 2;
         options = new Button[MAXBUTTON];
 
-        ButtonNav backToMenu = new ButtonNav(x40, y70, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
-        ButtonNav quit = new ButtonNav(x43, y80, buttonSize, "Quit", GameState.Quit);
+        ButtonNav backToMenu = new ButtonNav(x33, y70, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+        ButtonNav quit = new ButtonNav(x41, y80, Utility.perc(buttonSize, 90), "Quit", GameState.Quit);
 
         options[0] = backToMenu;
         options[1] = quit;
@@ -63,7 +65,7 @@ public class MenuGameOver extends Menu {
     public void drawGameOverScreen(Graphics g) {
         g.setFont(gameOverFont);
         g.setColor(Color.WHITE);
-        g.drawString("GAME OVER", Utility.percWidth(13), Utility.percHeight(50));
+        g.drawString("GAME OVER", gameOverX, Utility.percHeight(50));
     }
 
     public void drawScore(Graphics g) {
