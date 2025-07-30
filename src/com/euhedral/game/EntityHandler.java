@@ -43,7 +43,12 @@ public class EntityHandler {
     private static EnemyPool enemies;
     private BulletPool bullets;
     private PickupPool pickups;
-    int pickupValue = 0;
+//    int pickupValue = 0;
+
+    public static double pickupX = -1;
+    public static double pickupY = -1;
+    public static int pickupValue = -1;
+    public static int spawnProbablity = -1;
 
     private EnemyBoss boss;
 
@@ -83,9 +88,11 @@ public class EntityHandler {
     public void update() {
         updatePlayer();
         updateBullets();
+
         updateEnemies();
 
-        pickups.update();
+        updatePickups();
+
 //        updateFlag();
 
         checkCollisions();
@@ -383,7 +390,7 @@ public class EntityHandler {
         spawnPickup(x, y, id, pickupValue);
     }
 
-    private void spawnPickup(int x, int y, EntityID id, int value) {
+    private void spawnPickup(double x, double y, EntityID id, int value) {
         if (pickups.getPoolSize() > 0) {
             pickups.spawnFromPool(x, y, id, value);
 //            spawnPickupsFromPool(x, y, id);
@@ -509,42 +516,16 @@ public class EntityHandler {
 
     public void updateEnemies() {
         enemies.disableIfOutsideBounds(levelHeight); // todo: Move within update loop
-
         enemies.update();
-
-//        LinkedList<Entity> enemies = this.enemies.getEntities();
-//        for (Entity entity : enemies) {
-//            Enemy enemy = (Enemy) entity;
-//            if(true) { // todo: Why tho?
-//                enemy.update();
-//                checkDeathAnimationEnd(enemy);
-//                while (enemy.hasShot()) {
-//                    spawnEnemyBullet(enemy);
-//                    enemy.decrementShot();
-//                }
-//
-//            }
-//        }
     }
 
-//    private void spawnEnemyBullet(Enemy enemy) {
-//        int x = enemy.getTurretX();
-//        double dir = enemy.getBulletAngle();
-//        double y = enemy.getTurretY();
-//        double bulletVelocity = enemy.getBulletVelocity();
-//        boolean tracking = false;
-//        if (enemy.getEnemyType() == TYPE_STATIC1 || enemy.getEnemyType() == TYPE_STATIC2 || enemy.getEnemyType() == TYPE_SIDE2 || enemy.getEnemyType() == TYPE_DRONE2) {
-//            tracking = true;
-//        }
-//
-//        if (bullets.getPoolSize() > 0) {
-//            bullets.spawnFromPool(x, (int) y, dir, bulletVelocity, tracking);
-//        }
-//        else {
-//            bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity, tracking));
-//        }
-////        bullets.printPool("Enemy Bullet");
-//    }
+    public void updatePickups() {
+        if (pickupX > -1) {
+            spawnPickup(pickupX, pickupY, EntityID.PickupHealth, pickupValue);
+            pickupX = -1;
+        }
+        pickups.update();
+    }
 
     public void clearEnemies() {
         enemies.clear();
@@ -555,12 +536,13 @@ public class EntityHandler {
         entity.disable();
     }
 
-    private void destroy(Enemy enemy) {
-        enemy.destroy();
-        if (!GameController.godMode)
-            VariableHandler.increaseScore(enemy.getScore());
-//        spawnPickup((int) enemy.getX(), (int) enemy.getY(), EntityID.PickupHealth, 5);
-    }
+//    private void destroy(Enemy enemy) {
+//        enemy.destroy();
+//        if (!GameController.godMode)
+//            VariableHandler.increaseScore(enemy.getScore());
+//        int health = 5;
+//        spawnPickup((int) enemy.getX(), (int) enemy.getY(), EntityID.PickupHealth, health);
+//    }
 
     private void destroy(Bullet bullet, MobileEntity entity) {
         SoundHandler.playSound(SoundHandler.IMPACT);
@@ -571,11 +553,11 @@ public class EntityHandler {
     * Boss Functions
     * */
 
-    private void destroyBoss() {
-        boss.setAlive(false);
-        destroy(boss);
-        VariableHandler.increaseScore(VariableHandler.getBossScore());
-    }
+//    private void destroyBoss() {
+//        boss.setAlive(false);
+//        destroy(boss);
+//        VariableHandler.increaseScore(VariableHandler.getBossScore());
+//    }
 
     public void spawnBoss(int level, int x, int y) {
         if (level == 2) {

@@ -19,7 +19,6 @@ public class TextureHandler {
             enemySide2Image,
             explosionImage,
             impactSmallImage,
-            title,
             logo,
             seaImage,
             pickupImage,
@@ -69,10 +68,9 @@ public class TextureHandler {
             enemySide2Image = loader.loadImage("/enemySide2.png");
             explosionImage = loader.loadImage("/explosion.png");
             impactSmallImage = loader.loadImage("/impactsmall.png");
-            title = loader.loadImage("/title.png");
             logo = loader.loadImage("/logo.png");
             seaImage = loader.loadImage("/sea.png");
-            pickupImage = loader.loadImage("/pickup.png");
+            pickupImage = loader.loadImage("/health.png");
             bulletPlayerImage = loader.loadImage("/bulletplayer.png");
             bulletEnemyImage = loader.loadImage("/bulletenemy.png");
         } catch (Exception e) {
@@ -148,11 +146,11 @@ public class TextureHandler {
         }
 
         w = Utility.intAtWidth640(16);
-        h = w*2;
+        h = w;
 
         pickup[0] = pickupSS.grabImage(1,1, w, h);
-        pickup[1] = pickupSS.grabImage(2,1, w, h);
-        pickup[2] = pickupSS.grabImage(3,1, w, h);
+//        pickup[1] = pickupSS.grabImage(2,1, w, h);
+//        pickup[2] = pickupSS.grabImage(3,1, w, h);
 
         w = 4;
         h = 12;

@@ -3,6 +3,7 @@ package com.euhedral.game;
 import com.euhedral.engine.Entity;
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Pool;
+import com.euhedral.engine.Utility;
 import com.euhedral.game.Entities.Bullet;
 import com.euhedral.game.Entities.BulletEnemy;
 import com.euhedral.game.Entities.Enemy.Enemy;
@@ -331,6 +332,10 @@ public class EnemyPool extends Pool {
         enemy.destroy();
         if (!GameController.godMode)
             VariableHandler.increaseScore(enemy.getScore());
+        EntityHandler.pickupValue = 5;
+        EntityHandler.pickupX = enemy.getX();
+        EntityHandler.pickupY = enemy.getY();
+        EntityHandler.spawnProbablity = Utility.randomRange(0, EntityHandler.enemyTypes);
 //        spawnPickup((int) enemy.getX(), (int) enemy.getY(), EntityID.PickupHealth, 5);
     }
 }
