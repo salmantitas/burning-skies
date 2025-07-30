@@ -92,7 +92,7 @@ public class BulletEnemy extends Bullet{
 //    }
 
     @Override
-    public void resurrect(int x, int y) {
+    public void resurrect(double x, double y) {
         this.calculated = false;
         super.resurrect(x, y);
         SoundHandler.playSound(initSound);

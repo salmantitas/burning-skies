@@ -134,7 +134,7 @@ public class Bullet extends MobileEntity {
     }
 
     @Override
-    public void resurrect(int x, int y) {
+    public void resurrect(double x, double y) {
         super.resurrect(x, y);
         impact.endAnimation();
         impact.playedOnce = false;

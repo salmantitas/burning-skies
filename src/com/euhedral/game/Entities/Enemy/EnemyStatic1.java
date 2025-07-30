@@ -133,7 +133,7 @@ public class EnemyStatic1 extends Enemy {
     }
 
     @Override
-    public void resurrect(int x, int y) {
+    public void resurrect(double x, double y) {
         commonInit();
         explosion.playedOnce = false;
         super.resurrect(x, y);

@@ -57,7 +57,7 @@ public class BulletPlayer extends Bullet{
 //    }
 
     @Override
-    public void resurrect(int x, int y) {
+    public void resurrect(double x, double y) {
 //        this.x = x;
 //        this.y = y;
         this.calculated = false;

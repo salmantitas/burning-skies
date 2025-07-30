@@ -15,7 +15,7 @@ public class PickupPool extends Pool {
         super();
     }
 
-    public void spawnFromPool(int x, int y, EntityID id, int value) {
+    public void spawnFromPool(double x, double y, EntityID id, int value) {
         entity = findInList();
         entity.resurrect(x, y);
         pickup = (Pickup) entity;

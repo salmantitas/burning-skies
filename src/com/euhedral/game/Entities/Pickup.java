@@ -11,7 +11,7 @@ public class Pickup extends MobileEntity {
 
     private int value;
 
-    public Pickup(int x, int y, EntityID entityID, int value) {
+    public Pickup(double x, double y, EntityID entityID, int value) {
         super(x, y, entityID);
         width = Utility.intAtWidth640(16);
         height = width * 2;

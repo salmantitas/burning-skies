@@ -70,7 +70,7 @@ public abstract class MobileEntity extends Entity {
     double normX;
     double normY;
 
-    public MobileEntity(int x, int y, EntityID id) {
+    public MobileEntity(double x, double y, EntityID id) {
         super(x, y, id);
 
         forwardVelocity = 0;

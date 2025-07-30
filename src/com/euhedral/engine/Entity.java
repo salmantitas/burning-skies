@@ -31,7 +31,7 @@ public abstract class Entity {
     protected Animation anim;
     protected int animationSpeed = 3;
 
-    public Entity(int x, int y, EntityID id) {
+    public Entity(double x, double y, EntityID id) {
         this.x = x;
         this.y = y;
         this.id = id;
@@ -220,7 +220,7 @@ public abstract class Entity {
         setActive(false);
     }
 
-    public void resurrect(int x, int y) {
+    public void resurrect(double x, double y) {
         enable();
         this.x = x;
         this.y = y;
