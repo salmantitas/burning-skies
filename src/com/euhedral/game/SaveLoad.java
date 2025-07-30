@@ -28,7 +28,7 @@ public class SaveLoad {
         // Create string variables of variables that will be saved
         String score = Integer.toString(VariableHandler.getScore());
         String health = Integer.toString(VariableHandler.health.getValue());
-        String ground = Boolean.toString(VariableHandler.gotGround());
+        String ground = Boolean.toString(true); // todo: remove later
         String level = Integer.toString(VariableHandler.getLevel());
         String power = Integer.toString(VariableHandler.power.getValue());
         String shield = Integer.toString(VariableHandler.shield.getValue());
@@ -104,7 +104,7 @@ public class SaveLoad {
             // Create variables to store data from save-file
             int score = Integer.parseInt(loadData.get(0));
             int health = Integer.parseInt(loadData.get(1));
-            boolean ground = Boolean.parseBoolean(loadData.get(2));
+            boolean ground = Boolean.parseBoolean(loadData.get(2)); // todo: remove later
             int level = Integer.parseInt(loadData.get(3));
             int power = Integer.parseInt(loadData.get(4));
             int shield = Integer.parseInt(loadData.get(5));
@@ -112,7 +112,6 @@ public class SaveLoad {
             // Update variables
             VariableHandler.setScore(score);
             VariableHandler.health.set(health);
-            VariableHandler.setGround(ground);
             VariableHandler.setLevel(level);
             VariableHandler.power.set(power);
             VariableHandler.shield.setValue(shield);

@@ -16,11 +16,11 @@ public class Player extends MobileEntity {
     private final int shootTimerDefault = 9;
     private BulletPool bullets = new BulletPool();
     int turretY;
-    int turretMidX;
+    int turretMidX, turretLeftX, turretRightX;
 
     // Personal
     private int levelHeight;
-    private int power;
+//    private int power;
     //    private boolean ground = false;
 //    private boolean airBullet = true;
     private int clampOffsetX;
@@ -29,6 +29,7 @@ public class Player extends MobileEntity {
 
     private Attribute health;
     private Attribute shield;
+    private Attribute power;
 
     private final int HEALTH_HIGH = 66;
     private final int HEALTH_MED = 33;
@@ -73,7 +74,7 @@ public class Player extends MobileEntity {
 
         resetMovement();
 
-        this.power = 1;
+//        this.power = 1;
 
         boundsVertical = new Rectangle2D.Double();
         boundsHorizontal = new Rectangle2D.Double();
@@ -110,6 +111,7 @@ public class Player extends MobileEntity {
     private void setAttributes() {
         health = VariableHandler.health;
         shield = VariableHandler.shield;
+        power = VariableHandler.power;
     }
 
     private void setImage() {
@@ -312,15 +314,15 @@ public class Player extends MobileEntity {
         turretMidX = (int) (x + width / 2 - 2);
         turretY = (int) (y + height * 2 / 3 - velY);
 
-//        int spawnLeftX = (int) (x + 4);
-//        int spawnRightX = (int) (x + width - 8);
+        turretRightX = (int) (x + width - 8);
+        turretLeftX = (int) (x + 4);
 
 //        System.out.printf("Left to Mid: %d, Mid to Right: %d", spawnMidX-spawnLeftX, spawnRightX-spawnMidX);
 
 
 //        Utility.log("VelY:" + velY);
 
-//        int power = VariableHandler.power.getValue();
+//        power = VariableHandler.power.getValue();
 //
 //        // tempSolution
 //        double correctionFactor = .715;
@@ -342,13 +344,14 @@ public class Player extends MobileEntity {
 //            spawnBullet(spawnRightX, turretY, shootAngleRight);
 //            spawnBullet(spawnMidX, (int) y, NORTH);
 //            spawnBullet(spawnLeftX, turretY, shootAngleLeft);
-//        } else if (power == 2) {
-//            spawnBullet(spawnRightX, turretY, NORTH);
-//            spawnBullet(spawnLeftX, turretY, NORTH);
-//        } else {
-//        }
+//        } else
+        if (power.getValue() == 2) {
+            spawnBullet(turretRightX, turretY, NORTH);
+            spawnBullet(turretLeftX, turretY, NORTH);
+        } else {
+            spawnBullet(turretMidX, turretY, NORTH);
+        }
 
-        spawnBullet(turretMidX, turretY, NORTH);
         // reset shoot timer to default
         shootTimer = shootTimerDefault;
     }
@@ -469,9 +472,9 @@ public class Player extends MobileEntity {
         destinationGiven = true;
     }
 
-    public void setPower(int power) {
-        this.power = power;
-    }
+//    public void setPower(int power) {
+//        this.power = power;
+//    }
 
     public int getMx() {
         return mx;
@@ -481,22 +484,30 @@ public class Player extends MobileEntity {
         return my;
     }
 
-    public int getPower() {
-        return power;
-    }
+//    public int getPower() {
+//        return power;
+//    }
 
 //    public void setGround(Boolean ground) {
 //        this.ground = ground;
 //    }
 
-    public void damage(int num) {
+    public void damage(int damage) {
         if (shield.getValue() > 0) {
-            int temp = num - shield.getValue();
-            shield.decrease(num * 2);
+            int temp = damage - shield.getValue();
+            shield.decrease(damage * 2);
             if (temp > 0) {
                 health.decrease(temp);
+                if (power.getValue() > 1) {
+                    power.decrease(1);
+                }
             }
-        } else health.decrease(num);
+        } else {
+            health.decrease(damage);
+            if (power.getValue() > 1) {
+                power.decrease(1);
+            }
+        }
     }
 
     // Bullet Functions

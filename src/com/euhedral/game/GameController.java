@@ -599,9 +599,6 @@ public class GameController {
                 case power:
                     shop.buyPower();
                     break;
-                case ground:
-                    shop.buyGround();
-                    break;
                 case shield:
                     shop.buyShield();
                     break;
@@ -802,7 +799,6 @@ public class GameController {
         VariableHandler.setScore(4000);
         variableHandler.setLevel(4);
         VariableHandler.power.set(3);
-        variableHandler.setGround(true);
         VariableHandler.shield.set(100);
     }
 

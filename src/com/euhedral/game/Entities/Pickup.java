@@ -42,12 +42,12 @@ public class Pickup extends MobileEntity {
 //        drawDefault(g);
     }
 
-    public void resurrect(int x, int y, EntityID id) {
-        this.x = x;
-        this.y = y;
+    public void resurrect(double x, double y, EntityID id) {
+        super.resurrect(x, y, id);
+//        this.x = x;
+//        this.y = y;
         this.id = id;
         selectImage();
-        super.resurrect(x, y, id);
     }
 
     public void collision() {
@@ -63,7 +63,7 @@ public class Pickup extends MobileEntity {
     private void selectImage() {
         if (id == EntityID.PickupHealth)
             image = GameController.getTexture().pickup[0];
-        else if (id == EntityID.PickupPower)
+        else if (id == EntityID.PickupShield)
             image = GameController.getTexture().pickup[1];
         else
             image = GameController.getTexture().pickup[2];

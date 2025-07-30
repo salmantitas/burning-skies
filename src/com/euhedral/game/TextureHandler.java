@@ -70,7 +70,7 @@ public class TextureHandler {
             impactSmallImage = loader.loadImage("/impactsmall.png");
             logo = loader.loadImage("/logo.png");
             seaImage = loader.loadImage("/sea.png");
-            pickupImage = loader.loadImage("/health.png");
+            pickupImage = loader.loadImage("/pickup.png");
             bulletPlayerImage = loader.loadImage("/bulletplayer.png");
             bulletEnemyImage = loader.loadImage("/bulletenemy.png");
         } catch (Exception e) {
@@ -149,8 +149,8 @@ public class TextureHandler {
         h = w;
 
         pickup[0] = pickupSS.grabImage(1,1, w, h);
-//        pickup[1] = pickupSS.grabImage(2,1, w, h);
-//        pickup[2] = pickupSS.grabImage(3,1, w, h);
+        pickup[1] = pickupSS.grabImage(2,1, w, h);
+        pickup[2] = pickupSS.grabImage(3,1, w, h);
 
         w = 4;
         h = 12;

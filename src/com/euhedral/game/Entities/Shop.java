@@ -17,18 +17,6 @@ public class Shop {
         buyAbstract(VariableHandler.shield, 50, "Shield is full");
     }
 
-    public void buyGround() {
-        int cost = VariableHandler.ground.getCost();
-        if (VariableHandler.getScore() >= cost) {
-            if (!VariableHandler.gotGround()) {
-                VariableHandler.decreaseScore(cost);
-                VariableHandler.setGround(true);
-            }
-        } else {
-            System.out.println("Not enough score");
-        }
-    }
-
     public void buyAbstract(Attribute attribute, int value, String message) {
         int cost = attribute.getCost();
         int valueMax = attribute.getMAX();

@@ -226,8 +226,8 @@ public abstract class Entity {
         this.y = y;
     }
 
-    public void resurrect(int x, int y, EntityID id) {
-        enable();
+    public void resurrect(double x, double y, EntityID id) {
+        resurrect(x, y);
     }
 
     private void setActive(boolean active) {

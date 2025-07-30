@@ -1,6 +1,7 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.Utility;
+import com.euhedral.game.UI.UIHandler;
 
 import java.awt.*;
 
@@ -29,7 +30,6 @@ public class Attribute {
         setMAX(defaultValue);
         setValue(defaultValue);
         this.binary = binary;
-        font = new Font("arial", 1, fontSize);
     }
 
     Attribute(int defaultValue, boolean binary, int cost) {
@@ -49,6 +49,9 @@ public class Attribute {
 
     public void decrease(int value) {
         this.value -= value;
+        if (this.value <= MIN) {
+            this.value = MIN;
+        }
     }
 
     public void set(int value) {
@@ -87,6 +90,10 @@ public class Attribute {
         this.MAX = MAX;
     }
 
+    public void setMIN(int MIN) {
+        this.MIN = MIN;
+    }
+
     public int getValue() {
         return value;
     }
@@ -113,6 +120,7 @@ public class Attribute {
 
     public void setFontSize(int size) {
         fontSize = size;
+        font = UIHandler.customFont.deriveFont(0, fontSize);
     }
 
     public void renderBar(Graphics g) {
@@ -128,5 +136,6 @@ public class Attribute {
         g.setFont(font);
         g.setColor(Color.WHITE);
         g.drawString("Power: " + value, x, y);
+        Utility.log("Power: " + value);
     }
 }

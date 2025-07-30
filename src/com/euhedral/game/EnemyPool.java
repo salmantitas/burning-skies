@@ -11,7 +11,6 @@ import com.euhedral.game.Entities.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class EnemyPool extends Pool {
     private int[] active;
@@ -332,10 +331,10 @@ public class EnemyPool extends Pool {
         enemy.destroy();
         if (!GameController.godMode)
             VariableHandler.increaseScore(enemy.getScore());
-        EntityHandler.pickupValue = 5;
-        EntityHandler.pickupX = enemy.getX();
-        EntityHandler.pickupY = enemy.getY();
-        EntityHandler.spawnProbablity = Utility.randomRange(0, EntityHandler.enemyTypes);
+        EntityHandler.lastDestroyedType = enemy.getEnemyType();
+        EntityHandler.lastDestroyedX = enemy.getX();
+        EntityHandler.lastDestroyedY = enemy.getY();
+//        EntityHandler.spawnProbablity = Utility.randomRange(0, EntityHandler.enemyTypes);
 //        spawnPickup((int) enemy.getX(), (int) enemy.getY(), EntityID.PickupHealth, 5);
     }
 }

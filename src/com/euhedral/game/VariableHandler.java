@@ -31,7 +31,6 @@ public class VariableHandler {
 //    private int lives = 3;
 
     public static Attribute power;
-    public static Attribute ground;
     public static Attribute shield;
     public static Attribute health;
 
@@ -44,7 +43,7 @@ public class VariableHandler {
 
     // Score
     private static int score = 0;
-    private static int scoreX = Utility.percWidth(2.5);
+    private static int scoreX = Utility.intAtWidth640(150);
     private static int scoreY = Utility.percHeight(4);
     private static int scoreSize = Utility.percWidth(2);
     private static Font scoreFont = UIHandler.customFont.deriveFont(0, scoreSize);
@@ -92,9 +91,6 @@ public class VariableHandler {
     // todo: ActionTag will be updated here
     private ActionTag action = null;
 
-//    // todo: Ground will be updated here
-//    private static boolean ground = false;
-
     private static boolean tutorial = true;
 
     // Deadzones
@@ -114,7 +110,6 @@ public class VariableHandler {
     // Shop Costs
 
 //    public static final int costPower = 1000;
-//    public static final int costGround = 1000;
 
     public VariableHandler() {
         colorMap = new HashMap<>();
@@ -148,21 +143,22 @@ public class VariableHandler {
     }
 
     public static void initializeAttributes() {
-        health = new Attribute(100, false, 500);
+        health = new Attribute(100, false);
         health.setY(Utility.percHeight(5));
         health.setForegroundColor(healthHigh);
 
         levelY = Utility.percHeight(4);
         timerY = Utility.percHeight(7);// levelY + Utility.percHeight(5);
 
-        power = new Attribute(1, false, 1000);
-        power.setMAX(5);
-        power.setX(Utility.percWidth(24));
+        power = new Attribute(1, false);
+        power.setMIN(1);
+        power.setMAX(2);
+        power.setX(Utility.intAtWidth640(20));
         power.setY(scoreY);
         power.setFontSize(scoreSize);
 
-        ground = new Attribute(0, true, 1500);
-        shield = new Attribute(0, false, 2000);
+        shield = new Attribute(0, false);
+        shield.setMIN(0);
         shield.setMAX(100);
         shield.setY(health.getY() + Utility.percHeight(3));
         shield.setForegroundColor(Color.yellow);
@@ -227,7 +223,7 @@ public class VariableHandler {
 
     public static void renderHUD(Graphics g) {
         renderScore(g);
-//        power.renderValue(g);
+        power.renderValue(g);
         health.renderBar(g);
         if (shield.getValue() > 0)
             shield.renderBar(g);
@@ -354,14 +350,6 @@ public class VariableHandler {
 
     public void nextLevel() {
         level++;
-    }
-
-    public static void setGround(boolean active) {
-        ground.setActive(active);
-    }
-
-    public static boolean gotGround() {
-        return ground.isActive();
     }
 
     public static boolean finishedFinalLevel() {

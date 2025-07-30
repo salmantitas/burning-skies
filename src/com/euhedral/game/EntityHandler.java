@@ -45,11 +45,13 @@ public class EntityHandler {
     private PickupPool pickups;
 //    int pickupValue = 0;
 
-    public static double pickupX = -1;
-    public static double pickupY = -1;
-    public static int pickupValue = -1;
-    public static int spawnProbablity = -1;
+    // Last Destroyed Enemy
+    public static double lastDestroyedX = -1; // < 0 means nothing was destroyed
+    public static double lastDestroyedY = -1;
+    public static double lastDestroyedType = -1;
+//    public static int spawnProbablity = -1;
 
+    private int pickupValue;
     private EnemyBoss boss;
 
     Graphics2D g2d;
@@ -113,43 +115,6 @@ public class EntityHandler {
         enemies.render(g);
         //renderFlag(g);
     }
-
-//    public void spawnEntity(int x, int y, int enemyType, int direction, int time) {
-//        // todo: Player
-//
-//        // Air Enemies
-//        if (enemies.getPoolSize(enemyType) > 0) {
-//            enemies.spawnFromPool(x, y, enemyType, direction, time);
-//        }
-//        else {
-//            spawnNew(x, y, enemyType, direction, time);
-//        }
-////        enemies.printPool("Enemy");
-//
-//        // Pickups
-//
-////        else if (id == EntityID.Pickup) {
-////            spawnPickup(x, y, PickupID.Health, color);
-////        }
-////
-////        else if (id == EntityID.PickupShield) {
-////            spawnPickup(x, y, PickupID.Shield, color);
-////        }
-//
-//        // todo: Boss
-//    }
-
-//    public void spawnEntity(int x, int y, int enemyType) {
-//        //todo: Check by enemyType
-//
-//        if (enemies.getPoolSize(enemyType) > 0) {
-//            enemies.spawnFromPool(x, y, enemyType, "", 0);
-//        }
-//        else {
-//            spawnNew(x, y, enemyType, "", 0);
-//        }
-//        enemies.printPool("Enemy");
-//    }
 
     public void spawnEntity(int x, int y, int enemyType, int distance, int direction) {
         //todo: Check by enemyType
@@ -280,9 +245,9 @@ public class EntityHandler {
         return !(player.getMx() == mx && player.getMy() == my);
     }
 
-    public int getPlayerPower() {
-        return player.getPower();
-    }
+//    public int getPlayerPower() {
+//        return player.getPower();
+//    }
 
     public void playerCanShoot() {
         if (player != null)
@@ -303,14 +268,14 @@ public class EntityHandler {
         }
 //        player = new Player(x, y, levelHeight);
 //        player.setGround(VariableHandler.gotGround());
-        player.setPower(VariableHandler.power.getValue());
+//        player.setPower(VariableHandler.power.getValue());
         setCameraToPlayer();
     }
 
     public void spawnPlayer(int width, int height, int power, boolean ground) {
         player = new Player(width, height, levelHeight);
 //        player.setGround(ground);
-        player.setPower(power);
+//        player.setPower(power);
         setCameraToPlayer();
     }
 
@@ -375,7 +340,6 @@ public class EntityHandler {
 
     // Spawns Pickup with default health value = 30
     public void spawnPickup(int x, int y, EntityID id) {
-        pickupValue = 0;
         switch (id) {
             case PickupHealth:
                 pickupValue = 30;
@@ -399,13 +363,6 @@ public class EntityHandler {
             pickups.add(new Pickup(x, y, id, value));
 //        System.out.println("Pickup spawned");
     }
-
-//    public void spawnPickupsFromPool(int x, int y, EntityID id) {
-//        Pickup pickup = (Pickup) pickups.findInList();
-//        pickup.resurrect(x, y, id);
-//        pickups.decrease();
-//        System.out.println("Pool: " + pickups.getPoolSize() + " | Pickups: " + pickups.getEntities().size());
-//    }
 
     public void clearPickups() {
         pickups.clear();
@@ -520,9 +477,32 @@ public class EntityHandler {
     }
 
     public void updatePickups() {
-        if (pickupX > -1) {
-            spawnPickup(pickupX, pickupY, EntityID.PickupHealth, pickupValue);
-            pickupX = -1;
+        if (lastDestroyedX > -1) {
+            // todo: determine Pickup Value and Type based on Enemy Type
+            if (lastDestroyedType > TYPE_BASIC2) {
+                EntityID pickupID = null;
+                int pickupValue = 0;
+                if (lastDestroyedType == TYPE_DRONE1 || lastDestroyedType == TYPE_DRONE2) {
+                    // todo: Spawn Homing Bullets
+                } else if (lastDestroyedType == TYPE_DRONE3) {
+                    // todo: Spawn Bomb Pickup
+                } else if (lastDestroyedType == TYPE_FAST) {
+                    // todo: Spawn Speed Pickup
+                } else if (lastDestroyedType == TYPE_STATIC1) {
+                    pickupID = EntityID.PickupPower;
+                    pickupValue = 1;
+                } else if (lastDestroyedType == TYPE_STATIC2 || lastDestroyedType == TYPE_STATIC3) {
+                    pickupID = EntityID.PickupShield;
+                    pickupValue = 10;
+                } else {
+                    pickupID = EntityID.PickupHealth;
+                    pickupValue = 5;
+                }
+                if (pickupID != null) {
+                    spawnPickup(lastDestroyedX, lastDestroyedY, pickupID, pickupValue);
+                }
+            }
+            lastDestroyedX = -1;
         }
         pickups.update();
     }
@@ -670,18 +650,6 @@ public class EntityHandler {
 
     public void playerVsPickupCollision() {
         pickups.checkCollisions(player);
-        // Player vs pickup collision
-//        LinkedList<Entity> entities = pickups.getEntities();
-//        for (Entity entity: entities) {
-//            Pickup pickup = (Pickup) entity;
-//            if (pickup.isActive()) {
-//                if (pickup.getBounds().intersects(getPlayerBounds())) {
-//                    pickup.collision();
-//                    pickups.increase();
-////                    Utility.log("Pool: " + pickups.getPoolSize());
-//                }
-//            }
-//        }
     }
 
     // Creates an instance of the player and sets the camera to follow it
