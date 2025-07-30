@@ -18,7 +18,7 @@ public class GameController {
      * Window Settings - Manually Configurable *
      *******************************************/
 
-    private String gameTitle = "Burning Skies";
+    private String gameTitle = "BURNING SKIES";
     public static String gameVersion = "0.7.05";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
