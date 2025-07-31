@@ -1,7 +1,6 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
-import com.euhedral.engine.Entity;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.UI.UIHandler;
@@ -62,6 +61,8 @@ public class VariableHandler {
     private static int levelY;
     private static int levelSize = scoreSize;
     private static Font levelFont = UIHandler.customFont.deriveFont(0, levelSize);
+
+    private static float renderWaveDuration = 1f;
 
     // Timer
     private static int timerX = Utility.percWidth(75);
@@ -227,6 +228,7 @@ public class VariableHandler {
     public static void renderHUD(Graphics g) {
         renderScore(g);
         power.renderValue(g);
+        renderWave(g);
         health.renderBar(g);
         if (shield.getValue() > 0)
             shield.renderBar(g);
@@ -247,6 +249,19 @@ public class VariableHandler {
         g.setFont(levelFont);
         g.setColor(Color.YELLOW);
         g.drawString("Level " + level, timerX, levelY);
+    }
+
+    public static void renderWave(Graphics g) {
+        if (renderWaveDuration > 0 && (Engine.stateIs(GameState.Game))) {
+            g.setFont(levelFont);
+            g.setColor(Color.YELLOW);
+//            int offsetX = Utility.intAtWidth640(30), offsetY = Utility.intAtWidth640(90);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setComposite(Utility.makeTransparent(renderWaveDuration));
+            g.drawString("Wave " + level, Engine.WIDTH/2 - Utility.intAtWidth640(40), Utility.intAtWidth640(80));
+            g2d.setComposite(Utility.makeTransparent(1f));
+            renderWaveDuration -= 0.01f;
+        }
     }
 
     public static void renderTimer(Graphics g) {
@@ -368,6 +383,7 @@ public class VariableHandler {
     }
 
     public static void setLevel(int i) {
+        renderWaveDuration = 1f;
         level = i;
         if (finishedFinalLevel())
             level = MAXLEVEL;
