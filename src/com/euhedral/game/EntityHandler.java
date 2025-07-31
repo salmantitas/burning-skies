@@ -34,8 +34,9 @@ public class EntityHandler {
     public static final int TYPE_STATIC2 = TYPE_SIDE2 + 1;
     public static final int TYPE_DRONE3 = TYPE_STATIC2 + 1;
     public static final int TYPE_STATIC3 = TYPE_DRONE3 + 1;
+    public static final int TYPE_DRONE4 = TYPE_STATIC3 + 1;
 
-    public static final int enemyTypes = TYPE_STATIC3 + 1;
+    public static final int enemyTypes = TYPE_DRONE4 + 1;
 
     // Entity Lists
     private Enemy enemy;
@@ -161,6 +162,8 @@ public class EntityHandler {
             enemy = new EnemyDrone3(x, y, levelHeight);
         } else if (enemyType == TYPE_STATIC3) {
             enemy = new EnemyStatic3(x, y, levelHeight);
+        } else if (enemyType == TYPE_DRONE4) {
+            enemy = new EnemyDrone4(x, y, levelHeight);
         }
 
         if (enemy != null) {
@@ -675,28 +678,8 @@ public class EntityHandler {
         this.levelHeight = levelHeight;
     }
 
-//    private void checkDeathAnimationEnd(Enemy enemy) {
-//        if (enemy.isExploding()) {
-//            if (enemy.checkDeathAnimationEnd()) {
-//                int enemyType = enemy.getEnemyType();
-//                enemies.increase(enemy, enemyType);
-//            }
-//        }
-//    }
-
     private void checkDeathAnimationEnd() {
         bullets.checkDeathAnimationEnd();
-
-//        for (Entity entity: bullets.getEntities()) {
-//
-//            Bullet bullet = (Bullet) entity;
-//
-//            if (bullet.isImpacting()) {
-//                if (bullet.checkDeathAnimationEnd()) {
-//                    bullets.increase(bullet);
-//                }
-//            }
-//        }
 
     }
 

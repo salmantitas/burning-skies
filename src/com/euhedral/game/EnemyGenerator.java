@@ -63,6 +63,7 @@ public class EnemyGenerator {
     final int TYPE_STATIC2 = EntityHandler.TYPE_STATIC2;
     final int TYPE_DRONE3 = EntityHandler.TYPE_DRONE3;
     final int TYPE_STATIC3 = EntityHandler.TYPE_STATIC3;
+    final int TYPE_DRONE4 = EntityHandler.TYPE_DRONE4;
     int maxTypes = TYPE_STATIC3 + 1;
 
     boolean difficultyIncreased = false;
@@ -91,7 +92,6 @@ public class EnemyGenerator {
         this.entityHandler = entityHandler;
     }
 
-    // todo: SpawnHealth
     public void update() {
         timeNowMillis = GameController.getCurrentTime();
         timeSinceLastSpawnMillis = timeNowMillis - lastSpawnTime;
@@ -197,6 +197,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_STATIC2; // stub
 //        enemytype = TYPE_DRONE3; // stub
 //        enemytype = TYPE_STATIC3; // stub
+//        enemytype = TYPE_DRONE4; // stub
 
 //        difficulty = maxTypes; // stub
 
@@ -223,6 +224,9 @@ public class EnemyGenerator {
                 break;
             case TYPE_STATIC3:
                 limit = limitSide - 2;
+                break;
+            case TYPE_DRONE4:
+                limit = 1;
                 break;
         }
 
@@ -254,7 +258,10 @@ public class EnemyGenerator {
 
     protected void determineZone() {
 
-        entersFromSide = enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3 || enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2;
+        isDrone = enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3 || enemytype == TYPE_DRONE4;
+        isSideFlyer = enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2;
+
+        entersFromSide = isDrone || isSideFlyer;
 
         // Vertical Zone
         if (entersFromSide) {
@@ -265,9 +272,6 @@ public class EnemyGenerator {
             } else {
                 spawnX = xEnd + 2*adjustment;
             }
-
-            isDrone = enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3;
-            isSideFlyer = enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2;
 
             if (isDrone) {
                 spawnY = Utility.randomRangeInclusive(0, height / SCALE * 2 / 3);
