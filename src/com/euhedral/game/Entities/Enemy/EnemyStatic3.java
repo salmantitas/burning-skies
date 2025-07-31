@@ -28,7 +28,7 @@ public class EnemyStatic3 extends Enemy {
 //        bulletVelocity = Utility.intAtWidth640(6);
         shootTimerDefault = 300;
         shootTimer = 50;
-        score = 200;
+        score = 150;
 
         double decelerationMAX = 0.012;
         double decelerationMIN = 0.010;

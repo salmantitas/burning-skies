@@ -21,7 +21,7 @@ public class EnemyBasic1 extends Enemy{
 
         health_MAX = 2;
         commonInit();
-        score = 50;
+        score = 20;
         velX_MIN = 1.75f;
     }
 

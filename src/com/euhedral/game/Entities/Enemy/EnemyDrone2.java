@@ -13,7 +13,7 @@ public class EnemyDrone2 extends EnemyDrone{
         setImage(textureHandler.enemyDrone[1]);
 
         shootTimerDefault = 100;
-        score = 50;
+        score = 40;
         damage = 30;
 
         attackEffect = true;

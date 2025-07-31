@@ -64,7 +64,7 @@ public class EnemyGenerator {
     final int TYPE_DRONE3 = EntityHandler.TYPE_DRONE3;
     final int TYPE_STATIC3 = EntityHandler.TYPE_STATIC3;
     final int TYPE_DRONE4 = EntityHandler.TYPE_DRONE4;
-    int maxTypes = TYPE_STATIC3 + 1;
+    int maxTypes = TYPE_DRONE4 + 1;
 
     boolean difficultyIncreased = false;
 

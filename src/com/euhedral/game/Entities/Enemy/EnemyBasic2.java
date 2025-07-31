@@ -18,7 +18,7 @@ public class EnemyBasic2 extends Enemy{
 //        setImage(textureHandler.enemy[1]); // todo: Create new image
 
         shootTimerDefault = 125;
-        score = 60;
+        score = 30;
         movementDistance = movementDistance_MAX;
 //        attackEffect = true;
 

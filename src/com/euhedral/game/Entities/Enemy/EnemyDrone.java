@@ -15,7 +15,7 @@ public class EnemyDrone extends Enemy{
     public EnemyDrone(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
-        score = 25;
+        score = 10;
 
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyDrone[0]);

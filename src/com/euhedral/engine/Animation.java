@@ -64,4 +64,8 @@ public class Animation {
         count = 0;
         curr = null;
     }
+
+    public float getProgress() {
+        return ((float) count)/ ((float) frames);
+    }
 }

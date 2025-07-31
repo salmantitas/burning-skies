@@ -8,6 +8,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import com.euhedral.game.GameController;
+import com.euhedral.game.UI.UIHandler;
 
 /*
  *  Standard Enemies, flies downwards and shoots a missile at intervals
@@ -228,6 +229,11 @@ public class Enemy extends MobileEntity {
             expX = (int) x + (size - width) / 2;
             expY = (int) y - (size - height) / 2;
             explosion.drawAnimation(g, expX, expY, size, size);
+
+            g2d = (Graphics2D)  g;
+            g2d.setComposite(Utility.makeTransparent(1 - explosion.getProgress()));
+            renderScore(g);
+            g2d.setComposite(Utility.makeTransparent(1f));
         }
     }
 
@@ -477,5 +483,12 @@ public class Enemy extends MobileEntity {
         collidesHorizontally = object.intersects(getBoundsHorizontal());
 
         return collidesVertically || collidesHorizontally;
+    }
+
+    private void renderScore(Graphics g) {
+        g.setFont(UIHandler.customFont.deriveFont(1, 20));
+        g.setColor(Color.GREEN);
+        int offsetX = width/2 - Utility.intAtWidth640(10);
+        g.drawString(Integer.toString(score), (int) x + offsetX, (int) y);
     }
 }

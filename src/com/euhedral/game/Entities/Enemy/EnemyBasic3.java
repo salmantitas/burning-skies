@@ -15,7 +15,7 @@ public class EnemyBasic3 extends Enemy{
         setImage(textureHandler.enemy[2]);
 
         shootTimerDefault = 50; // too low: 10, too high: 100
-        score = 100;
+        score = 40;
         angle = SOUTH;
 
         health_MAX = 4;

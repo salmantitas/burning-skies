@@ -32,7 +32,7 @@ public class EnemyHeavy extends Enemy {
         bulletAngle = 60;
         shootTimerDefault = 80;
 //        shootTimer = shootTimerDefault;
-        score = 75;
+        score = 50;
         leftTurret = width / 3 - Utility.intAtWidth640(2);
         rightTurret = 2 * width / 3 - Utility.intAtWidth640(2);
 

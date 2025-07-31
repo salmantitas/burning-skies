@@ -17,7 +17,7 @@ public class EnemySide1 extends Enemy{
 
         shootTimerDefault = 50;
 //        shootTimer = 50;
-        score = 200;
+        score = 60;
 
         xMin = -width;
         xMax = Engine.WIDTH;
