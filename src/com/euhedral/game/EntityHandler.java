@@ -487,7 +487,8 @@ public class EntityHandler {
                 } else if (lastDestroyedType == TYPE_DRONE3) {
                     // todo: Spawn Bomb Pickup
                 } else if (lastDestroyedType == TYPE_FAST) {
-                    // todo: Spawn Speed Pickup
+                    pickupID = EntityID.PickupSpeed;
+                    pickupValue = 30;
                 } else if (lastDestroyedType == TYPE_STATIC1) {
                     pickupID = EntityID.PickupPower;
                     pickupValue = 1;
@@ -499,6 +500,7 @@ public class EntityHandler {
                     pickupValue = 5;
                 }
                 if (pickupID != null) {
+//                    pickupIDglue = 30; // stub
                     spawnPickup(lastDestroyedX, lastDestroyedY, pickupID, pickupValue);
                 }
             }

@@ -55,7 +55,14 @@ public class Pickup extends MobileEntity {
             VariableHandler.health.increase(value);
         else if (id == EntityID.PickupShield)
             VariableHandler.shield.increase(value);
-        else VariableHandler.power.increase(value);
+        else if (id == EntityID.PickupPower)
+            VariableHandler.power.increase(value);
+        else if (id == EntityID.PickupSpeed)
+            VariableHandler.speedBoostDuration += value;
+//        else if (id == EntityID.PickupBomb)
+//            VariableHandler.shield.increase(value);
+//        else if (id == EntityID.PickupHoming)
+//            VariableHandler.shield.increase(value);
         SoundHandler.playSound(SoundHandler.PICKUP);
         disable();
     }
@@ -65,8 +72,10 @@ public class Pickup extends MobileEntity {
             image = GameController.getTexture().pickup[0];
         else if (id == EntityID.PickupShield)
             image = GameController.getTexture().pickup[1];
-        else
+        else if (id == EntityID.PickupPower)
             image = GameController.getTexture().pickup[2];
+        else if (id == EntityID.PickupSpeed)
+            image = GameController.getTexture().pickup[3];
     }
 
     public void setValue(int value) {

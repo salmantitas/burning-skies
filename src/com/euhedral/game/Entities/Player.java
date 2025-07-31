@@ -31,6 +31,9 @@ public class Player extends MobileEntity {
     private Attribute health;
     private Attribute shield;
     private Attribute power;
+    private double speedBoost;
+    private int speedBoostDuration_MAX = 60;
+    private int speedBoostDuration;
 
     private final int HEALTH_HIGH = 66;
     private final int HEALTH_MED = 33;
@@ -68,6 +71,8 @@ public class Player extends MobileEntity {
         velX = 0;
         velY = 0;
         physics.acceleration = 0.1;
+        speedBoost = 0;
+        speedBoostDuration = 0;
         velY_MIN = 4;
         velX_MIN = 4;
         velY_MAX = 10;
@@ -114,6 +119,25 @@ public class Player extends MobileEntity {
             jitter--;
             jitter_MULT *= -1;
         }
+
+        if (VariableHandler.speedBoostDuration > 0) {
+            speedBoost = 3;
+            VariableHandler.speedBoostDuration--;
+        } else {
+            speedBoost = 0;
+        }
+
+//        if (VariableHandler.speedBoost) {
+////            Utility.log("Speed Boost!");
+//
+//            speedBoostDuration--;
+//            if (speedBoostDuration <= 0) {
+//                VariableHandler.speedBoost = false;
+//            }
+//        } else {
+//            speedBoostDuration = speedBoostDuration_MAX;
+//            speedBoost = 0;
+//        }
     }
 
     private void setAttributes() {
@@ -184,26 +208,12 @@ public class Player extends MobileEntity {
     public void renderReflection(Graphics2D g2d, float transparency) {
         renderBulletReflections(g2d, transparency);
 
-//        g2d.setComposite(Utility.makeTransparent(transparency));
-
-//        int reflectionX = reflection.calculateReflectionX(x, getCenterX());
-//        int reflectionY = reflection.calculateReflectionY(y, getCenterY());
-//        int newWidth = (int) (width * reflection.sizeOffset);
-//        int newHeight = (int) (height * reflection.sizeOffset);
-//
-//        g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
         reflection.render(g2d, image, x + (jitter_MULT * jitter), getCenterX(), y + (jitter_MULT * jitter), getCenterY(), width, height, transparency);
-
-//        g2d.setComposite(Utility.makeTransparent(1f));
     }
 
     private void renderBulletReflections(Graphics2D g2d, float transparency) {
         bullets.renderReflections(g2d, transparency);
-//        LinkedList<Entity> list = bullets.getEntities();
-//        for (Entity entity : list) {
-//            Bullet bullet = (Bullet) entity;
-//            bullet.renderReflection(g2d, transparency);
-//        }
+
     }
 
     @Override
@@ -386,7 +396,7 @@ public class Player extends MobileEntity {
                 velX = Utility.clamp(velX, -velX_MAX, 0);
             } else {
                 velX -= physics.acceleration;
-                velX = Utility.clamp(velX, -velX_MAX, -velX_MIN);
+                velX = Utility.clamp(velX, -(velX_MAX + speedBoost), -(velX_MIN + speedBoost));
             }
 //            Utility.log("VelX: " + velX);
         }
@@ -397,7 +407,7 @@ public class Player extends MobileEntity {
                 velX = Utility.clamp(velX, 0, velX_MAX);
             } else {
                 velX += physics.acceleration;
-                velX = Utility.clamp(velX, velX_MIN, velX_MAX);
+                velX = Utility.clamp(velX, (velX_MIN + speedBoost), (velX_MAX + speedBoost));
             }
         }
 

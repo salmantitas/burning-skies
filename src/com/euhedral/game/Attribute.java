@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class Attribute {
 
+    private String name = "";
     private int x = Utility.percWidth(2.5);
     private int y;
     private int defaultValue;
@@ -25,15 +26,16 @@ public class Attribute {
     int width;
     int height;
 
-    public Attribute(int defaultValue, boolean binary) {
+    public Attribute(String name, int defaultValue, boolean binary) {
+        this.name = name;
         setDefaultValue(defaultValue);
         setMAX(defaultValue);
         setValue(defaultValue);
         this.binary = binary;
     }
 
-    Attribute(int defaultValue, boolean binary, int cost) {
-        this(defaultValue, binary);
+    Attribute(String name, int defaultValue, boolean binary, int cost) {
+        this(name, defaultValue, binary);
         this.cost = cost;
     }
 
@@ -135,7 +137,6 @@ public class Attribute {
     public void renderValue(Graphics g) {
         g.setFont(font);
         g.setColor(Color.WHITE);
-        g.drawString("Power: " + value, x, y);
-        Utility.log("Power: " + value);
+        g.drawString(name + ": " + value, x, y);
     }
 }

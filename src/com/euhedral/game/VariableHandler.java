@@ -27,12 +27,11 @@ public class VariableHandler {
 
     // Attributes
 
-    // Vitality
-//    private int lives = 3;
-
     public static Attribute power;
     public static Attribute shield;
     public static Attribute health;
+
+    public static int speedBoostDuration;
 
     private static Color healthLow = Color.RED;
     private static Color healthMed = Color.ORANGE;
@@ -143,25 +142,27 @@ public class VariableHandler {
     }
 
     public static void initializeAttributes() {
-        health = new Attribute(100, false);
+        health = new Attribute("Health", 100, false);
         health.setY(Utility.percHeight(5));
         health.setForegroundColor(healthHigh);
 
         levelY = Utility.percHeight(4);
         timerY = Utility.percHeight(7);// levelY + Utility.percHeight(5);
 
-        power = new Attribute(1, false);
+        power = new Attribute("Power", 1, false);
         power.setMIN(1);
         power.setMAX(2);
         power.setX(Utility.intAtWidth640(20));
         power.setY(scoreY);
         power.setFontSize(scoreSize);
 
-        shield = new Attribute(0, false);
+        shield = new Attribute("Shield", 0, false);
         shield.setMIN(0);
         shield.setMAX(100);
         shield.setY(health.getY() + Utility.percHeight(3));
         shield.setForegroundColor(Color.yellow);
+
+        speedBoostDuration = 0;
     }
 
     public static void console() {
@@ -229,6 +230,8 @@ public class VariableHandler {
             shield.renderBar(g);
         if (Engine.stateIs(GameState.Game))
             renderTimer(g);
+        if (speedBoostDuration > 0)
+            renderSpeedBoost(g);
 //            renderFPS(g);
     }
 
@@ -248,6 +251,12 @@ public class VariableHandler {
         g.setFont(levelFont);
         g.setColor(Color.YELLOW);
         g.drawString("Timer: " + GameController.getCurrentTime(), timerX, timerY);
+    }
+
+    public static void renderSpeedBoost(Graphics g) {
+        g.setFont(levelFont);
+        g.setColor(Color.WHITE);
+        g.drawString("Speed Boost: " + speedBoostDuration, timerX - Utility.intAtWidth640(40), shield.getY() + Utility.intAtWidth640(10));
     }
 
 //    public static void renderFPS(Graphics g) {
