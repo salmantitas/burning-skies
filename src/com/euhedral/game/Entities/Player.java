@@ -6,6 +6,7 @@ import com.euhedral.game.Entities.Enemy.Enemy;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public class Player extends MobileEntity {
@@ -50,6 +51,8 @@ public class Player extends MobileEntity {
     Graphics2D g2d;
     private TextureHandler textureHandler;
 
+    int jitter = 0, jitter_MULT = 1, jitter_MAX;
+
     private Reflection reflection;
 
     public Player(int x, int y, int levelHeight) {
@@ -69,6 +72,8 @@ public class Player extends MobileEntity {
         velX_MIN = 4;
         velY_MAX = 10;
         velX_MAX = 9;
+
+        jitter_MAX = Utility.intAtWidth640(2);
 
 //        physics.friction = 1; // instantenous is equal to (minVel - 2)
 
@@ -105,7 +110,10 @@ public class Player extends MobileEntity {
 
         setImage();
 
-//        decay();
+        if (jitter > 0) {
+            jitter--;
+            jitter_MULT *= -1;
+        }
     }
 
     private void setAttributes() {
@@ -155,6 +163,11 @@ public class Player extends MobileEntity {
 //        renderBounds(g);
     }
 
+    @Override
+    protected void drawImage(Graphics g, BufferedImage image) {
+        g.drawImage(image, (int) x + (jitter_MULT * jitter), (int) y + (jitter_MULT * jitter), null);
+    }
+
     public void renderShadow(Graphics2D g2d) {
         g2d.setComposite(Utility.makeTransparent(0.4f));
 
@@ -179,7 +192,7 @@ public class Player extends MobileEntity {
 //        int newHeight = (int) (height * reflection.sizeOffset);
 //
 //        g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
-        reflection.render(g2d, image, x, getCenterX(), y, getCenterY(), width, height, transparency);
+        reflection.render(g2d, image, x + (jitter_MULT * jitter), getCenterX(), y + (jitter_MULT * jitter), getCenterY(), width, height, transparency);
 
 //        g2d.setComposite(Utility.makeTransparent(1f));
     }
@@ -497,17 +510,19 @@ public class Player extends MobileEntity {
             int temp = damage - shield.getValue();
             shield.decrease(damage * 2);
             if (temp > 0) {
-                health.decrease(temp);
-                if (power.getValue() > 1) {
-                    power.decrease(1);
-                }
+                damageHealth(temp);
             }
         } else {
-            health.decrease(damage);
-            if (power.getValue() > 1) {
-                power.decrease(1);
-            }
+            damageHealth(damage);
         }
+    }
+
+    private void damageHealth(int damage) {
+        health.decrease(damage);
+        if (power.getValue() > 1) {
+            power.decrease(1);
+        }
+        jitter = jitter_MAX;
     }
 
     // Bullet Functions

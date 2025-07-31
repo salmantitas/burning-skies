@@ -62,8 +62,7 @@ public class Enemy extends MobileEntity {
     private Reflection reflection;
     int reflectionX, reflectionY, newWidth, newHeight;
 
-    int jitter = 0;
-    int jitter_MAX;
+    int jitter = 0, jitter_MULT = 1, jitter_MAX;
 
     // Bounds
     Rectangle2D boundsVertical, boundsHorizontal;
@@ -133,8 +132,13 @@ public class Enemy extends MobileEntity {
                     }
 //                }
 
-                if (health < health_MAX && health == 1)
-                    jitter = Utility.randomRange(-jitter_MAX, jitter_MAX);
+                if (jitter > 0) {
+                    jitter--;
+                    jitter_MULT *= -1;
+                }
+
+//                if (health < health_MAX && health == 1)
+//                    jitter = Utility.randomRange(-jitter_MAX, jitter_MAX);
 
 //                inscreenX =!(x < VariableHandler.deadzoneWidth) && !(x > VariableHandler.deadzoneRightX - VariableHandler.deadzoneWidth);
             }
@@ -194,7 +198,7 @@ public class Enemy extends MobileEntity {
 
     @Override
     protected void drawImage(Graphics g, BufferedImage image) {
-        g.drawImage(image, (int) x + jitter, (int) y + jitter, null);
+        g.drawImage(image, (int) x + (jitter_MULT * jitter), (int) y + (jitter_MULT * jitter), null);
     }
 
     protected void renderAttackPath(Graphics g) {
@@ -251,7 +255,7 @@ public class Enemy extends MobileEntity {
         newHeight = (int) (height * reflection.sizeOffset);
 
         if (state == STATE_ACTIVE) {
-            g2d.drawImage(image, reflectionX + jitter, reflectionY + jitter, newWidth, newHeight, null);
+            g2d.drawImage(image, reflectionX + (jitter_MULT * jitter), reflectionY + (jitter_MULT * jitter), newWidth, newHeight, null);
         } else if (state == STATE_EXPLODING) {
             explosion.drawAnimation(g2d, reflectionX, reflectionY, newWidth, newHeight);
         }
@@ -274,6 +278,7 @@ public class Enemy extends MobileEntity {
 
     public void damage() {
         this.health--;
+        jitter = jitter_MAX;
     }
 
     public int getHealth() {
