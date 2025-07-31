@@ -4,6 +4,7 @@ import com.euhedral.engine.*;
 import com.euhedral.game.*;
 import com.euhedral.game.Entities.Enemy.Enemy;
 
+import javax.swing.plaf.basic.BasicIconFactory;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -179,8 +180,13 @@ public class Player extends MobileEntity {
         super.render(g);
 
         if (shield.getValue() > 0) {
-            g.setColor(Color.yellow);
-            g.drawOval((int) x - width / 2, (int) y - height / 2, width * 2, height * 2);
+            g2d = (Graphics2D) g;
+            g2d.setColor(Color.blue);
+            g2d.setComposite(Utility.makeTransparent(0.2f));
+            g2d.fillOval((int) x - width / 2, (int) y - height / 2, width * 2, height * 2);
+            g2d.setComposite(Utility.makeTransparent(1f));
+            g2d.setStroke(new BasicStroke(3,1,1));
+            g2d.drawOval((int) x - width / 2, (int) y - height / 2, width * 2, height * 2);
         }
 
 //        renderStats(g);

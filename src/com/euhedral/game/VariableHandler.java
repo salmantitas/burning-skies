@@ -32,6 +32,7 @@ public class VariableHandler {
     public static Attribute health;
 
     public static int speedBoostDuration;
+    private static int speedBoostX;
 
     private static Color healthLow = Color.RED;
     private static Color healthMed = Color.ORANGE;
@@ -42,8 +43,8 @@ public class VariableHandler {
 
     // Score
     private static int score = 0;
-    private static int scoreX = Utility.intAtWidth640(150);
-    private static int scoreY = Utility.percHeight(4);
+    private static int scoreX = Utility.percWidth(75);;
+    private static int scoreY = Utility.intAtWidth640(20);
     private static int scoreSize = Utility.percWidth(2);
     private static Font scoreFont = UIHandler.customFont.deriveFont(0, scoreSize);
 
@@ -147,12 +148,12 @@ public class VariableHandler {
         health.setForegroundColor(healthHigh);
 
         levelY = Utility.percHeight(4);
-        timerY = Utility.percHeight(7);// levelY + Utility.percHeight(5);
+        timerY = scoreY + Utility.intAtWidth640(25);
 
         power = new Attribute("Power", 1, false);
         power.setMIN(1);
         power.setMAX(2);
-        power.setX(Utility.intAtWidth640(20));
+        power.setX(Utility.intAtWidth640(17));
         power.setY(scoreY);
         power.setFontSize(scoreSize);
 
@@ -160,9 +161,10 @@ public class VariableHandler {
         shield.setMIN(0);
         shield.setMAX(100);
         shield.setY(health.getY() + Utility.percHeight(3));
-        shield.setForegroundColor(Color.yellow);
+        shield.setForegroundColor(Color.blue);
 
         speedBoostDuration = 0;
+        speedBoostX = power.getX() + Utility.intAtWidth640(120);
     }
 
     public static void console() {
@@ -256,7 +258,7 @@ public class VariableHandler {
     public static void renderSpeedBoost(Graphics g) {
         g.setFont(levelFont);
         g.setColor(Color.WHITE);
-        g.drawString("Speed Boost: " + speedBoostDuration, timerX - Utility.intAtWidth640(40), shield.getY() + Utility.intAtWidth640(10));
+        g.drawString("Speed Boost: " + speedBoostDuration, speedBoostX, power.getY());
     }
 
 //    public static void renderFPS(Graphics g) {
