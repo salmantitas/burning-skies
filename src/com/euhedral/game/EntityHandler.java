@@ -482,13 +482,14 @@ public class EntityHandler {
             if (lastDestroyedType > TYPE_BASIC2) {
                 EntityID pickupID = null;
                 int pickupValue = 0;
+                int maxChanceCoefficient = 2;
                 if (lastDestroyedType == TYPE_DRONE1 || lastDestroyedType == TYPE_DRONE2) {
                     // todo: Spawn Homing Bullets
                 } else if (lastDestroyedType == TYPE_DRONE3) {
                     // todo: Spawn Bomb Pickup
                 } else if (lastDestroyedType == TYPE_FAST) {
                     pickupID = EntityID.PickupSpeed;
-                    pickupValue = 30;
+                    pickupValue = 30 * maxChanceCoefficient;
                 } else if (lastDestroyedType == TYPE_STATIC1) {
                     pickupID = EntityID.PickupPower;
                     pickupValue = 1;
@@ -497,11 +498,13 @@ public class EntityHandler {
                     pickupValue = 10;
                 } else {
                     pickupID = EntityID.PickupHealth;
-                    pickupValue = 5;
+                    pickupValue = 5 * maxChanceCoefficient;
                 }
                 if (pickupID != null) {
-//                    pickupIDglue = 30; // stub
-                    spawnPickup(lastDestroyedX, lastDestroyedY, pickupID, pickupValue);
+                    int rand = Utility.randomRangeInclusive(1, maxChanceCoefficient);
+                    if (rand == 1) {
+                        spawnPickup(lastDestroyedX, lastDestroyedY, pickupID, pickupValue);
+                    }
                 }
             }
             lastDestroyedX = -1;
