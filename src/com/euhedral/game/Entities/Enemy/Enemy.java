@@ -91,7 +91,7 @@ public class Enemy extends MobileEntity {
         shootTimerDefault = 150;
         shootTimer = shootTimerFirst;
 
-        bulletVelocity = Utility.intAtWidth640(4);
+        bulletVelocity = Utility.intAtWidth640(3);
         bulletArcAngle = 15;
 
         textureHandler = GameController.getTexture();
@@ -101,7 +101,7 @@ public class Enemy extends MobileEntity {
         boundsHorizontal = new Rectangle2D.Double();
 
         setEnemyType();
-        forwardVelocity = 2.4;
+        forwardVelocity = EntityHandler.backgroundScrollingSpeed;
         offscreenVelY = forwardVelocity;
 
         bulletAngle = 90;

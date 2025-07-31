@@ -7,12 +7,12 @@ import com.euhedral.game.GameController;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class EnemyDrone extends Enemy{
+public class EnemyDrone1 extends Enemy{
 
     double destinationX, destinationY;
     int updateSkip = 0;
 
-    public EnemyDrone(int x, int y, int levelHeight) {
+    public EnemyDrone1(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
         score = 10;
@@ -27,7 +27,7 @@ public class EnemyDrone extends Enemy{
         commonInit();
     }
 
-    public EnemyDrone(int x, int y, Color color, int levelHeight) {
+    public EnemyDrone1(int x, int y, Color color, int levelHeight) {
         this(x, y, levelHeight);
         this.color = color;
     }

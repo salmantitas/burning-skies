@@ -31,9 +31,10 @@ public class EntityHandler {
     public static final int TYPE_FAST = TYPE_SIDE1 + 1;
     public static final int TYPE_DRONE2 = TYPE_FAST + 1;
     public static final int TYPE_SIDE2 = TYPE_DRONE2 + 1;
-    public static final int TYPE_SCATTER = TYPE_SIDE2 + 1;
-    public static final int TYPE_MINE = TYPE_SCATTER + 1;
-    public static final int TYPE_DRONE3 = TYPE_MINE + 1;
+    public static final int TYPE_MINE1 = TYPE_SIDE2 + 1;
+    public static final int TYPE_SCATTER = TYPE_MINE1 + 1;
+    public static final int TYPE_MINE2 = TYPE_SCATTER + 1;
+    public static final int TYPE_DRONE3 = TYPE_MINE2 + 1;
     public static final int TYPE_SCATTER2 = TYPE_DRONE3 + 1;
     public static final int TYPE_DRONE4 = TYPE_SCATTER2 + 1;
 
@@ -61,7 +62,7 @@ public class EntityHandler {
 
     // Background Scrolling
     private static double scrollRate = 64d/20;
-    public static final double backgroundScrollingSpeed = scrollRate/2;
+    public static final double backgroundScrollingSpeed = 3.5; // 3 < v < 4 // = scrollRate/2;
 
     EntityHandler() {
         bullets = new BulletPool();
@@ -148,7 +149,7 @@ public class EntityHandler {
             enemy = new EnemyFast(x, y, levelHeight);
             enemy.setHMove(direction);
         } else if (enemyType == TYPE_DRONE1) {
-            enemy = new EnemyDrone(x, y, levelHeight);
+            enemy = new EnemyDrone1(x, y, levelHeight);
         } else if (enemyType == TYPE_SIDE1) {
             enemy = new EnemySide1(x, y, levelHeight);
         } else if (enemyType == TYPE_STATIC1) {
@@ -158,9 +159,11 @@ public class EntityHandler {
         } else if (enemyType == TYPE_SIDE2) {
             enemy = new EnemySide2(x, y, levelHeight);
         } else if (enemyType == TYPE_SCATTER) {
-            enemy = new EnemyScatter(x, y, levelHeight);
-        } else if (enemyType == TYPE_MINE) {
-            enemy = new EnemyMinefield(x, y, levelHeight);
+            enemy = new EnemyScatter1(x, y, levelHeight);
+        } else if (enemyType == TYPE_MINE1) {
+            enemy = new EnemyMinefield1(x, y, levelHeight);
+        } else if (enemyType == TYPE_MINE2) {
+            enemy = new EnemyMinefield2(x, y, levelHeight);
         } else if (enemyType == TYPE_DRONE3) {
             enemy = new EnemyDrone3(x, y, levelHeight);
         } else if (enemyType == TYPE_SCATTER2) {

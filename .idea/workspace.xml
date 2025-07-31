@@ -28,23 +28,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="Difficulty Balancing">
-      <change afterPath="$PROJECT_DIR$/res/EnemyMine.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/enemySide.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/score.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyMinefield.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyMinefield1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Burning_Skies/settings.csv" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Burning_Skies/settings.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/enemySide1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/enemySide2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/enemySide1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/enemySide2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/Pool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/Pool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/enemyDown.png" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/enemyDown.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/enemyDown.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/enemyDown.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/score.csv" beforeDir="false" afterPath="$PROJECT_DIR$/score.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EnemyGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EnemyGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EnemyPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EnemyPool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyStatic2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyScatter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyStatic3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyScatter2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyMinefield.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyMinefield2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyScatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyScatter1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemySide1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemySide1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemySide2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemySide2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/TextureHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/TextureHandler.java" afterDir="false" />
@@ -115,20 +113,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Engine.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/titas/Downloads/jdeploy-intellij-plugin-1.0-SNAPSHOT.zip",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propCompiler"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Engine.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/titas/Downloads/jdeploy-intellij-plugin-1.0-SNAPSHOT.zip&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.euhedral.game.Entities.Enemy" />
@@ -279,12 +277,12 @@
           <option name="timeStamp" value="542" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone.java</url>
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone1.java</url>
           <line>70</line>
           <option name="timeStamp" value="555" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone.java</url>
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone1.java</url>
           <line>68</line>
           <option name="timeStamp" value="556" />
         </line-breakpoint>
@@ -324,7 +322,7 @@
           <option name="timeStamp" value="645" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyScatter.java</url>
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyScatter1.java</url>
           <line>101</line>
           <option name="timeStamp" value="647" />
         </line-breakpoint>
@@ -365,7 +363,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java</url>
-          <line>124</line>
+          <line>125</line>
           <option name="timeStamp" value="684" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -380,12 +378,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java</url>
-          <line>534</line>
+          <line>537</line>
           <option name="timeStamp" value="714" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java</url>
-          <line>511</line>
+          <line>514</line>
           <option name="timeStamp" value="717" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -399,7 +397,7 @@
           <option name="timeStamp" value="727" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyMinefield.java</url>
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyMinefield2.java</url>
           <line>81</line>
           <option name="timeStamp" value="732" />
         </line-breakpoint>
@@ -409,7 +407,7 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java</url>
-          <line>35</line>
+          <line>36</line>
           <properties field="TYPE_DRONE3" class="com.euhedral.game.EntityHandler" />
           <option name="timeStamp" value="648" />
         </line-breakpoint>

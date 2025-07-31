@@ -38,7 +38,7 @@ public class TextureHandler {
 
 
     public BufferedImage[] player = new BufferedImage[9];
-    public BufferedImage[] enemy = new BufferedImage[3];
+    public BufferedImage[] enemy = new BufferedImage[4];
     public BufferedImage[] enemyHeavy = new BufferedImage[1];
     public BufferedImage[] enemyFast = new BufferedImage[1];
     public BufferedImage[] enemyStatic = new BufferedImage[3];
@@ -97,7 +97,7 @@ public class TextureHandler {
         player[4] = playerSS.grabImage(3,2, w,h);
         player[5] = playerSS.grabImage(3,3, w,h);
 
-        for (int i = 0; i < 3; i ++) {
+        for (int i = 0; i < 4; i ++) {
             enemy[i] = enemyDownSS.grabImage(i + 1, 1, w, h);
         }
 

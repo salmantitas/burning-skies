@@ -3,7 +3,7 @@ package com.euhedral.game.Entities.Enemy;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
 
-public class EnemyDrone4 extends EnemyDrone{
+public class EnemyDrone4 extends EnemyDrone1 {
 
     int recoilPause = 25; // too low: 20, too high: 50
     double deceleration = 0.1;

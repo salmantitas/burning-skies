@@ -59,7 +59,8 @@ public class EnemyGenerator {
     final int TYPE_DRONE2 = EntityHandler.TYPE_DRONE2;
     final int TYPE_SIDE2 = EntityHandler.TYPE_SIDE2;
     final int TYPE_SCATTER = EntityHandler.TYPE_SCATTER;
-    final int TYPE_MINE = EntityHandler.TYPE_MINE;
+    final int TYPE_MINE1 = EntityHandler.TYPE_MINE1;
+    final int TYPE_MINE2 = EntityHandler.TYPE_MINE2;
     final int TYPE_DRONE3 = EntityHandler.TYPE_DRONE3;
     final int TYPE_SCATTER2 = EntityHandler.TYPE_SCATTER2;
     final int TYPE_DRONE4 = EntityHandler.TYPE_DRONE4;
@@ -194,7 +195,8 @@ public class EnemyGenerator {
 //        enemytype = TYPE_DRONE2; // stub
 //        enemytype = TYPE_SIDE2; // stub
 //        enemytype = TYPE_STATIC2; // stub
-//        enemytype = TYPE_MINE; // stub
+//        enemytype = TYPE_MINE1; // stub
+//        enemytype = TYPE_MINE2; // stub
 //        enemytype = TYPE_DRONE3; // stub
 //        enemytype = TYPE_STATIC3; // stub
 //        enemytype = TYPE_DRONE4; // stub
@@ -204,9 +206,11 @@ public class EnemyGenerator {
 //        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
 
         limit = 5;
-//        int limitSide = 4;
 
         switch (enemytype) {
+            case TYPE_MINE1:
+                limit = 5;
+                break;
             case TYPE_SIDE1:
                 limit = limitSide;
                 break;
@@ -216,7 +220,7 @@ public class EnemyGenerator {
             case TYPE_SIDE2:
                 limit = limitSide - 1;
                 break;
-            case TYPE_MINE:
+            case TYPE_MINE2:
                 limit = 1;
                 break;
             case TYPE_SCATTER:
@@ -262,7 +266,7 @@ public class EnemyGenerator {
     protected void determineZone() {
 
         isDrone = enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3 || enemytype == TYPE_DRONE4;
-        isSideFlyer = enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2 || enemytype == TYPE_MINE;
+        isSideFlyer = enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2 || enemytype == TYPE_MINE2;
 
         entersFromSide = isDrone || isSideFlyer;
 

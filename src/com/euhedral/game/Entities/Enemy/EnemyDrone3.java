@@ -6,7 +6,7 @@ import com.euhedral.game.EntityHandler;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class EnemyDrone3 extends EnemyDrone{
+public class EnemyDrone3 extends EnemyDrone1 {
 
     int explosionTimer;
     int explosionTimer_MAX = 400; // too high = 1000; too low = 100

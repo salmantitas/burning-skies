@@ -8,11 +8,11 @@ import com.euhedral.game.GameController;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class EnemyMinefield extends Enemy{
+public class EnemyMinefield2 extends Enemy{
 
     double xMin, xMax;
 
-    public EnemyMinefield(int x, int y, int levelHeight) {
+    public EnemyMinefield2(int x, int y, int levelHeight) {
         super(x, y,  levelHeight);
 
         shootTimerDefault = 15;
@@ -32,7 +32,7 @@ public class EnemyMinefield extends Enemy{
         commonInit();
     }
 
-    public EnemyMinefield(int x, int y, Color color, int levelHeight) {
+    public EnemyMinefield2(int x, int y, Color color, int levelHeight) {
         super(x, y, color, levelHeight);
     }
 
@@ -84,7 +84,7 @@ public class EnemyMinefield extends Enemy{
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_MINE;
+        enemyType = EntityHandler.TYPE_MINE2;
     }
 
     @Override

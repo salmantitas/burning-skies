@@ -23,7 +23,7 @@ public class EnemySide1 extends Enemy{
         xMax = Engine.WIDTH;
 
         textureHandler = GameController.getTexture();
-        setImage(textureHandler.enemySide[2]);
+        setImage(textureHandler.enemySide[0]);
 
         health_MAX = 3;
         velX_MIN = 10f;
@@ -79,9 +79,9 @@ public class EnemySide1 extends Enemy{
 
     private void setImage() {
         if (velX > 0) {
-            setImage(textureHandler.enemySide[3]);
+            setImage(textureHandler.enemySide[1]);
         } else if (velX < 0) {
-            setImage(textureHandler.enemySide[2]);
+            setImage(textureHandler.enemySide[0]);
         }
     }
 
