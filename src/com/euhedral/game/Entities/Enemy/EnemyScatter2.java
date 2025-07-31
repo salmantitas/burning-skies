@@ -6,7 +6,7 @@ import com.euhedral.game.EntityHandler;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class EnemyStatic3 extends Enemy {
+public class EnemyScatter2 extends Enemy {
 
     double destinationX, destinationY;
     double deceleration;
@@ -22,7 +22,7 @@ public class EnemyStatic3 extends Enemy {
     double tempAngle;
     int degreesPerBullet;
 
-    public EnemyStatic3(int x, int y, int levelHeight) {
+    public EnemyScatter2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
 //        bulletVelocity = Utility.intAtWidth640(6);
@@ -57,7 +57,7 @@ public class EnemyStatic3 extends Enemy {
         damage = 90;
     }
 
-    public EnemyStatic3(int x, int y, Color color, int levelHeight) {
+    public EnemyScatter2(int x, int y, Color color, int levelHeight) {
         this(x, y, levelHeight);
         this.color = color;
     }
@@ -147,7 +147,7 @@ public class EnemyStatic3 extends Enemy {
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_STATIC3;
+        enemyType = EntityHandler.TYPE_SCATTER2;
     }
 
     public boolean checkCollision(Rectangle2D object) {

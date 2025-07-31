@@ -76,6 +76,11 @@ public class EnemyDrone3 extends EnemyDrone{
             expX = (int) x - (size - width)/2;
             expY = (int) y - (size - height)/2;
             explosion.drawAnimation(g, expX, expY, size, size);
+
+            g2d = (Graphics2D)  g;
+            g2d.setComposite(Utility.makeTransparent(1 - explosion.getProgress()));
+            renderScore(g);
+            g2d.setComposite(Utility.makeTransparent(1f));
         }
     }
 

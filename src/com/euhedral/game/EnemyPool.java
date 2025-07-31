@@ -3,7 +3,6 @@ package com.euhedral.game;
 import com.euhedral.engine.Entity;
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Pool;
-import com.euhedral.engine.Utility;
 import com.euhedral.game.Entities.Bullet;
 import com.euhedral.game.Entities.BulletEnemy;
 import com.euhedral.game.Entities.Enemy.Enemy;
@@ -95,7 +94,7 @@ public class EnemyPool extends Pool {
 
         entityX = (int) entity.getX()/64;
 
-        if (enemyType == EntityHandler.TYPE_STATIC1 || enemyType == EntityHandler.TYPE_STATIC2) {
+        if (enemyType == EntityHandler.TYPE_STATIC1 || enemyType == EntityHandler.TYPE_SCATTER) {
             // find spot in exclusion zone
             for (int i = 0; i < 10; i++) {
                 if (exclusionZones.get(i) == entityX) {
@@ -209,7 +208,7 @@ public class EnemyPool extends Pool {
     }
 
     private void addExclusionZone(Entity entity, int enemyType) {
-        if (enemyType == EntityHandler.TYPE_STATIC1 || enemyType == EntityHandler.TYPE_STATIC2) {
+        if (enemyType == EntityHandler.TYPE_STATIC1 || enemyType == EntityHandler.TYPE_SCATTER) {
             done = false;
             for (int i = 0; i < 10; i++) {
                 if (done) { }
@@ -260,7 +259,7 @@ public class EnemyPool extends Pool {
         double y = enemy.getTurretY();
         double bulletVelocity = enemy.getBulletVelocity();
         boolean tracking = false;
-        if (enemy.getEnemyType() == EntityHandler.TYPE_STATIC1 || enemy.getEnemyType() == EntityHandler.TYPE_STATIC2 ||
+        if (enemy.getEnemyType() == EntityHandler.TYPE_STATIC1 || enemy.getEnemyType() == EntityHandler.TYPE_SCATTER ||
                 enemy.getEnemyType() == EntityHandler.TYPE_SIDE2 || enemy.getEnemyType() == EntityHandler.TYPE_DRONE2) {
             tracking = true;
         }

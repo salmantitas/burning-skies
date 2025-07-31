@@ -3,8 +3,6 @@ package com.euhedral.game;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
 
-import java.util.ArrayList;
-
 public class EnemyGenerator {
     // Level
     int level;
@@ -60,9 +58,10 @@ public class EnemyGenerator {
     final int TYPE_STATIC1 = EntityHandler.TYPE_STATIC1;
     final int TYPE_DRONE2 = EntityHandler.TYPE_DRONE2;
     final int TYPE_SIDE2 = EntityHandler.TYPE_SIDE2;
-    final int TYPE_STATIC2 = EntityHandler.TYPE_STATIC2;
+    final int TYPE_SCATTER = EntityHandler.TYPE_SCATTER;
+    final int TYPE_MINE = EntityHandler.TYPE_MINE;
     final int TYPE_DRONE3 = EntityHandler.TYPE_DRONE3;
-    final int TYPE_STATIC3 = EntityHandler.TYPE_STATIC3;
+    final int TYPE_SCATTER2 = EntityHandler.TYPE_SCATTER2;
     final int TYPE_DRONE4 = EntityHandler.TYPE_DRONE4;
     int maxTypes = TYPE_DRONE4 + 1;
 
@@ -195,6 +194,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_DRONE2; // stub
 //        enemytype = TYPE_SIDE2; // stub
 //        enemytype = TYPE_STATIC2; // stub
+//        enemytype = TYPE_MINE; // stub
 //        enemytype = TYPE_DRONE3; // stub
 //        enemytype = TYPE_STATIC3; // stub
 //        enemytype = TYPE_DRONE4; // stub
@@ -216,13 +216,16 @@ public class EnemyGenerator {
             case TYPE_SIDE2:
                 limit = limitSide - 1;
                 break;
-            case TYPE_STATIC2:
+            case TYPE_MINE:
+                limit = 1;
+                break;
+            case TYPE_SCATTER:
                 limit = limitSide - 1;
                 break;
             case TYPE_DRONE3:
                 limit = 1;
                 break;
-            case TYPE_STATIC3:
+            case TYPE_SCATTER2:
                 limit = limitSide - 2;
                 break;
             case TYPE_DRONE4:
@@ -259,7 +262,7 @@ public class EnemyGenerator {
     protected void determineZone() {
 
         isDrone = enemytype == TYPE_DRONE1 || enemytype == TYPE_DRONE2 || enemytype == TYPE_DRONE3 || enemytype == TYPE_DRONE4;
-        isSideFlyer = enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2;
+        isSideFlyer = enemytype == TYPE_SIDE1 || enemytype == TYPE_SIDE2 || enemytype == TYPE_MINE;
 
         entersFromSide = isDrone || isSideFlyer;
 
@@ -284,7 +287,7 @@ public class EnemyGenerator {
         }
         // Horizontal Zone
         else {
-            movesHorizontally = enemytype == TYPE_HEAVY || enemytype == TYPE_BASIC2 || enemytype == TYPE_STATIC2 || enemytype == TYPE_STATIC3;
+            movesHorizontally = enemytype == TYPE_HEAVY || enemytype == TYPE_BASIC2 || enemytype == TYPE_SCATTER || enemytype == TYPE_SCATTER2;
             if (movesHorizontally) {
                 spawnX = Utility.randomRangeInclusive(xStart + 3, xEnd - 3);
 

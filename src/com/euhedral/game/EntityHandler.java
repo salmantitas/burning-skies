@@ -31,10 +31,11 @@ public class EntityHandler {
     public static final int TYPE_FAST = TYPE_SIDE1 + 1;
     public static final int TYPE_DRONE2 = TYPE_FAST + 1;
     public static final int TYPE_SIDE2 = TYPE_DRONE2 + 1;
-    public static final int TYPE_STATIC2 = TYPE_SIDE2 + 1;
-    public static final int TYPE_DRONE3 = TYPE_STATIC2 + 1;
-    public static final int TYPE_STATIC3 = TYPE_DRONE3 + 1;
-    public static final int TYPE_DRONE4 = TYPE_STATIC3 + 1;
+    public static final int TYPE_SCATTER = TYPE_SIDE2 + 1;
+    public static final int TYPE_MINE = TYPE_SCATTER + 1;
+    public static final int TYPE_DRONE3 = TYPE_MINE + 1;
+    public static final int TYPE_SCATTER2 = TYPE_DRONE3 + 1;
+    public static final int TYPE_DRONE4 = TYPE_SCATTER2 + 1;
 
     public static final int enemyTypes = TYPE_DRONE4 + 1;
 
@@ -156,12 +157,14 @@ public class EntityHandler {
             enemy = new EnemyDrone2(x, y, levelHeight);
         } else if (enemyType == TYPE_SIDE2) {
             enemy = new EnemySide2(x, y, levelHeight);
-        } else if (enemyType == TYPE_STATIC2) {
-            enemy = new EnemyStatic2(x, y, levelHeight);
+        } else if (enemyType == TYPE_SCATTER) {
+            enemy = new EnemyScatter(x, y, levelHeight);
+        } else if (enemyType == TYPE_MINE) {
+            enemy = new EnemyMinefield(x, y, levelHeight);
         } else if (enemyType == TYPE_DRONE3) {
             enemy = new EnemyDrone3(x, y, levelHeight);
-        } else if (enemyType == TYPE_STATIC3) {
-            enemy = new EnemyStatic3(x, y, levelHeight);
+        } else if (enemyType == TYPE_SCATTER2) {
+            enemy = new EnemyScatter2(x, y, levelHeight);
         } else if (enemyType == TYPE_DRONE4) {
             enemy = new EnemyDrone4(x, y, levelHeight);
         }
@@ -496,7 +499,7 @@ public class EntityHandler {
                 } else if (lastDestroyedType == TYPE_STATIC1) {
                     pickupID = EntityID.PickupPower;
                     pickupValue = 1;
-                } else if (lastDestroyedType == TYPE_STATIC2 || lastDestroyedType == TYPE_STATIC3) {
+                } else if (lastDestroyedType == TYPE_SCATTER || lastDestroyedType == TYPE_SCATTER2) {
                     pickupID = EntityID.PickupShield;
                     pickupValue = 10;
                 } else {

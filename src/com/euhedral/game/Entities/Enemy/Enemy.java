@@ -383,11 +383,11 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void resurrect(double x, double y) {
+        shootTimer = shootTimerFirst;
         commonInit();
         explosion.playedOnce = false;
         super.resurrect(x, y);
         explosion.endAnimation();
-        shootTimer = shootTimerFirst;
         inscreenY = false;
     }
 
@@ -485,10 +485,12 @@ public class Enemy extends MobileEntity {
         return collidesVertically || collidesHorizontally;
     }
 
-    private void renderScore(Graphics g) {
-        g.setFont(UIHandler.customFont.deriveFont(1, 20));
-        g.setColor(Color.GREEN);
-        int offsetX = width/2 - Utility.intAtWidth640(10);
-        g.drawString(Integer.toString(score), (int) x + offsetX, (int) y);
+    protected void renderScore(Graphics g) {
+        if (isExploding()) {
+            g.setFont(UIHandler.customFont.deriveFont(1, 20));
+            g.setColor(Color.GREEN);
+            int offsetX = width / 2 - Utility.intAtWidth640(10);
+            g.drawString(Integer.toString(score), (int) x + offsetX, (int) y);
+        }
     }
 }
