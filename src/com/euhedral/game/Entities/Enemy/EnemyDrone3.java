@@ -20,7 +20,7 @@ public class EnemyDrone3 extends EnemyDrone1 {
         setImage(textureHandler.enemyDrone[2]);
 
         score = 75;
-        damage = 30;
+        damage = 50;
 
         //        enemyType = EntityHandler.TYPE_DRONE;
 

@@ -1,0 +1,98 @@
+package com.euhedral.game.Entities.Enemy;
+
+import com.euhedral.engine.Utility;
+import com.euhedral.game.EntityHandler;
+
+public class EnemyDrone5 extends EnemyDrone1 {
+
+    int recoilPause = 25; // too low: 20, too high: 50
+    double deceleration = 0.1;
+
+    double tempAngle;
+    int degreesPerBullet;
+
+    public EnemyDrone5(int x, int y, int levelHeight) {
+        super(x, y, levelHeight);
+        setImage(textureHandler.enemyDrone[4]);
+
+        shootTimerDefault = 250;
+        score = 200;
+        damage = 40;
+
+        bulletsPerShot_MAX = 36;
+        int tempAngle = 360/bulletsPerShot_MAX;
+        bulletArcAngle = tempAngle * bulletsPerShot_MAX;
+
+        attackEffect = true;
+
+        health_MAX = 1;
+        bulletVelocity = 2;
+        commonInit();
+    }
+
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+//
+//    }
+
+//    @Override
+//    public void update() {
+//        super.update();
+//    }
+
+    @Override
+    protected void shoot() {
+        resetShootTimer();
+        shootDefault();
+    }
+
+    @Override
+    protected void shootDefault() {
+        bulletsPerShot += bulletsPerShot_MAX;
+    }
+
+    @Override
+    public void move() {
+        if (isActive() && inscreenY) {
+            if (shootTimer < recoilPause) {
+                forwardVelocity -= deceleration;
+            } else {
+                forwardVelocity = 2;
+            }
+        } else if (isExploding()) {
+            velY = explodingVelocity;
+            velX = 0;
+        }
+        moveInScreen();
+    }
+
+    @Override
+    protected void commonInit() {
+        super.commonInit();
+        forwardVelocity = 1;
+    }
+
+    @Override
+    public int getTurretX() {
+        return (int) x + width/2 - Utility.intAtWidth640(2);
+    }
+
+    @Override
+    public double calculateShotTrajectory() {
+        return calculateAngle(getTurretX(), getTurretY(), destinationX, destinationY);
+    }
+
+    @Override
+    public double getBulletAngle() {
+        tempAngle = calculateShotTrajectory();
+        degreesPerBullet = bulletArcAngle / bulletsPerShot_MAX;
+        return tempAngle - (2 * degreesPerBullet) + (bulletsPerShot - 1) * degreesPerBullet;
+    }
+
+    @Override
+    protected void setEnemyType() {
+        enemyType = EntityHandler.TYPE_DRONE5;
+    }
+}

@@ -92,7 +92,7 @@ public class EnemyDrone1 extends Enemy{
 //        super.resurrect(x, y);
 //    }
 
-    private void updateDestination() {
+    protected void updateDestination() {
         destinationX = EntityHandler.playerX;
         destinationY = EntityHandler.playerY;
     }

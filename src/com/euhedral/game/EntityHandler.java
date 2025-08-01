@@ -32,13 +32,15 @@ public class EntityHandler {
     public static final int TYPE_DRONE2 = TYPE_FAST + 1;
     public static final int TYPE_SIDE2 = TYPE_DRONE2 + 1;
     public static final int TYPE_MINE1 = TYPE_SIDE2 + 1;
-    public static final int TYPE_SCATTER = TYPE_MINE1 + 1;
-    public static final int TYPE_MINE2 = TYPE_SCATTER + 1;
+    public static final int TYPE_SCATTER1 = TYPE_MINE1 + 1;
+    public static final int TYPE_SIDE3 = TYPE_SCATTER1 + 1;
+    public static final int TYPE_MINE2 = TYPE_SIDE3 + 1;
     public static final int TYPE_DRONE3 = TYPE_MINE2 + 1;
     public static final int TYPE_SCATTER2 = TYPE_DRONE3 + 1;
     public static final int TYPE_DRONE4 = TYPE_SCATTER2 + 1;
+    public static final int TYPE_DRONE5 = TYPE_DRONE4 + 1;
 
-    public static final int enemyTypes = TYPE_DRONE4 + 1;
+    public static final int enemyTypes = TYPE_DRONE5 + 1;
 
     // Entity Lists
     private Enemy enemy;
@@ -61,8 +63,7 @@ public class EntityHandler {
     float transparency;
 
     // Background Scrolling
-    private static double scrollRate = 64d/20;
-    public static final double backgroundScrollingSpeed = scrollRate * 35/32; // 3.5; // 3 < v < 4 // = scrollRate/2;
+    public static final double backgroundScrollingSpeed = GameController.scrollRate * 35/32; // 3.5; // 3 < v < 4 // = scrollRate/2;
 
     EntityHandler() {
         bullets = new BulletPool();
@@ -158,7 +159,9 @@ public class EntityHandler {
             enemy = new EnemyDrone2(x, y, levelHeight);
         } else if (enemyType == TYPE_SIDE2) {
             enemy = new EnemySide2(x, y, levelHeight);
-        } else if (enemyType == TYPE_SCATTER) {
+        } else if (enemyType == TYPE_SIDE3) {
+            enemy = new EnemySide3(x, y, levelHeight);
+        } else if (enemyType == TYPE_SCATTER1) {
             enemy = new EnemyScatter1(x, y, levelHeight);
         } else if (enemyType == TYPE_MINE1) {
             enemy = new EnemyMinefield1(x, y, levelHeight);
@@ -170,6 +173,8 @@ public class EntityHandler {
             enemy = new EnemyScatter2(x, y, levelHeight);
         } else if (enemyType == TYPE_DRONE4) {
             enemy = new EnemyDrone4(x, y, levelHeight);
+        } else if (enemyType == TYPE_DRONE5) {
+            enemy = new EnemyDrone5(x, y, levelHeight);
         }
 
         if (enemy != null) {
@@ -492,17 +497,17 @@ public class EntityHandler {
                 EntityID pickupID = null;
                 int pickupValue = 0;
                 int maxChanceCoefficient = 2;
-                if (lastDestroyedType == TYPE_DRONE1 || lastDestroyedType == TYPE_DRONE2) {
+                if (lastDestroyedType == TYPE_DRONE2) {
                     // todo: Spawn Homing Bullets
                 } else if (lastDestroyedType == TYPE_DRONE3) {
                     // todo: Spawn Bomb Pickup
-                } else if (lastDestroyedType == TYPE_FAST) {
+                } else if (lastDestroyedType == TYPE_DRONE1 || lastDestroyedType == TYPE_FAST || lastDestroyedType == TYPE_SIDE1) {
                     pickupID = EntityID.PickupSpeed;
                     pickupValue = 30 * maxChanceCoefficient;
-                } else if (lastDestroyedType == TYPE_STATIC1) {
+                } else if (lastDestroyedType == TYPE_STATIC1 || lastDestroyedType == TYPE_DRONE4 || lastDestroyedType == TYPE_MINE2) {
                     pickupID = EntityID.PickupPower;
                     pickupValue = 1;
-                } else if (lastDestroyedType == TYPE_SCATTER || lastDestroyedType == TYPE_SCATTER2) {
+                } else if (lastDestroyedType == TYPE_SCATTER1 || lastDestroyedType == TYPE_SCATTER2) {
                     pickupID = EntityID.PickupShield;
                     pickupValue = 10;
                 } else {

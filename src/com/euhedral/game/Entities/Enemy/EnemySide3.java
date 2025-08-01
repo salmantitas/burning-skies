@@ -7,43 +7,57 @@ import com.euhedral.game.GameController;
 
 import java.awt.geom.Rectangle2D;
 
-public class EnemySide2 extends Enemy{
+public class EnemySide3 extends Enemy{
+
+    double destinationX, destinationY;
+    boolean firstEntry;
 
     double xMin, xMax;
 
-    public EnemySide2(int x, int y, int levelHeight) {
-        super(x, y,  levelHeight);
+    public EnemySide3(int x, int y, int levelHeight) {
+        super(x, y, levelHeight);
 
-        shootTimerDefault = 40;
-//        shootTimer = 50;
-        score = 60;
         bulletVelocity = Utility.intAtWidth640(3);
+        score = 100;
+//        shootTimerDefault = 200;
+        attackEffect = true;
 
-        xMin = -width;
-        xMax = Engine.WIDTH;
+        xMin = -2*width;
+        xMax = Engine.WIDTH + width;
 
         textureHandler = GameController.getTexture();
-        setImage(textureHandler.enemySide[0]);
+        setImage(textureHandler.enemySide[2]);
 
-        health_MAX = 3;
-        velX_MIN = 9f;
+        health_MAX = 2;
+        velX_MIN = 3f;
 
-//        shootTimer = shootTimerDefault;
         commonInit();
     }
+
+
+//    @Override
+//    public void initialize() {
+//        super.initialize();
+//
+//
+//    }
 
     @Override
     public void move() {
         if (isActive()) {
+            double xMin = -2*width, xMax = Engine.WIDTH + width;
 
             velY = 0;
-            if (x <= xMin) {
+            if (x <= xMin && velX < 0) {
                 velX = velX_MIN;
-                y += 64;
-            } else if (x >= xMax) {
+                if (!firstEntry)
+                    y = destinationY;
+            } else if (x >= xMax && velX > 0) {
                 velX = -velX_MIN;
-                y += 64;
+                if (!firstEntry)
+                    y = destinationY;
             }
+
         } else if (isExploding()) {
             velY = explodingVelocity;
         }
@@ -62,17 +76,30 @@ public class EnemySide2 extends Enemy{
     @Override
     public void update() {
         super.update();
+        updateDestination();
         setImage();
     }
 
     private void setImage() {
         if (velX > 0) {
-            setImage(textureHandler.enemySide[3]);
+            setImage(textureHandler.enemySide[5]);
             damageImage = textureHandler.enemyDamage[2];
         } else if (velX < 0) {
-            setImage(textureHandler.enemySide[2]);
+            setImage(textureHandler.enemySide[4]);
             damageImage = textureHandler.enemyDamage[1];
         }
+    }
+
+    private void updateDestination() {
+        int offsetY = -32;
+        destinationX = EntityHandler.playerX;
+        destinationY = EntityHandler.playerY + offsetY;
+    }
+
+    @Override
+    public double getBulletAngle() {
+        firstEntry = false; // todo: move somewhere else
+        return calculateAngle(destinationX, destinationY); // stub
     }
 
     @Override
@@ -80,11 +107,12 @@ public class EnemySide2 extends Enemy{
         setHealth(health_MAX);
         velX = velX_MIN;
         velY = 0;
+        firstEntry = true;
     }
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_SIDE2;
+        enemyType = EntityHandler.TYPE_SIDE3;
     }
 
     @Override

@@ -33,11 +33,12 @@ public class EnemyBasic3 extends Enemy{
     @Override
     public void update() {
         super.update();
+        int angleAdjustment = 10;
         if (state == STATE_ACTIVE && inscreenY) {
             if (hMove == HorizontalMovement.LEFT)
-                angle = Math.min(angle + angleIncrement, EAST);
+                angle = Math.min(angle + angleIncrement, EAST - angleAdjustment);
             else if (hMove == HorizontalMovement.RIGHT) {
-                angle = Math.max(angle - angleIncrement, WEST);
+                angle = Math.max(angle - angleIncrement, WEST + angleAdjustment);
             }
 
             if (x < -width || x > Engine.WIDTH -0*width) {

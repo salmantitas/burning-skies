@@ -400,12 +400,14 @@ public class Enemy extends MobileEntity {
 
     @Override
     public void resurrect(double x, double y) {
+        super.resurrect(x, y);
         shootTimer = shootTimerFirst;
         commonInit();
         explosion.playedOnce = false;
-        super.resurrect(x, y);
         explosion.endAnimation();
         inscreenY = false;
+        jitter = 0;
+        jitter_MULT = 1;
     }
 
     public boolean checkDeathAnimationEnd() {

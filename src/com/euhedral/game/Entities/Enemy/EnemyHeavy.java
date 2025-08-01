@@ -48,7 +48,7 @@ public class EnemyHeavy extends Enemy {
 
         velX = 0;
         velY_MIN = 1.7f;
-        forwardVelocity = velY_MIN;
+        forwardVelocity = EntityHandler.backgroundScrollingSpeed;
 //        distance = 0; // stub ; width * 2;
 //        movementDistance = distance;
         health_MAX = 4;

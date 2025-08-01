@@ -14,7 +14,6 @@ public class TextureHandler {
             enemyDownImage,
             enemyDownDamageImage,
             enemyDroneImage,
-            enemyMineImage,
             enemySideImage,
             explosionImage,
             impactSmallImage,
@@ -29,7 +28,6 @@ public class TextureHandler {
             enemyDownSS,
             enemyDownDamageSS,
             enemyDroneSS,
-            enemyMineSS,
             enemySideSS,
             explosionSS,
             impactSmallSS,
@@ -46,8 +44,8 @@ public class TextureHandler {
     public BufferedImage[] enemyHeavy = new BufferedImage[1];
     public BufferedImage[] enemyFast = new BufferedImage[1];
     public BufferedImage[] enemyStatic = new BufferedImage[3];
-    public BufferedImage[] enemySide = new BufferedImage[6];
-    public BufferedImage[] enemyDrone = new BufferedImage[4];
+    public BufferedImage[] enemySide = new BufferedImage[8];
+    public BufferedImage[] enemyDrone = new BufferedImage[5];
     public BufferedImage[] explosion = new BufferedImage[4];
     public BufferedImage[] impactSmall = new BufferedImage[4];
     public BufferedImage[] sea = new BufferedImage[8];
@@ -122,17 +120,26 @@ public class TextureHandler {
         enemyStatic[0] = enemyDownSS.grabImage(1,3,w,h);
         enemyStatic[1] = enemyDownSS.grabImage(2,3,w,h);
         enemyStatic[2] = enemyDownSS.grabImage(3,3,w,h);
+
+//        for (int i = 0; i < 1; i++) {
+//            for (int j = 0; j < 1; j++) {
+//                enemySide[i]
+//            }
+//        }
+
         enemySide[0] = enemySideSS.grabImage(1,1,w,h);
         enemySide[1] = enemySideSS.grabImage(2,1,w,h);
         enemySide[2] = enemySideSS.grabImage(1,2,w,h);
         enemySide[3] = enemySideSS.grabImage(2,2,w,h);
         enemySide[4] = enemySideSS.grabImage(1,3,w,h);
         enemySide[5] = enemySideSS.grabImage(2,3,w,h);
+        enemySide[6] = enemySideSS.grabImage(1,4,w,h);
+        enemySide[7] = enemySideSS.grabImage(2,4,w,h);
 
         w = 32;
         h = 32;
 
-        for (int i = 0; i < 4; i ++) {
+        for (int i = 0; i < 5; i ++) {
             enemyDrone[i] = enemyDroneSS.grabImage(i+1,1,w,h);
         }
 

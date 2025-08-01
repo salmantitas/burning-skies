@@ -170,7 +170,7 @@ public class EnemyScatter1 extends Enemy {
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_SCATTER;
+        enemyType = EntityHandler.TYPE_SCATTER1;
     }
 
     public boolean checkCollision(Rectangle2D object) {

@@ -1,46 +1,29 @@
 package com.euhedral.game.Entities.Enemy;
 
+import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
 
 public class EnemyDrone4 extends EnemyDrone1 {
 
-    int recoilPause = 25; // too low: 20, too high: 50
-    double deceleration = 0.1;
-
-    double tempAngle;
-    int degreesPerBullet;
+    int bulletAngle_MIN = 30;
+    int bulletAngle_MAX = 180 - bulletAngle_MIN;
+    int bulletAngleIncrements = 10;
 
     public EnemyDrone4(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         setImage(textureHandler.enemyDrone[3]);
 
-        shootTimerDefault = 250;
-        score = 200;
+        shootTimerDefault = 20;
+        score = 150;
         damage = 30;
 
-        bulletsPerShot_MAX = 36;
-        int tempAngle = 360/bulletsPerShot_MAX;
-        bulletArcAngle = tempAngle * bulletsPerShot_MAX;
+//        attackEffect = true;
 
-        attackEffect = true;
-
-        health_MAX = 1;
-        bulletVelocity = 2;
+        health_MAX = 3;
+        bulletVelocity = 3;
         commonInit();
     }
-
-//    @Override
-//    public void initialize() {
-//        super.initialize();
-//
-//
-//    }
-
-//    @Override
-//    public void update() {
-//        super.update();
-//    }
 
     @Override
     protected void shoot() {
@@ -50,45 +33,35 @@ public class EnemyDrone4 extends EnemyDrone1 {
 
     @Override
     protected void shootDefault() {
-        bulletsPerShot += bulletsPerShot_MAX;
+        super.shootDefault();
+        bulletAngle += bulletAngleIncrements;
+        if (bulletAngle > bulletAngle_MAX)
+            bulletAngleIncrements = - 10;
+        else if (bulletAngle < bulletAngle_MIN) {
+            bulletAngleIncrements = 10;
+        }
     }
 
     @Override
-    public void move() {
-        if (isActive() && inscreenY) {
-            if (shootTimer < recoilPause) {
-                forwardVelocity -= deceleration;
-            } else {
-                forwardVelocity = 2;
-            }
-        } else if (isExploding()) {
-            velY = explodingVelocity;
-            velX = 0;
-        }
-        moveInScreen();
+    protected void updateDestination() {
+        destinationX = Engine.WIDTH/2;
+        destinationY = Engine.HEIGHT/2;
     }
 
     @Override
     protected void commonInit() {
         super.commonInit();
         forwardVelocity = 1;
+        if (x < Engine.WIDTH /2)
+            bulletAngle = bulletAngle_MIN;
+        else {
+            bulletAngle = bulletAngle_MAX;
+        }
     }
 
     @Override
     public int getTurretX() {
         return (int) x + width/2 - Utility.intAtWidth640(2);
-    }
-
-    @Override
-    public double calculateShotTrajectory() {
-        return calculateAngle(getTurretX(), getTurretY(), destinationX, destinationY);
-    }
-
-    @Override
-    public double getBulletAngle() {
-        tempAngle = calculateShotTrajectory();
-        degreesPerBullet = bulletArcAngle / bulletsPerShot_MAX;
-        return tempAngle - (2 * degreesPerBullet) + (bulletsPerShot - 1) * degreesPerBullet;
     }
 
     @Override
