@@ -11,7 +11,7 @@ public class EnemyBasic1 extends Enemy{
 
     public EnemyBasic1(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
-        textureHandler = GameController.getTexture();
+//        textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[0]);
 
         shootTimerDefault = 150;

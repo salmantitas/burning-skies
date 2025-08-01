@@ -69,8 +69,10 @@ public class EnemyMinefield2 extends Enemy{
     private void setImage() {
         if (velX > 0) {
             setImage(textureHandler.enemySide[5]);
+            damageImage = textureHandler.enemyDamage[2];
         } else if (velX < 0) {
             setImage(textureHandler.enemySide[4]);
+            damageImage = textureHandler.enemyDamage[1];
         }
     }
 

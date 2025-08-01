@@ -59,7 +59,7 @@ public abstract class MobileEntity extends Entity {
     protected HorizontalMovement hMove = HorizontalMovement.NONE;
     protected VerticalMovement vMove = VerticalMovement.NONE;
 
-    // Angle
+    // Anglee
     protected double forwardVelocity;
     protected double angle;
     private double angleX;

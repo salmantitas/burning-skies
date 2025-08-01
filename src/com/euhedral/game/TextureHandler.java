@@ -12,6 +12,7 @@ public class TextureHandler {
     private BufferedImage
             playerImage,
             enemyDownImage,
+            enemyDownDamageImage,
             enemyDroneImage,
             enemyMineImage,
             enemySideImage,
@@ -26,6 +27,7 @@ public class TextureHandler {
     private SpriteSheet
             playerSS,
             enemyDownSS,
+            enemyDownDamageSS,
             enemyDroneSS,
             enemyMineSS,
             enemySideSS,
@@ -38,7 +40,9 @@ public class TextureHandler {
 
 
     public BufferedImage[] player = new BufferedImage[9];
+    public BufferedImage[] playerDamage = new BufferedImage[3];
     public BufferedImage[] enemy = new BufferedImage[4];
+    public BufferedImage[] enemyDamage = new BufferedImage[3];
     public BufferedImage[] enemyHeavy = new BufferedImage[1];
     public BufferedImage[] enemyFast = new BufferedImage[1];
     public BufferedImage[] enemyStatic = new BufferedImage[3];
@@ -57,6 +61,7 @@ public class TextureHandler {
         try {
             playerImage = loader.loadImage("/player.png");
             enemyDownImage = loader.loadImage("/enemyDown.png");
+            enemyDownDamageImage = loader.loadImage("/enemyDamage.png");
             enemyDroneImage = loader.loadImage("/enemyDrone.png");
             enemySideImage = loader.loadImage("/enemySide.png");
             explosionImage = loader.loadImage("/explosion.png");
@@ -72,6 +77,7 @@ public class TextureHandler {
 
         playerSS = new SpriteSheet(playerImage);
         enemyDownSS = new SpriteSheet(enemyDownImage);
+        enemyDownDamageSS = new SpriteSheet(enemyDownDamageImage);
         enemySideSS = new SpriteSheet(enemySideImage);
         enemyDroneSS = new SpriteSheet(enemyDroneImage);
         explosionSS = new SpriteSheet(explosionImage);
@@ -97,9 +103,17 @@ public class TextureHandler {
         player[4] = playerSS.grabImage(3,2, w,h);
         player[5] = playerSS.grabImage(3,3, w,h);
 
+        playerDamage[0] = playerSS.grabImage(1,4, w,h);
+        playerDamage[1] = playerSS.grabImage(2,4, w,h);
+        playerDamage[2] = playerSS.grabImage(3,4, w,h);
+
         for (int i = 0; i < 4; i ++) {
             enemy[i] = enemyDownSS.grabImage(i + 1, 1, w, h);
         }
+
+        enemyDamage[0] = enemyDownDamageSS.grabImage(1,1, w, h);
+        enemyDamage[1] = enemyDownDamageSS.grabImage(1,2, w, h);
+        enemyDamage[2] = enemyDownDamageSS.grabImage(2,2, w, h);
 
 //        w = 128;
 

@@ -54,6 +54,7 @@ public class Player extends MobileEntity {
     // Graphics
     Graphics2D g2d;
     private TextureHandler textureHandler;
+    private BufferedImage damageImage;
 
     int jitter = 0, jitter_MULT = 1, jitter_MAX;
 
@@ -148,28 +149,34 @@ public class Player extends MobileEntity {
     }
 
     private void setImage() {
-        if (health.getValue() > HEALTH_HIGH) {
+//        if (health.getValue() > HEALTH_HIGH) {
             if (isMovingLeft()) {
                 image = textureHandler.player[6];
+                damageImage = textureHandler.playerDamage[1];
             } else if (isMovingRight()) {
                 image = textureHandler.player[3];
-            } else
+                damageImage = textureHandler.playerDamage[2];
+            } else {
                 image = textureHandler.player[0];
-        } else if (health.getValue() > HEALTH_MED) {
-            if (isMovingLeft()) {
-                image = textureHandler.player[7];
-            } else if (isMovingRight()) {
-                image = textureHandler.player[4];
-            } else
-                image = textureHandler.player[1];
-        } else {
-            if (isMovingLeft()) {
-                image = textureHandler.player[8];
-            } else if (isMovingRight()) {
-                image = textureHandler.player[5];
-            } else
-                image = textureHandler.player[2];
-        }
+                damageImage = textureHandler.playerDamage[0];
+            }
+//        }
+
+//        else if (health.getValue() > HEALTH_MED) {
+//            if (isMovingLeft()) {
+//                image = textureHandler.player[7];
+//            } else if (isMovingRight()) {
+//                image = textureHandler.player[4];
+//            } else
+//                image = textureHandler.player[1];
+//        } else {
+//            if (isMovingLeft()) {
+//                image = textureHandler.player[8];
+//            } else if (isMovingRight()) {
+//                image = textureHandler.player[5];
+//            } else
+//                image = textureHandler.player[2];
+//        }
         VariableHandler.setHealthColor();
     }
 
@@ -178,9 +185,16 @@ public class Player extends MobileEntity {
         bullets.render(g);
 
         super.render(g);
+        float transparency = (1f - (float) health.getValue()/100)/2;
+
+        g2d = (Graphics2D) g;
+
+        g2d.setComposite(Utility.makeTransparent(transparency));
+        g.drawImage(damageImage, (int) x, (int) y, null);
+        g2d.setComposite(Utility.makeTransparent(1f));
+
 
         if (shield.getValue() > 0) {
-            g2d = (Graphics2D) g;
             g2d.setColor(Color.blue);
             g2d.setComposite(Utility.makeTransparent(0.2f));
             g2d.fillOval((int) x - width / 2, (int) y - height / 2, width * 2, height * 2);

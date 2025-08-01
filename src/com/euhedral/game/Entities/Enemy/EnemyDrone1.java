@@ -97,6 +97,12 @@ public class EnemyDrone1 extends Enemy{
         destinationY = EntityHandler.playerY;
     }
 
+    @Override
+    protected void drawDamageImage() {
+        g2d.setColor(Color.BLACK);
+        g2d.fillOval((int) x, (int) y, width, height);
+    }
+
 //    @Override
 //    public void render(Graphics g) {
 //        super.render(g);
@@ -104,7 +110,6 @@ public class EnemyDrone1 extends Enemy{
 //
 ////        g.drawString("y-cord: " + y, (int) x, (int) y);
 //    }
-
 
     @Override
     protected void renderBounds(Graphics g) {

@@ -51,6 +51,7 @@ public class Enemy extends MobileEntity {
     protected boolean attackEffect;
     double attackPathX;
     double attackPathY;
+    protected BufferedImage damageImage;
 
     // State Machine
     protected final int STATE_EXPLODING = 2;
@@ -91,10 +92,11 @@ public class Enemy extends MobileEntity {
         shootTimerDefault = 150;
         shootTimer = shootTimerFirst;
 
-        bulletVelocity = Utility.intAtWidth640(3);
+        bulletVelocity = Utility.intAtWidth640(2);
         bulletArcAngle = 15;
 
         textureHandler = GameController.getTexture();
+        damageImage = textureHandler.enemyDamage[0];
         attackEffect = false;
 
         boundsVertical = new Rectangle2D.Double();
@@ -200,6 +202,21 @@ public class Enemy extends MobileEntity {
     @Override
     protected void drawImage(Graphics g, BufferedImage image) {
         g.drawImage(image, (int) x + (jitter_MULT * jitter), (int) y + (jitter_MULT * jitter), null);
+
+        float transparency = (1f - (float) health/(float) health_MAX)/2;
+
+        g2d = (Graphics2D) g;
+
+        g2d.setComposite(Utility.makeTransparent(transparency));
+        drawDamageImage();
+        g2d.setComposite(Utility.makeTransparent(1f));
+    }
+
+    protected void drawDamageImage() {
+//        g2d.setColor(Color.red);
+//        g2d.fillRect((int) x, (int) y, width, height);
+        g2d.drawImage(damageImage, (int) x, (int) y, null);
+
     }
 
     protected void renderAttackPath(Graphics g) {

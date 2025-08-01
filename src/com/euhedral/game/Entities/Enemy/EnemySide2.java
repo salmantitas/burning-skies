@@ -17,6 +17,7 @@ public class EnemySide2 extends Enemy{
     public EnemySide2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
+        bulletVelocity = Utility.intAtWidth640(3);
         score = 100;
 //        shootTimerDefault = 200;
         attackEffect = true;
@@ -82,8 +83,10 @@ public class EnemySide2 extends Enemy{
     private void setImage() {
         if (velX > 0) {
             setImage(textureHandler.enemySide[3]);
+            damageImage = textureHandler.enemyDamage[2];
         } else if (velX < 0) {
             setImage(textureHandler.enemySide[2]);
+            damageImage = textureHandler.enemyDamage[1];
         }
     }
 

@@ -62,7 +62,7 @@ public class EntityHandler {
 
     // Background Scrolling
     private static double scrollRate = 64d/20;
-    public static final double backgroundScrollingSpeed = 3.5; // 3 < v < 4 // = scrollRate/2;
+    public static final double backgroundScrollingSpeed = scrollRate * 35/32; // 3.5; // 3 < v < 4 // = scrollRate/2;
 
     EntityHandler() {
         bullets = new BulletPool();

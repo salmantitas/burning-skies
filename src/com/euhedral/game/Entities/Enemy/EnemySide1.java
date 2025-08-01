@@ -32,20 +32,6 @@ public class EnemySide1 extends Enemy{
         commonInit();
     }
 
-    public EnemySide1(int x, int y, Color color, int levelHeight) {
-        super(x, y, color, levelHeight);
-//        enemyID = EnemyID.Fast;
-    }
-
-//    @Override
-//    public void initialize() {
-//        super.initialize();
-//
-////        enemyType = EntityHandler.TYPE_SIDE;
-//
-//
-//    }
-
     @Override
     public void move() {
         if (isActive()) {
@@ -80,8 +66,10 @@ public class EnemySide1 extends Enemy{
     private void setImage() {
         if (velX > 0) {
             setImage(textureHandler.enemySide[1]);
+            damageImage = textureHandler.enemyDamage[2];
         } else if (velX < 0) {
             setImage(textureHandler.enemySide[0]);
+            damageImage = textureHandler.enemyDamage[1];
         }
     }
 

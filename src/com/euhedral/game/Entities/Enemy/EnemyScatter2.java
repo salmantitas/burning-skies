@@ -25,7 +25,7 @@ public class EnemyScatter2 extends Enemy {
     public EnemyScatter2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
-//        bulletVelocity = Utility.intAtWidth640(6);
+        bulletVelocity = Utility.intAtWidth640(2);
         shootTimerDefault = 300;
         shootTimer = 50;
         score = 150;
