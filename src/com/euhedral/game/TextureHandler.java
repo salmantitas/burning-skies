@@ -49,7 +49,7 @@ public class TextureHandler {
     public BufferedImage[] explosion = new BufferedImage[4];
     public BufferedImage[] impactSmall = new BufferedImage[4];
     public BufferedImage[] sea = new BufferedImage[8];
-    public BufferedImage[] pickup = new BufferedImage[4];
+    public BufferedImage[] pickup = new BufferedImage[5];
     public BufferedImage[] bulletPlayer = new BufferedImage[1];
     public BufferedImage[] bulletEnemy = new BufferedImage[1];
 
@@ -158,7 +158,7 @@ public class TextureHandler {
         w = Utility.intAtWidth640(16);
         h = w;
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             pickup[i] = pickupSS.grabImage(i + 1,1, w, h);
         }
 

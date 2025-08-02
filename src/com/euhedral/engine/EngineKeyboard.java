@@ -31,6 +31,7 @@ public class  EngineKeyboard extends KeyAdapter {
         keyMap.put("S", KeyEvent.VK_S);
         keyMap.put("D", KeyEvent.VK_D);
         keyMap.put("SPACE", KeyEvent.VK_SPACE);
+        keyMap.put("CTRL", KeyEvent.VK_CONTROL);
     }
 
     public void keyPressed(KeyEvent e) {

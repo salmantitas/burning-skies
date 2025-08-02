@@ -13,6 +13,7 @@ public enum EntityID {
     PickupShield,
     PickupPower,
     PickupSpeed,
+    PickupCircle,
     PickupBomb,
     PickupHoming,
     Boss

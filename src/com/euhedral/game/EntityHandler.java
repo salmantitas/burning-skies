@@ -129,7 +129,7 @@ public class EntityHandler {
         else {
             spawnNew(x, y, enemyType, direction, distance);
         }
-        enemies.printPool("Enemy");
+//        enemies.printPool("Enemy");
     }
 
     private void spawnNew(int x, int y, int enemyType, int direction, int distance) {
@@ -267,9 +267,15 @@ public class EntityHandler {
         if (player != null)
             player.canShoot(true);
     }
+
     public void playerCannotShoot() {
         if (player != null)
             player.canShoot(false);
+    }
+
+    public void playerSpecial() {
+        if (player != null)
+            player.special();
     }
 
     public void spawnPlayer(int x, int y) {
@@ -497,14 +503,17 @@ public class EntityHandler {
                 EntityID pickupID = null;
                 int pickupValue = 0;
                 int maxChanceCoefficient = 2;
-                if (lastDestroyedType == TYPE_DRONE2) {
-                    // todo: Spawn Homing Bullets
-                } else if (lastDestroyedType == TYPE_DRONE3) {
-                    // todo: Spawn Bomb Pickup
+                if (lastDestroyedType == TYPE_DRONE5 || lastDestroyedType == TYPE_DRONE3) {
+                    pickupID = EntityID.PickupCircle;
+                    pickupValue = 1;
+//                } else if (lastDestroyedType == TYPE_DRONE2) {
+//                    // todo: Spawn Homing Bullets
+//                } else if (lastDestroyedType == TYPE_DRONE3) {
+//                    // todo: Spawn Bomb Pickup
                 } else if (lastDestroyedType == TYPE_DRONE1 || lastDestroyedType == TYPE_FAST || lastDestroyedType == TYPE_SIDE1) {
                     pickupID = EntityID.PickupSpeed;
                     pickupValue = 30 * maxChanceCoefficient;
-                } else if (lastDestroyedType == TYPE_STATIC1 || lastDestroyedType == TYPE_DRONE4 || lastDestroyedType == TYPE_MINE2) {
+                } else if (lastDestroyedType == TYPE_STATIC1 || lastDestroyedType == TYPE_DRONE2 || lastDestroyedType == TYPE_DRONE4 || lastDestroyedType == TYPE_MINE2) {
                     pickupID = EntityID.PickupPower;
                     pickupValue = 1;
                 } else if (lastDestroyedType == TYPE_SCATTER1 || lastDestroyedType == TYPE_SCATTER2) {

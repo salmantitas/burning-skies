@@ -15,8 +15,8 @@ public class Player extends MobileEntity {
     // Shooting Entity
     private boolean canShoot;
     private int shootTimer = 0;
-    private final int shootTimerDefault = 9;
-    private BulletPool bullets = new BulletPool();
+    private final int shootTimerDefault = 10;
+    private BulletPool bullets;
     int turretY;
     int turretMidX, turretLeftX, turretRightX;
 
@@ -70,6 +70,10 @@ public class Player extends MobileEntity {
         height = width;
         color = Color.WHITE;
 
+        bullets = new BulletPool();
+        for (int i = 0; i < 360; i ++)
+            bullets.spawn(-1, -1, 90);
+
         velX = 0;
         velY = 0;
         physics.acceleration = 0.1;
@@ -111,9 +115,10 @@ public class Player extends MobileEntity {
         if (canShoot && shootTimer <= 0)
             shoot();
 
+//        bullets.printPool("Bullets");
+        bullets.disableIfOutsideBounds(levelHeight);
         bullets.update();
-        bullets.checkIfAboveScreen();
-        checkDeathAnimationEnd();
+        bullets.checkDeathAnimationEnd();
 
         setImage();
 
@@ -354,8 +359,7 @@ public class Player extends MobileEntity {
     private void shoot() {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
-        turretMidX = (int) (x + width / 2 - 2);
-        turretY = (int) (y + height * 2 / 3 - velY);
+        calculateTurretPositions();
 
         turretRightX = (int) (x + width - 8);
         turretLeftX = (int) (x + 4);
@@ -406,6 +410,32 @@ public class Player extends MobileEntity {
 //            bullets.add(new BulletPlayer(x, y, dir));
         bullets.spawn(x, y, dir);
 //        bullets.printPool("Player Bullets");
+    }
+
+    public void special() {
+        if (true)
+            circularShot();
+    }
+
+    private void circularShot() {
+        calculateTurretPositions();
+        int degrees = 360;
+        int arc = 1;
+        int num = degrees / arc;
+
+//        VariableHandler.circularShot = true; //todo: delete
+
+        if (VariableHandler.circularShot) {
+            for (int i = 0; i < num; i++) {
+                spawnBullet(turretMidX, turretY, arc * i);
+            }
+            VariableHandler.circularShot = false;
+        }
+    }
+
+    private void calculateTurretPositions() {
+        turretMidX = (int) (x + width / 2 - 2);
+        turretY = (int) (y + height * 2 / 3 - velY);
     }
 
     private void keyboardMove() {
@@ -565,20 +595,6 @@ public class Player extends MobileEntity {
     public void clear() {
         canShoot(false);
         bullets.clear();
-    }
-
-    private void checkDeathAnimationEnd() {
-        bullets.checkDeathAnimationEnd();
-//        for (Entity entity : bullets.getEntities()) {
-//
-//            Bullet bullet = (Bullet) entity;
-//
-//            if (bullet.isImpacting()) {
-//                if (bullet.checkDeathAnimationEnd()) {
-//                    bullets.increase(bullet);
-//                }
-//            }
-//        }
     }
 
     public void resetMovement() {

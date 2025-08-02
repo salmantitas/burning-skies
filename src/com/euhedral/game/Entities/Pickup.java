@@ -59,6 +59,8 @@ public class Pickup extends MobileEntity {
             VariableHandler.power.increase(value);
         else if (id == EntityID.PickupSpeed)
             VariableHandler.speedBoostDuration += value;
+        else if (id == EntityID.PickupCircle)
+            VariableHandler.circularShot = true;
 //        else if (id == EntityID.PickupBomb)
 //            VariableHandler.shield.increase(value);
 //        else if (id == EntityID.PickupHoming)
@@ -76,6 +78,9 @@ public class Pickup extends MobileEntity {
             image = GameController.getTexture().pickup[2];
         else if (id == EntityID.PickupSpeed)
             image = GameController.getTexture().pickup[3];
+        else if (id == EntityID.PickupCircle) {
+            image = GameController.getTexture().pickup[4];
+        }
     }
 
     public void setValue(int value) {

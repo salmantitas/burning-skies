@@ -240,6 +240,9 @@ public class EnemyGenerator {
                 limit = limitSide - 2;
                 break;
             case TYPE_DRONE4:
+                limit = 2;
+                break;
+            case TYPE_DRONE5:
                 limit = 1;
                 break;
         }

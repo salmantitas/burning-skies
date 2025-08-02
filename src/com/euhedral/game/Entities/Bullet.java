@@ -1,6 +1,7 @@
 package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Animation;
+import com.euhedral.engine.Engine;
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.*;
@@ -18,6 +19,13 @@ public class Bullet extends MobileEntity {
     protected int impactSize = 32;
 
     protected int initSound = SoundHandler.BULLET_PLAYER;
+
+    // Disabling
+    int offset;
+    int bottomBounds;
+    int rightBounds;
+
+    boolean belowScreen, aboveScreen, leftOfScreen, rightOfScreen;
 
     // Impact
     protected int impactTimer = 0;
@@ -56,6 +64,10 @@ public class Bullet extends MobileEntity {
         newHeight = (int) (height * reflection.sizeOffset);
 
         impactSize = Math.max(newWidth, newHeight);
+
+        offset = 64*3;
+        bottomBounds = EntityHandler.getLevelHeight() + offset;
+        rightBounds = Engine.WIDTH + offset;
     }
 
     Bullet(int x, int y, double angle) {
@@ -163,4 +175,20 @@ public class Bullet extends MobileEntity {
         return (y + height / 2);
     }
 
+    @Override
+    public boolean canDisable() {
+//        if (isActive()) {
+
+            belowScreen = y > bottomBounds;
+            aboveScreen = y < 0;
+            leftOfScreen = x < 0;
+            rightOfScreen = x > rightBounds;
+
+//            if (belowScreen || aboveScreen || leftOfScreen || rightOfScreen)
+//                Utility.log("Can disable");
+
+            return belowScreen || aboveScreen || leftOfScreen || rightOfScreen;
+//        }
+//        else return super.canDisable();
+    }
 }

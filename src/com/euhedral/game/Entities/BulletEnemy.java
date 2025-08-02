@@ -11,13 +11,6 @@ public class BulletEnemy extends Bullet{
 
     private boolean tracking;
 
-    // Disabling
-    int offset;
-    int bottomBounds;
-    int rightBounds;
-
-    boolean belowScreen, aboveScreen, leftOfScreen, rightOfScreen;
-
     BulletEnemy(int x, int y) {
         super(x, y);
     }
@@ -38,9 +31,7 @@ public class BulletEnemy extends Bullet{
 
         impactSize = Math.max(newWidth, newHeight);
 
-        offset = 64*3;
-        bottomBounds = EntityHandler.getLevelHeight() + offset;
-        rightBounds = Engine.WIDTH + offset;
+
     }
 
     public BulletEnemy(int x, int y, double angle, double vel, boolean tracking) {
@@ -98,25 +89,11 @@ public class BulletEnemy extends Bullet{
         SoundHandler.playSound(initSound);
     }
 
-    @Override
-    public boolean canDisable() {
-//        int offset = 64*3;
-//        int bottomBounds = EntityHandler.getLevelHeight() + offset;
-//        int rightBounds = Engine.WIDTH + offset;
-
-        belowScreen = y > bottomBounds;
-        aboveScreen = y < 0;
-        leftOfScreen = x < 0;
-        rightOfScreen = x > rightBounds;
-
-        return belowScreen || aboveScreen || leftOfScreen || rightOfScreen;
+    public void setTracking(boolean tracking) {
+        this.tracking = tracking;
     }
 
     public boolean isTracking() {
         return tracking;
-    }
-
-    public void setTracking(boolean tracking) {
-        this.tracking = tracking;
     }
 }

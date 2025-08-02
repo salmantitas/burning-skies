@@ -32,6 +32,7 @@ public class VariableHandler {
 
     public static int speedBoostDuration;
     private static int speedBoostX;
+    public static boolean circularShot;
 
     private static Color healthLow = Color.RED;
     private static Color healthMed = Color.ORANGE;
@@ -166,6 +167,8 @@ public class VariableHandler {
 
         speedBoostDuration = 0;
         speedBoostX = power.getX() + Utility.intAtWidth640(120);
+
+        circularShot = false;
     }
 
     public static void console() {

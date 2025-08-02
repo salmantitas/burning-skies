@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "BURNING SKIES";
-    public static String gameVersion = "0.7.20";
+    public static String gameVersion = "0.7.21";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -75,7 +75,7 @@ public class GameController {
      * Controls *
      ************/
     public static String UP = "W", DOWN = "S", LEFT = "A", RIGHT = "D", SHOOT = "SPACE",
-            BULLET = "CTRL",
+            SPECIAL = "CTRL",
             PAUSE = "P";
 
     /******************
@@ -480,6 +480,9 @@ public class GameController {
 
             if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
                 stopShootPlayer();
+
+//            if (key == KeyInput.getKeyEvent(SPECIAL))
+//                entityHandler.stopPlayerSpecial();
         }
 
     }
@@ -692,8 +695,8 @@ public class GameController {
             if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
                 entityHandler.playerCanShoot();
 
-//            if (key == KeyEvent.VK_CONTROL)
-//                entityHandler.switchPlayerBullet();
+            if (key == KeyInput.getKeyEvent(SPECIAL))
+                entityHandler.playerSpecial();
 
             if (Engine.stateIs(GameState.Game)) {
                 if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {
