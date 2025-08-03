@@ -101,7 +101,8 @@ public class BulletPool extends Pool {
     }
 
     private void destroy(Bullet bullet, MobileEntity entity) {
-        SoundHandler.playSound(SoundHandler.IMPACT);
+        if (VariableHandler.shield.getValue() <= 0)
+            SoundHandler.playSound(SoundHandler.IMPACT);
         bullet.destroy(entity);
     }
 

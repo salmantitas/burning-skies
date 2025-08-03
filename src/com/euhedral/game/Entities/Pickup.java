@@ -60,7 +60,7 @@ public class Pickup extends MobileEntity {
         else if (id == EntityID.PickupSpeed)
             VariableHandler.speedBoostDuration += value;
         else if (id == EntityID.PickupCircle)
-            VariableHandler.circularShot = true;
+            VariableHandler.ringOfFire = true;
 //        else if (id == EntityID.PickupBomb)
 //            VariableHandler.shield.increase(value);
 //        else if (id == EntityID.PickupHoming)

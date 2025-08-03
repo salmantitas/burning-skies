@@ -19,6 +19,7 @@ public class EntityHandler {
     // Player
     private Player player;// = new Player(0, 0, 0);
     public static double playerX, playerY;
+    public static int playerRadius;
 
     // Enemy Types
     public static final int TYPE_BASIC1 = 0;
@@ -221,6 +222,7 @@ public class EntityHandler {
         player.update();
         playerX = player.getCenterX();
         playerY = player.getCenterY();
+        playerRadius = player.getRadius();
     }
 
     public void renderPlayer(Graphics g) {
@@ -614,66 +616,16 @@ public class EntityHandler {
 
     private void playerVsEnemyBulletCollision() {
         bullets.checkCollision(player);
-
-//        for (Entity entity: bullets.getEntities()) {
-//            Bullet bullet = (Bullet) entity;
-//
-//            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
-////                bullets.increase(bullet);
-//                destroy(bullet, player);
-//                damagePlayer(10);
-//            }
-//        }
     }
 
     private void playerVsEnemyCollision() {
         enemies.checkCollisions(player);
-
-//        for (Entity entity : enemies.getEntities()) {
-//            Enemy enemy = (Enemy) entity;
-////            boolean enemyInAir = enemy.getContactId() == ContactID.Air;
-//            if (enemy.isActive())
-//                if (enemy.isInscreenY() && enemy.isActive()) {
-//                    boolean collision = player.checkCollision(enemy);
-////                    boolean collision2 = player.checkCollision(enemy.getBoundsVertical());
-//                    if (collision) {
-//                        int damage = enemy.getDamage();
-//                        damagePlayer(damage);
-//                        destroy(enemy);
-//                    }
-//                }
-////            else if (enemy.getContactId() == ContactID.Boss) {
-////                damagePlayer(10);
-////            }
-//        }
     }
 
     private void enemyVsPlayerBulletCollision() {
+        if (playerRadius > -1)
+            enemies.destroyIfWithinRadius(playerX, playerY, playerRadius);
         enemies.checkCollisionBullet(player);
-
-//        for (Entity entity : enemies.getEntities()) {
-//            Enemy enemy = (Enemy) entity;
-//            if (enemy.isInscreenY() && enemy.isActive()) {
-//                Bullet bullet = player.checkCollisionBullet(enemy);
-//                if (bullet != null) {
-//                    destroy(bullet, enemy);
-//                    boolean isBoss = false;
-//                    if (isBoss) {
-//                        boss.damage();
-//                        VariableHandler.setHealthBoss(boss.getHealth());
-//                        if (boss.getHealth() <= 0) {
-//                            destroyBoss();
-//                        }
-//                    } else {
-//                        enemy.damage();
-//                        if (enemy.getHealth() <= 0) {
-//                            destroy(enemy);
-//                        }
-//                    }
-////                    player.increaseBullets();
-//                }
-//            }
-//        }
     }
 
     public void playerVsPickupCollision() {

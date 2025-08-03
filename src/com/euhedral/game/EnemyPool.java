@@ -159,6 +159,22 @@ public class EnemyPool extends Pool {
         addExclusionZone(entity, enemyType);
     }
 
+    public void destroyIfWithinRadius(double x, double y, int radius) {
+        for (int i = 0; i < entities.size(); i ++) {
+            entity = entities.get(i);
+            if (entity.isActive())
+                destroyIfWithinRadiusHelper(x, y, radius);
+        }
+    }
+
+    private void destroyIfWithinRadiusHelper(double x, double y, int radius) {
+        enemy = (Enemy) entity;
+        if (enemy.inRadius(x,y,radius)) {
+            destroy(enemy);
+//            increase(enemyType);
+        }
+    }
+
     @Override
     public void disableIfOutsideBounds(Entity entity, int levelHeight) {
 //        int offset = 200;

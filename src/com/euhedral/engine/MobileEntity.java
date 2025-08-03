@@ -101,20 +101,30 @@ public abstract class MobileEntity extends Entity {
         y += velY;
     }
 
+    protected double calculateMagnitude(double aX, double aY, double bX, double bY) {
+        double vectorABx = aX - bX;
+        double vectorABy = (aY - bY);
+
+        double magnitudeAB = Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
+
+        return magnitudeAB;
+    }
+
     // Triangle with vertices A, B, C
     protected double calculateAngle(double aX, double aY, double bX, double bY) {
 
         // Coordinates
         double cX = aX + 1, cY = aY;
 
+        // todo: Refactor using calculateMagnitude function
         // Vectors
         double vectorABx = aX - bX;
         double vectorABy = (aY - bY);
-        double vectorACx = aX - cX;
-        double vectorACy = (aY - cY);
+        double magnitudeAB = Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
 
         // Magnitudes
-        double magnitudeAB = Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
+        double vectorACx = aX - cX;
+        double vectorACy = (aY - cY);
         double magnitudeAC = Math.sqrt(Math.pow(vectorACx,2) + Math.pow(vectorACy, 2));
 
         // Dot Product

@@ -100,7 +100,6 @@ public class Pool {
     }
 
     public void disableIfOutsideBounds(Entity entity, int levelHeight) {
-
         if (entity.canDisable()) {
             entity.disable();
             reusable++;

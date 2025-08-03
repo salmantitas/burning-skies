@@ -398,6 +398,16 @@ public class Enemy extends MobileEntity {
 
     }
 
+    public boolean inRadius(double x, double y, int radius) {
+        double aX = this.x;
+        double aY = this.y;
+        if (this.x < x)
+            aX = this.x + width;
+        if (this.y < y)
+            aY = this.y + height;
+        return Math.abs(calculateMagnitude(aX, aY, x,y)) < radius;
+    }
+
     @Override
     public void resurrect(double x, double y) {
         super.resurrect(x, y);

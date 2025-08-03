@@ -4,11 +4,9 @@ import com.euhedral.engine.*;
 import com.euhedral.game.*;
 import com.euhedral.game.Entities.Enemy.Enemy;
 
-import javax.swing.plaf.basic.BasicIconFactory;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 public class Player extends MobileEntity {
 
@@ -19,6 +17,7 @@ public class Player extends MobileEntity {
     private BulletPool bullets;
     int turretY;
     int turretMidX, turretLeftX, turretRightX;
+    int bulletVelocity;
 
     // Personal
     private int levelHeight;
@@ -33,7 +32,7 @@ public class Player extends MobileEntity {
     private Attribute shield;
     private Attribute power;
     private double speedBoost;
-    private int speedBoostDuration_MAX = 60;
+//    private int speedBoostDuration_MAX = 60;
     private int speedBoostDuration;
 
     private final int HEALTH_HIGH = 66;
@@ -58,6 +57,9 @@ public class Player extends MobileEntity {
 
     int jitter = 0, jitter_MULT = 1, jitter_MAX;
 
+    int ringOfFireRadius;
+    int ringOfFireRadius_MAX = Engine.WIDTH/2;
+
     private Reflection reflection;
 
     public Player(int x, int y, int levelHeight) {
@@ -70,9 +72,11 @@ public class Player extends MobileEntity {
         height = width;
         color = Color.WHITE;
 
+        bulletVelocity = Utility.intAtWidth640(6);
+
         bullets = new BulletPool();
-        for (int i = 0; i < 360; i ++)
-            bullets.spawn(-1, -1, 90);
+//        for (int i = 0; i < 360; i ++)
+//            bullets.spawn(-1, -1, 90);
 
         velX = 0;
         velY = 0;
@@ -85,6 +89,8 @@ public class Player extends MobileEntity {
         velX_MAX = 9;
 
         jitter_MAX = Utility.intAtWidth640(2);
+
+        ringOfFireRadius = -1;
 
 //        physics.friction = 1; // instantenous is equal to (minVel - 2)
 
@@ -134,17 +140,14 @@ public class Player extends MobileEntity {
             speedBoost = 0;
         }
 
-//        if (VariableHandler.speedBoost) {
-////            Utility.log("Speed Boost!");
-//
-//            speedBoostDuration--;
-//            if (speedBoostDuration <= 0) {
-//                VariableHandler.speedBoost = false;
-//            }
-//        } else {
-//            speedBoostDuration = speedBoostDuration_MAX;
-//            speedBoost = 0;
-//        }
+        if (ringOfFireRadius > -1) {
+
+            ringOfFireRadius += bulletVelocity;
+
+            if (ringOfFireRadius >= ringOfFireRadius_MAX) {
+                ringOfFireRadius = -1;
+            }
+        }
     }
 
     private void setAttributes() {
@@ -198,14 +201,22 @@ public class Player extends MobileEntity {
         g.drawImage(damageImage, (int) x, (int) y, null);
         g2d.setComposite(Utility.makeTransparent(1f));
 
-
+        // Render Shield
+        int shieldOffset = 8;
         if (shield.getValue() > 0) {
             g2d.setColor(Color.blue);
             g2d.setComposite(Utility.makeTransparent(0.2f));
-            g2d.fillOval((int) x - width / 2, (int) y - height / 2, width * 2, height * 2);
+            g2d.fillOval((int) x - width / shieldOffset, (int) y - height / shieldOffset + 5, width + 2*width / shieldOffset, height + 2*height / shieldOffset);
             g2d.setComposite(Utility.makeTransparent(1f));
             g2d.setStroke(new BasicStroke(3,1,1));
-            g2d.drawOval((int) x - width / 2, (int) y - height / 2, width * 2, height * 2);
+            g2d.drawOval((int) x - width / shieldOffset, (int) y - height / shieldOffset + 5, width + 2*width / shieldOffset, height + 2*height / shieldOffset);
+        }
+
+        // Render Ring Of Fire
+        if (ringOfFireRadius > -1) {
+            g2d.setStroke(new BasicStroke(ringOfFireRadius / (bulletVelocity * 2)));
+            g.setColor(Color.YELLOW);
+            g.drawOval((int) x - ringOfFireRadius, (int) y - ringOfFireRadius, width + ringOfFireRadius * 2, height + ringOfFireRadius * 2);
         }
 
 //        renderStats(g);
@@ -414,22 +425,24 @@ public class Player extends MobileEntity {
 
     public void special() {
         if (true)
-            circularShot();
+            ringOfFire();
     }
 
-    private void circularShot() {
-        calculateTurretPositions();
-        int degrees = 360;
-        int arc = 1;
-        int num = degrees / arc;
+    private void ringOfFire() {
 
-//        VariableHandler.circularShot = true; //todo: delete
+//        VariableHandler.ringOfFire = true; //todo: delete
 
-        if (VariableHandler.circularShot) {
-            for (int i = 0; i < num; i++) {
-                spawnBullet(turretMidX, turretY, arc * i);
-            }
-            VariableHandler.circularShot = false;
+        if (VariableHandler.ringOfFire) {
+            ringOfFireRadius = 0;
+//            calculateTurretPositions();
+//            int degrees = 360;
+//            int arc = 1;
+//            int num = degrees / arc;
+
+//            for (int i = 0; i < num; i++) {
+//                spawnBullet(turretMidX, turretY, arc * i);
+//            }
+            VariableHandler.ringOfFire = false;
         }
     }
 
@@ -610,6 +623,10 @@ public class Player extends MobileEntity {
 
     public double getCenterY() {
         return (y + height / 2 - 2);
+    }
+
+    public int getRadius() {
+        return ringOfFireRadius;
     }
 
     private boolean isMovingLeft() {

@@ -17,11 +17,15 @@ public class Attribute {
     private int cost;
     private boolean active = false, binary;
     Font font;
+    private int count = 0;
+    private int count_MAX = 45;
 
     // Render Properties
 
     Color backgroundColor = Color.lightGray;
     Color foregroundColor;
+    public Color textColor;
+    public Color increaseTextColor;
     int fontSize;
     int width;
     int height;
@@ -44,9 +48,15 @@ public class Attribute {
     }
 
     public void increase(int value) {
-        this.value += value;
-        if (this.value >= MAX)
-            this.value = MAX;
+        if (this.value == MAX) {
+
+        } else {
+            this.value += value;
+            count = count_MAX;
+            if (this.value >= MAX) {
+                this.value = MAX;
+            }
+        }
     }
 
     public void decrease(int value) {
@@ -136,7 +146,11 @@ public class Attribute {
 
     public void renderValue(Graphics g) {
         g.setFont(font);
-        g.setColor(Color.WHITE);
+        g.setColor(textColor);
+        if (count > 0) {
+            g.setColor(increaseTextColor);
+            count--;
+        }
         g.drawString(name + ": " + value, x, y);
     }
 }

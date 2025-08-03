@@ -1,15 +1,18 @@
 package com.euhedral.game.Entities;
 
 import com.euhedral.engine.Engine;
+import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
 import com.euhedral.game.SoundHandler;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 
 public class BulletEnemy extends Bullet{
 
     private boolean tracking;
+    public boolean canPlayImpactAnimation;
 
     BulletEnemy(int x, int y) {
         super(x, y);
@@ -31,7 +34,7 @@ public class BulletEnemy extends Bullet{
 
         impactSize = Math.max(newWidth, newHeight);
 
-
+        canPlayImpactAnimation = true;
     }
 
     public BulletEnemy(int x, int y, double angle, double vel, boolean tracking) {
@@ -45,11 +48,16 @@ public class BulletEnemy extends Bullet{
         if (state == STATE_ACTIVE) {
             super.update();
         } else if (state == STATE_IMPACT) {
-            impact.runAnimation();
+            if (!canPlayImpactAnimation) {
+                impact.playedOnce = true;
+                impact.endAnimation();
+            } else {
+                impact.runAnimation();
 //            impactTimer++;
-            this.velX = entity.getVelX();
-            this.velY = entity.getVelY();
-            super.update();
+                this.velX = entity.getVelX();
+                this.velY = entity.getVelY();
+                super.update();
+            }
         }
     }
 
@@ -80,13 +88,20 @@ public class BulletEnemy extends Bullet{
 //
 //            impact.drawAnimation(g, (int) x, (int) y, impactSize, impactSize);
 //        }
-//    }
+//    }b
 
     @Override
     public void resurrect(double x, double y) {
         this.calculated = false;
         super.resurrect(x, y);
         SoundHandler.playSound(initSound);
+    }
+
+    @Override
+    public void destroy(MobileEntity entity) {
+        canPlayImpactAnimation = VariableHandler.shield.getValue() <= 0;
+        state = STATE_IMPACT;
+        this.entity = entity;
     }
 
     public void setTracking(boolean tracking) {

@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "BURNING SKIES";
-    public static String gameVersion = "0.7.21";
+    public static String gameVersion = "0.7.24";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -507,6 +507,8 @@ public class GameController {
         variableHandler.resetPower();
         VariableHandler.shield.reset();
         variableHandler.health.reset();
+        variableHandler.speedBoostDuration = 0;
+        variableHandler.ringOfFire = false;
         VariableHandler.setHealthColor();
 
         /*************

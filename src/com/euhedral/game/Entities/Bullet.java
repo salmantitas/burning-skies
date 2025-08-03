@@ -162,12 +162,6 @@ public class Bullet extends MobileEntity {
     }
 
     public boolean checkDeathAnimationEnd() {
-//        if (impactTimer > impactTimerCheck) {
-//            impactTimer = 0;
-//            return true;
-//        }
-//        return impactTimer > impactTimerCheck;
-
         return impact.playedOnce;
     }
 

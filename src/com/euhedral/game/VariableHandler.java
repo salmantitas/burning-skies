@@ -32,7 +32,9 @@ public class VariableHandler {
 
     public static int speedBoostDuration;
     private static int speedBoostX;
-    public static boolean circularShot;
+    public static boolean ringOfFire;
+    private static int ringOfFireX;
+    private static int ringOfFireY;
 
     private static Color healthLow = Color.RED;
     private static Color healthMed = Color.ORANGE;
@@ -153,6 +155,8 @@ public class VariableHandler {
         timerY = scoreY + Utility.intAtWidth640(25);
 
         power = new Attribute("Power", 1, false);
+        power.textColor = Color.WHITE;
+        power.increaseTextColor = Color.RED;
         power.setMIN(1);
         power.setMAX(2);
         power.setX(Utility.intAtWidth640(17));
@@ -167,8 +171,10 @@ public class VariableHandler {
 
         speedBoostDuration = 0;
         speedBoostX = power.getX() + Utility.intAtWidth640(120);
+        ringOfFireX = health.getX() + Utility.intAtWidth640(180);
+        ringOfFireY = health.getY() + Utility.intAtWidth640(12);
 
-        circularShot = false;
+        ringOfFire = false;
     }
 
     public static void console() {
@@ -239,6 +245,8 @@ public class VariableHandler {
             renderTimer(g);
         if (speedBoostDuration > 0)
             renderSpeedBoost(g);
+        if (ringOfFire)
+            renderRingOfFire(g);
 //            renderFPS(g);
     }
 
@@ -277,6 +285,14 @@ public class VariableHandler {
         g.setFont(levelFont);
         g.setColor(Color.WHITE);
         g.drawString("Speed Boost: " + speedBoostDuration, speedBoostX, power.getY());
+    }
+
+    public static void renderRingOfFire(Graphics g) {
+        g.setFont(levelFont);
+        g.setColor(Color.WHITE);
+        g.drawString("CTRL", ringOfFireX, ringOfFireY);
+        g.drawImage(GameController.getTexture().pickup[4], ringOfFireX + Utility.intAtWidth640(50),
+                ringOfFireY - Utility.intAtWidth640(16), null);
     }
 
 //    public static void renderFPS(Graphics g) {
