@@ -29,32 +29,18 @@
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="Difficulty Balancing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/bgm1.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/bgm1.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/bullet_player.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/bullet_player.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/export/BLLTRico_Metallic_11.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/export/BLLTRico_Ricochet Metallic_04.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/export/SCIEnrg_Shield Activate Deactivate_02.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/export/hit.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/impact.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/impact.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/pickup.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/pickup.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/ringOfFire.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/ringOfFire.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Burning Skies/shield_1.wav" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Burning Skies/shield_1.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/bgm1.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/bgm1.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/bgmMain.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/bgmMain.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/bullet_player.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/bullet_player.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/export/BLLTRico_Metallic_11.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/export/BLLTRico_Ricochet Metallic_04.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/export/SCIEnrg_Shield Activate Deactivate_02.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/export/hit.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/impact.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/impact.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/pickup.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/pickup.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/ringOfFire.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/ringOfFire.wav" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/shield_1.wav" beforeDir="false" afterPath="$PROJECT_DIR$/res/shield_1.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/pickup.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/pickup.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/score.csv" beforeDir="false" afterPath="$PROJECT_DIR$/score.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.csv" beforeDir="false" afterPath="$PROJECT_DIR$/settings.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Attribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Attribute.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/BulletPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/BulletPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EntityID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EntityID.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/SoundHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/SoundHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/PickupID.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/TextureHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/TextureHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/VariableHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/VariableHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,20 +108,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Engine.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/titas/Downloads/jdeploy-intellij-plugin-1.0-SNAPSHOT.zip&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Engine.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/titas/Downloads/jdeploy-intellij-plugin-1.0-SNAPSHOT.zip",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propCompiler"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.euhedral.game.Entities.Enemy" />
@@ -257,7 +243,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java</url>
-          <line>476</line>
+          <line>486</line>
           <option name="timeStamp" value="441" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -352,12 +338,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/EntityHandler.java</url>
-          <line>553</line>
+          <line>555</line>
           <option name="timeStamp" value="714" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java</url>
-          <line>216</line>
+          <line>217</line>
           <option name="timeStamp" value="742" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -366,9 +352,9 @@
           <option name="timeStamp" value="745" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/game/GameController.java</url>
-          <line>170</line>
-          <option name="timeStamp" value="746" />
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/VariableHandler.java</url>
+          <line>155</line>
+          <option name="timeStamp" value="747" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />

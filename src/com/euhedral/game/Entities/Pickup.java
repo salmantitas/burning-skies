@@ -56,19 +56,18 @@ public class Pickup extends MobileEntity {
             VariableHandler.health.increase(value);
         else if (id == EntityID.PickupShield) {
             VariableHandler.shield.increase(value);
-//            pickupSound = SoundHandler.SHIELD_1;
         }
         else if (id == EntityID.PickupPower) {
+            if (VariableHandler.power.isMax())
+                VariableHandler.homing = true;
             VariableHandler.power.increase(value);
         }
         else if (id == EntityID.PickupSpeed) {
             VariableHandler.speedBoostDuration += value;
         }
-        else if (id == EntityID.PickupCircle)
+        else if (id == EntityID.PickupPulse)
             VariableHandler.ringOfFire = true;
 //        else if (id == EntityID.PickupBomb)
-//            VariableHandler.shield.increase(value);
-//        else if (id == EntityID.PickupHoming)
 //            VariableHandler.shield.increase(value);
         SoundHandler.playSound(pickupSound);
         disable();
@@ -83,7 +82,7 @@ public class Pickup extends MobileEntity {
             image = GameController.getTexture().pickup[2];
         else if (id == EntityID.PickupSpeed)
             image = GameController.getTexture().pickup[3];
-        else if (id == EntityID.PickupCircle) {
+        else if (id == EntityID.PickupPulse) {
             image = GameController.getTexture().pickup[4];
         }
     }

@@ -156,6 +156,16 @@ public class Attribute {
         g.fillRect(x, y, value * width, height);
     }
 
+//    public void renderValue(Graphics g) {
+//        g.setFont(font);
+//        g.setColor(textColor);
+//        if (count > 0) {
+//            g.setColor(increaseTextColor);
+//            count--;
+//        }
+//        g.drawString(name + ": " + value, x, y);
+//    }
+
     public void renderValue(Graphics g) {
         g.setFont(font);
         g.setColor(textColor);
@@ -163,6 +173,10 @@ public class Attribute {
             g.setColor(increaseTextColor);
             count--;
         }
-        g.drawString(name + ": " + value, x, y);
+        g.drawString(Integer.toString(value), x, y);
+    }
+
+    public boolean isMax() {
+        return this.value >= MAX;
     }
 }

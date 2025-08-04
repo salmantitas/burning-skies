@@ -162,8 +162,8 @@ public class TextureHandler {
             pickup[i] = pickupSS.grabImage(i + 1,1, w, h);
         }
 
-        w = 4;
-        h = 10;
+        w = 8;
+        h = w;
         bulletPlayer[0] = bulletPlayerSS.grabImage(1,1,w,h);
 
         w = 16;

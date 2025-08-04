@@ -506,9 +506,11 @@ public class EntityHandler {
                 int pickupValue = 0;
                 int maxChanceCoefficient = 2;
                 if (lastDestroyedType == TYPE_DRONE5 || lastDestroyedType == TYPE_DRONE3) {
-                    pickupID = EntityID.PickupCircle;
+                    pickupID = EntityID.PickupPulse;
                     pickupValue = 1;
 //                } else if (lastDestroyedType == TYPE_DRONE2) {
+//                    pickupID = EntityID.PickupHoming;
+//                    pickupValue = 1;
 //                    // todo: Spawn Homing Bullets
 //                } else if (lastDestroyedType == TYPE_DRONE3) {
 //                    // todo: Spawn Bomb Pickup
@@ -669,6 +671,12 @@ public class EntityHandler {
 
     public static int getLevelHeight() {
         return levelHeight;
+    }
+
+    // Temporary Functions until better implementation
+
+    public static LinkedList<Entity> getEnemyList() {
+        return enemies.getEntities();
     }
 
 }

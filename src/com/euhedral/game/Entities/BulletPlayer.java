@@ -13,9 +13,9 @@ public class BulletPlayer extends Bullet{
     public BulletPlayer(int x, int y, double angle) {
         super(x, y, angle);
 //        this.contactId = contactId;
-        width = Utility.intAtWidth640(2); //4
-        height = Utility.intAtWidth640(5); //10
         setImage(textureHandler.bulletPlayer[0]);
+        width = image.getWidth(); //4
+        height = width; //10
 //        impactColor = Color.GREEN;
         commonInit();
 

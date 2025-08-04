@@ -26,12 +26,18 @@ public class VariableHandler {
 
     // Attributes
 
-    public static Attribute power;
-    public static Attribute shield;
-    public static Attribute health;
+    public static Attribute health, power, shield;
+
+    private static int healthIconX, healthIconY;
+    private static int powerIconY;
+    private static int shieldIconY;
+    private static int speedBoostIconX, ringOfFireIconX;
 
     public static int speedBoostDuration;
     private static int speedBoostX;
+
+    public static boolean homing;
+
     public static boolean ringOfFire;
     private static int ringOfFireX;
     private static int ringOfFireY;
@@ -147,8 +153,14 @@ public class VariableHandler {
     }
 
     public static void initializeAttributes() {
+        powerIconY = scoreY - Utility.intAtWidth640(16);
+        healthIconY = powerIconY + Utility.intAtWidth640(18);
+        shieldIconY = healthIconY + Utility.intAtWidth640(18);
+
+        healthIconX = Utility.intAtWidth640(8);
         health = new Attribute("Health", 100, false);
-        health.setY(Utility.percHeight(5));
+        health.setX(healthIconX + Utility.intAtWidth640(18));
+        health.setY(healthIconY + Utility.intAtWidth640(2));
         health.setForegroundColor(healthHigh);
 
         levelY = Utility.percHeight(4);
@@ -159,23 +171,31 @@ public class VariableHandler {
         power.increaseTextColor = Color.RED;
         power.setMIN(1);
         power.setMAX(2);
-        power.setX(Utility.intAtWidth640(17));
-        power.setY(scoreY);
+        power.setX(healthIconX + Utility.intAtWidth640(18));
+        power.setY(powerIconY + Utility.intAtWidth640(13));
         power.setFontSize(scoreSize);
 
         shield = new Attribute("Shield", 0, false);
         shield.setMIN(0);
         shield.setMAX(100);
-        shield.setY(health.getY() + Utility.percHeight(3));
+        shield.setX(healthIconX + Utility.intAtWidth640(18));
+        shield.setY(shieldIconY + Utility.intAtWidth640(2));
         shield.setForegroundColor(Color.blue);
         shield.activateSound = SoundHandler.SHIELD_1;
         shield.deactivateSound = SoundHandler.SHIELD_3;
 
-        speedBoostDuration = 0;
-        speedBoostX = power.getX() + Utility.intAtWidth640(120);
-        ringOfFireX = health.getX() + Utility.intAtWidth640(180);
-        ringOfFireY = health.getY() + Utility.intAtWidth640(12);
+        int iconSpacingX = 148;
 
+        speedBoostIconX = healthIconX + iconSpacingX;
+
+        speedBoostDuration = 0;
+        speedBoostX = speedBoostIconX + Utility.intAtWidth640(20);
+        ringOfFireY = power.getY();
+
+        homing = false;
+
+        ringOfFireIconX = speedBoostIconX + iconSpacingX;
+        ringOfFireX = ringOfFireIconX + Utility.intAtWidth640(20);
         ringOfFire = false;
     }
 
@@ -237,18 +257,31 @@ public class VariableHandler {
      **********/
 
     public static void renderHUD(Graphics g) {
-        renderScore(g);
+        g.drawImage(GameController.getTexture().pickup[2], healthIconX,
+                powerIconY, null);
         power.renderValue(g);
-        renderWave(g);
+        g.drawImage(GameController.getTexture().pickup[0], healthIconX,
+                healthIconY, null);
         health.renderBar(g);
-        if (shield.getValue() > 0)
+        if (shield.getValue() > 0) {
+            g.drawImage(GameController.getTexture().pickup[1], healthIconX,
+                    shieldIconY, null);
             shield.renderBar(g);
-        if (Engine.stateIs(GameState.Game))
-            renderTimer(g);
-        if (speedBoostDuration > 0)
+        }
+        if (speedBoostDuration > 0) {
+            g.drawImage(GameController.getTexture().pickup[3], speedBoostIconX,
+                    powerIconY, null);
             renderSpeedBoost(g);
+        }
         if (ringOfFire)
             renderRingOfFire(g);
+
+        renderScore(g);
+        renderWave(g);
+        if (Engine.stateIs(GameState.Game)) {
+            renderTimer(g);
+        }
+
 //            renderFPS(g);
     }
 
@@ -279,22 +312,21 @@ public class VariableHandler {
 
     public static void renderTimer(Graphics g) {
         g.setFont(levelFont);
-        g.setColor(Color.YELLOW);
+        g.setColor(Color.WHITE);
         g.drawString("Timer: " + GameController.getCurrentTime(), timerX, timerY);
     }
 
     public static void renderSpeedBoost(Graphics g) {
         g.setFont(levelFont);
-        g.setColor(Color.WHITE);
-        g.drawString("Speed Boost: " + speedBoostDuration, speedBoostX, power.getY());
+        g.setColor(Color.ORANGE);
+        g.drawString(Integer.toString(speedBoostDuration), speedBoostX, power.getY());
     }
 
     public static void renderRingOfFire(Graphics g) {
         g.setFont(levelFont);
-        g.setColor(Color.WHITE);
+        g.setColor(Color.YELLOW);
         g.drawString("CTRL", ringOfFireX, ringOfFireY);
-        g.drawImage(GameController.getTexture().pickup[4], ringOfFireX + Utility.intAtWidth640(50),
-                ringOfFireY - Utility.intAtWidth640(16), null);
+        g.drawImage(GameController.getTexture().pickup[4], ringOfFireIconX, powerIconY, null);
     }
 
 //    public static void renderFPS(Graphics g) {
