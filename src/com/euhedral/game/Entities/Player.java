@@ -62,7 +62,7 @@ public class Player extends MobileEntity {
     int shieldTimer_MAX = 30;
 
     int ringOfFireRadius;
-    int ringOfFireRadius_MAX = Engine.WIDTH/2;
+    int ringOfFireRadius_MAX = Engine.WIDTH;
 
     private Reflection reflection;
 

@@ -24,6 +24,7 @@ public class EnemyDrone1 extends Enemy{
 
         health_MAX = 1;
         damage = 15;
+        shootTimerFirst = 100;
         commonInit();
     }
 
@@ -81,6 +82,7 @@ public class EnemyDrone1 extends Enemy{
     protected void commonInit() {
         this.setHealth(health_MAX);
         forwardVelocity = 5;
+        shootTimer = shootTimerFirst;
 //        velX = minVelX;
         updateDestination();
     }

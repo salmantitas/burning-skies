@@ -52,11 +52,7 @@ public class EnemyDrone4 extends EnemyDrone1 {
     protected void commonInit() {
         super.commonInit();
         forwardVelocity = 1;
-        if (x < Engine.WIDTH /2)
-            bulletAngle = bulletAngle_MIN;
-        else {
-            bulletAngle = bulletAngle_MAX;
-        }
+        bulletAngle = 90;
     }
 
     @Override

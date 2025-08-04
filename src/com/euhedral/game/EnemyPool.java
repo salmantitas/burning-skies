@@ -170,8 +170,9 @@ public class EnemyPool extends Pool {
     private void destroyIfWithinRadiusHelper(double x, double y, int radius) {
         enemy = (Enemy) entity;
         if (enemy.inRadius(x,y,radius)) {
-            destroy(enemy);
-//            increase(enemyType);
+            if (enemy.isInscreenY()) {
+                destroy(enemy);
+            }
         }
     }
 

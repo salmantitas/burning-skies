@@ -49,15 +49,14 @@ public class MenuCredits extends Menu {
         assets.add("- Joshua McLean");
         assets.add("");
 
-        assets.add("Bullet Sound Effects");
+//        assets.add("Bullet Sound Effects");
+        assets.add("Sound Effects");
         assets.add("- The Premiere Edition 10 on videvo.com");
         assets.add("- Michel Baradari");
-        assets.add("Explosion Sound Effect");
         assets.add("- Pranus Production's Gun Sound Pack");
-        assets.add("on itch.io");
-        assets.add("");
-        assets.add("UI Sound Effect");
         assets.add("- JDSherbert");
+        assets.add("- Pranus Production's Gun Sound Pack");
+        assets.add("- Shapeforms Audio Free Sound Effects");
         assets.add("");
 
         assets.add("Sea Texture");

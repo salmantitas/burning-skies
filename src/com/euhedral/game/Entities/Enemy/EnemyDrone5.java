@@ -30,18 +30,6 @@ public class EnemyDrone5 extends EnemyDrone1 {
         commonInit();
     }
 
-//    @Override
-//    public void initialize() {
-//        super.initialize();
-//
-//
-//    }
-
-//    @Override
-//    public void update() {
-//        super.update();
-//    }
-
     @Override
     protected void shoot() {
         resetShootTimer();
