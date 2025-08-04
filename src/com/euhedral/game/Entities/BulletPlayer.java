@@ -8,14 +8,18 @@ import java.awt.*;
 
 public class BulletPlayer extends Bullet{
 
+    int impactAnimationAdjustmentX;
+
     public BulletPlayer(int x, int y, double angle) {
         super(x, y, angle);
 //        this.contactId = contactId;
-        width = Utility.intAtWidth640(3); //6
-        height = width * 3; // 18
+        width = Utility.intAtWidth640(2); //4
+        height = Utility.intAtWidth640(5); //10
         setImage(textureHandler.bulletPlayer[0]);
 //        impactColor = Color.GREEN;
         commonInit();
+
+        impactAnimationAdjustmentX = (impact.getImageWidth() - width)/4;
 
 //        impact = new Animation(10, GameController.getTexture().impactSmall[0],
 //                GameController.getTexture().impactSmall[1],
@@ -38,19 +42,14 @@ public class BulletPlayer extends Bullet{
         }
     }
 
-//    @Override
-//    protected void drawDefault(Graphics g) {
-//        if (state == STATE_ACTIVE) {
-//            drawImage(g, image, width, height);
-////            g.setColor(color);
-////            g.fillOval((int) x, (int) y, width, height);
-//        } else if (state == STATE_IMPACT && entity.isActive()) {
-////            g.setColor(impactColor);
-////            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
-//
-//            impact.drawAnimation(g, (int) x, (int) y, impactSize, impactSize);
-//        }
-//    }
+    @Override
+    protected void drawDefault(Graphics g) {
+        if (state == STATE_ACTIVE) {
+            drawImage(g, image, width, height);
+        } else if (state == STATE_IMPACT && entity.isActive()) {
+            impact.drawAnimation(g, (int) x - impactAnimationAdjustmentX, (int) y, impactSize, impactSize);
+        }
+    }
 
 //    public ContactID getContactId() {
 //        return contactId;

@@ -163,7 +163,7 @@ public class TextureHandler {
         }
 
         w = 4;
-        h = 12;
+        h = 10;
         bulletPlayer[0] = bulletPlayerSS.grabImage(1,1,w,h);
 
         w = 16;

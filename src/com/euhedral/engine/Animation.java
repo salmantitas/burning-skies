@@ -68,4 +68,8 @@ public class Animation {
     public float getProgress() {
         return ((float) count)/ ((float) frames);
     }
+
+    public int getImageWidth() {
+        return images[0].getWidth();
+    }
 }
