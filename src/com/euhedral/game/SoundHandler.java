@@ -26,8 +26,9 @@ public class SoundHandler {
     public static final int SHIELD_2 = 11;
     public static final int SHIELD_3 = 12;
     public static final int RING = 13;
+    public static final int EXPLOSION_PLAYER = 14;
 
-    static int MAX_CLIP = RING + 1;
+    static int MAX_CLIP = EXPLOSION_PLAYER + 1;
     static Clip clip;
     public static Clip effect;
     private static Clip bgm;
@@ -66,6 +67,7 @@ public class SoundHandler {
         soundURL[BULLET_ENEMY] = getClass().getResource("/bullet_enemy.wav");
         soundURL[PICKUP] = getClass().getResource("/pickup.wav");
         soundURL[EXPLOSION] = getClass().getResource("/explosion.wav");
+        soundURL[EXPLOSION_PLAYER] = getClass().getResource("/explosion_player.wav");
         soundURL[BGMGAMEOVER] = getClass().getResource("/bgmGameOver.wav");
         soundURL[BGMPLAY] = getClass().getResource("/bgm1.wav");
         soundURL[IMPACT] = getClass().getResource("/impact.wav");

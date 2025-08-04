@@ -78,8 +78,7 @@ public class MenuGameOver extends Menu {
     @Override
     public void onSwitch() {
         explosion.playedOnce = false;
-        SoundHandler.playSound(SoundHandler.EXPLOSION);
-//        GameController.getSound().bgm_Main.stop();
+        SoundHandler.playSound(SoundHandler.EXPLOSION_PLAYER);
         SoundHandler.playBGMGameOver();
         super.onSwitch();
     }
