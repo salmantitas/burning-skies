@@ -7,6 +7,7 @@ import com.euhedral.game.Entities.Enemy.Enemy;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 public class Player extends MobileEntity {
 
@@ -149,7 +150,7 @@ public class Player extends MobileEntity {
 
         if (ringOfFireRadius > -1) {
 
-            ringOfFireRadius += bulletVelocity;
+            ringOfFireRadius += ringOfFireRadius/3 + bulletVelocity;
 
             if (ringOfFireRadius >= ringOfFireRadius_MAX) {
                 ringOfFireRadius = -1;
@@ -226,8 +227,13 @@ public class Player extends MobileEntity {
 
         // Render Ring Of Fire
         if (ringOfFireRadius > -1) {
-            g2d.setStroke(new BasicStroke(ringOfFireRadius / (bulletVelocity * 2)));
             g.setColor(Color.YELLOW);
+
+            g2d.setComposite(Utility.makeTransparent(0.f));
+            g.fillOval((int) x - ringOfFireRadius, (int) y - ringOfFireRadius, width + ringOfFireRadius * 2, height + ringOfFireRadius * 2);
+            g2d.setComposite(Utility.makeTransparent(1f));
+
+            g2d.setStroke(new BasicStroke(ringOfFireRadius / (bulletVelocity * 3)));
             g.drawOval((int) x - ringOfFireRadius, (int) y - ringOfFireRadius, width + ringOfFireRadius * 2, height + ringOfFireRadius * 2);
         }
 
@@ -376,6 +382,20 @@ public class Player extends MobileEntity {
         turretRightX = (int) (x + width - 8);
         turretLeftX = (int) (x + 4);
 
+        if (VariableHandler.homing) {
+            VariableHandler.homing = false;
+
+            LinkedList<Entity> enemies = EntityHandler.getEnemyList();
+            for (Entity entity: enemies) {
+                if (entity.isActive()) {
+                    Enemy enemy = (Enemy) entity;
+                    if (enemy.isInscreenY()) {
+                        spawnBullet(turretMidX, turretY, calculateAngle(enemy.getX(), enemy.getY()));
+                    }
+                }
+            }
+        }
+
 //        System.out.printf("Left to Mid: %d, Mid to Right: %d", spawnMidX-spawnLeftX, spawnRightX-spawnMidX);
 
 
@@ -427,9 +447,6 @@ public class Player extends MobileEntity {
     }
 
     private void ringOfFire() {
-
-//        VariableHandler.ringOfFire = true; //todo: delete
-
         if (VariableHandler.ringOfFire) {
             ringOfFireRadius = 0;
             VariableHandler.ringOfFire = false;
