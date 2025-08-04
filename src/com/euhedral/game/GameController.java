@@ -107,7 +107,7 @@ public class GameController {
     private double backgroundScroll = 0;
 //    private float backgroundScrollAcc = 0;
     private static final double maxScroll = 64;
-    public static final double scrollRate = maxScroll/22; // MAX = 0.04
+    public static final double scrollRate = maxScroll/24; // MAX = 0.04
 
     BufferedImage imageSea; // = GameController.getTexture().sea[currentImage];
     int imageScrollinginterval; // = imageSea.getHeight() * 2;
@@ -168,7 +168,7 @@ public class GameController {
         textureHandler = new TextureHandler();
 
         imageSea = GameController.getTexture().sea[currentImage];
-        imageScrollinginterval = imageSea.getHeight() * 2 - 1;
+        imageScrollinginterval = imageSea.getHeight() * 2 - 2;
         /*************
          * Game Code *
          *************/
@@ -822,8 +822,6 @@ public class GameController {
 
     // todo: speed up 'animation'
     private void renderScrollingBackground(Graphics g) {
-//        scrollRate = 0.005f;
-
 
         if (!Engine.stateIs(GameState.Test)) {
 
