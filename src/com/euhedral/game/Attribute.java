@@ -30,6 +30,8 @@ public class Attribute {
     int width;
     int height;
 
+    public int activateSound, deactivateSound;
+
     public Attribute(String name, int defaultValue, boolean binary) {
         this.name = name;
         setDefaultValue(defaultValue);
@@ -51,6 +53,12 @@ public class Attribute {
         if (this.value == MAX) {
 
         } else {
+            if (this.value == MIN) {
+                if (activateSound != 0) {
+                    SoundHandler.playSound(activateSound);
+                }
+            }
+
             this.value += value;
             count = count_MAX;
             if (this.value >= MAX) {
@@ -63,6 +71,10 @@ public class Attribute {
         this.value -= value;
         if (this.value <= MIN) {
             this.value = MIN;
+
+            if (deactivateSound != 0) {
+                    SoundHandler.playSound(deactivateSound);
+                }
         }
     }
 

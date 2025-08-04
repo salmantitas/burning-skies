@@ -168,6 +168,8 @@ public class VariableHandler {
         shield.setMAX(100);
         shield.setY(health.getY() + Utility.percHeight(3));
         shield.setForegroundColor(Color.blue);
+        shield.activateSound = SoundHandler.SHIELD_1;
+        shield.deactivateSound = SoundHandler.SHIELD_3;
 
         speedBoostDuration = 0;
         speedBoostX = power.getX() + Utility.intAtWidth640(120);

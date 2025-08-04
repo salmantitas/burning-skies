@@ -14,13 +14,13 @@ public class Pickup extends MobileEntity {
     public Pickup(double x, double y, EntityID entityID, int value) {
         super(x, y, entityID);
         width = Utility.intAtWidth640(16);
-        height = width * 2;
+//        height = width * 2;
 //        if (entityID == entityID.PickupHealth)
 //            color = Color.green;
 //        else if (entityID == entityID.PickupShield)
 //            color = Color.YELLOW;
 //        else color = Color.orange;
-        velY = 1.8f;
+        velY = EntityHandler.backgroundScrollingSpeed;
         setValue(value);
         selectImage();
 
@@ -51,21 +51,26 @@ public class Pickup extends MobileEntity {
     }
 
     public void collision() {
+        int pickupSound = SoundHandler.PICKUP;
         if (id == EntityID.PickupHealth)
             VariableHandler.health.increase(value);
-        else if (id == EntityID.PickupShield)
+        else if (id == EntityID.PickupShield) {
             VariableHandler.shield.increase(value);
-        else if (id == EntityID.PickupPower)
+//            pickupSound = SoundHandler.SHIELD_1;
+        }
+        else if (id == EntityID.PickupPower) {
             VariableHandler.power.increase(value);
-        else if (id == EntityID.PickupSpeed)
+        }
+        else if (id == EntityID.PickupSpeed) {
             VariableHandler.speedBoostDuration += value;
+        }
         else if (id == EntityID.PickupCircle)
             VariableHandler.ringOfFire = true;
 //        else if (id == EntityID.PickupBomb)
 //            VariableHandler.shield.increase(value);
 //        else if (id == EntityID.PickupHoming)
 //            VariableHandler.shield.increase(value);
-        SoundHandler.playSound(SoundHandler.PICKUP);
+        SoundHandler.playSound(pickupSound);
         disable();
     }
 

@@ -57,6 +57,9 @@ public class Player extends MobileEntity {
 
     int jitter = 0, jitter_MULT = 1, jitter_MAX;
 
+    int shieldTimer = 0;
+    int shieldTimer_MAX = 30;
+
     int ringOfFireRadius;
     int ringOfFireRadius_MAX = Engine.WIDTH/2;
 
@@ -133,6 +136,10 @@ public class Player extends MobileEntity {
             jitter_MULT *= -1;
         }
 
+        if (shieldTimer > 0) {
+            shieldTimer--;
+        }
+
         if (VariableHandler.speedBoostDuration > 0) {
             speedBoost = 3;
             VariableHandler.speedBoostDuration--;
@@ -153,6 +160,7 @@ public class Player extends MobileEntity {
     private void setAttributes() {
         health = VariableHandler.health;
         shield = VariableHandler.shield;
+//        shield.setValue(100);
         power = VariableHandler.power;
     }
 
@@ -204,8 +212,12 @@ public class Player extends MobileEntity {
         // Render Shield
         int shieldOffset = 8;
         if (shield.getValue() > 0) {
+            float shieldTransparency = 0.2f;
+            if (shieldTimer > 0) {
+                shieldTransparency *= (float) Math.pow(shieldTimer_MAX / 2 - shieldTimer, 2)/ (shieldTimer_MAX * 15);
+            }
             g2d.setColor(Color.blue);
-            g2d.setComposite(Utility.makeTransparent(0.2f));
+            g2d.setComposite(Utility.makeTransparent(shieldTransparency));
             g2d.fillOval((int) x - width / shieldOffset, (int) y - height / shieldOffset + 5, width + 2*width / shieldOffset, height + 2*height / shieldOffset);
             g2d.setComposite(Utility.makeTransparent(1f));
             g2d.setStroke(new BasicStroke(3,1,1));
@@ -277,17 +289,6 @@ public class Player extends MobileEntity {
     }
 
     public Bullet checkCollisionBullet(Enemy enemy) {
-//        Bullet bullet = null;
-//        for (Entity entity : bullets.getEntities()) {
-//            BulletPlayer bulletPlayer = (BulletPlayer) entity;
-//            boolean intersectsEnemy = bulletPlayer.getBounds().intersects(enemy.getBoundsHorizontal()) || bulletPlayer.getBounds().intersects(enemy.getBoundsVertical());
-//            if (bulletPlayer.isActive() && intersectsEnemy)
-////                    && (bulletPlayer.getContactId() == enemy.getContactId() || bulletPlayer.getContactId() == ContactID.Air && enemy.getContactId() == ContactID.Boss))
-//            {
-//                bullet = bulletPlayer;
-//            }
-//        }
-//        return bullet;
         return bullets.checkCollision(enemy);
     }
 
@@ -415,17 +416,14 @@ public class Player extends MobileEntity {
     }
 
     private void spawnBullet(int x, int y, double dir) {
-//        if (bullets.getPoolSize() > 0) {
-//            bullets.spawnFromPool(x, y, dir);
-//        } else
-//            bullets.add(new BulletPlayer(x, y, dir));
         bullets.spawn(x, y, dir);
-//        bullets.printPool("Player Bullets");
     }
 
     public void special() {
-        if (true)
+        if (VariableHandler.ringOfFire) {
             ringOfFire();
+            SoundHandler.playSound(SoundHandler.RING);
+        }
     }
 
     private void ringOfFire() {
@@ -434,14 +432,6 @@ public class Player extends MobileEntity {
 
         if (VariableHandler.ringOfFire) {
             ringOfFireRadius = 0;
-//            calculateTurretPositions();
-//            int degrees = 360;
-//            int arc = 1;
-//            int num = degrees / arc;
-
-//            for (int i = 0; i < num; i++) {
-//                spawnBullet(turretMidX, turretY, arc * i);
-//            }
             VariableHandler.ringOfFire = false;
         }
     }
@@ -585,6 +575,8 @@ public class Player extends MobileEntity {
             if (temp > 0) {
                 damageHealth(temp);
             }
+            shieldTimer = shieldTimer_MAX;
+            SoundHandler.playSound(SoundHandler.SHIELD_2);
         } else {
             damageHealth(damage);
         }

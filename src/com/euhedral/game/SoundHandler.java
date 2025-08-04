@@ -22,8 +22,12 @@ public class SoundHandler {
     public static final int BULLET_ENEMY = 7;
     public static final int UI1 = 8;
     public static final int UI2 = 9;
+    public static final int SHIELD_1 = 10;
+    public static final int SHIELD_2 = 11;
+    public static final int SHIELD_3 = 12;
+    public static final int RING = 13;
 
-    static int MAX_CLIP = UI2 + 1;
+    static int MAX_CLIP = RING + 1;
     static Clip clip;
     public static Clip effect;
     private static Clip bgm;
@@ -67,6 +71,10 @@ public class SoundHandler {
         soundURL[IMPACT] = getClass().getResource("/impact.wav");
         soundURL[UI1] = getClass().getResource("/clip_ui_1.wav");
         soundURL[UI2] = getClass().getResource("/clip_ui_2.wav");
+        soundURL[SHIELD_1] = getClass().getResource("/shield_1.wav");
+        soundURL[SHIELD_2] = getClass().getResource("/shield_2.wav");
+        soundURL[SHIELD_3] = getClass().getResource("/shield_3.wav");
+        soundURL[RING] = getClass().getResource("/ringOfFire.wav");
 
         for (int i = 0; i < MAX_CLIP; i ++) {
             clips[i] = setClip(i);
