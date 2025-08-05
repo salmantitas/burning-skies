@@ -508,7 +508,7 @@ public class GameController {
         VariableHandler.shield.reset();
         variableHandler.health.reset();
         variableHandler.speedBoostDuration = 0;
-        variableHandler.ringOfFire = false;
+        variableHandler.pulse = false;
         VariableHandler.setHealthColor();
 
         /*************

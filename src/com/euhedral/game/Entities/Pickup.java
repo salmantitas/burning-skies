@@ -66,7 +66,7 @@ public class Pickup extends MobileEntity {
             VariableHandler.speedBoostDuration += value;
         }
         else if (id == EntityID.PickupPulse)
-            VariableHandler.ringOfFire = true;
+            VariableHandler.pulse = true;
 //        else if (id == EntityID.PickupBomb)
 //            VariableHandler.shield.increase(value);
         SoundHandler.playSound(pickupSound);

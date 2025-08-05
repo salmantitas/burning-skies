@@ -1,6 +1,7 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
+import com.euhedral.engine.Entity;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.UI.UIHandler;
@@ -38,9 +39,8 @@ public class VariableHandler {
 
     public static boolean homing;
 
-    public static boolean ringOfFire;
-    private static int ringOfFireX;
-    private static int ringOfFireY;
+    public static boolean pulse;
+    private static int pulseX, pulseY;
 
     private static Color healthLow = Color.RED;
     private static Color healthMed = Color.ORANGE;
@@ -190,13 +190,13 @@ public class VariableHandler {
 
         speedBoostDuration = 0;
         speedBoostX = speedBoostIconX + Utility.intAtWidth640(20);
-        ringOfFireY = power.getY();
+        pulseY = power.getY();
 
         homing = false;
 
         ringOfFireIconX = speedBoostIconX + iconSpacingX;
-        ringOfFireX = ringOfFireIconX + Utility.intAtWidth640(20);
-        ringOfFire = false;
+        pulseX = ringOfFireIconX + Utility.intAtWidth640(20);
+        pulse = false;
     }
 
     public static void console() {
@@ -257,6 +257,8 @@ public class VariableHandler {
      **********/
 
     public static void renderHUD(Graphics g) {
+//        g.setColor(Color.RED);
+//        g.drawLine(0, deadzoneTop + 8, Engine.WIDTH, deadzoneTop + 8);
         g.drawImage(GameController.getTexture().pickup[2], healthIconX,
                 powerIconY, null);
         power.renderValue(g);
@@ -273,7 +275,7 @@ public class VariableHandler {
                     powerIconY, null);
             renderSpeedBoost(g);
         }
-        if (ringOfFire)
+        if (pulse)
             renderRingOfFire(g);
 
         renderScore(g);
@@ -325,7 +327,7 @@ public class VariableHandler {
     public static void renderRingOfFire(Graphics g) {
         g.setFont(levelFont);
         g.setColor(Color.YELLOW);
-        g.drawString("CTRL", ringOfFireX, ringOfFireY);
+        g.drawString("CTRL", pulseX, pulseY);
         g.drawImage(GameController.getTexture().pickup[4], ringOfFireIconX, powerIconY, null);
     }
 

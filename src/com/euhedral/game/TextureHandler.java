@@ -67,8 +67,8 @@ public class TextureHandler {
             logo = loader.loadImage("/logo.png");
             seaImage = loader.loadImage("/sea.png");
             pickupImage = loader.loadImage("/pickup.png");
-            bulletPlayerImage = loader.loadImage("/bulletplayer.png");
-            bulletEnemyImage = loader.loadImage("/bulletenemy.png");
+            bulletPlayerImage = loader.loadImage("/bulletPlayer.png");
+            bulletEnemyImage = loader.loadImage("/bulletEnemy.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
