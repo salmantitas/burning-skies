@@ -6,6 +6,7 @@ import com.euhedral.engine.Pool;
 import com.euhedral.game.Entities.Bullet;
 import com.euhedral.game.Entities.BulletEnemy;
 import com.euhedral.game.Entities.Enemy.Enemy;
+import com.euhedral.game.Entities.Enemy.EnemyDrone3;
 import com.euhedral.game.Entities.Player;
 
 import java.awt.*;
@@ -24,6 +25,9 @@ public class EnemyPool extends Pool {
 
     private BulletPool bullets;
 
+    double explodingDroneX, explodingDroneY;
+    double explodingDroneRadius;
+
     public EnemyPool(BulletPool bullets) {
         super();
         int enemyTypes = EntityHandler.enemyTypes;
@@ -37,6 +41,10 @@ public class EnemyPool extends Pool {
             active[i] = 0;
             exclusionZones.add(-100);
         }
+
+        explodingDroneX = -1;
+        explodingDroneY = -1;
+        explodingDroneRadius = -1;
 
 //        for (int i = 0; i < enemyTypes; i++) {
 //        }
@@ -59,13 +67,21 @@ public class EnemyPool extends Pool {
                     enemy.decrementShot();
                 }
 
+//                if (enemy.getEnemyType() == EntityHandler.TYPE_DRONE3) {
+//                    if (enemy.isExploding()) {
+//                        explodingDroneRadius = ((EnemyDrone3) enemy).getRadius();
+//                        explodingDroneX = enemy.getX();
+//                        explodingDroneY = enemy.getY();
+//                    }
+//                }
+
 //            }
         }
     }
 
-    @Override
-    public void render(Graphics g) {
-        super.render(g);
+//    @Override
+//    public void render(Graphics g) {
+//        super.render(g);
 
 //        // render exclusion zone
 //        g.setColor(Color.RED);
@@ -75,7 +91,7 @@ public class EnemyPool extends Pool {
 //                g.drawRect((int) x*64, 400, 64, 64);
 //            }
 //        }
-    }
+//    }
 
     public int getPoolSize(int enemyType) {
         return reusable[enemyType];
@@ -170,7 +186,7 @@ public class EnemyPool extends Pool {
     private void destroyIfWithinRadiusHelper(double x, double y, int radius) {
         enemy = (Enemy) entity;
         if (enemy.inRadius(x,y,radius)) {
-            if (enemy.isInscreenY()) {
+            if (enemy.isBelowDeadZoneTop()) {
                 destroy(enemy);
             }
         }
@@ -331,6 +347,9 @@ public class EnemyPool extends Pool {
                         if (enemy.getHealth() <= 0) {
                             destroy(enemy);
                         }
+
+//                        if (explodingDroneRadius > -1)
+//                            destroyIfWithinRadius(explodingDroneX, explodingDroneY, (int) explodingDroneRadius);
                     }
 //                    player.increaseBullets();
                 }

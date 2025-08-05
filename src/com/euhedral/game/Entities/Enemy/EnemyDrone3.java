@@ -12,14 +12,18 @@ public class EnemyDrone3 extends EnemyDrone1 {
     int explosionTimer_MAX = 400; // too high = 1000; too low = 100
     int explosionOffset;
 
+    double radius;
+
     float minOpacity = 0.1f;
     float explosionRadiusOpacity;
+
+    int score_MAX = 150;
 
     public EnemyDrone3(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         setImage(textureHandler.enemyDrone[2]);
 
-        score = 75;
+        score = 10;
         damage = 50;
 
         //        enemyType = EntityHandler.TYPE_DRONE;
@@ -43,6 +47,7 @@ public class EnemyDrone3 extends EnemyDrone1 {
         super.update();
         if (isActive() && inscreenY) {
             explosionTimer++;
+            score = (explosionTimer * score_MAX) / explosionTimer_MAX;
             if (explosionTimer >= explosionTimer_MAX) {
                 state = STATE_EXPLODING;
             }
@@ -119,6 +124,11 @@ public class EnemyDrone3 extends EnemyDrone1 {
         super.commonInit();
         forwardVelocity = 3;
         explosionTimer = 0;
+    }
+
+    public double getRadius() {
+        radius = Math.sqrt(Math.pow(bounds.getWidth(), 2) + Math.pow(bounds.getHeight(), 2));
+        return radius;
     }
 
 }

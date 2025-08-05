@@ -26,6 +26,13 @@ public class EnemyDrone4 extends EnemyDrone1 {
     }
 
     @Override
+    protected void moveInScreen() {
+        y += velY;
+        if (x < destinationX - width || x > destinationX + width)
+            x += velX;
+    }
+
+    @Override
     protected void shoot() {
         resetShootTimer();
         shootDefault();
@@ -53,6 +60,12 @@ public class EnemyDrone4 extends EnemyDrone1 {
         super.commonInit();
         forwardVelocity = 1;
         bulletAngle = 90;
+
+        if (x < destinationX)
+            bulletAngleIncrements = - 10;
+        else {
+            bulletAngleIncrements = 10;
+        }
     }
 
     @Override
