@@ -41,7 +41,7 @@ public class Bullet extends MobileEntity {
     protected Reflection reflection;
     int reflectionX, reflectionY, newWidth, newHeight;
 
-    Bullet(int x, int y) {
+    Bullet( double x, double y) {
         super(x ,y, EntityID.Bullet);
         this.x = x;
         this.y = y;
@@ -70,7 +70,7 @@ public class Bullet extends MobileEntity {
         rightBounds = Engine.WIDTH + offset;
     }
 
-    Bullet(int x, int y, double angle) {
+    Bullet(double x, double y, double angle) {
         this(x,y);
         this.angle = angle % 360;
     }

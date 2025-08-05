@@ -5,12 +5,15 @@ import com.euhedral.game.*;
 import com.euhedral.game.Entities.Enemy.Enemy;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class BulletPlayer extends Bullet{
 
     int impactAnimationAdjustmentX;
 
-    public BulletPlayer(int x, int y, double angle) {
+    public Enemy target;
+
+    public BulletPlayer(double x, double y, double angle) {
         super(x, y, angle);
 //        this.contactId = contactId;
         setImage(textureHandler.bulletPlayer[0]);
@@ -28,9 +31,22 @@ public class BulletPlayer extends Bullet{
 //        );
     }
 
+    public BulletPlayer(double x, double y, double forwardVelocity, double angle) {
+        this(x, y, angle);
+        this.forwardVelocity = forwardVelocity;
+    }
+
+    public BulletPlayer(double x, double y, double forwardVelocity, Enemy target) {
+        this(x, y, 0);
+        this.target = (Enemy) target;
+    }
+
     @Override
     public void update() {
         if (state == STATE_ACTIVE) {
+            if (target != null) {
+                calculateVelocities(target.getX() + target.getWidth()/2, target.getY() + target.getHeight()/2);
+            }
             super.update();
         } else if (state == STATE_IMPACT) {
             impact.runAnimation();
@@ -51,6 +67,16 @@ public class BulletPlayer extends Bullet{
         }
     }
 
+    @Override
+    protected void drawImage(Graphics g, BufferedImage image, int targetWidth, int targetHeight) {
+        if (target == null)
+            g.drawImage(image, (int) x, (int) y, targetWidth, targetHeight, null);
+        else {
+            g.setColor(Color.RED);
+            g.fillOval((int) x, (int) y, width, height);
+        }
+    }
+
 //    public ContactID getContactId() {
 //        return contactId;
 //    }
@@ -60,6 +86,7 @@ public class BulletPlayer extends Bullet{
 //        this.x = x;
 //        this.y = y;
         this.calculated = false;
+        target = null;
         super.resurrect(x, y);
         commonInit();
     }

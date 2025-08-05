@@ -61,8 +61,8 @@ public class Player extends MobileEntity {
     int shieldTimer = 0;
     int shieldTimer_MAX = 30;
 
-    int ringOfFireRadius;
-    int ringOfFireRadius_MAX = Engine.WIDTH;
+    int pulseRadius;
+    int pulseRadius_MAX = Engine.WIDTH;
 
     private Reflection reflection;
 
@@ -94,7 +94,7 @@ public class Player extends MobileEntity {
 
         jitter_MAX = Utility.intAtWidth640(2);
 
-        ringOfFireRadius = -1;
+        pulseRadius = -1;
 
 //        physics.friction = 1; // instantenous is equal to (minVel - 2)
 
@@ -125,10 +125,11 @@ public class Player extends MobileEntity {
         if (canShoot && shootTimer <= 0)
             shoot();
 
-//        bullets.printPool("Bullets");
         bullets.disableIfOutsideBounds(levelHeight);
         bullets.update();
-        bullets.checkDeathAnimationEnd();
+        bullets.checkDeathAnimationEndPlayer();
+//        bullets.printPool("Bullets");
+//        bullets.cleanupPlayerBullets();
 
         setImage();
 
@@ -142,18 +143,18 @@ public class Player extends MobileEntity {
         }
 
         if (VariableHandler.speedBoostDuration > 0) {
-            speedBoost = 3;
+            speedBoost = 2;
             VariableHandler.speedBoostDuration--;
         } else {
             speedBoost = 0;
         }
 
-        if (ringOfFireRadius > -1) {
+        if (pulseRadius > -1) {
 
-            ringOfFireRadius += ringOfFireRadius/3 + bulletVelocity;
+            pulseRadius += pulseRadius / 10 + bulletVelocity;
 
-            if (ringOfFireRadius >= ringOfFireRadius_MAX) {
-                ringOfFireRadius = -1;
+            if (pulseRadius >= pulseRadius_MAX) {
+                pulseRadius = -1;
             }
         }
     }
@@ -226,15 +227,15 @@ public class Player extends MobileEntity {
         }
 
         // Render Ring Of Fire
-        if (ringOfFireRadius > -1) {
+        if (pulseRadius > -1) {
             g.setColor(Color.YELLOW);
 
             g2d.setComposite(Utility.makeTransparent(0.f));
-            g.fillOval((int) x - ringOfFireRadius, (int) y - ringOfFireRadius, width + ringOfFireRadius * 2, height + ringOfFireRadius * 2);
+            g.fillOval((int) x - pulseRadius, (int) y - pulseRadius, width + pulseRadius * 2, height + pulseRadius * 2);
             g2d.setComposite(Utility.makeTransparent(1f));
 
-            g2d.setStroke(new BasicStroke(ringOfFireRadius / (bulletVelocity * 3)));
-            g.drawOval((int) x - ringOfFireRadius, (int) y - ringOfFireRadius, width + ringOfFireRadius * 2, height + ringOfFireRadius * 2);
+            g2d.setStroke(new BasicStroke(pulseRadius / (bulletVelocity * 3)));
+            g.drawOval((int) x - pulseRadius, (int) y - pulseRadius, width + pulseRadius * 2, height + pulseRadius * 2);
         }
 
 //        renderStats(g);
@@ -378,7 +379,6 @@ public class Player extends MobileEntity {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
         calculateTurretPositions();
-
         turretRightX = (int) (x + width - 8);
         turretLeftX = (int) (x + 4);
 
@@ -389,8 +389,8 @@ public class Player extends MobileEntity {
             for (Entity entity: enemies) {
                 if (entity.isActive()) {
                     Enemy enemy = (Enemy) entity;
-                    if (enemy.isInscreenY()) {
-                        spawnBullet(turretMidX, turretY, calculateAngle(enemy.getX(), enemy.getY()));
+                    if (enemy.isBelowDeadZoneTop()) {
+                        bullets.spawn(turretMidX, turretY, bulletVelocity, enemy);
                     }
                 }
             }
@@ -425,31 +425,30 @@ public class Player extends MobileEntity {
 //            spawnBullet(spawnLeftX, turretY, shootAngleLeft);
 //        } else
         if (power.getValue() == 2) {
-            spawnBullet(turretRightX, turretY, NORTH);
-            spawnBullet(turretLeftX, turretY, NORTH);
+            bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
         } else {
-            spawnBullet(turretMidX, turretY, NORTH);
+            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
         }
 
         // reset shoot timer to default
         shootTimer = shootTimerDefault;
     }
 
-    private void spawnBullet(int x, int y, double dir) {
-        bullets.spawn(x, y, dir);
-    }
-
     public void special() {
-        if (VariableHandler.ringOfFire) {
-            ringOfFire();
+//        VariableHandler.pulse = true;
+
+        if (VariableHandler.pulse) {
+            pulse();
             SoundHandler.playSound(SoundHandler.RING);
         }
     }
 
-    private void ringOfFire() {
-        if (VariableHandler.ringOfFire) {
-            ringOfFireRadius = 0;
-            VariableHandler.ringOfFire = false;
+    private void pulse() {
+
+        if (VariableHandler.pulse) {
+            pulseRadius = 0;
+            VariableHandler.pulse = false;
         }
     }
 
@@ -465,8 +464,8 @@ public class Player extends MobileEntity {
                 velX += Math.abs(velX) / 4;
                 velX = Utility.clamp(velX, -velX_MAX, 0);
             } else {
-                velX -= physics.acceleration;
-                velX = Utility.clamp(velX, -(velX_MAX + speedBoost), -(velX_MIN + speedBoost));
+                velX -= (physics.acceleration * (1 + speedBoost) );
+                velX = Utility.clamp(velX, -(velX_MAX + speedBoost), -(velX_MIN));
             }
 //            Utility.log("VelX: " + velX);
         }
@@ -476,8 +475,8 @@ public class Player extends MobileEntity {
                 velX -= Math.abs(velX) / 4;
                 velX = Utility.clamp(velX, 0, velX_MAX);
             } else {
-                velX += physics.acceleration;
-                velX = Utility.clamp(velX, (velX_MIN + speedBoost), (velX_MAX + speedBoost));
+                velX += (physics.acceleration * (1 + speedBoost) );
+                velX = Utility.clamp(velX, (velX_MIN), (velX_MAX + speedBoost));
             }
         }
 
@@ -500,8 +499,8 @@ public class Player extends MobileEntity {
                 velY += Math.abs(velY) / 4;
                 velY = Utility.clamp(velY, -velY_MAX, 0);
             } else {
-                velY -= physics.acceleration;
-                velY = Utility.clamp(velY, -velY_MAX, -velY_MIN);
+                velY -= (physics.acceleration * (1 + speedBoost));
+                velY = Utility.clamp(velY, -(velY_MAX + speedBoost), -velY_MIN);
             }
         }
 
@@ -510,8 +509,8 @@ public class Player extends MobileEntity {
                 velY -= Math.abs(velY) / 4;
                 velY = Utility.clamp(velY, 0, velY_MAX);
             } else {
-                velY += physics.acceleration;
-                velY = Utility.clamp(velY, velY_MIN, velY_MAX);
+                velY += (physics.acceleration * (1 + speedBoost) );
+                velY = Utility.clamp(velY, velY_MIN, (velY_MAX + speedBoost));
             }
         }
 
@@ -626,6 +625,10 @@ public class Player extends MobileEntity {
         moveUp = false;
     }
 
+    public LinkedList<Bullet> getImpactingBulletsList() {
+        return bullets.getImpactingBulletsList();
+    }
+
     public double getCenterX() {
         return x + width / 2 - 9; // todo: find out why we need 12
     }
@@ -635,7 +638,7 @@ public class Player extends MobileEntity {
     }
 
     public int getRadius() {
-        return ringOfFireRadius;
+        return pulseRadius;
     }
 
     private boolean isMovingLeft() {

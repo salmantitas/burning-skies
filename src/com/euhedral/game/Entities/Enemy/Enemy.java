@@ -210,6 +210,7 @@ public class Enemy extends MobileEntity {
         g2d.setComposite(Utility.makeTransparent(transparency));
         drawDamageImage();
         g2d.setComposite(Utility.makeTransparent(1f));
+
     }
 
     protected void drawDamageImage() {
@@ -318,6 +319,10 @@ public class Enemy extends MobileEntity {
 
     public boolean isInscreenY() {
         return inscreenY;
+    }
+
+    public boolean isBelowDeadZoneTop() {
+        return y > VariableHandler.deadzoneTop + 20;
     }
 
     public void setInscreenY(boolean inscreenY) {

@@ -24,19 +24,41 @@ public class BulletPool extends Pool {
         super();
     }
 
-    public void spawn(int x, int y, double angle) {
+    public void spawn(int x, int y, double forwardVelocity, double angle) {
         if (getPoolSize() > 0) {
-            spawnFromPool(x, y, angle);
+            spawnFromPool(x, y, forwardVelocity, angle);
         } else
-            add(new BulletPlayer(x, y, angle));
+            add(new BulletPlayer(x, y, forwardVelocity, angle));
     }
 
-    public void spawnFromPool(int x, int y, double angle) {
+    public void spawn(int x, int y, double forwardVelocity, Enemy target) {
+        if (getPoolSize() > 0) {
+            spawnFromPool(x, y, forwardVelocity, target);
+        } else
+            add(new BulletPlayer(x, y, forwardVelocity, target));
+    }
+
+    public void spawnFromPool(double x, double y, double forwardVelocity, double angle) {
         entity = findInList();
         entity.resurrect(x, y);
         Bullet bullet = (Bullet) entity;
         if (bullet.getAngle() != angle) {
             bullet.setAngle(angle);
+        }
+        if (bullet.getForwardVelocity() != forwardVelocity) {
+            bullet.setForwardVelocity(forwardVelocity);
+        }
+        decrease();
+//        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
+    }
+
+    public void spawnFromPool(double x, double y, double forwardVelocity, Entity target) {
+        entity = findInList();
+        entity.resurrect(x, y);
+        BulletPlayer bullet = (BulletPlayer) entity;
+        bullet.target = (Enemy) target;
+        if (bullet.getForwardVelocity() != forwardVelocity) {
+            bullet.setForwardVelocity(forwardVelocity);
         }
         decrease();
 //        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
@@ -125,4 +147,37 @@ public class BulletPool extends Pool {
             }
         }
     }
+
+    public void checkDeathAnimationEndPlayer() {
+        for (Entity entity : entities) {
+
+            bulletPlayer = (BulletPlayer) entity;
+
+            if (bulletPlayer.isImpacting()) {
+                if (bulletPlayer.checkDeathAnimationEnd()) {
+                    increase(bulletPlayer);
+                    bulletPlayer.target = null;
+                }
+            } else if (bulletPlayer.isActive()) {
+                if (bulletPlayer.target != null) {
+                    if (!bulletPlayer.target.isActive()) {
+                        increase(bulletPlayer);
+                    }
+                }
+            }
+        }
+    }
+
+    public LinkedList<Bullet> getImpactingBulletsList() {
+        LinkedList<Bullet> impactingBullets = new LinkedList<>();
+
+        for (Entity entity: entities) {
+            Bullet bullet = (Bullet) entity;
+            if (bullet.isImpacting())
+                impactingBullets.add(bullet);
+        }
+
+        return impactingBullets;
+    }
+
 }
