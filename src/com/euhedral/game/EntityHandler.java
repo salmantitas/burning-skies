@@ -48,6 +48,7 @@ public class EntityHandler {
     private Flag flag; // todo: Remove
     private static EnemyPool enemies;
     private BulletPool bullets;
+    private LinkedList<Bullet> bulletsPlayerImpacting;
     private PickupPool pickups;
 //    int pickupValue = 0;
 
@@ -103,6 +104,7 @@ public class EntityHandler {
 //        updateFlag();
 
         checkCollisions();
+        bulletsPlayerImpacting = player.getImpactingBulletsList();
     }
 
 //    public void cleanDisabledEntities() {
@@ -118,6 +120,10 @@ public class EntityHandler {
         bullets.render(g);
         pickups.render(g);
         enemies.render(g);
+
+        for (Entity entity: bulletsPlayerImpacting) {
+            entity.render(g);
+        }
         //renderFlag(g);
     }
 
