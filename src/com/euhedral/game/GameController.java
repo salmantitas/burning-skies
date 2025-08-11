@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "BURNING SKIES";
-    public static String gameVersion = "0.7.31";
+    public static String gameVersion = "0.7.32";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -107,7 +107,7 @@ public class GameController {
     private double backgroundScroll = 0;
 //    private float backgroundScrollAcc = 0;
     private static final double maxScroll = 64;
-    public static final double scrollRate = maxScroll/26; // MAX = 0.04
+    public static final double scrollRate = maxScroll/27; // MAX = 0.04
 
     BufferedImage imageSea; // = GameController.getTexture().sea[currentImage];
     int imageScrollinginterval; // = imageSea.getHeight() * 2;
