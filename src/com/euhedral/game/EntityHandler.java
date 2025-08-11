@@ -121,8 +121,10 @@ public class EntityHandler {
         pickups.render(g);
         enemies.render(g);
 
-        for (Entity entity: bulletsPlayerImpacting) {
-            entity.render(g);
+        if (bulletsPlayerImpacting != null) {
+            for (Entity entity : bulletsPlayerImpacting) {
+                entity.render(g);
+            }
         }
         //renderFlag(g);
     }

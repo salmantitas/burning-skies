@@ -55,6 +55,7 @@ public class VariableHandler {
     private static int scoreY = Utility.intAtWidth640(20);
     private static int scoreSize = Utility.percWidth(2);
     private static Font scoreFont = UIHandler.customFont.deriveFont(0, scoreSize);
+    public static Color scoreColor = Color.YELLOW;
 
     // High Score
     public static final int HIGH_SCORE_NUMBERS_MAX = 10;
@@ -289,7 +290,7 @@ public class VariableHandler {
 
     public static void renderScore(Graphics g) {
         g.setFont(scoreFont);
-        g.setColor(Color.WHITE);
+        g.setColor(scoreColor);
         g.drawString("Score: " + score, scoreX, scoreY);
     }
 

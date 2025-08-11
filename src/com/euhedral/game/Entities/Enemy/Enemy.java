@@ -522,7 +522,7 @@ public class Enemy extends MobileEntity {
     protected void renderScore(Graphics g) {
         if (isExploding()) {
             g.setFont(UIHandler.customFont.deriveFont(1, 20));
-            g.setColor(Color.GREEN);
+            g.setColor(VariableHandler.scoreColor );
             int offsetX = width / 2 - Utility.intAtWidth640(10);
             g.drawString(Integer.toString(score), (int) x + offsetX, (int) y);
         }

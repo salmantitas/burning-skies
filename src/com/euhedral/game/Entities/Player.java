@@ -22,7 +22,7 @@ public class Player extends MobileEntity {
 
     // Personal
     private int levelHeight;
-//    private int power;
+    //    private int power;
     //    private boolean ground = false;
 //    private boolean airBullet = true;
     private int clampOffsetX;
@@ -34,7 +34,7 @@ public class Player extends MobileEntity {
     private Attribute power;
     private double speedBoost;
 //    private int speedBoostDuration_MAX = 60;
-    private int speedBoostDuration;
+//    private int speedBoostDuration;
 
     private final int HEALTH_HIGH = 66;
     private final int HEALTH_MED = 33;
@@ -86,7 +86,7 @@ public class Player extends MobileEntity {
         velY = 0;
         physics.acceleration = 0.1;
         speedBoost = 0;
-        speedBoostDuration = 0;
+        VariableHandler.speedBoostDuration = 0;
         velY_MIN = 4;
         velX_MIN = 4;
         velY_MAX = 10;
@@ -168,16 +168,16 @@ public class Player extends MobileEntity {
 
     private void setImage() {
 //        if (health.getValue() > HEALTH_HIGH) {
-            if (isMovingLeft()) {
-                image = textureHandler.player[6];
-                damageImage = textureHandler.playerDamage[1];
-            } else if (isMovingRight()) {
-                image = textureHandler.player[3];
-                damageImage = textureHandler.playerDamage[2];
-            } else {
-                image = textureHandler.player[0];
-                damageImage = textureHandler.playerDamage[0];
-            }
+        if (isMovingLeft()) {
+            image = textureHandler.player[6];
+            damageImage = textureHandler.playerDamage[1];
+        } else if (isMovingRight()) {
+            image = textureHandler.player[3];
+            damageImage = textureHandler.playerDamage[2];
+        } else {
+            image = textureHandler.player[0];
+            damageImage = textureHandler.playerDamage[0];
+        }
 //        }
 
 //        else if (health.getValue() > HEALTH_MED) {
@@ -202,10 +202,30 @@ public class Player extends MobileEntity {
     public void render(Graphics g) {
         bullets.render(g);
 
-        super.render(g);
-        float transparency = (1f - (float) health.getValue()/100)/2;
-
+        // Render Speed Boost
         g2d = (Graphics2D) g;
+        if (VariableHandler.speedBoostDuration > 0) {
+
+
+            g.setColor(Color.ORANGE);
+            g2d.setComposite(Utility.makeTransparent(0.2f));
+            if (isMovingLeft()) {
+                g.fillRect((int) x + width / 2, (int) y, width / 2, height);
+            }
+            if (isMovingRight()) {
+                g.fillRect((int) x, (int) y, width / 2, height);
+            }
+            if (isMovingUp()) {
+                g.fillRect((int) x, (int) y + height / 2, width, height / 2);
+            }
+            if (isMovingDown()) {
+                g.fillRect((int) x, (int) y, width, height / 2);
+            }
+            g2d.setComposite(Utility.makeTransparent(1f));
+        }
+
+        super.render(g);
+        float transparency = (1f - (float) health.getValue() / 100) / 2;
 
         g2d.setComposite(Utility.makeTransparent(transparency));
         g.drawImage(damageImage, (int) x, (int) y, null);
@@ -216,14 +236,14 @@ public class Player extends MobileEntity {
         if (shield.getValue() > 0) {
             float shieldTransparency = 0.2f;
             if (shieldTimer > 0) {
-                shieldTransparency *= (float) Math.pow(shieldTimer_MAX / 2 - shieldTimer, 2)/ (shieldTimer_MAX * 15);
+                shieldTransparency *= (float) Math.pow(shieldTimer_MAX / 2 - shieldTimer, 2) / (shieldTimer_MAX * 15);
             }
             g2d.setColor(Color.blue);
             g2d.setComposite(Utility.makeTransparent(shieldTransparency));
-            g2d.fillOval((int) x - width / shieldOffset, (int) y - height / shieldOffset + 5, width + 2*width / shieldOffset, height + 2*height / shieldOffset);
+            g2d.fillOval((int) x - width / shieldOffset, (int) y - height / shieldOffset + 5, width + 2 * width / shieldOffset, height + 2 * height / shieldOffset);
             g2d.setComposite(Utility.makeTransparent(1f));
-            g2d.setStroke(new BasicStroke(3,1,1));
-            g2d.drawOval((int) x - width / shieldOffset, (int) y - height / shieldOffset + 5, width + 2*width / shieldOffset, height + 2*height / shieldOffset);
+            g2d.setStroke(new BasicStroke(3, 1, 1));
+            g2d.drawOval((int) x - width / shieldOffset, (int) y - height / shieldOffset + 5, width + 2 * width / shieldOffset, height + 2 * height / shieldOffset);
         }
 
         // Render Ring Of Fire
@@ -386,7 +406,7 @@ public class Player extends MobileEntity {
             VariableHandler.homing = false;
 
             LinkedList<Entity> enemies = EntityHandler.getEnemyList();
-            for (Entity entity: enemies) {
+            for (Entity entity : enemies) {
                 if (entity.isActive()) {
                     Enemy enemy = (Enemy) entity;
                     if (enemy.isBelowDeadZoneTop()) {
@@ -464,18 +484,16 @@ public class Player extends MobileEntity {
                 velX += Math.abs(velX) / 4;
                 velX = Utility.clamp(velX, -velX_MAX, 0);
             } else {
-                velX -= (physics.acceleration * (1 + speedBoost) );
+                velX -= (physics.acceleration * (1 + speedBoost));
                 velX = Utility.clamp(velX, -(velX_MAX + speedBoost), -(velX_MIN));
             }
 //            Utility.log("VelX: " + velX);
-        }
-
-        else if (isMovingRight()) {
+        } else if (isMovingRight()) {
             if (x > VariableHandler.deadzoneRightX - VariableHandler.deadzoneWidth) {
                 velX -= Math.abs(velX) / 4;
                 velX = Utility.clamp(velX, 0, velX_MAX);
             } else {
-                velX += (physics.acceleration * (1 + speedBoost) );
+                velX += (physics.acceleration * (1 + speedBoost));
                 velX = Utility.clamp(velX, (velX_MIN), (velX_MAX + speedBoost));
             }
         }
@@ -502,14 +520,12 @@ public class Player extends MobileEntity {
                 velY -= (physics.acceleration * (1 + speedBoost));
                 velY = Utility.clamp(velY, -(velY_MAX + speedBoost), -velY_MIN);
             }
-        }
-
-        else if (isMovingDown()) {
+        } else if (isMovingDown()) {
             if (y > levelHeight + clampOffsetY) {
                 velY -= Math.abs(velY) / 4;
                 velY = Utility.clamp(velY, 0, velY_MAX);
             } else {
-                velY += (physics.acceleration * (1 + speedBoost) );
+                velY += (physics.acceleration * (1 + speedBoost));
                 velY = Utility.clamp(velY, velY_MIN, (velY_MAX + speedBoost));
             }
         }
