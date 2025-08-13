@@ -30,7 +30,7 @@ public class EnemyPool extends Pool {
 
     public EnemyPool(BulletPool bullets) {
         super();
-        int enemyTypes = EntityHandler.enemyTypes;
+        int enemyTypes = VariableHandler.enemyTypes;
         this.bullets = bullets;
         reusable = new int[enemyTypes];
         active = new int[enemyTypes];
@@ -110,7 +110,7 @@ public class EnemyPool extends Pool {
 
         entityX = (int) entity.getX()/64;
 
-        if (enemyType == EntityHandler.TYPE_STATIC1 || enemyType == EntityHandler.TYPE_SCATTER1) {
+        if (enemyType == VariableHandler.TYPE_STATIC1 || enemyType == VariableHandler.TYPE_SCATTER1) {
             // find spot in exclusion zone
             for (int i = 0; i < 10; i++) {
                 if (exclusionZones.get(i) == entityX) {
@@ -241,7 +241,7 @@ public class EnemyPool extends Pool {
     }
 
     private void addExclusionZone(Entity entity, int enemyType) {
-        if (enemyType == EntityHandler.TYPE_STATIC1 || enemyType == EntityHandler.TYPE_SCATTER1) {
+        if (enemyType == VariableHandler.TYPE_STATIC1 || enemyType == VariableHandler.TYPE_SCATTER1) {
             done = false;
             for (int i = 0; i < 10; i++) {
                 if (done) { }
@@ -270,7 +270,7 @@ public class EnemyPool extends Pool {
     public void renderReflections(Graphics2D g2d, float transparency) {
         for (Entity entity: entities) {
             enemy = (Enemy) entity;
-            if (enemy.getEnemyType() == EntityHandler.TYPE_DRONE3) {
+            if (enemy.getEnemyType() == VariableHandler.TYPE_DRONE3) {
                 transparency = 0.1f;
             }
             enemy.renderReflection(g2d, transparency);
@@ -292,8 +292,8 @@ public class EnemyPool extends Pool {
         double y = enemy.getTurretY();
         double bulletVelocity = enemy.getBulletVelocity();
         boolean tracking = false;
-        if (enemy.getEnemyType() == EntityHandler.TYPE_STATIC1 || enemy.getEnemyType() == EntityHandler.TYPE_SCATTER1 ||
-                enemy.getEnemyType() == EntityHandler.TYPE_SIDE3 || enemy.getEnemyType() == EntityHandler.TYPE_DRONE2) {
+        if (enemy.getEnemyType() == VariableHandler.TYPE_STATIC1 || enemy.getEnemyType() == VariableHandler.TYPE_SCATTER1 ||
+                enemy.getEnemyType() == VariableHandler.TYPE_SIDE3 || enemy.getEnemyType() == VariableHandler.TYPE_DRONE2) {
             tracking = true;
         }
 

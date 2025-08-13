@@ -116,7 +116,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         buildBasicSpawnIntervalMatrix();
         buildHeavySpawnIntervalMatrix();
 
-        maxTypes = TYPE_HEAVY + 1;
+        maxTypes = VariableHandler.TYPE_HEAVY + 1;
     }
 
     private void buildMatrix() {
@@ -145,7 +145,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         int minEnemiesCross = 1;
         int maxEnemiesCross = 8;
 
-        int tempType = TYPE_BASIC1;
+        int tempType = VariableHandler.TYPE_BASIC1;
 
         enemyNumbers[tempType][PATTERN_LINE][ENEMY_MIN] = minLine;
         enemyNumbers[tempType][PATTERN_LINE][ENEMY_MAX] = maxLine;
@@ -182,24 +182,26 @@ public class ProceduralGenerator extends EnemyGenerator {
         int minEnemiesCross = 1;
         int maxEnemiesCross = 2;
 
-        enemyNumbers[TYPE_HEAVY][PATTERN_LINE][ENEMY_MIN] = minLine;
-        enemyNumbers[TYPE_HEAVY][PATTERN_LINE][ENEMY_MAX] = maxLine;
-        enemyNumbers[TYPE_HEAVY][PATTERN_PINCER][ENEMY_MIN] = minPincer;
-        enemyNumbers[TYPE_HEAVY][PATTERN_PINCER][ENEMY_MAX] = maxPincer;
-        enemyNumbers[TYPE_HEAVY][PATTERN_SLIDE][ENEMY_MIN] = minPincer;
-        enemyNumbers[TYPE_HEAVY][PATTERN_SLIDE][ENEMY_MAX] = maxPincer;
-        enemyNumbers[TYPE_HEAVY][PATTERN_V][ENEMY_MIN] = minV;
-        enemyNumbers[TYPE_HEAVY][PATTERN_V][ENEMY_MAX] = maxV;
-        enemyNumbers[TYPE_HEAVY][PATTERN_VERTICAL][ENEMY_MIN] = minVertical;
-        enemyNumbers[TYPE_HEAVY][PATTERN_VERTICAL][ENEMY_MAX] = maxVertical;
-        enemyNumbers[TYPE_HEAVY][PATTERN_SQUARE][ENEMY_MIN] = minSquare;
-        enemyNumbers[TYPE_HEAVY][PATTERN_SQUARE][ENEMY_MAX] = maxSquare;
-        enemyNumbers[TYPE_HEAVY][PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
-        enemyNumbers[TYPE_HEAVY][PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
+        int tempType = VariableHandler.TYPE_HEAVY;
+
+        enemyNumbers[tempType][PATTERN_LINE][ENEMY_MIN] = minLine;
+        enemyNumbers[tempType][PATTERN_LINE][ENEMY_MAX] = maxLine;
+        enemyNumbers[tempType][PATTERN_PINCER][ENEMY_MIN] = minPincer;
+        enemyNumbers[tempType][PATTERN_PINCER][ENEMY_MAX] = maxPincer;
+        enemyNumbers[tempType][PATTERN_SLIDE][ENEMY_MIN] = minPincer;
+        enemyNumbers[tempType][PATTERN_SLIDE][ENEMY_MAX] = maxPincer;
+        enemyNumbers[tempType][PATTERN_V][ENEMY_MIN] = minV;
+        enemyNumbers[tempType][PATTERN_V][ENEMY_MAX] = maxV;
+        enemyNumbers[tempType][PATTERN_VERTICAL][ENEMY_MIN] = minVertical;
+        enemyNumbers[tempType][PATTERN_VERTICAL][ENEMY_MAX] = maxVertical;
+        enemyNumbers[tempType][PATTERN_SQUARE][ENEMY_MIN] = minSquare;
+        enemyNumbers[tempType][PATTERN_SQUARE][ENEMY_MAX] = maxSquare;
+        enemyNumbers[tempType][PATTERN_CROSS][ENEMY_MIN] = minEnemiesCross;
+        enemyNumbers[tempType][PATTERN_CROSS][ENEMY_MAX] = maxEnemiesCross;
     }
 
     private void buildBasicSpawnIntervalMatrix() {
-        int tempType = TYPE_BASIC1;
+        int tempType = VariableHandler.TYPE_BASIC1;
         int tempPattern = PATTERN_LINE;
 
 //        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
@@ -286,7 +288,7 @@ public class ProceduralGenerator extends EnemyGenerator {
     }
 
     private void buildHeavySpawnIntervalMatrix() {
-        int tempType = TYPE_HEAVY;
+        int tempType = VariableHandler.TYPE_HEAVY;
         int tempPattern = PATTERN_LINE;
 
         spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN;
@@ -483,7 +485,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         num = enemyNumbers[enemytype][pattern][ENEMY_MIN];
 
 //        determineType();
-        enemytype = TYPE_BASIC1;
+        enemytype = VariableHandler.TYPE_BASIC1;
 
 //        determineZone();
         spawnZone = 2;
@@ -1134,7 +1136,7 @@ public class ProceduralGenerator extends EnemyGenerator {
     }
 
     private void spawnHeavyHelper(int x, int y) {
-        entityHandler.spawnEntity(x*SCALE, y*SCALE, EntityHandler.TYPE_HEAVY,  0, 0);
+        entityHandler.spawnEntity(x*SCALE, y*SCALE, VariableHandler.TYPE_HEAVY,  0, 0);
     }
 
     private void spawnBoss(int x, int y) {
@@ -1152,7 +1154,7 @@ public class ProceduralGenerator extends EnemyGenerator {
             lastLastPattern = lastPattern;
             lastPattern = pattern;
             int max = maxPatterns;
-            if (enemytype == TYPE_HEAVY) {
+            if (enemytype == VariableHandler.TYPE_HEAVY) {
                 max = 2;
             }
             pattern = Utility.randomRange(0, max);
@@ -1167,7 +1169,7 @@ public class ProceduralGenerator extends EnemyGenerator {
     // Spawn enemies according to the pattern and number
     @Override
     protected void spawnEnemiesHelper() {
-        if (enemytype == TYPE_DRONE1) {
+        if (enemytype == VariableHandler.TYPE_DRONE1) {
             Utility.log("Drone");
         }
 
@@ -1279,7 +1281,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         int rand = Utility.randomRangeInclusive(0, calculatedDifficulty);
 //        enemytype = rand;
 
-        enemytype = TYPE_BASIC1; // stub, todo: remove
+        enemytype = VariableHandler.TYPE_BASIC1; // stub, todo: remove
     }
 
     //    private Color getKey(EntityID id) {

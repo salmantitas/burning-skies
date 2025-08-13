@@ -2,6 +2,7 @@ package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -147,7 +148,7 @@ public class EnemyScatter2 extends Enemy {
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_SCATTER2;
+        enemyType = VariableHandler.TYPE_SCATTER2;
     }
 
     public boolean checkCollision(Rectangle2D object) {

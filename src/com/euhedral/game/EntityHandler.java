@@ -21,28 +21,6 @@ public class EntityHandler {
     public static double playerX, playerY;
     public static int playerRadius;
 
-    // Enemy Types
-    public static final int TYPE_BASIC1 = 0;
-    public static final int TYPE_BASIC2 = TYPE_BASIC1 + 1;
-    public static final int TYPE_HEAVY = TYPE_BASIC2 + 1;
-    public static final int TYPE_BASIC3 = TYPE_HEAVY + 1;
-    public static final int TYPE_DRONE1 = TYPE_BASIC3 + 1;
-    public static final int TYPE_STATIC1 = TYPE_DRONE1 + 1;
-    public static final int TYPE_SIDE1 = TYPE_STATIC1 + 1;
-    public static final int TYPE_FAST = TYPE_SIDE1 + 1;
-    public static final int TYPE_DRONE2 = TYPE_FAST + 1;
-    public static final int TYPE_SIDE2 = TYPE_DRONE2 + 1;
-    public static final int TYPE_MINE1 = TYPE_SIDE2 + 1;
-    public static final int TYPE_SCATTER1 = TYPE_MINE1 + 1;
-    public static final int TYPE_SIDE3 = TYPE_SCATTER1 + 1;
-    public static final int TYPE_MINE2 = TYPE_SIDE3 + 1;
-    public static final int TYPE_DRONE3 = TYPE_MINE2 + 1;
-    public static final int TYPE_SCATTER2 = TYPE_DRONE3 + 1;
-    public static final int TYPE_DRONE4 = TYPE_SCATTER2 + 1;
-    public static final int TYPE_DRONE5 = TYPE_DRONE4 + 1;
-
-    public static final int enemyTypes = TYPE_DRONE5 + 1;
-
     // Entity Lists
     private Enemy enemy;
     private Flag flag; // todo: Remove
@@ -71,6 +49,7 @@ public class EntityHandler {
         bullets = new BulletPool();
         pickups = new PickupPool();
         enemies = new EnemyPool(bullets);
+        bulletsPlayerImpacting = new LinkedList<>();
 //        this.variableHandler = variableHandler;
 //        initializeAnimations();
     }
@@ -121,11 +100,11 @@ public class EntityHandler {
         pickups.render(g);
         enemies.render(g);
 
-        if (bulletsPlayerImpacting != null) {
+//        if (bulletsPlayerImpacting != null) {
             for (Entity entity : bulletsPlayerImpacting) {
                 entity.render(g);
             }
-        }
+//        }
         //renderFlag(g);
     }
 
@@ -144,45 +123,45 @@ public class EntityHandler {
     private void spawnNew(int x, int y, int enemyType, int direction, int distance) {
         enemy = null;
 
-        if (enemyType == TYPE_BASIC1) {
+        if (enemyType == VariableHandler.TYPE_BASIC1) {
             enemy = new EnemyBasic1(x, y, levelHeight);
-        } else if (enemyType == TYPE_HEAVY) {
+        } else if (enemyType == VariableHandler.TYPE_HEAVY) {
             enemy = new EnemyHeavy(x, y, levelHeight);
-        } else if (enemyType == TYPE_BASIC2) {
+        } else if (enemyType == VariableHandler.TYPE_BASIC2) {
             enemy = new EnemyBasic2(x, y, levelHeight);
             enemy.setHMove(direction);
 //            enemy.setMovementDistance(distance);
-        } else if (enemyType == TYPE_BASIC3) {
+        } else if (enemyType == VariableHandler.TYPE_BASIC3) {
             enemy = new EnemyBasic3(x, y, levelHeight);
             enemy.setHMove(direction);
-        } else if (enemyType == TYPE_FAST) {
+        } else if (enemyType == VariableHandler.TYPE_FAST) {
             enemy = new EnemyFast(x, y, levelHeight);
             enemy.setHMove(direction);
-        } else if (enemyType == TYPE_DRONE1) {
+        } else if (enemyType == VariableHandler.TYPE_DRONE1) {
             enemy = new EnemyDrone1(x, y, levelHeight);
-        } else if (enemyType == TYPE_SIDE1) {
+        } else if (enemyType == VariableHandler.TYPE_SIDE1) {
             enemy = new EnemySide1(x, y, levelHeight);
-        } else if (enemyType == TYPE_STATIC1) {
+        } else if (enemyType == VariableHandler.TYPE_STATIC1) {
             enemy = new EnemyStatic1(x, y, levelHeight);
-        } else if (enemyType == TYPE_DRONE2) {
+        } else if (enemyType == VariableHandler.TYPE_DRONE2) {
             enemy = new EnemyDrone2(x, y, levelHeight);
-        } else if (enemyType == TYPE_SIDE2) {
+        } else if (enemyType == VariableHandler.TYPE_SIDE2) {
             enemy = new EnemySide2(x, y, levelHeight);
-        } else if (enemyType == TYPE_SIDE3) {
+        } else if (enemyType == VariableHandler.TYPE_SIDE3) {
             enemy = new EnemySide3(x, y, levelHeight);
-        } else if (enemyType == TYPE_SCATTER1) {
+        } else if (enemyType == VariableHandler.TYPE_SCATTER1) {
             enemy = new EnemyScatter1(x, y, levelHeight);
-        } else if (enemyType == TYPE_MINE1) {
+        } else if (enemyType == VariableHandler.TYPE_MINE1) {
             enemy = new EnemyMinefield1(x, y, levelHeight);
-        } else if (enemyType == TYPE_MINE2) {
+        } else if (enemyType == VariableHandler.TYPE_MINE2) {
             enemy = new EnemyMinefield2(x, y, levelHeight);
-        } else if (enemyType == TYPE_DRONE3) {
+        } else if (enemyType == VariableHandler.TYPE_DRONE3) {
             enemy = new EnemyDrone3(x, y, levelHeight);
-        } else if (enemyType == TYPE_SCATTER2) {
+        } else if (enemyType == VariableHandler.TYPE_SCATTER2) {
             enemy = new EnemyScatter2(x, y, levelHeight);
-        } else if (enemyType == TYPE_DRONE4) {
+        } else if (enemyType == VariableHandler.TYPE_DRONE4) {
             enemy = new EnemyDrone4(x, y, levelHeight);
-        } else if (enemyType == TYPE_DRONE5) {
+        } else if (enemyType == VariableHandler.TYPE_DRONE5) {
             enemy = new EnemyDrone5(x, y, levelHeight);
         }
 
@@ -208,11 +187,11 @@ public class EntityHandler {
     // todo: Causes issue with vertical movement
     private void spawnNew(int x, int y, int enemyType) {
         Enemy enemy;
-        if (enemyType == TYPE_BASIC1) {
+        if (enemyType == VariableHandler.TYPE_BASIC1) {
             enemy = new EnemyBasic1(x, y, levelHeight);
             enemies.add(enemy);
 //                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
-        } else if (enemyType == TYPE_HEAVY) {
+        } else if (enemyType == VariableHandler.TYPE_HEAVY) {
             enemy = new EnemyHeavy(x, y, levelHeight);
             enemies.add(enemy);
         } else {
@@ -509,11 +488,11 @@ public class EntityHandler {
     public void updatePickups() {
         if (lastDestroyedX > -1) {
             // todo: determine Pickup Value and Type based on Enemy Type
-            if (lastDestroyedType > TYPE_BASIC2) {
+            if (lastDestroyedType > VariableHandler.TYPE_BASIC2) {
                 EntityID pickupID = null;
                 int pickupValue = 0;
                 int maxChanceCoefficient = 2;
-                if (lastDestroyedType == TYPE_DRONE5 || lastDestroyedType == TYPE_DRONE3) {
+                if (lastDestroyedType == VariableHandler.TYPE_DRONE5 || lastDestroyedType == VariableHandler.TYPE_DRONE3) {
                     pickupID = EntityID.PickupPulse;
                     pickupValue = 1;
 //                } else if (lastDestroyedType == TYPE_DRONE2) {
@@ -522,13 +501,13 @@ public class EntityHandler {
 //                    // todo: Spawn Homing Bullets
 //                } else if (lastDestroyedType == TYPE_DRONE3) {
 //                    // todo: Spawn Bomb Pickup
-                } else if (lastDestroyedType == TYPE_DRONE1 || lastDestroyedType == TYPE_FAST || lastDestroyedType == TYPE_SIDE1) {
+                } else if (lastDestroyedType == VariableHandler.TYPE_DRONE1 || lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE1) {
                     pickupID = EntityID.PickupSpeed;
                     pickupValue = 30 * maxChanceCoefficient;
-                } else if (lastDestroyedType == TYPE_STATIC1 || lastDestroyedType == TYPE_DRONE2 || lastDestroyedType == TYPE_DRONE4 || lastDestroyedType == TYPE_MINE2) {
+                } else if (lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2 || lastDestroyedType == VariableHandler.TYPE_DRONE4 || lastDestroyedType == VariableHandler.TYPE_MINE2) {
                     pickupID = EntityID.PickupPower;
                     pickupValue = 1;
-                } else if (lastDestroyedType == TYPE_SCATTER1 || lastDestroyedType == TYPE_SCATTER2) {
+                } else if (lastDestroyedType == VariableHandler.TYPE_SCATTER1 || lastDestroyedType == VariableHandler.TYPE_SCATTER2) {
                     pickupID = EntityID.PickupShield;
                     pickupValue = 10;
                 } else {

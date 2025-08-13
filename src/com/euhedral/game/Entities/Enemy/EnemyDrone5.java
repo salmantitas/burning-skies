@@ -2,6 +2,7 @@ package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
+import com.euhedral.game.VariableHandler;
 
 public class EnemyDrone5 extends EnemyDrone1 {
 
@@ -81,6 +82,6 @@ public class EnemyDrone5 extends EnemyDrone1 {
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_DRONE5;
+        enemyType = VariableHandler.TYPE_DRONE5;
     }
 }

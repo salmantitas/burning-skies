@@ -4,6 +4,7 @@ import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
 import com.euhedral.game.GameController;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.geom.Rectangle2D;
 
@@ -84,7 +85,7 @@ public class EnemySide2 extends Enemy{
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_SIDE2;
+        enemyType = VariableHandler.TYPE_SIDE2;
     }
 
     @Override

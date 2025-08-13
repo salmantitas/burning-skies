@@ -4,6 +4,7 @@ import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
 import com.euhedral.game.GameController;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 
@@ -74,6 +75,6 @@ public class EnemyBasic2 extends Enemy{
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_BASIC2;
+        enemyType = VariableHandler.TYPE_BASIC2;
     }
 }

@@ -3,6 +3,7 @@ package com.euhedral.game.Entities.Enemy;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
 import com.euhedral.game.GameController;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 
@@ -236,7 +237,7 @@ public class EnemyHeavy extends Enemy {
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_HEAVY;
+        enemyType = VariableHandler.TYPE_HEAVY;
     }
 
 //    @Override

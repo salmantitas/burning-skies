@@ -2,6 +2,7 @@ package com.euhedral.game.Entities.Enemy;
 
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -116,7 +117,7 @@ public class EnemyDrone3 extends EnemyDrone1 {
 
     @Override
     protected void setEnemyType() {
-        enemyType = EntityHandler.TYPE_DRONE3;
+        enemyType = VariableHandler.TYPE_DRONE3;
     }
 
     @Override

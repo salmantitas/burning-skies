@@ -46,6 +46,28 @@ public class VariableHandler {
     private static Color healthMed = Color.ORANGE;
     private static Color healthHigh = Color.GREEN;
 
+    // Enemy Types
+    public static final int TYPE_BASIC1 = 0;
+    public static final int TYPE_BASIC2 = TYPE_BASIC1 + 1;
+    public static final int TYPE_HEAVY = TYPE_BASIC2 + 1;
+    public static final int TYPE_BASIC3 = TYPE_HEAVY + 1;
+    public static final int TYPE_DRONE1 = TYPE_BASIC3 + 1;
+    public static final int TYPE_STATIC1 = TYPE_DRONE1 + 1;
+    public static final int TYPE_SIDE1 = TYPE_STATIC1 + 1;
+    public static final int TYPE_FAST = TYPE_SIDE1 + 1;
+    public static final int TYPE_DRONE2 = TYPE_FAST + 1;
+    public static final int TYPE_SIDE2 = TYPE_DRONE2 + 1;
+    public static final int TYPE_MINE1 = TYPE_SIDE2 + 1;
+    public static final int TYPE_SCATTER1 = TYPE_MINE1 + 1;
+    public static final int TYPE_SIDE3 = TYPE_SCATTER1 + 1;
+    public static final int TYPE_MINE2 = TYPE_SIDE3 + 1;
+    public static final int TYPE_DRONE3 = TYPE_MINE2 + 1;
+    public static final int TYPE_SCATTER2 = TYPE_DRONE3 + 1;
+    public static final int TYPE_DRONE4 = TYPE_SCATTER2 + 1;
+    public static final int TYPE_DRONE5 = TYPE_DRONE4 + 1;
+
+    public static final int enemyTypes = TYPE_DRONE5 + 1;
+
     // todo: Boss Health
 //    public static Attribute bossHealth;
 
@@ -90,7 +112,7 @@ public class VariableHandler {
 
     private static int STARTLEVEL = 1;
     private static int level;
-    private static final int MAXLEVEL = EntityHandler.enemyTypes;
+    private static final int MAXLEVEL = enemyTypes;
 //    public static int difficulty = 1;
 
     private static int healthBossDef, healthBoss;
@@ -493,7 +515,7 @@ public class VariableHandler {
 
     public static int getDifficultyLevel() {
         if (difficultyType == DIFFICULTY_CHALLENGE)
-            return EntityHandler.enemyTypes;
+            return enemyTypes;
 //        todo: Custom Difficulty
 //        else if () {
 //
