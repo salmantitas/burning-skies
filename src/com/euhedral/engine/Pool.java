@@ -19,7 +19,9 @@ public class Pool {
     }
 
     public void update() {
-        camMarker = GameController.getCamera().getMarker();
+        if (GameController.getCamera() != null)
+            camMarker = GameController.getCamera().getMarker();
+
             for (Entity entity : entities) {
                 entity.update();
             }
@@ -95,11 +97,11 @@ public class Pool {
     public void disableIfOutsideBounds(int levelHeight) {
         for (Entity entity: entities) {
             if (entity.isActive())
-                disableIfOutsideBounds(entity, levelHeight);
+                disableIfOutsideBoundsHelper(entity, levelHeight);
         }
     }
 
-    public void disableIfOutsideBounds(Entity entity, int levelHeight) {
+    protected void disableIfOutsideBoundsHelper(Entity entity, int levelHeight) {
         if (entity.canDisable()) {
             entity.disable();
             reusable++;

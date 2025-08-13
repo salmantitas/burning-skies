@@ -3,6 +3,7 @@ package com.euhedral.game;
 public enum EntityID {
     Player,
     Enemy,
+    Background,
     EnemyBasic,
     EnemyMove,
     EnemySnake,

@@ -65,7 +65,7 @@ public class EntityHandler {
     float transparency;
 
     // Background Scrolling
-    public static final double backgroundScrollingSpeed = GameController.scrollRate * 35/32; // 3.5; // 3 < v < 4 // = scrollRate/2;
+    public static final double backgroundScrollingSpeed = Background.scrollRate * 35/32; // 3.5; // 3 < v < 4 // = scrollRate/2;
 
     EntityHandler() {
         bullets = new BulletPool();

@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "BURNING SKIES";
-    public static String gameVersion = "0.7.32";
+    public static String gameVersion = "0.7.33";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -98,29 +98,7 @@ public class GameController {
      * Graphics *
      ************/
 
-    // Background Scrolling
-//    int timesRenderedIn = 0;
-    int timesRenderedOut = 0;
-    int currentImage = 0;
-//    int imageAnimationSpeed = 1;
-    static int maxImage = 7;
-    private double backgroundScroll = 0;
-//    private float backgroundScrollAcc = 0;
-    private static final double maxScroll = 64;
-    public static final double scrollRate = maxScroll/27; // MAX = 0.04
-
-    BufferedImage imageSea; // = GameController.getTexture().sea[currentImage];
-    int imageScrollinginterval; // = imageSea.getHeight() * 2;
-
-    int minX = 0;
-    int minY = (int) -maxScroll;
-
-    /************
-     * Test *
-     ************/
-
-    int testWaveSpeed = 1;
-    Color testColor = new Color(128/3, 128/2, 128);
+    Background background;
 
     public GameController() {
 
@@ -147,6 +125,18 @@ public class GameController {
      * Initializer Functions *
      *************************/
 
+    private void initializeGraphics() {
+//        camera = new Camera(0,0);
+//        camera.setMarker(VariableHandler.deadzoneTop);
+        textureHandler = new TextureHandler();
+
+        background = new Background();
+        /*************
+         * Game Code *
+         *************/
+
+    }
+
     private void initializeGame() {
         /*************
          * Game Code *
@@ -162,17 +152,6 @@ public class GameController {
         } catch (Exception e) {
             Utility.log("Exception");
         }
-    }
-
-    private void initializeGraphics() {
-        textureHandler = new TextureHandler();
-
-        imageSea = GameController.getTexture().sea[currentImage];
-        imageScrollinginterval = imageSea.getHeight() * 2 - 2;
-        /*************
-         * Game Code *
-         *************/
-
     }
 
     // Initializes SoundHandler Class and loads the volume settings to allow background music to play
@@ -305,11 +284,13 @@ public class GameController {
         if (Engine.stateIs(GameState.GameOver)) {
 
         }
+
+//        background.update();
     }
 
     public void render(Graphics g) {
 
-        renderScrollingBackground(g);
+        background.render(g);
 
         if (Engine.currentState == GameState.Transition) {
             /*************
@@ -820,124 +801,8 @@ public class GameController {
         levelMap.put(num, level);
     }
 
-    // todo: speed up 'animation'
-    private void renderScrollingBackground(Graphics g) {
-
-        if (!Engine.stateIs(GameState.Test)) {
-
-            for (int i = minX; i < Engine.WIDTH; i += imageScrollinginterval) {
-                for (int j = minY; j < Engine.HEIGHT; j += imageScrollinginterval) {
-
-                    g.drawImage(imageSea, i, j + (int) (backgroundScroll), imageScrollinginterval + 1, imageScrollinginterval + 1, null);
-
-//                    if (backgroundScrollAcc >= maxScroll/2) {
-//                        backgroundScrollAcc = 0f;
-//                        currentImage = (currentImage - 1);
-//                        if (currentImage < 0) {
-//                            currentImage = maxImage + currentImage;
-//                        }
-//                    }
-
-//
-//
-//                        if ((timesRenderedIn % 16) == 0) {
-//                    currentImage = (currentImage + 1) % (maxImage + 1);
-//                        }
-
-//                    Utility.log("CurrentImage: " + currentImage);
-//
-                    imageSea = GameController.getTexture().sea[currentImage];
-//                    }
-
-                }
-
-            }
-
-            if (Engine.stateIs(GameState.Game)) {
-                backgroundScroll += scrollRate;
-//                backgroundScrollAcc += scrollRate;
-            } else if (Engine.stateIs(GameState.Transition)) {
-                    backgroundScroll += scrollRate/4;
-                }
-
-            if (backgroundScroll >= maxScroll) {
-                backgroundScroll = 0;
-            }
-//
-//                Utility.log("Scroll: " + backgroundScroll);
-//                        timesRenderedIn++;
-//
-//                        if ((timesRenderedIn % 16) == 0) {
-//                            currentImage = (currentImage - 1);
-//                            if (currentImage < 0) {
-//                                currentImage = maxImage + currentImage;
-//                            }
-//                        }
-//            }
-
-//            if (!Engine.stateIs(GameState.Game)) {
-                timesRenderedOut++;
-
-//            if (!Engine.stateIs(GameState.Game)) {
-                if ((timesRenderedOut % 20) == 0) {
-                    currentImage = (currentImage + 1) % (maxImage + 1);
-//                    currentImage = (currentImage - 1);
-//                    if (currentImage < 0) {
-//                        currentImage = maxImage + currentImage;
-//                    }
-                }
-//            } else {
-//                if (backgroundScrollAcc >= maxScroll) {
-//                    backgroundScrollAcc = 0f;
-//                    currentImage = (currentImage - 1);
-//                    if (currentImage < 0) {
-//                        currentImage = maxImage + currentImage;
-//                    }
-//                }
-//            }
-
-
-//            Utility.log("CurrentImage: " + currentImage);
-            }
-//        }
-
-        // Test todo: delete
-
-//        if (Engine.stateIs(GameState.Menu)) {
-//            testFunction(g, 50);
-//        }
-    }
-
     public static long getCurrentTime() {
         return timeInSeconds;
-    }
-
-    // Test Functions
-
-    private void testFunction(Graphics g, int gap) {
-        g.setColor(testColor);
-        int yInterval = gap;
-        for (int j = 0; j < Engine.HEIGHT; j += yInterval )
-                testSineLine(g, j);
-
-        testWaveSpeed++;
-    }
-
-    private void testDrawHorizontalLine(Graphics g, int j) {
-        for (int i = 0; i < Engine.WIDTH; i++)
-            g.fillRect(i, (j + testWaveSpeed) % Engine.HEIGHT, 4, 4);
-    }
-
-    private void testSineLine(Graphics g, int j) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setComposite(Utility.makeTransparent(0.75f));
-
-        for (int i = 0; i < Engine.WIDTH; i++) {
-            double iSin = Math.toDegrees(Math.sin(i));
-            double yCor = (j + iSin) + testWaveSpeed;
-            g.fillRect(i, (int) yCor % Engine.HEIGHT, 6, 2);
-        }
-        g2d.setComposite(Utility.makeTransparent(1f));
     }
 
 }

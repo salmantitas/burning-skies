@@ -193,8 +193,8 @@ public class EnemyPool extends Pool {
     }
 
     @Override
-    public void disableIfOutsideBounds(Entity entity, int levelHeight) {
-//        int offset = 200;
+    protected void disableIfOutsideBoundsHelper(Entity entity, int levelHeight) {
+        //        int offset = 200;
 
         enemy = (Enemy) entity;
         enemyType = enemy.getEnemyType();
