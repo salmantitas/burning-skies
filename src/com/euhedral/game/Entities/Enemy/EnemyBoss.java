@@ -47,8 +47,8 @@ public abstract class EnemyBoss extends Enemy {
         if (inscreenY) {
             moveInScreen();
         } else {
-            y += velY;
-            x = Utility.clamp(x, 0, Engine.WIDTH - width);
+            pos.y += velY;
+            pos.x = Utility.clamp(pos.x, 0, Engine.WIDTH - width);
         }
 
 //        System.out.println("Boss at (" + x + ", " + y + ")");

@@ -17,7 +17,7 @@ public class EnemyBoss1 extends EnemyBoss{
         super(x,y, levelHeight);
         height = Utility.intAtWidth640(48);
         width = height*3;
-        this.x = x - width/2;
+        pos.x = x - width/2;
         color = Color.orange;
         velX = Utility.intAtWidth640(2);
         health = 100;
@@ -34,7 +34,7 @@ public class EnemyBoss1 extends EnemyBoss{
     public void render(Graphics g) {
         super.render(g);
         g.setColor(color);
-        g.fillRect((int) x, (int) y, width, height);
+        g.fillRect((int) pos.x, (int) pos.y, width, height);
     }
 
     @Override
@@ -57,18 +57,18 @@ public class EnemyBoss1 extends EnemyBoss{
     public void moveInScreen() {
         if (distToCover > 0) {
             distToCover--;
-            y += velY;
+            pos.y += velY;
         }
         else {
             if (!moveLeft)
-                x += velX;
+                pos.x += velX;
             else
-                x -= velX;
+                pos.x -= velX;
         }
 
-        if (x < min)
+        if (pos.x < min)
             moveLeft = false;
-        if (x > max)
+        if (pos.x > max)
             moveLeft = true;
     }
 

@@ -63,15 +63,15 @@ public class BulletEnemy extends Bullet{
 
     @Override
     protected void move() {
-        x += velX;
+        pos.x += velX;
         if (state == STATE_ACTIVE) {
             if (isTracking()) {
-                y += velY;
+                pos.y += velY;
             } else {
-                y += velY + EntityHandler.backgroundScrollingSpeed;
+                pos.y += velY + EntityHandler.backgroundScrollingSpeed;
             }
         } else if (state == STATE_IMPACT) {
-            y += velY;
+            pos.y += velY;
         }
 
     }

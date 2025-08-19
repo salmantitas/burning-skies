@@ -97,8 +97,8 @@ public abstract class MobileEntity extends Entity {
 
     // Add velocity components to coordinates to update screen position
     protected void move() {
-        x += velX;
-        y += velY;
+        pos.x += velX;
+        pos.y += velY;
     }
 
     protected double calculateMagnitude(double aX, double aY, double bX, double bY) {
@@ -143,7 +143,7 @@ public abstract class MobileEntity extends Entity {
 
     // Triangle with vertices A, B, C
     protected double calculateAngle(double bX, double bY) {
-        return calculateAngle(x, y, bX, bY);
+        return calculateAngle(pos.x, pos.y, bX, bY);
     }
 
     // Calculate the velX and velY using angle (of direction) and forward velocity
@@ -159,8 +159,8 @@ public abstract class MobileEntity extends Entity {
     // using (x,y) as the base and (destinationX, destinationY) as the target angle
     protected void calculateVelocities(double destinationX, double destinationY) {
         // Vector
-        vectorABx = destinationX - x;
-        vectorABy = destinationY - y;
+        vectorABx = destinationX - pos.x;
+        vectorABy = destinationY - pos.y;
 
         // Magnitude
         magnitudeAB = Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
@@ -218,6 +218,6 @@ public abstract class MobileEntity extends Entity {
     }
 
     protected double getCenterX() {
-        return (x + width / 2 - 2);
+        return (pos.x + width / 2 - 2);
     }
 }

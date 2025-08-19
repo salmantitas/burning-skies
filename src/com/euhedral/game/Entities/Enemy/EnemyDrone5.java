@@ -65,7 +65,7 @@ public class EnemyDrone5 extends EnemyDrone1 {
 
     @Override
     public int getTurretX() {
-        return (int) x + width/2 - Utility.intAtWidth640(2);
+        return (int) pos.x + width/2 - Utility.intAtWidth640(2);
     }
 
     @Override

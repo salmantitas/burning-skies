@@ -44,8 +44,8 @@ public class Animation {
         }
     }
 
-    public void drawAnimation(Graphics g, int x, int y) {
-        g.drawImage(curr, x, y, null);
+    public void drawAnimation(Graphics g, double x, double y) {
+        g.drawImage(curr, (int) x, (int) y, null);
     }
 
     public void drawAnimation(Graphics g, int x, int y, int targetWidth, int targetHeight) {

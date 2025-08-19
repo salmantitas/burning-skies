@@ -7,11 +7,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public abstract class Entity {
-
-    // todo: DELETE, test only
-    protected int initCount = 0;
-
-    protected double x, y;
+    protected Position pos;
+//    protected double x, y;
     protected int width, height;
     protected EntityID id;
 
@@ -26,19 +23,18 @@ public abstract class Entity {
     protected Color color;
     Color boundColor = Color.green;
     protected BufferedImage image;
-    protected BufferedImage images[];
+//    protected BufferedImage images[];
 
     protected Animation anim;
     protected int animationSpeed = 3;
 
     public Entity(double x, double y, EntityID id) {
-        this.x = x;
-        this.y = y;
+        pos = new Position(x,y);
+//        this.x = x;
+//        this.y = y;
         this.id = id;
 
         bounds = new Rectangle();
-
-//        initialize();
     }
 
     public Entity(int x, int y, EntityID id, BufferedImage image) {
@@ -48,11 +44,9 @@ public abstract class Entity {
 
     public Entity(int x, int y, EntityID id, BufferedImage[] images) {
         this(x,y, id);
-        this.images = images;
-
+        this.anim = new Animation(animationSpeed, images);
+//        this.images = images;
     }
-
-//    protected abstract void initialize();
 
     public abstract void update();
 
@@ -66,7 +60,7 @@ public abstract class Entity {
     // In the absense of an animation, it attempts to draw an image
     // Otherwise, a default color is set and a rectangle is drawn on screen
     protected void drawDefault(Graphics g) {
-        if (images != null) {
+        if (anim != null) {
             drawAnimation(g);
         }
         else if (image != null) {
@@ -76,10 +70,6 @@ public abstract class Entity {
             setColor(g);
             drawRect(g);
         }
-    }
-
-    protected void drawAnimation(Graphics g) {
-        // todo: ???
     }
 
     protected void renderBounds(Graphics g) {
@@ -97,19 +87,32 @@ public abstract class Entity {
     // Getters & Setters
 
     public double getX() {
-        return x;
+        return pos.x;
     }
 
     public double getY() {
-        return y;
+        return pos.y;
+    }
+
+    public Position getPos() {
+        return pos;
     }
 
     public void setX(int x) {
-        this.x = x;
+        pos.x = x;
     }
 
     public void setY(int y) {
-        this.y = y;
+        pos.y = y;
+    }
+
+    public void setPos(Position pos) {
+        this.pos = pos;
+    }
+
+    public void setPos(double x, double y) {
+        pos.x = x;
+        pos.y = y;
     }
 
     public int getWidth() {
@@ -137,24 +140,24 @@ public abstract class Entity {
     }
 
     public Rectangle2D getBounds() {
-        bounds.setRect( x, y, width, height);
+        bounds.setRect( pos.x, pos.y, width, height);
         return bounds;
     }
 
     public Rectangle getBoundsTop() {
-        return new Rectangle((int) (x + 0.2*width), (int) y,  (int) (0.6* width),  height/4);
+        return new Rectangle((int) (pos.x + 0.2*width), (int) pos.y,  (int) (0.6* width),  height/4);
     }
 
     public Rectangle getBoundsBottom() {
-        return new Rectangle((int) (x + 0.2*width), (int) y + 3*height/4,  (int) (0.6* width),  height/4);
+        return new Rectangle((int) (pos.x + 0.2*width), (int) pos.y + 3*height/4,  (int) (0.6* width),  height/4);
     }
 
     public Rectangle getBoundsLeft() {
-        return new Rectangle((int) x, (int) (y + 0.35*height),  width/4,  (int) (height * 0.3));
+        return new Rectangle((int) pos.x, (int) (pos.y + 0.35*height),  width/4,  (int) (height * 0.3));
     }
 
     public Rectangle getBoundsRight() {
-        return new Rectangle((int) x + 3*width/4, (int) (y + 0.35*height),  width/4,  (int) (height * 0.3));
+        return new Rectangle((int) pos.x + 3*width/4, (int) (pos.y + 0.35*height),  width/4,  (int) (height * 0.3));
     }
 
     protected void setColor(Graphics g) {
@@ -169,12 +172,16 @@ public abstract class Entity {
         this.image = image;
     }
 
+    protected void drawAnimation(Graphics g) {
+        anim.drawAnimation(g, pos.x, pos.y);
+    }
+
     protected void drawImage(Graphics g, BufferedImage image) {
-        g.drawImage(image, (int) x, (int) y, null);
+        g.drawImage(image, (int) pos.x, (int) pos.y, null);
     }
 
     protected void drawImage(Graphics g, BufferedImage image, int targetWidth, int targetHeight) {
-        g.drawImage(image, (int) x, (int) y, targetWidth, targetHeight, null);
+        g.drawImage(image, (int) pos.x, (int) pos.y, targetWidth, targetHeight, null);
     }
 
     protected void drawImage(Graphics g, BufferedImage image, int targetWidth, int targetHeight, double rotation) {
@@ -183,7 +190,7 @@ public abstract class Entity {
         int tX = 0, tY = 0;
         g2d.translate(-tX, -tY);
         g2d.rotate(Math.toRadians(rotation));
-        g2d.drawImage(image, (int) x, (int) y, targetWidth, targetHeight, null);
+        g2d.drawImage(image, (int) pos.x, (int) pos.y, targetWidth, targetHeight, null);
         g2d.rotate(Math.toRadians(-rotation));
         g2d.translate(tX, tY);
     }
@@ -193,7 +200,7 @@ public abstract class Entity {
 //    }
 
     protected void drawRect(Graphics g) {
-        g.fillRect((int) x, (int) y, width, height);
+        g.fillRect((int) pos.x, (int) pos.y, width, height);
     }
 
     public boolean isActive() {
@@ -222,14 +229,16 @@ public abstract class Entity {
 
     public void resurrect(double x, double y) {
         enable();
-        this.x = x;
-        this.y = y;
+        setPos(x,y);
+//        pos.x = x;
+//        this.y = y;
     }
 
     public void resurrect(double x, double y, EntityID id) {
         resurrect(x, y);
     }
 
+    // todo: What is going on here and why??
     private void setActive(boolean active) {
         if (active) {
             state = STATE_ACTIVE;
@@ -243,7 +252,7 @@ public abstract class Entity {
     * */
 
     protected void printLocation() {
-        System.out.printf("__ at (%d, %d)", x, y);
+        System.out.printf("__ at (%d, %d)", pos.x, pos.y);
     }
 
     public EntityID getID() {

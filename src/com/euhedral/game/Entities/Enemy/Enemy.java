@@ -126,7 +126,7 @@ public class Enemy extends MobileEntity {
             super.update();
             shootTimer--; // todo: maybe move to when in screen
             if (!inscreenY) {
-                inscreenY = y > cam + Utility.percHeight(30);
+                inscreenY = pos.y > cam + Utility.percHeight(30);
             }
             if (inscreenY && isActive()) { // todo: potential redundant check for active
 //                if (inscreenX) {
@@ -139,10 +139,6 @@ public class Enemy extends MobileEntity {
                     jitter--;
                     jitter_MULT *= -1;
                 }
-
-//                if (health < health_MAX && health == 1)
-//                    jitter = Utility.randomRange(-jitter_MAX, jitter_MAX);
-
 //                inscreenX =!(x < VariableHandler.deadzoneWidth) && !(x > VariableHandler.deadzoneRightX - VariableHandler.deadzoneWidth);
             }
         } else if (state == STATE_EXPLODING) {
@@ -171,11 +167,11 @@ public class Enemy extends MobileEntity {
             if (inscreenY) {
                 moveInScreen();
             } else {
-                y += offscreenVelY;
+                pos.y += offscreenVelY;
             }
         } else if (isExploding()) {
             velY = 1.5f;
-            y += velY;
+            pos.y += velY;
         }
     }
 
@@ -201,7 +197,7 @@ public class Enemy extends MobileEntity {
 
     @Override
     protected void drawImage(Graphics g, BufferedImage image) {
-        g.drawImage(image, (int) x + (jitter_MULT * jitter), (int) y + (jitter_MULT * jitter), null);
+        g.drawImage(image, (int) pos.x + (jitter_MULT * jitter), (int) pos.y + (jitter_MULT * jitter), null);
 
         float transparency = (1f - (float) health/(float) health_MAX)/2;
 
@@ -216,7 +212,7 @@ public class Enemy extends MobileEntity {
     protected void drawDamageImage() {
 //        g2d.setColor(Color.red);
 //        g2d.fillRect((int) x, (int) y, width, height);
-        g2d.drawImage(damageImage, (int) x, (int) y, null);
+        g2d.drawImage(damageImage, (int) pos.x, (int) pos.y, null);
 
     }
 
@@ -230,7 +226,7 @@ public class Enemy extends MobileEntity {
                 g.setColor(Color.RED);
 
 
-                attackPathX = x - (0.5) * (double) width;
+                attackPathX = pos.x - (0.5) * (double) width;
                 attackPathY = getTurretY() - (0.5) * (double) height;
 //                double drawY = y - (0.5) * (double) height;
 
@@ -244,8 +240,8 @@ public class Enemy extends MobileEntity {
     protected void renderExplosion(Graphics g) {
         if (!explosion.playedOnce) {
             size = Math.max(width, height);
-            expX = (int) x + (size - width) / 2;
-            expY = (int) y - (size - height) / 2;
+            expX = (int) pos.x + (size - width) / 2;
+            expY = (int) pos.y - (size - height) / 2;
             explosion.drawAnimation(g, expX, expY, size, size);
 
             g2d = (Graphics2D)  g;
@@ -262,9 +258,9 @@ public class Enemy extends MobileEntity {
 
             int offsetX = (int) (Engine.WIDTH / 2 - getCenterX()) / 15;
             int sizeOffset = 10;
-            int offsetY = 10 + (int) y / 500;
+            int offsetY = 10 + (int) pos.y / 500;
             g.setColor(Color.DARK_GRAY);
-            g.fillRect((int) x - offsetX, (int) y + offsetY, width - sizeOffset, height - sizeOffset);
+            g.fillRect((int) pos.x - offsetX, (int) pos.y + offsetY, width - sizeOffset, height - sizeOffset);
 
             g2d.setComposite(Utility.makeTransparent(1f));
         }
@@ -273,8 +269,8 @@ public class Enemy extends MobileEntity {
     public void renderReflection(Graphics2D g2d, float transparency) {
         g2d.setComposite(Utility.makeTransparent(transparency));
 
-        reflectionX = reflection.calculateReflectionX(x, getCenterX());
-        reflectionY = reflection.calculateReflectionY(y, getCenterY());
+        reflectionX = reflection.calculateReflectionX(pos.x, getCenterX());
+        reflectionY = reflection.calculateReflectionY(pos.y, getCenterY());
         newWidth = (int) (width * reflection.sizeOffset);
         newHeight = (int) (height * reflection.sizeOffset);
 
@@ -296,8 +292,8 @@ public class Enemy extends MobileEntity {
     }
 
     protected void moveInScreen() {
-        y += velY;
-        x += velX;
+        pos.y += velY;
+        pos.x += velX;
     }
 
     public void damage() {
@@ -322,7 +318,7 @@ public class Enemy extends MobileEntity {
     }
 
     public boolean isBelowDeadZoneTop() {
-        return y > VariableHandler.deadzoneTop + 20;
+        return pos.y > VariableHandler.deadzoneTop + 20;
     }
 
     public void setInscreenY(boolean inscreenY) {
@@ -376,13 +372,13 @@ public class Enemy extends MobileEntity {
 //    }
 
     public Rectangle2D getBoundsHorizontal() {
-        boundsHorizontal.setRect(x, y, width, 1 * height / 3 + 2);
+        boundsHorizontal.setRect(pos.x, pos.y, width, 1 * height / 3 + 2);
 //        Rectangle bounds = new Rectangle(x, y, width, 1*height/3 + 2);
         return boundsHorizontal;
     }
 
     public Rectangle2D getBoundsVertical() {
-        boundsVertical.setRect(x + (width / 4), y, (2 * width) / 4, height);
+        boundsVertical.setRect(pos.x + (width / 4), pos.y, (2 * width) / 4, height);
 //        Rectangle bounds = new Rectangle(x + (width / 4), y, (2 * width) / 4, height);
         return boundsVertical;
     }
@@ -404,12 +400,12 @@ public class Enemy extends MobileEntity {
     }
 
     public boolean inRadius(double x, double y, int radius) {
-        double aX = this.x;
-        double aY = this.y;
-        if (this.x < x)
-            aX = this.x + width;
-        if (this.y < y)
-            aY = this.y + height;
+        double aX = pos.x;
+        double aY = pos.y;
+        if (pos.x < x)
+            aX = pos.x + width;
+        if (pos.y < y)
+            aY = pos.y + height;
         return Math.abs(calculateMagnitude(aX, aY, x,y)) < radius;
     }
 
@@ -465,11 +461,11 @@ public class Enemy extends MobileEntity {
     }
 
     public int getTurretX() {
-        return ((int) x + width / 2);
+        return ((int) pos.x + width / 2);
     }
 
     public int getTurretY() {
-        return (int) y + Utility.intAtWidth640(2);
+        return (int) pos.y + Utility.intAtWidth640(2);
     }
 
     public double getBulletVelocity() {
@@ -507,7 +503,7 @@ public class Enemy extends MobileEntity {
     // Private Methods
 
     private double getCenterY() {
-        return (y + height / 2 + 2);
+        return (pos.y + height / 2 + 2);
     }
 
     public boolean checkCollision(Rectangle2D object) {
@@ -524,7 +520,7 @@ public class Enemy extends MobileEntity {
             g.setFont(UIHandler.customFont.deriveFont(1, 20));
             g.setColor(VariableHandler.scoreColor );
             int offsetX = width / 2 - Utility.intAtWidth640(10);
-            g.drawString(Integer.toString(score), (int) x + offsetX, (int) y);
+            g.drawString(Integer.toString(score), (int) pos.x + offsetX, (int) pos.y);
         }
     }
 }

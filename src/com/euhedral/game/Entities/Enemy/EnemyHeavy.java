@@ -107,7 +107,7 @@ public class EnemyHeavy extends Enemy {
                 g.setColor(Color.RED);
 
 
-                attackPathX = x - (0.5) * (double) width;
+                attackPathX = pos.x - (0.5) * (double) width;
                 if (bulletAngle == bulletAngleMIN) {
                     attackPathY = getTurretY() - (double) height;
                 } else {
@@ -197,19 +197,19 @@ public class EnemyHeavy extends Enemy {
     }
 
     private void updateDestination() {
-        destinationX = EntityHandler.playerX;
-        destinationY = EntityHandler.playerY;
+        destinationX = EntityHandler.playerPositon.x;
+        destinationY = EntityHandler.playerPositon.y;
     }
 
     @Override
     public int getTurretX() {
         if (turretLeft) {
             turretLeft = !turretLeft;
-            return (int) x + width / 3 - Utility.intAtWidth640(2);
+            return (int) pos.x + width / 3 - Utility.intAtWidth640(2);
         }
         else {
             turretLeft = !turretLeft;
-            return (int) x + 2 * width / 3 - Utility.intAtWidth640(2);
+            return (int) pos.x + 2 * width / 3 - Utility.intAtWidth640(2);
         }
     }
 
@@ -226,8 +226,8 @@ public class EnemyHeavy extends Enemy {
 //        if (bothShotsFired)
 //            incrementBulletAngle();
 
-        rangeCheck1 = (destinationX - offsetLeft > x) && (destinationX - offsetLeft < x + width);
-        rangeCheck2 = (destinationX + 32 + offsetRight < x + width) && (destinationX + 32 + offsetRight > x);
+        rangeCheck1 = (destinationX - offsetLeft > pos.x) && (destinationX - offsetLeft < pos.x + width);
+        rangeCheck2 = (destinationX + 32 + offsetRight < pos.x + width) && (destinationX + 32 + offsetRight > pos.x);
         playerInRange = rangeCheck1 || rangeCheck2;
 
         if (playerInRange)

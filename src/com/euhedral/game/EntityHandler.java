@@ -18,7 +18,7 @@ public class EntityHandler {
 
     // Player
     private Player player;// = new Player(0, 0, 0);
-    public static double playerX, playerY;
+    public static Position playerPositon;
     public static int playerRadius;
 
     // Entity Lists
@@ -207,8 +207,11 @@ public class EntityHandler {
     // Helper function exists because GameController needs to call on this during tutorial
     public void updatePlayer() {
         player.update();
-        playerX = player.getCenterX();
-        playerY = player.getCenterY();
+        if (playerPositon == null) {
+            playerPositon = new Position(player.getCenterX(), player.getCenterY());
+        } else {
+            playerPositon.setPosition(player.getCenterX(), player.getCenterY());
+        }
         playerRadius = player.getRadius();
     }
 
@@ -428,7 +431,7 @@ public class EntityHandler {
 
     private void renderReflections(Graphics g) {
         g2d = (Graphics2D) g;
-        transparency = 0.2f;
+        transparency = 0.15f;
         renderBulletReflections(g2d, transparency);
         player.renderReflection(g2d, transparency);
         renderEnemyReflections(g2d, transparency);
@@ -613,7 +616,7 @@ public class EntityHandler {
 
     private void enemyVsPlayerBulletCollision() {
         if (playerRadius > -1)
-            enemies.destroyIfWithinRadius(playerX, playerY, playerRadius);
+            enemies.destroyIfWithinRadius(playerPositon.x, playerPositon.y, playerRadius);
         enemies.checkCollisionBullet(player);
     }
 

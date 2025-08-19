@@ -107,14 +107,14 @@ public class EnemyBasic1 extends Enemy{
 
     @Override
     public int getTurretX() {
-        return (int) x + width/2 - Utility.intAtWidth640(2);
+        return (int) pos.x + width/2 - Utility.intAtWidth640(2);
     }
 
     private void renderPath(Graphics g) {
         g.setColor(Color.RED);
         int pathLength = Engine.HEIGHT;
-        int originX = (int) x + width/2;
-        int originY = (int) y + height/2;
+        int originX = (int) pos.x + width/2;
+        int originY = (int) pos.y + height/2;
         for (int i = 0; i < pathLength; i ++) {
             g.drawLine(originX, originY, originX + 0, originY + i);
         }

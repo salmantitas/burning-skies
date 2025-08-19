@@ -28,9 +28,9 @@ public class EnemyDrone4 extends EnemyDrone1 {
 
     @Override
     protected void moveInScreen() {
-        y += velY;
-        if (x < destinationX - width || x > destinationX + width)
-            x += velX;
+        pos.y += velY;
+        if (pos.x < destinationX - width || pos.x > destinationX + width)
+            pos.x += velX;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class EnemyDrone4 extends EnemyDrone1 {
         forwardVelocity = 1;
         bulletAngle = 90;
 
-        if (x < destinationX)
+        if (pos.x < destinationX)
             bulletAngleIncrements = - 10;
         else {
             bulletAngleIncrements = 10;
@@ -71,7 +71,7 @@ public class EnemyDrone4 extends EnemyDrone1 {
 
     @Override
     public int getTurretX() {
-        return (int) x + width/2 - Utility.intAtWidth640(2);
+        return (int) pos.x + width/2 - Utility.intAtWidth640(2);
     }
 
     @Override

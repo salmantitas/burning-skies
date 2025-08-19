@@ -93,7 +93,7 @@ public class EnemyScatter2 extends Enemy {
     protected void moveInScreen() {
         if (movementState == MOVING_DOWN) {
             velY = Math.max(0, velY - deceleration);
-            y += velY;
+            pos.y += velY;
             if (velY == 0) {
                 movementState = MOVING_CIRCLE;
                 vMove = VerticalMovement.UP;
@@ -118,7 +118,7 @@ public class EnemyScatter2 extends Enemy {
 
     @Override
     public int getTurretX() {
-        return (int) x + width / 2 - Utility.intAtWidth640(2);
+        return (int) pos.x + width / 2 - Utility.intAtWidth640(2);
     }
 
     @Override
@@ -135,8 +135,8 @@ public class EnemyScatter2 extends Enemy {
     }
 
     private void updateDestination() {
-        destinationX = EntityHandler.playerX;
-        destinationY = EntityHandler.playerY;
+        destinationX = EntityHandler.playerPositon.x;
+        destinationY = EntityHandler.playerPositon.y;
     }
 
     @Override

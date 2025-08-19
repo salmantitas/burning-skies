@@ -49,14 +49,14 @@ public class EnemySide3 extends Enemy{
             double xMin = -2*width, xMax = Engine.WIDTH + width;
 
             velY = 0;
-            if (x <= xMin && velX < 0) {
+            if (pos.x <= xMin && velX < 0) {
                 velX = velX_MIN;
                 if (!firstEntry)
-                    y = destinationY;
-            } else if (x >= xMax && velX > 0) {
+                    pos.y = destinationY;
+            } else if (pos.x >= xMax && velX > 0) {
                 velX = -velX_MIN;
                 if (!firstEntry)
-                    y = destinationY;
+                    pos.y = destinationY;
             }
 
         } else if (isExploding()) {
@@ -93,8 +93,8 @@ public class EnemySide3 extends Enemy{
 
     private void updateDestination() {
         int offsetY = -32;
-        destinationX = EntityHandler.playerX;
-        destinationY = EntityHandler.playerY + offsetY;
+        destinationX = EntityHandler.playerPositon.x;
+        destinationY = EntityHandler.playerPositon.y + offsetY;
     }
 
     @Override
@@ -118,12 +118,12 @@ public class EnemySide3 extends Enemy{
 
     @Override
     public int getTurretY() {
-        return (int) y + Utility.intAtWidth640(3);
+        return (int) pos.y + Utility.intAtWidth640(3);
     }
 
     @Override
     public Rectangle2D getBoundsHorizontal() {
-        boundsHorizontal.setRect(x, y + 20, width, 1*height/3 + 2);
+        boundsHorizontal.setRect(pos.x, pos.y + 20, width, 1*height/3 + 2);
         return boundsHorizontal;
     }
 
@@ -131,9 +131,9 @@ public class EnemySide3 extends Enemy{
     public Rectangle2D getBoundsVertical() {
 //        Rectangle2D bounds = null;
         if (velX > 0)
-            boundsVertical.setRect(x + (width / 4) - 10, y, (2 * width) / 4, height);
+            boundsVertical.setRect(pos.x + (width / 4) - 10, pos.y, (2 * width) / 4, height);
         else
-            boundsVertical.setRect(x + (width / 4) + 10, y, (2 * width) / 4, height);
+            boundsVertical.setRect(pos.x + (width / 4) + 10, pos.y, (2 * width) / 4, height);
         return boundsVertical;
     }
 }

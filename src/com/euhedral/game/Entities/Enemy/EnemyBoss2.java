@@ -25,7 +25,7 @@ public class EnemyBoss2 extends EnemyBoss{
         super(x,y, levelHeight);
         height = Utility.intAtWidth640(48);
         width = height*3;
-        this.x = x - width/2;
+        pos.x = x - width/2;
         color = Color.orange;
         velX = Utility.intAtWidth640(2);
         health = 200;
@@ -48,13 +48,13 @@ public class EnemyBoss2 extends EnemyBoss{
     public void render(Graphics g) {
         super.render(g);
         g.setColor(color);
-        g.fillRect((int) x, (int) y, width, height);
+        g.fillRect((int) pos.x, (int) pos.y, width, height);
     }
 
     @Override
     public void shoot() {
-        double leftGun = x + offset;
-        double rightGun = x + width- offset;
+        double leftGun = pos.x + offset;
+        double rightGun = pos.x + width- offset;
         // left gun
 //        bullets.add(new BulletEnemy((int) (leftGun), y + height / 2, 110));
 
@@ -77,15 +77,15 @@ public class EnemyBoss2 extends EnemyBoss{
     public void moveInScreen() {
         if (distToCover > 0) {
             distToCover--;
-            y += velY;
+            pos.y += velY;
         }
         else {
             if (isPlayerCenter()) {
 
             } else if (isPlayerLeft()) {
-                x = (int) Math.max(x - velX, 0);
+                pos.x = (int) Math.max(pos.x - velX, 0);
             } else if (isPlayerRight()) {
-                x = (int) Math.min(x + velX, Engine.WIDTH - width);
+                pos.x = (int) Math.min(pos.x + velX, Engine.WIDTH - width);
             }
         }
     }
@@ -93,7 +93,7 @@ public class EnemyBoss2 extends EnemyBoss{
     // Private Methods
 
     private boolean isPlayerLeft() {
-        midPoint = (int) x + width/2;
+        midPoint = (int) pos.x + width/2;
         playerStart = player.getX();
         playerEnd = (int) playerStart + player.getWidth();
 
@@ -101,7 +101,7 @@ public class EnemyBoss2 extends EnemyBoss{
     }
 
     private boolean isPlayerRight() {
-        midPoint = (int) x + width/2;
+        midPoint = (int) pos.x + width/2;
         playerStart = player.getX();
 
         return midPoint < playerStart;
@@ -111,6 +111,6 @@ public class EnemyBoss2 extends EnemyBoss{
         playerStart = player.getX();
         playerEnd = (int) playerStart + player.getWidth();
 
-        return (x + offset < playerStart) && ((x + width) - offset > playerEnd);
+        return (pos.x + offset < playerStart) && ((pos.x + width) - offset > playerEnd);
     }
 }

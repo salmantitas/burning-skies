@@ -63,17 +63,17 @@ public class BulletPlayer extends Bullet{
         if (state == STATE_ACTIVE) {
             drawImage(g, image, width, height);
         } else if (state == STATE_IMPACT && entity.isActive()) {
-            impact.drawAnimation(g, (int) x - impactAnimationAdjustmentX, (int) y, impactSize, impactSize);
+            impact.drawAnimation(g, (int) pos.x - impactAnimationAdjustmentX, (int) pos.y, impactSize, impactSize);
         }
     }
 
     @Override
     protected void drawImage(Graphics g, BufferedImage image, int targetWidth, int targetHeight) {
         if (target == null)
-            g.drawImage(image, (int) x, (int) y, targetWidth, targetHeight, null);
+            g.drawImage(image, (int) pos.x, (int) pos.y, targetWidth, targetHeight, null);
         else {
             g.setColor(Color.RED);
-            g.fillOval((int) x, (int) y, width, height);
+            g.fillOval((int) pos.x, (int) pos.y, width, height);
         }
     }
 

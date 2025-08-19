@@ -210,16 +210,16 @@ public class Player extends MobileEntity {
             g.setColor(Color.ORANGE);
             g2d.setComposite(Utility.makeTransparent(0.2f));
             if (isMovingLeft()) {
-                g.fillRect((int) x + width / 2, (int) y, width / 2, height);
+                g.fillRect((int) pos.x + width / 2, (int) pos.y, width / 2, height);
             }
             if (isMovingRight()) {
-                g.fillRect((int) x, (int) y, width / 2, height);
+                g.fillRect((int) pos.x, (int) pos.y, width / 2, height);
             }
             if (isMovingUp()) {
-                g.fillRect((int) x, (int) y + height / 2, width, height / 2);
+                g.fillRect((int) pos.x, (int) pos.y + height / 2, width, height / 2);
             }
             if (isMovingDown()) {
-                g.fillRect((int) x, (int) y, width, height / 2);
+                g.fillRect((int) pos.x, (int) pos.y, width, height / 2);
             }
             g2d.setComposite(Utility.makeTransparent(1f));
         }
@@ -228,7 +228,7 @@ public class Player extends MobileEntity {
         float transparency = (1f - (float) health.getValue() / 100) / 2;
 
         g2d.setComposite(Utility.makeTransparent(transparency));
-        g.drawImage(damageImage, (int) x, (int) y, null);
+        g.drawImage(damageImage, (int) pos.x, (int) pos.y, null);
         g2d.setComposite(Utility.makeTransparent(1f));
 
         // Render Shield
@@ -240,10 +240,10 @@ public class Player extends MobileEntity {
             }
             g2d.setColor(Color.blue);
             g2d.setComposite(Utility.makeTransparent(shieldTransparency));
-            g2d.fillOval((int) x - width / shieldOffset, (int) y - height / shieldOffset + 5, width + 2 * width / shieldOffset, height + 2 * height / shieldOffset);
+            g2d.fillOval((int) pos.x - width / shieldOffset, (int) pos.y - height / shieldOffset + 5, width + 2 * width / shieldOffset, height + 2 * height / shieldOffset);
             g2d.setComposite(Utility.makeTransparent(1f));
             g2d.setStroke(new BasicStroke(3, 1, 1));
-            g2d.drawOval((int) x - width / shieldOffset, (int) y - height / shieldOffset + 5, width + 2 * width / shieldOffset, height + 2 * height / shieldOffset);
+            g2d.drawOval((int) pos.x - width / shieldOffset, (int) pos.y - height / shieldOffset + 5, width + 2 * width / shieldOffset, height + 2 * height / shieldOffset);
         }
 
         // Render Ring Of Fire
@@ -251,11 +251,11 @@ public class Player extends MobileEntity {
             g.setColor(Color.YELLOW);
 
             g2d.setComposite(Utility.makeTransparent(0.f));
-            g.fillOval((int) x - pulseRadius, (int) y - pulseRadius, width + pulseRadius * 2, height + pulseRadius * 2);
+            g.fillOval((int) pos.x - pulseRadius, (int) pos.y - pulseRadius, width + pulseRadius * 2, height + pulseRadius * 2);
             g2d.setComposite(Utility.makeTransparent(1f));
 
             g2d.setStroke(new BasicStroke(pulseRadius / (bulletVelocity * 3)));
-            g.drawOval((int) x - pulseRadius, (int) y - pulseRadius, width + pulseRadius * 2, height + pulseRadius * 2);
+            g.drawOval((int) pos.x - pulseRadius, (int) pos.y - pulseRadius, width + pulseRadius * 2, height + pulseRadius * 2);
         }
 
 //        renderStats(g);
@@ -264,7 +264,7 @@ public class Player extends MobileEntity {
 
     @Override
     protected void drawImage(Graphics g, BufferedImage image) {
-        g.drawImage(image, (int) x + (jitter_MULT * jitter), (int) y + (jitter_MULT * jitter), null);
+        g.drawImage(image, (int) pos.x + (jitter_MULT * jitter), (int) pos.y + (jitter_MULT * jitter), null);
     }
 
     public void renderShadow(Graphics2D g2d) {
@@ -273,9 +273,9 @@ public class Player extends MobileEntity {
         int sizeOffset = 10;
         int xCorrection = 8;
         int offsetX = (int) (Engine.WIDTH / 2 - getCenterX()) / 15;
-        int offsetY = 10 + (int) y / 500;
+        int offsetY = 10 + (int) pos.y / 500;
         g2d.setColor(Color.DARK_GRAY);
-        g2d.fillRect(xCorrection + (int) x - offsetX, (int) y - offsetY, width - sizeOffset, height - sizeOffset);
+        g2d.fillRect(xCorrection + (int) pos.x - offsetX, (int) pos.y - offsetY, width - sizeOffset, height - sizeOffset);
 
         g2d.setComposite(Utility.makeTransparent(1f));
     }
@@ -283,7 +283,7 @@ public class Player extends MobileEntity {
     public void renderReflection(Graphics2D g2d, float transparency) {
         renderBulletReflections(g2d, transparency);
 
-        reflection.render(g2d, image, x + (jitter_MULT * jitter), getCenterX(), y + (jitter_MULT * jitter), getCenterY(), width, height, transparency);
+        reflection.render(g2d, image, pos.x + (jitter_MULT * jitter), getCenterX(), pos.y + (jitter_MULT * jitter), getCenterY(), width, height, transparency);
     }
 
     private void renderBulletReflections(Graphics2D g2d, float transparency) {
@@ -358,17 +358,18 @@ public class Player extends MobileEntity {
     }
 
     public Rectangle2D getBoundsHorizontal() {
-        boundsHorizontal.setRect(x + 1, y + 2 * height / 3 - 2, width - 3, height / 3 - 6);
+        boundsHorizontal.setRect(pos.x + 1, pos.y + 2 * height / 3 - 2, width - 3, height / 3 - 6);
         return boundsHorizontal;
     }
 
     public Rectangle2D getBoundsVertical() {
-        boundsVertical.setRect(x + (width / 4) + 1, y - 1, (2 * width) / 4 - 3, height - 1);
+        boundsVertical.setRect(pos.x + (width / 4) + 1, pos.y - 1, (2 * width) / 4 - 3, height - 1);
         return boundsVertical;
     }
 
     public void setX(int x) {
-        this.x = x;
+        super.setX(x);
+//        this.x = x;
     }
 
 //    public void switchBullet() {
@@ -399,8 +400,8 @@ public class Player extends MobileEntity {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
         calculateTurretPositions();
-        turretRightX = (int) (x + width - 8);
-        turretLeftX = (int) (x + 4);
+        turretRightX = (int) (pos.x + width - 8);
+        turretLeftX = (int) (pos.x + 4);
 
         if (VariableHandler.homing) {
             VariableHandler.homing = false;
@@ -473,14 +474,14 @@ public class Player extends MobileEntity {
     }
 
     private void calculateTurretPositions() {
-        turretMidX = (int) (x + width / 2 - 2);
-        turretY = (int) (y + height * 2 / 3 - velY);
+        turretMidX = (int) (pos.x + width / 2 - 2);
+        turretY = (int) (pos.y + height * 2 / 3 - velY);
     }
 
     private void keyboardMove() {
 
         if (isMovingLeft()) {
-            if (x < VariableHandler.deadzoneWidth) {
+            if (pos.x < VariableHandler.deadzoneWidth) {
                 velX += Math.abs(velX) / 4;
                 velX = Utility.clamp(velX, -velX_MAX, 0);
             } else {
@@ -489,7 +490,7 @@ public class Player extends MobileEntity {
             }
 //            Utility.log("VelX: " + velX);
         } else if (isMovingRight()) {
-            if (x > VariableHandler.deadzoneRightX - VariableHandler.deadzoneWidth) {
+            if (pos.x > VariableHandler.deadzoneRightX - VariableHandler.deadzoneWidth) {
                 velX -= Math.abs(velX) / 4;
                 velX = Utility.clamp(velX, 0, velX_MAX);
             } else {
@@ -513,7 +514,7 @@ public class Player extends MobileEntity {
 //        y = Utility.clamp(y, levelHeight - 640, levelHeight + clampOffsetY);
 
         if (isMovingUp()) {
-            if (y < levelHeight - 600) {
+            if (pos.y < levelHeight - 600) {
                 velY += Math.abs(velY) / 4;
                 velY = Utility.clamp(velY, -velY_MAX, 0);
             } else {
@@ -521,7 +522,7 @@ public class Player extends MobileEntity {
                 velY = Utility.clamp(velY, -(velY_MAX + speedBoost), -velY_MIN);
             }
         } else if (isMovingDown()) {
-            if (y > levelHeight + clampOffsetY) {
+            if (pos.y > levelHeight + clampOffsetY) {
                 velY -= Math.abs(velY) / 4;
                 velY = Utility.clamp(velY, 0, velY_MAX);
             } else {
@@ -547,26 +548,26 @@ public class Player extends MobileEntity {
 
         if (destinationGiven) {
             int positionOffset = 5;
-            if (mx == y && my == y) {
+            if (mx == pos.y && my == pos.y) {
                 destinationGiven = false;
             }
-            if (Math.abs(mx - x) < positionOffset) {
+            if (Math.abs(mx - pos.x) < positionOffset) {
                 moveLeft = false;
                 moveRight = false;
-            } else if (mx > x) {
+            } else if (mx > pos.x) {
                 moveLeft = false;
                 moveRight = true;
-            } else if (mx < x) {
+            } else if (mx < pos.x) {
                 moveLeft = true;
                 moveRight = false;
             }
-            if (Math.abs(my - y) < positionOffset) {
+            if (Math.abs(my - pos.y) < positionOffset) {
                 moveUp = false;
                 moveDown = false;
-            } else if (my > y) {
+            } else if (my > pos.y) {
                 moveUp = false;
                 moveDown = true;
-            } else if (my < y) {
+            } else if (my < pos.y) {
                 moveUp = true;
                 moveDown = false;
             }
@@ -646,11 +647,11 @@ public class Player extends MobileEntity {
     }
 
     public double getCenterX() {
-        return x + width / 2 - 9; // todo: find out why we need 12
+        return pos.x + width / 2 - 9; // todo: find out why we need 12
     }
 
     public double getCenterY() {
-        return (y + height / 2 - 2);
+        return (pos.y + height / 2 - 2);
     }
 
     public int getRadius() {

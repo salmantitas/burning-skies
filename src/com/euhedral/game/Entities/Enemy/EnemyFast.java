@@ -87,8 +87,8 @@ public class EnemyFast extends Enemy{
     }
 
     private void updateDestination() {
-        destinationX = EntityHandler.playerX;
-        destinationY = EntityHandler.playerY;
+        destinationX = EntityHandler.playerPositon.x;
+        destinationY = EntityHandler.playerPositon.y;
     }
 
 //    @Override
@@ -100,7 +100,7 @@ public class EnemyFast extends Enemy{
 
     @Override
     public int getTurretX() {
-        return (int) x + width/2 - Utility.intAtWidth640(2);
+        return (int) pos.x + width/2 - Utility.intAtWidth640(2);
     }
 
     @Override

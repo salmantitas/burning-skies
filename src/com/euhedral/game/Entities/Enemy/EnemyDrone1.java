@@ -96,14 +96,14 @@ public class EnemyDrone1 extends Enemy{
 //    }
 
     protected void updateDestination() {
-        destinationX = EntityHandler.playerX;
-        destinationY = EntityHandler.playerY;
+        destinationX = EntityHandler.playerPositon.x;
+        destinationY = EntityHandler.playerPositon.y;
     }
 
     @Override
     protected void drawDamageImage() {
         g2d.setColor(Color.BLACK);
-        g2d.fillOval((int) x, (int) y, width, height);
+        g2d.fillOval((int) pos.x, (int) pos.y, width, height);
     }
 
 //    @Override

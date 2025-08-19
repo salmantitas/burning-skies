@@ -42,7 +42,7 @@ public class EnemyBasic3 extends Enemy{
                 angle = Math.max(angle - angleIncrement, WEST + angleAdjustment);
             }
 
-            if (x < -width || x > Engine.WIDTH -0*width) {
+            if (pos.x < -width || pos.x > Engine.WIDTH -0*width) {
                 angle = SOUTH;
             }
         }
@@ -56,7 +56,7 @@ public class EnemyBasic3 extends Enemy{
 
     @Override
     protected void shoot() {
-        if (x < -width || x > Engine.WIDTH - 0*width) {
+        if (pos.x < -width || pos.x > Engine.WIDTH - 0*width) {
 
         } else
             super.shoot();
@@ -72,7 +72,7 @@ public class EnemyBasic3 extends Enemy{
 
     @Override
     public int getTurretX() {
-        return (int) x + width/2 - Utility.intAtWidth640(2);
+        return (int) pos.x + width/2 - Utility.intAtWidth640(2);
     }
 
     @Override

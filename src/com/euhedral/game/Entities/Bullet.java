@@ -43,8 +43,9 @@ public class Bullet extends MobileEntity {
 
     Bullet( double x, double y) {
         super(x ,y, EntityID.Bullet);
-        this.x = x;
-        this.y = y;
+        setPos(x,y);
+//        this.x = x;
+//        this.y = y;
         collided = false;
         width = Utility.intAtWidth640(4);
         height = Utility.intAtWidth640(24)/2;
@@ -102,15 +103,15 @@ public class Bullet extends MobileEntity {
 //            g.setColor(impactColor);
 //            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
 
-            impact.drawAnimation(g, (int) x, (int) y, impactSize, impactSize);
+            impact.drawAnimation(g, (int) pos.x, (int) pos.y, impactSize, impactSize);
         }
     }
 
     public void renderReflection(Graphics2D g2d, float transparency) {
         g2d.setComposite(Utility.makeTransparent(transparency));
 
-        reflectionX = reflection.calculateReflectionX(x, getCenterX());
-        reflectionY = reflection.calculateReflectionY(y, getCenterY());
+        reflectionX = reflection.calculateReflectionX(pos.x, getCenterX());
+        reflectionY = reflection.calculateReflectionY(pos.y, getCenterY());
 
         if (state == STATE_ACTIVE) {
             g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
@@ -122,8 +123,9 @@ public class Bullet extends MobileEntity {
     }
 
     protected void move() {
-        x += velX;
-        y += velY;
+        super.move();
+//        pos.x += velX;
+//        pos.y += velY;
     }
 
     public void mirror(Bullet bullet, double angle) {
@@ -134,15 +136,17 @@ public class Bullet extends MobileEntity {
     }
 
     public void setX(int x) {
-        this.x = x;
+        super.setX(x);
+//        pos.x = x;
     }
 
     public void setY(int y) {
-        this.y = y;
+        super.setY(y);
+//        this.y = y;
     }
 
     public Rectangle2D getBounds() {
-        return new Rectangle2D.Double(x, y, width, height);
+        return new Rectangle2D.Double(pos.x, pos.y, width, height);
     }
 
     @Override
@@ -166,17 +170,17 @@ public class Bullet extends MobileEntity {
     }
 
     protected double getCenterY() {
-        return (y + height / 2);
+        return (pos.y + height / 2);
     }
 
     @Override
     public boolean canDisable() {
 //        if (isActive()) {
 
-            belowScreen = y > bottomBounds;
-            aboveScreen = y < 0;
-            leftOfScreen = x < 0;
-            rightOfScreen = x > rightBounds;
+            belowScreen = pos.y > bottomBounds;
+            aboveScreen = pos.y < 0;
+            leftOfScreen = pos.x < 0;
+            rightOfScreen = pos.x > rightBounds;
 
 //            if (belowScreen || aboveScreen || leftOfScreen || rightOfScreen)
 //                Utility.log("Can disable");

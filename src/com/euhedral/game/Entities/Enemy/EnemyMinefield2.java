@@ -42,9 +42,9 @@ public class EnemyMinefield2 extends Enemy{
         if (isActive()) {
 
             velY = 0;
-            if (x <= xMin) {
+            if (pos.x <= xMin) {
                 velX = velX_MIN;
-            } else if (x >= xMax) {
+            } else if (pos.x >= xMax) {
                 velX = -velX_MIN;
             }
         } else if (isExploding()) {
@@ -92,12 +92,12 @@ public class EnemyMinefield2 extends Enemy{
 
     @Override
     public int getTurretY() {
-        return (int) y + Utility.intAtWidth640(3);
+        return (int) pos.y + Utility.intAtWidth640(3);
     }
 
     @Override
     public Rectangle2D getBoundsHorizontal() {
-        boundsHorizontal.setRect(x, y + 20, width, 1*height/3 + 2);
+        boundsHorizontal.setRect(pos.x, pos.y + 20, width, 1*height/3 + 2);
         return boundsHorizontal;
     }
 
@@ -105,9 +105,9 @@ public class EnemyMinefield2 extends Enemy{
     public Rectangle2D getBoundsVertical() {
 //        Rectangle2D bounds = null;
         if (velX > 0)
-            boundsVertical.setRect(x + (width / 4) - 10, y, (2 * width) / 4, height);
+            boundsVertical.setRect(pos.x + (width / 4) - 10, pos.y, (2 * width) / 4, height);
         else
-            boundsVertical.setRect(x + (width / 4) + 10, y, (2 * width) / 4, height);
+            boundsVertical.setRect(pos.x + (width / 4) + 10, pos.y, (2 * width) / 4, height);
         return boundsVertical;
     }
 }

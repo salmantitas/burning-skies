@@ -82,7 +82,7 @@ public class EnemyStatic1 extends Enemy {
     protected void moveInScreen() {
 //        if (y < verticalPosition) {
         velY = Math.max(0, velY - deceleration);
-        y += velY;
+        pos.y += velY;
 //        }
     }
 
@@ -120,7 +120,7 @@ public class EnemyStatic1 extends Enemy {
 
     @Override
     public int getTurretX() {
-        return (int) x + width / 2 - Utility.intAtWidth640(2);
+        return (int) pos.x + width / 2 - Utility.intAtWidth640(2);
     }
 
     @Override
@@ -129,8 +129,8 @@ public class EnemyStatic1 extends Enemy {
     }
 
     private void updateDestination() {
-        destinationX = EntityHandler.playerX;
-        destinationY = EntityHandler.playerY;
+        destinationX = EntityHandler.playerPositon.x;
+        destinationY = EntityHandler.playerPositon.y;
     }
 
     @Override
