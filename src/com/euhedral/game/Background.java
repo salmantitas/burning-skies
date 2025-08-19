@@ -4,7 +4,7 @@ import com.euhedral.engine.Engine;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Pool;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.Entities.BackgroundObject;
+import com.euhedral.game.Entities.Clouds;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -19,7 +19,9 @@ public class Background {
     private double backgroundScroll = 0;
     //    private float backgroundScrollAcc = 0;
     private static final double maxScroll = 64;
-    public static final double scrollRate = maxScroll/28; // MAX = 0.04
+    public static final double scrollRateGame = maxScroll/29;  // MAX = 0.04
+    public static final double scrollRateTransition = scrollRateGame/4;
+    private static double scrollRate;
 
     BufferedImage imageSea; // = GameController.getTexture().sea[currentImage];
     int imageScrollinginterval; // = imageSea.getHeight() * 2;
@@ -28,7 +30,9 @@ public class Background {
     int minY = (int) -maxScroll;
 
     Pool backgroundObjects;
-    int islandSpawnCount, islandSpawnCount_MAX;
+    int cloudSpawnCount, cloudSpawnCount_MAX;
+
+    int cloudScale = 3;
 
     /************
      * Test *
@@ -42,17 +46,17 @@ public class Background {
         imageScrollinginterval = imageSea.getHeight() * 2 - 2;
 
         backgroundObjects = new Pool();
-        islandSpawnCount = 0;
-        islandSpawnCount_MAX = 10;
+        cloudSpawnCount = 0;
+        cloudSpawnCount_MAX = 54*cloudScale;
     }
 
     public void update() {
         backgroundObjects.update();
-        islandSpawnCount++;
-        if (islandSpawnCount > islandSpawnCount_MAX) {
-            spawnNewIsland();
-            islandSpawnCount = 0;
-            islandSpawnCount_MAX = Utility.randomRangeInclusive(10, 20);
+        cloudSpawnCount++;
+        if (cloudSpawnCount > cloudSpawnCount_MAX) {
+            spawnNewCloud();
+            cloudSpawnCount = 0;
+            cloudSpawnCount_MAX = Utility.randomRangeInclusive(54*cloudScale, 54*(cloudScale + 1));
         }
 //        backgroundObjects.disableIfOutsideBounds(1);
     }
@@ -96,11 +100,15 @@ public class Background {
             }
 
             if (Engine.stateIs(GameState.Game)) {
-                backgroundScroll += scrollRate;
+                scrollRate = scrollRateGame;
 //                backgroundScrollAcc += scrollRate;
             } else if (Engine.stateIs(GameState.Transition)) {
-                backgroundScroll += scrollRate/4;
+                scrollRate = scrollRateTransition;
+            } else {
+                scrollRate = 0;
             }
+
+            backgroundScroll += scrollRate;
 
             if (backgroundScroll >= maxScroll) {
                 backgroundScroll = 0;
@@ -176,10 +184,14 @@ public class Background {
         g2d.setComposite(Utility.makeTransparent(1f));
     }
 
-    private void spawnNewIsland() {
-        BackgroundObject island = new BackgroundObject(Utility.randomRangeInclusive(0, Engine.WIDTH), -100, EntityID.Background);
-        island.setWidth(100);
-        island.setHeight(100);
-        backgroundObjects.add(island);
+    private void spawnNewCloud() {
+        Clouds cloud = new Clouds(Utility.randomRangeInclusive(0, Engine.WIDTH), -100, EntityID.Background);
+        cloud.setWidth(48*cloudScale);
+        cloud.setHeight(54*cloudScale);
+        backgroundObjects.add(cloud);
+    }
+
+    public static double getScrollRate() {
+        return scrollRate;
     }
 }

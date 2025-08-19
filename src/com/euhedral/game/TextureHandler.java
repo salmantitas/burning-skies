@@ -19,6 +19,7 @@ public class TextureHandler {
             impactSmallImage,
             logo,
             seaImage,
+            cloudImage,
             pickupImage,
             bulletPlayerImage,
             bulletEnemyImage;
@@ -32,6 +33,7 @@ public class TextureHandler {
             explosionSS,
             impactSmallSS,
             seaSS,
+            cloudSS,
             pickupSS,
             bulletPlayerSS,
             bulletEnemySS;
@@ -49,6 +51,7 @@ public class TextureHandler {
     public BufferedImage[] explosion = new BufferedImage[4];
     public BufferedImage[] impactSmall = new BufferedImage[4];
     public BufferedImage[] sea = new BufferedImage[8];
+    public BufferedImage[] cloud = new BufferedImage[1];
     public BufferedImage[] pickup = new BufferedImage[5];
     public BufferedImage[] bulletPlayer = new BufferedImage[1];
     public BufferedImage[] bulletEnemy = new BufferedImage[1];
@@ -66,6 +69,7 @@ public class TextureHandler {
             impactSmallImage = loader.loadImage("/impactsmall.png");
             logo = loader.loadImage("/logo.png");
             seaImage = loader.loadImage("/sea.png");
+            cloudImage = loader.loadImage("/cloud.png");
             pickupImage = loader.loadImage("/pickup.png");
             bulletPlayerImage = loader.loadImage("/bulletPlayer.png");
             bulletEnemyImage = loader.loadImage("/bulletEnemy.png");
@@ -81,6 +85,7 @@ public class TextureHandler {
         explosionSS = new SpriteSheet(explosionImage);
         impactSmallSS = new SpriteSheet(impactSmallImage);
         seaSS = new SpriteSheet(seaImage);
+        cloudSS = new SpriteSheet(cloudImage);
         pickupSS = new SpriteSheet(pickupImage);
         bulletPlayerSS = new SpriteSheet(bulletPlayerImage);
         bulletEnemySS = new SpriteSheet(bulletEnemyImage);
@@ -169,6 +174,10 @@ public class TextureHandler {
         w = 16;
         h = 16;
         bulletEnemy[0] = bulletEnemySS.grabImage(1,1,w,h);
+
+        w = 48;
+        h = 54;
+        cloud[0] = cloudSS.grabImage(1,1,w,h);
     }
 
     public static Animation initExplosion(int speed) {

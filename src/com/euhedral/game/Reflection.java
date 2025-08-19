@@ -6,8 +6,8 @@ import com.euhedral.engine.Utility;
 import java.awt.*;
 
 public class Reflection {
-    public static final double lightX = Engine.WIDTH / 2, lightY = Engine.HEIGHT/2;
-    public static final double sizeOffset = 0.9;
+    public static final double screenCenterX = Engine.WIDTH / 2, screenCenterY = Engine.HEIGHT/2;
+    public static final double sizeOffset = 0.8;
     public static final int xCorrection = 8;
     public static final int yCorrection = 12;
 
@@ -15,16 +15,16 @@ public class Reflection {
 
     double offsetX, offsetY;
 
-    public double calculateOffsetX(double centerX) {
-        return offsetX = (lightX - centerX) / 15;
+    public double calculateOffsetX(double objectCenterX) {
+        return offsetX = (screenCenterX - objectCenterX) / 15;
     }
 
-    public double calculateOffsetY(double centerY) {
-        return offsetY = (lightY - centerY) / 15;
+    public double calculateOffsetY(double objectCenterY) {
+        return offsetY = (screenCenterY - objectCenterY) / 15;
     }
 
     public int calculateReflectionX(double x, double centerX) {
-        return (int) (xCorrection + x - calculateOffsetX(centerX));
+        return (int) (xCorrection + x + calculateOffsetX(centerX));
     }
 
     public int calculateReflectionY(double y, double centerY) {
