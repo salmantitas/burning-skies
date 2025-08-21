@@ -74,9 +74,9 @@ public class Pool {
     }
 
     public void clear() {
-        reusable = 0;
+        reusable = entities.size();
         for (Entity entity: entities) {
-            entity.clear(); // todo: instead of clearing, destroy themr
+            entity.clear(); // todo: instead of clearing, destroy them
 //            increase(entity);
         }
 //        entities.clear();

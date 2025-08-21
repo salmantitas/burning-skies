@@ -3,11 +3,13 @@ package com.euhedral.game;
 import com.euhedral.engine.Entity;
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.engine.Pool;
+import com.euhedral.engine.Utility;
 import com.euhedral.game.Entities.Bullet;
 import com.euhedral.game.Entities.BulletEnemy;
 import com.euhedral.game.Entities.Enemy.Enemy;
 import com.euhedral.game.Entities.Enemy.EnemyDrone3;
 import com.euhedral.game.Entities.Player;
+import com.euhedral.game.UI.UIHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -140,7 +142,7 @@ public class EnemyPool extends Pool {
     public void clear() {
 //        int len = reusable.length;
         for (int i = 0; i < reusable.length; i ++) {
-            reusable[i] = 0;
+            reusable[i] += active[i];
             active[i] = 0;
             exclusionZones.set(i, -100);
         }
@@ -372,4 +374,25 @@ public class EnemyPool extends Pool {
 //        EntityHandler.spawnProbablity = Utility.randomRange(0, EntityHandler.enemyTypes);
 //        spawnPickup((int) enemy.getX(), (int) enemy.getY(), EntityID.PickupHealth, 5);
     }
+
+    @Override
+    public void printPool(String name) {
+        super.printPool(name);
+        String temp = "";
+        for (int i = 0; i < reusable.length; i++) {
+            temp += i;
+            temp += ": ";
+            temp += reusable[i];
+            temp += "/";
+            temp += active[i] + reusable[i];
+            temp += "| ";
+        }
+
+        Utility.log(temp);
+    }
+
+//    @Override
+//    public int getPoolSize() {
+//        return reusable[enemyType];
+//    }
 }

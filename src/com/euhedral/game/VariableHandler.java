@@ -1,7 +1,6 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
-import com.euhedral.engine.Entity;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.UI.UIHandler;
@@ -452,7 +451,7 @@ public class VariableHandler {
         level = STARTLEVEL;
     }
 
-    public void nextLevel() {
+    public void incrementLevel() {
         level++;
     }
 
@@ -463,8 +462,8 @@ public class VariableHandler {
     public static void setLevel(int i) {
         renderWaveDuration = 1f;
         level = i;
-        if (finishedFinalLevel())
-            level = MAXLEVEL;
+//        if (finishedFinalLevel())
+//            level = MAXLEVEL;
     }
 
     public static boolean isTutorial() {

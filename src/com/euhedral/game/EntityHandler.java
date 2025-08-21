@@ -117,7 +117,7 @@ public class EntityHandler {
         else {
             spawnNew(x, y, enemyType, direction, distance);
         }
-//        enemies.printPool("Enemy");
+        enemies.printPool("Enemy");
     }
 
     private void spawnNew(int x, int y, int enemyType, int direction, int distance) {
@@ -342,9 +342,9 @@ public class EntityHandler {
 //        Utility.log("Bullet pool size" + bullets.getPoolSize());
     }
 
-    private void clearBullets() {
-        bullets.clear();
-    }
+//    private void clearBullets() {
+//        bullets.clear();
+//    }
 
     /********************
      * Pickup Functions *
@@ -531,7 +531,7 @@ public class EntityHandler {
 
     public void clearEnemies() {
         enemies.clear();
-        clearBullets();
+        bullets.clear();
     }
 
     private void disable(Entity entity) {
@@ -607,6 +607,8 @@ public class EntityHandler {
     }
 
     private void playerVsEnemyBulletCollision() {
+        if (playerRadius > -1)
+            bullets.destroyIfWithinRadius(playerPositon.x, playerPositon.y, playerRadius);
         bullets.checkCollision(player);
     }
 

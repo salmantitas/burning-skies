@@ -157,8 +157,12 @@ public class Bullet extends MobileEntity {
     }
 
     public void destroy(MobileEntity entity) {
-        state = STATE_IMPACT;
+        destroy();
         this.entity = entity;
+    }
+
+    public void destroy() {
+        state = STATE_IMPACT;
     }
 
     public boolean isImpacting() {

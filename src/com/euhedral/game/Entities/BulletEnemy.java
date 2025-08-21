@@ -100,8 +100,7 @@ public class BulletEnemy extends Bullet{
     @Override
     public void destroy(MobileEntity entity) {
         canPlayImpactAnimation = VariableHandler.shield.getValue() <= 0;
-        state = STATE_IMPACT;
-        this.entity = entity;
+        super.destroy(entity);
     }
 
     public void setTracking(boolean tracking) {
@@ -110,5 +109,19 @@ public class BulletEnemy extends Bullet{
 
     public boolean isTracking() {
         return tracking;
+    }
+
+    public boolean inRadius(double x, double y, int radius) {
+        double aX = pos.x;
+        double aY = pos.y;
+        if (pos.x < x)
+            aX = pos.x + width;
+        if (pos.y < y)
+            aY = pos.y + height;
+        return Math.abs(calculateMagnitude(aX, aY, x,y)) < radius;
+    }
+
+    public boolean isBelowDeadZoneTop() {
+        return pos.y > VariableHandler.deadzoneTop + 20;
     }
 }

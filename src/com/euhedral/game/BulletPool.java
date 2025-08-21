@@ -168,6 +168,23 @@ public class BulletPool extends Pool {
         }
     }
 
+    public void destroyIfWithinRadius(double x, double y, int radius) {
+        for (int i = 0; i < entities.size(); i ++) {
+            entity = entities.get(i);
+            if (entity.isActive())
+                destroyIfWithinRadiusHelper(x, y, radius);
+        }
+    }
+
+    private void destroyIfWithinRadiusHelper(double x, double y, int radius) {
+        bulletEnemy = (BulletEnemy) entity;
+        if (bulletEnemy.inRadius(x,y,radius)) {
+            if (bulletEnemy.isBelowDeadZoneTop()) {
+                destroy(bulletEnemy);
+            }
+        }
+    }
+
     public LinkedList<Bullet> getImpactingBulletsList() {
         LinkedList<Bullet> impactingBullets = new LinkedList<>();
 
