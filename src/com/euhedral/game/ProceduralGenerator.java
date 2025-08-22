@@ -531,7 +531,7 @@ public class ProceduralGenerator extends EnemyGenerator {
     }
 
     private void spawnPower() {
-        spawnPickupHelper(EntityID.PickupPower);
+        spawnPickupHelper(EntityID.PickupHoming);
         System.out.println("Power-Up Spawned");
         resetWaveSincePower();
     }

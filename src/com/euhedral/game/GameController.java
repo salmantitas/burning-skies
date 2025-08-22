@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "BURNING SKIES";
-    public static String gameVersion = "0.7.35";
+    public static String gameVersion = "0.7.36";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -488,7 +488,7 @@ public class GameController {
         variableHandler.resetPower();
         VariableHandler.shield.reset();
         variableHandler.health.reset();
-        variableHandler.speedBoostDuration = 0;
+        variableHandler.firepower.reset();
         variableHandler.pulse = false;
         VariableHandler.setHealthColor();
 
@@ -658,6 +658,7 @@ public class GameController {
         if (key == KeyEvent.VK_G) {
             godMode = !godMode;
             Utility.log("God Mode " + godMode);
+            VariableHandler.setScore(0);
         }
     }
 

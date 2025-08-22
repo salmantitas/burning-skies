@@ -359,7 +359,7 @@ public class EntityHandler {
             case PickupShield:
                 pickupValue = 100;
                 break;
-            case PickupPower:
+            case PickupHoming:
                 pickupValue = 1;
                 break;
         }
@@ -505,10 +505,10 @@ public class EntityHandler {
 //                } else if (lastDestroyedType == TYPE_DRONE3) {
 //                    // todo: Spawn Bomb Pickup
                 } else if (lastDestroyedType == VariableHandler.TYPE_DRONE1 || lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE1) {
-                    pickupID = EntityID.PickupSpeed;
-                    pickupValue = 30 * maxChanceCoefficient;
+                    pickupID = EntityID.PickupHoming;
+                    pickupValue = 1;
                 } else if (lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2 || lastDestroyedType == VariableHandler.TYPE_DRONE4 || lastDestroyedType == VariableHandler.TYPE_MINE2) {
-                    pickupID = EntityID.PickupPower;
+                    pickupID = EntityID.PickupFirepower;
                     pickupValue = 1;
                 } else if (lastDestroyedType == VariableHandler.TYPE_SCATTER1 || lastDestroyedType == VariableHandler.TYPE_SCATTER2) {
                     pickupID = EntityID.PickupShield;

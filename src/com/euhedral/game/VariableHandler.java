@@ -26,15 +26,17 @@ public class VariableHandler {
 
     // Attributes
 
-    public static Attribute health, power, shield;
+    public static Attribute health, power, shield, firepower;
 
     private static int healthIconX, healthIconY;
-    private static int powerIconY;
+    private static int firepowerIconY;
     private static int shieldIconY;
-    private static int speedBoostIconX, ringOfFireIconX;
+    private static int shootRateBoostIconX, pulseIconX;
 
-    public static int speedBoostDuration;
-    private static int speedBoostX;
+    private static int pulseVarialbleToBeNamed = 0;
+
+//    public static int shootRateBoostDuration;
+    private static int shootRateBoostX;
 
     public static boolean homing;
 
@@ -72,7 +74,7 @@ public class VariableHandler {
 
     // Score
     private static int score = 0;
-    private static int scoreX = Utility.percWidth(75);;
+    private static int scoreX = Utility.percWidth(74);;
     private static int scoreY = Utility.intAtWidth640(20);
     private static int scoreSize = Utility.percWidth(2);
     private static Font scoreFont = UIHandler.customFont.deriveFont(0, scoreSize);
@@ -96,7 +98,7 @@ public class VariableHandler {
     private static float renderWaveDuration = 1f;
 
     // Timer
-    private static int timerX = Utility.percWidth(75);
+    private static int timerX = scoreX;
     private static int timerY;
 
     // Notifications
@@ -139,10 +141,6 @@ public class VariableHandler {
     public static int difficultyType = DIFFICULTY_NORMAL;
     public static int difficultyLevel = 1;
 
-    // Shop Costs
-
-//    public static final int costPower = 1000;
-
     public VariableHandler() {
         colorMap = new HashMap<>();
         initializeColorMap();
@@ -175,8 +173,8 @@ public class VariableHandler {
     }
 
     public static void initializeAttributes() {
-        powerIconY = scoreY - Utility.intAtWidth640(16);
-        healthIconY = powerIconY + Utility.intAtWidth640(18);
+        firepowerIconY = scoreY - Utility.intAtWidth640(16);
+        healthIconY = firepowerIconY + Utility.intAtWidth640(18);
         shieldIconY = healthIconY + Utility.intAtWidth640(18);
 
         healthIconX = Utility.intAtWidth640(8);
@@ -192,10 +190,18 @@ public class VariableHandler {
         power.textColor = Color.WHITE;
         power.increaseTextColor = Color.RED;
         power.setMIN(1);
-        power.setMAX(2);
+        power.setMAX(1);
         power.setX(healthIconX + Utility.intAtWidth640(18));
-        power.setY(powerIconY + Utility.intAtWidth640(13));
+        power.setY(firepowerIconY + Utility.intAtWidth640(13));
         power.setFontSize(scoreSize);
+
+        firepower = new Attribute("Shoot Rate", 1, false);
+        firepower.setMIN(1);
+        firepower.setMAX(25);
+        firepower.textColor = Color.WHITE;
+        firepower.increaseTextColor = Color.RED;
+        firepower.setFontSize(scoreSize);
+        firepower.setY(power.getY());
 
         shield = new Attribute("Shield", 0, false);
         shield.setMIN(0);
@@ -208,16 +214,18 @@ public class VariableHandler {
 
         int iconSpacingX = 148;
 
-        speedBoostIconX = healthIconX + iconSpacingX;
+        shootRateBoostIconX = healthIconX + iconSpacingX;
 
-        speedBoostDuration = 0;
-        speedBoostX = speedBoostIconX + Utility.intAtWidth640(20);
+        firepower.setX(power.getX());
+
+//        shootRateBoostDuration = 0;
+        shootRateBoostX = shootRateBoostIconX + Utility.intAtWidth640(20);
         pulseY = power.getY();
 
         homing = false;
 
-        ringOfFireIconX = speedBoostIconX + iconSpacingX;
-        pulseX = ringOfFireIconX + Utility.intAtWidth640(20);
+        pulseIconX = shootRateBoostIconX + iconSpacingX;
+        pulseX = pulseIconX + Utility.intAtWidth640(20);
         pulse = false;
     }
 
@@ -282,8 +290,9 @@ public class VariableHandler {
 //        g.setColor(Color.RED);
 //        g.drawLine(0, deadzoneTop + 8, Engine.WIDTH, deadzoneTop + 8);
         g.drawImage(GameController.getTexture().pickup[2], healthIconX,
-                powerIconY, null);
-        power.renderValue(g);
+                firepowerIconY, null);
+        firepower.renderValue(g);
+//        power.renderValue(g);
         g.drawImage(GameController.getTexture().pickup[0], healthIconX,
                 healthIconY, null);
         health.renderBar(g);
@@ -292,13 +301,13 @@ public class VariableHandler {
                     shieldIconY, null);
             shield.renderBar(g);
         }
-        if (speedBoostDuration > 0) {
-            g.drawImage(GameController.getTexture().pickup[3], speedBoostIconX,
-                    powerIconY, null);
-            renderSpeedBoost(g);
-        }
-        if (pulse)
-            renderRingOfFire(g);
+//        if (shootRateBoostDuration > 0) {
+//        g.drawImage(GameController.getTexture().pickup[3], shootRateBoostIconX,
+//                firepowerIconY, null);
+//        renderSpeedBoost(g);
+//        }
+//        if (pulse)
+            renderPulse(g);
 
         renderScore(g);
         renderWave(g);
@@ -312,6 +321,8 @@ public class VariableHandler {
     public static void renderScore(Graphics g) {
         g.setFont(scoreFont);
         g.setColor(scoreColor);
+        if (GameController.godMode)
+            g.setColor(Color.GRAY);
         g.drawString("Score: " + score, scoreX, scoreY);
     }
 
@@ -342,15 +353,31 @@ public class VariableHandler {
 
     public static void renderSpeedBoost(Graphics g) {
         g.setFont(levelFont);
-        g.setColor(Color.ORANGE);
-        g.drawString(Integer.toString(speedBoostDuration), speedBoostX, power.getY());
+        if (firepower.getValue() > 0)
+            g.setColor(Color.ORANGE);
+        else g.setColor(Color.WHITE);
+        g.drawString(Integer.toString(firepower.getValue()), shootRateBoostX, power.getY());
     }
 
-    public static void renderRingOfFire(Graphics g) {
+    public static void renderPulse(Graphics g) {
         g.setFont(levelFont);
-        g.setColor(Color.YELLOW);
-        g.drawString("CTRL", pulseX, pulseY);
-        g.drawImage(GameController.getTexture().pickup[4], ringOfFireIconX, powerIconY, null);
+        Color color = null;
+        String text = "";
+        if (pulse) {
+            if (pulseVarialbleToBeNamed/10 % 2 == 0) {
+                g.setColor(Color.YELLOW);
+            } else
+                g.setColor(Color.WHITE);
+            text = "CTRL";
+            pulseVarialbleToBeNamed++;
+        } else {
+            pulseVarialbleToBeNamed = 0;
+            g.setColor(Color.WHITE);
+            text = "N/A";
+        }
+        g.setColor(color);
+        g.drawString(text, pulseX, pulseY);
+        g.drawImage(GameController.getTexture().pickup[4], pulseIconX, firepowerIconY, null);
     }
 
 //    public static void renderFPS(Graphics g) {

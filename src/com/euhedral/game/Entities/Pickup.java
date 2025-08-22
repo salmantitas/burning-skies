@@ -57,13 +57,13 @@ public class Pickup extends MobileEntity {
         else if (id == EntityID.PickupShield) {
             VariableHandler.shield.increase(value);
         }
-        else if (id == EntityID.PickupPower) {
+        else if (id == EntityID.PickupHoming) {
             if (VariableHandler.power.isMax())
                 VariableHandler.homing = true;
             VariableHandler.power.increase(value);
         }
-        else if (id == EntityID.PickupSpeed) {
-            VariableHandler.speedBoostDuration += value;
+        else if (id == EntityID.PickupFirepower) {
+            VariableHandler.firepower.increase(value);
         }
         else if (id == EntityID.PickupPulse)
             VariableHandler.pulse = true;
@@ -78,10 +78,10 @@ public class Pickup extends MobileEntity {
             image = GameController.getTexture().pickup[0];
         else if (id == EntityID.PickupShield)
             image = GameController.getTexture().pickup[1];
-        else if (id == EntityID.PickupPower)
-            image = GameController.getTexture().pickup[2];
-        else if (id == EntityID.PickupSpeed)
+        else if (id == EntityID.PickupHoming)
             image = GameController.getTexture().pickup[3];
+        else if (id == EntityID.PickupFirepower)
+            image = GameController.getTexture().pickup[2];
         else if (id == EntityID.PickupPulse) {
             image = GameController.getTexture().pickup[4];
         }

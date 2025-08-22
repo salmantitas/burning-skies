@@ -14,7 +14,7 @@ public class Player extends MobileEntity {
     // Shooting Entity
     private boolean canShoot;
     private int shootTimer = 0;
-    private final int shootTimerDefault = 10;
+    private final int shootTimerDefault = 12;
     private BulletPool bullets;
     int turretY;
     int turretMidX, turretLeftX, turretRightX;
@@ -29,12 +29,8 @@ public class Player extends MobileEntity {
     private int clampOffsetY;
     private int shootAngle = Utility.intAtWidth640(5);
 
-    private Attribute health;
-    private Attribute shield;
-    private Attribute power;
-    private double speedBoost;
-//    private int speedBoostDuration_MAX = 60;
-//    private int speedBoostDuration;
+    private Attribute health, shield, power, shootRate;
+//    private int shootRateBoost;
 
     private final int HEALTH_HIGH = 66;
     private final int HEALTH_MED = 33;
@@ -85,8 +81,8 @@ public class Player extends MobileEntity {
         velX = 0;
         velY = 0;
         physics.acceleration = 0.1;
-        speedBoost = 0;
-        VariableHandler.speedBoostDuration = 0;
+//        shootRateBoost = 0;
+//        VariableHandler.shootRateBoostDuration = 0;
         velY_MIN = 4;
         velX_MIN = 4;
         velY_MAX = 10;
@@ -99,8 +95,6 @@ public class Player extends MobileEntity {
 //        physics.friction = 1; // instantenous is equal to (minVel - 2)
 
         resetMovement();
-
-//        this.power = 1;
 
         boundsVertical = new Rectangle2D.Double();
         boundsHorizontal = new Rectangle2D.Double();
@@ -142,12 +136,12 @@ public class Player extends MobileEntity {
             shieldTimer--;
         }
 
-        if (VariableHandler.speedBoostDuration > 0) {
-            speedBoost = 2;
-            VariableHandler.speedBoostDuration--;
-        } else {
-            speedBoost = 0;
-        }
+//        if (VariableHandler.shootRateBoostDuration > 0) {
+//            shootRateBoost = 4;
+//            VariableHandler.shootRateBoostDuration--;
+//        } else {
+//            shootRateBoost = 0;
+//        }
 
         if (pulseRadius > -1) {
 
@@ -164,6 +158,7 @@ public class Player extends MobileEntity {
         shield = VariableHandler.shield;
 //        shield.setValue(100);
         power = VariableHandler.power;
+        shootRate = VariableHandler.firepower;
     }
 
     private void setImage() {
@@ -204,25 +199,25 @@ public class Player extends MobileEntity {
 
         // Render Speed Boost
         g2d = (Graphics2D) g;
-        if (VariableHandler.speedBoostDuration > 0) {
-
-
-            g.setColor(Color.ORANGE);
-            g2d.setComposite(Utility.makeTransparent(0.2f));
-            if (isMovingLeft()) {
-                g.fillRect((int) pos.x + width / 2, (int) pos.y, width / 2, height);
-            }
-            if (isMovingRight()) {
-                g.fillRect((int) pos.x, (int) pos.y, width / 2, height);
-            }
-            if (isMovingUp()) {
-                g.fillRect((int) pos.x, (int) pos.y + height / 2, width, height / 2);
-            }
-            if (isMovingDown()) {
-                g.fillRect((int) pos.x, (int) pos.y, width, height / 2);
-            }
-            g2d.setComposite(Utility.makeTransparent(1f));
-        }
+//        if (VariableHandler.speedBoostDuration > 0) {
+//
+//
+//            g.setColor(Color.ORANGE);
+//            g2d.setComposite(Utility.makeTransparent(0.2f));
+//            if (isMovingLeft()) {
+//                g.fillRect((int) pos.x + width / 2, (int) pos.y, width / 2, height);
+//            }
+//            if (isMovingRight()) {
+//                g.fillRect((int) pos.x, (int) pos.y, width / 2, height);
+//            }
+//            if (isMovingUp()) {
+//                g.fillRect((int) pos.x, (int) pos.y + height / 2, width, height / 2);
+//            }
+//            if (isMovingDown()) {
+//                g.fillRect((int) pos.x, (int) pos.y, width, height / 2);
+//            }
+//            g2d.setComposite(Utility.makeTransparent(1f));
+//        }
 
         super.render(g);
         float transparency = (1f - (float) health.getValue() / 100) / 2;
@@ -367,10 +362,10 @@ public class Player extends MobileEntity {
         return boundsVertical;
     }
 
-    public void setX(int x) {
-        super.setX(x);
-//        this.x = x;
-    }
+//    public void setX(int x) {
+//        super.setX(x);
+////        this.x = x;
+//    }
 
 //    public void switchBullet() {
 //        if (ground)
@@ -391,7 +386,7 @@ public class Player extends MobileEntity {
 //        y = Utility.clamp(y, levelHeight - 640, levelHeight + clampOffsetY);
 
         // movement
-        mouseMove();
+//        mouseMove();
         keyboardMove();
 
     }
@@ -426,8 +421,30 @@ public class Player extends MobileEntity {
 //
 //        // tempSolution
 //        double correctionFactor = .715;
-//        double shootAngleLeft = NORTH - shootAngle * correctionFactor;
-//        double shootAngleRight = NORTH + shootAngle;
+        double shootAngleLeft = NORTH - shootAngle;
+        double shootAngleRight = NORTH + shootAngle;
+
+        if (shootRate.getValue() <= 5) {
+            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
+        } else if (shootRate.getValue() <= 10) {
+            bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
+        } else if (shootRate.getValue() <= 15) {
+            bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
+            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
+        } else if (shootRate.getValue() <= 20) {
+            bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
+            bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
+        } else {
+            bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
+            bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
+        }
 
 //        if (power == 5) {
 //            spawnBullet(spawnRightX, turretY, shootAngleRight);
@@ -441,19 +458,16 @@ public class Player extends MobileEntity {
 //            spawnBullet(spawnLeftX, turretY, NORTH);
 //            spawnBullet(spawnLeftX, turretY, shootAngleLeft);
 //        } else if (power == 3) {
-//            spawnBullet(spawnRightX, turretY, shootAngleRight);
-//            spawnBullet(spawnMidX, (int) y, NORTH);
-//            spawnBullet(spawnLeftX, turretY, shootAngleLeft);
+
 //        } else
-        if (power.getValue() == 2) {
-            bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH);
-            bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
+        if (shootRate.getValue() <= 2) {
+
         } else {
-            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
+
         }
 
         // reset shoot timer to default
-        shootTimer = shootTimerDefault;
+        shootTimer = shootTimerDefault - (shootRate.getValue() - 1) % 5;
     }
 
     public void special() {
@@ -485,8 +499,8 @@ public class Player extends MobileEntity {
                 velX += Math.abs(velX) / 4;
                 velX = Utility.clamp(velX, -velX_MAX, 0);
             } else {
-                velX -= (physics.acceleration * (1 + speedBoost));
-                velX = Utility.clamp(velX, -(velX_MAX + speedBoost), -(velX_MIN));
+                velX -= (physics.acceleration);
+                velX = Utility.clamp(velX, -(velX_MAX), -(velX_MIN));
             }
 //            Utility.log("VelX: " + velX);
         } else if (isMovingRight()) {
@@ -494,8 +508,8 @@ public class Player extends MobileEntity {
                 velX -= Math.abs(velX) / 4;
                 velX = Utility.clamp(velX, 0, velX_MAX);
             } else {
-                velX += (physics.acceleration * (1 + speedBoost));
-                velX = Utility.clamp(velX, (velX_MIN), (velX_MAX + speedBoost));
+                velX += (physics.acceleration);
+                velX = Utility.clamp(velX, (velX_MIN), (velX_MAX));
             }
         }
 
@@ -518,16 +532,16 @@ public class Player extends MobileEntity {
                 velY += Math.abs(velY) / 4;
                 velY = Utility.clamp(velY, -velY_MAX, 0);
             } else {
-                velY -= (physics.acceleration * (1 + speedBoost));
-                velY = Utility.clamp(velY, -(velY_MAX + speedBoost), -velY_MIN);
+                velY -= (physics.acceleration);
+                velY = Utility.clamp(velY, -(velY_MAX), -velY_MIN);
             }
         } else if (isMovingDown()) {
             if (pos.y > levelHeight + clampOffsetY) {
                 velY -= Math.abs(velY) / 4;
                 velY = Utility.clamp(velY, 0, velY_MAX);
             } else {
-                velY += (physics.acceleration * (1 + speedBoost));
-                velY = Utility.clamp(velY, velY_MIN, (velY_MAX + speedBoost));
+                velY += (physics.acceleration);
+                velY = Utility.clamp(velY, velY_MIN, (velY_MAX));
             }
         }
 
@@ -619,6 +633,9 @@ public class Player extends MobileEntity {
         health.decrease(damage);
         if (power.getValue() > 1) {
             power.decrease(1);
+        }
+        if (shootRate.getValue() > 0) {
+            shootRate.decrease(1);
         }
         jitter = jitter_MAX;
     }
