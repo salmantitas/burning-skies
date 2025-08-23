@@ -198,13 +198,13 @@ public class EnemyGenerator {
 //        enemytype = TYPE_DRONE2; // stub
 //        enemytype = TYPE_SIDE2; // stub
 //        enemytype = TYPE_SIDE3; // stub
-//        enemytype = TYPE_STATIC2; // stub
+//        enemytype = VariableHandler.TYPE_SCATTER1; // stub
 //        enemytype = TYPE_MINE1; // stub
 //        enemytype = TYPE_MINE2; // stub
 //        enemytype = TYPE_DRONE3; // stub
-//        enemytype = TYPE_STATIC3; // stub
+//        enemytype = VariableHandler.TYPE_SCATTER2; // stub
 //        enemytype = TYPE_DRONE4; // stub
-//        enemytype = TYPE_DRONE5; // stub
+//        enemytype = VariableHandler.TYPE_DRONE5; // stub
 
 //        difficulty = maxTypes; // stub
 
@@ -246,6 +246,9 @@ public class EnemyGenerator {
             case VariableHandler.TYPE_DRONE5:
                 limit = 1;
                 break;
+            case VariableHandler.TYPE_DRONE6:
+                limit = 1;
+                break;
         }
 
             if (EntityHandler.getActiveEnemies(enemytype) >= limit) {
@@ -276,7 +279,7 @@ public class EnemyGenerator {
 
     protected void determineZone() {
 
-        isDrone = enemytype == VariableHandler.TYPE_DRONE1 || enemytype == VariableHandler.TYPE_DRONE2 || enemytype == VariableHandler.TYPE_DRONE3 || enemytype == VariableHandler.TYPE_DRONE5;
+        isDrone = enemytype == VariableHandler.TYPE_DRONE1 || enemytype == VariableHandler.TYPE_DRONE2 || enemytype == VariableHandler.TYPE_DRONE3 || enemytype == VariableHandler.TYPE_DRONE6;
         isSideFlyer = enemytype == VariableHandler.TYPE_SIDE1 || enemytype == VariableHandler.TYPE_SIDE2 || enemytype == VariableHandler.TYPE_SIDE3 || enemytype == VariableHandler.TYPE_MINE2 || enemytype == VariableHandler.TYPE_DRONE4;
 
         entersFromSide = isDrone || isSideFlyer;

@@ -99,11 +99,15 @@ public class Bullet extends MobileEntity {
             drawImage(g, image, width, height);
 //            g.setColor(color);
 //            g.fillOval((int) x, (int) y, width, height);
-        } else if (state == STATE_IMPACT && entity.isActive()) {
+        } else if (state == STATE_IMPACT) {
+            if (entity == null) {
+                impact.drawAnimation(g, (int) pos.x, (int) pos.y, impactSize, impactSize);
+            } else if (entity.isActive()) {
 //            g.setColor(impactColor);
 //            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
 
-            impact.drawAnimation(g, (int) pos.x, (int) pos.y, impactSize, impactSize);
+                impact.drawAnimation(g, (int) pos.x, (int) pos.y, impactSize, impactSize);
+            }
         }
     }
 
@@ -192,5 +196,21 @@ public class Bullet extends MobileEntity {
             return belowScreen || aboveScreen || leftOfScreen || rightOfScreen;
 //        }
 //        else return super.canDisable();
+    }
+
+    public void setEntity(MobileEntity entity) {
+        this.entity = entity;
+    }
+
+    public void resetEntity() {
+        entity = null;
+    }
+
+    public boolean isEntityNull() {
+        return entity == null;
+    }
+
+    public boolean isEntityActive() {
+        return entity.isActive();
     }
 }

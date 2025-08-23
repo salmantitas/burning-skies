@@ -11,7 +11,7 @@ public class BulletPlayer extends Bullet{
 
     int impactAnimationAdjustmentX;
 
-    public Enemy target;
+//    public Enemy target;
 
     public BulletPlayer(double x, double y, double angle) {
         super(x, y, angle);
@@ -23,6 +23,7 @@ public class BulletPlayer extends Bullet{
         commonInit();
 
         impactAnimationAdjustmentX = (impact.getImageWidth() - width)/4;
+        physics.acceleration = 0.1;
 
 //        impact = new Animation(10, GameController.getTexture().impactSmall[0],
 //                GameController.getTexture().impactSmall[1],
@@ -38,14 +39,22 @@ public class BulletPlayer extends Bullet{
 
     public BulletPlayer(double x, double y, double forwardVelocity, Enemy target) {
         this(x, y, 0);
-        this.target = (Enemy) target;
+        this.entity = target;
     }
 
     @Override
     public void update() {
         if (state == STATE_ACTIVE) {
-            if (target != null) {
-                calculateVelocities(target.getX() + target.getWidth()/2, target.getY() + target.getHeight()/2);
+            if (entity != null) {
+                forwardVelocity += physics.acceleration;
+                if (entity.isActive())
+                    calculateVelocities(entity.getX() + entity.getWidth()/2, entity.getY() + entity.getHeight()/2);
+                else {
+                    if (!calculated) {
+                        calculateAngle(entity.getX(), entity.getY());
+                        calculated = true;
+                    }
+                }
             }
             super.update();
         } else if (state == STATE_IMPACT) {
@@ -69,11 +78,11 @@ public class BulletPlayer extends Bullet{
 
     @Override
     protected void drawImage(Graphics g, BufferedImage image, int targetWidth, int targetHeight) {
-        if (target == null)
+        if (entity == null)
             g.drawImage(image, (int) pos.x, (int) pos.y, targetWidth, targetHeight, null);
         else {
             g.setColor(Color.RED);
-            g.fillOval((int) pos.x, (int) pos.y, width, height);
+            g.fillOval((int) pos.x, (int) pos.y, 16, 16);
         }
     }
 
@@ -86,7 +95,7 @@ public class BulletPlayer extends Bullet{
 //        this.x = x;
 //        this.y = y;
         this.calculated = false;
-        target = null;
+        entity = null;
         super.resurrect(x, y);
         commonInit();
     }

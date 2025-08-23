@@ -56,7 +56,7 @@ public class BulletPool extends Pool {
         entity = findInList();
         entity.resurrect(x, y);
         BulletPlayer bullet = (BulletPlayer) entity;
-        bullet.target = (Enemy) target;
+        bullet.setEntity((MobileEntity) target);
         if (bullet.getForwardVelocity() != forwardVelocity) {
             bullet.setForwardVelocity(forwardVelocity);
         }
@@ -143,6 +143,7 @@ public class BulletPool extends Pool {
             if (bullet.isImpacting()) {
                 if (bullet.checkDeathAnimationEnd()) {
                     increase(bullet);
+                    bullet.resetEntity();
                 }
             }
         }
@@ -156,12 +157,12 @@ public class BulletPool extends Pool {
             if (bulletPlayer.isImpacting()) {
                 if (bulletPlayer.checkDeathAnimationEnd()) {
                     increase(bulletPlayer);
-                    bulletPlayer.target = null;
+                    bulletPlayer.resetEntity();
                 }
             } else if (bulletPlayer.isActive()) {
-                if (bulletPlayer.target != null) {
-                    if (!bulletPlayer.target.isActive()) {
-                        increase(bulletPlayer);
+                if (!bulletPlayer.isEntityNull()) {
+                    if (!bulletPlayer.isEntityActive()) {
+//                        increase(bulletPlayer);
                     }
                 }
             }
@@ -195,6 +196,10 @@ public class BulletPool extends Pool {
         }
 
         return impactingBullets;
+    }
+
+    public void destroy(BulletEnemy bulletEnemy) {
+        bulletEnemy.destroy();
     }
 
 }

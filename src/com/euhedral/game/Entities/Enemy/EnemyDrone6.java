@@ -3,31 +3,30 @@ package com.euhedral.game.Entities.Enemy;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.VariableHandler;
 
-public class EnemyDrone5 extends EnemyDrone1 {
+public class EnemyDrone6 extends EnemyDrone1 {
 
     int recoilPause = 25; // too low: 20, too high: 50
     double deceleration = 0.1;
 
     double tempAngle;
     int degreesPerBullet;
-    int shotCount = 1, shotSign = 1;
 
-    public EnemyDrone5(int x, int y, int levelHeight) {
+    public EnemyDrone6(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
-        setImage(textureHandler.enemyDrone[4]);
+        setImage(textureHandler.enemyDrone[5]);
 
         shootTimerDefault = 250;
         score = 200;
         damage = 40;
 
-        bulletsPerShot_MAX = 18;
-        bulletArcAngle = 180;
-        degreesPerBullet = bulletArcAngle / bulletsPerShot_MAX;
+        bulletsPerShot_MAX = 36;
+        int tempAngle = 360/bulletsPerShot_MAX;
+        bulletArcAngle = tempAngle * bulletsPerShot_MAX;
 
         attackEffect = true;
 
         health_MAX = 1;
-        bulletVelocity = 3;
+        bulletVelocity = 2;
         commonInit();
     }
 
@@ -77,16 +76,11 @@ public class EnemyDrone5 extends EnemyDrone1 {
     public double getBulletAngle() {
         tempAngle = calculateShotTrajectory();
         degreesPerBullet = bulletArcAngle / bulletsPerShot_MAX;
-        tempAngle = tempAngle + shotCount/2 * shotSign * degreesPerBullet;
-        shotCount++;
-        shotSign *= -1;
-        if (shotCount > bulletsPerShot_MAX)
-            shotCount = 1;
-        return tempAngle;// - (2 * degreesPerBullet) + (bulletsPerShot - 1) * degreesPerBullet; // * (bulletsPerShot % 2 == 0 ? 1 : -1); // stub
+        return tempAngle - (2 * degreesPerBullet) + (bulletsPerShot - 1) * degreesPerBullet;
     }
 
     @Override
     protected void setEnemyType() {
-        enemyType = VariableHandler.TYPE_DRONE5;
+        enemyType = VariableHandler.TYPE_DRONE6;
     }
 }

@@ -10,7 +10,7 @@ public class Shop {
     }
 
     public void buyPower() {
-        buyAbstract(VariableHandler.power, 1, "Max power has been reached");
+        buyAbstract(VariableHandler.firepower, 1, "Max firepower has been reached");
     }
 
     public void buyShield() {

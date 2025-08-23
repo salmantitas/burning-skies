@@ -89,8 +89,8 @@ public class MenuTransition extends Menu {
         int score = VariableHandler.getScore();
         boolean minHealthScore = score > VariableHandler.health.getCost();
         boolean fullHealth = VariableHandler.health.getValue() >= VariableHandler.health.getMAX();
-        boolean minPowerScore = score > VariableHandler.power.getCost();
-        boolean maxPower = VariableHandler.power.getValue() >= VariableHandler.power.getMAX();
+        boolean minPowerScore = score > VariableHandler.firepower.getCost();
+        boolean maxPower = VariableHandler.firepower.getValue() >= VariableHandler.firepower.getMAX();
         boolean minShieldScore = score > VariableHandler.shield.getCost();
         boolean fullShield = VariableHandler.shield.getValue() >= VariableHandler.shield.getMAX();
 

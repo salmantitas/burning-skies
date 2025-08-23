@@ -30,7 +30,7 @@ public class SaveLoad {
         String health = Integer.toString(VariableHandler.health.getValue());
         String ground = Boolean.toString(true); // todo: remove later
         String level = Integer.toString(VariableHandler.getLevel());
-        String power = Integer.toString(VariableHandler.power.getValue());
+        String power = Integer.toString(VariableHandler.firepower.getValue());
         String shield = Integer.toString(VariableHandler.shield.getValue());
 
         // Turn strings into a string array to be written
@@ -113,7 +113,7 @@ public class SaveLoad {
             VariableHandler.setScore(score);
             VariableHandler.health.set(health);
             VariableHandler.setLevel(level);
-            VariableHandler.power.set(power);
+            VariableHandler.firepower.set(power);
             VariableHandler.shield.setValue(shield);
 
             VariableHandler.saveDataNotification = VariableHandler.loadText;

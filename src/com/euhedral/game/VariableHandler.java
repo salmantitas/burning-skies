@@ -26,7 +26,7 @@ public class VariableHandler {
 
     // Attributes
 
-    public static Attribute health, power, shield, firepower;
+    public static Attribute health, shield, firepower;
 
     private static int healthIconX, healthIconY;
     private static int firepowerIconY;
@@ -66,8 +66,9 @@ public class VariableHandler {
     public static final int TYPE_SCATTER2 = TYPE_DRONE3 + 1;
     public static final int TYPE_DRONE4 = TYPE_SCATTER2 + 1;
     public static final int TYPE_DRONE5 = TYPE_DRONE4 + 1;
+    public static final int TYPE_DRONE6 = TYPE_DRONE5 + 1;
 
-    public static final int enemyTypes = TYPE_DRONE5 + 1;
+    public static final int enemyTypes = TYPE_DRONE6 + 1;
 
     // todo: Boss Health
 //    public static Attribute bossHealth;
@@ -186,14 +187,14 @@ public class VariableHandler {
         levelY = Utility.percHeight(4);
         timerY = scoreY + Utility.intAtWidth640(25);
 
-        power = new Attribute("Power", 1, false);
-        power.textColor = Color.WHITE;
-        power.increaseTextColor = Color.RED;
-        power.setMIN(1);
-        power.setMAX(1);
-        power.setX(healthIconX + Utility.intAtWidth640(18));
-        power.setY(firepowerIconY + Utility.intAtWidth640(13));
-        power.setFontSize(scoreSize);
+//        power = new Attribute("Power", 1, false);
+//        power.textColor = Color.WHITE;
+//        power.increaseTextColor = Color.RED;
+//        power.setMIN(1);
+//        power.setMAX(1);
+//        power.setX(healthIconX + Utility.intAtWidth640(18));
+//        power.setY(firepowerIconY + Utility.intAtWidth640(13));
+//        power.setFontSize(scoreSize);
 
         firepower = new Attribute("Shoot Rate", 1, false);
         firepower.setMIN(1);
@@ -201,7 +202,8 @@ public class VariableHandler {
         firepower.textColor = Color.WHITE;
         firepower.increaseTextColor = Color.RED;
         firepower.setFontSize(scoreSize);
-        firepower.setY(power.getY());
+        firepower.setX(healthIconX + Utility.intAtWidth640(18));
+        firepower.setY(firepowerIconY + Utility.intAtWidth640(13));
 
         shield = new Attribute("Shield", 0, false);
         shield.setMIN(0);
@@ -216,11 +218,11 @@ public class VariableHandler {
 
         shootRateBoostIconX = healthIconX + iconSpacingX;
 
-        firepower.setX(power.getX());
+//        firepower.setX(power.getX());
 
 //        shootRateBoostDuration = 0;
         shootRateBoostX = shootRateBoostIconX + Utility.intAtWidth640(20);
-        pulseY = power.getY();
+        pulseY = firepower.getY();
 
         homing = false;
 
@@ -270,8 +272,8 @@ public class VariableHandler {
         }
     }
 
-    public void resetPower() {
-        power.reset();
+    public void resetFirepower() {
+        firepower.reset();
     }
 
     public static void increaseScore(int score) {
@@ -351,13 +353,13 @@ public class VariableHandler {
         g.drawString("Timer: " + GameController.getCurrentTime(), timerX, timerY);
     }
 
-    public static void renderSpeedBoost(Graphics g) {
-        g.setFont(levelFont);
-        if (firepower.getValue() > 0)
-            g.setColor(Color.ORANGE);
-        else g.setColor(Color.WHITE);
-        g.drawString(Integer.toString(firepower.getValue()), shootRateBoostX, power.getY());
-    }
+//    public static void renderSpeedBoost(Graphics g) {
+//        g.setFont(levelFont);
+//        if (firepower.getValue() > 0)
+//            g.setColor(Color.ORANGE);
+//        else g.setColor(Color.WHITE);
+//        g.drawString(Integer.toString(firepower.getValue()), shootRateBoostX, firepower.getY());
+//    }
 
     public static void renderPulse(Graphics g) {
         g.setFont(levelFont);

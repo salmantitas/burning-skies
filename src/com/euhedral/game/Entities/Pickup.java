@@ -58,9 +58,9 @@ public class Pickup extends MobileEntity {
             VariableHandler.shield.increase(value);
         }
         else if (id == EntityID.PickupHoming) {
-            if (VariableHandler.power.isMax())
+//            if (VariableHandler.power.isMax())
                 VariableHandler.homing = true;
-            VariableHandler.power.increase(value);
+//            VariableHandler.power.increase(value);
         }
         else if (id == EntityID.PickupFirepower) {
             VariableHandler.firepower.increase(value);

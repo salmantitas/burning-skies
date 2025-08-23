@@ -305,7 +305,7 @@ public class EnemyPool extends Pool {
         else {
             bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity, tracking));
         }
-//        bullets.printPool("Enemy Bullet");
+        bullets.printPool("Enemy Bullet");
     }
 
     public void checkCollisions(Player player) {

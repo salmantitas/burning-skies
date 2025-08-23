@@ -54,8 +54,13 @@ public class BulletEnemy extends Bullet{
             } else {
                 impact.runAnimation();
 //            impactTimer++;
-                this.velX = entity.getVelX();
-                this.velY = entity.getVelY();
+                if (entity == null) {
+                    this.velX = 0;
+                    this.velY = EntityHandler.backgroundScrollingSpeed;
+                } else {
+                    this.velX = entity.getVelX();
+                    this.velY = entity.getVelY();
+                }
                 super.update();
             }
         }

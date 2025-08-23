@@ -29,7 +29,7 @@ public class Player extends MobileEntity {
     private int clampOffsetY;
     private int shootAngle = Utility.intAtWidth640(5);
 
-    private Attribute health, shield, power, shootRate;
+    private Attribute health, shield, firepower;
 //    private int shootRateBoost;
 
     private final int HEALTH_HIGH = 66;
@@ -123,7 +123,6 @@ public class Player extends MobileEntity {
         bullets.update();
         bullets.checkDeathAnimationEndPlayer();
 //        bullets.printPool("Bullets");
-//        bullets.cleanupPlayerBullets();
 
         setImage();
 
@@ -157,8 +156,8 @@ public class Player extends MobileEntity {
         health = VariableHandler.health;
         shield = VariableHandler.shield;
 //        shield.setValue(100);
-        power = VariableHandler.power;
-        shootRate = VariableHandler.firepower;
+//        power = VariableHandler.firepower;
+        firepower = VariableHandler.firepower;
     }
 
     private void setImage() {
@@ -398,6 +397,7 @@ public class Player extends MobileEntity {
         turretRightX = (int) (pos.x + width - 8);
         turretLeftX = (int) (pos.x + 4);
 
+//        VariableHandler.homing = true; // todo: Test Only
         if (VariableHandler.homing) {
             VariableHandler.homing = false;
 
@@ -424,16 +424,16 @@ public class Player extends MobileEntity {
         double shootAngleLeft = NORTH - shootAngle;
         double shootAngleRight = NORTH + shootAngle;
 
-        if (shootRate.getValue() <= 5) {
+        if (firepower.getValue() <= 5) {
             bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
-        } else if (shootRate.getValue() <= 10) {
+        } else if (firepower.getValue() <= 10) {
             bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH);
             bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
-        } else if (shootRate.getValue() <= 15) {
+        } else if (firepower.getValue() <= 15) {
             bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
             bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
             bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
-        } else if (shootRate.getValue() <= 20) {
+        } else if (firepower.getValue() <= 20) {
             bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
             bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH);
             bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
@@ -460,18 +460,18 @@ public class Player extends MobileEntity {
 //        } else if (power == 3) {
 
 //        } else
-        if (shootRate.getValue() <= 2) {
+        if (firepower.getValue() <= 2) {
 
         } else {
 
         }
 
         // reset shoot timer to default
-        shootTimer = shootTimerDefault - (shootRate.getValue() - 1) % 5;
+        shootTimer = shootTimerDefault - (firepower.getValue() - 1) % 5;
     }
 
     public void special() {
-//        VariableHandler.pulse = true;
+//        VariableHandler.pulse = true; // todo: Test Only
 
         if (VariableHandler.pulse) {
             pulse();
@@ -631,11 +631,8 @@ public class Player extends MobileEntity {
 
     private void damageHealth(int damage) {
         health.decrease(damage);
-        if (power.getValue() > 1) {
-            power.decrease(1);
-        }
-        if (shootRate.getValue() > 0) {
-            shootRate.decrease(1);
+        if (firepower.getValue() > 0) {
+            firepower.decrease(1);
         }
         jitter = jitter_MAX;
     }

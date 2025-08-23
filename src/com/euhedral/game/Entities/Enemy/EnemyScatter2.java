@@ -22,6 +22,7 @@ public class EnemyScatter2 extends Enemy {
 
     double tempAngle;
     int degreesPerBullet;
+    int shotCount = 1, shotSign = 1;
 
     public EnemyScatter2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
@@ -39,7 +40,8 @@ public class EnemyScatter2 extends Enemy {
         deceleration = decelerationMAX;
 
         bulletsPerShot_MAX = 5;
-        bulletArcAngle = 10 * bulletsPerShot_MAX;
+        bulletArcAngle = 50;
+        degreesPerBullet = bulletArcAngle / bulletsPerShot_MAX;
 
         attackEffect = true;
 
@@ -129,9 +131,12 @@ public class EnemyScatter2 extends Enemy {
     @Override
     public double getBulletAngle() {
         tempAngle = calculateShotTrajectory();
-        degreesPerBullet = bulletArcAngle / bulletsPerShot_MAX;
-//        double maxArc = tempAngle + 20;
-        return tempAngle - (2 * degreesPerBullet) + (bulletsPerShot - 1) * degreesPerBullet; // * (bulletsPerShot % 2 == 0 ? 1 : -1); // stub
+        tempAngle = tempAngle + shotCount/2 * shotSign * degreesPerBullet;
+        shotCount++;
+        shotSign *= -1;
+        if (shotCount > bulletsPerShot_MAX)
+            shotCount = 1;
+        return tempAngle;// - (2 * degreesPerBullet) + (bulletsPerShot - 1) * degreesPerBullet; // * (bulletsPerShot % 2 == 0 ? 1 : -1); // stub
     }
 
     private void updateDestination() {

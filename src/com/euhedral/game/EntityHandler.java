@@ -117,7 +117,7 @@ public class EntityHandler {
         else {
             spawnNew(x, y, enemyType, direction, distance);
         }
-        enemies.printPool("Enemy");
+//        enemies.printPool("Enemy");
     }
 
     private void spawnNew(int x, int y, int enemyType, int direction, int distance) {
@@ -163,6 +163,8 @@ public class EntityHandler {
             enemy = new EnemyDrone4(x, y, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_DRONE5) {
             enemy = new EnemyDrone5(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_DRONE6) {
+            enemy = new EnemyDrone6(x, y, levelHeight);
         }
 
         if (enemy != null) {
@@ -495,7 +497,7 @@ public class EntityHandler {
                 EntityID pickupID = null;
                 int pickupValue = 0;
                 int maxChanceCoefficient = 2;
-                if (lastDestroyedType == VariableHandler.TYPE_DRONE5 || lastDestroyedType == VariableHandler.TYPE_DRONE3) {
+                if (lastDestroyedType == VariableHandler.TYPE_DRONE6 || lastDestroyedType == VariableHandler.TYPE_DRONE3) {
                     pickupID = EntityID.PickupPulse;
                     pickupValue = 1;
 //                } else if (lastDestroyedType == TYPE_DRONE2) {
@@ -504,10 +506,10 @@ public class EntityHandler {
 //                    // todo: Spawn Homing Bullets
 //                } else if (lastDestroyedType == TYPE_DRONE3) {
 //                    // todo: Spawn Bomb Pickup
-                } else if (lastDestroyedType == VariableHandler.TYPE_DRONE1 || lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE1) {
+                } else if (lastDestroyedType == VariableHandler.TYPE_DRONE1 || lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE3) {
                     pickupID = EntityID.PickupHoming;
                     pickupValue = 1;
-                } else if (lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2 || lastDestroyedType == VariableHandler.TYPE_DRONE4 || lastDestroyedType == VariableHandler.TYPE_MINE2) {
+                } else if (lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2 || lastDestroyedType == VariableHandler.TYPE_DRONE4 || lastDestroyedType == VariableHandler.TYPE_SIDE1 || lastDestroyedType == VariableHandler.TYPE_MINE2) {
                     pickupID = EntityID.PickupFirepower;
                     pickupValue = 1;
                 } else if (lastDestroyedType == VariableHandler.TYPE_SCATTER1 || lastDestroyedType == VariableHandler.TYPE_SCATTER2) {
