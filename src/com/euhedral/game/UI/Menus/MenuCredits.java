@@ -7,6 +7,7 @@ import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.UI.UIHandler;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class MenuCredits extends Menu {
     int leftPaneX = Utility.percWidth(3), rightPaneX = Utility.percWidth(56);
     int lineHeightInPixel = 30;
 
-    Font creditFont = UIHandler.customFont.deriveFont(0, creditFontSize);
+    Font creditFont = VariableHandler.customFont.deriveFont(0, creditFontSize);
 
     public MenuCredits() {
         super(GameState.Credits);
@@ -30,12 +31,15 @@ public class MenuCredits extends Menu {
         int panelWidth = Utility.percWidth(40);
         int panelHeight = Utility.percHeight(70);
 
-        Panel leftPane = new Panel(leftPaneX, Utility.percHeight(22), panelWidth, panelHeight, GameState.Game);
-        leftPane.setTransparency(0.7f);
+        float panelTransparency = 0.7f;
+        Color panelColor = Color.BLACK;
+
+        Panel leftPane = new Panel(leftPaneX, Utility.percHeight(22), panelWidth, panelHeight, GameState.Game, panelTransparency, panelColor);
+        leftPane.enableBorder();
         menuItems.add(leftPane);
 
-        Panel rightPane = new Panel(rightPaneX, Utility.percHeight(22), panelWidth, panelHeight, GameState.Game);
-        rightPane.setTransparency(0.7f);
+        Panel rightPane = new Panel(rightPaneX, Utility.percHeight(22), panelWidth, panelHeight, GameState.Game, panelTransparency, panelColor);
+        rightPane.enableBorder();
         menuItems.add(rightPane);
 
         assets = new ArrayList<>();
@@ -47,6 +51,7 @@ public class MenuCredits extends Menu {
         assets.add("Background Music");
         assets.add("- Dar Golan");
         assets.add("- Joshua McLean");
+        assets.add("- Tallbeard Studios");
         assets.add("");
 
 //        assets.add("Bullet Sound Effects");

@@ -5,6 +5,7 @@ import com.euhedral.engine.UI.*;
 import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
+import com.euhedral.game.SoundHandler;
 import com.euhedral.game.UI.UIHandler;
 import com.euhedral.game.VariableHandler;
 
@@ -15,7 +16,8 @@ public class MenuPause extends Menu {
     int pauseX = Utility.percWidth(15), pauseY = Utility.percHeight(40);
     int buttonX = pauseX + Utility.percWidth(1);
 
-    Font textFont = UIHandler.customFont.deriveFont(0, Utility.intAtWidth640(90));
+    Font textFont = VariableHandler.customFont.deriveFont(0, Utility.intAtWidth640(90));
+    Font BGMFont = VariableHandler.customFont.deriveFont(0, Utility.intAtWidth640(10));
 
 //    ButtonAction volumeMasterDown = new ButtonAction(x36, volY, optionSize, optionSize, "-", ActionTag.volumeMasterDown);
 //    ButtonAction volumeMaster = new ButtonAction(x40, volY, optionSize, "Master Volume", ActionTag.volumeMaster);
@@ -67,6 +69,7 @@ public class MenuPause extends Menu {
 
         VariableHandler.renderHUD(g);
         drawPause(g);
+        drawBGM(g);
 //        VariableHandler.renderLevel(g);
 //        renderValue(g, volumeMasterUp, SoundHandler.getVolumeMaster(), SoundHandler.isVolumeMaster());
 
@@ -81,5 +84,11 @@ public class MenuPause extends Menu {
         g.setFont(textFont);
         g.setColor(Color.WHITE);
         g.drawString("PAUSE", pauseX, pauseY);
+    }
+
+    public void drawBGM(Graphics g) {
+        g.setFont(BGMFont);
+        g.setColor(Color.WHITE);
+        g.drawString("BGM: " + SoundHandler.getSongName(), pauseX, pauseY + 30);
     }
 }

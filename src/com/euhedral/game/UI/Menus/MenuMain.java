@@ -7,7 +7,7 @@ import com.euhedral.engine.*;
 import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
 import com.euhedral.game.UI.MessageBox;
-import com.euhedral.game.UI.UIHandler;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 import java.io.IOException;
@@ -65,8 +65,8 @@ public class MenuMain extends Menu {
 //            e.printStackTrace();
 //        }
 
-        titleFont = UIHandler.customFont.deriveFont(1, titleSize);
-        versionFont = UIHandler.customFont.deriveFont(1, versionSize);
+        titleFont = VariableHandler.customFont.deriveFont(1, titleSize);
+        versionFont = VariableHandler.customFont.deriveFont(1, versionSize);
     }
 
     @Override

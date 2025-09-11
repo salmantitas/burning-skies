@@ -8,18 +8,19 @@ import com.euhedral.engine.UI.Panel;
 import com.euhedral.game.ActionTag;
 import com.euhedral.game.GameController;
 import com.euhedral.game.UI.UIHandler;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class MenuHelp extends Menu {
 
-    int helpX = 300;
+    int helpX = 210;
     int helpY = 200;
 
-    Font textFont = UIHandler.customFont.deriveFont(0, Utility.intAtWidth640(8));
+    Font textFont = VariableHandler.customFont.deriveFont(0, Utility.intAtWidth640(10));
     ArrayList<String> help;
-    int lineHeightInPixel = 80;
+    int lineHeightInPixel = 50;
 
 //    private class Bindable extends UIItem{
 //        String str;
@@ -77,21 +78,31 @@ public class MenuHelp extends Menu {
         ButtonNav back = new ButtonNav(x43, y80, optionSize, "Back", GameState.Menu);
         options[0] = back;
 
-        int panelWidth = Utility.percWidth(55);
+        int panelWidth = Utility.percWidth(67);
         int panelHeight = 470;
 
-        Panel backPane = new Panel(helpX - Utility.percWidth(1), helpY + 40, panelWidth, panelHeight, GameState.Game);
-        backPane.setTransparency(0.8f);
+        float panelTransparency = 0.7f;
+        Color panelColor = Color.BLACK;
+
+        Panel backPane = new Panel(helpX - Utility.percWidth(1), helpY + 40, panelWidth, panelHeight, GameState.Game, panelTransparency, panelColor);
+        backPane.enableBorder();
         menuItems.add(backPane);
 
 //        createBindable(GameController.UP, 100, 100);
 
         help = new ArrayList<>();
-        help.add(GameController.UP + "-" + GameController.LEFT + "-" + GameController.DOWN + "-"
-                + GameController.RIGHT + " or the Arrow Keys for movement");
-        help.add(GameController.SHOOT + " to shoot");
-        help.add("ESC or " + GameController.PAUSE + " in-game to pause or resume");
-        help.add("");
+        help.add("Use WASD or the Arrow Keys to move.");
+//        help.add("");
+        help.add("        SPACEBAR to shoot.");
+//        help.add("");
+        help.add("        ESCAPE or P to pause.");
+//        help.add("");
+        help.add("        CTRL to use Special Move.");
+//        help.add("");
+        help.add("You can disable tutorial in Settings.");
+//        help.add("");
+        help.add("Shoot as many enemies as you can.");
+//        help.add("");
         help.add("You can toggle tutorial message-boxes");
         help.add("in Settings");
 //        help.add("ESC from menu to quit");
@@ -143,7 +154,7 @@ public class MenuHelp extends Menu {
         for (int i = 0; i < help.size(); i++)
         {
             String s = help.get(i);
-            g.drawString(s, helpX + Utility.percWidth(3), helpY + (i+1)*lineHeightInPixel);
+            g.drawString(s, helpX + Utility.percWidth(3), (helpY + 50) + (i+1)*lineHeightInPixel);
         }
     }
 

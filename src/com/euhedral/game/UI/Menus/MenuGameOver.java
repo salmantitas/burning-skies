@@ -17,7 +17,7 @@ public class MenuGameOver extends Menu {
     int gameOverX = Utility.percWidth(5);
     int scoreX = Utility.percWidth(14);
 
-    Font gameOverFont = UIHandler.customFont.deriveFont(0, Utility.intAtWidth640(60));
+    Font gameOverFont = VariableHandler.customFont.deriveFont(0, Utility.intAtWidth640(60));
     Font scoreFont = new Font("arial", 1, 40);
 
     int inScreenMarker, minSize, explodeX, explodeY;

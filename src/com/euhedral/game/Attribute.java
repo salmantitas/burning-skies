@@ -144,7 +144,7 @@ public class Attribute {
 
     public void setFontSize(int size) {
         fontSize = size;
-        font = UIHandler.customFont.deriveFont(0, fontSize);
+        font = VariableHandler.customFont.deriveFont(0, fontSize);
     }
 
     public void renderBar(Graphics g) {

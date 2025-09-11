@@ -1,5 +1,7 @@
 package com.euhedral.game;
 
+import com.euhedral.engine.Engine;
+import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 
 import javax.sound.sampled.AudioInputStream;
@@ -18,23 +20,31 @@ public class SoundHandler {
     public static final int EXPLOSION = 3;
     public static final int EXPLOSION_PLAYER = 4;
     public static final int BGMGAMEOVER = 5;
-    public static final int BGMPLAY = 6;
-    public static final int IMPACT = 7;
-    public static final int BULLET_ENEMY = 8;
-    public static final int UI1 = 9;
-    public static final int UI2 = 10;
-    public static final int SHIELD_1 = 11;
-    public static final int SHIELD_2 = 12;
-    public static final int SHIELD_3 = 13;
-    public static final int RING = 14;
+    public static final int IMPACT = 6;
+    public static final int BULLET_ENEMY = 7;
+    public static final int UI1 = 8;
+    public static final int UI2 = 9;
+    public static final int SHIELD_1 = 10;
+    public static final int SHIELD_2 = 11;
+    public static final int SHIELD_3 = 12;
+    public static final int RING = 13;
+
 
     static int MAX_CLIP = RING + 1;
+
+    public static final int BGMPLAY1 = 0;
+    public static final int BGMPLAY2 = 1;
+
     static Clip clip;
     public static Clip effect;
     private static Clip bgm;
     static Clip newClip = null;
     static URL soundURL[] = new URL[MAX_CLIP];
     static Clip clips[] = new Clip[MAX_CLIP];
+    static URL BGM_URL[] = new URL[BGMPLAY2 + 1];
+    static Clip BGMs[] = new Clip[BGMPLAY2 + 1];
+
+    private static int currentBGM = -1;
 
     static FloatControl gainControl;
     static FloatControl bgmGainControl;
@@ -53,6 +63,7 @@ public class SoundHandler {
     static AudioInputStream ais;
 
     private static int bgmID = -1;
+    private static int bgmGameID = -1;
 
     static boolean noBgmPlaying;
     static boolean sameBgmPlaying;
@@ -69,7 +80,6 @@ public class SoundHandler {
         soundURL[EXPLOSION] = getClass().getResource("/explosion.wav");
         soundURL[EXPLOSION_PLAYER] = getClass().getResource("/explosion_player.wav");
         soundURL[BGMGAMEOVER] = getClass().getResource("/bgmGameOver.wav");
-        soundURL[BGMPLAY] = getClass().getResource("/bgm1.wav");
         soundURL[IMPACT] = getClass().getResource("/impact.wav");
         soundURL[UI1] = getClass().getResource("/clip_ui_1.wav");
         soundURL[UI2] = getClass().getResource("/clip_ui_2.wav");
@@ -78,8 +88,16 @@ public class SoundHandler {
         soundURL[SHIELD_3] = getClass().getResource("/shield_3.wav");
         soundURL[RING] = getClass().getResource("/ringOfFire.wav");
 
+
         for (int i = 0; i < MAX_CLIP; i ++) {
             clips[i] = setClip(i);
+        }
+
+        BGM_URL[BGMPLAY1] = getClass().getResource("/bgm1.wav");
+        BGM_URL[BGMPLAY2] = getClass().getResource("/bgm2.wav");
+
+        for (int i = 0; i < 2; i ++) {
+            BGMs[i] = setClipBGM(i);
         }
 
         volumeEffects = VOLUME_MAX;
@@ -89,25 +107,19 @@ public class SoundHandler {
     }
 
     public void update() {
-        for (int i = 0; i < MAX_CLIP; i ++) {
-//            Utility.log("Index: " + i);
-            if (!clips[i].isRunning()) {
-//                clips[i].close();
-                // remove
-            }
-        }
-    }
-
-//    public static void setFile(int i) {
-//        try {
-//            ais = AudioSystem.getAudioInputStream(soundURL[i]);
-//            clip = AudioSystem.getClip();
-//            clip.open(ais);
-//        } catch (Exception e) {
+//        No point
+//        for (int i = 0; i < MAX_CLIP; i ++) {
+//            if (!clips[i].isRunning()) {
 //
+//            }
 //        }
-////        Utility.log("Set File");
-//    }
+
+//        if (Engine.stateIs(GameState.Game)) {
+//            if (!BGMs[currentBGM].isRunning()) {
+//                BGMUp();
+//            }
+//        }
+    }
 
     // Assumes all clips have already been loaded
     public static void setFile(int i) {
@@ -115,10 +127,29 @@ public class SoundHandler {
         clip.setFramePosition(0);
     }
 
+    // Assumes all clips have already been loaded
+    public static void setFileBGM(int i) {
+        clip = BGMs[i];
+        clip.setFramePosition(0);
+    }
+
     public static Clip setClip(int i) {
         newClip = null;
         try {
             ais = AudioSystem.getAudioInputStream(soundURL[i]);
+            newClip = AudioSystem.getClip();
+            newClip.open(ais);
+        } catch (Exception e) {
+
+        }
+//        Utility.log("Set Clip");
+        return newClip;
+    }
+
+    public static Clip setClipBGM(int i) {
+        newClip = null;
+        try {
+            ais = AudioSystem.getAudioInputStream(BGM_URL[i]);
             newClip = AudioSystem.getClip();
             newClip.open(ais);
         } catch (Exception e) {
@@ -212,14 +243,31 @@ public class SoundHandler {
         // stub
     }
 
+    public static void playBGMPlay() {
+        if (Engine.previousState == GameState.Pause) {
+            return;
+        }
+
+        if (currentBGM == -1) {
+            currentBGM = Utility.randomRangeInclusive(BGMPLAY1, BGMPLAY2);
+        } else {
+            currentBGM = (currentBGM + 1) % (BGMPLAY2 + 1);
+        }
+
+        sameBgmPlaying = bgmGameID == currentBGM;
+
+        if (sameBgmPlaying) {
+
+        }
+        else {
+            bgm.stop();
+            bgmPlayHelper(currentBGM);
+        }
+    }
+
     public static void playBGMMenu() {
         playBGM(BGMMAINMENU);
 //        Utility.log("Play BGM Menu");
-    }
-
-    public static void playBGMPlay() {
-        playBGM(BGMPLAY);
-//        Utility.log("Play BGM Game");
     }
 
     public static void playBGMGameOver() {
@@ -248,12 +296,21 @@ public class SoundHandler {
         bgm.start();
         bgm.loop(Clip.LOOP_CONTINUOUSLY);
         bgmID = soundID;
+        bgmGameID = -1;
 //        Utility.log("BGM Helper");
     }
 
-//    public boolean playingBGMMenu() {
-//        return clip == bgm_Main;
-//    }
+    private static void bgmPlayHelper(int soundID) {
+        bgm.stop();
+        setFileBGM(soundID);
+        bgm = clip;
+        gainControlVolumeMaster();
+        bgm.start();
+        bgm.loop(Clip.LOOP_CONTINUOUSLY);
+        bgmGameID = soundID;
+        bgmID = -1;
+//        Utility.log("BGM Helper");
+    }
 
     /******************
      * Volume Control *
@@ -333,6 +390,19 @@ public class SoundHandler {
         gainControlVolumeMaster();
     }
 
+    public static void BGMUp() {
+        currentBGM = (currentBGM + 1) % (BGMPLAY2 + 1);
+        bgmPlayHelper(currentBGM);
+    }
+
+    public static void BGMDown() {
+        currentBGM = (currentBGM - 1) % (BGMPLAY2 + 1);
+        if (currentBGM < 0) {
+            currentBGM += BGMPLAY2 + 1;
+        }
+        bgmPlayHelper(currentBGM);
+    }
+
     /*****************
      * Getter/Setter *
      *****************/
@@ -371,5 +441,19 @@ public class SoundHandler {
     public static void setVolumeEffects(int volume) {
         volumeEffects = volume;
 //        Utility.log(Integer.toString(volumeEffects));
+    }
+
+    public static String getSongName() {
+        String returnString = "";
+        if (currentBGM == 0) {
+            returnString = "Mountain Trails - Joshua McLean";
+        } else if (currentBGM == 1) {
+            returnString = "Pixel Wars 1 - Tallbeard Studios";
+        }
+        return returnString;
+    }
+
+    public static boolean gameBGMRunning() {
+        return bgmGameID > -1;
     }
 }

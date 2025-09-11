@@ -17,7 +17,10 @@ public enum ActionTag {
     volumeEffects,
     volumeEffectsUp,
     volumeEffectsDown,
-    toggleDifficulty,
+    BGMUp,
+    BGMDown,
+    increaseDifficulty,
+    decreaseDifficulty,
     save,
     load
 }

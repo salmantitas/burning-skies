@@ -53,7 +53,7 @@ public class Bullet extends MobileEntity {
 
         textureHandler = GameController.getTexture();
 
-        impact = new Animation(2, GameController.getTexture().impactSmall[0],
+        impact = new Animation(4, GameController.getTexture().impactSmall[0],
                 GameController.getTexture().impactSmall[1],
                 GameController.getTexture().impactSmall[2],
                 GameController.getTexture().impactSmall[3]

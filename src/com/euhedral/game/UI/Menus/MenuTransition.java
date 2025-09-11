@@ -1,9 +1,8 @@
 package com.euhedral.game.UI.Menus;
 
 import com.euhedral.engine.*;
+import com.euhedral.engine.UI.*;
 import com.euhedral.engine.UI.Button;
-import com.euhedral.engine.UI.ButtonAction;
-import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.game.ActionTag;
 import com.euhedral.game.UI.UIHandler;
@@ -21,8 +20,8 @@ public class MenuTransition extends Menu {
     String text2 = "";
     int size1 = Utility.intAtWidth640(25);
     int size2 = Utility.intAtWidth640(10);
-    Font font1 = UIHandler.customFont.deriveFont(1, size1);
-    Font font2 = UIHandler.customFont.deriveFont(1, size2);
+    Font font1 = VariableHandler.customFont.deriveFont(1, size1);
+    Font font2 = VariableHandler.customFont.deriveFont(1, size2);
 
     int lineSpace = Utility.intAtWidth640(25);
     int difficultyNameX = 500;
@@ -48,7 +47,7 @@ public class MenuTransition extends Menu {
     int difficultyX = x10;
     int startY = difficultyY + spacingY;
 
-    ButtonAction difficulty = new ButtonAction(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty", ActionTag.toggleDifficulty);
+    ButtonAction2 difficulty = new ButtonAction2(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty", null);
 
     ButtonAction start = new ButtonAction(difficultyX, startY, Utility.perc(buttonSize, 80), "Start", ActionTag.go);
 
@@ -67,6 +66,9 @@ public class MenuTransition extends Menu {
         super(GameState.Transition);
         MAXBUTTON = 3;
         options = new Button[MAXBUTTON];
+
+        difficulty.setIncreaseAction(ActionTag.increaseDifficulty);
+        difficulty.setDecreaseAction(ActionTag.decreaseDifficulty);
 
         options[0] = difficulty;
         options[1] = start;

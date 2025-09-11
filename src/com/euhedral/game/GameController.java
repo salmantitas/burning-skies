@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "BURNING SKIES";
-    public static String gameVersion = "0.7.37";
+    public static String gameVersion = "0.7.38";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -31,7 +31,7 @@ public class GameController {
 
     // Management
     private UIHandler uiHandler;
-    private VariableHandler variableHandler;
+    private static VariableHandler variableHandler;
     private EntityHandler entityHandler;
     private static TextureHandler textureHandler;
     private SoundHandler soundHandler;
@@ -113,6 +113,7 @@ public class GameController {
 //        Engine.setState(GameState.Test);
         Engine.menuState();
 
+        initializeSettings();
         initializeSound();
         initializeGraphics();
         initializeAnimations();
@@ -125,9 +126,17 @@ public class GameController {
      * Initializer Functions *
      *************************/
 
+    private void initializeSettings() {
+        variableHandler = new VariableHandler();
+
+        try {
+            SaveLoad.loadSettings();
+        } catch (Exception e) {
+            Utility.log("Exception");
+        }
+    }
+
     private void initializeGraphics() {
-//        camera = new Camera(0,0);
-//        camera.setMarker(VariableHandler.deadzoneTop);
         textureHandler = new TextureHandler();
 
         background = new Background();
@@ -142,16 +151,9 @@ public class GameController {
          * Game Code *
          *************/
 
-        variableHandler = new VariableHandler();
         entityHandler = new EntityHandler();
         shop = new Shop();
         scanner = new Scanner(System.in);
-
-        try {
-            SaveLoad.loadSettings();
-        } catch (Exception e) {
-            Utility.log("Exception");
-        }
     }
 
     // Initializes SoundHandler Class and loads the volume settings to allow background music to play
@@ -573,10 +575,24 @@ public class GameController {
                     SaveLoad.saveSettings();
                     break;
                 }
-                case toggleDifficulty: {
+                case BGMUp: {
+                    soundHandler.BGMUp();
+                    break;
+                }
+                case BGMDown: {
+                    soundHandler.BGMDown();
+                    break;
+                }
+                case increaseDifficulty: {
                     VariableHandler.difficultyType++;
                     if (VariableHandler.difficultyType > VariableHandler.DIFFICULTY_CHALLENGE)
                         VariableHandler.difficultyType = 0;
+                    break;
+                }
+                case decreaseDifficulty: {
+                    VariableHandler.difficultyType--;
+                    if (VariableHandler.difficultyType < 0)
+                        VariableHandler.difficultyType = VariableHandler.DIFFICULTY_CHALLENGE;
                     break;
                 }
                 case health:
@@ -640,16 +656,28 @@ public class GameController {
         if (Engine.currentState != GameState.Game) {
             // Keyboard to Navigate buttons
 
-            if (key == KeyEvent.VK_RIGHT || key == KeyInput.getKeyEvent(RIGHT) || key == KeyEvent.VK_DOWN || key == KeyInput.getKeyEvent(DOWN)) {
-                uiHandler.keyboardSelection('r');
+            if (key == KeyEvent.VK_DOWN || key == KeyInput.getKeyEvent(DOWN)) {
+                uiHandler.keyboardSelection('d');
             }
 
-            if (key == KeyEvent.VK_LEFT || key == KeyInput.getKeyEvent(LEFT) || key == KeyEvent.VK_UP || key == KeyInput.getKeyEvent(UP)) {
-                uiHandler.keyboardSelection('l');
+            if (key == KeyEvent.VK_UP || key == KeyInput.getKeyEvent(UP)) {
+                uiHandler.keyboardSelection('u');
+            }
+
+            // Left/Right to increase or decrease something
+            if (key == KeyEvent.VK_RIGHT || key == KeyInput.getKeyEvent(RIGHT)) {
+                uiHandler.increaseOption();
+                performAction();
+            }
+
+            if (key == KeyEvent.VK_LEFT || key == KeyInput.getKeyEvent(LEFT)) {
+                uiHandler.decreaseOption();
+                performAction();
             }
         }
 
-        // Enter/Spacebar to select selected
+        // Needs to be outside the check to dismiss tutorial prompt
+        // Enter/E to select selected
         if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_E ) {
             uiHandler.chooseSelected();
             performAction();
@@ -663,7 +691,7 @@ public class GameController {
     }
 
     private void keyPressedPlayer(int key) {
-        if (Engine.stateIs(GameState.Game) || Engine.stateIs(GameState.Pause)) {
+        if (Engine.stateIs(GameState.Game)) {
             if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
                 movePlayer('l');
 

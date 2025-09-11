@@ -8,6 +8,7 @@ import java.awt.*;
 public class Panel extends MenuItem {
 
     Graphics2D g2d;
+    boolean border = false;
 
     public Panel(int x, int y, int width, int height, GameState state) {
         super(x,y,width, height, state);
@@ -26,6 +27,13 @@ public class Panel extends MenuItem {
 
         // Ensure that nothing on top of the transparent panel is rendered transparent
         g2d.setComposite(Utility.makeTransparent(1));
+
+        if (border)
+            g.drawRect(x, y, width, height);
+    }
+
+    public void enableBorder() {
+        border = true;
     }
 
 }

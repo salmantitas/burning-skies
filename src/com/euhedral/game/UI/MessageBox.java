@@ -3,6 +3,7 @@ package com.euhedral.game.UI;
 import com.euhedral.engine.UI.UIItem;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.SoundHandler;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class MessageBox extends UIItem {
 //    private Close close;
     private int margin = Utility.intAtWidth640(10);
     private int fontSize = Utility.intAtWidth640(10);
-    private Font font = UIHandler.customFont.deriveFont(1, fontSize);
+    private Font font = VariableHandler.customFont.deriveFont(1, fontSize);
     private float transparency;
 
     private double SCALE_FACTOR;
@@ -195,6 +196,6 @@ public class MessageBox extends UIItem {
 
     public void setFontSize(int fontSize) {
         this.fontSize = fontSize;
-        font = UIHandler.customFont.deriveFont(1, fontSize);// new Font("arial", 0, fontSize);
+        font = VariableHandler.customFont.deriveFont(1, fontSize);// new Font("arial", 0, fontSize);
     }
 }

@@ -4,7 +4,6 @@ import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ActionTag;
 import com.euhedral.game.UI.MessageBox;
-import com.euhedral.game.UI.UIHandler;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
@@ -72,11 +71,10 @@ public class Menu {
     protected Font headingFont;
 
     protected int buttonOffsetX, buttonOffsetY;
-    protected Font buttonValueFont = UIHandler.customFont.deriveFont(0, Utility.intAtWidth640(18));
+    protected Font buttonValueFont = VariableHandler.customFont.deriveFont(0, Utility.intAtWidth640(18));
     protected Color buttonValueColor;
 
     Button button;
-    int tempReassign;
     ActionTag returnAction;
     MessageBox messageBox;
 
@@ -85,7 +83,7 @@ public class Menu {
         messageBoxes = new ArrayList<>();
         activeMessageBoxes = 0;
 
-        headingFont = UIHandler.customFont.deriveFont(1, titleSize);
+        headingFont = VariableHandler.customFont.deriveFont(1, titleSize);
 //        previous = null;
     }
 
@@ -145,19 +143,25 @@ public class Menu {
      * */
     public void keyboardSelection(char c) {
         if (activeMessageBoxes == 0) {
-            if (c == 'r') {
-                reassignSelected((index + 1) % MAXBUTTON);
-//                options[index].deselect();
-//                index = (index + 1) % MAXBUTTON;
-//                options[index].select();
-            } else {
-                tempReassign = index - 1;
-                if (tempReassign < 0) tempReassign = MAXBUTTON - 1;
-//
-//                options[index].deselect();
-//                index = (index - 1);
-//                options[index].select();
-                reassignSelected(tempReassign);
+            if (c == 'd') {
+                int nextButton = (index + 1) % MAXBUTTON;
+                while (!options[nextButton].isEnabled()) {
+                    Utility.log("" + nextButton);
+                    nextButton = (nextButton + 1) % MAXBUTTON;
+                }
+                reassignSelected(nextButton);
+            } else if (c == 'u') {
+                int nextButton = (index - 1) % MAXBUTTON;
+                if (nextButton < 0) {
+                    nextButton += MAXBUTTON;
+                }
+
+                while (!options[nextButton].isEnabled()) {
+                    Utility.log("" + nextButton);
+                    nextButton = (nextButton - 1) % MAXBUTTON;
+                }
+
+                reassignSelected(nextButton);
             }
         }
     }
@@ -189,6 +193,27 @@ public class Menu {
                 }
             }
         }
+        return returnAction;
+    }
+
+    public ActionTag increaseOption() {
+        returnAction = null;
+
+        // todo: Find correct action, if existing
+        button = options[index];
+        returnAction = (ActionTag) button.increaseOption();
+        Utility.log("Increase Attempted");
+
+        return returnAction;
+    }
+
+    public ActionTag decreaseOption() {
+        returnAction = null;
+
+        button = options[index];
+        returnAction = (ActionTag) button.decreaseOption();
+        Utility.log("Decrease Attempted");
+
         return returnAction;
     }
 

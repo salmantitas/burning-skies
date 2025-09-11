@@ -5,17 +5,19 @@ import com.euhedral.engine.GameState;
 import com.euhedral.engine.UI.*;
 import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.Menu;
+import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.ActionTag;
 import com.euhedral.game.SoundHandler;
+import com.euhedral.game.UI.UIHandler;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 
 public class MenuSettings extends Menu {
 
-//    // Functions
-//    Function toggleTutorial = () -> VariableHandler.toggleTutorial();
+    int bgmX, bgmY;
+    Font BGMFont = VariableHandler.customFont.deriveFont(0, Utility.intAtWidth640(10));
 
     // Options
 
@@ -23,10 +25,11 @@ public class MenuSettings extends Menu {
 
     ButtonAction tutorial = new ButtonAction(x36, y40, optionSize, "Tutorial", ActionTag.tutorial);
     ButtonAction volumeMasterDown = new ButtonAction(x30, y48 + volOffset, optionSize, optionSize, "-", ActionTag.volumeMasterDown);
-    ButtonAction volumeMaster = new ButtonAction(x36, y48, optionSize, "Master Volume", ActionTag.volumeMaster);
+    ButtonAction2 volumeMaster = new ButtonAction2(x36, y48, optionSize, "Master Volume", ActionTag.volumeMaster);
     ButtonAction volumeMasterUp = new ButtonAction(x70, y48 + volOffset, optionSize, optionSize,"+", ActionTag.volumeMasterUp);
 //    ButtonAction volumeMusicDown = new ButtonAction(x36, y56, optionSize, optionSize, "-", ActionTag.volumeMusicDown);
     ButtonAction volumeMusic = new ButtonAction(x36, y56, optionSize, "Music Volume", ActionTag.volumeMusic);
+    ButtonAction2 changeBGM = new ButtonAction2(x36, y62, optionSize, "Change BGM", null);
 //    ButtonAction volumeMusicUp = new ButtonAction(x62, y56, optionSize, optionSize,"+", ActionTag.volumeMusicUp);
 //    ButtonAction volumeEffectsDown = new ButtonAction(x36, y62, optionSize, optionSize, "-", ActionTag.volumeEffectsDown);
 //    ButtonAction volumeEffects = new ButtonAction(x40, y62, optionSize, "Effects Volume", ActionTag.volumeEffects);
@@ -35,26 +38,46 @@ public class MenuSettings extends Menu {
 
     public MenuSettings() {
         super(GameState.Settings);
-        MAXBUTTON = 6; //11;
+        MAXBUTTON = 5; //11;
         options = new Button[MAXBUTTON];
 
+        volumeMaster.setIncreaseAction(ActionTag.volumeMasterUp);
+        volumeMaster.setDecreaseAction(ActionTag.volumeMasterDown);
+
+        changeBGM.setIncreaseAction(ActionTag.BGMUp);
+        changeBGM.setDecreaseAction(ActionTag.BGMDown);
+
         options[0] = tutorial;
-        options[1] = volumeMasterDown;
-        options[2] = volumeMaster;
-        options[3] = volumeMasterUp;
+//        options[1] = volumeMasterDown;
+        options[1] = volumeMaster;
+//        options[3] = volumeMasterUp;
 //        options[4] = volumeMusicDown;
-        options[4] = volumeMusic;
+        options[2] = volumeMusic;
+        options[3] = changeBGM;
 //        options[6] = volumeMusicUp;
 //        options[7] = volumeEffectsDown;
 //        options[8] = volumeEffects;
 //        options[9] = volumeEffectsUp;
         options[MAXBUTTON - 1] = back;
+
+        int panelX = 300;
+        int panelY = 300;
+        bgmX = panelX;
+        bgmY = panelY - 50;
+        int panelWidth = 780;
+        int panelHeight = 370;
+        float panelTransparency = 0.85f;
+        Color panelColor = Color.BLACK;
+
+        Panel backPane = new Panel(panelX, panelY, panelWidth, panelHeight, GameState.Game, panelTransparency, panelColor);
+        backPane.enableBorder();
+        menuItems.add(backPane);
     }
 
-//    @Override
-//    public void update() {
-//
-//    }
+    @Override
+    public void update() {
+        checkConditionAndDisable(changeBGM, SoundHandler.gameBGMRunning());
+    }
 
     // Disables button when the conditions are not true
     private void checkConditionAndDisable(Button button, boolean condition) {
@@ -69,6 +92,8 @@ public class MenuSettings extends Menu {
 
 //        g.setFont(new Font("arial", 1, Utility.percWidth(5)));
         g.setColor(Color.WHITE);
+        if (SoundHandler.gameBGMRunning())
+            drawBGM(g);
 
         // Render Toggle Icons
 
@@ -101,7 +126,15 @@ public class MenuSettings extends Menu {
         buttonValueColor = bool ? Color.GREEN : Color.RED;
         g.setColor(buttonValueColor);
 
-        g.fillOval(10 + buttonOffsetX, buttonOffsetY ,toggleIconSize,toggleIconSize);
+        int gap = button.getSelectedWidth() - button.getWidth();
+
+        g.fillOval(buttonOffsetX + gap, buttonOffsetY ,toggleIconSize,toggleIconSize);
+    }
+
+    public void drawBGM(Graphics g) {
+        g.setFont(BGMFont);
+        g.setColor(Color.WHITE);
+        g.drawString("BGM: " + SoundHandler.getSongName(), bgmX, bgmY + 30);
     }
 
 }

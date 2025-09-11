@@ -25,9 +25,11 @@ public class MenuHighScore extends Menu {
 
         int panelWidth = 300;
         int panelHeight = Utility.percHeight(41.5);
+        float panelTransparency = 0.7f;
+        Color panelColor = Color.BLACK;
 
-        Panel backPane = new Panel(highScoreX, y25, panelWidth, panelHeight, GameState.Game);
-        backPane.setTransparency(0.8f);
+        Panel backPane = new Panel(highScoreX, y25, panelWidth, panelHeight, GameState.Game, panelTransparency, panelColor);
+        backPane.enableBorder();
         menuItems.add(backPane);
     }
 

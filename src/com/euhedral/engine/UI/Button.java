@@ -3,7 +3,7 @@ package com.euhedral.engine.UI;
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.SoundHandler;
-import com.euhedral.game.UI.UIHandler;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -21,7 +21,7 @@ public class Button extends UIItem{
     protected LinkedList<GameState> otherStates = new LinkedList<>();
     protected float transparency = 1;
     protected boolean fontSizeCalculated = false;
-    protected int originalWidth, newWidth;
+    protected int originalWidth, selectedWidth;
     protected Color disabledColor, disabledTextColor;
 
     Graphics2D g2d;
@@ -32,12 +32,12 @@ public class Button extends UIItem{
         this.x = x;
         this.y = y;
         this.originalWidth = width;
-        this.newWidth = width + 5;
+        this.selectedWidth = width + 4;
         this.width = width;
         this.height = height;
         this.text = text;
-        fontSelected = UIHandler.customFont.deriveFont(1, newWidth); // new Font("arial", 1, newWidth);
-        fontUnselected = UIHandler.customFont.deriveFont(1, width); // new Font("arial", 1, width);
+        fontSelected = VariableHandler.customFont.deriveFont(1, selectedWidth);
+        fontUnselected = VariableHandler.customFont.deriveFont(1, width);
         font = fontUnselected;
         backColor = Color.BLUE;
         selectedColor = Color.RED;
@@ -47,6 +47,7 @@ public class Button extends UIItem{
     }
 
     public Button(int x, int y, int size, String text) {
+        this.size = size;
         this(x, y, size, (size * 14)/10, text);
     }
 
@@ -62,11 +63,15 @@ public class Button extends UIItem{
 
         g.setFont(font);
 
-        stringWidth = (g.getFontMetrics().stringWidth(text));
-
         if (!fontSizeCalculated) {
             // Adjusts the width and height of the button to fit the text
-            width = Utility.perc(stringWidth, 110);;
+            g.setFont(fontUnselected);
+            stringWidth = (g.getFontMetrics().stringWidth(text));
+            width = stringWidth + Utility.intAtWidth640(4);
+
+            g.setFont(fontSelected);
+            stringWidth = (g.getFontMetrics().stringWidth(text));
+            selectedWidth = stringWidth + Utility.intAtWidth640(4);
 
             if (width < height)
                 width = height;
@@ -75,7 +80,8 @@ public class Button extends UIItem{
 
         if (!enabled) {
             g.setColor(disabledColor);
-            g.fill3DRect(x,y,width,height, true);
+            if (fill)
+                g.fill3DRect(x,y,width,height, true);
 
             g.setColor(disabledTextColor);
             g.drawString(text, x + Utility.perc(width, 5), y + Utility.perc(height, 75));
@@ -93,6 +99,8 @@ public class Button extends UIItem{
             }
             else g.setColor(textColor);
 //            int stringX = x + Utility.perc(width, 5);
+
+            stringWidth = (g.getFontMetrics().stringWidth(text));
             stringXSelected = x + (width/2 - stringWidth/2);
             g.drawString(text, stringXSelected, y + Utility.perc(height, 75));
         }
@@ -114,19 +122,16 @@ public class Button extends UIItem{
         this.fill = true;
     }
 
-//    // Not very sure what's happening here
-//    private AlphaComposite makeTransparent(float alpha) {
-//        int type = AlphaComposite.SRC_OVER;
-//        return(AlphaComposite.getInstance(type, alpha));
-//    }
-
-//    // todo: removal
-//    public void addOtherState(GameState state) {
-//        otherStates.add(state);
-//    }
-
     public Object activate() {
         SoundHandler.playSound(SoundHandler.UI2);
+        return null;
+    }
+
+    public Object increaseOption() {
+        return null;
+    }
+
+    public Object decreaseOption() {
         return null;
     }
 
@@ -161,8 +166,12 @@ public class Button extends UIItem{
         return selected;
     }
 
-    private void setSelected(boolean b) {
+    protected void setSelected(boolean b) {
         selected = b;
+    }
+
+    public int getSelectedWidth() {
+        return selectedWidth;
     }
 
 
