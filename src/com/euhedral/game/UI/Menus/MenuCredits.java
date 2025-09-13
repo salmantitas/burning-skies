@@ -51,7 +51,7 @@ public class MenuCredits extends Menu {
         assets.add("Background Music");
         assets.add("- Dar Golan");
         assets.add("- Joshua McLean");
-        assets.add("- Tallbeard Studios");
+        assets.add("- Abstraction");
         assets.add("");
 
 //        assets.add("Bullet Sound Effects");

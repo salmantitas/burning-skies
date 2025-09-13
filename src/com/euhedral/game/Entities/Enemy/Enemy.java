@@ -7,13 +7,14 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+import com.euhedral.game.Entities.Airplane;
 import com.euhedral.game.GameController;
 import com.euhedral.game.UI.UIHandler;
 
 /*
  *  Standard Enemies, flies downwards and shoots a missile at intervals
  * */
-public class Enemy extends MobileEntity {
+public class Enemy extends Airplane {
     protected int enemyType;
 
     protected int health;
@@ -21,10 +22,9 @@ public class Enemy extends MobileEntity {
 
     protected double offscreenVelY;
     protected boolean moveLeft, moveRight;
-    protected Color color;
-    protected int shootTimerDefault;
+//    protected Color color;
+//    protected int shootTimerDefault;
     protected int shootTimerFirst = 50;
-    protected int shootTimer;
     protected boolean inscreenY = false;
 //    protected boolean inscreenX = false;
     protected float cam;
@@ -36,22 +36,18 @@ public class Enemy extends MobileEntity {
     protected int damage;
     protected double explodingVelocity = EntityHandler.backgroundScrollingSpeed;
 
-    protected TextureHandler textureHandler;
     protected Animation explosion;
 
     protected int levelHeight;
 
     protected int bulletsPerShot_MAX = 1;
     protected int bulletsPerShot = 0;
-    protected double bulletVelocity;
     protected double bulletAngle;
     protected int bulletArcAngle;
 
-    Graphics2D g2d;
     protected boolean attackEffect;
     double attackPathX;
     double attackPathY;
-    protected BufferedImage damageImage;
 
     // State Machine
     protected final int STATE_EXPLODING = 2;
@@ -63,12 +59,6 @@ public class Enemy extends MobileEntity {
 
     private Reflection reflection;
     int reflectionX, reflectionY, newWidth, newHeight;
-
-    int jitter = 0, jitter_MULT = 1, jitter_MAX;
-
-    // Bounds
-    Rectangle2D boundsVertical, boundsHorizontal;
-    boolean collidesVertically, collidesHorizontally;
 
     int disableOffset = 64 * 3;
     int bottomBounds;
@@ -124,7 +114,7 @@ public class Enemy extends MobileEntity {
 //        updateActive();
         if (state == STATE_ACTIVE) {
             super.update();
-            shootTimer--; // todo: maybe move to when in screen
+            updateShootTimer(); // todo: maybe move to when in screen
             if (!inscreenY) {
                 inscreenY = pos.y > cam + Utility.percHeight(30);
             }
@@ -135,11 +125,7 @@ public class Enemy extends MobileEntity {
                     }
 //                }
 
-                if (jitter > 0) {
-                    jitter--;
-                    jitter_MULT *= -1;
-                }
-//                inscreenX =!(x < VariableHandler.deadzoneWidth) && !(x > VariableHandler.deadzoneRightX - VariableHandler.deadzoneWidth);
+                jitter();
             }
         } else if (state == STATE_EXPLODING) {
             explosion.runAnimation();
@@ -209,13 +195,6 @@ public class Enemy extends MobileEntity {
 
     }
 
-    protected void drawDamageImage() {
-//        g2d.setColor(Color.red);
-//        g2d.fillRect((int) x, (int) y, width, height);
-        g2d.drawImage(damageImage, (int) pos.x, (int) pos.y, null);
-
-    }
-
     protected void renderAttackPath(Graphics g) {
         if (attackEffect) {
             boolean secondsTillShotFire = (shootTimer < 20);
@@ -266,6 +245,7 @@ public class Enemy extends MobileEntity {
         }
     }
 
+    // todo: Use render function in Reflection Class
     public void renderReflection(Graphics2D g2d, float transparency) {
         g2d.setComposite(Utility.makeTransparent(transparency));
 
@@ -282,6 +262,7 @@ public class Enemy extends MobileEntity {
         g2d.setComposite(Utility.makeTransparent(1f));
     }
 
+    @Override
     protected void shoot() {
         resetShootTimer();
         shootDefault();
@@ -370,18 +351,6 @@ public class Enemy extends MobileEntity {
 //    public boolean isAlive() {
 //        return state == STATE_ACTIVE;
 //    }
-
-    public Rectangle2D getBoundsHorizontal() {
-        boundsHorizontal.setRect(pos.x, pos.y, width, 1 * height / 3 + 2);
-//        Rectangle bounds = new Rectangle(x, y, width, 1*height/3 + 2);
-        return boundsHorizontal;
-    }
-
-    public Rectangle2D getBoundsVertical() {
-        boundsVertical.setRect(pos.x + (width / 4), pos.y, (2 * width) / 4, height);
-//        Rectangle bounds = new Rectangle(x + (width / 4), y, (2 * width) / 4, height);
-        return boundsVertical;
-    }
 
     @Override
     protected void renderBounds(Graphics g) {
@@ -504,15 +473,6 @@ public class Enemy extends MobileEntity {
 
     private double getCenterY() {
         return (pos.y + height / 2 + 2);
-    }
-
-    public boolean checkCollision(Rectangle2D object) {
-        boundsVertical = getBoundsVertical();
-        boundsHorizontal = getBoundsHorizontal();
-        collidesVertically = object.intersects(boundsVertical);
-        collidesHorizontally = object.intersects(getBoundsHorizontal());
-
-        return collidesVertically || collidesHorizontally;
     }
 
     protected void renderScore(Graphics g) {

@@ -9,6 +9,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.net.URL;
+import java.util.HashMap;
 
 public class SoundHandler {
 
@@ -29,11 +30,12 @@ public class SoundHandler {
     public static final int SHIELD_3 = 12;
     public static final int RING = 13;
 
-
     static int MAX_CLIP = RING + 1;
 
-    public static final int BGMPLAY1 = 0;
-    public static final int BGMPLAY2 = 1;
+//    public static final int BGMPLAY1 = 0;
+//    public static final int BGMPLAY2 = 1;
+
+    private static final int BGM_MAX = 3;
 
     static Clip clip;
     public static Clip effect;
@@ -41,8 +43,8 @@ public class SoundHandler {
     static Clip newClip = null;
     static URL soundURL[] = new URL[MAX_CLIP];
     static Clip clips[] = new Clip[MAX_CLIP];
-    static URL BGM_URL[] = new URL[BGMPLAY2 + 1];
-    static Clip BGMs[] = new Clip[BGMPLAY2 + 1];
+    static URL BGM_URL[] = new URL[BGM_MAX];
+    static Clip BGMs[] = new Clip[BGM_MAX];
 
     private static int currentBGM = -1;
 
@@ -67,6 +69,8 @@ public class SoundHandler {
 
     static boolean noBgmPlaying;
     static boolean sameBgmPlaying;
+
+    private static String[] songInfo = new String[BGM_MAX];
 
     public SoundHandler() {
         initializeSounds();
@@ -93,10 +97,15 @@ public class SoundHandler {
             clips[i] = setClip(i);
         }
 
-        BGM_URL[BGMPLAY1] = getClass().getResource("/bgm1.wav");
-        BGM_URL[BGMPLAY2] = getClass().getResource("/bgm2.wav");
+        songInfo[0] = "Mountain Trails - Joshua McLean";
+        songInfo[1] = "Pixel Wars 1 - Abstraction";
+        songInfo[2] = "Battle Commences - Not Jam";
 
-        for (int i = 0; i < 2; i ++) {
+        for (int i = 0; i < BGM_MAX; i ++) {
+            BGM_URL[i] = getClass().getResource("/bgm" + (i + 1 + ".wav"));
+        }
+
+        for (int i = 0; i < BGM_MAX; i ++) {
             BGMs[i] = setClipBGM(i);
         }
 
@@ -249,9 +258,9 @@ public class SoundHandler {
         }
 
         if (currentBGM == -1) {
-            currentBGM = Utility.randomRangeInclusive(BGMPLAY1, BGMPLAY2);
+            currentBGM = Utility.randomRangeInclusive(0, BGM_MAX-1);
         } else {
-            currentBGM = (currentBGM + 1) % (BGMPLAY2 + 1);
+            currentBGM = (currentBGM + 1) % (BGM_MAX);
         }
 
         sameBgmPlaying = bgmGameID == currentBGM;
@@ -391,14 +400,14 @@ public class SoundHandler {
     }
 
     public static void BGMUp() {
-        currentBGM = (currentBGM + 1) % (BGMPLAY2 + 1);
+        currentBGM = (currentBGM + 1) % (BGM_MAX);
         bgmPlayHelper(currentBGM);
     }
 
     public static void BGMDown() {
-        currentBGM = (currentBGM - 1) % (BGMPLAY2 + 1);
+        currentBGM = (currentBGM - 1) % (BGM_MAX);
         if (currentBGM < 0) {
-            currentBGM += BGMPLAY2 + 1;
+            currentBGM += BGM_MAX;
         }
         bgmPlayHelper(currentBGM);
     }
@@ -444,13 +453,9 @@ public class SoundHandler {
     }
 
     public static String getSongName() {
-        String returnString = "";
-        if (currentBGM == 0) {
-            returnString = "Mountain Trails - Joshua McLean";
-        } else if (currentBGM == 1) {
-            returnString = "Pixel Wars 1 - Tallbeard Studios";
-        }
-        return returnString;
+        if (currentBGM == -1)
+            return "";
+        else return songInfo[currentBGM];
     }
 
     public static boolean gameBGMRunning() {

@@ -9,16 +9,13 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
-public class Player extends MobileEntity {
+public class Player extends Airplane {
 
     // Shooting Entity
     private boolean canShoot;
-    private int shootTimer = 0;
-    private final int shootTimerDefault = 12;
     private BulletPool bullets;
     int turretY;
     int turretMidX, turretLeftX, turretRightX;
-    int bulletVelocity;
 
     // Personal
     private int levelHeight;
@@ -35,25 +32,11 @@ public class Player extends MobileEntity {
     private final int HEALTH_HIGH = 66;
     private final int HEALTH_MED = 33;
 
-    // Bounds
-    Rectangle2D boundsVertical;
-    Rectangle2D boundsHorizontal;
-
-    // Collisions
-    boolean collidesVertically;
-    boolean collidesHorizontally;
-
     // Test
     private int mx, my;
     private boolean destinationGiven = false;
 
-    // Graphics
-    Graphics2D g2d;
-    private TextureHandler textureHandler;
-    private BufferedImage damageImage;
-
-    int jitter = 0, jitter_MULT = 1, jitter_MAX;
-
+    // Power-Up
     int shieldTimer = 0;
     int shieldTimer_MAX = 30;
 
@@ -102,6 +85,8 @@ public class Player extends MobileEntity {
         clampOffsetX = -5 * width / 4;
         clampOffsetY = height - 20;
 
+        shootTimerDefault = 12;
+
         reflection = new Reflection();
 
     }
@@ -114,7 +99,7 @@ public class Player extends MobileEntity {
     public void update() {
 //        System.out.println("Player at (" + x + ", " + y + ")");
         super.update();
-        shootTimer--;
+        updateShootTimer();
 
         if (canShoot && shootTimer <= 0)
             shoot();
@@ -126,10 +111,7 @@ public class Player extends MobileEntity {
 
         setImage();
 
-        if (jitter > 0) {
-            jitter--;
-            jitter_MULT *= -1;
-        }
+        jitter();
 
         if (shieldTimer > 0) {
             shieldTimer--;
@@ -172,23 +154,7 @@ public class Player extends MobileEntity {
             image = textureHandler.player[0];
             damageImage = textureHandler.playerDamage[0];
         }
-//        }
 
-//        else if (health.getValue() > HEALTH_MED) {
-//            if (isMovingLeft()) {
-//                image = textureHandler.player[7];
-//            } else if (isMovingRight()) {
-//                image = textureHandler.player[4];
-//            } else
-//                image = textureHandler.player[1];
-//        } else {
-//            if (isMovingLeft()) {
-//                image = textureHandler.player[8];
-//            } else if (isMovingRight()) {
-//                image = textureHandler.player[5];
-//            } else
-//                image = textureHandler.player[2];
-//        }
         VariableHandler.setHealthColor();
     }
 
@@ -198,31 +164,12 @@ public class Player extends MobileEntity {
 
         // Render Speed Boost
         g2d = (Graphics2D) g;
-//        if (VariableHandler.speedBoostDuration > 0) {
-//
-//
-//            g.setColor(Color.ORANGE);
-//            g2d.setComposite(Utility.makeTransparent(0.2f));
-//            if (isMovingLeft()) {
-//                g.fillRect((int) pos.x + width / 2, (int) pos.y, width / 2, height);
-//            }
-//            if (isMovingRight()) {
-//                g.fillRect((int) pos.x, (int) pos.y, width / 2, height);
-//            }
-//            if (isMovingUp()) {
-//                g.fillRect((int) pos.x, (int) pos.y + height / 2, width, height / 2);
-//            }
-//            if (isMovingDown()) {
-//                g.fillRect((int) pos.x, (int) pos.y, width, height / 2);
-//            }
-//            g2d.setComposite(Utility.makeTransparent(1f));
-//        }
 
         super.render(g);
         float transparency = (1f - (float) health.getValue() / 100) / 2;
 
         g2d.setComposite(Utility.makeTransparent(transparency));
-        g.drawImage(damageImage, (int) pos.x, (int) pos.y, null);
+        drawDamageImage();
         g2d.setComposite(Utility.makeTransparent(1f));
 
         // Render Shield
@@ -248,7 +195,7 @@ public class Player extends MobileEntity {
             g.fillOval((int) pos.x - pulseRadius, (int) pos.y - pulseRadius, width + pulseRadius * 2, height + pulseRadius * 2);
             g2d.setComposite(Utility.makeTransparent(1f));
 
-            g2d.setStroke(new BasicStroke(pulseRadius / (bulletVelocity * 3)));
+            g2d.setStroke(new BasicStroke((int) (pulseRadius / (bulletVelocity * 3))));
             g.drawOval((int) pos.x - pulseRadius, (int) pos.y - pulseRadius, width + pulseRadius * 2, height + pulseRadius * 2);
         }
 
@@ -333,14 +280,6 @@ public class Player extends MobileEntity {
         canShoot = b;
     }
 
-    public boolean checkCollision(Rectangle2D object) {
-        boundsVertical.setRect(getBoundsVertical());
-        boundsHorizontal.setRect(getBoundsHorizontal());
-        collidesVertically = object.intersects(boundsVertical);
-        collidesHorizontally = object.intersects(boundsHorizontal);
-
-        return collidesVertically || collidesHorizontally;
-    }
 
     public boolean checkCollision(Enemy enemy) {
         boundsVertical.setRect(getBoundsVertical());
@@ -350,26 +289,6 @@ public class Player extends MobileEntity {
 
         return collidesVertically || collidesHorizontally;
     }
-
-    public Rectangle2D getBoundsHorizontal() {
-        boundsHorizontal.setRect(pos.x + 1, pos.y + 2 * height / 3 - 2, width - 3, height / 3 - 6);
-        return boundsHorizontal;
-    }
-
-    public Rectangle2D getBoundsVertical() {
-        boundsVertical.setRect(pos.x + (width / 4) + 1, pos.y - 1, (2 * width) / 4 - 3, height - 1);
-        return boundsVertical;
-    }
-
-//    public void setX(int x) {
-//        super.setX(x);
-////        this.x = x;
-//    }
-
-//    public void switchBullet() {
-//        if (ground)
-//            airBullet = !airBullet;
-//    }
 
     // Private Methods
 
@@ -390,7 +309,8 @@ public class Player extends MobileEntity {
 
     }
 
-    private void shoot() {
+    @Override
+    protected void shoot() {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
         calculateTurretPositions();
