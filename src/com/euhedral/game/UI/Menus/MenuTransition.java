@@ -5,6 +5,7 @@ import com.euhedral.engine.UI.*;
 import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.game.ActionTag;
+import com.euhedral.game.SoundHandler;
 import com.euhedral.game.UI.UIHandler;
 import com.euhedral.game.VariableHandler;
 
@@ -171,6 +172,12 @@ public class MenuTransition extends Menu {
 //        g.setColor(Color.BLACK);
 //        g.setFont(font2);
         g.drawString(text2, text2X, text2Y);
+    }
+
+    @Override
+    public void onSwitch() {
+        SoundHandler.playBGMMenu();
+        super.onSwitch();
     }
 
 }

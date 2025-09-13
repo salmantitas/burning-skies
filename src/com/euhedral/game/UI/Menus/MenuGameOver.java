@@ -6,7 +6,6 @@ import com.euhedral.engine.UI.ButtonNav;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
-import com.euhedral.game.UI.UIHandler;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
@@ -24,14 +23,19 @@ public class MenuGameOver extends Menu {
 
     public MenuGameOver() {
         super(GameState.GameOver);
-        MAXBUTTON = 2;
+        MAXBUTTON = 3;
         options = new Button[MAXBUTTON];
 
-        ButtonNav backToMenu = new ButtonNav(x33, y70, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
+        int mainMenuX = 440;
+        int mainMenuY = 685;
+
+        ButtonNav play = new ButtonNav(x41, y62, Utility.perc(buttonSize, 90), "Play", GameState.Transition);
+        ButtonNav backToMenu = new ButtonNav(mainMenuX, mainMenuY, Utility.perc(buttonSize, 80), "Main Menu", GameState.Menu);
         ButtonNav quit = new ButtonNav(x41, y80, Utility.perc(buttonSize, 90), "Quit", GameState.Quit);
 
-        options[0] = backToMenu;
-        options[1] = quit;
+        options[0] = play;
+        options[1] = backToMenu;
+        options[2] = quit;
 
         explosion = GameController.getTexture().initExplosion(10);
         minSize = Math.min(Engine.WIDTH, Engine.HEIGHT - VariableHandler.deadzoneTop);

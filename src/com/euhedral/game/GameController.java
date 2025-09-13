@@ -19,7 +19,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "BURNING SKIES";
-    public static String gameVersion = "0.7.38";
+    public static String gameVersion = "0.7.39";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -203,7 +203,7 @@ public class GameController {
 
             uiHandler.update();
 
-        if (Engine.stateIs(GameState.Menu)) {
+        if (Engine.stateIs(GameState.Menu) || Engine.stateIs(GameState.GameOver)) {
             levelLoaded = false;
 
             if (reset)
@@ -618,7 +618,7 @@ public class GameController {
     public void notifyUIHandler(GameState state) {
         uiHandler.updateState(state);
 
-        if (state == GameState.Menu) {
+        if (state == GameState.Menu || state == GameState.GameOver) {
             reset = true;
             VariableHandler.updateHighScore();
         }
