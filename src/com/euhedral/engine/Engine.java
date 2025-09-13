@@ -44,8 +44,8 @@ public class Engine extends Canvas implements Runnable {
     public static GameState currentState = GameState.Game;
     public static GameState previousState;
 
-    public EngineKeyboard keyInput;
-    public EngineMouse mouseInput;
+    public KeyInput keyInput;
+    public MouseInput mouseInput;
 
     /*
      * Initializes variables:
@@ -59,8 +59,8 @@ public class Engine extends Canvas implements Runnable {
         loader = new BufferedImageLoader();
         gameController = new GameController();
 
-        keyInput = new EngineKeyboard(gameController);
-        mouseInput = new EngineMouse(gameController);
+        keyInput = new KeyInput(gameController);
+        mouseInput = new MouseInput(gameController);
 
         addKeyListener(keyInput);
         addMouseListener(mouseInput);
