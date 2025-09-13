@@ -18,16 +18,12 @@ public class MouseInput extends MouseAdapter {
 
     public MouseInput(GameController gameController) {
         this.gameController = gameController;
-//        mouseInput = new MouseInput(this, gameController);
     }
 
     public void mousePressed(MouseEvent e) {
         mxPressed = e.getX();
         myPressed = e.getY();
         buttonPressed = e.getButton();
-
-//        mouseInput.updatePressed();
-//        notifyPress(mouse.getButtonPressed());
         gameController.mousePressed(buttonPressed);
 
 //        System.out.println("Mouse Pressed at (" + mxPressed + ", " + myPressed + ")");
@@ -37,8 +33,6 @@ public class MouseInput extends MouseAdapter {
         mxReleased = e.getX();
         myReleased = e.getY();
         buttonReleased = e.getButton();
-
-//        mouseInput.updateReleased();
         gameController.mouseReleased(buttonReleased);
         gameController.checkButtonAction(mxReleased, myReleased);
 
@@ -48,8 +42,6 @@ public class MouseInput extends MouseAdapter {
     public void mouseMoved(MouseEvent e) {
         mxMove = e.getX();
         myMove = e.getY();
-//        mouseInput.updateMoved();
-//        notifyMoved(getMxMoved(), getMyMoved());
         gameController.mouseMoved(mxMove, myMove);
 
 //        System.out.println("Mouse moved at (" + mxMove + ", " + myMove + ")");
@@ -58,8 +50,7 @@ public class MouseInput extends MouseAdapter {
     public void mouseDragged(MouseEvent e) {
         mxDrag = e.getX();
         myDrag = e.getY();
-//        mouseInput.updateDragged();
-        gameController.mouseMoved(mxDrag, myDrag);
+        gameController.mouseDragged(mxDrag, myDrag);
 
 //        System.out.println("Mouse dragged at (" + mxMove + ", " + myMove + ")");
     }

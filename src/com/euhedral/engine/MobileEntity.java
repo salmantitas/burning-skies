@@ -84,6 +84,10 @@ public abstract class MobileEntity extends Entity {
 
     @Override
     public void update() {
+        activeUpdate();
+    }
+
+    protected void activeUpdate() {
         if (isActive()) {
             // todo: active check might be redundant
             move();

@@ -45,7 +45,7 @@ public class Menu {
     protected int x10 = Utility.percWidth(10);
     protected int x20 = Utility.percWidth(20);
     protected int x30 = Utility.percWidth(30);
-    protected int x33 = Utility.percWidth(33);
+    protected int x35 = Utility.percWidth(35);
     protected int x36 = Utility.percWidth(36);
     protected int x40 = Utility.percWidth(40);
     protected int x41 = Utility.percWidth(41);

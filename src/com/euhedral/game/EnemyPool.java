@@ -314,7 +314,6 @@ public class EnemyPool extends Pool {
             if (enemy.isActive())
                 if (enemy.isInscreenY() && enemy.isActive()) {
                     boolean collision = player.checkCollision(enemy);
-//                    boolean collision2 = player.checkCollision(enemy.getBoundsVertical());
                     if (collision) {
                         int damage = enemy.getDamage();
                         if (GameController.godMode) {

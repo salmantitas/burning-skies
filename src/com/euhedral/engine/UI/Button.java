@@ -47,8 +47,8 @@ public class Button extends UIItem{
     }
 
     public Button(int x, int y, int size, String text) {
-        this.size = size;
         this(x, y, size, (size * 14)/10, text);
+        this.size = size;
     }
 
     public void render(Graphics g) {
