@@ -23,7 +23,7 @@ public class EnemyBasic1 extends Enemy{
         health_MAX = 2;
         commonInit();
         score = 20;
-        velX_MIN = 1.75f;
+//        velX_MIN = 1.5f;
     }
 
     public EnemyBasic1(int x, int y, Color color, int levelHeight) {

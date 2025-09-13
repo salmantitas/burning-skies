@@ -26,7 +26,7 @@ public class EnemyBasic2 extends Enemy{
         health_MAX = 2;
         commonInit();
 
-        velX_MIN = 1.5;
+        velX_MIN = 1.25;
     }
 
 //    @Override
