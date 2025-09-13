@@ -52,6 +52,7 @@ public class MenuCredits extends Menu {
         assets.add("- Dar Golan");
         assets.add("- Joshua McLean");
         assets.add("- Abstraction");
+        assets.add("- Not Jam");
         assets.add("");
 
 //        assets.add("Bullet Sound Effects");
