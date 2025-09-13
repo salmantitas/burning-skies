@@ -168,11 +168,11 @@ public class SoundHandler {
         return newClip;
     }
 
-    public void playMusic(int i) {
-        setFile(i);
-        play();
-        loop();
-    }
+//    public void playMusic(int i) {
+//        setFile(i);
+//        play();
+//        loop();
+//    }
 
     public void stopMusic() {
         clip.stop();
@@ -335,7 +335,7 @@ public class SoundHandler {
 
     public static void toggleVolumeMusic() {
         volumeMusicOn = !volumeMusicOn;
-        // gainControlVolume
+        gainControlVolumeMusic();
     }
 
     public static void toggleVolumeEffects() {
