@@ -1,0 +1,43 @@
+package com.euhedral.game;
+
+import com.euhedral.engine.Engine;
+import com.euhedral.engine.GameState;
+
+import java.awt.*;
+
+public class Renderer {
+
+    public void render(GameController gameController, Graphics g) {
+        gameController.renderBackground(g);
+
+        if (Engine.currentState == GameState.Transition) {
+            /*************
+             * Game Code *
+             *************/
+        }
+
+        /*************
+         * Game Code *
+         *************/
+
+        boolean validCameraRenderState = Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause || Engine.stateIs(GameState.GameOver);
+
+        if (validCameraRenderState) {
+            gameController.renderInCamera(g);
+
+            if (VariableHandler.isHud()) {
+
+//                entityHandler.renderBossHealth(g);
+
+            }
+
+        }
+
+        /***************
+         * Engine Code *
+         ***************/
+
+        gameController.renderUI(g);
+//        uiHandler.render(g);
+    }
+}

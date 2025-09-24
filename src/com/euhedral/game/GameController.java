@@ -26,6 +26,11 @@ public class GameController {
     private double gameScale = Engine.SCALE;
     private Color gameBackground = new Color(0,0,128);
 
+    private Renderer renderer;
+
+    private HashMap<GameState, State> stateMachine;
+    private State currentState;
+
     long timer = System.currentTimeMillis();
     public static long timeInSeconds;
 
@@ -38,9 +43,6 @@ public class GameController {
 
     ActionTag action;
 
-    boolean endGameCondition;
-    boolean activeMessageBoxes;
-    boolean tutorialDisabled;
     boolean validCameraRenderState;
 
     // Mouse
@@ -137,6 +139,7 @@ public class GameController {
     }
 
     private void initializeGraphics() {
+        renderer = new Renderer();
         textureHandler = new TextureHandler();
 
         background = new Background();
@@ -150,6 +153,16 @@ public class GameController {
         /*************
          * Game Code *
          *************/
+
+        stateMachine = new HashMap<>();
+
+        State statePlay = new StatePlay();
+        State state = new State();
+
+        stateMachine.put(GameState.Game, statePlay);
+        stateMachine.put(GameState.Menu, state);
+
+        currentState = state;
 
         entityHandler = new EntityHandler();
         shop = new Shop();
@@ -191,140 +204,20 @@ public class GameController {
     }
 
     public void update() {
-        Engine.timer++;
-
-        soundHandler.update(); // runs in all states
-
-        if (Engine.stateIs(GameState.Quit))
-            Engine.stop();
-
-        if (!Engine.stateIs(GameState.Pause) && !Engine.stateIs(GameState.Game) && !Engine.stateIs(GameState.Transition))
-//            resetGame();
-
-            uiHandler.update();
-
-        if (Engine.stateIs(GameState.Menu) || Engine.stateIs(GameState.GameOver)) {
-            levelLoaded = false;
-
-            if (reset)
-                resetGame();
+        if (stateMachine.containsKey(Engine.currentState)) {
+            currentState = stateMachine.get(Engine.currentState);
+        } else {
+            currentState = stateMachine.get(GameState.Menu);
         }
 
-        if (Engine.stateIs(GameState.Transition)) {
-            /*************
-             * Game Code *
-             *************/
-
-            /*
-             * Spawn if the level can loaded and has not already been spawned
-             * */
-
-            if (levelLoaded) {
-                if (!levelSpawned)
-                    spawn();
-            }
-        }
-
-        /*
-         * Disable the level load permission, as the level is already running
-         * */
-        if (Engine.stateIs(GameState.Game)
-//                && !VariableManager.isConsole()
-        ) {
-//            if (System.currentTimeMillis() - 1000 > timer) {
-//                timer = System.currentTimeMillis();
-//                timeInSeconds++;
-//                System.out.printf("Timer: %d\n", timeInSeconds);
-//            }
-
-            levelLoaded = false;
-            endGameCondition = variableHandler.health.getValue() <= 0;
-
-            if (endGameCondition) {
-
-                Engine.gameOverState();
-
-                System.out.println("Game Over");
-                VariableHandler.updateHighScore();
-            }
-
-            /*************
-             * Game Code *
-             *************/
-
-            else {
-
-                // Game only runs if either tutorials are disabled, or no message boxes are active
-                // Player can move when the tutorial box is up.
-
-                activeMessageBoxes = !uiHandler.noActiveMessageBoxes();
-                tutorialDisabled = !VariableHandler.isTutorial();
-
-                // if tutorial is disabled or there are no active message boxes, just run the game
-
-                if (tutorialDisabled || !activeMessageBoxes) {
-                    if (activeMessageBoxes) {
-//                        System.out.println("Active Message Box");
-                    }
-                    enemyGenerator.update();
-                    entityHandler.update();
-                    checkLevelStatus();
-
-                    if (System.currentTimeMillis() - 1000 > timer) {
-                        timer = System.currentTimeMillis();
-                        timeInSeconds++;
-//                        System.out.printf("Timer: %d\n", timeInSeconds);
-                    }
-                }
-
-                else if (activeMessageBoxes) {
-                        entityHandler.updatePlayer();
-                    }
-            }
-        }
-
-        if (Engine.stateIs(GameState.GameOver)) {
-
-        }
-
-//        background.update();
+        currentState.update(this);
     }
 
     public void render(Graphics g) {
-
-        background.render(g);
-
-        if (Engine.currentState == GameState.Transition) {
-            /*************
-             * Game Code *
-             *************/
-        }
-
-            /*************
-             * Game Code *
-             *************/
-
-            validCameraRenderState = Engine.currentState == GameState.Game || Engine.currentState == GameState.Pause || Engine.stateIs(GameState.GameOver);
-
-            if (validCameraRenderState) {
-                    renderInCamera(g);
-
-                    if (VariableHandler.isHud()) {
-
-                        entityHandler.renderBossHealth(g);
-
-                    }
-
-            }
-
-        /***************
-         * Engine Code *
-         ***************/
-
-        uiHandler.render(g);
+        renderer.render(this, g);
     }
 
-    private void renderInCamera(Graphics g) {
+    public void renderInCamera(Graphics g) {
         /***************
          * Engine Code *
          ***************/
@@ -450,19 +343,21 @@ public class GameController {
 
             // todo: Move all player movement functions to Entity Handler
             if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
-                stopMovePlayer('l');
+                entityHandler.stopMovePlayer('l');
 
             if (key == (KeyEvent.VK_RIGHT) || key == KeyInput.getKeyEvent(RIGHT))
-                stopMovePlayer('r');
+                entityHandler.stopMovePlayer('r');
 
             if (key == (KeyEvent.VK_UP) || key == KeyInput.getKeyEvent(UP))
-                stopMovePlayer('u');
+                entityHandler.stopMovePlayer('u');
+//                stopMovePlayer('u');
 
             if (key == (KeyEvent.VK_DOWN) || key == KeyInput.getKeyEvent(DOWN))
-                stopMovePlayer('d');
+                entityHandler.stopMovePlayer('d');
+//                stopMovePlayer('d');
 
             if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
-                stopShootPlayer();
+                entityHandler.playerCannotShoot();
 
 //            if (key == KeyInput.getKeyEvent(SPECIAL))
 //                entityHandler.stopPlayerSpecial();
@@ -763,7 +658,7 @@ public class GameController {
      */
 
 
-    private void spawn() {
+    public void spawn() {
         levelSpawned = !levelSpawned;
         Engine.gameState();
 
@@ -834,4 +729,43 @@ public class GameController {
         return timeInSeconds;
     }
 
+    public void updateUI() {
+        uiHandler.update();
+    }
+
+    public void resetLevelLoaded() {
+        levelLoaded = false;
+    }
+
+    public boolean islevelLoaded() {
+        return  levelLoaded;
+    }
+
+    public boolean isLevelSpawned() {
+        return levelSpawned;
+    }
+
+    public boolean noActiveMessageBoxes() {
+        return uiHandler.noActiveMessageBoxes();
+    }
+
+    public void updateEnemyGenerator() {
+        enemyGenerator.update();
+    }
+
+    public void updateEntityHandler() {
+        entityHandler.update();
+    }
+
+    public void updatePlayer() {
+        entityHandler.updatePlayer();
+    }
+
+    public void renderBackground(Graphics g) {
+        background.render(g);
+    }
+
+    public void renderUI(Graphics g) {
+        uiHandler.render(g);
+    }
 }
