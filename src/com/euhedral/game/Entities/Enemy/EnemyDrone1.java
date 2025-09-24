@@ -101,7 +101,7 @@ public class EnemyDrone1 extends Enemy{
     }
 
     @Override
-    protected void drawDamageImage() {
+    protected void renderDamageImage() {
         g2d.setColor(Color.BLACK);
         g2d.fillOval((int) pos.x, (int) pos.y, width, height);
     }

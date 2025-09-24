@@ -28,6 +28,9 @@ public class Airplane extends MobileEntity {
     protected TextureHandler textureHandler;
     protected BufferedImage damageImage;
 
+    // debug
+    protected boolean debug = true;
+
     public Airplane(double x, double y, EntityID id) {
         super(x, y, id);
     }
@@ -66,7 +69,32 @@ public class Airplane extends MobileEntity {
         return boundsVertical;
     }
 
-    protected void drawDamageImage() {
+    // Render
+
+
+    @Override
+    public void render(Graphics g) {
+        super.render(g);
+        if (debug) {
+            renderBounds(g);
+        }
+    }
+
+    protected void renderDamageImage() {
         g2d.drawImage(damageImage, (int) pos.x, (int) pos.y, null);
+    }
+
+    @Override
+    protected void renderBounds(Graphics g) {
+        g.setColor(Color.green);
+        boundsVertical.setRect(getBoundsVertical());
+        boundsHorizontal.setRect(getBoundsHorizontal());
+        g2d = (Graphics2D) g;
+
+        g2d.draw(boundsVertical);
+        g2d.draw(boundsHorizontal);
+//        g.drawRect(r1.x, r1.y, r1.width, r1.height);
+//        g.drawRect(r2.x, r2.y, r2.width, r2.height);
+
     }
 }

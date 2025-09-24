@@ -169,7 +169,7 @@ public class Player extends Airplane {
         float transparency = (1f - (float) health.getValue() / 100) / 2;
 
         g2d.setComposite(Utility.makeTransparent(transparency));
-        drawDamageImage();
+        renderDamageImage();
         g2d.setComposite(Utility.makeTransparent(1f));
 
         // Render Shield
@@ -200,7 +200,6 @@ public class Player extends Airplane {
         }
 
 //        renderStats(g);
-//        renderBounds(g);
     }
 
     @Override
@@ -229,20 +228,6 @@ public class Player extends Airplane {
 
     private void renderBulletReflections(Graphics2D g2d, float transparency) {
         bullets.renderReflections(g2d, transparency);
-
-    }
-
-    @Override
-    protected void renderBounds(Graphics g) {
-        g.setColor(Color.green);
-        boundsVertical.setRect(getBoundsVertical());
-        boundsHorizontal.setRect(getBoundsHorizontal());
-        g2d = (Graphics2D) g;
-
-        g2d.draw(boundsVertical);
-        g2d.draw(boundsHorizontal);
-//        g.drawRect(r1.x, r1.y, r1.width, r1.height);
-//        g.drawRect(r2.x, r2.y, r2.width, r2.height);
 
     }
 
@@ -288,6 +273,27 @@ public class Player extends Airplane {
         collidesHorizontally = enemy.checkCollision(boundsHorizontal);
 
         return collidesVertically || collidesHorizontally;
+    }
+
+    @Override
+    public Rectangle2D getBoundsHorizontal() {
+        boundsHorizontal.setRect(
+                pos.x,
+                pos.y + 2* height / 3 - 2 ,
+                width,
+                height / 3 - 6
+        );
+        return boundsHorizontal;
+    }
+
+    public Rectangle2D getBoundsVertical() {
+        boundsVertical.setRect(
+                pos.x + (width / 4) + 7,
+                pos.y,
+                (2 * width) / 4 - 14,
+                height
+        );
+        return boundsVertical;
     }
 
     // Private Methods

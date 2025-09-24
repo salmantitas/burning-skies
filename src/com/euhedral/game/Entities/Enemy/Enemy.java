@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 
 import com.euhedral.game.Entities.Airplane;
 import com.euhedral.game.GameController;
-import com.euhedral.game.UI.UIHandler;
 
 /*
  *  Standard Enemies, flies downwards and shoots a missile at intervals
@@ -190,7 +189,7 @@ public class Enemy extends Airplane {
         g2d = (Graphics2D) g;
 
         g2d.setComposite(Utility.makeTransparent(transparency));
-        drawDamageImage();
+        renderDamageImage();
         g2d.setComposite(Utility.makeTransparent(1f));
 
     }
@@ -351,22 +350,6 @@ public class Enemy extends Airplane {
 //    public boolean isAlive() {
 //        return state == STATE_ACTIVE;
 //    }
-
-    @Override
-    protected void renderBounds(Graphics g) {
-        g.setColor(Color.green);
-        Rectangle2D r1 = getBoundsVertical();
-        Rectangle2D r2 = getBoundsHorizontal();
-
-        g2d = (Graphics2D) g;
-
-        g2d.draw(r1);
-        g2d.draw(r2);
-
-//        g2d.drawRect(r1.x, r1.y, r1.width, r1.height);
-//        g2d.drawRect(r2.x, r2.y, r2.width, r2.height);
-
-    }
 
     public boolean inRadius(double x, double y, int radius) {
         double aX = pos.x;
