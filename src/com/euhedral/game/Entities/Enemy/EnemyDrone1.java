@@ -52,6 +52,11 @@ public class EnemyDrone1 extends Enemy{
     }
 
     @Override
+    protected void updateBounds() {
+        collisionBox.setBounds( pos.x, pos.y, width, height);
+    }
+
+    @Override
     public void move() {
         if (isActive()) {
             // fix wobbling
