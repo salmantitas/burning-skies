@@ -350,11 +350,9 @@ public class GameController {
 
             if (key == (KeyEvent.VK_UP) || key == KeyInput.getKeyEvent(UP))
                 entityHandler.stopMovePlayer('u');
-//                stopMovePlayer('u');
 
             if (key == (KeyEvent.VK_DOWN) || key == KeyInput.getKeyEvent(DOWN))
                 entityHandler.stopMovePlayer('d');
-//                stopMovePlayer('d');
 
             if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
                 entityHandler.playerCannotShoot();

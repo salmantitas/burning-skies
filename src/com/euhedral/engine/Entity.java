@@ -34,7 +34,7 @@ public abstract class Entity {
 //        this.y = y;
         this.id = id;
 
-        collisionBox = new CollisionBox();
+        collisionBox = new CollisionBox(1);
     }
 
     public Entity(int x, int y, EntityID id, BufferedImage image) {
@@ -140,8 +140,8 @@ public abstract class Entity {
     }
 
     public Rectangle2D getBounds() {
-        collisionBox.bounds.setRect( pos.x, pos.y, width, height);
-        return collisionBox.bounds;
+        collisionBox.setBounds( pos.x, pos.y, width, height);
+        return collisionBox.getBounds();
     }
 
     public Rectangle getBoundsTop() {

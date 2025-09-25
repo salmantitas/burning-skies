@@ -222,27 +222,31 @@ public class EntityHandler {
     }
 
     public void movePlayer(char c) {
-        if (c == 'l')
-            player.moveLeft(true);
-        else if (c == 'r')
-            player.moveRight(true);
+        if (player != null) {
+            if (c == 'l')
+                player.moveLeft(true);
+            else if (c == 'r')
+                player.moveRight(true);
 
-        if (c == 'u')
-            player.moveUp(true);
-        else if (c == 'd')
-            player.moveDown(true);
+            if (c == 'u')
+                player.moveUp(true);
+            else if (c == 'd')
+                player.moveDown(true);
+        }
     }
 
     public void stopMovePlayer(char c) {
-        if (c == 'l')
-            player.moveLeft(false);
-        else if (c == 'r')
-            player.moveRight(false);
+        if (player != null) {
+            if (c == 'l')
+                player.moveLeft(false);
+            else if (c == 'r')
+                player.moveRight(false);
 
-        if (c == 'u')
-            player.moveUp(false);
-        else if (c == 'd')
-            player.moveDown(false);
+            if (c == 'u')
+                player.moveUp(false);
+            else if (c == 'd')
+                player.moveDown(false);
+        }
     }
 
     public void giveDestination(int mx, int my) {
