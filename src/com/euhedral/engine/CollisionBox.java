@@ -12,7 +12,7 @@ public class CollisionBox {
         initializeBounds(num);
     }
 
-    private void initializeBounds(int num) {
+    protected void initializeBounds(int num) {
         for (int i = 0; i < num ; i ++) {
             bounds[i] = new Rectangle();
         }
@@ -24,5 +24,13 @@ public class CollisionBox {
 
     public void setBounds(double x, double y, int width, int height) {
         bounds[0].setRect(x,y,width,height);
+    }
+
+    public Rectangle2D getBounds(int num) {
+        return bounds[num];
+    }
+
+    public void setBounds(int num, double x, double y, int width, int height) {
+        bounds[num].setRect(x,y,width,height);
     }
 }

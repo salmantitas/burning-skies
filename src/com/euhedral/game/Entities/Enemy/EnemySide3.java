@@ -123,17 +123,17 @@ public class EnemySide3 extends Enemy{
 
     @Override
     public Rectangle2D getBoundsHorizontal() {
-        boundsHorizontal.setRect(pos.x, pos.y + 20, width, 1*height/3 + 2);
-        return boundsHorizontal;
+        collisionBox.setBounds(0, pos.x, pos.y + 20, width, 1*height/3 + 2);
+        return collisionBox.getBounds(0);
     }
 
     @Override
     public Rectangle2D getBoundsVertical() {
 //        Rectangle2D bounds = null;
         if (velX > 0)
-            boundsVertical.setRect(pos.x + (width / 4) - 10, pos.y, (2 * width) / 4, height);
+            collisionBox.setBounds(1, pos.x + (width / 4) - 10, pos.y, (2 * width) / 4, height);
         else
-            boundsVertical.setRect(pos.x + (width / 4) + 10, pos.y, (2 * width) / 4, height);
-        return boundsVertical;
+            collisionBox.setBounds(1, pos.x + (width / 4) + 10, pos.y, (2 * width) / 4, height);
+        return collisionBox.getBounds(1);
     }
 }

@@ -15,7 +15,7 @@ public class Airplane extends MobileEntity {
     protected double bulletVelocity;
 
     // Bounds
-    protected Rectangle2D boundsVertical, boundsHorizontal;
+//    protected Rectangle2D boundsVertical, boundsHorizontal;
 
     // Collisions
     protected boolean collidesVertically, collidesHorizontally;
@@ -51,22 +51,24 @@ public class Airplane extends MobileEntity {
     }
 
     public boolean checkCollision(Rectangle2D object) {
-        boundsVertical = getBoundsVertical();
-        boundsHorizontal = getBoundsHorizontal();
+        Rectangle2D boundsVertical = getBoundsVertical();
+        Rectangle2D boundsHorizontal = getBoundsHorizontal();
         collidesVertically = object.intersects(boundsVertical);
-        collidesHorizontally = object.intersects(getBoundsHorizontal());
+        collidesHorizontally = object.intersects(boundsHorizontal);
 
         return collidesVertically || collidesHorizontally;
     }
 
     public Rectangle2D getBoundsHorizontal() {
-        boundsHorizontal.setRect(pos.x, pos.y, width, 1 * height / 3 + 2);
-        return boundsHorizontal;
+        collisionBox.setBounds(0, pos.x, pos.y, width, 1 * height / 3 + 2);
+        return collisionBox.getBounds(0);
+//        boundsHorizontal.setRect();
+//        return boundsHorizontal;
     }
 
     public Rectangle2D getBoundsVertical() {
-        boundsVertical.setRect(pos.x + (width / 4), pos.y, (2 * width) / 4, height);
-        return boundsVertical;
+        collisionBox.setBounds(1, pos.x + (width / 4), pos.y, (2 * width) / 4, height);
+        return collisionBox.getBounds(1);
     }
 
     // Render
@@ -87,12 +89,10 @@ public class Airplane extends MobileEntity {
     @Override
     protected void renderBounds(Graphics g) {
         g.setColor(Color.green);
-        boundsVertical.setRect(getBoundsVertical());
-        boundsHorizontal.setRect(getBoundsHorizontal());
         g2d = (Graphics2D) g;
 
-        g2d.draw(boundsVertical);
-        g2d.draw(boundsHorizontal);
+        g2d.draw(getBoundsVertical());
+        g2d.draw(getBoundsHorizontal());
 
     }
 }
