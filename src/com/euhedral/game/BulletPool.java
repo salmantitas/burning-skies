@@ -97,7 +97,7 @@ public class BulletPool extends Pool {
         collidingBullet = null;
         for (Entity entity : entities) {
             bulletPlayer = (BulletPlayer) entity;
-            intersectsEnemy = bulletPlayer.getBounds().intersects(enemy.getBoundsHorizontal()) || bulletPlayer.getBounds().intersects(enemy.getBoundsVertical());
+            intersectsEnemy = enemy.checkCollision(bulletPlayer.getBounds());// bulletPlayer.getBounds().intersects(enemy.getBoundsHorizontal()) || bulletPlayer.getBounds().intersects(enemy.getBoundsVertical());
             if (bulletPlayer.isActive() && intersectsEnemy)
             {
                 collidingBullet = bulletPlayer;

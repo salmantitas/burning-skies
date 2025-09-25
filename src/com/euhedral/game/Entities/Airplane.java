@@ -93,8 +93,6 @@ public class Airplane extends MobileEntity {
 
         g2d.draw(boundsVertical);
         g2d.draw(boundsHorizontal);
-//        g.drawRect(r1.x, r1.y, r1.width, r1.height);
-//        g.drawRect(r2.x, r2.y, r2.width, r2.height);
 
     }
 }

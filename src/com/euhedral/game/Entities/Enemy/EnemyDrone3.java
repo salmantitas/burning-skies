@@ -27,21 +27,12 @@ public class EnemyDrone3 extends EnemyDrone1 {
         score = 10;
         damage = 50;
 
-        //        enemyType = EntityHandler.TYPE_DRONE;
-
 //        power = 1;
 //        shootTimerDefault = 250;
 //        minVelX = 2f;
         health_MAX = 1;
         commonInit();
     }
-
-//    @Override
-//    public void initialize() {
-//        super.initialize();
-//
-//
-//    }
 
     @Override
     public void update() {
@@ -106,8 +97,12 @@ public class EnemyDrone3 extends EnemyDrone1 {
         size = Math.max(explosionTimer, explosionTimer);
         expX = (int) pos.x - (size - width)/3;
         expY = (int) pos.y - (size - height)/3;
-        bounds.setRect(expX, expY, 2*size/3, 2*size/3);
-        return bounds;
+
+        collisionBox.setBounds(
+                expX, expY, 2*size/3, 2*size/3
+        );
+
+        return collisionBox.getBounds();
     }
 
     @Override
@@ -128,6 +123,7 @@ public class EnemyDrone3 extends EnemyDrone1 {
     }
 
     public double getRadius() {
+        Rectangle2D bounds = getBounds();
         radius = Math.sqrt(Math.pow(bounds.getWidth(), 2) + Math.pow(bounds.getHeight(), 2));
         return radius;
     }

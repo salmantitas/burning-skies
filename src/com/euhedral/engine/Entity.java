@@ -18,7 +18,7 @@ public abstract class Entity {
 
     protected int state = STATE_ACTIVE;
 
-    protected Rectangle2D bounds;
+    protected CollisionBox collisionBox;
 
     protected Color color;
     Color boundColor = Color.green;
@@ -34,7 +34,7 @@ public abstract class Entity {
 //        this.y = y;
         this.id = id;
 
-        bounds = new Rectangle();
+        collisionBox = new CollisionBox();
     }
 
     public Entity(int x, int y, EntityID id, BufferedImage image) {
@@ -140,8 +140,8 @@ public abstract class Entity {
     }
 
     public Rectangle2D getBounds() {
-        bounds.setRect( pos.x, pos.y, width, height);
-        return bounds;
+        collisionBox.bounds.setRect( pos.x, pos.y, width, height);
+        return collisionBox.bounds;
     }
 
     public Rectangle getBoundsTop() {

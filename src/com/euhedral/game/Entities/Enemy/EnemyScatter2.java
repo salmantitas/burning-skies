@@ -156,8 +156,4 @@ public class EnemyScatter2 extends Enemy {
         enemyType = VariableHandler.TYPE_SCATTER2;
     }
 
-    public boolean checkCollision(Rectangle2D object) {
-        bounds.setRect(getBounds());
-        return object.intersects(bounds);
-    }
 }

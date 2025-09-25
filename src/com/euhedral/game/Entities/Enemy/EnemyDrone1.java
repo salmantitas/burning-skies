@@ -34,13 +34,6 @@ public class EnemyDrone1 extends Enemy{
         this.color = color;
     }
 
-//    @Override
-//    public void initialize() {
-//        super.initialize();
-//
-//
-//    }
-
     @Override
     protected void shoot() {
         // do nothing
@@ -117,16 +110,14 @@ public class EnemyDrone1 extends Enemy{
     @Override
     protected void renderBounds(Graphics g) {
         g.setColor(Color.green);
-        bounds = getBounds();
 
         g2d = (Graphics2D) g;
 
-        g2d.draw(bounds);
+        g2d.draw(getBounds());
     }
 
     public boolean checkCollision(Rectangle2D object) {
-        bounds = getBounds();
-        return object.intersects(bounds);
+        return object.intersects(getBounds());
     }
 
     @Override

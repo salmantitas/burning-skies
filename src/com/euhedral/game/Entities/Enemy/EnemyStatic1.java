@@ -154,8 +154,4 @@ public class EnemyStatic1 extends Enemy {
         enemyType = VariableHandler.TYPE_STATIC1;
     }
 
-    public boolean checkCollision(Rectangle2D object) {
-        bounds.setRect(getBounds());
-        return object.intersects(bounds);
-    }
 }
