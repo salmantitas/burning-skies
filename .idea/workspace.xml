@@ -28,16 +28,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="Difficulty Balancing">
-      <change afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/CollisionBoxAirplane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/CollisionBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/CollisionBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/MobileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/MobileEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/BulletPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/BulletPool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Airplane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Airplane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/CollisionBoxAirplane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/CollisionBoxAirplane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyMinefield2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyMinefield2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemySide1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemySide1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemySide2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemySide2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemySide3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemySide3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/PickupPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/PickupPool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +230,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/engine/MobileEntity.java</url>
-          <line>208</line>
+          <line>213</line>
           <option name="timeStamp" value="341" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -242,11 +242,6 @@
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuGameOver.java</url>
           <line>55</line>
           <option name="timeStamp" value="508" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/engine/Entity.java</url>
-          <line>171</line>
-          <option name="timeStamp" value="531" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/ProceduralGenerator.java</url>
@@ -350,8 +345,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Airplane.java</url>
-          <line>32</line>
+          <line>25</line>
           <option name="timeStamp" value="771" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java</url>
+          <line>289</line>
+          <option name="timeStamp" value="772" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />

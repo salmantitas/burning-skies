@@ -89,7 +89,7 @@ public class Enemy extends Airplane {
         damageImage = textureHandler.enemyDamage[0];
         attackEffect = false;
 
-        collisionBox = new CollisionBoxAirplane();
+        collisionBox = new CollisionBoxAirplane(this);
 
 //        boundsVertical = new Rectangle2D.Double();
 //        boundsHorizontal = new Rectangle2D.Double();

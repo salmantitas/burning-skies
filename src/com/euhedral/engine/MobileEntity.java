@@ -92,6 +92,11 @@ public abstract class MobileEntity extends Entity {
             // todo: active check might be redundant
             move();
         }
+        updateBounds();
+    }
+
+    protected void updateBounds() {
+        collisionBox.setBounds( pos.x, pos.y, width, height);
     }
 
 //    @Override

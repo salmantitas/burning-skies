@@ -79,7 +79,7 @@ public class Player extends Airplane {
 
         resetMovement();
 
-        collisionBox = new CollisionBoxAirplane();
+        collisionBox = new CollisionBoxAirplane(this);
 
 //        boundsVertical = new Rectangle2D.Double();
 //        boundsHorizontal = new Rectangle2D.Double();
@@ -134,6 +134,24 @@ public class Player extends Airplane {
                 pulseRadius = -1;
             }
         }
+    }
+
+    @Override
+    protected void updateBounds() {
+        collisionBox.setBounds(
+                0,
+                pos.x,
+                pos.y + 2* height / 3 - 2 ,
+                width,
+                height / 3 - 6
+        );
+        collisionBox.setBounds(
+                1,
+                pos.x + (width / 4) + 7,
+                pos.y,
+                (2 * width) / 4 - 14,
+                height
+        );
     }
 
     private void setAttributes() {
@@ -269,35 +287,7 @@ public class Player extends Airplane {
 
 
     public boolean checkCollision(Enemy enemy) {
-//        boundsVertical.setRect(getBoundsVertical());
-//        boundsHorizontal.setRect(getBoundsHorizontal());
-        collidesVertically = enemy.checkCollision(getBoundsVertical());
-        collidesHorizontally = enemy.checkCollision(getBoundsHorizontal());
-
-        return collidesVertically || collidesHorizontally;
-    }
-
-    @Override
-    public Rectangle2D getBoundsHorizontal() {
-        collisionBox.setBounds(
-                0,
-                pos.x,
-                pos.y + 2* height / 3 - 2 ,
-                width,
-                height / 3 - 6
-        );
-        return collisionBox.getBounds(0);
-    }
-
-    public Rectangle2D getBoundsVertical() {
-        collisionBox.setBounds(
-                1,
-                pos.x + (width / 4) + 7,
-                pos.y,
-                (2 * width) / 4 - 14,
-                height
-        );
-        return collisionBox.getBounds(1);
+        return collisionBox.checkCollision(enemy);
     }
 
     // Private Methods

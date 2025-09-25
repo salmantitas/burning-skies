@@ -14,12 +14,6 @@ public class Airplane extends MobileEntity {
     protected int shootTimerDefault;
     protected double bulletVelocity;
 
-    // Bounds
-//    protected Rectangle2D boundsVertical, boundsHorizontal;
-
-    // Collisions
-    protected boolean collidesVertically, collidesHorizontally;
-
     // Jitter
     protected int jitter = 0, jitter_MULT = 1, jitter_MAX;
 
@@ -29,10 +23,23 @@ public class Airplane extends MobileEntity {
     protected BufferedImage damageImage;
 
     // debug
-    protected boolean debug = true;
+    protected boolean debug = false;
 
     public Airplane(double x, double y, EntityID id) {
         super(x, y, id);
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        getBoundsHorizontal();
+        getBoundsVertical();
+    }
+
+    @Override
+    protected void updateBounds() {
+        collisionBox.setBounds(0, pos.x, pos.y, width, 1 * height / 3 + 2);
+        collisionBox.setBounds(1, pos.x + (width / 4), pos.y, (2 * width) / 4, height);
     }
 
     protected void updateShootTimer() {
@@ -51,23 +58,14 @@ public class Airplane extends MobileEntity {
     }
 
     public boolean checkCollision(Rectangle2D object) {
-        Rectangle2D boundsVertical = getBoundsVertical();
-        Rectangle2D boundsHorizontal = getBoundsHorizontal();
-        collidesVertically = object.intersects(boundsVertical);
-        collidesHorizontally = object.intersects(boundsHorizontal);
-
-        return collidesVertically || collidesHorizontally;
+        return ((CollisionBoxAirplane) collisionBox).checkCollision(object, getBoundsHorizontal(), getBoundsVertical());
     }
 
     public Rectangle2D getBoundsHorizontal() {
-        collisionBox.setBounds(0, pos.x, pos.y, width, 1 * height / 3 + 2);
         return collisionBox.getBounds(0);
-//        boundsHorizontal.setRect();
-//        return boundsHorizontal;
     }
 
     public Rectangle2D getBoundsVertical() {
-        collisionBox.setBounds(1, pos.x + (width / 4), pos.y, (2 * width) / 4, height);
         return collisionBox.getBounds(1);
     }
 

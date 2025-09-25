@@ -29,7 +29,7 @@ public class PickupPool extends Pool {
         for (Entity entity: entities) {
             pickup = (Pickup) entity;
             if (pickup.isActive()) {
-                if (pickup.getBounds().intersects(player.getBounds())) {
+                if (pickup.checkCollision(player)) {
                     pickup.collision();
                     increase();
 //                    Utility.log("Pool: " + pickups.getPoolSize());

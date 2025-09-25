@@ -30,11 +30,9 @@ public abstract class Entity {
 
     public Entity(double x, double y, EntityID id) {
         pos = new Position(x,y);
-//        this.x = x;
-//        this.y = y;
         this.id = id;
 
-        collisionBox = new CollisionBox(1);
+        collisionBox = new CollisionBox(this,1);
     }
 
     public Entity(int x, int y, EntityID id, BufferedImage image) {
@@ -45,7 +43,6 @@ public abstract class Entity {
     public Entity(int x, int y, EntityID id, BufferedImage[] images) {
         this(x,y, id);
         this.anim = new Animation(animationSpeed, images);
-//        this.images = images;
     }
 
     public abstract void update();
@@ -140,24 +137,7 @@ public abstract class Entity {
     }
 
     public Rectangle2D getBounds() {
-        collisionBox.setBounds( pos.x, pos.y, width, height);
         return collisionBox.getBounds();
-    }
-
-    public Rectangle getBoundsTop() {
-        return new Rectangle((int) (pos.x + 0.2*width), (int) pos.y,  (int) (0.6* width),  height/4);
-    }
-
-    public Rectangle getBoundsBottom() {
-        return new Rectangle((int) (pos.x + 0.2*width), (int) pos.y + 3*height/4,  (int) (0.6* width),  height/4);
-    }
-
-    public Rectangle getBoundsLeft() {
-        return new Rectangle((int) pos.x, (int) (pos.y + 0.35*height),  width/4,  (int) (height * 0.3));
-    }
-
-    public Rectangle getBoundsRight() {
-        return new Rectangle((int) pos.x + 3*width/4, (int) (pos.y + 0.35*height),  width/4,  (int) (height * 0.3));
     }
 
     protected void setColor(Graphics g) {
@@ -184,16 +164,16 @@ public abstract class Entity {
         g.drawImage(image, (int) pos.x, (int) pos.y, targetWidth, targetHeight, null);
     }
 
-    protected void drawImage(Graphics g, BufferedImage image, int targetWidth, int targetHeight, double rotation) {
-        rotation = rotation % 90;
-        Graphics2D g2d = (Graphics2D) g;
-        int tX = 0, tY = 0;
-        g2d.translate(-tX, -tY);
-        g2d.rotate(Math.toRadians(rotation));
-        g2d.drawImage(image, (int) pos.x, (int) pos.y, targetWidth, targetHeight, null);
-        g2d.rotate(Math.toRadians(-rotation));
-        g2d.translate(tX, tY);
-    }
+//    protected void drawImage(Graphics g, BufferedImage image, int targetWidth, int targetHeight, double rotation) {
+//        rotation = rotation % 90;
+//        Graphics2D g2d = (Graphics2D) g;
+//        int tX = 0, tY = 0;
+//        g2d.translate(-tX, -tY);
+//        g2d.rotate(Math.toRadians(rotation));
+//        g2d.drawImage(image, (int) pos.x, (int) pos.y, targetWidth, targetHeight, null);
+//        g2d.rotate(Math.toRadians(-rotation));
+//        g2d.translate(tX, tY);
+//    }
 
 //    protected void drawImage(Graphics g, BufferedImage image, int x, int y, int targetWidth, int targetHeight) {
 //        g.drawImage(image, x, y, targetWidth, targetHeight, null);
@@ -257,5 +237,13 @@ public abstract class Entity {
 
     public EntityID getID() {
         return id;
+    }
+
+    public CollisionBox getCollisionBox() {
+        return collisionBox;
+    }
+
+    public boolean checkCollision(Entity other) {
+        return collisionBox.checkCollision(other);
     }
 }
