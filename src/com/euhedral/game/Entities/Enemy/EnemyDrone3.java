@@ -93,7 +93,7 @@ public class EnemyDrone3 extends EnemyDrone1 {
     }
 
     @Override
-    public Rectangle2D getBounds() {
+    public void updateBounds() {
         size = Math.max(explosionTimer, explosionTimer);
         expX = (int) pos.x - (size - width)/3;
         expY = (int) pos.y - (size - height)/3;
@@ -101,8 +101,6 @@ public class EnemyDrone3 extends EnemyDrone1 {
         collisionBox.setBounds(
                 expX, expY, 2*size/3, 2*size/3
         );
-
-        return collisionBox.getBounds();
     }
 
     @Override

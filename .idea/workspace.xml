@@ -29,15 +29,13 @@
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="Difficulty Balancing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/CollisionBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/CollisionBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/MobileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/MobileEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/BulletPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/BulletPool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Airplane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Airplane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/CollisionBoxAirplane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/CollisionBoxAirplane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Bullet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/CollisionBoxAirplane.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/PickupPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/PickupPool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,12 +303,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java</url>
-          <line>123</line>
+          <line>119</line>
           <option name="timeStamp" value="676" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java</url>
-          <line>63</line>
+          <line>61</line>
           <option name="timeStamp" value="679" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -345,13 +343,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Airplane.java</url>
-          <line>25</line>
+          <line>26</line>
           <option name="timeStamp" value="771" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/game/Entities/Player.java</url>
-          <line>289</line>
-          <option name="timeStamp" value="772" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />

@@ -97,7 +97,7 @@ public class BulletPool extends Pool {
         collidingBullet = null;
         for (Entity entity : entities) {
             bulletPlayer = (BulletPlayer) entity;
-            intersectsEnemy = enemy.checkCollision(bulletPlayer.getBounds());
+            intersectsEnemy = enemy.checkCollision(bulletPlayer);
             if (bulletPlayer.isActive() && intersectsEnemy)
             {
                 collidingBullet = bulletPlayer;
@@ -110,7 +110,7 @@ public class BulletPool extends Pool {
         for (Entity entity: entities) {
             bullet = (Bullet) entity;
 
-            if (bullet.isActive() && player.checkCollision(bullet.getBounds())) {
+            if (bullet.isActive() && player.checkCollision(bullet)) {
 //                bullets.increase(bullet);
                 destroy(bullet, player);
 

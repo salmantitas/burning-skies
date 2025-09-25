@@ -5,7 +5,6 @@ import com.euhedral.game.*;
 import com.euhedral.game.Entities.Enemy.Enemy;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
@@ -19,18 +18,11 @@ public class Player extends Airplane {
 
     // Personal
     private int levelHeight;
-    //    private int power;
-    //    private boolean ground = false;
-//    private boolean airBullet = true;
     private int clampOffsetX;
     private int clampOffsetY;
     private int shootAngle = Utility.intAtWidth640(5);
 
     private Attribute health, shield, firepower;
-//    private int shootRateBoost;
-
-    private final int HEALTH_HIGH = 66;
-    private final int HEALTH_MED = 33;
 
     // Test
     private int mx, my;
@@ -78,11 +70,6 @@ public class Player extends Airplane {
 //        physics.friction = 1; // instantenous is equal to (minVel - 2)
 
         resetMovement();
-
-        collisionBox = new CollisionBoxAirplane(this);
-
-//        boundsVertical = new Rectangle2D.Double();
-//        boundsHorizontal = new Rectangle2D.Double();
 
         clampOffsetX = -5 * width / 4;
         clampOffsetY = height - 20;

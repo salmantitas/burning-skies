@@ -1,5 +1,6 @@
 package com.euhedral.game.Entities;
 
+import com.euhedral.engine.CollisionBox;
 import com.euhedral.engine.MobileEntity;
 import com.euhedral.game.EntityID;
 import com.euhedral.game.TextureHandler;
@@ -27,13 +28,12 @@ public class Airplane extends MobileEntity {
 
     public Airplane(double x, double y, EntityID id) {
         super(x, y, id);
+        collisionBox = new CollisionBox(this, 2);
     }
 
     @Override
     public void update() {
         super.update();
-        getBoundsHorizontal();
-        getBoundsVertical();
     }
 
     @Override
@@ -55,10 +55,6 @@ public class Airplane extends MobileEntity {
 
     protected void shoot() {
 
-    }
-
-    public boolean checkCollision(Rectangle2D object) {
-        return ((CollisionBoxAirplane) collisionBox).checkCollision(object, getBoundsHorizontal(), getBoundsVertical());
     }
 
     public Rectangle2D getBoundsHorizontal() {

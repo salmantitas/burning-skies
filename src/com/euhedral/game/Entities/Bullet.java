@@ -86,6 +86,7 @@ public class Bullet extends MobileEntity {
         if (!calculated)
             calculateVelocities();
         move();
+        updateBounds();
     }
 
     @Override
@@ -149,9 +150,10 @@ public class Bullet extends MobileEntity {
 //        this.y = y;
     }
 
-    public Rectangle2D getBounds() {
-        return new Rectangle2D.Double(pos.x, pos.y, width, height);
-    }
+//    public Rectangle2D getBounds() {
+//        super.getBounds();
+//        return new Rectangle2D.Double(pos.x, pos.y, width, height);
+//    }
 
     @Override
     public void resurrect(double x, double y) {

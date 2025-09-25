@@ -4,11 +4,9 @@ import com.euhedral.engine.*;
 import com.euhedral.game.*;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import com.euhedral.game.Entities.Airplane;
-import com.euhedral.game.Entities.CollisionBoxAirplane;
 import com.euhedral.game.GameController;
 
 /*
@@ -88,8 +86,6 @@ public class Enemy extends Airplane {
         textureHandler = GameController.getTexture();
         damageImage = textureHandler.enemyDamage[0];
         attackEffect = false;
-
-        collisionBox = new CollisionBoxAirplane(this);
 
 //        boundsVertical = new Rectangle2D.Double();
 //        boundsHorizontal = new Rectangle2D.Double();
