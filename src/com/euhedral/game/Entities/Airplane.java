@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-public class Airplane extends MobileEntity {
+public abstract class Airplane extends MobileEntity {
     // Shooting
     protected int shootTimer = 0;
     protected int shootTimerDefault;
@@ -53,9 +53,7 @@ public class Airplane extends MobileEntity {
         }
     }
 
-    protected void shoot() {
-
-    }
+    protected abstract void shoot();
 
     public Rectangle2D getBoundsHorizontal() {
         return collisionBox.getBounds(0);
