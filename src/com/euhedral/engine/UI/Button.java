@@ -24,6 +24,9 @@ public class Button extends UIItem{
     protected int originalWidth, selectedWidth;
     protected Color disabledColor, disabledTextColor;
 
+
+    protected Runnable activate;
+
     Graphics2D g2d;
     int stringWidth;
     int stringXSelected;
@@ -174,6 +177,8 @@ public class Button extends UIItem{
         return selectedWidth;
     }
 
-
+    public void setActivate(Runnable runnable) {
+        this.activate = runnable;
+    }
 }
 

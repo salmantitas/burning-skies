@@ -13,6 +13,8 @@ public class ButtonNav extends Button {
     public ButtonNav(int x, int y, int size, String text, GameState targetSate) {
         super(x, y, size, text);
         this.targetSate = targetSate;
+
+        activate = () -> { Engine.setState(targetSate);};
     }
 
     public ButtonNav(int x, int y, int size, String text, GameState targetSate, boolean fill) {
@@ -48,7 +50,7 @@ public class ButtonNav extends Button {
     @Override
     public Object activate() {
         super.activate();
-        Engine.setState(targetSate);
+        activate.run();
         return null;
     }
 }
