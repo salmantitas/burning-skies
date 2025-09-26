@@ -121,17 +121,8 @@ public class EnemyDrone1 extends Enemy{
         g2d.draw(getBounds());
     }
 
-    public boolean checkCollision(Rectangle2D object) {
-        return object.intersects(getBounds());
-    }
-
     @Override
     protected void setEnemyType() {
         enemyType = VariableHandler.TYPE_DRONE1;
     }
-
-//    @Override
-//    public int getTurretX() {
-//        return (int) x + width/2 - Utility.intAtWidth640(2);
-//    }
 }
