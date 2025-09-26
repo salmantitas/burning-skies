@@ -6,13 +6,13 @@ import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
 
-public class ButtonAction2 extends ButtonAction {
-    private ButtonAction increase, decrease;
+public class ButtonOption extends Button {
+    private Button increase, decrease;
 
-    public ButtonAction2(int x, int y, int size, String text) {
+    public ButtonOption(int x, int y, int size, String text) {
         super(x, y, size, text);
-        increase = new ButtonAction(x + width + 2* size,y, size, ">");
-        decrease = new ButtonAction(x - (int) (2.5 * size),y, size, "<");
+        increase = new Button(x + width + 2* size,y, size, ">");
+        decrease = new Button(x - (int) (2.5 * size),y, size, "<");
     }
 
     @Override
@@ -154,11 +154,11 @@ public class ButtonAction2 extends ButtonAction {
 
     @Override
     public void activateIncrease() {
-        increase.activate();//.run();
+        increase.activate();
     }
 
     @Override
     public void activateDecrease() {
-        decrease.activate();//.run();
+        decrease.activate();
     }
 }

@@ -47,9 +47,9 @@ public class MenuTransition extends Menu {
     int difficultyX = x10;
     int startY = difficultyY + spacingY;
 
-    ButtonAction2 difficulty; // = new ButtonAction2(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty", null);
+    ButtonOption difficulty; // = new ButtonAction2(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty", null);
 
-    ButtonAction start;
+    Button start;
 
     ButtonNav back = new ButtonNav(difficultyX, y70, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
 
@@ -67,10 +67,10 @@ public class MenuTransition extends Menu {
         MAXBUTTON = 3;
         options = new Button[MAXBUTTON];
 
-        start = new ButtonAction(difficultyX, startY, Utility.perc(buttonSize, 80), "Start");
+        start = new Button(difficultyX, startY, Utility.perc(buttonSize, 80), "Start");
         start.activate = (GameController::setLevelLoadedtoTrue);
 
-        difficulty = new ButtonAction2(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty");
+        difficulty = new ButtonOption(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty");
 
         difficulty.setIncreaseActivate(() -> {
             VariableHandler.difficultyType++;

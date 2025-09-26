@@ -22,13 +22,13 @@ public class MenuSettings extends Menu {
 
     int volOffset = 2;
 
-    ButtonAction tutorial;
+    Button tutorial;
 //    ButtonAction volumeMasterDown = new ButtonAction(x30, y48 + volOffset, optionSize, optionSize, "-", ActionTag.volumeMasterDown);
-    ButtonAction2 volumeMaster = new ButtonAction2(x36, y48, optionSize, "Master Volume");
-    ButtonAction volumeMasterUp = new ButtonAction(x70, y48 + volOffset, optionSize,"+");
+    ButtonOption volumeMaster = new ButtonOption(x36, y48, optionSize, "Master Volume");
+    Button volumeMasterUp = new Button(x70, y48 + volOffset, optionSize,"+");
 //    ButtonAction volumeMusicDown = new ButtonAction(x36, y56, optionSize, optionSize, "-", ActionTag.volumeMusicDown);
-    ButtonAction volumeMusic;
-    ButtonAction2 changeBGM = new ButtonAction2(x36, y62, optionSize, "Change BGM");
+    Button volumeMusic;
+    ButtonOption changeBGM = new ButtonOption(x36, y62, optionSize, "Change BGM");
 //    ButtonAction volumeMusicUp = new ButtonAction(x62, y56, optionSize, optionSize,"+", ActionTag.volumeMusicUp);
 //    ButtonAction volumeEffectsDown = new ButtonAction(x36, y62, optionSize, optionSize, "-", ActionTag.volumeEffectsDown);
 //    ButtonAction volumeEffects = new ButtonAction(x40, y62, optionSize, "Effects Volume", ActionTag.volumeEffects);
@@ -41,7 +41,7 @@ public class MenuSettings extends Menu {
         options = new Button[MAXBUTTON];
 
 //        tutorial = new ButtonAction(x36, y40, optionSize, "Tutorial", ActionTag.tutorial);
-        tutorial = new ButtonAction(x36, y40, optionSize, "Tutorial");
+        tutorial = new Button(x36, y40, optionSize, "Tutorial");
         tutorial.setActivate(() -> {
             VariableHandler.toggleTutorial();
             SaveLoad.saveSettings();
@@ -53,7 +53,7 @@ public class MenuSettings extends Menu {
         }));
 
 //        ButtonAction volumeMusic = new ButtonAction(x36, y56, optionSize, "Music Volume", ActionTag.volumeMusic);
-        volumeMusic = new ButtonAction(x36, y56, optionSize, "Music Volume");
+        volumeMusic = new Button(x36, y56, optionSize, "Music Volume");
         volumeMusic.setActivate(() -> {
             SoundHandler.toggleVolumeMusic();
             SaveLoad.saveSettings();
@@ -141,11 +141,10 @@ public class MenuSettings extends Menu {
     public void onSwitch() {
         super.onSwitch();
 
-//        Utility.log("Previous: " + previous);
+        back.setActivate(() -> {
+            Engine.setState(Engine.previousState);
+        });
 
-//        Utility.log("Previous State: " + Engine.previousState);
-        back.setTargetState(Engine.previousState);
-//        Utility.log("Back's Target:" + back.getTargetState());
     }
 
     /*******************
