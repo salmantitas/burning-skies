@@ -2,7 +2,6 @@ package com.euhedral.engine.UI;
 
 import com.euhedral.engine.GameState;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.ActionTag;
 import com.euhedral.game.UI.MessageBox;
 import com.euhedral.game.VariableHandler;
 
@@ -75,7 +74,7 @@ public class Menu {
     protected Color buttonValueColor;
 
     Button button;
-    ActionTag returnAction;
+//    ActionTag returnAction;
     MessageBox messageBox;
 
     public Menu(GameState state) {
@@ -169,8 +168,8 @@ public class Menu {
     /*
     * Checks whether the mouse has clicked on a button. If true, the button is activated.
     * */
-    public ActionTag checkButtonAction(int mx, int my) {
-        returnAction = null;
+    public void checkButtonAction(int mx, int my) {
+//        returnAction = null;
         for (int i = 0; i < messageBoxes.size(); i++) {
             messageBox = messageBoxes.get(i);
 //            if (messageBox.mouseOverlap(mx, my)) {
@@ -187,74 +186,54 @@ public class Menu {
                 button = options[i];
                 if (button.mouseOverlap(mx, my)) {
                     if (button.isEnabled()) {
-                        returnAction = activateButton(button);
+                        activateButton(button);
                         break;
                     }
                 }
             }
         }
-        return returnAction;
+//        return returnAction;
     }
 
-    public ActionTag increaseOption() {
-        returnAction = null;
-
-        // todo: Find correct action, if existing
+    public void increaseOption() {
         button = options[index];
-        returnAction = (ActionTag) button.increaseOption();
-        Utility.log("Increase Attempted");
-
-        return returnAction;
+        button.activateIncrease();
+//        Utility.log("Increase Attempted");
     }
 
-    public ActionTag decreaseOption() {
-        returnAction = null;
-
+    public void decreaseOption() {
         button = options[index];
-        returnAction = (ActionTag) button.decreaseOption();
-        Utility.log("Decrease Attempted");
-
-        return returnAction;
+        button.activateDecrease();
+//        Utility.log("Decrease Attempted");
     }
 
     /*
     * If the selected button is a navigation button, the GameState is changed. Otherwise, the ActionTag is applied.
     * */
-    public ActionTag activateButton(Button button) {
-        returnAction = null;
-
+    public void activateButton(Button button) {
         if (activeMessageBoxes == 0) {
 //            previous = Engine.currentState;
-            returnAction = (ActionTag) button.activate();
+            if (button.getText() == "Back") {
+                Utility.log("Back");
+            }
+            button.activate();
         }
 
-//        if (button instanceof ButtonAction) {
-//            ButtonAction actButton = (ButtonAction) button;
-//            returnAction = actButton.getAction();
-//        }
-
-//        if (button instanceof ButtonNav) {
-//            button.activate();
-//        } else {
-//            ButtonAction actButton = (ButtonAction) button;
-//            returnAction = actButton.getAction();
-//        }
-
-        return returnAction;
+//        return returnAction;
     }
 
     /*
     * Activates the button that is selected
     * */
-    public ActionTag chooseSelected() {
-        returnAction = null;
+    public void chooseSelected() {
+//        returnAction = null;
         if (activeMessageBoxes > 0) {
             messageBoxes.getFirst().disable();
             activeMessageBoxes--;
         } else if (options != null)
-            returnAction = activateButton(options[index]);
+            activateButton(options[index]);
 
-        return returnAction;
+//        return returnAction;
     }
 
     public GameState getState() {

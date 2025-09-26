@@ -41,8 +41,6 @@ public class GameController {
     private static TextureHandler textureHandler;
     private SoundHandler soundHandler;
 
-    ActionTag action;
-
     boolean validCameraRenderState;
 
     // Mouse
@@ -65,7 +63,7 @@ public class GameController {
 
     // Levels
     private int levelHeight;
-    private boolean levelLoaded = false; // levels will only loaded when this is true
+    private static boolean levelLoaded = false; // levels will only loaded when this is true
     boolean reset = true;
     boolean levelEndCondition;
     BufferedImage level;
@@ -410,102 +408,6 @@ public class GameController {
         myD /= Engine.SCALE;
 
         uiHandler.checkButtonAction((int) mxD, (int) myD);
-        performAction();
-    }
-
-    public void performAction() {
-        action = uiHandler.getAction();
-        if (action != null) {
-            switch (action) {
-                case go:
-                    levelLoaded = true;
-                    break;
-                case tutorial:
-                    VariableHandler.toggleTutorial();
-                    break;
-                case volumeMaster: {
-                    soundHandler.toggleVolumeMaster();
-                    SaveLoad.saveSettings();
-                    break;
-                }
-                case volumeMasterUp: {
-                    soundHandler.volumeMasterUp();
-                    SaveLoad.saveSettings();
-                    break;
-                }
-                case volumeMasterDown: {
-                    soundHandler.volumeMasterDown();
-                    SaveLoad.saveSettings();
-                    break;
-                }
-                case volumeMusic: {
-                    soundHandler.toggleVolumeMusic();
-                    SaveLoad.saveSettings();
-                    break;
-                }
-                case volumeMusicUp: {
-                    soundHandler.volumeMusicUp();
-                    SaveLoad.saveSettings();
-                    break;
-                }
-                case volumeMusicDown: {
-                    soundHandler.volumeMusicDown();
-                    SaveLoad.saveSettings();
-                    break;
-                }
-                case volumeEffects: {
-                    soundHandler.toggleVolumeEffects();
-                    SaveLoad.saveSettings();
-                    break;
-                }
-                case volumeEffectsUp: {
-                    soundHandler.volumeEffectsUp();
-                    SaveLoad.saveSettings();
-                    break;
-                }
-                case volumeEffectsDown: {
-                    soundHandler.volumeEffectsDown();
-                    SaveLoad.saveSettings();
-                    break;
-                }
-                case BGMUp: {
-                    soundHandler.BGMUp();
-                    break;
-                }
-                case BGMDown: {
-                    soundHandler.BGMDown();
-                    break;
-                }
-                case increaseDifficulty: {
-                    VariableHandler.difficultyType++;
-                    if (VariableHandler.difficultyType > VariableHandler.DIFFICULTY_CHALLENGE)
-                        VariableHandler.difficultyType = 0;
-                    break;
-                }
-                case decreaseDifficulty: {
-                    VariableHandler.difficultyType--;
-                    if (VariableHandler.difficultyType < 0)
-                        VariableHandler.difficultyType = VariableHandler.DIFFICULTY_CHALLENGE;
-                    break;
-                }
-                case health:
-                    shop.buyHealth();
-                    break;
-                case power:
-                    shop.buyPower();
-                    break;
-                case shield:
-                    shop.buyShield();
-                    break;
-                case save:
-                    save();
-                    break;
-                case load:
-                    load();
-                    break;
-            }
-            uiHandler.endAction();
-        }
     }
 
     public void notifyUIHandler(GameState state) {
@@ -560,12 +462,10 @@ public class GameController {
             // Left/Right to increase or decrease something
             if (key == KeyEvent.VK_RIGHT || key == KeyInput.getKeyEvent(RIGHT)) {
                 uiHandler.increaseOption();
-                performAction();
             }
 
             if (key == KeyEvent.VK_LEFT || key == KeyInput.getKeyEvent(LEFT)) {
                 uiHandler.decreaseOption();
-                performAction();
             }
         }
 
@@ -573,7 +473,6 @@ public class GameController {
         // Enter/E to select selected
         if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_E ) {
             uiHandler.chooseSelected();
-            performAction();
         }
 
         if (key == KeyEvent.VK_G) {
@@ -765,5 +664,9 @@ public class GameController {
 
     public void renderUI(Graphics g) {
         uiHandler.render(g);
+    }
+
+    public static void setLevelLoadedtoTrue() {
+        levelLoaded = true;
     }
 }

@@ -8,49 +8,26 @@ import com.euhedral.engine.GameState;
 import java.awt.*;
 
 public class ButtonNav extends Button {
-    private GameState targetSate;
+    private GameState targetState;
 
-    public ButtonNav(int x, int y, int size, String text, GameState targetSate) {
+    public ButtonNav(int x, int y, int size, String text, GameState targetState) {
         super(x, y, size, text);
-        this.targetSate = targetSate;
+        this.targetState = targetState;
 
-        activate = () -> { Engine.setState(targetSate);};
+        activate = () -> { Engine.setState(targetState);};
     }
 
-    public ButtonNav(int x, int y, int size, String text, GameState targetSate, boolean fill) {
-        this(x, y, size, text, targetSate);
-        font = new Font("arial", 1, size);
-        backColor = Color.BLUE;
-        textColor = Color.RED;
-        this.fill = fill;
+    public void setTargetState(GameState targetSate) {
+        this.targetState = targetSate;
     }
 
-    public ButtonNav(int x, int y, int size, String text, GameState targetSate, Color backColor, Color textColor) {
-        this(x, y, size, text, targetSate);
-        font = new Font("arial", 1, size);
-        this.backColor = backColor;
-        this.textColor = textColor;
-    }
-
-    public ButtonNav(int x, int y, int size, String text, GameState targetSate, Color backColor, Color textColor, Font font) {
-        this(x, y, size, text, targetSate);
-        this.font = font;
-        this.backColor = backColor;
-        this.textColor = textColor;
-    }
-
-    public GameState getTargetSate() {
-        return targetSate;
-    }
-
-    public void setTargetSate(GameState targetSate) {
-        this.targetSate = targetSate;
+    public GameState getTargetState() {
+        return targetState;
     }
 
     @Override
-    public Object activate() {
+    public void activate() {
         super.activate();
-        activate.run();
-        return null;
+//        activate.run();
     }
 }

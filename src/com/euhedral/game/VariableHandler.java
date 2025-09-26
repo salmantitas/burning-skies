@@ -127,9 +127,6 @@ public class VariableHandler {
 
     public static HashMap<Color, EntityID> colorMap;
 
-    // todo: ActionTag will be updated here
-    private ActionTag action = null;
-
     private static boolean tutorial = true;
 
     // Deadzones
@@ -138,10 +135,10 @@ public class VariableHandler {
 
     // Difficulty
 
-    static int DIFFICULTY_EASY = 0;
-    static int DIFFICULTY_NORMAL = 1;
-//    static int DIFFICULTY_CUSTOM = DIFFICULTY_NORMAL + 1;
-    static int DIFFICULTY_CHALLENGE = DIFFICULTY_NORMAL + 1;
+    public static int DIFFICULTY_EASY = 0;
+    public static int DIFFICULTY_NORMAL = 1;
+//    public static int DIFFICULTY_CUSTOM = DIFFICULTY_NORMAL + 1;
+    public static int DIFFICULTY_CHALLENGE = DIFFICULTY_NORMAL + 1;
 
     public static int difficultyType = DIFFICULTY_NORMAL;
     public static int difficultyLevel = 1;

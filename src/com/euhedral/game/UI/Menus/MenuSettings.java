@@ -7,9 +7,8 @@ import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.Utility;
-import com.euhedral.game.ActionTag;
+import com.euhedral.game.SaveLoad;
 import com.euhedral.game.SoundHandler;
-import com.euhedral.game.UI.UIHandler;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
@@ -23,13 +22,13 @@ public class MenuSettings extends Menu {
 
     int volOffset = 2;
 
-    ButtonAction tutorial = new ButtonAction(x36, y40, optionSize, "Tutorial", ActionTag.tutorial);
-    ButtonAction volumeMasterDown = new ButtonAction(x30, y48 + volOffset, optionSize, optionSize, "-", ActionTag.volumeMasterDown);
-    ButtonAction2 volumeMaster = new ButtonAction2(x36, y48, optionSize, "Master Volume", ActionTag.volumeMaster);
-    ButtonAction volumeMasterUp = new ButtonAction(x70, y48 + volOffset, optionSize, optionSize,"+", ActionTag.volumeMasterUp);
+    ButtonAction tutorial;
+//    ButtonAction volumeMasterDown = new ButtonAction(x30, y48 + volOffset, optionSize, optionSize, "-", ActionTag.volumeMasterDown);
+    ButtonAction2 volumeMaster = new ButtonAction2(x36, y48, optionSize, "Master Volume");
+    ButtonAction volumeMasterUp = new ButtonAction(x70, y48 + volOffset, optionSize,"+");
 //    ButtonAction volumeMusicDown = new ButtonAction(x36, y56, optionSize, optionSize, "-", ActionTag.volumeMusicDown);
-    ButtonAction volumeMusic = new ButtonAction(x36, y56, optionSize, "Music Volume", ActionTag.volumeMusic);
-    ButtonAction2 changeBGM = new ButtonAction2(x36, y62, optionSize, "Change BGM", null);
+    ButtonAction volumeMusic;
+    ButtonAction2 changeBGM = new ButtonAction2(x36, y62, optionSize, "Change BGM");
 //    ButtonAction volumeMusicUp = new ButtonAction(x62, y56, optionSize, optionSize,"+", ActionTag.volumeMusicUp);
 //    ButtonAction volumeEffectsDown = new ButtonAction(x36, y62, optionSize, optionSize, "-", ActionTag.volumeEffectsDown);
 //    ButtonAction volumeEffects = new ButtonAction(x40, y62, optionSize, "Effects Volume", ActionTag.volumeEffects);
@@ -41,11 +40,43 @@ public class MenuSettings extends Menu {
         MAXBUTTON = 5; //11;
         options = new Button[MAXBUTTON];
 
-        volumeMaster.setIncreaseAction(ActionTag.volumeMasterUp);
-        volumeMaster.setDecreaseAction(ActionTag.volumeMasterDown);
+//        tutorial = new ButtonAction(x36, y40, optionSize, "Tutorial", ActionTag.tutorial);
+        tutorial = new ButtonAction(x36, y40, optionSize, "Tutorial");
+        tutorial.setActivate(() -> {
+            VariableHandler.toggleTutorial();
+            SaveLoad.saveSettings();
+        });
 
-        changeBGM.setIncreaseAction(ActionTag.BGMUp);
-        changeBGM.setDecreaseAction(ActionTag.BGMDown);
+        volumeMaster.setActivate((() -> {
+            SoundHandler.toggleVolumeMaster();
+            SaveLoad.saveSettings();
+        }));
+
+//        ButtonAction volumeMusic = new ButtonAction(x36, y56, optionSize, "Music Volume", ActionTag.volumeMusic);
+        volumeMusic = new ButtonAction(x36, y56, optionSize, "Music Volume");
+        volumeMusic.setActivate(() -> {
+            SoundHandler.toggleVolumeMusic();
+            SaveLoad.saveSettings();
+        });
+
+//        volumeMaster.setIncreaseAction(ActionTag.volumeMasterUp);
+//        volumeMaster.setDecreaseAction(ActionTag.volumeMasterDown);
+
+        volumeMaster.setIncreaseActivate(() -> {
+            SoundHandler.volumeMasterUp();
+            SaveLoad.saveSettings();
+        });
+
+        volumeMaster.setDecreaseActivate(() -> {
+            SoundHandler.volumeMasterDown();
+            SaveLoad.saveSettings();
+        });
+
+//        changeBGM.setIncreaseAction(ActionTag.BGMUp);
+//        changeBGM.setDecreaseAction(ActionTag.BGMDown);
+
+        changeBGM.setIncreaseActivate(SoundHandler::BGMUp);
+        changeBGM.setDecreaseActivate(SoundHandler::BGMDown);
 
         options[0] = tutorial;
 //        options[1] = volumeMasterDown;
@@ -112,7 +143,9 @@ public class MenuSettings extends Menu {
 
 //        Utility.log("Previous: " + previous);
 
-        back.setTargetSate(Engine.previousState);
+//        Utility.log("Previous State: " + Engine.previousState);
+        back.setTargetState(Engine.previousState);
+//        Utility.log("Back's Target:" + back.getTargetState());
     }
 
     /*******************

@@ -2,21 +2,17 @@ package com.euhedral.game.UI;
 
 import com.euhedral.engine.*;
 import com.euhedral.engine.UI.Menu;
-import com.euhedral.game.ActionTag;
 import com.euhedral.game.UI.Menus.*;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class UIHandler {
 
     private Menu currentMenu;
     private ArrayList<Menu> menus;
-    ActionTag action = null;
+//    ActionTag action = null;
     boolean menuChanged = false;
 
     // Common game variables
@@ -79,19 +75,19 @@ public class UIHandler {
     }
 
     public void checkButtonAction(int mx, int my) {
-        action = currentMenu.checkButtonAction(mx, my);
+        currentMenu.checkButtonAction(mx, my);
     }
 
     public void chooseSelected() {
-        action = currentMenu.chooseSelected();
+        currentMenu.chooseSelected();
     }
 
     public void increaseOption() {
-        action = currentMenu.increaseOption();
+        currentMenu.increaseOption();
     }
 
     public void decreaseOption() {
-        action = currentMenu.decreaseOption();
+        currentMenu.decreaseOption();
     }
 
     /*
@@ -125,13 +121,13 @@ public class UIHandler {
         currentMenu.keyboardSelection(c);
     }
 
-    public ActionTag getAction() {
-        return action;
-    }
-
-    public void endAction() {
-        action = null;
-    }
+//    public ActionTag getAction() {
+//        return action;
+//    }
+//
+//    public void endAction() {
+//        action = null;
+//    }
 
     public void updateState(GameState state) {
         findNewCurrent(state);

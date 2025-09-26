@@ -25,7 +25,7 @@ public class Button extends UIItem{
     protected Color disabledColor, disabledTextColor;
 
 
-    protected Runnable activate;
+    public Runnable activate;
 
     Graphics2D g2d;
     int stringWidth;
@@ -125,17 +125,20 @@ public class Button extends UIItem{
         this.fill = true;
     }
 
-    public Object activate() {
-        SoundHandler.playSound(SoundHandler.UI2);
-        return null;
+    public void activate() {
+        if (activate != null)
+        {
+            SoundHandler.playSound(SoundHandler.UI2);
+            activate.run();
+        }
     }
 
-    public Object increaseOption() {
-        return null;
+    public void increaseOption() {
+//        return null;
     }
 
-    public Object decreaseOption() {
-        return null;
+    public void decreaseOption() {
+//        return null;
     }
 
     public void enable() {
@@ -152,6 +155,10 @@ public class Button extends UIItem{
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getText() {
+        return text;
     }
 
     public void select() {
@@ -179,6 +186,14 @@ public class Button extends UIItem{
 
     public void setActivate(Runnable runnable) {
         this.activate = runnable;
+    }
+
+    public void activateIncrease() {
+
+    }
+
+    public void activateDecrease() {
+
     }
 }
 

@@ -2,8 +2,6 @@ package com.euhedral.engine.UI;/*
  * Do not modify
  * */
 
-import com.euhedral.engine.Utility;
-import com.euhedral.game.ActionTag;
 import com.euhedral.game.SoundHandler;
 
 import java.awt.*;
@@ -11,39 +9,40 @@ import java.awt.*;
 public class ButtonAction2 extends ButtonAction {
     private ButtonAction increase, decrease;
 
-    public ButtonAction2(int x, int y, int size, String text, ActionTag action) {
-        super(x, y, size, text, action);
+    public ButtonAction2(int x, int y, int size, String text) {
+        super(x, y, size, text);
         increase = new ButtonAction(x + width + 2* size,y, size, ">");
         decrease = new ButtonAction(x - (int) (2.5 * size),y, size, "<");
     }
 
     @Override
-    public Object increaseOption() {
-        if (!enabled) {
-            return null;
-        }
+    public void increaseOption() {
         if (increase != null)
             SoundHandler.playSound(SoundHandler.UI2);
-        return increase.getAction();
+//        return increase.getAction();
     }
 
     @Override
-    public Object decreaseOption() {
-        if (!enabled) {
-            return null;
-        }
-
+    public void decreaseOption() {
         if (decrease != null)
             SoundHandler.playSound(SoundHandler.UI2);
-        return decrease.getAction();
+//        return decrease.getAction();
     }
 
-    public void setIncreaseAction(ActionTag increaseAction) {
-            this.increase.setAction(increaseAction);
+//    public void setIncreaseAction(ActionTag increaseAction) {
+//            this.increase.setAction(increaseAction);
+//    }
+//
+//    public void setDecreaseAction(ActionTag decreaseAction) {
+//            this.decrease.setAction(decreaseAction);
+//    }
+
+    public void setIncreaseActivate(Runnable runnable) {
+        increase.setActivate(runnable);
     }
 
-    public void setDecreaseAction(ActionTag decreaseAction) {
-            this.decrease.setAction(decreaseAction);
+    public void setDecreaseActivate(Runnable runnable) {
+        decrease.setActivate(runnable);
     }
 
     @Override
@@ -151,5 +150,15 @@ public class ButtonAction2 extends ButtonAction {
         super.deselect();
         increase.deselect();
         decrease.deselect();
+    }
+
+    @Override
+    public void activateIncrease() {
+        increase.activate();//.run();
+    }
+
+    @Override
+    public void activateDecrease() {
+        decrease.activate();//.run();
     }
 }

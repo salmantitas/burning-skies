@@ -2,41 +2,38 @@ package com.euhedral.engine.UI;/*
  * Do not modify
  * */
 
-import com.euhedral.engine.GameState;
-import com.euhedral.game.ActionTag;
-import com.euhedral.game.SoundHandler;
-
 public class ButtonAction extends Button {
-    private ActionTag action;
+//    private ActionTag action;
 
-    public ButtonAction(int x, int y, int width, int height, String text, ActionTag action) {
-        super(x, y, width, height, text);
-        this.action = action;
-    }
+//    public ButtonAction(int x, int y, int width, int height, String text, ActionTag action) {
+//        super(x, y, width, height, text);
+//        this.action = action;
+//    }
 
     public ButtonAction(int x, int y, int size, String text) {
         super(x, y, size, text);
     }
 
-    public ButtonAction(int x, int y, int size, String text, ActionTag action) {
-        super(x, y, size, text);
-        this.action = action;
-    }
+//    public ButtonAction(int x, int y, int size, String text, ActionTag action) {
+//        super(x, y, size, text);
+//        this.action = action;
+//    }
+//
+//    public ActionTag getAction() {
+//        return action;
+//    }
 
-    public ActionTag getAction() {
-        return action;
-    }
+//    @Override
+//    public void activate() {
+//        if (activate != null)
+//        {
+//            SoundHandler.playSound(SoundHandler.UI2);
+//            activate.run();
+//        }
+////        return action;
+//    }
 
-    @Override
-    public Object activate() {
-        if (action != null)
-        {
-            SoundHandler.playSound(SoundHandler.UI2);
-        }
-        return action;
-    }
-
-    public void setAction(ActionTag action) {
-        this.action = action;
-    }
+//    public void setAction(ActionTag action) {
+//        this.action = action;
+//    }
 }

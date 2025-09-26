@@ -4,9 +4,8 @@ import com.euhedral.engine.*;
 import com.euhedral.engine.UI.*;
 import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.Menu;
-import com.euhedral.game.ActionTag;
+import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
-import com.euhedral.game.UI.UIHandler;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
@@ -48,9 +47,9 @@ public class MenuTransition extends Menu {
     int difficultyX = x10;
     int startY = difficultyY + spacingY;
 
-    ButtonAction2 difficulty = new ButtonAction2(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty", null);
+    ButtonAction2 difficulty; // = new ButtonAction2(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty", null);
 
-    ButtonAction start = new ButtonAction(difficultyX, startY, Utility.perc(buttonSize, 80), "Start", ActionTag.go);
+    ButtonAction start;
 
     ButtonNav back = new ButtonNav(difficultyX, y70, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
 
@@ -58,9 +57,9 @@ public class MenuTransition extends Menu {
 
     // Options
 
-    ButtonAction save = new ButtonAction(x75, y48, optionSize, "Save", ActionTag.save);
-
-    ButtonAction load = new ButtonAction(x75, y56, optionSize, "Load", ActionTag.load);
+//    ButtonAction save = new ButtonAction(x75, y48, optionSize, "Save", ActionTag.save);
+//
+//    ButtonAction load = new ButtonAction(x75, y56, optionSize, "Load", ActionTag.load);
 
 
     public MenuTransition() {
@@ -68,23 +67,27 @@ public class MenuTransition extends Menu {
         MAXBUTTON = 3;
         options = new Button[MAXBUTTON];
 
-        difficulty.setIncreaseAction(ActionTag.increaseDifficulty);
-        difficulty.setDecreaseAction(ActionTag.decreaseDifficulty);
+        start = new ButtonAction(difficultyX, startY, Utility.perc(buttonSize, 80), "Start");
+        start.activate = (GameController::setLevelLoadedtoTrue);
+
+        difficulty = new ButtonAction2(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty");
+
+        difficulty.setIncreaseActivate(() -> {
+            VariableHandler.difficultyType++;
+            if (VariableHandler.difficultyType > VariableHandler.DIFFICULTY_CHALLENGE)
+                VariableHandler.difficultyType = 0;
+        });
+
+        difficulty.setDecreaseActivate(() -> {
+            VariableHandler.difficultyType--;
+            if (VariableHandler.difficultyType < 0)
+                VariableHandler.difficultyType = VariableHandler.DIFFICULTY_CHALLENGE;
+        });
 
         options[0] = difficulty;
         options[1] = start;
         options[2] = back;
 //        options[2] = quit;
-
-//        options[4] = health;
-//        options[5] = ground;
-//        options[6] = power;
-//        options[7] = shield;
-//
-//        options[8] = save;
-//        options[9] = load;
-
-
     }
 
     @Override
