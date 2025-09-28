@@ -262,8 +262,9 @@ public class EntityHandler {
 //    }
 
     public void playerCanShoot() {
-        if (player != null)
+        if (player != null) {
             player.canShoot(true);
+        }
     }
 
     public void playerCannotShoot() {

@@ -7,6 +7,7 @@ public class State {
 
     public void update(GameController gameController) {
         Engine.timer++;
+        gameController.updateUI();
 
 //        gameController.updateSounds();
 
@@ -16,7 +17,7 @@ public class State {
         if (!Engine.stateIs(GameState.Pause) && !Engine.stateIs(GameState.Game) && !Engine.stateIs(GameState.Transition))
 //            resetGame();
 
-            gameController.updateUI();
+
 
 //            uiHandler.update();
 
@@ -40,10 +41,6 @@ public class State {
                 if (!gameController.isLevelSpawned())
                     gameController.spawn();
             }
-        }
-
-        if (Engine.stateIs(GameState.GameOver)) {
-
         }
 
 //        background.update();

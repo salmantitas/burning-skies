@@ -6,7 +6,7 @@ import com.euhedral.engine.UI.Menu;
 import com.euhedral.engine.UI.Panel;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.SoundHandler;
-import com.euhedral.game.UI.MessageBox;
+import com.euhedral.game.Tutorial;
 import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
@@ -16,32 +16,16 @@ public class MenuPlay extends Menu {
 //    public static boolean moved = false;
 //    public static boolean shot = false;
 
-    MessageBox tutorial;
+    private Tutorial tutorial;
 
     public MenuPlay() {
         super(GameState.Game);
         MAXBUTTON = 0;
 //        options = new Button[MAXBUTTON];
 
-        tutorial = new MessageBox(230,200, 800, 550);
-        tutorial.addText("Use WASD or the Arrow Keys to move.");
-        tutorial.addText("");
-        tutorial.addText("        SPACEBAR to shoot.");
-        tutorial.addText("");
-        tutorial.addText("        ESCAPE or P to pause.");
-        tutorial.addText("");
-        tutorial.addText("        CTRL to use Special Move.");
-        tutorial.addText("");
-        tutorial.addText("You can disable tutorial in Settings.");
-        tutorial.addText("");
-        tutorial.addText("Shoot as many enemies as you can.");
-        tutorial.addText("");
-        tutorial.addText("Survive!");
-        tutorial.addText("");
-        tutorial.setFontSize(Utility.intAtWidth640(10));
+        tutorial = new Tutorial();
 
-        tutorial.setTransparency(0.8f);
-        addMessageBox(tutorial);
+        addMessageBox(tutorial.getMessageBox());
 
         float hudTransparencyTop = 1f;
         float hudTransparencySide = 0.2f;
@@ -60,24 +44,17 @@ public class MenuPlay extends Menu {
         menuItems.add(rightPane);
     }
 
-//    public static void moved() {
-//
-//    }
-//
-//    public static void shot() {
-//
+//    @Override
+//    public void update() {
+//        super.update();
+//        tutorial.update();
 //    }
 
     @Override
     public void render(Graphics g) {
-
         super.render(g);
-
         VariableHandler.renderHUD(g);
-//        VariableHandler.renderLevel(g);
-//        if (VariableHandler.isTutorial() && activeMessageBoxes > 0)
-//            renderTutorials(g);
-
+//        tutorial.render(g);
         super.postRender(g);
     }
 
@@ -86,19 +63,4 @@ public class MenuPlay extends Menu {
         super.onSwitch();
         SoundHandler.playBGMPlay();
     }
-
-//    private void renderTutorials(Graphics g) {
-//        int textX = 200, moveY = 200, shootY = 300;
-//        Color c = Color.black;
-//        if (moved) c = Color.green;
-//
-//        g.setColor(c);
-//        g.drawString("You can use WASD or the Arrow Keys for movement", textX, moveY);
-//
-//        c = Color.black;
-//        if (shot) c = Color.GREEN;
-//
-//        g.setColor(c);
-//        g.drawString("SPACEBAR can be used for shooting.", textX, shootY);
-//    }
 }

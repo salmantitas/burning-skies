@@ -1,12 +1,13 @@
 package com.euhedral.game;
 
 import com.euhedral.engine.Engine;
+import com.euhedral.engine.GameState;
 
 public class StatePlay extends State {
 
     @Override
     public void update(GameController gameController) {
-        Engine.timer++; // Might move to super.update(gameController)
+        super.update(gameController);
 
         /*
          * Disable the level load permission, as the level is already running
@@ -41,11 +42,7 @@ public class StatePlay extends State {
                 if (activeMessageBoxes) {
 //                        System.out.println("Active Message Box");
                 }
-                gameController.updateEnemyGenerator();
-//                    enemyGenerator.update();
-                gameController.updateEntityHandler();
-//                    entityHandler.update();
-                gameController.checkLevelStatus();
+                runGame(gameController);
 
                 if (System.currentTimeMillis() - 1000 > gameController.timer) {
                     gameController.timer = System.currentTimeMillis();
@@ -56,5 +53,11 @@ public class StatePlay extends State {
                 gameController.updatePlayer();
             }
         }
+    }
+
+    private void runGame(GameController gameController) {
+        gameController.updateEnemyGenerator();
+        gameController.updateEntityHandler();
+        gameController.checkLevelStatus();
     }
 }

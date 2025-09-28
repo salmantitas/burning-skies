@@ -384,6 +384,7 @@ public class GameController {
         variableHandler.firepower.reset();
         variableHandler.pulse = false;
         VariableHandler.setHealthColor();
+        Tutorial.reset();
 
         /*************
          * Game Code *
@@ -496,8 +497,10 @@ public class GameController {
             if (key == (KeyEvent.VK_DOWN) || key == KeyInput.getKeyEvent(DOWN))
                 movePlayer('d');
 
-            if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0))
+            if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0)) {
                 entityHandler.playerCanShoot();
+                Tutorial.setShot(true);
+            }
 
             if (key == KeyInput.getKeyEvent(SPECIAL))
                 entityHandler.playerSpecial();
