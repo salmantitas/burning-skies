@@ -35,7 +35,7 @@ public class SoundHandler {
 //    public static final int BGMPLAY1 = 0;
 //    public static final int BGMPLAY2 = 1;
 
-    private static final int BGM_MAX = 3;
+    private static final int BGM_MAX = 2;
 
     static Clip clip;
     public static Clip effect;
@@ -99,7 +99,7 @@ public class SoundHandler {
 
         songInfo[0] = "Mountain Trails - Joshua McLean";
         songInfo[1] = "Pixel Wars 1 - Abstraction";
-        songInfo[2] = "Battle Commences - Not Jam";
+//        songInfo[2] = "Battle Commences - Not Jam";
 
         for (int i = 0; i < BGM_MAX; i ++) {
             BGM_URL[i] = getClass().getResource("/bgm" + (i + 1 + ".wav"));
