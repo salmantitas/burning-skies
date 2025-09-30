@@ -44,6 +44,7 @@ public class EntityHandler {
 
     // Background Scrolling
     public static final double backgroundScrollingSpeed = Background.scrollRateGame * 35/32; // 3.5; // 3 < v < 4 // = scrollRate/2;
+    private long spawnInterval = 3 * 60;
 
     EntityHandler() {
         bullets = new BulletPool();
@@ -113,6 +114,7 @@ public class EntityHandler {
 
         if (enemies.getPoolSize(enemyType) > 0) {
             enemies.spawnFromPool(x, y, enemyType, direction, distance);
+            spawnInterval = enemies.getSpawnInterval();
         }
         else {
             spawnNew(x, y, enemyType, direction, distance);
@@ -130,7 +132,6 @@ public class EntityHandler {
         } else if (enemyType == VariableHandler.TYPE_BASIC2) {
             enemy = new EnemyBasic2(x, y, levelHeight);
             enemy.setHMove(direction);
-//            enemy.setMovementDistance(distance);
         } else if (enemyType == VariableHandler.TYPE_BASIC3) {
             enemy = new EnemyBasic3(x, y, levelHeight);
             enemy.setHMove(direction);
@@ -169,37 +170,9 @@ public class EntityHandler {
 
         if (enemy != null) {
             enemies.add(enemy);
+            spawnInterval = enemy.getSpawnInterval();
         }
-//        enemies.increaseActive(enemyType);
-//        else if (id == EntityID.EnemySnake) {
-//            Enemy enemy = new EnemySnake(x, y, ContactID.Air, color, levelHeight);
-//            enemies.add(enemy);
-//        } else if (id == EntityID.EnemyFast) {
-//            Enemy enemy = new EnemyFast(x, y, ContactID.Air, color, levelHeight);
-//            enemies.add(enemy);
-//        }
 
-        // Ground Enemies
-
-//        else if (id == EntityID.EnemyGround) {
-//            spawnEnemy(x, y, TYPE_BASIC, ContactID.Ground, color);
-//        }
-    }
-
-    // todo: Causes issue with vertical movement
-    private void spawnNew(int x, int y, int enemyType) {
-        Enemy enemy;
-        if (enemyType == VariableHandler.TYPE_BASIC1) {
-            enemy = new EnemyBasic1(x, y, levelHeight);
-            enemies.add(enemy);
-//                System.out.println("Pool: " + poolEnemy + " | Enemies: " + enemies.size());
-        } else if (enemyType == VariableHandler.TYPE_HEAVY) {
-            enemy = new EnemyHeavy(x, y, levelHeight);
-            enemies.add(enemy);
-        } else {
-            return;
-        }
-        enemies.add(enemy);
     }
 
     /********************
@@ -678,4 +651,7 @@ public class EntityHandler {
         return enemies.getEntities();
     }
 
+    public long getSpawnInterval() {
+        return spawnInterval;
+    }
 }

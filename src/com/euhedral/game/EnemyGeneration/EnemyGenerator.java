@@ -3,7 +3,6 @@ package com.euhedral.game.EnemyGeneration;
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
 import com.euhedral.game.EntityHandler;
-import com.euhedral.game.GameController;
 import com.euhedral.game.VariableHandler;
 
 public class EnemyGenerator {
@@ -28,8 +27,9 @@ public class EnemyGenerator {
     int num;
 
     long spawnInterval;
-    long spawnInterval_MIN = 60 * 3;
-    long spawnInterval_MAX = spawnInterval_MIN * 5;
+    long spawnInterval_MIN = 60 * 2;
+    long spawnInterval_START = 60 * 3;
+    long spawnInterval_MAX = spawnInterval_START * 5;
     float spawnIntervalFloat;
 
     int updatesSinceLastSpawn;
@@ -85,7 +85,7 @@ public class EnemyGenerator {
     final int firstWave = 1;
     int waveSinceHealth, waveSincePower, waveSinceShield;
     int wavesSinceDifficultyIncrease = 0;
-    int waveSinceHeavy = 0;
+//    int waveSinceHeavy = 0;
     final int MINWaveSinceHeavy = 1;
 
     // Zone
@@ -102,19 +102,12 @@ public class EnemyGenerator {
     }
 
     public void update() {
-        timeNowMillis = GameController.getCurrentTime();
-//        timeSinceLastSpawnMillis = timeNowMillis - lastSpawnTime;
-
         updatesSinceLastSpawn++;
-
         canSpawn = spawnInterval <= updatesSinceLastSpawn;
-        // todo: SpawnInterval for different types
 
         if (canSpawn) {
             spawnEnemies();
             updatesSinceLastSpawn = 0;
-//            lastSpawnTime = GameController.getCurrentTime();
-//            enemiesSpawned = 0;
         }
     }
 
@@ -144,7 +137,7 @@ public class EnemyGenerator {
 
         spawnY = (height - Engine.HEIGHT)/SCALE ;//- (wave * MIN_PAUSE);
 //        lastSpawnTime = GameController.getCurrentTime();
-        spawnInterval = spawnInterval_MIN;
+        spawnInterval = spawnInterval_START;
 
         updatesSinceLastSpawn = 0;
 
@@ -153,7 +146,7 @@ public class EnemyGenerator {
 
     protected void spawnEnemies() {
         System.out.println("Wave: " + wave);
-        increment();
+//        increment();
         determinePattern(); // move down later
         determineNum();
         determineType();
@@ -373,11 +366,11 @@ public class EnemyGenerator {
     protected void spawnEnemiesHelper() {
         spawnOneEnemy();
 
-        if (enemytype != VariableHandler.TYPE_HEAVY) {
-            waveSinceHeavy++;
-        } else {
-            waveSinceHeavy = 0;
-        }
+//        if (enemytype != VariableHandler.TYPE_HEAVY) {
+//            waveSinceHeavy++;
+//        } else {
+//            waveSinceHeavy = 0;
+//        }
     }
 
     protected void incrementDifficulty() {
@@ -405,8 +398,8 @@ public class EnemyGenerator {
     }
 
     protected void determineSpawnInterval() {
-        spawnInterval = spawnInterval_MIN;
-        spawnIntervalFloat = (float) spawnInterval;
+        spawnInterval = entityHandler.getSpawnInterval(); // spawnInterval_MIN;
+//        spawnIntervalFloat = (float) spawnInterval;
 
 //        if (enemytype == VariableHandler.TYPE_HEAVY) {
 //            if (spawnIntervalFloat > spawnInterval_MIN)
@@ -433,6 +426,5 @@ public class EnemyGenerator {
 
     protected void spawnOneEnemy() {
         entityHandler.spawnEntity(spawnX * (64 + incrementMIN), spawnY * (64 + incrementMIN), enemytype, movementDistance * SCALE, movementDirection);
-//        System.out.println("Enemy spawned");
     }
 }

@@ -60,6 +60,8 @@ public class Enemy extends Airplane {
 
     int disableOffset = 64 * 3;
     int bottomBounds;
+    protected int UPDATES_PER_SECOND = 60;
+    protected long spawnInterval = 3 * UPDATES_PER_SECOND;
 
     public Enemy(int x, int y, int levelHeight) {
         super(x, y, EntityID.Enemy);
@@ -464,5 +466,9 @@ public class Enemy extends Airplane {
             int offsetX = width / 2 - Utility.intAtWidth640(10);
             g.drawString(Integer.toString(score), (int) pos.x + offsetX, (int) pos.y);
         }
+    }
+
+    public long getSpawnInterval() {
+        return spawnInterval;
     }
 }

@@ -113,7 +113,7 @@ public class ProceduralGenerator extends EnemyGenerator {
 
         buildMatrix();
 
-        spawnInterval_MIN = 2;
+        spawnInterval_START = 2;
         spawnInterval_MAX = 5;
         int maxNum = 12;
         spawnIntervals = new int[maxTypes][maxPatterns][maxNum];
@@ -210,21 +210,21 @@ public class ProceduralGenerator extends EnemyGenerator {
         int tempPattern = PATTERN_LINE;
 
 //        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][5] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][6] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][7] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][8] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][5] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][6] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][7] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][8] = (int) spawnInterval_START + 1;
 
         tempPattern = PATTERN_VERTICAL;
 
 //        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_START + 2;
 //        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
@@ -234,10 +234,10 @@ public class ProceduralGenerator extends EnemyGenerator {
         tempPattern = PATTERN_PINCER;
 
 //        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 2;
-        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 3;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_START + 2;
+        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_START + 3;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 1;
@@ -246,10 +246,10 @@ public class ProceduralGenerator extends EnemyGenerator {
         tempPattern = PATTERN_SLIDE;
 
 //        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 2;
-        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 3;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_START + 2;
+        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_START + 3;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 1;
@@ -259,21 +259,21 @@ public class ProceduralGenerator extends EnemyGenerator {
 
 //        spawnIntervals[tempPattern][0] = (int) spawnInterval_MIN;
 //        spawnIntervals[tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][5] = (int) spawnInterval_MIN + 2;
-        spawnIntervals[tempType][tempPattern][6] = (int) spawnInterval_MIN + 2;
-        spawnIntervals[tempType][tempPattern][7] = (int) spawnInterval_MIN + 3;
-        spawnIntervals[tempType][tempPattern][8] = (int) spawnInterval_MIN + 3;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][5] = (int) spawnInterval_START + 2;
+        spawnIntervals[tempType][tempPattern][6] = (int) spawnInterval_START + 2;
+        spawnIntervals[tempType][tempPattern][7] = (int) spawnInterval_START + 3;
+        spawnIntervals[tempType][tempPattern][8] = (int) spawnInterval_START + 3;
 
         tempPattern = PATTERN_SQUARE;
 
-        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN + 2;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 3;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 4;
-        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 5;
-        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 6;
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_START + 2;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START + 3;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 4;
+        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_START + 5;
+        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_START + 6;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 2;
 //        spawnIntervals[tempPattern][6] = (int) spawnInterval_MIN + 2;
 //        spawnIntervals[tempPattern][7] = (int) spawnInterval_MIN + 3;
@@ -281,8 +281,8 @@ public class ProceduralGenerator extends EnemyGenerator {
 
         tempPattern = PATTERN_CROSS;
 
-        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 4;
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START + 4;
 //        spawnIntervals[tempPattern][2] = (int) spawnInterval_MIN;
 //        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN;
 //        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN;
@@ -296,9 +296,9 @@ public class ProceduralGenerator extends EnemyGenerator {
         int tempType = VariableHandler.TYPE_HEAVY;
         int tempPattern = PATTERN_LINE;
 
-        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_START;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 1;
 //        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempType][tempPattern][5] = (int) spawnInterval_MIN + 1;
@@ -308,9 +308,9 @@ public class ProceduralGenerator extends EnemyGenerator {
 
         tempPattern = PATTERN_VERTICAL;
 
-        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_START;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 1;
 //        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 2;
 //        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
@@ -320,9 +320,9 @@ public class ProceduralGenerator extends EnemyGenerator {
 
         tempPattern = PATTERN_PINCER;
 
-        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_START;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 1;
 //        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 2;
 //        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 3;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
@@ -332,9 +332,9 @@ public class ProceduralGenerator extends EnemyGenerator {
 
         tempPattern = PATTERN_SLIDE;
 
-        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 2;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 2;
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START + 2;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 2;
 //        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 2;
 //        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 3;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 1;
@@ -344,9 +344,9 @@ public class ProceduralGenerator extends EnemyGenerator {
 
         tempPattern = PATTERN_V;
 
-        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_START;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 1;
 //        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 1;
 //        spawnIntervals[tempType][tempPattern][5] = (int) spawnInterval_MIN + 2;
@@ -356,9 +356,9 @@ public class ProceduralGenerator extends EnemyGenerator {
 
         tempPattern = PATTERN_SQUARE;
 
-        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_START;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 1;
 //        spawnIntervals[tempType][tempPattern][3] = (int) spawnInterval_MIN + 5;
 //        spawnIntervals[tempType][tempPattern][4] = (int) spawnInterval_MIN + 6;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN + 2;
@@ -368,9 +368,9 @@ public class ProceduralGenerator extends EnemyGenerator {
 
         tempPattern = PATTERN_CROSS;
 
-        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_MIN + 1;
-        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_MIN + 1;
+        spawnIntervals[tempType][tempPattern][0] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][1] = (int) spawnInterval_START + 1;
+        spawnIntervals[tempType][tempPattern][2] = (int) spawnInterval_START + 1;
 //        spawnIntervals[tempPattern][3] = (int) spawnInterval_MIN;
 //        spawnIntervals[tempPattern][4] = (int) spawnInterval_MIN;
 //        spawnIntervals[tempPattern][5] = (int) spawnInterval_MIN;
@@ -553,7 +553,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         entityHandler.spawnPickup(playerX * SCALE, spawnY * SCALE, id);
         wave++;
 //        System.out.println("Wave: " + wave);
-        spawnInterval = spawnInterval_MIN;
+        spawnInterval = spawnInterval_START;
         lastSpawnTimePickup = GameController.getCurrentTime();
     }
 

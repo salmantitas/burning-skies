@@ -29,6 +29,7 @@ public class EnemyPool extends Pool {
 
     double explodingDroneX, explodingDroneY;
     double explodingDroneRadius;
+    private long spawnInterval;
 
     public EnemyPool(BulletPool bullets) {
         super();
@@ -168,6 +169,7 @@ public class EnemyPool extends Pool {
         entity = findInList(enemyType);
         entity.resurrect(x, y);
         enemy = (Enemy) entity;
+        spawnInterval = enemy.getSpawnInterval();
         enemy.setHMove(direction);
 //        enemy.setMovementDistance(distance);
         decrease(enemy.getEnemyType());
@@ -388,6 +390,10 @@ public class EnemyPool extends Pool {
         }
 
         Utility.log(temp);
+    }
+
+    public long getSpawnInterval() {
+        return spawnInterval;
     }
 
 //    @Override

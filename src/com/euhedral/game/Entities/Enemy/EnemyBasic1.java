@@ -23,6 +23,7 @@ public class EnemyBasic1 extends Enemy{
         health_MAX = 2;
         commonInit();
         score = 20;
+        spawnInterval = 2 * UPDATES_PER_SECOND;
 //        velX_MIN = 1.5f;
     }
 
