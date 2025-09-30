@@ -1,7 +1,10 @@
-package com.euhedral.game;
+package com.euhedral.game.EnemyGeneration;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.EntityHandler;
+import com.euhedral.game.GameController;
+import com.euhedral.game.VariableHandler;
 
 public class EnemyGenerator {
     // Level
@@ -23,11 +26,14 @@ public class EnemyGenerator {
     int difficulty;
     int minWavesDifficultyIncrease;
     int num;
-    long lastSpawnTime;
+
     long spawnInterval;
-    long spawnInterval_MIN = 2;
-    long spawnInterval_MAX = 5;
+    long spawnInterval_MIN = 60 * 3;
+    long spawnInterval_MAX = spawnInterval_MIN * 5;
     float spawnIntervalFloat;
+
+    int updatesSinceLastSpawn;
+
 //    int enemiesSpawned; // todo: Why do we need this?
     int spawnX, spawnY;
 
@@ -44,7 +50,7 @@ public class EnemyGenerator {
     int MOVE_RIGHT = -MOVE_LEFT;
 
     // Pickup
-    long spawnIntervalPickups;
+//    long spawnIntervalPickups;
 
     // Enemy Types
     int enemytype;
@@ -97,13 +103,17 @@ public class EnemyGenerator {
 
     public void update() {
         timeNowMillis = GameController.getCurrentTime();
-        timeSinceLastSpawnMillis = timeNowMillis - lastSpawnTime;
-        canSpawn = spawnInterval <= timeSinceLastSpawnMillis;
+//        timeSinceLastSpawnMillis = timeNowMillis - lastSpawnTime;
+
+        updatesSinceLastSpawn++;
+
+        canSpawn = spawnInterval <= updatesSinceLastSpawn;
         // todo: SpawnInterval for different types
 
         if (canSpawn) {
             spawnEnemies();
-            lastSpawnTime = GameController.getCurrentTime();
+            updatesSinceLastSpawn = 0;
+//            lastSpawnTime = GameController.getCurrentTime();
 //            enemiesSpawned = 0;
         }
     }
@@ -133,9 +143,10 @@ public class EnemyGenerator {
         // todo: use line for first wave here
 
         spawnY = (height - Engine.HEIGHT)/SCALE ;//- (wave * MIN_PAUSE);
-        lastSpawnTime = GameController.getCurrentTime();
+//        lastSpawnTime = GameController.getCurrentTime();
         spawnInterval = spawnInterval_MIN;
-        spawnIntervalPickups = spawnInterval_MAX;
+
+        updatesSinceLastSpawn = 0;
 
 //        spawnFirstWave();
     }
@@ -397,10 +408,10 @@ public class EnemyGenerator {
         spawnInterval = spawnInterval_MIN;
         spawnIntervalFloat = (float) spawnInterval;
 
-        if (enemytype == VariableHandler.TYPE_HEAVY) {
+//        if (enemytype == VariableHandler.TYPE_HEAVY) {
 //            if (spawnIntervalFloat > spawnInterval_MIN)
-                spawnInterval = (long) (spawnIntervalFloat*1.1);
-        }
+//                spawnInterval = (long) (spawnIntervalFloat*1.1);
+//        }
     }
 
     public int getLevelHeight() {

@@ -1,7 +1,11 @@
-package com.euhedral.game;
+package com.euhedral.game.EnemyGeneration;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.EntityHandler;
+import com.euhedral.game.EntityID;
+import com.euhedral.game.GameController;
+import com.euhedral.game.VariableHandler;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -26,6 +30,7 @@ public class ProceduralGenerator extends EnemyGenerator {
 
     final int ENDLESS = -1;
 
+    long lastSpawnTime;
     long lastSpawnTimePickup;
 
     int enemiesSpawned;
@@ -435,7 +440,7 @@ public class ProceduralGenerator extends EnemyGenerator {
         // Can spawn multiple pickups
         // todo: Improve the logic
         if (canSpawn) {
-            boolean canSpawnPickups = spawnIntervalPickups <= timeSinceLastSpawnMillis;
+//            boolean canSpawnPickups = spawnIntervalPickups <= timeSinceLastSpawnMillis;
 //            if (wave == (MIN_WAVE_SHIELD_SPAWN - 1))
 //                spawnShield();
 //            else if (wave == (MIN_WAVE_POWER_SPAWN - 1))
