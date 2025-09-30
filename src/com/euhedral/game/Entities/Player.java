@@ -23,17 +23,15 @@ public class Player extends Airplane {
     private int shootAngle = Utility.intAtWidth640(5);
 
     private Attribute health, shield, firepower;
+    int shieldTimer = 0;
+    int shieldTimer_MAX = 30;
+    private Pulse pulse;
 
     // Test
     private int mx, my;
     private boolean destinationGiven = false;
 
-    // Power-Up
-    int shieldTimer = 0;
-    int shieldTimer_MAX = 30;
 
-    int pulseRadius;
-    int pulseRadius_MAX = Engine.WIDTH;
 
     private Reflection reflection;
 
@@ -65,7 +63,7 @@ public class Player extends Airplane {
 
         jitter_MAX = Utility.intAtWidth640(2);
 
-        pulseRadius = -1;
+        pulse = new Pulse();
 
 //        physics.friction = 1; // instantenous is equal to (minVel - 2)
 
@@ -113,14 +111,8 @@ public class Player extends Airplane {
 //            shootRateBoost = 0;
 //        }
 
-        if (pulseRadius > -1) {
+        pulse.update(bulletVelocity);
 
-            pulseRadius += pulseRadius / 10 + bulletVelocity;
-
-            if (pulseRadius >= pulseRadius_MAX) {
-                pulseRadius = -1;
-            }
-        }
     }
 
     @Override
@@ -194,17 +186,7 @@ public class Player extends Airplane {
             g2d.drawOval((int) pos.x - width / shieldOffset, (int) pos.y - height / shieldOffset + 5, width + 2 * width / shieldOffset, height + 2 * height / shieldOffset);
         }
 
-        // Render Ring Of Fire
-        if (pulseRadius > -1) {
-            g.setColor(Color.YELLOW);
-
-            g2d.setComposite(Utility.makeTransparent(0.f));
-            g.fillOval((int) pos.x - pulseRadius, (int) pos.y - pulseRadius, width + pulseRadius * 2, height + pulseRadius * 2);
-            g2d.setComposite(Utility.makeTransparent(1f));
-
-            g2d.setStroke(new BasicStroke((int) (pulseRadius / (bulletVelocity * 3))));
-            g.drawOval((int) pos.x - pulseRadius, (int) pos.y - pulseRadius, width + pulseRadius * 2, height + pulseRadius * 2);
-        }
+        pulse.render(g2d, pos, width, height, bulletVelocity);
 
 //        renderStats(g);
     }
@@ -389,7 +371,7 @@ public class Player extends Airplane {
     private void pulse() {
 
         if (VariableHandler.pulse) {
-            pulseRadius = 0;
+            pulse.radius = 0;
             VariableHandler.pulse = false;
         }
     }
@@ -576,7 +558,7 @@ public class Player extends Airplane {
     }
 
     public int getRadius() {
-        return pulseRadius;
+        return pulse.radius;
     }
 
     private boolean isMovingLeft() {
