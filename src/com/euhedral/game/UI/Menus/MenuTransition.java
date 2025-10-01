@@ -4,6 +4,7 @@ import com.euhedral.engine.*;
 import com.euhedral.engine.UI.*;
 import com.euhedral.engine.UI.Button;
 import com.euhedral.engine.UI.Menu;
+import com.euhedral.game.Difficulty;
 import com.euhedral.game.GameController;
 import com.euhedral.game.SoundHandler;
 import com.euhedral.game.VariableHandler;
@@ -14,22 +15,6 @@ public class MenuTransition extends Menu {
 
     int optionSize = buttonSize/2;
     int shopSize = buttonSize/2;
-
-    String difficultyName = "";
-    String text1 = "";
-    String text2 = "";
-    int size1 = Utility.intAtWidth640(25);
-    int size2 = Utility.intAtWidth640(10);
-    Font font1 = VariableHandler.customFont.deriveFont(1, size1);
-    Font font2 = VariableHandler.customFont.deriveFont(1, size2);
-
-    int lineSpace = Utility.intAtWidth640(25);
-    int difficultyNameX = 500;
-    int difficultyNameY = 300;
-    int text1X = 200;
-    int text1Y = difficultyNameY + lineSpace;
-    int text2X = text1X;
-    int text2Y = text1Y + lineSpace;
 
 //    // Shop
 //
@@ -73,15 +58,11 @@ public class MenuTransition extends Menu {
         difficulty = new ButtonOption(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty");
 
         difficulty.setIncreaseActivate(() -> {
-            VariableHandler.difficultyType++;
-            if (VariableHandler.difficultyType > VariableHandler.DIFFICULTY_CHALLENGE)
-                VariableHandler.difficultyType = 0;
+            Difficulty.increaseDifficulty();
         });
 
         difficulty.setDecreaseActivate(() -> {
-            VariableHandler.difficultyType--;
-            if (VariableHandler.difficultyType < 0)
-                VariableHandler.difficultyType = VariableHandler.DIFFICULTY_CHALLENGE;
+            Difficulty.decreaseDifficulty();
         });
 
         options[0] = difficulty;
@@ -150,31 +131,8 @@ public class MenuTransition extends Menu {
     }
 
     private void renderDifficulty(Graphics g) {
-        if (VariableHandler.difficultyType == 0) {
-            difficultyName = "Easy";
-            text1 = "Only start with basic enemies.";
-            text2 = "Enemies will progressively get more difficult";
-        } else if (VariableHandler.difficultyType == 1) {
-            difficultyName = "Normal";
-            text1 = "The intended experience.";
-            text2 = "Enemies will progressively get more difficult";
-        } else {
-            difficultyName = "Master";
-            text1 = "For the experienced player.";
-            text2 = "All enemies available from the start";
-        }
+        Difficulty.render(g);
 
-        g.setColor(Color.BLACK);
-        g.setFont(font1);
-        g.drawString(difficultyName, difficultyNameX, difficultyNameY);
-
-//        g.setColor(Color.BLACK);
-        g.setFont(font2);
-        g.drawString(text1, text1X, text1Y);
-
-//        g.setColor(Color.BLACK);
-//        g.setFont(font2);
-        g.drawString(text2, text2X, text2Y);
     }
 
     @Override

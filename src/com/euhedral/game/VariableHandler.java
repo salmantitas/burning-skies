@@ -119,11 +119,12 @@ public class VariableHandler {
     private static int STARTLEVEL = 1;
     private static int level;
     private static final int MAXLEVEL = enemyTypes;
-//    public static int difficulty = 1;
 
     private static int healthBossDef, healthBoss;
     private static int bossScore = 500;
     private static boolean bossLives = false;
+
+    public static Difficulty difficulty;
 
     public static HashMap<Color, EntityID> colorMap;
 
@@ -133,20 +134,9 @@ public class VariableHandler {
     public static int deadzoneWidth = Utility.intAtWidth640(32);
     public static int deadzoneLeftX = 0, deadzoneRightX = Engine.WIDTH - deadzoneWidth - Utility.intAtWidth640(8), deadzoneTop = Utility.intAtWidth640(50);
 
-    // Difficulty
-
-    public static int DIFFICULTY_EASY = 0;
-    public static int DIFFICULTY_NORMAL = 1;
-//    public static int DIFFICULTY_CUSTOM = DIFFICULTY_NORMAL + 1;
-    public static int DIFFICULTY_CHALLENGE = DIFFICULTY_NORMAL + 1;
-
-    public static int difficultyType = DIFFICULTY_NORMAL;
-    public static int difficultyLevel = 1;
-
     public VariableHandler() {
         try {
-//            URL fontURL = new URL("file:///D:/Programming/burning-skies/res/magz.otf");
-            URL fontURL = getClass().getResource("/PublicPixel-rv0pA.ttf");//"/mags.otf");
+            URL fontURL = getClass().getResource("/PublicPixel-rv0pA.ttf");
             customFont = Font.createFont(Font.TRUETYPE_FONT, fontURL.openStream());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
@@ -161,7 +151,7 @@ public class VariableHandler {
         levelFont = customFont.deriveFont(0, levelSize);
 
         colorMap = new HashMap<>();
-        initializeColorMap();
+//        initializeColorMap();
         initializeAttributes();
         try {
             highScore = SaveLoad.loadHighScore();
@@ -172,23 +162,25 @@ public class VariableHandler {
             }
             SaveLoad.saveHighScore();
         }
+
+        difficulty = new Difficulty(enemyTypes);
     }
 
-    private void initializeColorMap() {
-        /*************
-         * Game Code *
-         *************/
-
-        colorMap.put(new Color(0, 0, 255), EntityID.Player);
-        colorMap.put(new Color(255, 0, 0), EntityID.EnemyBasic);
-        colorMap.put(new Color(150, 0, 0), EntityID.EnemyMove);
-        colorMap.put(new Color(100, 0, 0), EntityID.EnemySnake);
-        colorMap.put(new Color(200, 0, 0), EntityID.EnemyFast);
-        colorMap.put(new Color(255, 150, 244), EntityID.EnemyGround);
-        colorMap.put(new Color(0, 255, 0), EntityID.PickupHealth);
-        colorMap.put(new Color(255, 255, 0), EntityID.PickupShield);
-        colorMap.put(new Color(255, 216, 0), EntityID.Boss);
-    }
+//    private void initializeColorMap() {
+//        /*************
+//         * Game Code *
+//         *************/
+//
+//        colorMap.put(new Color(0, 0, 255), EntityID.Player);
+//        colorMap.put(new Color(255, 0, 0), EntityID.EnemyBasic);
+//        colorMap.put(new Color(150, 0, 0), EntityID.EnemyMove);
+//        colorMap.put(new Color(100, 0, 0), EntityID.EnemySnake);
+//        colorMap.put(new Color(200, 0, 0), EntityID.EnemyFast);
+//        colorMap.put(new Color(255, 150, 244), EntityID.EnemyGround);
+//        colorMap.put(new Color(0, 255, 0), EntityID.PickupHealth);
+//        colorMap.put(new Color(255, 255, 0), EntityID.PickupShield);
+//        colorMap.put(new Color(255, 216, 0), EntityID.Boss);
+//    }
 
     public static void initializeAttributes() {
         firepowerIconY = scoreY - Utility.intAtWidth640(16);
@@ -203,15 +195,6 @@ public class VariableHandler {
 
         levelY = Utility.percHeight(4);
         timerY = scoreY + Utility.intAtWidth640(25);
-
-//        power = new Attribute("Power", 1, false);
-//        power.textColor = Color.WHITE;
-//        power.increaseTextColor = Color.RED;
-//        power.setMIN(1);
-//        power.setMAX(1);
-//        power.setX(healthIconX + Utility.intAtWidth640(18));
-//        power.setY(firepowerIconY + Utility.intAtWidth640(13));
-//        power.setFontSize(scoreSize);
 
         firepower = new Attribute("Shoot Rate", 1, false);
         firepower.setMIN(1);
@@ -320,13 +303,8 @@ public class VariableHandler {
                     shieldIconY, null);
             shield.renderBar(g);
         }
-//        if (shootRateBoostDuration > 0) {
-//        g.drawImage(GameController.getTexture().pickup[3], shootRateBoostIconX,
-//                firepowerIconY, null);
-//        renderSpeedBoost(g);
-//        }
-//        if (pulse)
-            renderPulse(g);
+
+        renderPulse(g);
 
         renderScore(g);
         renderWave(g);
@@ -369,14 +347,6 @@ public class VariableHandler {
         g.setColor(Color.WHITE);
         g.drawString("Timer: " + GameController.getCurrentTime(), timerX, timerY);
     }
-
-//    public static void renderSpeedBoost(Graphics g) {
-//        g.setFont(levelFont);
-//        if (firepower.getValue() > 0)
-//            g.setColor(Color.ORANGE);
-//        else g.setColor(Color.WHITE);
-//        g.drawString(Integer.toString(firepower.getValue()), shootRateBoostX, firepower.getY());
-//    }
 
     public static void renderPulse(Graphics g) {
         g.setFont(levelFont);
@@ -556,16 +526,5 @@ public class VariableHandler {
             outputList.add(highScore.get(i).toString());
         }
         return outputList;
-    }
-
-    public static int getDifficultyLevel() {
-        if (difficultyType == DIFFICULTY_CHALLENGE)
-            return enemyTypes;
-//        todo: Custom Difficulty
-//        else if () {
-//
-//        }
-        else
-            return (difficultyType + 1);
     }
 }

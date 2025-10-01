@@ -2,6 +2,7 @@ package com.euhedral.game.EnemyGeneration;
 
 import com.euhedral.engine.Engine;
 import com.euhedral.engine.Utility;
+import com.euhedral.game.Difficulty;
 import com.euhedral.game.EntityHandler;
 import com.euhedral.game.VariableHandler;
 
@@ -107,7 +108,7 @@ public class EnemyGenerator {
 
         System.out.printf("levelWidth: %d, levelHeight: %d\n", width, height);
 
-        difficulty = VariableHandler.getDifficultyLevel();
+        difficulty = Difficulty.getDifficultyLevel();
         minWavesDifficultyIncrease = 5;
         minDifficultyForMovement = 2;
         entityHandler.setLevelHeight(getLevelHeight());

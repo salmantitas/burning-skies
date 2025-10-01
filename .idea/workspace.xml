@@ -28,16 +28,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="Difficulty Balancing">
+      <change afterPath="$PROJECT_DIR$/src/com/euhedral/game/Difficulty.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.csv" beforeDir="false" afterPath="$PROJECT_DIR$/settings.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/engine/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/engine/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/BulletPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/BulletPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EnemyGeneration/EnemyGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EnemyGeneration/EnemyGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyDrone6.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyMinefield2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/EnemyMinefield2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/TextureHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/TextureHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/VariableHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/VariableHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
