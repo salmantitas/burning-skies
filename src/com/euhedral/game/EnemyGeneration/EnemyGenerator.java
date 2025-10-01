@@ -95,20 +95,11 @@ public class EnemyGenerator {
     boolean movesHorizontally;
     int adjustment = 1;
     int zone;
+    private int spawnY_DEFAULT;
 
     public EnemyGenerator(EntityHandler entityHandler) {
         this.entityHandler = entityHandler;
         maxTypes = VariableHandler.enemyTypes;
-    }
-
-    public void update() {
-        updatesSinceLastSpawn++;
-        canSpawn = spawnInterval <= updatesSinceLastSpawn;
-
-        if (canSpawn) {
-            spawnEnemies();
-            updatesSinceLastSpawn = 0;
-        }
     }
 
     public void generateLevel() {
@@ -128,20 +119,26 @@ public class EnemyGenerator {
         // create distance between player and first wave
 //        enemiesSpawned = 0;
         wave = firstWave;
-        resetWaveSinceHealth();
-        resetWaveSincePower();
-        resetWaveSinceShield();
-//        System.out.println("Wave: " + wave);
 
         // todo: use line for first wave here
 
-        spawnY = (height - Engine.HEIGHT)/SCALE ;//- (wave * MIN_PAUSE);
-//        lastSpawnTime = GameController.getCurrentTime();
+        spawnY_DEFAULT = (height - Engine.HEIGHT) / SCALE;
+        spawnY = spawnY_DEFAULT;
         spawnInterval = spawnInterval_START;
 
         updatesSinceLastSpawn = 0;
 
 //        spawnFirstWave();
+    }
+
+    public void update() {
+        updatesSinceLastSpawn++;
+        canSpawn = spawnInterval <= updatesSinceLastSpawn;
+
+        if (canSpawn) {
+            spawnEnemies();
+            updatesSinceLastSpawn = 0;
+        }
     }
 
     protected void spawnEnemies() {
@@ -209,6 +206,7 @@ public class EnemyGenerator {
 //        enemytype = VariableHandler.TYPE_SCATTER2; // stub
 //        enemytype = TYPE_DRONE4; // stub
 //        enemytype = VariableHandler.TYPE_DRONE5; // stub
+//        enemytype = VariableHandler.TYPE_DRONE6; // stub
 
 //        difficulty = maxTypes; // stub
 
@@ -335,7 +333,7 @@ public class EnemyGenerator {
                 }
             }
 
-            spawnY = (height - Engine.HEIGHT) / SCALE;
+            spawnY = spawnY_DEFAULT;
 
 //            if (wave == firstWave) {
 //                spawnX = xStart;

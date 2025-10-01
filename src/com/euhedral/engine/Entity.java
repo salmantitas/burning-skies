@@ -157,7 +157,7 @@ public abstract class Entity {
     }
 
     protected void drawImage(Graphics g, BufferedImage image) {
-        g.drawImage(image, (int) pos.x, (int) pos.y, null);
+        g.drawImage(image, (int) pos.x, (int) pos.y, width, height, null);
     }
 
     protected void drawImage(Graphics g, BufferedImage image, int targetWidth, int targetHeight) {

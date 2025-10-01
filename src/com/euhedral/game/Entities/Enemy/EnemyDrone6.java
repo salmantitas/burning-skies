@@ -13,7 +13,7 @@ public class EnemyDrone6 extends EnemyDrone1 {
 
     public EnemyDrone6(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
-        setImage(textureHandler.enemyDrone[5]);
+        setImage(textureHandler.enemyDroneL[0]);
 
         shootTimerDefault = 250;
         score = 200;
@@ -24,6 +24,9 @@ public class EnemyDrone6 extends EnemyDrone1 {
         bulletArcAngle = tempAngle * bulletsPerShot_MAX;
 
         attackEffect = true;
+
+        width = 64;
+        height = 64;
 
         health_MAX = 1;
         bulletVelocity = 2;

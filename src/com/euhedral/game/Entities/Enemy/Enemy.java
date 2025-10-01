@@ -179,11 +179,18 @@ public class Enemy extends Airplane {
         } else {
             renderExplosion(g);
         }
+        g.setColor(Color.RED);
     }
 
     @Override
     protected void drawImage(Graphics g, BufferedImage image) {
-        g.drawImage(image, (int) pos.x + (jitter_MULT * jitter), (int) pos.y + (jitter_MULT * jitter), null);
+        g.drawImage(
+                image,
+                (int) pos.x + (jitter_MULT * jitter),
+                (int) pos.y + (jitter_MULT * jitter),
+                width,
+                height,
+                null);
 
         float transparency = (1f - (float) health/(float) health_MAX)/2;
 
@@ -299,7 +306,8 @@ public class Enemy extends Airplane {
     }
 
     public boolean isBelowDeadZoneTop() {
-        return pos.y > VariableHandler.deadzoneTop + 20;
+        int offset = 25;
+        return pos.y > VariableHandler.deadzoneTop + offset;
     }
 
     public void setInscreenY(boolean inscreenY) {

@@ -111,7 +111,6 @@ public class BulletPool extends Pool {
             bullet = (Bullet) entity;
 
             if (bullet.isActive() && player.checkCollision(bullet)) {
-//                bullets.increase(bullet);
                 destroy(bullet, player);
 
                 if (GameController.godMode) {

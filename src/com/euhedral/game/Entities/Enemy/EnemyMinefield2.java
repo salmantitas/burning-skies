@@ -27,7 +27,7 @@ public class EnemyMinefield2 extends Enemy{
         setImage(textureHandler.enemySide[4]);
 
         health_MAX = 3;
-        velX_MIN = 8f;
+        velX_MIN = 7f;
         bulletVelocity = 1;
 
         commonInit();
