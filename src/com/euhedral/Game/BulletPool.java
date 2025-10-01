@@ -115,8 +115,10 @@ public class BulletPool extends Pool {
 
                 if (GameController.godMode) {
 
-                } else
-                    player.damage(10);
+                } else {
+                    int bulletDamage = 10;
+                    player.damage((int ) (bulletDamage * Difficulty.getDamageTakenMult()) );
+                }
             }
         }
     }

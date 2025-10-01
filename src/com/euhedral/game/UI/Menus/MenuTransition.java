@@ -30,13 +30,15 @@ public class MenuTransition extends Menu {
 
     int difficultyY = y48;
     int difficultyX = x10;
-    int gameSpeedY = difficultyY + spacingY;
-    int startY = gameSpeedY + spacingY;
+    int damageDealtY = difficultyY + spacingY;
+    int damageTakenY = damageDealtY + spacingY;
+    int startY = damageTakenY + spacingY;
     int backY = startY  + spacingY;
 
     ButtonOption difficulty;
     ButtonOption gameSpeed;
-    ButtonOption damage;
+    ButtonOption damageDealt;
+    ButtonOption damageTaken;
 
     Button start;
 
@@ -53,7 +55,7 @@ public class MenuTransition extends Menu {
 
     public MenuTransition() {
         super(GameState.Transition);
-        MAXBUTTON = 4;
+        MAXBUTTON = 5;
         options = new Button[MAXBUTTON];
 
         start = new Button(difficultyX, startY, Utility.perc(buttonSize, 80), "Start");
@@ -69,17 +71,22 @@ public class MenuTransition extends Menu {
             Difficulty.decreaseDifficulty();
         });
 
-        damage = new ButtonOption(difficultyX, difficultyY + 100, Utility.perc(buttonSize, 70), "Damage");
-        damage.setIncreaseActivate(Difficulty::increaseDamage);
-        damage.setDecreaseActivate(Difficulty::decreaseDamage);
+        damageDealt = new ButtonOption(difficultyX, damageDealtY, Utility.perc(buttonSize, 70), "Damage Dealt");
+        damageDealt.setIncreaseActivate(Difficulty::increaseDamageDealt);
+        damageDealt.setDecreaseActivate(Difficulty::decreaseDamageDealt);
+
+        damageTaken = new ButtonOption(difficultyX, damageTakenY, Utility.perc(buttonSize, 70), "Damage Taken");
+        damageTaken.setIncreaseActivate(Difficulty::increaseDamageTaken);
+        damageTaken.setDecreaseActivate(Difficulty::decreaseTakenDealt);
 //        gameSpeed = new ButtonOption(difficultyX, difficultyY + 100, Utility.perc(buttonSize, 70), "Game Speed");
 //        gameSpeed.setIncreaseActivate(Difficulty::increaseGameSpeed);
 //        gameSpeed.setDecreaseActivate(Difficulty::decreaseGameSpeed);
 
         options[0] = difficulty;
-        options[1] = damage;
-        options[2] = start;
-        options[3] = back;
+        options[1] = damageDealt;
+        options[2] = damageTaken;
+        options[3] = start;
+        options[4] = back;
 //        options[2] = quit;
     }
 

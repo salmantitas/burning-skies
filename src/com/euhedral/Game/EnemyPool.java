@@ -319,7 +319,7 @@ public class EnemyPool extends Pool {
                         if (GameController.godMode) {
 
                         } else
-                            player.damage(10);
+                            player.damage( (int) (damage * Difficulty.getDamageTakenMult()));
                         destroy(enemy);
                     }
                 }
@@ -344,7 +344,7 @@ public class EnemyPool extends Pool {
 //                            destroyBoss();
 //                        }
                     } else {
-                        enemy.damage(1 * Difficulty.getDamageMult());
+                        enemy.damage((int) (1 * Difficulty.getDamageDealtMult()));
                         if (enemy.getHealth() <= 0) {
                             destroy(enemy);
                         }

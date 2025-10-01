@@ -37,7 +37,10 @@ public class Difficulty {
     private static int text2Y = text1Y + lineSpace;
     private static int currentButton = 0;
 
-    private static int damageMult = 1;
+    private static int mult_MIN = 1;
+    private static int mult_MAX = 2;
+    private static double damageDealtMult = 1;
+    private static double damageTakenMult = 1;
 
     public Difficulty(int enemyTypes) {
         this.enemyTypes = enemyTypes;
@@ -82,9 +85,13 @@ public class Difficulty {
                 text2 = "All enemies available from the start";
             }
         } else if (currentButton == 1) {
-            difficultyName = "Damage";
-            text1 = "Increase your damage, but get half the score";
-            text2 = "Damage : x" + damageMult + ", Score Multiplier: X" + 1d / damageMult;
+            difficultyName = "Damage Dealt";
+            text1 = "Increase the damage dealt, but get half the score";
+            text2 = "Damage Dealt: x" + damageDealtMult + ", Score Multiplier: X" + 1d / damageDealtMult;
+        } else if (currentButton == 2) {
+            difficultyName = "Damage Taken";
+            text1 = "Increase the damage taken, but get half the score";
+            text2 = "Damage Taken: x" + damageTakenMult + ", Score Multiplier: X" + damageTakenMult;
         }
 //        else if (currentButton == 1) {
 //            difficultyName = "Game Speed";
@@ -108,32 +115,47 @@ public class Difficulty {
     }
 
     public static void decreaseGameSpeed() {
-        int mult_MIN = 1;
-//        int mult_MAX = 2;
         Engine.setGameSpeedScaleMult(mult_MIN);
     }
 
-    public static void increaseDamage() {
-//        int mult_MIN = 1;
-        int mult_MAX = 2;
-        damageMult = mult_MAX;
+    public static void increaseDamageDealt() {
+        damageDealtMult *= 2;
+        if (damageDealtMult > mult_MAX)
+            damageDealtMult = mult_MAX;
     }
 
-    public static void decreaseDamage() {
-        int mult_MIN = 1;
-//        int mult_MAX = 2;
-        damageMult = mult_MIN;
+    public static void decreaseDamageDealt() {
+        damageDealtMult = mult_MIN;
+//        damageDealtMult /= 2;
+//        if (damageDealtMult < 1d / mult_MAX)
+//            damageDealtMult = 1d / mult_MAX;
+    }
+
+    public static void increaseDamageTaken() {
+        damageTakenMult *= 2;
+        if (damageTakenMult > mult_MAX)
+            damageTakenMult = mult_MAX;
+    }
+
+    public static void decreaseTakenDealt() {
+        damageTakenMult /= 2;
+        if (damageTakenMult < 1d / mult_MAX)
+            damageTakenMult = 1d / mult_MAX;
     }
 
     public static double getScoreMultiplier() {
-        return 1d * Engine.getGameSpeedScaleMult() / damageMult;
+        return  Engine.getGameSpeedScaleMult() * (1d / damageDealtMult) * (damageTakenMult);
     }
 
     public static void setCurrentButton(int index) {
         currentButton = index;
     }
 
-    public static int getDamageMult() {
-        return damageMult;
+    public static double getDamageDealtMult() {
+        return damageDealtMult;
+    }
+
+    public static double getDamageTakenMult() {
+        return damageTakenMult;
     }
 }

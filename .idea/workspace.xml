@@ -29,16 +29,11 @@
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="Difficulty Balancing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/score.csv" beforeDir="false" afterPath="$PROJECT_DIR$/score.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Engine/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Engine/Engine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Engine/UI/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Engine/UI/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/BulletPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/BulletPool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/Difficulty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/Difficulty.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/EnemyPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/EnemyPool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/EntityHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/EntityHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Enemy/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/Entities/Pickup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuTransition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuTransition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/VariableHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/VariableHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -331,7 +326,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/Game/Difficulty.java</url>
-          <line>112</line>
+          <line>117</line>
           <option name="timeStamp" value="777" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">

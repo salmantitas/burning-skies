@@ -285,6 +285,9 @@ public class Enemy extends Airplane {
     }
 
     public void damage(int damageValue) {
+        if (damageValue < 1) {
+            damageValue = 1;
+        }
         this.health -= damageValue;
         jitter = jitter_MAX;
     }

@@ -321,6 +321,9 @@ public class VariableHandler {
         if (GameController.godMode)
             g.setColor(Color.GRAY);
         g.drawString("Score: " + score, scoreX, scoreY);
+        int offset = 150;
+
+        g.drawString("X" + Difficulty.getScoreMultiplier(), scoreX - offset, scoreY);
     }
 
     public static void renderLevel(Graphics g) {

@@ -97,15 +97,10 @@ public class Bullet extends MobileEntity {
     protected void drawDefault(Graphics g) {
         if (state == STATE_ACTIVE) {
             drawImage(g, image, width, height);
-//            g.setColor(color);
-//            g.fillOval((int) x, (int) y, width, height);
         } else if (state == STATE_IMPACT) {
             if (entity == null) {
                 impact.drawAnimation(g, (int) pos.x, (int) pos.y, impactSize, impactSize);
             } else if (entity.isActive()) {
-//            g.setColor(impactColor);
-//            g.fillOval((int) x - impactFactor, (int) y - impactFactor, width + impactFactor*2, height + impactFactor*2);
-
                 impact.drawAnimation(g, (int) pos.x, (int) pos.y, impactSize, impactSize);
             }
         }

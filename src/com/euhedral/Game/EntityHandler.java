@@ -296,13 +296,6 @@ public class EntityHandler {
         }
     }
 
-    public void damagePlayer(int num){
-        if (GameController.godMode) {
-
-        } else
-            player.damage(num);
-    }
-
     /********************
      * Bullet Functions *
      ********************/
