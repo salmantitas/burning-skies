@@ -22,7 +22,7 @@ public class EnemyMinefield1 extends Enemy{
 
         health_MAX = 2;
         commonInit();
-        score = 20;
+        score = 60;
         forwardVelocity = EntityHandler.backgroundScrollingSpeed + 1;
         velX_MIN = 1.75f;
 //        bulletAngle = 30;

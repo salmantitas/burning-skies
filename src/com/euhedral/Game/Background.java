@@ -19,7 +19,7 @@ public class Background {
     private double backgroundScroll = 0;
     //    private float backgroundScrollAcc = 0;
     private static final double maxScroll = 64;
-    public static final double scrollRateGame = maxScroll/33;  // MAX = 0.04
+    public static final double scrollRateGame = maxScroll/34;  // MAX = 0.04
     public static final double scrollRateTransition = scrollRateGame/4;
     private static double scrollRate;
 

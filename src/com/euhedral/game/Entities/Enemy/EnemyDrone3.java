@@ -23,7 +23,7 @@ public class EnemyDrone3 extends EnemyDrone1 {
         super(x, y, levelHeight);
         setImage(textureHandler.enemyDrone[2]);
 
-        score = 10;
+        score = 20;
         damage = 50;
 
 //        power = 1;
