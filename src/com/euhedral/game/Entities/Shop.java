@@ -1,7 +1,7 @@
-package com.euhedral.game.Entities;
+package com.euhedral.Game.Entities;
 
-import com.euhedral.game.Attribute;
-import com.euhedral.game.VariableHandler;
+import com.euhedral.Game.Attribute;
+import com.euhedral.Game.VariableHandler;
 
 public class Shop {
 

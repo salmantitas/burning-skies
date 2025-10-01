@@ -1,8 +1,8 @@
-package com.euhedral.game.EnemyGeneration;
+package com.euhedral.Game.EnemyGeneration;
 
-import com.euhedral.game.EntityHandler;
-import com.euhedral.game.EntityID;
-import com.euhedral.game.VariableHandler;
+import com.euhedral.Game.EntityHandler;
+import com.euhedral.Game.EntityID;
+import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

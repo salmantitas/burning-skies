@@ -1,7 +1,7 @@
-package com.euhedral.game.Entities.Enemy;
+package com.euhedral.Game.Entities.Enemy;
 
-import com.euhedral.engine.Engine;
-import com.euhedral.engine.Utility;
+import com.euhedral.Engine.Engine;
+import com.euhedral.Engine.Utility;
 //import com.euhedral.game.ContactID;
 //import com.euhedral.game.EnemyID;
 

@@ -1,9 +1,9 @@
-package com.euhedral.game.Entities.Enemy;
+package com.euhedral.Game.Entities.Enemy;
 
-import com.euhedral.engine.Utility;
-import com.euhedral.game.EntityHandler;
-import com.euhedral.game.GameController;
-import com.euhedral.game.VariableHandler;
+import com.euhedral.Engine.Utility;
+import com.euhedral.Game.EntityHandler;
+import com.euhedral.Game.GameController;
+import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
 

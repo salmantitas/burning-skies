@@ -1,10 +1,10 @@
-package com.euhedral.game.EnemyGeneration;
+package com.euhedral.Game.EnemyGeneration;
 
-import com.euhedral.engine.Engine;
-import com.euhedral.engine.Utility;
-import com.euhedral.game.Difficulty;
-import com.euhedral.game.EntityHandler;
-import com.euhedral.game.VariableHandler;
+import com.euhedral.Engine.Engine;
+import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Difficulty;
+import com.euhedral.Game.EntityHandler;
+import com.euhedral.Game.VariableHandler;
 
 public class EnemyGenerator {
     // Level

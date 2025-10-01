@@ -1,14 +1,14 @@
-package com.euhedral.game.UI;
+package com.euhedral.Game.UI;
 
-import com.euhedral.engine.UI.UIItem;
-import com.euhedral.engine.Utility;
-import com.euhedral.game.SoundHandler;
-import com.euhedral.game.VariableHandler;
+import com.euhedral.Engine.UI.UIItem;
+import com.euhedral.Engine.Utility;
+import com.euhedral.Game.SoundHandler;
+import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-import static com.euhedral.engine.Utility.makeTransparent;
+import static com.euhedral.Engine.Utility.makeTransparent;
 
 public class MessageBox extends UIItem {
 

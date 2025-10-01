@@ -1,8 +1,8 @@
-package com.euhedral.game.Entities;
+package com.euhedral.Game.Entities;
 
-import com.euhedral.engine.*;
-import com.euhedral.game.*;
-import com.euhedral.game.Entities.Enemy.Enemy;
+import com.euhedral.Engine.*;
+import com.euhedral.Game.*;
+import com.euhedral.Game.Entities.Enemy.Enemy;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

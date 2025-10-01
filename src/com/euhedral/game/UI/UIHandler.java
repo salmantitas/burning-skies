@@ -1,9 +1,9 @@
-package com.euhedral.game.UI;
+package com.euhedral.Game.UI;
 
-import com.euhedral.engine.*;
-import com.euhedral.engine.UI.Menu;
-import com.euhedral.game.UI.Menus.*;
-import com.euhedral.game.VariableHandler;
+import com.euhedral.Engine.*;
+import com.euhedral.Engine.UI.Menu;
+import com.euhedral.Game.UI.Menus.*;
+import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
 import java.util.ArrayList;

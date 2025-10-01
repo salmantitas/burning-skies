@@ -1,13 +1,12 @@
-package com.euhedral.game.Entities;
+package com.euhedral.Game.Entities;
 
-import com.euhedral.engine.Animation;
-import com.euhedral.engine.Engine;
-import com.euhedral.engine.MobileEntity;
-import com.euhedral.engine.Utility;
-import com.euhedral.game.*;
+import com.euhedral.Engine.Animation;
+import com.euhedral.Engine.Engine;
+import com.euhedral.Engine.MobileEntity;
+import com.euhedral.Engine.Utility;
+import com.euhedral.Game.*;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
 public class Bullet extends MobileEntity {
 //    protected int vel;

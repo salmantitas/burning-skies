@@ -1,9 +1,9 @@
-package com.euhedral.game.Entities;
+package com.euhedral.Game.Entities;
 
-import com.euhedral.engine.CollisionBox;
-import com.euhedral.engine.MobileEntity;
-import com.euhedral.game.EntityID;
-import com.euhedral.game.TextureHandler;
+import com.euhedral.Engine.CollisionBox;
+import com.euhedral.Engine.MobileEntity;
+import com.euhedral.Game.EntityID;
+import com.euhedral.Game.TextureHandler;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

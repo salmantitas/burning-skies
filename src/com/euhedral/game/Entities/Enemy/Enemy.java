@@ -1,13 +1,13 @@
-package com.euhedral.game.Entities.Enemy;
+package com.euhedral.Game.Entities.Enemy;
 
-import com.euhedral.engine.*;
-import com.euhedral.game.*;
+import com.euhedral.Engine.*;
+import com.euhedral.Game.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import com.euhedral.game.Entities.Airplane;
-import com.euhedral.game.GameController;
+import com.euhedral.Game.Entities.Airplane;
+import com.euhedral.Game.GameController;
 
 /*
  *  Standard Enemies, flies downwards and shoots a missile at intervals

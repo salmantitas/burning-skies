@@ -1,7 +1,7 @@
-package com.euhedral.game.Entities.Enemy;
+package com.euhedral.Game.Entities.Enemy;
 
-import com.euhedral.engine.Utility;
-import com.euhedral.game.VariableHandler;
+import com.euhedral.Engine.Utility;
+import com.euhedral.Game.VariableHandler;
 
 public class EnemyDrone6 extends EnemyDrone1 {
 
@@ -25,8 +25,8 @@ public class EnemyDrone6 extends EnemyDrone1 {
 
         attackEffect = true;
 
-        width = 64;
-        height = 64;
+//        width = 64;
+//        height = 64;
 
         health_MAX = 1;
         bulletVelocity = 2;

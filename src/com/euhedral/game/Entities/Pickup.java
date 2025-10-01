@@ -1,8 +1,8 @@
-package com.euhedral.game.Entities;
+package com.euhedral.Game.Entities;
 
-import com.euhedral.engine.MobileEntity;
-import com.euhedral.engine.Utility;
-import com.euhedral.game.*;
+import com.euhedral.Engine.MobileEntity;
+import com.euhedral.Engine.Utility;
+import com.euhedral.Game.*;
 //import com.euhedral.game.PickupID;
 
 import java.awt.*;
@@ -14,6 +14,7 @@ public class Pickup extends MobileEntity {
     public Pickup(double x, double y, EntityID entityID, int value) {
         super(x, y, entityID);
         width = Utility.intAtWidth640(16);
+        height = width;
 //        height = width * 2;
 //        if (entityID == entityID.PickupHealth)
 //            color = Color.green;

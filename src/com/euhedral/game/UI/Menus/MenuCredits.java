@@ -1,13 +1,12 @@
-package com.euhedral.game.UI.Menus;
+package com.euhedral.Game.UI.Menus;
 
-import com.euhedral.engine.GameState;
-import com.euhedral.engine.UI.Button;
-import com.euhedral.engine.UI.ButtonNav;
-import com.euhedral.engine.UI.Menu;
-import com.euhedral.engine.UI.Panel;
-import com.euhedral.engine.Utility;
-import com.euhedral.game.UI.UIHandler;
-import com.euhedral.game.VariableHandler;
+import com.euhedral.Engine.GameState;
+import com.euhedral.Engine.UI.Button;
+import com.euhedral.Engine.UI.ButtonNav;
+import com.euhedral.Engine.UI.Menu;
+import com.euhedral.Engine.UI.Panel;
+import com.euhedral.Engine.Utility;
+import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -1,12 +1,8 @@
-package com.euhedral.game.Entities.Enemy;
+package com.euhedral.Game.Entities.Enemy;
 
-import com.euhedral.engine.Engine;
-import com.euhedral.engine.Utility;
-import com.euhedral.game.EntityHandler;
-import com.euhedral.game.GameController;
-import com.euhedral.game.VariableHandler;
-
-import java.awt.*;
+import com.euhedral.Engine.Utility;
+import com.euhedral.Game.GameController;
+import com.euhedral.Game.VariableHandler;
 
 public class EnemyBasic2 extends Enemy{
 
