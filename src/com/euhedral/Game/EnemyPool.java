@@ -344,7 +344,7 @@ public class EnemyPool extends Pool {
 //                            destroyBoss();
 //                        }
                     } else {
-                        enemy.damage();
+                        enemy.damage(1 * Difficulty.getDamageMult());
                         if (enemy.getHealth() <= 0) {
                             destroy(enemy);
                         }

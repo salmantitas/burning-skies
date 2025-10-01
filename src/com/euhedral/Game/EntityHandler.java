@@ -514,23 +514,6 @@ public class EntityHandler {
         bullets.clear();
     }
 
-    private void disable(Entity entity) {
-        entity.disable();
-    }
-
-//    private void destroy(Enemy enemy) {
-//        enemy.destroy();
-//        if (!GameController.godMode)
-//            VariableHandler.increaseScore(enemy.getScore());
-//        int health = 5;
-//        spawnPickup((int) enemy.getX(), (int) enemy.getY(), EntityID.PickupHealth, health);
-//    }
-
-    private void destroy(Bullet bullet, MobileEntity entity) {
-        SoundHandler.playSound(SoundHandler.IMPACT);
-        bullet.destroy(entity);
-    }
-
     /*
     * Boss Functions
     * */

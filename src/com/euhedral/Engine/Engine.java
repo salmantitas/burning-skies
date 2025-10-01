@@ -34,7 +34,7 @@ public class Engine extends Canvas implements Runnable {
     public static int timer = 0;
 
     private static double targetUpdatesPerSecond_DEFAULT = 60.0;
-    private static double gameSpeedScaleMult = 1;
+    private static int gameSpeedScaleMult = 1;
     private static double targetUpdatesPerSecond = targetUpdatesPerSecond_DEFAULT * gameSpeedScaleMult;
     private static int fps = 0;
 
@@ -118,7 +118,7 @@ public class Engine extends Canvas implements Runnable {
 
                 Thread.sleep((long) remainingTime);
 
-//                drawInterval = nanosecondsPerCycle / targetUpdatesPerSecond;
+                drawInterval = nanosecondsPerCycle / targetUpdatesPerSecond;
                 nextDrawTime += drawInterval;
 
             } catch (InterruptedException e) {
@@ -308,5 +308,14 @@ public class Engine extends Canvas implements Runnable {
 
     public static int getFPS() {
         return 0; // stub
+    }
+
+    public static int getGameSpeedScaleMult() {
+        return gameSpeedScaleMult;
+    }
+
+    public static void setGameSpeedScaleMult(int gameSpeedScaleMult) {
+        Engine.gameSpeedScaleMult = gameSpeedScaleMult;
+        targetUpdatesPerSecond = targetUpdatesPerSecond_DEFAULT * gameSpeedScaleMult;
     }
 }

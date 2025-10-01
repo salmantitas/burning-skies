@@ -30,13 +30,17 @@ public class MenuTransition extends Menu {
 
     int difficultyY = y48;
     int difficultyX = x10;
-    int startY = difficultyY + spacingY;
+    int gameSpeedY = difficultyY + spacingY;
+    int startY = gameSpeedY + spacingY;
+    int backY = startY  + spacingY;
 
-    ButtonOption difficulty; // = new ButtonAction2(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty", null);
+    ButtonOption difficulty;
+    ButtonOption gameSpeed;
+    ButtonOption damage;
 
     Button start;
 
-    ButtonNav back = new ButtonNav(difficultyX, y70, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+    ButtonNav back = new ButtonNav(difficultyX, backY, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
 
 //    ButtonNav quit = new ButtonNav(x43, y80, buttonSize, "Quit", GameState.Quit);
 
@@ -49,7 +53,7 @@ public class MenuTransition extends Menu {
 
     public MenuTransition() {
         super(GameState.Transition);
-        MAXBUTTON = 3;
+        MAXBUTTON = 4;
         options = new Button[MAXBUTTON];
 
         start = new Button(difficultyX, startY, Utility.perc(buttonSize, 80), "Start");
@@ -65,9 +69,17 @@ public class MenuTransition extends Menu {
             Difficulty.decreaseDifficulty();
         });
 
+        damage = new ButtonOption(difficultyX, difficultyY + 100, Utility.perc(buttonSize, 70), "Damage");
+        damage.setIncreaseActivate(Difficulty::increaseDamage);
+        damage.setDecreaseActivate(Difficulty::decreaseDamage);
+//        gameSpeed = new ButtonOption(difficultyX, difficultyY + 100, Utility.perc(buttonSize, 70), "Game Speed");
+//        gameSpeed.setIncreaseActivate(Difficulty::increaseGameSpeed);
+//        gameSpeed.setDecreaseActivate(Difficulty::decreaseGameSpeed);
+
         options[0] = difficulty;
-        options[1] = start;
-        options[2] = back;
+        options[1] = damage;
+        options[2] = start;
+        options[3] = back;
 //        options[2] = quit;
     }
 
@@ -99,6 +111,12 @@ public class MenuTransition extends Menu {
     }
 
     @Override
+    protected void reassignSelected(int reassign) {
+        super.reassignSelected(reassign);
+        Difficulty.setCurrentButton(getIndex());
+    }
+
+    @Override
     public void render(Graphics g) {
         super.render(g);
 //        tutorialState(g); // to be deleted
@@ -125,14 +143,9 @@ public class MenuTransition extends Menu {
         g.setFont(new Font("arial", 1, Utility.percWidth(1)));
         g.drawString(VariableHandler.saveDataNotification, x40, y70);
 
-        renderDifficulty(g);
-
-        super.postRender(g);
-    }
-
-    private void renderDifficulty(Graphics g) {
         Difficulty.render(g);
 
+        super.postRender(g);
     }
 
     @Override

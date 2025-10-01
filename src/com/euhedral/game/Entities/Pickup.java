@@ -15,12 +15,6 @@ public class Pickup extends MobileEntity {
         super(x, y, entityID);
         width = Utility.intAtWidth640(16);
         height = width;
-//        height = width * 2;
-//        if (entityID == entityID.PickupHealth)
-//            color = Color.green;
-//        else if (entityID == entityID.PickupShield)
-//            color = Color.YELLOW;
-//        else color = Color.orange;
         velY = EntityHandler.backgroundScrollingSpeed;
         setValue(value);
         selectImage();

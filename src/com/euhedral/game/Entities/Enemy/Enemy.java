@@ -284,8 +284,8 @@ public class Enemy extends Airplane {
         pos.x += velX;
     }
 
-    public void damage() {
-        this.health--;
+    public void damage(int damageValue) {
+        this.health -= damageValue;
         jitter = jitter_MAX;
     }
 
@@ -323,7 +323,7 @@ public class Enemy extends Airplane {
 //    }
 
     public int getScore() {
-        return score;
+        return (int) (score * Difficulty.getScoreMultiplier());
     }
 
     public void setHMove(int direction) {
@@ -470,9 +470,10 @@ public class Enemy extends Airplane {
     protected void renderScore(Graphics g) {
         if (isExploding()) {
             g.setFont(VariableHandler.customFont.deriveFont(1, 20));
-            g.setColor(VariableHandler.scoreColor );
+            g.setColor(VariableHandler.scoreColor);
             int offsetX = width / 2 - Utility.intAtWidth640(10);
-            g.drawString(Integer.toString(score), (int) pos.x + offsetX, (int) pos.y);
+            double mult = Difficulty.getScoreMultiplier();
+            g.drawString(Integer.toString((int) (score * mult)), (int) pos.x + offsetX, (int) pos.y);
         }
     }
 

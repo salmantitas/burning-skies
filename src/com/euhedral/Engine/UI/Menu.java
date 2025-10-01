@@ -256,7 +256,7 @@ public class Menu {
 //        resetMessageBoxes();
     }
 
-    private void reassignSelected(int reassign) {
+    protected void reassignSelected(int reassign) {
         options[index].deselect();
         index = reassign;
         options[index].select();
@@ -376,6 +376,10 @@ public class Menu {
         buttonValueColor = condition ? Color.GREEN : Color.GRAY;
         g.setColor(buttonValueColor);
         g.drawString(Integer.toString(value), 10 + buttonOffsetX, buttonOffsetY);
+    }
+
+    protected int getIndex() {
+        return index;
     }
 
 }
