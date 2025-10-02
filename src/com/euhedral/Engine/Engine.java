@@ -5,6 +5,7 @@ package com.euhedral.Engine;/*
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
+import com.euhedral.Game.Difficulty;
 import com.euhedral.Game.GameController;
 
 public class Engine extends Canvas implements Runnable {
@@ -34,9 +35,11 @@ public class Engine extends Canvas implements Runnable {
     public static int timer = 0;
 
     private static double targetUpdatesPerSecond_DEFAULT = 60.0;
-    private static int gameSpeedScaleMult = 1;
+    private final double updateRate = 1d/targetUpdatesPerSecond_DEFAULT;
+    private static double gameSpeedScaleMult = 1;
     private static double targetUpdatesPerSecond = targetUpdatesPerSecond_DEFAULT * gameSpeedScaleMult;
-    private static int fps = 0;
+    private static int fps = 0, ups = 0;
+    long nextStatTime;
 
     public static GameController gameController;
     public static BufferedImageLoader loader;
@@ -90,50 +93,70 @@ public class Engine extends Canvas implements Runnable {
     public void run() {
         requestFocus();
 
-//        double targetUpdatesPerSecond = 60;
-        double millisecondsPerCycle = 1000000.0;
-        double nanosecondsPerCycle = 1000000000.0;
-        double drawInterval = nanosecondsPerCycle / targetUpdatesPerSecond;
-        double nextDrawTime = System.nanoTime() + drawInterval;
-        long timer = System.currentTimeMillis();
-        int ups = 0;
+        double accumulator = 0;
+        long currentTime, lastUpdate = System.currentTimeMillis();
+        long nextStatTime = System.currentTimeMillis() + 1000;
 
-        double remainingTime = 0;
-
-        // Sleep Based Game Loop
-        // todo: Replace with timestep based loop
         while (running) {
-            update();
-            ups++;
-            render();
-            fps++;
+            currentTime = System.currentTimeMillis();
+            double lastRenderTimeInSeconds = (currentTime - lastUpdate) / 1000d;
+            accumulator += lastRenderTimeInSeconds * gameSpeedScaleMult;
+            lastUpdate = currentTime;
 
-            try {
-                remainingTime = nextDrawTime - System.nanoTime();
-                remainingTime = remainingTime / millisecondsPerCycle;
-
-                if (remainingTime < 0) {
-                    remainingTime = 0;
+            if (accumulator >= updateRate) {
+                while (accumulator > updateRate) {
+                    update();
+                    accumulator -= updateRate;
                 }
-
-                Thread.sleep((long) remainingTime);
-
-                drawInterval = nanosecondsPerCycle / targetUpdatesPerSecond;
-                nextDrawTime += drawInterval;
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
-
-            if (System.currentTimeMillis() - 1000 > timer) {
-                timer += 1000;
-                timeInSeconds++;
-                System.out.printf("FPS: %d | TPS: %d | Timer: %d\n", fps, ups, timeInSeconds);
-                fps = 0;
-                ups = 0;
-            }
-
+            render();
+            printStats();
         }
+
+//        double targetUpdatesPerSecond = 60;
+//        double millisecondsPerCycle = 1000000.0;
+//        double nanosecondsPerCycle = 1000000000.0;
+//        double drawInterval = nanosecondsPerCycle / targetUpdatesPerSecond;
+//        double nextDrawTime = System.nanoTime() + drawInterval;
+//        long timer = System.currentTimeMillis();
+//        int ups = 0;
+//
+//        double remainingTime = 0;
+//
+//        // Sleep Based Game Loop
+//        // todo: Replace with timestep based loop
+//        while (running) {
+//            update();
+//            ups++;
+//            render();
+//            fps++;
+//
+//            try {
+//                remainingTime = nextDrawTime - System.nanoTime();
+//                remainingTime = remainingTime / millisecondsPerCycle;
+//
+//                if (remainingTime < 0) {
+//                    remainingTime = 0;
+//                }
+//
+//                Thread.sleep((long) remainingTime);
+//
+//                drawInterval = nanosecondsPerCycle / targetUpdatesPerSecond;
+//                nextDrawTime += drawInterval;
+//
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (System.currentTimeMillis() - 1000 > timer) {
+//                timer += 1000;
+//                timeInSeconds++;
+//                System.out.printf("FPS: %d | TPS: %d | Timer: %d\n", fps, ups, timeInSeconds);
+//                fps = 0;
+//                ups = 0;
+//            }
+//
+//        }
 
         System.exit(0);
     }
@@ -143,6 +166,7 @@ public class Engine extends Canvas implements Runnable {
      */
     public void update() {
         gameController.update();
+        ups++;
     }
 
     /*
@@ -169,6 +193,8 @@ public class Engine extends Canvas implements Runnable {
 
         g.dispose();
         bs.show(); //
+
+        fps++;
     }
 
     public static void main(String[] args) {
@@ -310,12 +336,22 @@ public class Engine extends Canvas implements Runnable {
         return 0; // stub
     }
 
-    public static int getGameSpeedScaleMult() {
+    public static double getGameSpeedScaleMult() {
         return gameSpeedScaleMult;
     }
 
-    public static void setGameSpeedScaleMult(int gameSpeedScaleMult) {
+    public static void setGameSpeedScaleMult(double gameSpeedScaleMult) {
         Engine.gameSpeedScaleMult = gameSpeedScaleMult;
         targetUpdatesPerSecond = targetUpdatesPerSecond_DEFAULT * gameSpeedScaleMult;
     }
-}
+
+    private void printStats() {
+        if (System.currentTimeMillis() > nextStatTime) {
+            System.out.println(String.format("FPS: %d, UPS: %d", fps, ups));
+            fps = 0;
+            ups = 0;
+            nextStatTime = System.currentTimeMillis() + 1000;
+        }
+    }
+
+    }
