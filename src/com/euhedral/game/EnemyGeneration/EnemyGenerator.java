@@ -28,10 +28,11 @@ public class EnemyGenerator {
     int num;
 
     long spawnInterval;
-    long spawnInterval_MIN = 60 * 2;
+    long spawnInterval_MIN = 60 * 1;
     long spawnInterval_START = 60 * 3;
     long spawnInterval_MAX = spawnInterval_START * 5;
     float spawnIntervalFloat;
+    int spawnIntervalDeduction;
 
     int updatesSinceLastSpawn;
 
@@ -126,7 +127,7 @@ public class EnemyGenerator {
         spawnY_DEFAULT = (height - Engine.HEIGHT) / SCALE;
         spawnY = spawnY_DEFAULT;
         spawnInterval = spawnInterval_START;
-
+        spawnIntervalDeduction = 0;
         updatesSinceLastSpawn = 0;
 
 //        spawnFirstWave();
@@ -379,6 +380,9 @@ public class EnemyGenerator {
                 difficultyIncreased = true;
                 wavesSinceDifficultyIncrease = 0;
                 Utility.log("Diff: " + difficulty);
+            } else {
+                spawnIntervalDeduction += 5;
+                wavesSinceDifficultyIncrease = 0;
             }
 //            minWavesDifficultyIncrease += 5;
             if (wave / minWavesDifficultyIncrease + 1 > level) {
@@ -397,7 +401,10 @@ public class EnemyGenerator {
     }
 
     protected void determineSpawnInterval() {
-        spawnInterval = entityHandler.getSpawnInterval(); // spawnInterval_MIN;
+        spawnInterval = entityHandler.getSpawnInterval();
+        spawnInterval = Math.max(spawnInterval - spawnIntervalDeduction, spawnInterval_MIN );
+
+        Utility.log("Spawn Interval: " + spawnInterval);
 //        spawnIntervalFloat = (float) spawnInterval;
 
 //        if (enemytype == VariableHandler.TYPE_HEAVY) {

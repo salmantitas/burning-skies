@@ -30,9 +30,12 @@
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="Difficulty Balancing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/score.csv" beforeDir="false" afterPath="$PROJECT_DIR$/score.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.csv" beforeDir="false" afterPath="$PROJECT_DIR$/settings.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/Engine/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Engine/Engine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Engine/UI/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Engine/UI/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Engine/UI/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Engine/UI/Button.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/Difficulty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/Difficulty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/EnemyGeneration/EnemyGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/EnemyGeneration/EnemyGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuTransition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/game/UI/Menus/MenuTransition.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -275,11 +278,6 @@
           <option name="timeStamp" value="645" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/Game/Entities/Enemy/EnemyScatter1.java</url>
-          <line>105</line>
-          <option name="timeStamp" value="647" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/Game/Entities/Enemy/EnemyFast1.java</url>
           <line>55</line>
           <option name="timeStamp" value="660" />
@@ -310,24 +308,29 @@
           <option name="timeStamp" value="750" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/euhedral/Game/SoundHandler.java</url>
-          <line>208</line>
-          <option name="timeStamp" value="767" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/Game/StatePlay.java</url>
           <line>6</line>
           <option name="timeStamp" value="774" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/Game/EnemyGeneration/EnemyGenerator.java</url>
-          <line>116</line>
+          <line>117</line>
           <option name="timeStamp" value="776" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/euhedral/Game/Difficulty.java</url>
-          <line>129</line>
+          <line>127</line>
           <option name="timeStamp" value="777" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/Game/EnemyGeneration/EnemyGenerator.java</url>
+          <line>378</line>
+          <option name="timeStamp" value="778" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/Engine/UI/Button.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="780" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />

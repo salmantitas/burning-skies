@@ -20,7 +20,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "BURNING SKIES";
-    public static String gameVersion = "0.7.42";
+    public static String gameVersion = "0.7.43";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;

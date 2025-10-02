@@ -10,8 +10,9 @@ public class Difficulty {
 
     // Difficulty
 
-    public static int DIFFICULTY_NORMAL = 1;
-    public static int enemyLevel = DIFFICULTY_NORMAL;
+    public static int DIFFICULTY_NORMAL = 0;
+    public static int DIFFICULTY_CHALLENGE = DIFFICULTY_NORMAL + 1;
+    public static int difficultyMode = DIFFICULTY_NORMAL;
 
     private static String difficultyName = "";
     private static String text1 = "";
@@ -43,48 +44,34 @@ public class Difficulty {
     }
 
     public static int getDifficultyLevel() {
-        return enemyLevel + 1;
-//        if (difficultyType == DIFFICULTY_CHALLENGE)
-//            return enemyTypes;
-////        todo: Custom Difficulty
-////        else if () {
-////
-////        }
-//        else
-//            return (difficultyType + 1);
+        if (difficultyMode == DIFFICULTY_CHALLENGE)
+            return enemyTypes;
+        else
+            return difficultyMode + 1;
     }
 
     public static void increaseDifficulty() {
-        Difficulty.enemyLevel++;
-        if (enemyLevel > enemyTypes)
-            enemyLevel = 0;
+        Difficulty.difficultyMode++;
+        if (difficultyMode > DIFFICULTY_CHALLENGE)
+            difficultyMode = 0;
     }
 
     public static void decreaseDifficulty() {
-        enemyLevel--;
-        if (enemyLevel < 0)
-            enemyLevel = enemyTypes;
+        difficultyMode--;
+        if (difficultyMode < 0)
+            difficultyMode = DIFFICULTY_CHALLENGE;
     }
 
     public static void render(Graphics g) {
-        difficultyName = "" + (enemyLevel + 1);
         if (currentButton == 0 ) {
-            if (enemyLevel == 0) {
-                difficultyName += " - Easy";
-                text1 = "Only start with basic enemies.";
-                text2 = "Enemies will progressively get more difficult";
-            } else if (enemyLevel == 1) {
-                difficultyName += " - Normal";
+            if (difficultyMode == 0) {
+                difficultyName = " Normal";
                 text1 = "The intended experience.";
                 text2 = "Enemies will progressively get more difficult";
-            } else if (enemyLevel == enemyTypes) {
-                difficultyName += " - Master";
+            } else {
+                difficultyName = " Master";
                 text1 = "For the experienced player.";
                 text2 = "All enemies available from the start";
-            } else {
-                difficultyName += " - Custom";
-                text1 = "For a custom experience";
-                text2 = "Enemies from level " + (enemyLevel + 1) + " available from the start";
             }
         } else if (currentButton == 1) {
             difficultyName = "Damage Dealt";
@@ -111,9 +98,20 @@ public class Difficulty {
 
         g.setColor(Color.BLACK);
         g.setFont(font1);
+
+        int width = g.getFontMetrics().stringWidth(difficultyName);
+        difficultyNameX = (Engine.WIDTH - width)/2;
+
         g.drawString(difficultyName, difficultyNameX, difficultyNameY);
 
         g.setFont(font2);
+
+        width = g.getFontMetrics().stringWidth(text1);
+        text1X = (Engine.WIDTH - width)/2;
+
+        width = g.getFontMetrics().stringWidth(text2);
+        text2X = (Engine.WIDTH - width)/2;
+
         g.drawString(text1, text1X, text1Y);
         g.drawString(text2, text2X, text2Y);
     }

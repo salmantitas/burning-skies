@@ -1,5 +1,6 @@
 package com.euhedral.Engine.UI;
 
+import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.GameState;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.SoundHandler;
@@ -18,7 +19,6 @@ public class Button extends UIItem{
     protected boolean fill = false;
     protected boolean outline = true;
     protected boolean enabled = true;
-    protected LinkedList<GameState> otherStates = new LinkedList<>();
     protected float transparency = 1;
     protected boolean fontSizeCalculated = false;
     protected int originalWidth, selectedWidth;
@@ -69,15 +69,17 @@ public class Button extends UIItem{
         if (!fontSizeCalculated) {
             // Adjusts the width and height of the button to fit the text
             g.setFont(fontUnselected);
-            stringWidth = (g.getFontMetrics().stringWidth(text));
+
+            stringWidth = Engine.g2d.getFontMetrics().stringWidth(text);
+            int stringHeight = Engine.g2d.getFontMetrics().getHeight();
+
             width = stringWidth + Utility.intAtWidth640(4);
+            height = stringHeight + Utility.intAtWidth640(4);
 
             g.setFont(fontSelected);
             stringWidth = (g.getFontMetrics().stringWidth(text));
-            selectedWidth = stringWidth + Utility.intAtWidth640(4);
+            selectedWidth = stringWidth;// + Utility.intAtWidth640(4);
 
-            if (width < height)
-                width = height;
             fontSizeCalculated = true;
         }
 
@@ -101,11 +103,10 @@ public class Button extends UIItem{
                 g.setColor(selectedColor);
             }
             else g.setColor(textColor);
-//            int stringX = x + Utility.perc(width, 5);
 
             stringWidth = (g.getFontMetrics().stringWidth(text));
-            stringXSelected = x + (width/2 - stringWidth/2);
-            g.drawString(text, stringXSelected, y + Utility.perc(height, 75));
+            stringXSelected = x + (width - stringWidth)/2;
+            g.drawString(text, stringXSelected, y + height - Utility.intAtWidth640(2));
         }
 
         if (transparency < 1) {

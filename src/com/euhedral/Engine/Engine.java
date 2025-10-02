@@ -44,7 +44,7 @@ public class Engine extends Canvas implements Runnable {
     public static GameController gameController;
     public static BufferedImageLoader loader;
 
-    BufferStrategy bs;
+    public static Graphics2D g2d;
 
     // todo: change to private
     public static GameState currentState = GameState.Game;
@@ -95,7 +95,7 @@ public class Engine extends Canvas implements Runnable {
 
         double accumulator = 0;
         long currentTime, lastUpdate = System.currentTimeMillis();
-        long nextStatTime = System.currentTimeMillis() + 1000;
+        nextStatTime = System.currentTimeMillis() + 1000;
 
         while (running) {
             currentTime = System.currentTimeMillis();
@@ -109,6 +109,7 @@ public class Engine extends Canvas implements Runnable {
                     accumulator -= updateRate;
                 }
             }
+
             render();
             printStats();
         }
@@ -175,9 +176,9 @@ public class Engine extends Canvas implements Runnable {
      * Fills the screen with the background color and calls the gameController's render function
      * */
     public void render() {
-        bs = getBufferStrategy(); // BufferStrategy loads the upcoming frames in memory (prerenders them)
+        BufferStrategy bs = getBufferStrategy(); // BufferStrategy loads the upcoming frames in memory (prerenders them)
         if (bs == null) {
-            createBufferStrategy(3); // pre-renders three frames
+            createBufferStrategy(2); // pre-renders three frames
             return;
         }
 
@@ -186,7 +187,7 @@ public class Engine extends Canvas implements Runnable {
         g.setColor(BACKGROUND_COLOR);
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
-        Graphics2D g2d = (Graphics2D) g;
+        g2d = (Graphics2D) g;
 
         g2d.scale(SCALE, SCALE);
         gameController.render(g);
