@@ -39,6 +39,9 @@ public class Difficulty {
     private static double damageTakenMult = 1;
     private static boolean firePowerLoss = false;
 
+    private static double enemyFireRateMult = 1;
+    private static double enemyBulletSpeedMult = 1;
+
     public Difficulty(int enemyTypes) {
         this.enemyTypes = enemyTypes;
     }
@@ -88,8 +91,12 @@ public class Difficulty {
             text2 = "Game Speed : x" + Engine.getGameSpeedScaleMult() + ", Score Multiplier: X" + Engine.getGameSpeedScaleMult();
         } else if (currentButton == 4) {
             difficultyName = "Firepower Loss";
-            text1 = "Loss firepower when hit";
+            text1 = "Lose firepower when hit";
             text2 = "Firepower Loss : " + (firePowerLoss ? "ON" : "OFF") + ", Score Multiplier: X" + getFirePowerLossMult();
+        } else if (currentButton == 5) {
+            difficultyName = "Enemy Fire Rate";
+            text1 = "The faster the enemies shoot, the higher the score";
+            text2 = "Enemy Fire Rate : x" + enemyFireRateMult + ", Score Multiplier: X" + enemyFireRateMult;
         } else {
             difficultyName = "";
             text1 = "";
@@ -161,7 +168,8 @@ public class Difficulty {
         return  getGameSpeedScoreMult() *
                 (1d / damageDealtMult) *
                 (damageTakenMult) *
-                getFirePowerLossMult();
+                getFirePowerLossMult() *
+                enemyFireRateMult;
     }
 
     private static double getGameSpeedScoreMult() {
@@ -196,5 +204,29 @@ public class Difficulty {
 
     public static void toggleFirePowerLoss() {
         Difficulty.firePowerLoss = !firePowerLoss;
+    }
+
+    public static double getEnemyFireRateMult() {
+        return enemyFireRateMult;
+    }
+
+    public static void increaseEnemyFireRate() {
+        enemyFireRateMult *= 2;
+        if (enemyFireRateMult > mult_MAX)
+            enemyFireRateMult = mult_MAX;
+    }
+
+    public static void decreaseEnemyFireRate() {
+        enemyFireRateMult /= 2;
+        if (enemyFireRateMult < 1d / mult_MAX)
+            enemyFireRateMult = 1d / mult_MAX;
+    }
+
+    public static double getEnemyBulletSpeedMult() {
+        return enemyBulletSpeedMult;
+    }
+
+    public static void setEnemyBulletSpeedMult(double enemyBulletSpeedMult) {
+        Difficulty.enemyBulletSpeedMult = enemyBulletSpeedMult;
     }
 }

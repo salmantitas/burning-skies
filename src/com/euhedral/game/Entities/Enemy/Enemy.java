@@ -12,7 +12,7 @@ import com.euhedral.Game.GameController;
 /*
  *  Standard Enemies, flies downwards and shoots a missile at intervals
  * */
-public class Enemy extends Airplane {
+public abstract class Enemy extends Airplane {
     protected int enemyType;
 
     protected int health;
@@ -80,7 +80,7 @@ public class Enemy extends Airplane {
 
         score = 50;
         shootTimerDefault = 150;
-        shootTimer = shootTimerFirst;
+        shootTimer = shootTimerFirst; // todo: Check if we need to divide this by firerateMult as well
 
         bulletVelocity = Utility.intAtWidth640(2);
         bulletArcAngle = 15;
@@ -101,7 +101,7 @@ public class Enemy extends Airplane {
         explosion = GameController.getTexture().initExplosion(6);
         reflection = new Reflection();
         damage = 35;
-        shootTimer = shootTimerDefault;
+        resetShootTimer();
     }
 
     public Enemy(int x, int y, Color color, int levelHeight) {
@@ -318,7 +318,7 @@ public class Enemy extends Airplane {
     }
 
     protected void resetShootTimer() {
-        shootTimer = shootTimerDefault;
+        shootTimer = (int) (shootTimerDefault / Difficulty.getEnemyFireRateMult());
     }
 
 //    public ContactID getContactId() {
@@ -376,7 +376,7 @@ public class Enemy extends Airplane {
     @Override
     public void resurrect(double x, double y) {
         super.resurrect(x, y);
-        shootTimer = shootTimerFirst;
+        resetShootTimer();
         commonInit();
         explosion.playedOnce = false;
         explosion.endAnimation();

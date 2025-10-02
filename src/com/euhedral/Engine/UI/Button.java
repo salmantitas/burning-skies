@@ -70,8 +70,8 @@ public class Button extends UIItem{
             // Adjusts the width and height of the button to fit the text
             g.setFont(fontUnselected);
 
-            stringWidth = Engine.g2d.getFontMetrics().stringWidth(text);
-            int stringHeight = Engine.g2d.getFontMetrics().getHeight();
+            stringWidth = g2d.getFontMetrics().stringWidth(text);
+            int stringHeight = g2d.getFontMetrics().getHeight();
 
             width = stringWidth + Utility.intAtWidth640(4);
             height = stringHeight + Utility.intAtWidth640(4);

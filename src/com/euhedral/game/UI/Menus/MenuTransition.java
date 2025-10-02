@@ -28,12 +28,14 @@ public class MenuTransition extends Menu {
 
     // Navigation
 
-    int enemyLevelY = y48;
-    int enemyLevelX = x10;
+    int difficultyY = y48;
+    int difficultyX = x10;
     int damageDealtY;
     int damageTakenY;
     int gameSpeedY;
     int firePowerLossY;
+    int enemyFireRateY;
+    int enemyBulletSpeedY;
     int startY;
     int backY;
 
@@ -42,6 +44,8 @@ public class MenuTransition extends Menu {
     ButtonOption damageTaken;
     ButtonOption gameSpeed;
     Button firePowerLoss;
+    ButtonOption enemyFireRate;
+    ButtonOption enemyBulletSpeed;
 
     Button start;
 
@@ -56,49 +60,56 @@ public class MenuTransition extends Menu {
 
     public MenuTransition() {
         super(GameState.Transition);
-        MAXBUTTON = 7;
+        MAXBUTTON = 8;
         options = new Button[MAXBUTTON];
 
-        spacingY = Utility.percHeight(7);
+        spacingY = Utility.percHeight(5);
 
-        damageDealtY = enemyLevelY + spacingY;
+        damageDealtY = difficultyY + spacingY;
         damageTakenY = damageDealtY + spacingY;
         gameSpeedY = damageTakenY + spacingY;
         firePowerLossY = gameSpeedY + spacingY;
-        startY = firePowerLossY + spacingY;
+        enemyFireRateY = firePowerLossY + spacingY;
+        enemyBulletSpeedY = enemyFireRateY + spacingY;
+        startY = enemyBulletSpeedY + spacingY;
         backY = startY  + spacingY;
 
-        start = new Button(enemyLevelX, startY, Utility.perc(buttonSize, 80), "Start");
-        start.activate = (GameController::setLevelLoadedtoTrue);
-
-        difficulty = new ButtonOption(enemyLevelX, enemyLevelY, Utility.perc(buttonSize, 60), "Difficulty");
+        difficulty = new ButtonOption(difficultyX, difficultyY, Utility.perc(buttonSize, 60), "Difficulty");
         difficulty.setIncreaseActivate(Difficulty::increaseDifficulty);
         difficulty.setDecreaseActivate(Difficulty::decreaseDifficulty);
 
-        damageDealt = new ButtonOption(enemyLevelX, damageDealtY, Utility.perc(buttonSize, 60), "Damage Dealt");
+        damageDealt = new ButtonOption(difficultyX, damageDealtY, Utility.perc(buttonSize, 60), "Damage Dealt");
         damageDealt.setIncreaseActivate(Difficulty::increaseDamageDealt);
         damageDealt.setDecreaseActivate(Difficulty::decreaseDamageDealt);
 
-        damageTaken = new ButtonOption(enemyLevelX, damageTakenY, Utility.perc(buttonSize, 60), "Damage Taken");
+        damageTaken = new ButtonOption(difficultyX, damageTakenY, Utility.perc(buttonSize, 60), "Damage Taken");
         damageTaken.setIncreaseActivate(Difficulty::increaseDamageTaken);
         damageTaken.setDecreaseActivate(Difficulty::decreaseTakenDealt);
 
-        gameSpeed = new ButtonOption(enemyLevelX, gameSpeedY, Utility.perc(buttonSize, 60), "Game Speed");
+        gameSpeed = new ButtonOption(difficultyX, gameSpeedY, Utility.perc(buttonSize, 60), "Game Speed");
         gameSpeed.setIncreaseActivate(Difficulty::increaseGameSpeed);
         gameSpeed.setDecreaseActivate(Difficulty::decreaseGameSpeed);
 
-        firePowerLoss = new Button(enemyLevelX, firePowerLossY, Utility.perc(buttonSize, 60), "Firepower Loss");
+        firePowerLoss = new Button(difficultyX, firePowerLossY, Utility.perc(buttonSize, 60), "Firepower Loss");
         firePowerLoss.setActivate(Difficulty::toggleFirePowerLoss);
 
-        ButtonNav back = new ButtonNav(enemyLevelX, backY, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+        enemyFireRate = new ButtonOption(difficultyX, enemyFireRateY, Utility.perc(buttonSize, 60), "Enemy Fire Rate");
+        enemyFireRate.setIncreaseActivate(Difficulty::increaseEnemyFireRate);
+        enemyFireRate.setDecreaseActivate(Difficulty::decreaseEnemyFireRate);
+
+        start = new Button(difficultyX, startY, Utility.perc(buttonSize, 60), "Start");
+        start.activate = (GameController::setLevelLoadedtoTrue);
+
+        ButtonNav back = new ButtonNav(difficultyX, backY, Utility.perc(buttonSize, 60), "Back", GameState.Menu);
 
         options[0] = difficulty;
         options[1] = damageDealt;
         options[2] = damageTaken;
         options[3] = gameSpeed;
         options[4] = firePowerLoss;
-        options[5] = start;
-        options[6] = back;
+        options[5] = enemyFireRate;
+        options[6] = start;
+        options[7] = back;
 //        options[2] = quit;
     }
 
