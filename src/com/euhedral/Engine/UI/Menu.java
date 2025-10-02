@@ -378,6 +378,18 @@ public class Menu {
         g.drawString(Integer.toString(value), 10 + buttonOffsetX, buttonOffsetY);
     }
 
+    protected void renderIcon(Graphics g, Button button, boolean bool) {
+        buttonOffsetX = button.getX() + button.getWidth();
+        buttonOffsetY = button.getY() + ((button.getHeight() - toggleIconSize)/2);
+
+        buttonValueColor = bool ? Color.GREEN : Color.RED;
+        g.setColor(buttonValueColor);
+
+        int gap = button.getSelectedWidth() - button.getWidth();
+
+        g.fillOval(buttonOffsetX + gap, buttonOffsetY ,toggleIconSize,toggleIconSize);
+    }
+
     protected int getIndex() {
         return index;
     }

@@ -10,13 +10,8 @@ public class Difficulty {
 
     // Difficulty
 
-    public static int DIFFICULTY_EASY = 0;
     public static int DIFFICULTY_NORMAL = 1;
-    //    public static int DIFFICULTY_CUSTOM = DIFFICULTY_NORMAL + 1;
-    public static int DIFFICULTY_CHALLENGE = DIFFICULTY_NORMAL + 1;
-
-    public static int difficultyType = DIFFICULTY_NORMAL;
-    public static int difficultyLevel = 1;
+    public static int enemyLevel = DIFFICULTY_NORMAL;
 
     private static String difficultyName = "";
     private static String text1 = "";
@@ -29,7 +24,7 @@ public class Difficulty {
 
     private static int lineSpace = Utility.intAtWidth640(25);
 
-    private static int difficultyNameX = 500;
+    private static int difficultyNameX = 400;
     private static int difficultyNameY = 300;
     private static int text1X = 200;
     private static int text1Y = difficultyNameY + lineSpace;
@@ -41,48 +36,55 @@ public class Difficulty {
     private static int mult_MAX = 2;
     private static double damageDealtMult = 1;
     private static double damageTakenMult = 1;
+    private static boolean firePowerLoss = false;
 
     public Difficulty(int enemyTypes) {
         this.enemyTypes = enemyTypes;
     }
 
     public static int getDifficultyLevel() {
-        if (difficultyType == DIFFICULTY_CHALLENGE)
-            return enemyTypes;
-//        todo: Custom Difficulty
-//        else if () {
-//
-//        }
-        else
-            return (difficultyType + 1);
+        return enemyLevel + 1;
+//        if (difficultyType == DIFFICULTY_CHALLENGE)
+//            return enemyTypes;
+////        todo: Custom Difficulty
+////        else if () {
+////
+////        }
+//        else
+//            return (difficultyType + 1);
     }
 
     public static void increaseDifficulty() {
-        Difficulty.difficultyType++;
-        if (difficultyType > DIFFICULTY_CHALLENGE)
-            difficultyType = 0;
+        Difficulty.enemyLevel++;
+        if (enemyLevel > enemyTypes)
+            enemyLevel = 0;
     }
 
     public static void decreaseDifficulty() {
-        difficultyType--;
-        if (difficultyType < 0)
-            difficultyType = DIFFICULTY_CHALLENGE;
+        enemyLevel--;
+        if (enemyLevel < 0)
+            enemyLevel = enemyTypes;
     }
 
     public static void render(Graphics g) {
+        difficultyName = "" + (enemyLevel + 1);
         if (currentButton == 0 ) {
-            if (difficultyType == 0) {
-                difficultyName = "Easy";
+            if (enemyLevel == 0) {
+                difficultyName += " - Easy";
                 text1 = "Only start with basic enemies.";
                 text2 = "Enemies will progressively get more difficult";
-            } else if (difficultyType == 1) {
-                difficultyName = "Normal";
+            } else if (enemyLevel == 1) {
+                difficultyName += " - Normal";
                 text1 = "The intended experience.";
                 text2 = "Enemies will progressively get more difficult";
-            } else {
-                difficultyName = "Master";
+            } else if (enemyLevel == enemyTypes) {
+                difficultyName += " - Master";
                 text1 = "For the experienced player.";
                 text2 = "All enemies available from the start";
+            } else {
+                difficultyName += " - Custom";
+                text1 = "For a custom experience";
+                text2 = "Enemies from level " + (enemyLevel + 1) + " available from the start";
             }
         } else if (currentButton == 1) {
             difficultyName = "Damage Dealt";
@@ -93,11 +95,19 @@ public class Difficulty {
             text1 = "Increase the damage taken, but get half the score";
             text2 = "Damage Taken: x" + damageTakenMult + ", Score Multiplier: X" + damageTakenMult;
         }
-//        else if (currentButton == 1) {
-//            difficultyName = "Game Speed";
-//            text1 = "Risk higher speeds for higher score per enemy";
-//            text2 = "Game Speed : x" + Engine.getGameSpeedScaleMult() + ", Score Multiplier: X" + Engine.getGameSpeedScaleMult();
-//        }
+        else if (currentButton == 3) {
+            difficultyName = "Game Speed";
+            text1 = "Risk higher speeds for higher score per enemy";
+            text2 = "Game Speed : x" + Engine.getGameSpeedScaleMult() + ", Score Multiplier: X" + Engine.getGameSpeedScaleMult();
+        } else if (currentButton == 4) {
+            difficultyName = "Firepower Loss";
+            text1 = "Loss firepower when hit";
+            text2 = "Firepower Loss : " + (firePowerLoss ? "ON" : "OFF") + ", Score Multiplier: X" + getFirePowerLossMult();
+        } else {
+            difficultyName = "";
+            text1 = "";
+            text2 = "";
+        }
 
         g.setColor(Color.BLACK);
         g.setFont(font1);
@@ -109,13 +119,19 @@ public class Difficulty {
     }
 
     public static void increaseGameSpeed() {
-//        int mult_MIN = 1;
-        int mult_MAX = 2;
-        Engine.setGameSpeedScaleMult(mult_MAX);
+        if (Engine.getGameSpeedScaleMult() == mult_MAX) {
+
+        } else {
+            Engine.setGameSpeedScaleMult(1.5);
+        }
     }
 
     public static void decreaseGameSpeed() {
-        Engine.setGameSpeedScaleMult(mult_MIN);
+        if (Engine.getGameSpeedScaleMult() == mult_MIN) {
+
+        } else {
+            Engine.setGameSpeedScaleMult(1);
+        }
     }
 
     public static void increaseDamageDealt() {
@@ -144,7 +160,24 @@ public class Difficulty {
     }
 
     public static double getScoreMultiplier() {
-        return  Engine.getGameSpeedScaleMult() * (1d / damageDealtMult) * (damageTakenMult);
+        return  getGameSpeedScoreMult() *
+                (1d / damageDealtMult) *
+                (damageTakenMult) *
+                getFirePowerLossMult();
+    }
+
+    private static double getGameSpeedScoreMult() {
+//        return Engine.getGameSpeedScaleMult();
+
+        if (Engine.getGameSpeedScaleMult() == 1) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+    private static double getFirePowerLossMult() {
+        return firePowerLoss ? 2 : 1;
     }
 
     public static void setCurrentButton(int index) {
@@ -157,5 +190,13 @@ public class Difficulty {
 
     public static double getDamageTakenMult() {
         return damageTakenMult;
+    }
+
+    public static boolean isFirePowerLoss() {
+        return firePowerLoss;
+    }
+
+    public static void toggleFirePowerLoss() {
+        Difficulty.firePowerLoss = !firePowerLoss;
     }
 }

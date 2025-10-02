@@ -28,21 +28,24 @@ public class MenuTransition extends Menu {
 
     // Navigation
 
-    int difficultyY = y48;
-    int difficultyX = x10;
-    int damageDealtY = difficultyY + spacingY;
+    int enemyLevelY = y48;
+    int enemyLevelX = x10;
+    int damageDealtY = enemyLevelY + spacingY;
     int damageTakenY = damageDealtY + spacingY;
-    int startY = damageTakenY + spacingY;
+    int gameSpeedY = damageTakenY + spacingY;
+    int firePowerLossY = gameSpeedY + spacingY;
+    int startY = firePowerLossY + spacingY;
     int backY = startY  + spacingY;
 
-    ButtonOption difficulty;
-    ButtonOption gameSpeed;
+    ButtonOption enemyLevel;
     ButtonOption damageDealt;
     ButtonOption damageTaken;
+    ButtonOption gameSpeed;
+    Button firePowerLoss;
 
     Button start;
 
-    ButtonNav back = new ButtonNav(difficultyX, backY, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
+    ButtonNav back = new ButtonNav(enemyLevelX, backY, Utility.perc(buttonSize, 80), "Back", GameState.Menu);
 
 //    ButtonNav quit = new ButtonNav(x43, y80, buttonSize, "Quit", GameState.Quit);
 
@@ -55,38 +58,38 @@ public class MenuTransition extends Menu {
 
     public MenuTransition() {
         super(GameState.Transition);
-        MAXBUTTON = 5;
+        MAXBUTTON = 7;
         options = new Button[MAXBUTTON];
 
-        start = new Button(difficultyX, startY, Utility.perc(buttonSize, 80), "Start");
+        start = new Button(enemyLevelX, startY, Utility.perc(buttonSize, 80), "Start");
         start.activate = (GameController::setLevelLoadedtoTrue);
 
-        difficulty = new ButtonOption(difficultyX, difficultyY, Utility.perc(buttonSize, 70), "Difficulty");
+        enemyLevel = new ButtonOption(enemyLevelX, enemyLevelY, Utility.perc(buttonSize, 70), "Enemy Level");
+        enemyLevel.setIncreaseActivate(Difficulty::increaseDifficulty);
+        enemyLevel.setDecreaseActivate(Difficulty::decreaseDifficulty);
 
-        difficulty.setIncreaseActivate(() -> {
-            Difficulty.increaseDifficulty();
-        });
-
-        difficulty.setDecreaseActivate(() -> {
-            Difficulty.decreaseDifficulty();
-        });
-
-        damageDealt = new ButtonOption(difficultyX, damageDealtY, Utility.perc(buttonSize, 70), "Damage Dealt");
+        damageDealt = new ButtonOption(enemyLevelX, damageDealtY, Utility.perc(buttonSize, 70), "Damage Dealt");
         damageDealt.setIncreaseActivate(Difficulty::increaseDamageDealt);
         damageDealt.setDecreaseActivate(Difficulty::decreaseDamageDealt);
 
-        damageTaken = new ButtonOption(difficultyX, damageTakenY, Utility.perc(buttonSize, 70), "Damage Taken");
+        damageTaken = new ButtonOption(enemyLevelX, damageTakenY, Utility.perc(buttonSize, 70), "Damage Taken");
         damageTaken.setIncreaseActivate(Difficulty::increaseDamageTaken);
         damageTaken.setDecreaseActivate(Difficulty::decreaseTakenDealt);
-//        gameSpeed = new ButtonOption(difficultyX, difficultyY + 100, Utility.perc(buttonSize, 70), "Game Speed");
-//        gameSpeed.setIncreaseActivate(Difficulty::increaseGameSpeed);
-//        gameSpeed.setDecreaseActivate(Difficulty::decreaseGameSpeed);
 
-        options[0] = difficulty;
+        gameSpeed = new ButtonOption(enemyLevelX, gameSpeedY, Utility.perc(buttonSize, 70), "Game Speed");
+        gameSpeed.setIncreaseActivate(Difficulty::increaseGameSpeed);
+        gameSpeed.setDecreaseActivate(Difficulty::decreaseGameSpeed);
+
+        firePowerLoss = new Button(enemyLevelX, firePowerLossY, Utility.perc(buttonSize, 70), "Firepower Loss");
+        firePowerLoss.setActivate(Difficulty::toggleFirePowerLoss);
+
+        options[0] = enemyLevel;
         options[1] = damageDealt;
         options[2] = damageTaken;
-        options[3] = start;
-        options[4] = back;
+        options[3] = gameSpeed;
+        options[4] = firePowerLoss;
+        options[5] = start;
+        options[6] = back;
 //        options[2] = quit;
     }
 
@@ -151,6 +154,7 @@ public class MenuTransition extends Menu {
         g.drawString(VariableHandler.saveDataNotification, x40, y70);
 
         Difficulty.render(g);
+        renderIcon(g, firePowerLoss, Difficulty.isFirePowerLoss());
 
         super.postRender(g);
     }

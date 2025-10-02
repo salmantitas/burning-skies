@@ -151,18 +151,6 @@ public class MenuSettings extends Menu {
     * Render Functions *
     ********************/
 
-    private void renderIcon(Graphics g, Button button, boolean bool) {
-        buttonOffsetX = button.getX() + button.getWidth();
-        buttonOffsetY = button.getY() + ((button.getHeight() - toggleIconSize)/2);
-
-        buttonValueColor = bool ? Color.GREEN : Color.RED;
-        g.setColor(buttonValueColor);
-
-        int gap = button.getSelectedWidth() - button.getWidth();
-
-        g.fillOval(buttonOffsetX + gap, buttonOffsetY ,toggleIconSize,toggleIconSize);
-    }
-
     public void drawBGM(Graphics g) {
         g.setFont(BGMFont);
         g.setColor(Color.WHITE);

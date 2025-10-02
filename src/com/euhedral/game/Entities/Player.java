@@ -520,8 +520,10 @@ public class Player extends Airplane {
 
     private void damageHealth(int damage) {
         health.decrease(damage);
-        if (firepower.getValue() > 0) {
-            firepower.decrease(1);
+        if (Difficulty.isFirePowerLoss()) {
+            if (firepower.getValue() > 0) {
+                firepower.decrease(1);
+            }
         }
         jitter = jitter_MAX;
     }
