@@ -10,6 +10,8 @@ import java.awt.*;
 
 public class EnemyMinefield1 extends Enemy{
 
+    double yMin, yMax;
+
     public EnemyMinefield1(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
         textureHandler = GameController.getTexture();
@@ -18,14 +20,19 @@ public class EnemyMinefield1 extends Enemy{
         shootTimerDefault = 30;
 //        attackEffect = true;
 
-        //        enemyType = EntityHandler.TYPE_BASIC;
-
         health_MAX = 2;
         commonInit();
         score = 60;
         forwardVelocity = EntityHandler.backgroundScrollingSpeed + 1;
-        velX_MIN = 1.75f;
-//        bulletAngle = 30;
+//        velX_MIN = 1.75f;
+        velY_MIN = forwardVelocity;
+
+        yMin = -height;
+        yMax = levelHeight + 3*height;
+
+        disableOffset = height * 4;
+        bottomBounds = levelHeight + disableOffset;
+
         bulletVelocity = 3;
     }
 
@@ -37,12 +44,37 @@ public class EnemyMinefield1 extends Enemy{
         shootTimer = shootTimerDefault;
     }
 
-    private void updateBulletAngle() {
-        if (pos.x < Engine.WIDTH/2) {
-            bulletAngle = 30;
-        } else {
-            bulletAngle = 150;
+    @Override
+    protected void shoot() {
+        updateBulletAngle();
+        super.shoot();
+    }
+
+    @Override
+    public void move() {
+        if (isActive()) {
+
+            velX = 0;
+            if (pos.y <= yMin) {
+                velY = velY_MIN;
+            } else if (pos.y >= yMax) {
+                velY = -velY_MIN;
+            }
+        } else if (isExploding()) {
+            velY = explodingVelocity;
         }
+
+        moveInScreen();
+    }
+
+//    @Override
+//    protected void moveInScreen() {
+//        pos.y += (velY + EntityHandler.backgroundScrollingSpeed);
+//        pos.x += velX;
+//    }
+
+    private void updateBulletAngle() {
+        bulletAngle = calculateAngle(Engine.WIDTH/2, Engine.HEIGHT/2);
     }
 
     @Override

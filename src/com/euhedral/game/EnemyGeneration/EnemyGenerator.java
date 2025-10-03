@@ -10,7 +10,8 @@ public class EnemyGenerator {
     // Level
     int level;
     int cutoffHeight = 0, cutoffWidth = Utility.intAtWidth640(24);
-    int height = Engine.HEIGHT - cutoffHeight, width = VariableHandler.deadzoneRightX - cutoffWidth;
+    int height = Engine.HEIGHT - cutoffHeight;
+    int width = VariableHandler.deadzoneRightX - cutoffWidth;
 
     final int SCALE = 64;
 
@@ -202,7 +203,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_SIDE2; // stub
 //        enemytype = TYPE_SIDE3; // stub
 //        enemytype = VariableHandler.TYPE_SCATTER1; // stub
-//        enemytype = TYPE_MINE1; // stub
+//        enemytype = VariableHandler.TYPE_MINE1;
 //        enemytype = TYPE_MINE2; // stub
 //        enemytype = TYPE_DRONE3; // stub
 //        enemytype = VariableHandler.TYPE_SCATTER2; // stub

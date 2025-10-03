@@ -53,13 +53,6 @@ public class EnemyMinefield2 extends Enemy{
         moveInScreen();
     }
 
-//    @Override
-//    protected void shoot() {
-//        super.shoot();
-//        shot += 1;
-////        fastShoot();
-//    }
-
     @Override
     public void update() {
         super.update();
