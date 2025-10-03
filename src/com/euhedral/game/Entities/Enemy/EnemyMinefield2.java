@@ -15,7 +15,7 @@ public class EnemyMinefield2 extends Enemy{
     public EnemyMinefield2(int x, int y, int levelHeight) {
         super(x, y,  levelHeight);
 
-        shootTimerDefault = 15;
+        shootTimerDefault = 30;
 
         score = 80;
 

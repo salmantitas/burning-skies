@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class EnemyHeavy extends Enemy {
 
-    int movementDistance_MAX = 3*64;
+    int movementDistance_MAX = 4*64;
 
     int leftTurret, rightTurret;
     boolean turretLeft = true;

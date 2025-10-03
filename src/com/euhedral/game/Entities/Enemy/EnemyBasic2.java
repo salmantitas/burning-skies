@@ -6,7 +6,7 @@ import com.euhedral.Game.VariableHandler;
 
 public class EnemyBasic2 extends Enemy{
 
-    int movementDistance_MAX = 2*64;
+    int movementDistance_MAX = 3*64;
 
     public EnemyBasic2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
@@ -22,7 +22,7 @@ public class EnemyBasic2 extends Enemy{
         health_MAX = 2;
         commonInit();
 
-        velX_MIN = 1.25;
+        velX_MIN = 1;
     }
 
 //    @Override

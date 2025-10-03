@@ -22,7 +22,7 @@ public class EnemyFast extends Enemy{
 //        attackEffect = true;
 
         // todo: These happen last
-        shootTimerDefault = 35; // too low: 10, too high: 100
+        shootTimerDefault = 40; // too low: 10, too high: 100
 //        shootTimer = shootTimerDefault;
         score = 100;
         determineMovement();

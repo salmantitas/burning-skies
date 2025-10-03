@@ -15,7 +15,7 @@ public class EnemyMinefield1 extends Enemy{
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[3]);
 
-        shootTimerDefault = 20;
+        shootTimerDefault = 30;
 //        attackEffect = true;
 
         //        enemyType = EntityHandler.TYPE_BASIC;
