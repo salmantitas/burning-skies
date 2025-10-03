@@ -82,7 +82,7 @@ public abstract class Enemy extends Airplane {
         shootTimerDefault = 150;
         shootTimer = shootTimerFirst; // todo: Check if we need to divide this by firerateMult as well
 
-        bulletVelocity = Utility.intAtWidth640(2);
+        bulletVelocity = 3;
         bulletArcAngle = 15;
 
         textureHandler = GameController.getTexture();

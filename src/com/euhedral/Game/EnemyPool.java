@@ -300,10 +300,10 @@ public class EnemyPool extends Pool {
         }
 
         if (bullets.getPoolSize() > 0) {
-            bullets.spawnFromPool(x, (int) y, dir, bulletVelocity, tracking);
+            bullets.spawnFromPool(x, (int) y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking);
         }
         else {
-            bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity, tracking));
+            bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking));
         }
 //        bullets.printPool("Enemy Bullet");
     }

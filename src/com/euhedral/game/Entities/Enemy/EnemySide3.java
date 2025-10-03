@@ -18,7 +18,7 @@ public class EnemySide3 extends Enemy{
     public EnemySide3(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
-        bulletVelocity = Utility.intAtWidth640(3);
+        bulletVelocity = 5;
         score = 100;
 //        shootTimerDefault = 200;
         attackEffect = true;

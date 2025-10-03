@@ -36,7 +36,7 @@ public class Pickup extends MobileEntity {
     protected void move() {
         super.move();
 
-        pos.x = Utility.clamp(pos.x, VariableHandler.deadzoneWidth, VariableHandler.deadzoneRightX);
+        pos.x = Utility.clamp(pos.x, VariableHandler.deadzoneWidth, VariableHandler.deadzoneRightX - width);
     }
 
     @Override

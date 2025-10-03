@@ -60,7 +60,7 @@ public class MenuTransition extends Menu {
 
     public MenuTransition() {
         super(GameState.Transition);
-        MAXBUTTON = 8;
+        MAXBUTTON = 9;
         options = new Button[MAXBUTTON];
 
         spacingY = Utility.percHeight(5);
@@ -97,6 +97,10 @@ public class MenuTransition extends Menu {
         enemyFireRate.setIncreaseActivate(Difficulty::increaseEnemyFireRate);
         enemyFireRate.setDecreaseActivate(Difficulty::decreaseEnemyFireRate);
 
+        enemyBulletSpeed = new ButtonOption(difficultyX, enemyBulletSpeedY, Utility.perc(buttonSize, 60), "Enemy Bullet Speed");
+        enemyBulletSpeed.setIncreaseActivate(Difficulty::increaseEnemyBulletSpeed);
+        enemyBulletSpeed.setDecreaseActivate(Difficulty::decreaseEnemyBulletSpeed);
+
         start = new Button(difficultyX, startY, Utility.perc(buttonSize, 60), "Start");
         start.activate = (GameController::setLevelLoadedtoTrue);
 
@@ -108,8 +112,9 @@ public class MenuTransition extends Menu {
         options[3] = gameSpeed;
         options[4] = firePowerLoss;
         options[5] = enemyFireRate;
-        options[6] = start;
-        options[7] = back;
+        options[6] = enemyBulletSpeed;
+        options[7] = start;
+        options[8] = back;
 //        options[2] = quit;
     }
 

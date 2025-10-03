@@ -14,14 +14,14 @@ public class EnemyDrone4 extends EnemyDrone1 {
         super(x, y, levelHeight);
         setImage(textureHandler.enemyDrone[3]);
 
-        shootTimerDefault = 20;
+        shootTimerDefault = 30;
         score = 150;
         damage = 30;
 
 //        attackEffect = true;
 
         health_MAX = 3;
-        bulletVelocity = 3;
+        bulletVelocity = 2;
         commonInit();
     }
 

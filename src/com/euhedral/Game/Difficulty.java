@@ -95,8 +95,12 @@ public class Difficulty {
             text2 = "Firepower Loss : " + (firePowerLoss ? "ON" : "OFF") + ", Score Multiplier: X" + getFirePowerLossMult();
         } else if (currentButton == 5) {
             difficultyName = "Enemy Fire Rate";
-            text1 = "The faster the enemies shoot, the higher the score";
+            text1 = "Faster enemy fire rate for higher the score";
             text2 = "Enemy Fire Rate : x" + enemyFireRateMult + ", Score Multiplier: X" + enemyFireRateMult;
+        } else if (currentButton == 6) {
+            difficultyName = "Enemy Bullet Speed";
+            text1 = "Double the speed of enemy bullets, double the score";
+            text2 = "Enemy Bullet Speed : x" + enemyBulletSpeedMult + ", Score Multiplier: X" + enemyBulletSpeedMult;
         } else {
             difficultyName = "";
             text1 = "";
@@ -169,7 +173,8 @@ public class Difficulty {
                 (1d / damageDealtMult) *
                 (damageTakenMult) *
                 getFirePowerLossMult() *
-                enemyFireRateMult;
+                enemyFireRateMult *
+                enemyBulletSpeedMult;
     }
 
     private static double getGameSpeedScoreMult() {
@@ -226,7 +231,15 @@ public class Difficulty {
         return enemyBulletSpeedMult;
     }
 
-    public static void setEnemyBulletSpeedMult(double enemyBulletSpeedMult) {
-        Difficulty.enemyBulletSpeedMult = enemyBulletSpeedMult;
+    public static void increaseEnemyBulletSpeed() {
+        enemyBulletSpeedMult *= 2;
+        if (enemyBulletSpeedMult > mult_MAX)
+            enemyBulletSpeedMult = mult_MAX;
+    }
+
+    public static void decreaseEnemyBulletSpeed() {
+        enemyBulletSpeedMult /= 2;
+        if (enemyBulletSpeedMult < 1d / mult_MAX)
+            enemyBulletSpeedMult = 1d / mult_MAX;
     }
 }

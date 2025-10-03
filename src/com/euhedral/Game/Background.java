@@ -19,7 +19,7 @@ public class Background {
     private double backgroundScroll = 0;
     //    private float backgroundScrollAcc = 0;
     private static final double maxScroll = 64;
-    public static final double scrollRateGame = maxScroll/34;  // MAX = 0.04
+    public static final double scrollRateGame = maxScroll/32;  // MAX = 0.04
     public static final double scrollRateTransition = scrollRateGame/4;
     private static double scrollRate;
 
@@ -52,6 +52,22 @@ public class Background {
 
     public void update() {
 
+        updateSea();
+//        updateClouds();
+    }
+
+    private void updateClouds() {
+        backgroundObjects.update();
+        cloudSpawnCount++;
+        if (cloudSpawnCount > cloudSpawnCount_MAX) {
+            spawnNewCloud();
+            cloudSpawnCount = 0;
+            cloudSpawnCount_MAX = Utility.randomRangeInclusive(54*cloudScale, 54*(cloudScale + 1));
+        }
+        backgroundObjects.disableIfOutsideBounds(1);
+    }
+
+    private void updateSea() {
         if (Engine.stateIs(GameState.Game)) {
             scrollRate = scrollRateGame;
 //                backgroundScrollAcc += scrollRate;
@@ -66,15 +82,6 @@ public class Background {
         if (backgroundScroll >= maxScroll) {
             backgroundScroll = 0;
         }
-
-//        backgroundObjects.update();
-//        cloudSpawnCount++;
-//        if (cloudSpawnCount > cloudSpawnCount_MAX) {
-//            spawnNewCloud();
-//            cloudSpawnCount = 0;
-//            cloudSpawnCount_MAX = Utility.randomRangeInclusive(54*cloudScale, 54*(cloudScale + 1));
-//        }
-//        backgroundObjects.disableIfOutsideBounds(1);
     }
 
     public void render(Graphics g) {
@@ -194,6 +201,7 @@ public class Background {
 
         cloud.setWidth(48*cloudScale);
         cloud.setHeight(54*cloudScale);
+        cloud.setY(-54*cloudScale);
         backgroundObjects.add(cloud);
     }
 

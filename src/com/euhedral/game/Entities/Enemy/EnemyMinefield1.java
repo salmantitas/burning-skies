@@ -17,7 +17,7 @@ public class EnemyMinefield1 extends Enemy{
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[3]);
 
-        shootTimerDefault = 30;
+        shootTimerDefault = 40;
 //        attackEffect = true;
 
         health_MAX = 2;
@@ -67,14 +67,14 @@ public class EnemyMinefield1 extends Enemy{
         moveInScreen();
     }
 
-//    @Override
-//    protected void moveInScreen() {
-//        pos.y += (velY + EntityHandler.backgroundScrollingSpeed);
-//        pos.x += velX;
-//    }
-
     private void updateBulletAngle() {
-        bulletAngle = calculateAngle(Engine.WIDTH/2, Engine.HEIGHT/2);
+        int targetY = 0;
+        if (velY > 0) {
+            targetY = levelHeight;
+        } else {
+            targetY = 0;
+        }
+        bulletAngle = calculateAngle(Engine.WIDTH/2, targetY);
     }
 
     @Override

@@ -219,7 +219,7 @@ public class EnemyGenerator {
 
         switch (enemytype) {
             case VariableHandler.TYPE_MINE1:
-                limit = 5;
+                limit = 4;
                 break;
             case VariableHandler.TYPE_SIDE1:
                 limit = limitSide;

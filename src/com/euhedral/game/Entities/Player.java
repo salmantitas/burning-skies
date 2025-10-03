@@ -59,7 +59,7 @@ public class Player extends Airplane {
         velY_MIN = 4;
         velX_MIN = 4;
         velY_MAX = 10;
-        velX_MAX = 9;
+        velX_MAX = 10;
 
         jitter_MAX = Utility.intAtWidth640(2);
 

@@ -16,7 +16,7 @@ public class EnemyDrone6 extends EnemyDrone1 {
         setImage(textureHandler.enemyDroneL[0]);
 
         shootTimerFirst = 75;
-        shootTimerDefault = 300;
+        shootTimerDefault = 350;
         score = 200;
         damage = 40;
 
@@ -30,7 +30,7 @@ public class EnemyDrone6 extends EnemyDrone1 {
 //        height = 64;
 
         health_MAX = 1;
-        bulletVelocity = 2;
+        bulletVelocity = 1;
         commonInit();
     }
 
@@ -49,9 +49,10 @@ public class EnemyDrone6 extends EnemyDrone1 {
     public void move() {
         if (isActive() && inscreenY) {
             if (shootTimer < recoilPause) {
-                forwardVelocity -= deceleration;
+//                velY = forwardVelocity / 2;
+                forwardVelocity = 0;
             } else {
-                forwardVelocity = 2;
+                resetForwardVelocity();
             }
         } else if (isExploding()) {
             velY = explodingVelocity;
@@ -63,6 +64,10 @@ public class EnemyDrone6 extends EnemyDrone1 {
     @Override
     protected void commonInit() {
         super.commonInit();
+        resetForwardVelocity();
+    }
+
+    private void resetForwardVelocity() {
         forwardVelocity = 1;
     }
 

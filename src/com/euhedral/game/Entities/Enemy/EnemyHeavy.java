@@ -29,10 +29,8 @@ public class EnemyHeavy extends Enemy {
     public EnemyHeavy(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
-//        bulletVelocity = Utility.intAtWidth640(5);
         bulletAngle = 60;
-        shootTimerDefault = 80;
-//        shootTimer = shootTimerDefault;
+        shootTimerDefault = 90;
         score = 50;
         leftTurret = width / 3 - Utility.intAtWidth640(2);
         rightTurret = 2 * width / 3 - Utility.intAtWidth640(2);
@@ -194,6 +192,7 @@ public class EnemyHeavy extends Enemy {
         this.setHealth(health_MAX);
         velY = forwardVelocity;
         bulletAngle = bulletAngleMIN;
+        resetShootTimer();
     }
 
     private void updateDestination() {

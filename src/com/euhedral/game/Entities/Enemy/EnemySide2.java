@@ -17,7 +17,7 @@ public class EnemySide2 extends Enemy{
         shootTimerDefault = 40;
 //        shootTimer = 50;
         score = 70;
-        bulletVelocity = Utility.intAtWidth640(3);
+        bulletVelocity = 5;
 
         xMin = -width;
         xMax = Engine.WIDTH;

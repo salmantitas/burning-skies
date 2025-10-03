@@ -12,7 +12,7 @@ public class EnemyDrone2 extends EnemyDrone1 {
         super(x, y, levelHeight);
         setImage(textureHandler.enemyDrone[1]);
 
-        bulletVelocity = Utility.intAtWidth640(3);
+        bulletVelocity = 5;
         shootTimerDefault = 100;
         score = 40;
         damage = 20;
