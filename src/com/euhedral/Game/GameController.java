@@ -673,4 +673,8 @@ public class GameController {
     public static void setLevelLoadedtoTrue() {
         levelLoaded = true;
     }
+
+    public void updateBackground() {
+        background.update();
+    }
 }

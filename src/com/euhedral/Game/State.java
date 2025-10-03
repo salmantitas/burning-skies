@@ -8,6 +8,7 @@ public class State {
     public void update(GameController gameController) {
         Engine.timer++;
         gameController.updateUI();
+        gameController.updateBackground();
 
 //        gameController.updateSounds();
 
