@@ -31,65 +31,6 @@ public class EnemyBasic1 extends Enemy{
 
     }
 
-//    @Override
-//    public void initialize() {
-//        super.initialize();
-//
-//
-//    }
-
-//    @Override
-//    protected void shoot() {
-//        super.shoot();
-//        shootDefault();
-//    }
-
-//    @Override
-//    public void update() {
-//        super.update();
-//        if (state == STATE_ACTIVE && inscreen) {
-//            if (movementDistance >= 0) {
-//                movementDistance -= Math.abs(velX);
-//            } else {
-//                velX = 0;
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void render(Graphics g) {
-//        if (attackEffect) {
-//            boolean secondsTillShotFire = (shootTimer < 20);
-//            if (isActive() && secondsTillShotFire) {
-//                g.setColor(Color.red);
-//
-//                Graphics2D g2d = (Graphics2D) g;
-//                g.setColor(Color.RED);
-//
-//
-//                double drawX = x - (0.5) * (double) width;
-//                double drawY = y - (0.5) * (double) height;
-//                int arcAngle = 20;
-//
-//                g2d.setComposite(Utility.makeTransparent(0.5f));
-//                g2d.fillArc((int) drawX, (int) drawY, 2 * width, 2 * height, (int) -(getBulletAngle()) - arcAngle / 2, arcAngle);
-//                g2d.setComposite(Utility.makeTransparent(1f));
-//            }
-//        }
-//
-//        g.setColor(color);
-//        super.render(g);
-////        super.render(g);
-////        if (isActive()) {
-////            super.render(g);
-//////            renderBounds(g);
-////            renderPath(g);
-////        } else {
-////            if (!explosion.playedOnce) {
-////                explosion.drawAnimation(g, (int) x, (int) y, width, height);
-////            }
-////        }
-//    }
 
     @Override
     protected void commonInit() {

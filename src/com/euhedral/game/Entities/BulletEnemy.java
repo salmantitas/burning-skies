@@ -1,10 +1,13 @@
 package com.euhedral.Game.Entities;
 
 import com.euhedral.Engine.MobileEntity;
+import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.SoundHandler;
 import com.euhedral.Game.VariableHandler;
+
+import java.awt.*;
 
 public class BulletEnemy extends Bullet{
 
@@ -44,6 +47,7 @@ public class BulletEnemy extends Bullet{
     public void update() {
         if (state == STATE_ACTIVE) {
             super.update();
+            updateBounds(2);
         } else if (state == STATE_IMPACT) {
             if (!canPlayImpactAnimation) {
                 impact.playedOnce = true;
@@ -59,6 +63,7 @@ public class BulletEnemy extends Bullet{
                     this.velY = entity.getVelY();
                 }
                 super.update();
+                updateBounds(2);
             }
         }
     }
@@ -76,6 +81,11 @@ public class BulletEnemy extends Bullet{
             pos.y += velY;
         }
 
+    }
+
+    @Override
+    public void render(Graphics g) {
+        super.render(g);
     }
 
     @Override
@@ -99,14 +109,14 @@ public class BulletEnemy extends Bullet{
         return tracking;
     }
 
-    public boolean inRadius(double x, double y, int radius) {
+    public boolean inRadius(Position otherPos, int radius) {
         double aX = pos.x;
         double aY = pos.y;
-        if (pos.x < x)
+        if (pos.x < otherPos.x)
             aX = pos.x + width;
-        if (pos.y < y)
+        if (pos.y < otherPos.y)
             aY = pos.y + height;
-        return Math.abs(calculateMagnitude(aX, aY, x,y)) < radius;
+        return Math.abs(calculateMagnitude(aX, aY, otherPos.x, otherPos.y)) < radius;
     }
 
     public boolean isBelowDeadZoneTop() {

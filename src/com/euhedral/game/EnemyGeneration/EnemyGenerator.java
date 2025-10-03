@@ -127,7 +127,7 @@ public class EnemyGenerator {
 
         spawnY_DEFAULT = (height - Engine.HEIGHT) / SCALE;
         spawnY = spawnY_DEFAULT;
-        spawnInterval = spawnInterval_START;
+        spawnInterval = 0 ; //spawnInterval_START;
         spawnIntervalDeduction = 0;
         updatesSinceLastSpawn = 0;
 
@@ -196,7 +196,7 @@ public class EnemyGenerator {
 //        enemytype = TYPE_BASIC2; // stub
 //        enemytype = TYPE_BASIC3; // stub
 //        enemytype = TYPE_FAST2; // stub
-//        enemytype = TYPE_DRONE1; // stub
+//        enemytype = VariableHandler.TYPE_DRONE1; // stub
 //        enemytype = TYPE_SIDE1; // stub
 //        enemytype = TYPE_STATIC1; // stub
 //        enemytype = TYPE_DRONE2; // stub
@@ -284,7 +284,9 @@ public class EnemyGenerator {
 
     protected void determineZone() {
 
-        isDrone = enemytype == VariableHandler.TYPE_DRONE1 || enemytype == VariableHandler.TYPE_DRONE2 || enemytype == VariableHandler.TYPE_DRONE3 || enemytype == VariableHandler.TYPE_DRONE6;
+        isDrone = enemytype == VariableHandler.TYPE_DRONE1 || enemytype == VariableHandler.TYPE_DRONE2 ||
+                enemytype == VariableHandler.TYPE_DRONE3 || enemytype == VariableHandler.TYPE_DRONE4 ||
+                enemytype == VariableHandler.TYPE_DRONE5 || enemytype == VariableHandler.TYPE_DRONE6;
         isSideFlyer = enemytype == VariableHandler.TYPE_SIDE1 || enemytype == VariableHandler.TYPE_SIDE2 || enemytype == VariableHandler.TYPE_SIDE3 || enemytype == VariableHandler.TYPE_MINE2 || enemytype == VariableHandler.TYPE_DRONE4;
 
         entersFromSide = isDrone || isSideFlyer;
@@ -300,7 +302,8 @@ public class EnemyGenerator {
             }
 
             if (isDrone) {
-                spawnY = Utility.randomRangeInclusive(0, height / SCALE * 2 / 3);
+                int var = height * 1 /3;
+                spawnY = Utility.randomRangeInclusive(0, var / SCALE);
             } else if (isSideFlyer) {
                 spawnY = Utility.randomRangeInclusive(5, 7);
             }

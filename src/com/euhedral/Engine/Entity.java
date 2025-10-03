@@ -28,6 +28,9 @@ public abstract class Entity {
     protected Animation anim;
     protected int animationSpeed = 3;
 
+    // debug
+    protected boolean debug = false;
+
     public Entity(double x, double y, EntityID id) {
         pos = new Position(x,y);
         this.id = id;
@@ -51,6 +54,9 @@ public abstract class Entity {
         if (isActive()) {
             drawDefault(g);
         }
+        if (debug) {
+            renderBounds(g);
+        }
     }
 
     // Attempts to animate the object.
@@ -71,6 +77,8 @@ public abstract class Entity {
 
     protected void renderBounds(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
+
+        g2d.setStroke( new BasicStroke(1));
 
         g.setColor(boundColor);
         g2d.draw(getBounds());
@@ -197,6 +205,7 @@ public abstract class Entity {
 
     public void disable() {
         setActive(false);
+        pos.setPosition(-100, -100);
     }
 
     public boolean canDisable() {

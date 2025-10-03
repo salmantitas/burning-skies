@@ -85,7 +85,6 @@ public class Bullet extends MobileEntity {
         if (!calculated)
             calculateVelocities();
         move();
-        updateBounds();
     }
 
     @Override
@@ -121,32 +120,17 @@ public class Bullet extends MobileEntity {
         g2d.setComposite(Utility.makeTransparent(1f));
     }
 
-    protected void move() {
-        super.move();
-//        pos.x += velX;
-//        pos.y += velY;
-    }
+//    protected void move() {
+//        super.move();
+//    }
 
-    public void mirror(Bullet bullet, double angle) {
-        if (angle == 90) {
-            velX = -bullet.velX;
-            velY = bullet.velY;
-        }
-    }
 
-    public void setX(int x) {
-        super.setX(x);
-//        pos.x = x;
-    }
-
-    public void setY(int y) {
-        super.setY(y);
-//        this.y = y;
-    }
-
-//    public Rectangle2D getBounds() {
-//        super.getBounds();
-//        return new Rectangle2D.Double(pos.x, pos.y, width, height);
+//    public void setX(int x) {
+//        super.setX(x);
+//    }
+//
+//    public void setY(int y) {
+//        super.setY(y);
 //    }
 
     @Override
@@ -208,5 +192,9 @@ public class Bullet extends MobileEntity {
 
     public boolean isEntityActive() {
         return entity.isActive();
+    }
+
+    public void resetBounds() {
+        updateBounds(2);
     }
 }

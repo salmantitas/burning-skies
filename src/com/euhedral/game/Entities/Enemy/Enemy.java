@@ -176,10 +176,12 @@ public abstract class Enemy extends Airplane {
 //                g.setColor(Color.green);
 //            else g.setColor(Color.red);
 //            g.drawString("InscreenX", (int) x, (int) y);
+
+//            g.setColor(Color.RED);
+//            g.fillRect(100, 100, width, height);
         } else {
             renderExplosion(g);
         }
-        g.setColor(Color.RED);
     }
 
     @Override

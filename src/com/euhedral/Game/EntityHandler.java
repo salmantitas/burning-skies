@@ -187,6 +187,7 @@ public class EntityHandler {
         } else {
             playerPositon.setPosition(player.getCenterX(), player.getCenterY());
         }
+
         playerRadius = player.getRadius();
     }
 
@@ -261,6 +262,13 @@ public class EntityHandler {
 //        player = new Player(x, y, levelHeight);
 //        player.setGround(VariableHandler.gotGround());
 //        player.setPower(VariableHandler.power.getValue());
+
+        if (playerPositon == null) {
+            playerPositon = new Position(player.getCenterX(), player.getCenterY());
+        } else {
+            playerPositon.setPosition(player.getCenterX(), player.getCenterY());
+        }
+
         setCameraToPlayer();
     }
 
@@ -564,7 +572,7 @@ public class EntityHandler {
 
     private void playerVsEnemyBulletCollision() {
         if (playerRadius > -1)
-            bullets.destroyIfWithinRadius(playerPositon.x, playerPositon.y, playerRadius);
+            bullets.destroyIfWithinRadius(playerPositon, playerRadius);
         bullets.checkCollision(player);
     }
 

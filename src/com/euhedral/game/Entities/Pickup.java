@@ -26,9 +26,17 @@ public class Pickup extends MobileEntity {
         this.color = color;
     }
 
+//    @Override
+//    public void update() {
+//        super.update();
+//    }
+
+
     @Override
-    public void update() {
-        super.update();
+    protected void move() {
+        super.move();
+
+        pos.x = Utility.clamp(pos.x, VariableHandler.deadzoneWidth, VariableHandler.deadzoneRightX);
     }
 
     @Override

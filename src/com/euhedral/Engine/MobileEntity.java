@@ -2,6 +2,8 @@ package com.euhedral.Engine;
 
 import com.euhedral.Game.EntityID;
 
+import java.awt.*;
+
 public abstract class MobileEntity extends Entity {
 
     protected class Physics {
@@ -97,6 +99,10 @@ public abstract class MobileEntity extends Entity {
 
     protected void updateBounds() {
         collisionBox.setBounds( pos.x, pos.y, width, height);
+    }
+
+    protected void updateBounds(int offset) {
+        collisionBox.setBounds( pos.x + offset, pos.y + offset, width - 2 * offset, height - 2 * offset);
     }
 
 //    @Override

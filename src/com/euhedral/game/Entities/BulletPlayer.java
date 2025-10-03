@@ -56,6 +56,7 @@ public class BulletPlayer extends Bullet{
                 }
             }
             super.update();
+            updateBounds();
         } else if (state == STATE_IMPACT) {
             impact.runAnimation();
 //            impactTimer++;

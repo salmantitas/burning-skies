@@ -23,9 +23,6 @@ public abstract class Airplane extends MobileEntity {
     protected TextureHandler textureHandler;
     protected BufferedImage damageImage;
 
-    // debug
-    protected boolean debug = false;
-
     public Airplane(double x, double y, EntityID id) {
         super(x, y, id);
         collisionBox = new CollisionBox(this, 2);
@@ -63,25 +60,16 @@ public abstract class Airplane extends MobileEntity {
         return collisionBox.getBounds(1);
     }
 
-    // Render
-
-
-    @Override
-    public void render(Graphics g) {
-        super.render(g);
-        if (debug) {
-            renderBounds(g);
-        }
-    }
-
     protected void renderDamageImage() {
         g2d.drawImage(damageImage, (int) pos.x, (int) pos.y, null);
     }
 
     @Override
     protected void renderBounds(Graphics g) {
-        g.setColor(Color.green);
         g2d = (Graphics2D) g;
+        g2d.setColor(Color.green);
+
+        g2d.setStroke( new BasicStroke(1));
 
         g2d.draw(getBoundsVertical());
         g2d.draw(getBoundsHorizontal());

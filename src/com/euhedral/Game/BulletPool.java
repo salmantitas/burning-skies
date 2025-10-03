@@ -3,6 +3,7 @@ package com.euhedral.Game;
 import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.MobileEntity;
 import com.euhedral.Engine.Pool;
+import com.euhedral.Engine.Position;
 import com.euhedral.Game.Entities.Bullet;
 import com.euhedral.Game.Entities.BulletEnemy;
 import com.euhedral.Game.Entities.BulletPlayer;
@@ -114,11 +115,11 @@ public class BulletPool extends Pool {
                 destroy(bullet, player);
 
                 if (GameController.godMode) {
-
-                } else {
-                    int bulletDamage = 10;
-                    player.damage((int ) (bulletDamage * Difficulty.getDamageTakenMult()) );
+                    return;
                 }
+
+                int bulletDamage = 10;
+                player.damage((int ) (bulletDamage * Difficulty.getDamageTakenMult()) );
             }
         }
     }
@@ -145,6 +146,7 @@ public class BulletPool extends Pool {
                 if (bullet.checkDeathAnimationEnd()) {
                     increase(bullet);
                     bullet.resetEntity();
+                    bullet.resetBounds();
                 }
             }
         }
@@ -170,17 +172,17 @@ public class BulletPool extends Pool {
         }
     }
 
-    public void destroyIfWithinRadius(double x, double y, int radius) {
+    public void destroyIfWithinRadius(Position pos, int radius) {
         for (int i = 0; i < entities.size(); i ++) {
             entity = entities.get(i);
             if (entity.isActive())
-                destroyIfWithinRadiusHelper(x, y, radius);
+                destroyIfWithinRadiusHelper(pos, radius);
         }
     }
 
-    private void destroyIfWithinRadiusHelper(double x, double y, int radius) {
+    private void destroyIfWithinRadiusHelper(Position pos, int radius) {
         bulletEnemy = (BulletEnemy) entity;
-        if (bulletEnemy.inRadius(x,y,radius)) {
+        if (bulletEnemy.inRadius(pos,radius)) {
             if (bulletEnemy.isBelowDeadZoneTop()) {
                 destroy(bulletEnemy);
             }

@@ -41,13 +41,13 @@ public class EnemyDrone1 extends Enemy{
     @Override
     public void update() {
         super.update();
-        if (updateSkip == 10) {
-            updateDestination();
-            calculateVelocities(destinationX, destinationY);
-            updateSkip = 0;
-        } else {
-            updateSkip++;
-        }
+            if (updateSkip == 10) {
+                updateDestination();
+                calculateVelocities(destinationX, destinationY);
+                updateSkip = 0;
+            } else {
+                updateSkip++;
+            }
     }
 
     @Override
