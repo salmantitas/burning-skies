@@ -51,13 +51,29 @@ public class Background {
     }
 
     public void update() {
-        backgroundObjects.update();
-        cloudSpawnCount++;
-        if (cloudSpawnCount > cloudSpawnCount_MAX) {
-            spawnNewCloud();
-            cloudSpawnCount = 0;
-            cloudSpawnCount_MAX = Utility.randomRangeInclusive(54*cloudScale, 54*(cloudScale + 1));
+
+        if (Engine.stateIs(GameState.Game)) {
+            scrollRate = scrollRateGame;
+//                backgroundScrollAcc += scrollRate;
+        } else if (Engine.stateIs(GameState.Transition)) {
+            scrollRate = scrollRateTransition;
+        } else {
+            scrollRate = 0;
         }
+
+        backgroundScroll += scrollRate;
+
+        if (backgroundScroll >= maxScroll) {
+            backgroundScroll = 0;
+        }
+
+//        backgroundObjects.update();
+//        cloudSpawnCount++;
+//        if (cloudSpawnCount > cloudSpawnCount_MAX) {
+//            spawnNewCloud();
+//            cloudSpawnCount = 0;
+//            cloudSpawnCount_MAX = Utility.randomRangeInclusive(54*cloudScale, 54*(cloudScale + 1));
+//        }
 //        backgroundObjects.disableIfOutsideBounds(1);
     }
 
@@ -99,20 +115,7 @@ public class Background {
 
             }
 
-            if (Engine.stateIs(GameState.Game)) {
-                scrollRate = scrollRateGame;
-//                backgroundScrollAcc += scrollRate;
-            } else if (Engine.stateIs(GameState.Transition)) {
-                scrollRate = scrollRateTransition;
-            } else {
-                scrollRate = 0;
-            }
 
-            backgroundScroll += scrollRate;
-
-            if (backgroundScroll >= maxScroll) {
-                backgroundScroll = 0;
-            }
 //
 //                Utility.log("Scroll: " + backgroundScroll);
 //                        timesRenderedIn++;
@@ -186,6 +189,9 @@ public class Background {
 
     private void spawnNewCloud() {
         Clouds cloud = new Clouds(Utility.randomRangeInclusive(0, Engine.WIDTH), -100, EntityID.Background);
+
+        cloudScale = Utility.randomRangeInclusive(1, 10);
+
         cloud.setWidth(48*cloudScale);
         cloud.setHeight(54*cloudScale);
         backgroundObjects.add(cloud);
