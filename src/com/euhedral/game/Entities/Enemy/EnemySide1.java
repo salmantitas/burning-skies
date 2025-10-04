@@ -25,7 +25,7 @@ public class EnemySide1 extends Enemy{
         setImage(textureHandler.enemySide[0]);
 
         health_MAX = 3;
-        velX_MIN = 10f;
+        velX_MIN = 9f;
 
 //        shootTimer = shootTimerDefault;
         commonInit();

@@ -28,7 +28,7 @@ public class EnemyDrone5 extends EnemyDrone1 {
         attackEffect = true;
 
         health_MAX = 2;
-        bulletVelocity = 3;
+        bulletVelocity = 2;
         commonInit();
     }
 
