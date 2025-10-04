@@ -10,17 +10,11 @@ public class State {
         gameController.updateUI();
         gameController.updateBackground();
 
-//        gameController.updateSounds();
-
         if (Engine.stateIs(GameState.Quit))
             Engine.stop();
 
-        if (!Engine.stateIs(GameState.Pause) && !Engine.stateIs(GameState.Game) && !Engine.stateIs(GameState.Transition))
+//        if (!Engine.stateIs(GameState.Pause) && !Engine.stateIs(GameState.Game) && !Engine.stateIs(GameState.Transition))
 //            resetGame();
-
-
-
-//            uiHandler.update();
 
         if (Engine.stateIs(GameState.Menu) || Engine.stateIs(GameState.GameOver)) {
             gameController.resetLevelLoaded();
@@ -43,7 +37,5 @@ public class State {
                     gameController.spawn();
             }
         }
-
-//        background.update();
     }
 }

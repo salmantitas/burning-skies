@@ -312,7 +312,21 @@ public class VariableHandler {
             renderTimer(g);
         }
 
+        renderKillstreak(g);
+
 //            renderFPS(g);
+    }
+
+    private static void renderKillstreak(Graphics g) {
+        g.setColor(Color.YELLOW);
+
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.setComposite(Utility.makeTransparent(StatePlay.killTimer.getProgress()));
+
+        g.drawString("Killstreak: " + StatePlay.getKillstreak(), 500, 100);
+
+        g2d.setComposite(Utility.makeTransparent(1));
     }
 
     public static void renderScore(Graphics g) {

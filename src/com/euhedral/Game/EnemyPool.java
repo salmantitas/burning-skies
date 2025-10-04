@@ -365,8 +365,10 @@ public class EnemyPool extends Pool {
 
     private void destroy(Enemy enemy) {
         enemy.destroy();
-        if (!GameController.godMode)
+        if (!GameController.godMode) {
             VariableHandler.increaseScore(enemy.getScore());
+            StatePlay.increaseKillstreak();
+        }
         EntityHandler.lastDestroyedType = enemy.getEnemyType();
         EntityHandler.lastDestroyedX = enemy.getX();
         EntityHandler.lastDestroyedY = enemy.getY();
