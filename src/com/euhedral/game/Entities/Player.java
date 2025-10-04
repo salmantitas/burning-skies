@@ -26,6 +26,7 @@ public class Player extends Airplane {
     int shieldTimer = 0;
     int shieldTimer_MAX = 30;
     private Pulse pulse;
+    private int homingAngle = 180;
 
     // Test
     private int mx, my;
@@ -105,7 +106,7 @@ public class Player extends Airplane {
         }
 
         pulse.update(bulletVelocity);
-
+        homingAngle++;
     }
 
     @Override
@@ -188,7 +189,8 @@ public class Player extends Airplane {
     private void renderHoming(Graphics2D g2d) {
         if (VariableHandler.homing) {
             g2d.setColor(Color.RED);
-            g2d.drawOval(pos.intX() + width, pos.intY(), 10, 10);
+            g2d.setStroke(new BasicStroke(1));
+            g2d.drawArc(pos.intX(), pos.intY(), width, height, homingAngle, 10);
         }
     }
 
