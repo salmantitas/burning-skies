@@ -55,7 +55,7 @@ public abstract class Enemy extends Airplane {
     int expX;
     int expY;
 
-    private Reflection reflection;
+    protected Reflection reflection;
     int reflectionX, reflectionY, newWidth, newHeight;
 
     int disableOffset = 64 * 3;
@@ -468,7 +468,7 @@ public abstract class Enemy extends Airplane {
 
     // Private Methods
 
-    private double getCenterY() {
+    protected double getCenterY() {
         return (pos.y + height / 2 + 2);
     }
 

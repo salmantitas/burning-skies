@@ -219,7 +219,7 @@ public class EnemyGenerator {
 
         switch (enemytype) {
             case VariableHandler.TYPE_MINE1:
-                limit = 4;
+                limit = 2;
                 break;
             case VariableHandler.TYPE_SIDE1:
                 limit = limitSide;
@@ -324,10 +324,18 @@ public class EnemyGenerator {
                     spawnX = Utility.randomRangeInclusive(xStart + 3, xEnd - 3);
                 }
             } else if (enemytype == VariableHandler.TYPE_MINE1) {
-                spawnX = Utility.randomRangeInclusive(xStart, xStart + 1);
-                if (spawnX > xStart) {
+
+                if (EntityHandler.exclusionZonesContains(xStart)) {
                     spawnX = xEnd;
+                } else if (EntityHandler.exclusionZonesContains(xEnd)) {
+                    spawnX = xStart;
+                } else {
+                    spawnX = Utility.randomRangeInclusive(xStart, xStart + 1);
+                    if (spawnX > xStart) {
+                        spawnX = xEnd;
+                    }
                 }
+
             } else {
                 spawnX = Utility.randomRangeInclusive(xStart, xEnd);
 

@@ -7,6 +7,8 @@ import com.euhedral.Game.GameController;
 import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 public class EnemyMinefield1 extends Enemy{
 
@@ -68,13 +70,49 @@ public class EnemyMinefield1 extends Enemy{
     }
 
     private void updateBulletAngle() {
-        int targetY = 0;
+        int targetX = Engine.WIDTH/2;
+        int targetY = Engine.HEIGHT/2;
+
         if (velY > 0) {
             targetY = levelHeight;
         } else {
             targetY = 0;
         }
-        bulletAngle = calculateAngle(Engine.WIDTH/2, targetY);
+
+        bulletAngle = calculateAngle(targetX, targetY);
+    }
+
+    @Override
+    protected void drawImage(Graphics g, BufferedImage image) {
+        Graphics2D g2d = (Graphics2D) g;
+        AffineTransform original = g2d.getTransform();
+        if (velY < 0 ) {
+            g2d.rotate(Math.toRadians(180), pos.intX() + width/2, pos.intY() + height/2);
+        }
+        super.drawImage(g, image);
+        g2d.setTransform(original);
+    }
+
+    @Override
+    public void renderReflection(Graphics2D g2d, float transparency) {
+        g2d.setComposite(Utility.makeTransparent(transparency));
+
+        reflectionX = reflection.calculateReflectionX(pos.x, getCenterX());
+        reflectionY = reflection.calculateReflectionY(pos.y, getCenterY());
+        newWidth = (int) (width * reflection.sizeOffset);
+        newHeight = (int) (height * reflection.sizeOffset);
+
+        if (state == STATE_ACTIVE) {
+            AffineTransform original = g2d.getTransform();
+            if (velY < 0 ) {
+                g2d.rotate(Math.toRadians(180), pos.intX() + width/2, pos.intY() + height/2);
+            }
+            g2d.drawImage(image, reflectionX + (jitter_MULT * jitter), reflectionY + (jitter_MULT * jitter), newWidth, newHeight, null);
+            g2d.setTransform(original);
+        } else if (state == STATE_EXPLODING) {
+            explosion.drawAnimation(g2d, reflectionX, reflectionY, newWidth, newHeight);
+        }
+        g2d.setComposite(Utility.makeTransparent(1f));
     }
 
     @Override

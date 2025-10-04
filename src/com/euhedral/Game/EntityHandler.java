@@ -617,10 +617,6 @@ public class EntityHandler {
         return enemies.getActive(enemyType);
     }
 
-//    public static ArrayList<Integer> getExclusionZones() {
-//        return enemies.getExclusionZones();
-//    }
-
     public static boolean exclusionZonesContains(int x) {
         return enemies.exclusionZonesContains(x);
     }

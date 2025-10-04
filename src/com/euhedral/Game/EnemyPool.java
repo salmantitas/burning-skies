@@ -243,7 +243,8 @@ public class EnemyPool extends Pool {
     }
 
     private void addExclusionZone(Entity entity, int enemyType) {
-        if (enemyType == VariableHandler.TYPE_STATIC1 || enemyType == VariableHandler.TYPE_SCATTER1) {
+        if (enemyType == VariableHandler.TYPE_STATIC1 || enemyType == VariableHandler.TYPE_SCATTER1 || enemyType == VariableHandler.TYPE_SCATTER2
+        || enemyType == VariableHandler.TYPE_MINE1) {
             done = false;
             for (int i = 0; i < 10; i++) {
                 if (done) { }
@@ -260,10 +261,6 @@ public class EnemyPool extends Pool {
 //            }
         }
     }
-
-//    public ArrayList<Integer> getExclusionZones() {
-//        return exclusionZones;
-//    }
 
     public boolean exclusionZonesContains(int x) {
         return exclusionZones.contains(x);
