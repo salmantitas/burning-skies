@@ -3,7 +3,6 @@ package com.euhedral.Game.Entities;
 import com.euhedral.Engine.MobileEntity;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.*;
-//import com.euhedral.game.PickupID;
 
 import java.awt.*;
 
@@ -26,12 +25,6 @@ public class Pickup extends MobileEntity {
         this.color = color;
     }
 
-//    @Override
-//    public void update() {
-//        super.update();
-//    }
-
-
     @Override
     protected void move() {
         super.move();
@@ -39,16 +32,8 @@ public class Pickup extends MobileEntity {
         pos.x = Utility.clamp(pos.x, VariableHandler.deadzoneWidth, VariableHandler.deadzoneRightX - width );
     }
 
-    @Override
-    public void render(Graphics g) {
-        super.render(g);
-//        drawDefault(g);
-    }
-
     public void resurrect(double x, double y, EntityID id) {
         super.resurrect(x, y, id);
-//        this.x = x;
-//        this.y = y;
         this.id = id;
         selectImage();
     }
