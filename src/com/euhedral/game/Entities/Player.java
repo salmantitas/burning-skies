@@ -104,13 +104,6 @@ public class Player extends Airplane {
             shieldTimer--;
         }
 
-//        if (VariableHandler.shootRateBoostDuration > 0) {
-//            shootRateBoost = 4;
-//            VariableHandler.shootRateBoostDuration--;
-//        } else {
-//            shootRateBoost = 0;
-//        }
-
         pulse.update(bulletVelocity);
 
     }
@@ -187,8 +180,16 @@ public class Player extends Airplane {
         }
 
         pulse.render(g2d, pos, width, height, bulletVelocity);
+        renderHoming(g2d);
 
 //        renderStats(g);
+    }
+
+    private void renderHoming(Graphics2D g2d) {
+        if (VariableHandler.homing) {
+            g2d.setColor(Color.RED);
+            g2d.drawOval(pos.intX() + width, pos.intY(), 10, 10);
+        }
     }
 
     @Override
@@ -287,6 +288,7 @@ public class Player extends Airplane {
         turretLeftX = (int) (pos.x + 4);
 
 //        VariableHandler.homing = true; // todo: Test Only
+
         if (VariableHandler.homing) {
             VariableHandler.homing = false;
 

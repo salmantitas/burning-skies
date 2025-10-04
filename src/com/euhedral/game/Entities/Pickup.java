@@ -38,8 +38,9 @@ public class Pickup extends MobileEntity {
         selectImage();
     }
 
-    public void collision() {
+    public void collision(Player player) {
         int pickupSound = SoundHandler.PICKUP;
+
         if (id == EntityID.PickupHealth)
             VariableHandler.health.increase(value);
         else if (id == EntityID.PickupShield) {
@@ -47,14 +48,14 @@ public class Pickup extends MobileEntity {
         }
         else if (id == EntityID.PickupHoming) {
 //            if (VariableHandler.power.isMax())
-                VariableHandler.homing = true;
+                VariableHandler.homing = true; // Player.enableHoming();
 //            VariableHandler.power.increase(value);
         }
         else if (id == EntityID.PickupFirepower) {
             VariableHandler.firepower.increase(value);
         }
         else if (id == EntityID.PickupPulse)
-            VariableHandler.pulse = true;
+            VariableHandler.pulse = true; // Player.enablePulse();
 //        else if (id == EntityID.PickupBomb)
 //            VariableHandler.shield.increase(value);
         SoundHandler.playSound(pickupSound);

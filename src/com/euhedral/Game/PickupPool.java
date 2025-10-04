@@ -27,7 +27,7 @@ public class PickupPool extends Pool {
             pickup = (Pickup) entity;
             if (pickup.isActive()) {
                 if (pickup.checkCollision(player)) {
-                    pickup.collision();
+                    pickup.collision(player);
                     increase();
 //                    Utility.log("Pool: " + pickups.getPoolSize());
                 }
