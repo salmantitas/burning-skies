@@ -96,6 +96,7 @@ public class Button extends UIItem{
                 g.fill3DRect(x,y,width,height, true);
             else if (outline) {
                 g.setColor(Color.BLACK);
+                ((Graphics2D) g).setStroke( new BasicStroke(1));
                 g.drawRect(x, y, width, height);
             }
 
