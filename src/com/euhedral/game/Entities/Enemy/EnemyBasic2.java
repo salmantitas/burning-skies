@@ -12,7 +12,6 @@ public class EnemyBasic2 extends Enemy{
         super(x, y, levelHeight);
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[1]);
-//        setImage(textureHandler.enemy[1]); // todo: Create new image
 
         shootTimerDefault = 125;
         score = 30;
@@ -24,13 +23,6 @@ public class EnemyBasic2 extends Enemy{
 
         velX_MIN = 1;
     }
-
-//    @Override
-//    public void initialize() {
-//        super.initialize();
-//
-//
-//    }
 
     @Override
     public void update() {
@@ -50,19 +42,6 @@ public class EnemyBasic2 extends Enemy{
             }
         }
     }
-
-    @Override
-    protected void commonInit() {
-        this.setHealth(health_MAX);
-        velY = forwardVelocity;
-    }
-
-//    @Override
-//    public void resurrect(int x, int y) {
-//        commonInit();
-//        explosion.playedOnce = false;
-//        super.resurrect(x, y);
-//    }
 
     @Override
     public int getTurretX() {

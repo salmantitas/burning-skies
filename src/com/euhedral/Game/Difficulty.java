@@ -216,15 +216,17 @@ public class Difficulty {
     }
 
     public static void increaseEnemyFireRate() {
-        enemyFireRateMult *= 2;
+        double mult_MAX = 1.5;
+
+        enemyFireRateMult += 0.5;
         if (enemyFireRateMult > mult_MAX)
             enemyFireRateMult = mult_MAX;
     }
 
     public static void decreaseEnemyFireRate() {
-        enemyFireRateMult /= 2;
-        if (enemyFireRateMult < 1d / mult_MAX)
-            enemyFireRateMult = 1d / mult_MAX;
+        enemyFireRateMult -= 0.5;
+        if (enemyFireRateMult < 1d)
+            enemyFireRateMult = 1d;
     }
 
     public static double getEnemyBulletSpeedMult() {

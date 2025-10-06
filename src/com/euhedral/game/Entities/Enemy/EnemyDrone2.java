@@ -24,11 +24,6 @@ public class EnemyDrone2 extends EnemyDrone1 {
         commonInit();
     }
 
-//    @Override
-//    public void update() {
-//        super.update();
-//    }
-
     @Override
     protected void shoot() {
         resetShootTimer();
@@ -42,7 +37,6 @@ public class EnemyDrone2 extends EnemyDrone1 {
                 forwardVelocity -= deceleration;
             } else {
                 forwardVelocity = 4;
-//                forwardVelocity += 0.2; // todo: Use for future drones // too high = 0.5 // too low = 0.1
             }
         } else if (isExploding()) {
             velY = explodingVelocity;

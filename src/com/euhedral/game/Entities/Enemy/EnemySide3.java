@@ -20,7 +20,9 @@ public class EnemySide3 extends Enemy{
 
         bulletVelocity = 5;
         score = 100;
-//        shootTimerDefault = 200;
+
+        shootTimerFirst = 40;
+
         attackEffect = true;
 
         xMin = -2*width;
@@ -105,7 +107,7 @@ public class EnemySide3 extends Enemy{
 
     @Override
     protected void commonInit() {
-        setHealth(health_MAX);
+        super.commonInit();
         velX = velX_MIN;
         velY = 0;
         firstEntry = true;

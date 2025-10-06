@@ -1,6 +1,7 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Difficulty;
 import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
@@ -8,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 
 public class EnemyDrone3 extends EnemyDrone1 {
 
-    int explosionTimer;
+    double explosionTimer;
     int explosionTimer_MAX = 400; // too high = 1000; too low = 100
     int explosionOffset;
 
@@ -26,9 +27,6 @@ public class EnemyDrone3 extends EnemyDrone1 {
         score = 20;
         damage = 50;
 
-//        power = 1;
-//        shootTimerDefault = 250;
-//        minVelX = 2f;
         health_MAX = 1;
         commonInit();
     }
@@ -37,13 +35,14 @@ public class EnemyDrone3 extends EnemyDrone1 {
     public void update() {
         super.update();
         if (isActive() && inscreenY) {
-            explosionTimer++;
-            score = (explosionTimer * score_MAX) / explosionTimer_MAX;
+            explosionTimer += Difficulty.getEnemyFireRateMult();
+            score = (int) ((explosionTimer * score_MAX) / explosionTimer_MAX);
             if (explosionTimer >= explosionTimer_MAX) {
                 state = STATE_EXPLODING;
             }
-            explosionOffset = explosionTimer / 2 - Utility.intAtWidth640(7);
+            explosionOffset = (int) (explosionTimer / 2 - Utility.intAtWidth640(7));
         }
+        Utility.log("Score: " + score);
     }
 
     @Override
@@ -53,12 +52,10 @@ public class EnemyDrone3 extends EnemyDrone1 {
             g.setColor(Color.RED);
             g2d = (Graphics2D) g;
 
-//            maxOpacity = 0.4f;
-//            float minOpacity = 0.1f;
             explosionRadiusOpacity = (float) explosionTimer / 1000;
 
             g2d.setComposite(Utility.makeTransparent(Math.max(minOpacity, explosionRadiusOpacity)));
-            g.fillOval((int) pos.x - explosionOffset, (int) pos.y - explosionOffset, explosionTimer, explosionTimer);
+            g.fillOval((int) pos.x - explosionOffset, (int) pos.y - explosionOffset, (int) explosionTimer, (int) explosionTimer);
             g2d.setComposite(Utility.makeTransparent(1f));
         }
 
@@ -68,7 +65,7 @@ public class EnemyDrone3 extends EnemyDrone1 {
     @Override
     protected void renderExplosion(Graphics g) {
         if (!explosion.playedOnce) {
-            size = Math.max(explosionTimer, explosionTimer);
+            size = (int) Math.max(explosionTimer, explosionTimer);
             expX = (int) pos.x - (size - width)/2;
             expY = (int) pos.y - (size - height)/2;
             explosion.drawAnimation(g, expX, expY, size, size);
@@ -93,7 +90,7 @@ public class EnemyDrone3 extends EnemyDrone1 {
 
     @Override
     public void updateBounds() {
-        size = Math.max(explosionTimer, explosionTimer);
+        size = (int) Math.max(explosionTimer, explosionTimer);
         expX = (int) pos.x - (size - width)/3;
         expY = (int) pos.y - (size - height)/3;
 

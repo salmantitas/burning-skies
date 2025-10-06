@@ -14,17 +14,16 @@ public class EnemyDrone1 extends Enemy{
 
     public EnemyDrone1(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
+//        textureHandler = GameController.getTexture();
+        setImage(textureHandler.enemyDrone[0]);
 
         score = 10;
 
-        textureHandler = GameController.getTexture();
-        setImage(textureHandler.enemyDrone[0]);
         width = Utility.intAtWidth640(16);
         height = width;
 
         health_MAX = 1;
         damage = 15;
-        shootTimerFirst = 100;
         commonInit();
     }
 
@@ -81,8 +80,8 @@ public class EnemyDrone1 extends Enemy{
         this.setHealth(health_MAX);
         forwardVelocity = 5;
         shootTimer = shootTimerFirst;
-//        velX = minVelX;
         updateDestination();
+        calibrateShootTimerFirst();
     }
 
 //    @Override

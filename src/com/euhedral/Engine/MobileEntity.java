@@ -135,7 +135,9 @@ public abstract class MobileEntity extends Entity {
         // Vectors
         double vectorABx = aX - bX;
         double vectorABy = (aY - bY);
-        double magnitudeAB = Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
+        double magnitudeAB = calculateMagnitude(aX, aY, bX, bY);
+
+//                Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
 
         // Magnitudes
         double vectorACx = aX - cX;

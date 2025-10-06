@@ -15,10 +15,6 @@ public class EnemyScatter2 extends Enemy {
     int MOVING_DOWN = 0;
     int MOVING_CIRCLE = 1;
 
-    int movementFactor;
-
-    boolean first;
-
     double tempAngle;
     int degreesPerBullet;
     int shotCount = 1, shotSign = 1;
@@ -26,16 +22,15 @@ public class EnemyScatter2 extends Enemy {
     public EnemyScatter2(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
 
-        bulletVelocity = Utility.intAtWidth640(2);
-        shootTimerDefault = 300;
-        shootTimer = 50;
         score = 150;
 
-        double decelerationMAX = 0.012;
-        double decelerationMIN = 0.010;
-        int randMAX = (int) (decelerationMAX / decelerationMIN);
-        int decelerationInt = Utility.randomRangeInclusive(1, randMAX);
-        deceleration = (double) (decelerationInt) * decelerationMIN;
+        bulletVelocity = Utility.intAtWidth640(2);
+
+        shootTimerFirst = 45;
+        shootTimerDefault = 250;
+
+
+        double decelerationMAX = 0.015;
         deceleration = decelerationMAX;
 
         bulletsPerShot_MAX = 5;
@@ -63,13 +58,6 @@ public class EnemyScatter2 extends Enemy {
         this(x, y, levelHeight);
         this.color = color;
     }
-
-//    @Override
-//    public void initialize() {
-//        super.initialize();
-//
-//
-//    }
 
     @Override
     public void update() {
@@ -111,7 +99,7 @@ public class EnemyScatter2 extends Enemy {
 
     @Override
     protected void commonInit() {
-        this.setHealth(health_MAX);
+        super.commonInit();
         velY = 2.5f;
         velX = 0;
         movementState = MOVING_DOWN;

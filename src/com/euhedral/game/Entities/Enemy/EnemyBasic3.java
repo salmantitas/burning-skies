@@ -14,7 +14,9 @@ public class EnemyBasic3 extends Enemy{
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[2]);
 
-        shootTimerDefault = 50; // too low: 10, too high: 100
+        shootTimerFirst = 20;
+        shootTimerDefault = 60;
+
         score = 40;
         angle = SOUTH;
 
@@ -63,9 +65,7 @@ public class EnemyBasic3 extends Enemy{
 
     @Override
     protected void commonInit() {
-        this.setHealth(health_MAX);
-//        velY = forwardVelocity;
-//        velX_MIN = 0;
+        super.commonInit();
         angle = SOUTH;
     }
 

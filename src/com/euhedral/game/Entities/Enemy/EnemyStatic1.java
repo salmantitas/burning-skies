@@ -16,27 +16,18 @@ public class EnemyStatic1 extends Enemy {
 
         bulletVelocity = 5;
         shootTimerDefault = 200;
-//        shootTimer = shootTimerDefault;
         score = 75;
 
-        double decelerationMAX = 0.012;
-        double decelerationMIN = 0.010;
-//        int randMAX = (int) (decelerationMAX / decelerationMIN);
-//        int decelerationInt = Utility.randomRangeInclusive(1, randMAX);
-//        deceleration = (double) (decelerationInt) * decelerationMIN;
-        deceleration = decelerationMAX;
+        deceleration = 0.012;
 
         attackEffect = true;
 
         setImage(textureHandler.enemyStatic[0]);
 
-
         health_MAX = 4;
 
         velX = 0;
         velY_MIN = 1.75f;
-//        distance = 0; // stub ; width * 2;
-//        movementDistance = distance;
         commonInit();
         damage = 90;
     }
@@ -45,12 +36,6 @@ public class EnemyStatic1 extends Enemy {
         this(x, y, levelHeight);
         this.color = color;
     }
-
-//    @Override
-//    public void initialize() {
-//        super.initialize();
-//
-//    }
 
     @Override
     public void update() {
@@ -65,51 +50,13 @@ public class EnemyStatic1 extends Enemy {
         bulletsPerShot += 1;
     }
 
-    @Override
-    public void move() {
-        super.move();
-//        moveHorizontally();
-    }
-
-    private void moveShoot() {
-//        bullets.add(new BulletEnemy((int) (1.1 * x), y + height / 2, 90));
-//        bullets.add(new BulletEnemy(x + (int) (0.8 * width), y + height / 2, 90));
-    }
 
     @Override
     protected void moveInScreen() {
-//        if (y < verticalPosition) {
         velY = Math.max(0, velY - deceleration);
         pos.y += velY;
-//        }
     }
 
-//    public void moveHorizontally() {
-//        if (movementDistance > 0) {
-//            movementDistance--;
-//        } else {
-//            movementDistance = distance;
-//        }
-//
-//        int
-//                int0 = 0,
-//                int1 = Utility.perc(distance, 30),
-//                int2 = Utility.perc(distance, 50),
-//                int3 = Utility.perc(distance, 80);
-//
-//
-//        if (movementDistance <= distance && movementDistance > int3) {
-//            hMove = HorizontalMovement.LEFT;
-//        } else if (movementDistance <= int3 && movementDistance > int2 || movementDistance <= int1 && movementDistance > int0) {
-//            hMove = HorizontalMovement.NONE;
-//        } else if (movementDistance <= int2 && movementDistance > int1) {
-//            hMove = HorizontalMovement.RIGHT;
-//        }
-
-    /// /        } else if (movementTimer <= int1 && movementTimer > int0) {
-    /// /            hMove = HorizontalMovement.NONE;
-    /// /        }
-//    }
     @Override
     protected void commonInit() {
         this.setHealth(health_MAX);
@@ -131,21 +78,35 @@ public class EnemyStatic1 extends Enemy {
         destinationY = EntityHandler.playerPositon.y;
     }
 
+//    @Override
+//    public void resurrect(double x, double y) {
+//        commonInit();
+//        explosion.playedOnce = false;
+//        super.resurrect(x, y);
+//    }
+
     @Override
-    public void resurrect(double x, double y) {
-        commonInit();
-        explosion.playedOnce = false;
-        super.resurrect(x, y);
+    protected void renderAttackPath(Graphics g) {
+        if (attackEffect) {
+            boolean secondsTillShotFire = (shootTimer < 20);
+            if (isActive() && secondsTillShotFire) {
+                g2d = (Graphics2D) g;
+                g2d.setColor(Color.RED);
+
+                attackPathX = pos.x - (0.5) * (double) width;
+                attackPathY = getTurretY() - (0.5) * (double) height - 24;
+
+                g2d.setComposite(Utility.makeTransparent(0.5f));
+                g2d.fillArc((int) attackPathX, (int) attackPathY, 2 * width, 2 * height, (int) -(calculateShotTrajectory()) - bulletArcAngle / 2, bulletArcAngle);
+                g2d.setComposite(Utility.makeTransparent(1f));
+            }
+        }
     }
 
-//    @Override
-//    public void render(Graphics g) {
-//        g.setColor(Color.BLACK);
-//
-//        g.fillRect((int) destinationX, (int) destinationY, 10, 10);
-//
-//        super.render(g);
-//    }
+    @Override
+    public int getTurretY() {
+        return (int) pos.y + 12;
+    }
 
     @Override
     protected void setEnemyType() {

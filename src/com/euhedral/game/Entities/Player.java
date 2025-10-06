@@ -58,8 +58,8 @@ public class Player extends Airplane {
         physics.acceleration = 0.1;
 //        shootRateBoost = 0;
 //        VariableHandler.shootRateBoostDuration = 0;
-        velY_MIN = 4;
-        velX_MIN = 4;
+        velY_MIN = 5;
+        velX_MIN = 5;
         velY_MAX = 10;
         velX_MAX = 10;
 

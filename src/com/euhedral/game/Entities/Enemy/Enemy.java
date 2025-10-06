@@ -20,7 +20,7 @@ public abstract class Enemy extends Airplane {
 
     protected double offscreenVelY;
     protected boolean moveLeft, moveRight;
-    protected int shootTimerFirst = 50;
+    protected int shootTimerFirst;
     protected boolean inscreenY = false;
     protected float cam;
 
@@ -74,9 +74,9 @@ public abstract class Enemy extends Airplane {
         setLevelHeight(levelHeight);
         bottomBounds = levelHeight + disableOffset;
 
-        score = 50;
+        score = 30;
+        shootTimerFirst = 10;
         shootTimerDefault = 150;
-        shootTimer = shootTimerFirst; // todo: Check if we need to divide this by firerateMult as well
 
         bulletVelocity = 3;
         bulletArcAngle = 15;
@@ -84,9 +84,6 @@ public abstract class Enemy extends Airplane {
         textureHandler = GameController.getTexture();
         damageImage = textureHandler.enemyDamage[0];
         attackEffect = false;
-
-//        boundsVertical = new Rectangle2D.Double();
-//        boundsHorizontal = new Rectangle2D.Double();
 
         setEnemyType();
         forwardVelocity = EntityHandler.backgroundScrollingSpeed;
@@ -97,7 +94,7 @@ public abstract class Enemy extends Airplane {
         explosion = GameController.getTexture().initExplosion(6);
         reflection = new Reflection();
         damage = 35;
-        resetShootTimer();
+//        resetShootTimer();
     }
 
     public Enemy(int x, int y, Color color, int levelHeight) {
@@ -110,13 +107,13 @@ public abstract class Enemy extends Airplane {
 //        updateActive();
         if (state == STATE_ACTIVE) {
             super.update();
-            updateShootTimer(); // todo: maybe move to when in screen
             if (!inscreenY) {
                 inscreenY = pos.y > cam + Utility.percHeight(30);
             }
             if (inscreenY && isActive()) { // todo: potential redundant check for active
 //                if (inscreenX) {
-                    if (shootTimer <= 0) {
+                updateShootTimer(); // todo: maybe move to when in screen
+                if (shootTimer <= 0) {
                         shoot();
                     }
 //                }
@@ -157,10 +154,14 @@ public abstract class Enemy extends Airplane {
         }
     }
 
-//    @Override
-//    public void initialize() {
-//
-//    }
+    protected void calibrateShootTimerFirst(int shootTimerFirst) {
+        this.shootTimerFirst = 10;
+        shootTimer = (int) (shootTimerFirst / Difficulty.getEnemyFireRateMult());
+    }
+
+    protected void calibrateShootTimerFirst() {
+        shootTimer = (int) (shootTimerFirst / Difficulty.getEnemyFireRateMult());
+    }
 
     @Override
     public void render(Graphics g) {
@@ -374,7 +375,7 @@ public abstract class Enemy extends Airplane {
     @Override
     public void resurrect(double x, double y) {
         super.resurrect(x, y);
-        resetShootTimer();
+//        resetShootTimer();
         commonInit();
         explosion.playedOnce = false;
         explosion.endAnimation();
@@ -456,6 +457,7 @@ public abstract class Enemy extends Airplane {
         velX = 0;
         velY = explodingVelocity;
         jitter = 0;
+        calibrateShootTimerFirst();
     }
 
     public int getEnemyType() {

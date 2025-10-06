@@ -14,8 +14,8 @@ public class EnemySide2 extends Enemy{
     public EnemySide2(int x, int y, int levelHeight) {
         super(x, y,  levelHeight);
 
-        shootTimerDefault = 40;
-//        shootTimer = 50;
+        shootTimerFirst = 30;
+        shootTimerDefault = 60;
         score = 70;
         bulletVelocity = 5;
 

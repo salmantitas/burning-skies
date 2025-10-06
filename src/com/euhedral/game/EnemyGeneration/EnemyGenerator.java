@@ -57,24 +57,6 @@ public class EnemyGenerator {
 
     // Enemy Types
     int enemytype;
-//    final int TYPE_BASIC1 = EntityHandler.TYPE_BASIC1;
-//    final int TYPE_HEAVY = EntityHandler.TYPE_HEAVY;
-//    final int TYPE_BASIC2 = EntityHandler.TYPE_BASIC2;
-//    final int TYPE_BASIC3 = EntityHandler.TYPE_BASIC3;
-//    final int TYPE_FAST2 = EntityHandler.TYPE_FAST;
-//    final int TYPE_SIDE1 = EntityHandler.TYPE_SIDE1;
-//    final int TYPE_DRONE1 = EntityHandler.TYPE_DRONE1;
-//    final int TYPE_STATIC = EntityHandler.TYPE_STATIC1;
-//    final int TYPE_DRONE2 = EntityHandler.TYPE_DRONE2;
-//    final int TYPE_SIDE2 = EntityHandler.TYPE_SIDE2;
-//    final int TYPE_SIDE3 = EntityHandler.TYPE_SIDE3;
-//    final int TYPE_SCATTER1 = EntityHandler.TYPE_SCATTER1;
-//    final int TYPE_MINE1 = EntityHandler.TYPE_MINE1;
-//    final int TYPE_MINE2 = EntityHandler.TYPE_MINE2;
-//    final int TYPE_DRONE3 = EntityHandler.TYPE_DRONE3;
-//    final int TYPE_SCATTER2 = EntityHandler.TYPE_SCATTER2;
-//    final int TYPE_DRONE4 = EntityHandler.TYPE_DRONE4;
-//    final int TYPE_DRONE5 = EntityHandler.TYPE_DRONE5;
     int maxTypes;// = TYPE_DRONE5 + 1;
 
     boolean difficultyIncreased = false;
@@ -191,24 +173,24 @@ public class EnemyGenerator {
 //            enemytype = rand;
         }
 
-//        enemytype = TYPE_BASIC1; // stub
-//        enemytype = VariableHandler.TYPE_HEAVY; // stub
-//        enemytype = TYPE_BASIC2; // stub
-//        enemytype = TYPE_BASIC3; // stub
-//        enemytype = TYPE_FAST2; // stub
+//        enemytype = VariableHandler.TYPE_BASIC1; // stub
+//        enemytype = VariableHandler.TYPE_BASIC2; // stub
+//        enemytype = VariableHandler.TYPE_HEAVY;
+//        enemytype = VariableHandler.TYPE_BASIC3; // stub
 //        enemytype = VariableHandler.TYPE_DRONE1; // stub
-//        enemytype = TYPE_SIDE1; // stub
-//        enemytype = TYPE_STATIC1; // stub
-//        enemytype = TYPE_DRONE2; // stub
-//        enemytype = TYPE_SIDE2; // stub
-//        enemytype = TYPE_SIDE3; // stub
-//        enemytype = VariableHandler.TYPE_SCATTER1; // stub
+//        enemytype = VariableHandler.TYPE_STATIC1; // stub
+//        enemytype = VariableHandler.TYPE_SIDE1; // stub
+//        enemytype = VariableHandler.TYPE_DRONE2; // stub
+//        enemytype = VariableHandler.TYPE_FAST; // stub
+//        enemytype = VariableHandler.TYPE_SIDE2; // stub
+//        enemytype = VariableHandler.TYPE_DRONE3; // stub
 //        enemytype = VariableHandler.TYPE_MINE1;
-//        enemytype = TYPE_MINE2; // stub
-//        enemytype = TYPE_DRONE3; // stub
-//        enemytype = VariableHandler.TYPE_SCATTER2; // stub
-//        enemytype = TYPE_DRONE4; // stub
+//        enemytype = VariableHandler.TYPE_SCATTER1; // stub
+//        enemytype = VariableHandler.TYPE_DRONE4; // stub
+//        enemytype = VariableHandler.TYPE_SIDE3; // stub
+//        enemytype = VariableHandler.TYPE_MINE2; // stub
 //        enemytype = VariableHandler.TYPE_DRONE5; // stub
+//        enemytype = VariableHandler.TYPE_SCATTER2; //
 //        enemytype = VariableHandler.TYPE_LASER; // stub
 //        enemytype = VariableHandler.TYPE_DRONE6; // stub
 

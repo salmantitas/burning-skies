@@ -15,6 +15,7 @@ public class EnemyMinefield2 extends Enemy{
     public EnemyMinefield2(int x, int y, int levelHeight) {
         super(x, y,  levelHeight);
 
+        shootTimerFirst = 190;
         shootTimerDefault = 30;
 
         score = 80;
@@ -71,10 +72,9 @@ public class EnemyMinefield2 extends Enemy{
 
     @Override
     protected void commonInit() {
-        setHealth(health_MAX);
+        super.commonInit();
         velX = velX_MIN;
         velY = 0;
-        shootTimer = shootTimerDefault;
     }
 
     @Override

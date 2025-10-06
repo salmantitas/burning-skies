@@ -15,8 +15,8 @@ public class EnemyDrone6 extends EnemyDrone1 {
         super(x, y, levelHeight);
         setImage(textureHandler.enemyDroneL[0]);
 
-        shootTimerFirst = 75;
-        shootTimerDefault = 350;
+        shootTimerFirst = 150;
+        shootTimerDefault = 320;
         score = 200;
         damage = 40;
 

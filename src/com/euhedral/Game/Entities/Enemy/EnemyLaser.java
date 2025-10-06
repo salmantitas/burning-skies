@@ -29,7 +29,8 @@ public class EnemyLaser extends Enemy {
         super(x, y, levelHeight);
 
         bulletAngle = 90;
-        shootTimerDefault = 200;
+        shootTimerFirst = 60;
+        shootTimerDefault = 240;
         score = 150;
 
         velX_MIN = 1;
@@ -44,11 +45,11 @@ public class EnemyLaser extends Enemy {
         velX = 0;
         velY_MIN = 1.7f;
 
-        health_MAX = 4;
+        health_MAX = 5;
         commonInit();
         damage = 30;
 
-        laser = new Laser(this, 60);
+        laser = new Laser(this, 90);
     }
 
     @Override
@@ -83,14 +84,6 @@ public class EnemyLaser extends Enemy {
         laser.start();
     }
 
-    @Override
-    protected void commonInit() {
-        this.setHealth(health_MAX);
-        velY = forwardVelocity;
-        bulletAngle = bulletAngleMIN;
-        resetShootTimer();
-    }
-
     private void updateDestination() {
         destinationX = EntityHandler.playerPositon.intX();
     }
@@ -106,12 +99,14 @@ public class EnemyLaser extends Enemy {
     protected void renderAttackPath(Graphics g) {
         g.setColor(Color.RED);
 
-        if (isActive()) {
+        if (isActive() && inscreenY) {
             laser.render(g);
 
-            if (shootTimer <= 50) {
+            int showTime = 60; // todo: Needs better name
+
+            if (shootTimer <= showTime) {
                 g2d = (Graphics2D) g;
-                float transparency = 0.5f - shootTimer / (2 * 50f);
+                float transparency = 0.5f - shootTimer / (2f * showTime);
                 g2d.setComposite(Utility.makeTransparent(transparency));
 
                 g2d.setStroke(new BasicStroke((Math.max(shootTimer / 5, 2))));
@@ -156,6 +151,12 @@ public class EnemyLaser extends Enemy {
     @Override
     public void destroy() {
         super.destroy();
+        laser.stop();
+    }
+
+    @Override
+    public void clear() {
+        super.clear();
         laser.stop();
     }
 }

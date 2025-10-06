@@ -19,14 +19,13 @@ public class EnemyMinefield1 extends Enemy{
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[3]);
 
-        shootTimerDefault = 40;
+        shootTimerDefault = 60;
 //        attackEffect = true;
 
         health_MAX = 2;
         commonInit();
         score = 60;
         forwardVelocity = EntityHandler.backgroundScrollingSpeed + 1;
-//        velX_MIN = 1.75f;
         velY_MIN = forwardVelocity;
 
         yMin = -height;
@@ -38,13 +37,11 @@ public class EnemyMinefield1 extends Enemy{
         bulletVelocity = 3;
     }
 
-    @Override
-    protected void commonInit() {
-        this.setHealth(health_MAX);
-        velY = forwardVelocity;
-        updateBulletAngle();
-        shootTimer = shootTimerDefault;
-    }
+//    @Override
+//    protected void commonInit() {
+//        super.commonInit();
+////        updateBulletAngle();
+//    }
 
     @Override
     protected void shoot() {
@@ -73,11 +70,11 @@ public class EnemyMinefield1 extends Enemy{
         int targetX = Engine.WIDTH/2;
         int targetY = Engine.HEIGHT/2;
 
-        if (velY > 0) {
-            targetY = levelHeight;
-        } else {
+//        if (velY > 0) {
+//            targetY = levelHeight;
+//        } else {
             targetY = 0;
-        }
+//        }
 
         bulletAngle = calculateAngle(targetX, targetY);
     }

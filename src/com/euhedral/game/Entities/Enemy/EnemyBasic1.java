@@ -10,19 +10,14 @@ public class EnemyBasic1 extends Enemy{
 
     public EnemyBasic1(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
-//        textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[0]);
 
-        shootTimerDefault = 150;
 //        attackEffect = true;
-
-        //        enemyType = EntityHandler.TYPE_BASIC;
 
         health_MAX = 2;
         commonInit();
         score = 20;
         spawnInterval = 2 * UPDATES_PER_SECOND;
-//        velX_MIN = 1.5f;
     }
 
     public EnemyBasic1(int x, int y, Color color, int levelHeight) {
@@ -30,20 +25,6 @@ public class EnemyBasic1 extends Enemy{
         this.color = color;
 
     }
-
-
-    @Override
-    protected void commonInit() {
-        this.setHealth(health_MAX);
-        velY = forwardVelocity;
-    }
-
-//    @Override
-//    public void resurrect(int x, int y) {
-//        commonInit();
-//        explosion.playedOnce = false;
-//        super.resurrect(x, y);
-//    }
 
     @Override
     public int getTurretX() {

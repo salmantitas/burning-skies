@@ -15,28 +15,19 @@ public class EnemyScatter1 extends Enemy {
     int MOVING_DOWN = 0;
     int MOVING_CIRCLE = 1;
 
-    int movementFactor;
-
-    boolean first;
-
     int degreesPerBullet;
     double tempAngle;
     int shotCount = 1, shotSign = 1;
 
     public EnemyScatter1(int x, int y, int levelHeight) {
         super(x, y, levelHeight);
-
-        bulletVelocity = 5;
-        shootTimerDefault = 250;
-        shootTimer = 50;
         score = 125;
 
-        double decelerationMAX = 0.012;
-        double decelerationMIN = 0.010;
-        int randMAX = (int) (decelerationMAX / decelerationMIN);
-        int decelerationInt = Utility.randomRangeInclusive(1, randMAX);
-        deceleration = (double) (decelerationInt) * decelerationMIN;
-        deceleration = decelerationMAX;
+        bulletVelocity = 5;
+        shootTimerFirst = 30;
+        shootTimerDefault = 200;
+
+        deceleration = 0.012;
 
         bulletsPerShot_MAX = 3;
         bulletArcAngle = 30;
@@ -50,11 +41,12 @@ public class EnemyScatter1 extends Enemy {
 
         setImage(textureHandler.enemyStatic[1]);
 
-        health_MAX = 5;
+        health_MAX = 4;
 
         velX = 0;
-        velY_MIN = 1.75;
+//        velY_MIN = 1.75;
         velY_MAX = 1;
+        velX_MAX = velY_MAX;
         commonInit();
         damage = 90;
     }
@@ -63,13 +55,6 @@ public class EnemyScatter1 extends Enemy {
         this(x, y, levelHeight);
         this.color = color;
     }
-
-//    @Override
-//    public void initialize() {
-//        super.initialize();
-//
-//
-//    }
 
     @Override
     public void update() {
@@ -118,14 +103,14 @@ public class EnemyScatter1 extends Enemy {
 
             if (hMove == HorizontalMovement.RIGHT) {
                 velX += deceleration;
-                if (Math.abs(velX) >= velY_MAX) {
+                if (Math.abs(velX) >= velX_MAX) {
                     hMove = HorizontalMovement.LEFT;
                 }
             }
 
             if (hMove == HorizontalMovement.LEFT) {
                 velX -= deceleration;
-                if (Math.abs(velX) >= velY_MAX) {
+                if (Math.abs(velX) >= velX_MAX) {
                     hMove = HorizontalMovement.RIGHT;
                 }
             }
@@ -136,7 +121,7 @@ public class EnemyScatter1 extends Enemy {
 
     @Override
     protected void commonInit() {
-        this.setHealth(health_MAX);
+        super.commonInit();
         velY = 2.5f;
         velX = 0;
         movementState = MOVING_DOWN;

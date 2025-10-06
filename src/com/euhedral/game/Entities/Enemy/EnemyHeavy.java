@@ -47,9 +47,7 @@ public class EnemyHeavy extends Enemy {
 
         velX = 0;
         velY_MIN = 1.7f;
-//        forwardVelocity = EntityHandler.backgroundScrollingSpeed;
-//        distance = 0; // stub ; width * 2;
-//        movementDistance = distance;
+
         health_MAX = 4;
         commonInit();
         damage = 60;
@@ -59,13 +57,6 @@ public class EnemyHeavy extends Enemy {
         this(x,y, levelHeight);
         this.color = color;
     }
-
-//    @Override
-//    public void initialize() {
-//        super.initialize();
-//
-//
-//    }
 
     @Override
     public void update() {
@@ -85,13 +76,6 @@ public class EnemyHeavy extends Enemy {
                 movementDistance = movementDistance_MAX;
             }
         }
-//
-//        if (state == STATE_EXPLODING) {
-////            explosion.runAnimation();
-//            if (explosion.playedOnce) {
-////                disable();
-//            }
-//        }
     }
 
     @Override
@@ -125,74 +109,6 @@ public class EnemyHeavy extends Enemy {
     @Override
     protected void shootDefault() {
         bulletsPerShot += 2;
-    }
-
-//    @Override
-//    protected void shoot() {
-//        super.shoot();
-//        shot += 2;
-////        shootDownDefault();
-////        moveShoot();
-//    }
-
-
-    private void incrementBulletAngle() {
-        bulletAngle += bulletAngleINC;
-        if (bulletAngle > bulletAngleMAX)
-            bulletAngle = bulletAngleMIN;
-    }
-
-//    @Override
-//    protected void shootDownDefault() {
-//        shot += 2;
-//        bulletAngle += bulletAngleINC;
-//        if (bulletAngle > bulletAngleMAX)
-//            bulletAngle = bulletAngleMIN;
-//    }
-
-//    @Override
-//    public void move() {
-//        super.move();
-////        moveHorizontally();
-//    }
-
-    private void moveShoot() {
-//        bullets.add(new BulletEnemy((int) (1.1 * x), y + height / 2, 90));
-//        bullets.add(new BulletEnemy(x + (int) (0.8 * width), y + height / 2, 90));
-    }
-
-//    public void moveHorizontally() {
-//        if (movementDistance > 0) {
-//            movementDistance--;
-//        } else {
-//            movementDistance = distance;
-//        }
-//
-//        int
-//                int0 = 0,
-//                int1 = Utility.perc(distance, 30),
-//                int2 = Utility.perc(distance, 50),
-//                int3 = Utility.perc(distance, 80);
-//
-//
-//        if (movementDistance <= distance && movementDistance > int3) {
-//            hMove = HorizontalMovement.LEFT;
-//        } else if (movementDistance <= int3 && movementDistance > int2 || movementDistance <= int1 && movementDistance > int0) {
-//            hMove = HorizontalMovement.NONE;
-//        } else if (movementDistance <= int2 && movementDistance > int1) {
-//            hMove = HorizontalMovement.RIGHT;
-//        }
-////        } else if (movementTimer <= int1 && movementTimer > int0) {
-////            hMove = HorizontalMovement.NONE;
-////        }
-//    }
-
-    @Override
-    protected void commonInit() {
-        this.setHealth(health_MAX);
-        velY = forwardVelocity;
-        bulletAngle = bulletAngleMIN;
-        resetShootTimer();
     }
 
     private void updateDestination() {
@@ -238,11 +154,4 @@ public class EnemyHeavy extends Enemy {
     protected void setEnemyType() {
         enemyType = VariableHandler.TYPE_HEAVY;
     }
-
-//    @Override
-//    public void resurrect(int x, int y) {
-//        commonInit();
-//        explosion.playedOnce = false;
-//        super.resurrect(x, y);
-//    }
 }

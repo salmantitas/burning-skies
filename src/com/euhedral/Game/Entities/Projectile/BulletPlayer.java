@@ -4,6 +4,7 @@ import com.euhedral.Game.*;
 import com.euhedral.Game.Entities.Enemy.Enemy;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class BulletPlayer extends Bullet{
@@ -46,8 +47,10 @@ public class BulletPlayer extends Bullet{
         if (state == STATE_ACTIVE) {
             if (entity != null) {
                 forwardVelocity += physics.acceleration;
-                if (entity.isActive())
-                    calculateVelocities(entity.getX() + entity.getWidth()/2, entity.getY() + entity.getHeight()/2);
+                if (entity.isActive()) {
+                    calculateVelocities(entity.getX() + entity.getWidth() / 2, entity.getY() + entity.getHeight() / 2);
+                    angle = calculateAngle(entity.getX(), entity.getY());
+                }
                 else {
                     if (!calculated) {
                         calculateAngle(entity.getX(), entity.getY());
@@ -81,8 +84,15 @@ public class BulletPlayer extends Bullet{
         if (entity == null)
             g.drawImage(image, (int) pos.x, (int) pos.y, targetWidth, targetHeight, null);
         else {
-            g.setColor(Color.RED);
-            g.fillOval((int) pos.x, (int) pos.y, 16, 16);
+
+            Graphics2D g2d = (Graphics2D) g;
+//            AffineTransform original = g2d.getTransform();
+            g2d.setColor(Color.RED);
+
+//            g2d.rotate(Math.toRadians(180 - angle), pos.x + 8, pos.y + 8);
+            g2d.fillOval((int) pos.x, (int) pos.y, 16, 16);
+
+//            g2d.setTransform(original);
         }
     }
 

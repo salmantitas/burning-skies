@@ -14,8 +14,8 @@ public class EnemySide1 extends Enemy{
     public EnemySide1(int x, int y, int levelHeight) {
         super(x, y,  levelHeight);
 
+        shootTimerFirst = 30;
         shootTimerDefault = 50;
-//        shootTimer = 50;
         score = 60;
 
         xMin = -width;
@@ -27,7 +27,6 @@ public class EnemySide1 extends Enemy{
         health_MAX = 3;
         velX_MIN = 9f;
 
-//        shootTimer = shootTimerDefault;
         commonInit();
     }
 
@@ -44,17 +43,9 @@ public class EnemySide1 extends Enemy{
         } else if (isExploding()) {
             velY = explodingVelocity;
         }
-//        if (!inscreen)
-//            Utility.log("min: " + minVelX + "| vel: " + velX);
         moveInScreen();
     }
 
-//    @Override
-//    protected void shoot() {
-//        super.shoot();
-//        shot += 1;
-////        fastShoot();
-//    }
 
     @Override
     public void update() {
@@ -74,9 +65,12 @@ public class EnemySide1 extends Enemy{
 
     @Override
     protected void commonInit() {
+//        super.commonInit();
         setHealth(health_MAX);
         velX = velX_MIN;
         velY = 0;
+        jitter = 0;
+        calibrateShootTimerFirst();
     }
 
     @Override
