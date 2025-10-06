@@ -192,7 +192,7 @@ public class EnemyGenerator {
         }
 
 //        enemytype = TYPE_BASIC1; // stub
-//        enemytype = TYPE_HEAVY; // stub
+//        enemytype = VariableHandler.TYPE_HEAVY; // stub
 //        enemytype = TYPE_BASIC2; // stub
 //        enemytype = TYPE_BASIC3; // stub
 //        enemytype = TYPE_FAST2; // stub
@@ -209,6 +209,7 @@ public class EnemyGenerator {
 //        enemytype = VariableHandler.TYPE_SCATTER2; // stub
 //        enemytype = TYPE_DRONE4; // stub
 //        enemytype = VariableHandler.TYPE_DRONE5; // stub
+//        enemytype = VariableHandler.TYPE_LASER; // stub
 //        enemytype = VariableHandler.TYPE_DRONE6; // stub
 
 //        difficulty = maxTypes; // stub
@@ -249,6 +250,9 @@ public class EnemyGenerator {
                 limit = 2;
                 break;
             case VariableHandler.TYPE_DRONE5:
+                limit = 1;
+                break;
+            case VariableHandler.TYPE_LASER:
                 limit = 1;
                 break;
             case VariableHandler.TYPE_DRONE6:

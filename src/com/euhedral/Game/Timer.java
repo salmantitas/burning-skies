@@ -14,6 +14,9 @@ public class Timer {
     public void update() {
         if (running) {
             timeLeft--;
+            if (timeLeft < 0 ) {
+                stop();
+            }
         }
     }
 
@@ -34,5 +37,9 @@ public class Timer {
 
     public int getTimeLeft() {
         return timeLeft;
+    }
+
+    public int getStartTime() {
+        return startTime;
     }
 }

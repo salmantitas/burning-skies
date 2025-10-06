@@ -27,11 +27,11 @@ public class SaveLoad {
 
         // Create string variables of variables that will be saved
         String score = Integer.toString(VariableHandler.getScore());
-        String health = Integer.toString(VariableHandler.health.getValue());
+        String health = Double.toString(VariableHandler.health.getValue());
         String ground = Boolean.toString(true); // todo: remove later
         String level = Integer.toString(VariableHandler.getLevel());
-        String power = Integer.toString(VariableHandler.firepower.getValue());
-        String shield = Integer.toString(VariableHandler.shield.getValue());
+        String power = Double.toString(VariableHandler.firepower.getValue());
+        String shield = Double.toString(VariableHandler.shield.getValue());
 
         // Turn strings into a string array to be written
         List<String> rows = Arrays.asList(score, health, ground, level, power, shield);

@@ -20,6 +20,13 @@ public class CollisionBox {
         }
     }
 
+    public void render(Graphics g) {
+        g.setColor(Color.GREEN);
+
+        for (Rectangle2D bound : bounds)
+            g.drawRect((int) bound.getX(), (int) bound.getY(), (int) bound.getWidth(), (int) bound.getHeight());
+    }
+
     public Rectangle2D getBounds() {
         return bounds[0];
     }

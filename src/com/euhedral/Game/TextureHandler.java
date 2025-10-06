@@ -43,9 +43,8 @@ public class TextureHandler {
 
     public BufferedImage[] player = new BufferedImage[9];
     public BufferedImage[] playerDamage = new BufferedImage[3];
-    public BufferedImage[] enemy = new BufferedImage[4];
+    public BufferedImage[] enemy = new BufferedImage[12];
     public BufferedImage[] enemyDamage = new BufferedImage[3];
-    public BufferedImage[] enemyHeavy = new BufferedImage[1];
     public BufferedImage[] enemyFast = new BufferedImage[1];
     public BufferedImage[] enemyStatic = new BufferedImage[3];
     public BufferedImage[] enemySide = new BufferedImage[8];
@@ -119,13 +118,21 @@ public class TextureHandler {
             enemy[i] = enemyDownSS.grabImage(i + 1, 1, w, h);
         }
 
+        for (int i = 0; i < 4; i ++) {
+            enemy[i + 4] = enemyDownSS.grabImage(i + 1, 2, w, h);
+        }
+
+        for (int i = 0; i < 4; i ++) {
+            enemy[i + 8] = enemyDownSS.grabImage(i + 1, 3, w, h);
+        }
+
         enemyDamage[0] = enemyDownDamageSS.grabImage(1,1, w, h);
         enemyDamage[1] = enemyDownDamageSS.grabImage(1,2, w, h);
         enemyDamage[2] = enemyDownDamageSS.grabImage(2,2, w, h);
 
 //        w = 128;
 
-        enemyHeavy[0] = enemyDownSS.grabImage(1,2,w,h);
+//        enemyHeavy[0] = enemyDownSS.grabImage(1,2,w,h);
         enemyFast[0] = enemyDownSS.grabImage(2,2,w,h);
         enemyStatic[0] = enemyDownSS.grabImage(1,3,w,h);
         enemyStatic[1] = enemyDownSS.grabImage(2,3,w,h);

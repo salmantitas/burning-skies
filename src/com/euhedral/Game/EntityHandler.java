@@ -3,6 +3,7 @@ package com.euhedral.Game;
 import com.euhedral.Engine.*;
 import com.euhedral.Game.Entities.*;
 import com.euhedral.Game.Entities.Enemy.*;
+import com.euhedral.Game.Entities.Projectile.Bullet;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -166,6 +167,8 @@ public class EntityHandler {
             enemy = new EnemyDrone5(x, y, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_DRONE6) {
             enemy = new EnemyDrone6(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_LASER) {
+            enemy = new EnemyLaser(x, y, levelHeight);
         }
 
         if (enemy != null) {

@@ -1,5 +1,6 @@
-package com.euhedral.Game.Entities;
+package com.euhedral.Game.Entities.Projectile;
 
+import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.MobileEntity;
 import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
@@ -25,8 +26,6 @@ public class BulletEnemy extends Bullet{
         forwardVelocity = Utility.intAtWidth640(5);
         initSound = SoundHandler.BULLET_ENEMY;
         image = textureHandler.bulletEnemy[0];
-//        color = Color.orange;
-//        impactColor = Color.red;
         SoundHandler.playSound(initSound);
 
         newWidth = (int) (width * reflection.sizeOffset);
@@ -54,7 +53,6 @@ public class BulletEnemy extends Bullet{
                 impact.endAnimation();
             } else {
                 impact.runAnimation();
-//            impactTimer++;
                 if (entity == null) {
                     this.velX = 0;
                     this.velY = EntityHandler.backgroundScrollingSpeed;
@@ -83,10 +81,10 @@ public class BulletEnemy extends Bullet{
 
     }
 
-    @Override
-    public void render(Graphics g) {
-        super.render(g);
-    }
+//    @Override
+//    public void render(Graphics g) {
+//        super.render(g);
+//    }
 
     @Override
     public void resurrect(double x, double y) {

@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class EnemyStatic1 extends Enemy {
 
-    int verticalPosition = 400;
     double destinationX, destinationY;
     double deceleration;
 

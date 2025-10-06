@@ -14,7 +14,7 @@ public class MenuGameOver extends Menu {
 
     Animation explosion;
     int gameOverX = Utility.percWidth(5);
-    int scoreX = Utility.percWidth(14);
+//    int scoreX = Utility.percWidth(14);
 
     Font gameOverFont = VariableHandler.customFont.deriveFont(0, Utility.intAtWidth640(60));
     Font scoreFont = new Font("arial", 1, 40);
@@ -82,6 +82,7 @@ public class MenuGameOver extends Menu {
     @Override
     public void onSwitch() {
         explosion.playedOnce = false;
+        explosion.endAnimation();
         SoundHandler.playSound(SoundHandler.EXPLOSION_PLAYER);
         SoundHandler.playBGMGameOver();
         super.onSwitch();

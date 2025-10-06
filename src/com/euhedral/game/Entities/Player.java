@@ -3,6 +3,7 @@ package com.euhedral.Game.Entities;
 import com.euhedral.Engine.*;
 import com.euhedral.Game.*;
 import com.euhedral.Game.Entities.Enemy.Enemy;
+import com.euhedral.Game.Entities.Projectile.Bullet;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -77,6 +78,7 @@ public class Player extends Airplane {
 
         reflection = new Reflection();
 
+//        debug = true;
     }
 
 //    public Player(int x, int y, int levelHeight, BufferedImage image) {
@@ -360,7 +362,7 @@ public class Player extends Airplane {
         }
 
         // reset shoot timer to default
-        shootTimer = shootTimerDefault - (firepower.getValue() - 1) % 5;
+        shootTimer = shootTimerDefault - (int) (firepower.getValue() - 1) % 5;
     }
 
     public void special() {
@@ -508,9 +510,9 @@ public class Player extends Airplane {
 //        this.ground = ground;
 //    }
 
-    public void damage(int damage) {
+    public void damage(double damage) {
         if (shield.getValue() > 0) {
-            int temp = damage - shield.getValue();
+            double temp = damage - shield.getValue();
             shield.decrease(damage * 2);
             if (temp > 0) {
                 damageHealth(temp);
@@ -522,7 +524,7 @@ public class Player extends Airplane {
         }
     }
 
-    private void damageHealth(int damage) {
+    private void damageHealth(double damage) {
         health.decrease(damage);
         if (Difficulty.isFirePowerLoss()) {
             if (firepower.getValue() > 0) {

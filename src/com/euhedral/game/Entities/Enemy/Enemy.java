@@ -20,18 +20,14 @@ public abstract class Enemy extends Airplane {
 
     protected double offscreenVelY;
     protected boolean moveLeft, moveRight;
-//    protected Color color;
-//    protected int shootTimerDefault;
     protected int shootTimerFirst = 50;
     protected boolean inscreenY = false;
-//    protected boolean inscreenX = false;
     protected float cam;
 
     protected int score;
-//    protected int distance;
 
     protected int movementDistance;
-    protected int damage;
+    protected double damage;
     protected double explodingVelocity = EntityHandler.backgroundScrollingSpeed;
 
     protected Animation explosion;
@@ -427,7 +423,7 @@ public abstract class Enemy extends Airplane {
     }
 
     public int getTurretX() {
-        return ((int) pos.x + width / 2);
+        return ((int) pos.x + width / 2 - 1);
     }
 
     public int getTurretY() {
@@ -450,7 +446,7 @@ public abstract class Enemy extends Airplane {
         return state == STATE_EXPLODING;
     }
 
-    public int getDamage() {
+    public double getDamage() {
         return damage;
     }
 

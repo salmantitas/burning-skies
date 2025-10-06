@@ -1,4 +1,4 @@
-package com.euhedral.Game.Entities;
+package com.euhedral.Game.Entities.Projectile;
 
 import com.euhedral.Game.*;
 import com.euhedral.Game.Entities.Enemy.Enemy;

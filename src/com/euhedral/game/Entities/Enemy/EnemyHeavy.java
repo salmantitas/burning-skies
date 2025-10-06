@@ -43,11 +43,11 @@ public class EnemyHeavy extends Enemy {
 //        attackEffect = true;
 
         textureHandler = GameController.getTexture();
-        setImage(textureHandler.enemyHeavy[0]);
+        setImage(textureHandler.enemy[4]);
 
         velX = 0;
         velY_MIN = 1.7f;
-        forwardVelocity = EntityHandler.backgroundScrollingSpeed;
+//        forwardVelocity = EntityHandler.backgroundScrollingSpeed;
 //        distance = 0; // stub ; width * 2;
 //        movementDistance = distance;
         health_MAX = 4;

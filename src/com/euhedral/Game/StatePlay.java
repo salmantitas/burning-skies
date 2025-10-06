@@ -65,7 +65,6 @@ public class StatePlay extends State {
         killTimer.update();
         if (killTimer.getProgress() <= 0) {
             killstreak = 0;
-            killTimer.stop();
         }
     }
 

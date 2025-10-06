@@ -1,4 +1,4 @@
-package com.euhedral.Game.Entities;
+package com.euhedral.Game.Entities.Projectile;
 
 import com.euhedral.Engine.Animation;
 import com.euhedral.Engine.Engine;

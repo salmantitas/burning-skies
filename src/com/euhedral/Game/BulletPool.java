@@ -4,9 +4,9 @@ import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.MobileEntity;
 import com.euhedral.Engine.Pool;
 import com.euhedral.Engine.Position;
-import com.euhedral.Game.Entities.Bullet;
-import com.euhedral.Game.Entities.BulletEnemy;
-import com.euhedral.Game.Entities.BulletPlayer;
+import com.euhedral.Game.Entities.Projectile.Bullet;
+import com.euhedral.Game.Entities.Projectile.BulletEnemy;
+import com.euhedral.Game.Entities.Projectile.BulletPlayer;
 import com.euhedral.Game.Entities.Enemy.Enemy;
 import com.euhedral.Game.Entities.Player;
 

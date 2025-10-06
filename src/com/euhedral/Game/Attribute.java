@@ -12,7 +12,7 @@ public class Attribute {
     private int defaultValue;
     private int MIN = 0;
     private int MAX;
-    private int value;
+    private double value;
     private int cost;
     private boolean active = false, binary;
     Font font;
@@ -66,7 +66,7 @@ public class Attribute {
         }
     }
 
-    public void decrease(int value) {
+    public void decrease(double value) {
         this.value -= value;
         if (this.value <= MIN) {
             this.value = MIN;
@@ -117,7 +117,7 @@ public class Attribute {
         this.MIN = MIN;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
@@ -152,7 +152,7 @@ public class Attribute {
         g.setColor(backgroundColor);
         g.fillRect(x, y, MAX * width, height);
         g.setColor(foregroundColor);
-        g.fillRect(x, y, value * width, height);
+        g.fillRect(x, y, (int) value * width, height);
     }
 
 //    public void renderValue(Graphics g) {
@@ -172,7 +172,7 @@ public class Attribute {
             g.setColor(increaseTextColor);
             count--;
         }
-        g.drawString(Integer.toString(value), x, y);
+        g.drawString(Integer.toString((int) Math.round(value)), x, y);
     }
 
     public boolean isMax() {

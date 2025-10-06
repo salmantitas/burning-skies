@@ -4,10 +4,11 @@ import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.MobileEntity;
 import com.euhedral.Engine.Pool;
 import com.euhedral.Engine.Utility;
-import com.euhedral.Game.Entities.Bullet;
-import com.euhedral.Game.Entities.BulletEnemy;
+import com.euhedral.Game.Entities.Projectile.Bullet;
+import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.Entities.Enemy.Enemy;
 import com.euhedral.Game.Entities.Player;
+import com.euhedral.Game.Entities.Projectile.Laser;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -302,6 +303,7 @@ public class EnemyPool extends Pool {
         else {
             bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking));
         }
+
 //        bullets.printPool("Enemy Bullet");
     }
 
@@ -310,14 +312,15 @@ public class EnemyPool extends Pool {
             enemy = (Enemy) entity;
             if (enemy.isActive())
                 if (enemy.isInscreenY() && enemy.isActive()) {
-                    boolean collision = player.checkCollision(enemy);
+                    boolean collision = enemy.checkCollision(player);
                     if (collision) {
-                        int damage = enemy.getDamage();
+                        double damage = enemy.getDamage();
                         if (GameController.godMode) {
 
                         } else
-                            player.damage( (int) (damage * Difficulty.getDamageTakenMult()));
-                        destroy(enemy);
+                            player.damage( (damage * Difficulty.getDamageTakenMult()));
+                        if (enemy.collision)
+                            destroy(enemy);
                     }
                 }
 //            else if (enemy.getContactId() == ContactID.Boss) {
