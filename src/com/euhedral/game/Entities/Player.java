@@ -370,7 +370,7 @@ public class Player extends Airplane {
 
         if (VariableHandler.pulse) {
             pulse();
-            SoundHandler.playSound(SoundHandler.RING);
+            SoundHandler.playSound(SoundHandler.PULSE);
         }
     }
 

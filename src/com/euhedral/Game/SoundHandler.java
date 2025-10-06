@@ -27,9 +27,10 @@ public class SoundHandler {
     public static final int SHIELD_1 = 10;
     public static final int SHIELD_2 = 11;
     public static final int SHIELD_3 = 12;
-    public static final int RING = 13;
+    public static final int PULSE = 13;
+    public static final int LASER = 14;
 
-    static int MAX_CLIP = RING + 1;
+    static int MAX_CLIP = LASER + 1;
 
 //    public static final int BGMPLAY1 = 0;
 //    public static final int BGMPLAY2 = 1;
@@ -89,7 +90,8 @@ public class SoundHandler {
         soundURL[SHIELD_1] = getClass().getResource("/shield_1.wav");
         soundURL[SHIELD_2] = getClass().getResource("/shield_2.wav");
         soundURL[SHIELD_3] = getClass().getResource("/shield_3.wav");
-        soundURL[RING] = getClass().getResource("/ringOfFire.wav");
+        soundURL[PULSE] = getClass().getResource("/pulse.wav");
+        soundURL[LASER] = getClass().getResource("/laser.wav");
 
 
         for (int i = 0; i < MAX_CLIP; i ++) {
@@ -183,14 +185,25 @@ public class SoundHandler {
         play();
     }
 
-    static private void play() {
+    public static void loopSound(int i) {
+        playSound(i);
+        loop();
+    }
+
+    private static void play() {
 //        Utility.log("Play");
         clip.start();
         gainControlVolumeMaster();
 //        clip.
     }
 
-    private void loop() {
+    public static void stop(int i) {
+        clip = clips[i];
+        clip.stop();
+        clip.setFramePosition(0);
+    }
+
+    private static void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 

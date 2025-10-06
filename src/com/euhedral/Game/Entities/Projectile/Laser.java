@@ -3,6 +3,7 @@ package com.euhedral.Game.Entities.Projectile;
 import com.euhedral.Engine.*;
 import com.euhedral.Game.Entities.Enemy.Enemy;
 import com.euhedral.Game.EntityID;
+import com.euhedral.Game.SoundHandler;
 import com.euhedral.Game.Timer;
 
 import java.awt.*;
@@ -13,10 +14,17 @@ public class Laser extends MobileEntity {
     private Timer lifetime;
     private double damage;
 
+    int width_MIN;
+    int width_MAX;
+
+    int updateCount_Width = 0;
+
     public Laser(Enemy parent, int lifetime) {
         super(-100, -100, EntityID.Bullet);
         this.parent = parent;
-        width = 16;
+        width_MIN = 4;
+        width_MAX = 16;
+        width = width_MIN;
         height = Engine.HEIGHT * 2;
         this.lifetime = new Timer(lifetime);
         collisionBox = new CollisionBox(this, 1);
@@ -41,13 +49,28 @@ public class Laser extends MobileEntity {
 
     @Override
     public void update() {
-        setPos(parent.getTurretX(), parent.getTurretY());
+        updateCount_Width++;
+
+        setPos(parent.getTurretX() - width / 2, parent.getTurretY());
         collisionBox.setBounds(pos.x + 1, pos.y + 1, width - 2*1,  height - 2*1 );
+
         lifetime.update();
+
+        if (lifetime.getTimeLeft() <= 0) {
+            SoundHandler.stop(SoundHandler.LASER);
+            width = width_MIN;
+            updateCount_Width = 0;
+        } else {
+            if (updateCount_Width % 5 == 0) {
+                width = Math.min(width_MAX, width + 1);
+
+            }
+        }
     }
 
     public void start() {
         lifetime.start();
+        SoundHandler.playSound(SoundHandler.LASER);
     }
 
     @Override
@@ -61,10 +84,11 @@ public class Laser extends MobileEntity {
     public double getDamage() {
         if (lifetime.getTimeLeft() <= 0 && lifetime.getTimeLeft() < lifetime.getStartTime() - 5)
             return 0;
-        return damage;
+        return damage * width / width_MAX;
     }
 
     public void stop() {
         lifetime.stop();
+        SoundHandler.stop(SoundHandler.LASER);
     }
 }

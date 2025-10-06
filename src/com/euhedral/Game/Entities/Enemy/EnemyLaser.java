@@ -48,7 +48,7 @@ public class EnemyLaser extends Enemy {
         commonInit();
         damage = 30;
 
-        laser = new Laser(this, 30);
+        laser = new Laser(this, 60);
     }
 
     @Override
@@ -111,10 +111,11 @@ public class EnemyLaser extends Enemy {
 
             if (shootTimer <= 50) {
                 g2d = (Graphics2D) g;
-                g2d.setComposite(Utility.makeTransparent(0.5f));
+                float transparency = 0.5f - shootTimer / (2 * 50f);
+                g2d.setComposite(Utility.makeTransparent(transparency));
 
                 g2d.setStroke(new BasicStroke((Math.max(shootTimer / 5, 2))));
-                int drawX = getTurretX() + 16 / 2;
+                int drawX = getTurretX();
                 g.drawLine(drawX, getTurretY(), drawX, levelHeight * 2);
 
                 g2d.setComposite(Utility.makeTransparent(1f));
@@ -124,7 +125,7 @@ public class EnemyLaser extends Enemy {
 
     @Override
     public int getTurretX() {
-        return pos.intX() + width / 2 - bulletWidth;
+        return pos.intX() + width / 2 - bulletWidth + 8;
     }
 
     @Override
