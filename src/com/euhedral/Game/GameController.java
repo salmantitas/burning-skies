@@ -383,7 +383,7 @@ public class GameController {
         VariableHandler.shield.reset();
         variableHandler.health.reset();
         variableHandler.firepower.reset();
-        variableHandler.pulse = false;
+        variableHandler.pulse = true;
         VariableHandler.setHealthColor();
         Tutorial.reset();
         StatePlay.resetKillstreak();
@@ -487,25 +487,35 @@ public class GameController {
 
     private void keyPressedPlayer(int key) {
         if (Engine.stateIs(GameState.Game)) {
-            if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT))
+            if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT)) {
                 movePlayer('l');
+                Tutorial.setMovedLeft(true);
+            }
 
-            if (key == (KeyEvent.VK_RIGHT) || key == KeyInput.getKeyEvent(RIGHT))
+            if (key == (KeyEvent.VK_RIGHT) || key == KeyInput.getKeyEvent(RIGHT)) {
                 movePlayer('r');
+                Tutorial.setMovedRight(true);
+            }
 
-            if (key == (KeyEvent.VK_UP) || key == KeyInput.getKeyEvent(UP))
+            if (key == (KeyEvent.VK_UP) || key == KeyInput.getKeyEvent(UP)) {
                 movePlayer('u');
+                Tutorial.setMovedUp(true);
+            }
 
-            if (key == (KeyEvent.VK_DOWN) || key == KeyInput.getKeyEvent(DOWN))
+            if (key == (KeyEvent.VK_DOWN) || key == KeyInput.getKeyEvent(DOWN)) {
                 movePlayer('d');
+                Tutorial.setMovedDown(true);
+            }
 
             if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0)) {
                 entityHandler.playerCanShoot();
                 Tutorial.setShot(true);
             }
 
-            if (key == KeyInput.getKeyEvent(SPECIAL))
+            if (key == KeyInput.getKeyEvent(SPECIAL)) {
                 entityHandler.playerSpecial();
+                Tutorial.setSpecial(true);
+            }
 
             if (Engine.stateIs(GameState.Game)) {
                 if (key == KeyEvent.VK_P || key == KeyEvent.VK_ESCAPE) {

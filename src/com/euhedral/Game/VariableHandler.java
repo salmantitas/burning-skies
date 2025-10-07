@@ -319,13 +319,13 @@ public class VariableHandler {
     }
 
     private static void renderKillstreak(Graphics g) {
-        g.setColor(Color.YELLOW);
+        g.setColor(Color.RED);
 
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setComposite(Utility.makeTransparent(StatePlay.killTimer.getProgress()));
 
-        g.drawString("Killstreak: " + StatePlay.getKillstreak(), 500, 100);
+        g.drawString("" + StatePlay.getKillstreak(), 850, timerY);
 
         g2d.setComposite(Utility.makeTransparent(1));
     }
@@ -336,9 +336,12 @@ public class VariableHandler {
         if (GameController.godMode)
             g.setColor(Color.GRAY);
         g.drawString("Score: " + score, scoreX, scoreY);
-        int offset = 150;
+        int offset = 120;
 
-        g.drawString("X" + Difficulty.getScoreMultiplier(), scoreX - offset, scoreY);
+        String scoreMult = "X" + Difficulty.getScoreMultiplier();
+        scoreMult = scoreMult.substring(0, 4);
+
+        g.drawString(scoreMult, scoreX - offset, scoreY);
     }
 
     public static void renderLevel(Graphics g) {

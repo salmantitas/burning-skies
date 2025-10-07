@@ -12,6 +12,8 @@ public class Tutorial {
     private static boolean shot;
     private static boolean special;
 
+    private static int movedLeftTimer, movedRightTimer, movedUpTimer, movedDownTimer;
+
     private static int shotTimer;
     private static int specialTimer;
 
@@ -51,6 +53,11 @@ public class Tutorial {
         special = false;
 
         shotTimer = 60;
+        movedDownTimer = 60;
+        movedLeftTimer = 60;
+        movedUpTimer = 60;
+        movedRightTimer = 60;
+        specialTimer = 60;
     }
 
     public MessageBox getMessageBox() {
@@ -61,20 +68,22 @@ public class Tutorial {
         Graphics2D g2d = (Graphics2D) g;
         renderMovement(g2d);
         renderShot(g2d);
-
-//        g.drawString("CTRL", leftX, bottomY + 200);
+        renderSpeial(g2d);
     }
 
     private void renderMovement(Graphics2D g) {
-        renderTutorialPrompt(g, movedUp, 60, "W", leftX + 50, topY);
-        renderTutorialPrompt(g, movedLeft, 60, "A", leftX, bottomY);
-        renderTutorialPrompt(g, movedDown, 60, "S", leftX + 50, bottomY);
-        renderTutorialPrompt(g, movedRight, 60, "D", leftX + 100, bottomY);
+        renderTutorialPrompt(g, movedUp, movedUpTimer, "W", leftX + 50, topY);
+        renderTutorialPrompt(g, movedLeft, movedLeftTimer, "A", leftX, bottomY);
+        renderTutorialPrompt(g, movedDown, movedDownTimer, "S", leftX + 50, bottomY);
+        renderTutorialPrompt(g, movedRight, movedRightTimer, "D", leftX + 100, bottomY);
     }
 
     private void renderShot(Graphics2D g) {
         renderTutorialPrompt(g, shot, shotTimer, "SPACE", leftX, bottomY + 100);
+    }
 
+    private void renderSpeial(Graphics2D g) {
+        renderTutorialPrompt(g, special, specialTimer, "CTRL", leftX, bottomY + 200);
     }
 
     private void renderTutorialPrompt(Graphics2D g, boolean variable, int timer, String button, int x, int y) {
@@ -119,5 +128,20 @@ public class Tutorial {
     public void update() {
         if (shot)
             shotTimer--;
+
+        if (movedRight)
+            movedRightTimer--;
+
+        if (movedLeft)
+            movedLeftTimer--;
+
+        if (movedUp)
+            movedUpTimer--;
+
+        if (movedDown)
+            movedDownTimer--;
+
+        if (special)
+            specialTimer--;
     }
 }

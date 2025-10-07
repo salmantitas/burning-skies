@@ -174,11 +174,15 @@ public class Difficulty {
                 (damageTakenMult) *
                 getFirePowerLossMult() *
                 enemyFireRateMult *
-                enemyBulletSpeedMult;
+                enemyBulletSpeedMult *
+                getKillstreakMult();
+    }
+
+    private static double getKillstreakMult() {
+        return  1 + StatePlay.getKillstreak() / 100d;
     }
 
     private static double getGameSpeedScoreMult() {
-//        return Engine.getGameSpeedScaleMult();
 
         if (Engine.getGameSpeedScaleMult() == 1) {
             return 1;

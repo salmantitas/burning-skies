@@ -42,7 +42,6 @@ public class EnemyDrone3 extends EnemyDrone1 {
             }
             explosionOffset = (int) (explosionTimer / 2 - Utility.intAtWidth640(7));
         }
-        Utility.log("Score: " + score);
     }
 
     @Override

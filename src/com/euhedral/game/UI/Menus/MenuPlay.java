@@ -44,17 +44,17 @@ public class MenuPlay extends Menu {
         menuItems.add(rightPane);
     }
 
-//    @Override
-//    public void update() {
-//        super.update();
-//        tutorial.update();
-//    }
+    @Override
+    public void update() {
+        super.update();
+        tutorial.update();
+    }
 
     @Override
     public void render(Graphics g) {
         super.render(g);
         VariableHandler.renderHUD(g);
-//        tutorial.render(g);
+        tutorial.render(g);
         super.postRender(g);
     }
 
