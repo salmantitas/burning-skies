@@ -3,6 +3,7 @@ package com.euhedral.Game.Entities.Enemy;
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Difficulty;
 import com.euhedral.Game.Entities.Projectile.Laser;
 import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.GameController;
@@ -49,7 +50,7 @@ public class EnemyLaser extends Enemy {
         commonInit();
         damage = 30;
 
-        laser = new Laser(this, 90);
+        laser = new Laser(this, (int) (90 * Difficulty.getEnemyBulletSpeedMult()));
     }
 
     @Override
