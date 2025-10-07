@@ -134,6 +134,7 @@ public class SoundHandler {
     // Assumes all clips have already been loaded
     public static void setFile(int i) {
         clip = clips[i];
+        clip.stop();
         clip.setFramePosition(0);
     }
 
