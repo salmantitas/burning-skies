@@ -25,7 +25,7 @@ public class MenuPlay extends Menu {
 
         tutorial = new Tutorial();
 
-        addMessageBox(tutorial.getMessageBox());
+//        addMessageBox(tutorial.getMessageBox());
 
         float hudTransparencyTop = 1f;
         float hudTransparencySide = 0.2f;

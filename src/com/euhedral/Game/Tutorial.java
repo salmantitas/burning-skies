@@ -1,5 +1,8 @@
 package com.euhedral.Game;
 
+import com.euhedral.Engine.Engine;
+import com.euhedral.Engine.GameState;
+import com.euhedral.Engine.UI.Panel;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.UI.MessageBox;
 
@@ -8,20 +11,38 @@ import java.awt.*;
 public class Tutorial {
 
     private MessageBox messageBox;
+
+    private Panel panel;
     private static boolean movedLeft, movedRight, movedUp, movedDown;
     private static boolean shot;
     private static boolean special;
 
-    private static int movedLeftTimer, movedRightTimer, movedUpTimer, movedDownTimer;
+    private static boolean active;
 
+    private static int panelTimer;
+    private static int movedLeftTimer, movedRightTimer, movedUpTimer, movedDownTimer;
     private static int shotTimer;
     private static int specialTimer;
 
-    int topY=200;
+    int margin = 20;
+    int width = 126;
+    int height = 272;
+    int textHeight = 22;
+
+    int leftX = VariableHandler.deadzoneLeftX + 2*64 + margin;
+    int topY= 600;
     int bottomY = topY + 50;
-    int leftX = 70;
 
     public Tutorial() {
+
+        panel = new Panel(
+                leftX - margin,
+                topY - textHeight - margin,
+                width + 2* margin,
+                height + 2* margin,
+                GameState.Game);
+        panel.setTransparency(0.4f);
+
         messageBox = new MessageBox(230,200, 800, 550);
         messageBox.addText("Use WASD or the Arrow Keys to move.");
         messageBox.addText("");
@@ -52,12 +73,15 @@ public class Tutorial {
         shot = false;
         special = false;
 
+        active = true;
+
         shotTimer = 60;
         movedDownTimer = 60;
         movedLeftTimer = 60;
         movedUpTimer = 60;
         movedRightTimer = 60;
         specialTimer = 60;
+        panelTimer = 60;
     }
 
     public MessageBox getMessageBox() {
@@ -66,9 +90,16 @@ public class Tutorial {
 
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
+        renderPanel(g);
         renderMovement(g2d);
         renderShot(g2d);
         renderSpeial(g2d);
+    }
+
+    private void renderPanel(Graphics g) {
+        if (panelTimer > 0)
+            panel.setTransparency(panelTimer / 120f);
+        panel.render(g);
     }
 
     private void renderMovement(Graphics2D g) {
@@ -143,5 +174,11 @@ public class Tutorial {
 
         if (special)
             specialTimer--;
+
+        if (!active) {
+            panelTimer--;
+        }
+
+        active = !(movedLeft && movedRight && movedUp && movedDown && shot && special);g
     }
 }
