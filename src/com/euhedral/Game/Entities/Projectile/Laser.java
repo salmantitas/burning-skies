@@ -14,6 +14,8 @@ public class Laser extends MobileEntity {
     private Timer lifetime;
     private double damage;
 
+    boolean finished;
+
     int width_MIN;
     int width_MAX;
 
@@ -57,6 +59,7 @@ public class Laser extends MobileEntity {
         lifetime.update();
 
         if (lifetime.getTimeLeft() <= 0) {
+            finished = true;
             SoundHandler.stop(SoundHandler.LASER);
             width = width_MIN;
             updateCount_Width = 0;
@@ -69,6 +72,7 @@ public class Laser extends MobileEntity {
     }
 
     public void start() {
+        finished = false;
         lifetime.start();
         SoundHandler.loopSound(SoundHandler.LASER);
     }
@@ -90,5 +94,17 @@ public class Laser extends MobileEntity {
     public void stop() {
         lifetime.stop();
         SoundHandler.stop(SoundHandler.LASER);
+    }
+
+    public void resetTime(int laserTime) {
+        lifetime.resetTime(laserTime);
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public int getTimeLeft() {
+        return lifetime.getTimeLeft();
     }
 }

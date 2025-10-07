@@ -45,7 +45,7 @@ public class Pulse {
         }
         else if (VariableHandler.pulse) {
             g.setColor(Color.YELLOW);
-            g.setStroke( new BasicStroke(1) );
+            g.setStroke( new BasicStroke(2) );
 //            int x = pos.intX();
 //            int y = pos.intY();
 //            int centerX = x + width/2;

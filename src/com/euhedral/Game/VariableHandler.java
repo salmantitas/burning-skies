@@ -308,6 +308,7 @@ public class VariableHandler {
         renderPulse(g);
 
         renderScore(g);
+        renderScoreMult(g);
         renderWave(g);
         if (Engine.stateIs(GameState.Game)) {
             renderTimer(g);
@@ -336,6 +337,20 @@ public class VariableHandler {
         if (GameController.godMode)
             g.setColor(Color.GRAY);
         g.drawString("Score: " + score, scoreX, scoreY);
+        int offset = 120;
+
+        String scoreMult = "X" + Difficulty.getScoreMultiplier();
+        scoreMult = scoreMult.substring(0, 4);
+
+        g.drawString(scoreMult, scoreX - offset, scoreY);
+    }
+
+    public static void renderScoreMult(Graphics g) {
+        g.setFont(scoreFont);
+        g.setColor(scoreColor);
+        if (GameController.godMode)
+            g.setColor(Color.GRAY);
+
         int offset = 120;
 
         String scoreMult = "X" + Difficulty.getScoreMultiplier();

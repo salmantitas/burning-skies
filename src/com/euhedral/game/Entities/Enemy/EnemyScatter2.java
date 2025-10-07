@@ -24,7 +24,7 @@ public class EnemyScatter2 extends Enemy {
 
         score = 150;
 
-        bulletVelocity = Utility.intAtWidth640(2);
+        bulletVelocity = 3;
 
         shootTimerFirst = 45;
         shootTimerDefault = 250;

@@ -114,7 +114,6 @@ public class Bullet extends MobileEntity {
         if (state == STATE_ACTIVE) {
             g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
         } else if (state == STATE_IMPACT) {
-//            int impactSize = Math.max(newWidth, newHeight);
             impact.drawAnimation(g2d, reflectionX, reflectionY, impactSize, impactSize);
         }
         g2d.setComposite(Utility.makeTransparent(1f));

@@ -7,14 +7,13 @@ public class Timer {
 
     public Timer(int startTime) {
         running = false;
-        this.startTime = startTime;
-        timeLeft = 0;
+        resetTime(startTime);
     }
 
     public void update() {
         if (running) {
             timeLeft--;
-            if (timeLeft < 0 ) {
+            if (timeLeft <= 0 ) {
                 stop();
             }
         }
@@ -41,5 +40,10 @@ public class Timer {
 
     public int getStartTime() {
         return startTime;
+    }
+
+    public void resetTime(int startTime) {
+        this.startTime = startTime;
+        timeLeft = 0;
     }
 }

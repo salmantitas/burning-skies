@@ -28,27 +28,13 @@ public class MenuTransition extends Menu {
 
     // Navigation
 
-    int difficultyY = y48;
-    int difficultyX = x10;
-    int damageDealtY;
-    int damageTakenY;
-    int gameSpeedY;
-    int firePowerLossY;
-    int enemyFireRateY;
-    int enemyBulletSpeedY;
+    int customizeY = y48;
+    int customizeX = x10;
     int startY;
     int backY;
 
-    ButtonOption difficulty;
-    ButtonOption damageDealt;
-    ButtonOption damageTaken;
-    ButtonOption gameSpeed;
-    Button firePowerLoss;
-    ButtonOption enemyFireRate;
-    ButtonOption enemyBulletSpeed;
-
+    ButtonNav customize;
     Button start;
-
     ButtonNav back;
 
     // Options
@@ -60,62 +46,23 @@ public class MenuTransition extends Menu {
 
     public MenuTransition() {
         super(GameState.Transition);
-        MAXBUTTON = 9;
+        MAXBUTTON = 3;
         options = new Button[MAXBUTTON];
 
-        spacingY = Utility.percHeight(5);
+        spacingY = Utility.percHeight(10);
 
-        damageDealtY = difficultyY + spacingY;
-        damageTakenY = damageDealtY + spacingY;
-        gameSpeedY = damageTakenY + spacingY;
-        firePowerLossY = gameSpeedY + spacingY;
-        enemyFireRateY = firePowerLossY + spacingY;
-        enemyBulletSpeedY = enemyFireRateY + spacingY;
-        startY = enemyBulletSpeedY + spacingY;
+        startY = customizeY + spacingY;
         backY = startY  + spacingY;
 
-        difficulty = new ButtonOption(difficultyX, difficultyY, Utility.perc(buttonSize, 60), "Difficulty");
-        difficulty.setIncreaseActivate(Difficulty::increaseDifficulty);
-        difficulty.setDecreaseActivate(Difficulty::decreaseDifficulty);
-
-        damageDealt = new ButtonOption(difficultyX, damageDealtY, Utility.perc(buttonSize, 60), "Damage Dealt");
-        damageDealt.setIncreaseActivate(Difficulty::increaseDamageDealt);
-        damageDealt.setDecreaseActivate(Difficulty::decreaseDamageDealt);
-
-        damageTaken = new ButtonOption(difficultyX, damageTakenY, Utility.perc(buttonSize, 60), "Damage Taken");
-        damageTaken.setIncreaseActivate(Difficulty::increaseDamageTaken);
-        damageTaken.setDecreaseActivate(Difficulty::decreaseTakenDealt);
-
-        gameSpeed = new ButtonOption(difficultyX, gameSpeedY, Utility.perc(buttonSize, 60), "Game Speed");
-        gameSpeed.setIncreaseActivate(Difficulty::increaseGameSpeed);
-        gameSpeed.setDecreaseActivate(Difficulty::decreaseGameSpeed);
-
-        firePowerLoss = new Button(difficultyX, firePowerLossY, Utility.perc(buttonSize, 60), "Firepower Loss");
-        firePowerLoss.setActivate(Difficulty::toggleFirePowerLoss);
-
-        enemyFireRate = new ButtonOption(difficultyX, enemyFireRateY, Utility.perc(buttonSize, 60), "Enemy Fire Rate");
-        enemyFireRate.setIncreaseActivate(Difficulty::increaseEnemyFireRate);
-        enemyFireRate.setDecreaseActivate(Difficulty::decreaseEnemyFireRate);
-
-        enemyBulletSpeed = new ButtonOption(difficultyX, enemyBulletSpeedY, Utility.perc(buttonSize, 60), "Enemy Bullet Speed");
-        enemyBulletSpeed.setIncreaseActivate(Difficulty::increaseEnemyBulletSpeed);
-        enemyBulletSpeed.setDecreaseActivate(Difficulty::decreaseEnemyBulletSpeed);
-
-        start = new Button(difficultyX, startY, Utility.perc(buttonSize, 60), "Start");
+        customize = new ButtonNav(customizeX, customizeY, buttonSize, "Customize Difficulty", GameState.Difficulty);
+        start = new Button(customizeX, startY, buttonSize, "Start");
         start.activate = (GameController::setLevelLoadedtoTrue);
 
-        ButtonNav back = new ButtonNav(difficultyX, backY, Utility.perc(buttonSize, 60), "Back", GameState.Menu);
+        back = new ButtonNav(customizeX, backY, buttonSize, "Back", GameState.Menu);
 
-        options[0] = difficulty;
-        options[1] = damageDealt;
-        options[2] = damageTaken;
-        options[3] = gameSpeed;
-        options[4] = firePowerLoss;
-        options[5] = enemyFireRate;
-        options[6] = enemyBulletSpeed;
-        options[7] = start;
-        options[8] = back;
-//        options[2] = quit;
+        options[0] = customize;
+        options[1] = start;
+        options[2] = back;
     }
 
     @Override
@@ -146,17 +93,11 @@ public class MenuTransition extends Menu {
     }
 
     @Override
-    protected void reassignSelected(int reassign) {
-        super.reassignSelected(reassign);
-        Difficulty.setCurrentButton(getIndex());
-    }
-
-    @Override
     public void render(Graphics g) {
         super.render(g);
 //        tutorialState(g); // to be deleted
 
-        VariableHandler.renderHUD(g);
+//        VariableHandler.renderHUD(g);
 
 
         // Render Screen Text
@@ -178,8 +119,8 @@ public class MenuTransition extends Menu {
         g.setFont(new Font("arial", 1, Utility.percWidth(1)));
         g.drawString(VariableHandler.saveDataNotification, x40, y70);
 
-        Difficulty.render(g);
-        renderIcon(g, firePowerLoss, Difficulty.isFirePowerLoss());
+//        Difficulty.render(g);
+//        renderIcon(g, firePowerLoss, Difficulty.isFirePowerLoss());
 
         super.postRender(g);
     }

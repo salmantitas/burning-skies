@@ -191,7 +191,7 @@ public class Player extends Airplane {
     private void renderHoming(Graphics2D g2d) {
         if (VariableHandler.homing) {
             g2d.setColor(Color.RED);
-            g2d.setStroke(new BasicStroke(1));
+            g2d.setStroke(new BasicStroke(2));
             g2d.drawArc(pos.intX(), pos.intY(), width, height, homingAngle, 10);
         }
     }

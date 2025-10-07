@@ -8,6 +8,7 @@ public enum GameState {
     Credits,
     Pause,
     Transition,
+    Difficulty,
     GameOver,
     Highscore,
     Quit,

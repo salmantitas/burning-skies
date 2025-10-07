@@ -64,8 +64,13 @@ public class BulletPlayer extends Bullet{
             impact.runAnimation();
 //            impactTimer++;
 //            Utility.log(state + " " + impactTimer);
-            this.velX = entity.getVelX();
-            this.velY = entity.getVelY();
+            if (entity == null) {
+                this.velX = 0;
+                this.velY = 0;
+            } else {
+                this.velX = entity.getVelX();
+                this.velY = entity.getVelY();
+            }
             super.update();
         }
     }
@@ -74,8 +79,12 @@ public class BulletPlayer extends Bullet{
     protected void drawDefault(Graphics g) {
         if (state == STATE_ACTIVE) {
             drawImage(g, image, width, height);
-        } else if (state == STATE_IMPACT && entity.isActive()) {
-            impact.drawAnimation(g, (int) pos.x - impactAnimationAdjustmentX, (int) pos.y, impactSize, impactSize);
+        } else if (state == STATE_IMPACT) {
+            if (entity == null) {
+                impact.drawAnimation(g, (int) pos.x, (int) pos.y, impactSize, impactSize);
+            } else if (entity.isActive()) {
+                impact.drawAnimation(g, (int) pos.x - impactAnimationAdjustmentX, (int) pos.y, impactSize, impactSize);
+            }
         }
     }
 

@@ -1,6 +1,5 @@
 package com.euhedral.Game.Entities.Enemy;
 
-import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.Difficulty;
@@ -15,12 +14,10 @@ public class EnemyLaser extends Enemy {
 
     double deceleration;
 
-    int bulletAngleMIN = 60;
-
     int destinationX;
     int offsetLeft = 0, offsetRight = 0;
 
-    boolean playerLeft, playerRight, playerInRange;
+    boolean playerLeft, playerRight;
 
     private Laser laser;
     public boolean laserCollision;
@@ -47,10 +44,12 @@ public class EnemyLaser extends Enemy {
         velY_MIN = 1.7f;
 
         health_MAX = 5;
-        commonInit();
         damage = 30;
 
-        laser = new Laser(this, (int) (90 * Difficulty.getEnemyBulletSpeedMult()));
+        int laserTime = 90;
+        Utility.log("Laser Time: " + laserTime);
+        laser = new Laser(this, laserTime);
+        commonInit();
     }
 
     @Override
@@ -81,8 +80,8 @@ public class EnemyLaser extends Enemy {
 
     @Override
     protected void shoot() {
-        resetShootTimer();
         laser.start();
+        resetShootTimer();
     }
 
     private void updateDestination() {
@@ -104,6 +103,7 @@ public class EnemyLaser extends Enemy {
             laser.render(g);
 
             int showTime = 60; // todo: Needs better name
+//            int laserTimeLeft = laser.getTimeLeft();
 
             if (shootTimer <= showTime) {
                 g2d = (Graphics2D) g;
@@ -159,5 +159,12 @@ public class EnemyLaser extends Enemy {
     public void clear() {
         super.clear();
         laser.stop();
+    }
+
+    @Override
+    protected void commonInit() {
+        super.commonInit();
+        int laserTime = 90;
+        laser.resetTime(laserTime);
     }
 }

@@ -335,7 +335,11 @@ public class EnemyPool extends Pool {
             if (enemy.isInscreenY() && enemy.isActive()) {
                 Bullet bullet = player.checkCollisionBullet(enemy);
                 if (bullet != null) {
-                    destroy(bullet, enemy);
+                    if (enemy.collision) {
+                        destroy(bullet, enemy);
+                    } else {
+                        bullet.destroy();
+                    }
                     boolean isBoss = false;
                     if (isBoss) {
 //                        boss.damage();

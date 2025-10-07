@@ -26,7 +26,7 @@ public class Difficulty {
     private static int lineSpace = Utility.intAtWidth640(25);
 
     private static int difficultyNameX = 400;
-    private static int difficultyNameY = 300;
+    private static int difficultyNameY = 200;
     private static int text1X = 200;
     private static int text1Y = difficultyNameY + lineSpace;
     private static int text2X = text1X;

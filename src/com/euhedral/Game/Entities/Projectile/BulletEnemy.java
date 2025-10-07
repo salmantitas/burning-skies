@@ -81,11 +81,6 @@ public class BulletEnemy extends Bullet{
 
     }
 
-//    @Override
-//    public void render(Graphics g) {
-//        super.render(g);
-//    }
-
     @Override
     public void resurrect(double x, double y) {
         this.calculated = false;
