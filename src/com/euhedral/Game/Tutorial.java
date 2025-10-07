@@ -1,6 +1,5 @@
 package com.euhedral.Game;
 
-import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.GameState;
 import com.euhedral.Engine.UI.Panel;
 import com.euhedral.Engine.Utility;
@@ -12,76 +11,90 @@ public class Tutorial {
 
     private MessageBox messageBox;
 
-    private Panel panel;
-    private static boolean movedLeft, movedRight, movedUp, movedDown;
+    private static boolean moved;
     private static boolean shot;
     private static boolean special;
+    private Panel panelMoved, panelShot, panelSpecial;
 
     private static boolean active;
 
-    private static int panelTimer;
-    private static int movedLeftTimer, movedRightTimer, movedUpTimer, movedDownTimer;
+    private static int movedTimer;
     private static int shotTimer;
     private static int specialTimer;
 
     int margin = 20;
     int width = 126;
-    int height = 272;
+    int heightMoved = 72;
     int textHeight = 22;
 
     int leftX = VariableHandler.deadzoneLeftX + 2*64 + margin;
-    int topY= 600;
-    int bottomY = topY + 50;
+    int topYMoved = 600;
+    int bottomYMoved = topYMoved + 50;
+
+    int topYShot = topYMoved + heightMoved + 78;
+    int heightShot = 23;
+
+    int topYSpecial = topYShot + heightMoved + 28;
+    int heightSpecial = 23;
 
     public Tutorial() {
 
-        panel = new Panel(
+        panelMoved = new Panel(
                 leftX - margin,
-                topY - textHeight - margin,
+                topYMoved - textHeight - margin,
                 width + 2* margin,
-                height + 2* margin,
+                heightMoved + 2* margin,
                 GameState.Game);
-        panel.setTransparency(0.4f);
+        panelMoved.setBackColor(Color.BLACK);
 
-        messageBox = new MessageBox(230,200, 800, 550);
-        messageBox.addText("Use WASD or the Arrow Keys to move.");
-        messageBox.addText("");
-        messageBox.addText("        SPACEBAR to shoot.");
-        messageBox.addText("");
-        messageBox.addText("        ESCAPE or P to pause.");
-        messageBox.addText("");
-        messageBox.addText("        CTRL to use Special Move.");
-        messageBox.addText("");
-        messageBox.addText("You can disable tutorial in Settings.");
-        messageBox.addText("");
-        messageBox.addText("Shoot as many enemies as you can.");
-        messageBox.addText("");
-        messageBox.addText("Survive!");
-        messageBox.addText("");
-        messageBox.setFontSize(Utility.intAtWidth640(10));
+        panelShot = new Panel(
+                leftX - margin,
+                topYShot - textHeight - margin,
+                width + 2* margin,
+                heightShot + 2* margin,
+                GameState.Game);
+        panelShot.setBackColor(Color.BLACK);
 
-        messageBox.setTransparency(0.8f);
+        panelSpecial = new Panel(
+                leftX - margin,
+                topYSpecial - textHeight - margin,
+                width + 2* margin,
+                heightSpecial + 2* margin,
+                GameState.Game);
+        panelSpecial.setBackColor(Color.BLACK);
+
+//        messageBox = new MessageBox(230,200, 800, 550);
+//        messageBox.addText("Use WASD or the Arrow Keys to move.");
+//        messageBox.addText("");
+//        messageBox.addText("        SPACEBAR to shoot.");
+//        messageBox.addText("");
+//        messageBox.addText("        ESCAPE or P to pause.");
+//        messageBox.addText("");
+//        messageBox.addText("        CTRL to use Special Move.");
+//        messageBox.addText("");
+//        messageBox.addText("You can disable tutorial in Settings.");
+//        messageBox.addText("");
+//        messageBox.addText("Shoot as many enemies as you can.");
+//        messageBox.addText("");
+//        messageBox.addText("Survive!");
+//        messageBox.addText("");
+//        messageBox.setFontSize(Utility.intAtWidth640(10));
+//
+//        messageBox.setTransparency(0.8f);
 
         reset();
     }
 
     public static void reset() {
-        movedLeft = false;
-        movedDown = false;
-        movedRight = false;
-        movedUp = false;
+        moved = false;
         shot = false;
         special = false;
 
         active = true;
 
         shotTimer = 60;
-        movedDownTimer = 60;
-        movedLeftTimer = 60;
-        movedUpTimer = 60;
-        movedRightTimer = 60;
+        movedTimer = 60;
         specialTimer = 60;
-        panelTimer = 60;
     }
 
     public MessageBox getMessageBox() {
@@ -97,24 +110,35 @@ public class Tutorial {
     }
 
     private void renderPanel(Graphics g) {
-        if (panelTimer > 0)
-            panel.setTransparency(panelTimer / 120f);
-        panel.render(g);
+
+        float mult = 60 * 1.5f;
+
+        if (movedTimer > 0)
+            panelMoved.setTransparency( movedTimer / mult);
+        panelMoved.render(g);
+
+        if (shotTimer > 0)
+            panelShot.setTransparency(shotTimer / mult);
+        panelShot.render(g);
+
+        if (specialTimer > 0)
+            panelSpecial.setTransparency(specialTimer / mult);
+        panelSpecial.render(g);
     }
 
     private void renderMovement(Graphics2D g) {
-        renderTutorialPrompt(g, movedUp, movedUpTimer, "W", leftX + 50, topY);
-        renderTutorialPrompt(g, movedLeft, movedLeftTimer, "A", leftX, bottomY);
-        renderTutorialPrompt(g, movedDown, movedDownTimer, "S", leftX + 50, bottomY);
-        renderTutorialPrompt(g, movedRight, movedRightTimer, "D", leftX + 100, bottomY);
+        renderTutorialPrompt(g, moved, movedTimer, "W", leftX + 50, topYMoved);
+        renderTutorialPrompt(g, moved, movedTimer, "A", leftX, bottomYMoved);
+        renderTutorialPrompt(g, moved, movedTimer, "S", leftX + 50, bottomYMoved);
+        renderTutorialPrompt(g, moved, movedTimer, "D", leftX + 100, bottomYMoved);
     }
 
     private void renderShot(Graphics2D g) {
-        renderTutorialPrompt(g, shot, shotTimer, "SPACE", leftX, bottomY + 100);
+        renderTutorialPrompt(g, shot, shotTimer, "SPACE", leftX, bottomYMoved + 100);
     }
 
     private void renderSpeial(Graphics2D g) {
-        renderTutorialPrompt(g, special, specialTimer, "CTRL", leftX, bottomY + 200);
+        renderTutorialPrompt(g, special, specialTimer, "CTRL", leftX, bottomYMoved + 200);
     }
 
     private void renderTutorialPrompt(Graphics2D g, boolean variable, int timer, String button, int x, int y) {
@@ -132,20 +156,8 @@ public class Tutorial {
         this.messageBox = tutorial;
     }
 
-    public static void setMovedLeft(boolean movedLeft) {
-        Tutorial.movedLeft = movedLeft;
-    }
-
-    public static void setMovedRight(boolean movedRight) {
-        Tutorial.movedRight = movedRight;
-    }
-
-    public static void setMovedUp(boolean movedUp) {
-        Tutorial.movedUp = movedUp;
-    }
-
-    public static void setMovedDown(boolean movedDown) {
-        Tutorial.movedDown = movedDown;
+    public static void setMoved(boolean moved) {
+        Tutorial.moved = moved;
     }
 
     public static void setShot(boolean shot) {
@@ -160,25 +172,12 @@ public class Tutorial {
         if (shot)
             shotTimer--;
 
-        if (movedRight)
-            movedRightTimer--;
-
-        if (movedLeft)
-            movedLeftTimer--;
-
-        if (movedUp)
-            movedUpTimer--;
-
-        if (movedDown)
-            movedDownTimer--;
+        if (moved)
+            movedTimer--;
 
         if (special)
             specialTimer--;
 
-        if (!active) {
-            panelTimer--;
-        }
-
-        active = !(movedLeft && movedRight && movedUp && movedDown && shot && special);
+        active = !(moved  && shot && special);
     }
 }

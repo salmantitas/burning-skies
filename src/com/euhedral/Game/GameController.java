@@ -489,22 +489,22 @@ public class GameController {
         if (Engine.stateIs(GameState.Game)) {
             if (key == (KeyEvent.VK_LEFT) || key == KeyInput.getKeyEvent(LEFT)) {
                 movePlayer('l');
-                Tutorial.setMovedLeft(true);
+                Tutorial.setMoved(true);
             }
 
             if (key == (KeyEvent.VK_RIGHT) || key == KeyInput.getKeyEvent(RIGHT)) {
                 movePlayer('r');
-                Tutorial.setMovedRight(true);
+                Tutorial.setMoved(true);
             }
 
             if (key == (KeyEvent.VK_UP) || key == KeyInput.getKeyEvent(UP)) {
                 movePlayer('u');
-                Tutorial.setMovedUp(true);
+                Tutorial.setMoved(true);
             }
 
             if (key == (KeyEvent.VK_DOWN) || key == KeyInput.getKeyEvent(DOWN)) {
                 movePlayer('d');
-                Tutorial.setMovedDown(true);
+                Tutorial.setMoved(true);
             }
 
             if (key == (KeyInput.getKeyEvent(SHOOT)) || key == (KeyEvent.VK_NUMPAD0)) {
