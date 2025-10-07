@@ -30,7 +30,7 @@ public abstract class MenuItem {
 
     public abstract void render(Graphics g);
 
-    protected void setBackColor(Color backColor) {
+    public void setBackColor(Color backColor) {
         this.backColor = backColor;
     }
 
