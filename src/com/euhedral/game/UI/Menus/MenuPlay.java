@@ -47,14 +47,16 @@ public class MenuPlay extends Menu {
     @Override
     public void update() {
         super.update();
-        tutorial.update();
+        if (VariableHandler.isTutorial())
+            tutorial.update();
     }
 
     @Override
     public void render(Graphics g) {
         super.render(g);
         VariableHandler.renderHUD(g);
-        tutorial.render(g);
+        if (VariableHandler.isTutorial())
+            tutorial.render(g);
         super.postRender(g);
     }
 

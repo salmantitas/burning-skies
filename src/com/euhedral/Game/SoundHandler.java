@@ -134,8 +134,8 @@ public class SoundHandler {
     // Assumes all clips have already been loaded
     public static void setFile(int i) {
         clip = clips[i];
-        clip.stop();
-        clip.setFramePosition(0);
+//        clip.stop();
+        clip.setMicrosecondPosition(0);
     }
 
     // Assumes all clips have already been loaded
@@ -193,15 +193,15 @@ public class SoundHandler {
 
     private static void play() {
 //        Utility.log("Play");
-        clip.start();
         gainControlVolumeMaster();
+        clip.start();
 //        clip.
     }
 
     public static void stop(int i) {
         clip = clips[i];
         clip.stop();
-        clip.setFramePosition(0);
+        clip.setMicrosecondPosition(0);
     }
 
     private static void loop() {

@@ -383,7 +383,7 @@ public class VariableHandler {
         } else {
             pulseVarialbleToBeNamed = 0;
             g.setColor(Color.WHITE);
-            text = "N/A";
+            text = "0";
         }
         g.setColor(color);
         g.drawString(text, pulseX, pulseY);
