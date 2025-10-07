@@ -179,6 +179,6 @@ public class Tutorial {
             panelTimer--;
         }
 
-        active = !(movedLeft && movedRight && movedUp && movedDown && shot && special);g
+        active = !(movedLeft && movedRight && movedUp && movedDown && shot && special);
     }
 }
