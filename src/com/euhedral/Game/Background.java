@@ -82,6 +82,17 @@ public class Background {
         if (backgroundScroll >= maxScroll) {
             backgroundScroll = 0;
         }
+
+        timesRenderedOut++;
+
+//            if (!Engine.stateIs(GameState.Game)) {
+        if ((timesRenderedOut % 20) == 0) {
+            currentImage = (currentImage + 1) % (maxImage + 1);
+//                    currentImage = (currentImage - 1);
+//                    if (currentImage < 0) {
+//                        currentImage = maxImage + currentImage;
+//                    }
+        }
     }
 
     public void render(Graphics g) {
@@ -136,16 +147,16 @@ public class Background {
 //            }
 
 //            if (!Engine.stateIs(GameState.Game)) {
-            timesRenderedOut++;
-
-//            if (!Engine.stateIs(GameState.Game)) {
-            if ((timesRenderedOut % 20) == 0) {
-                currentImage = (currentImage + 1) % (maxImage + 1);
-//                    currentImage = (currentImage - 1);
-//                    if (currentImage < 0) {
-//                        currentImage = maxImage + currentImage;
-//                    }
-            }
+//            timesRenderedOut++;
+//
+////            if (!Engine.stateIs(GameState.Game)) {
+//            if ((timesRenderedOut % 20) == 0) {
+//                currentImage = (currentImage + 1) % (maxImage + 1);
+////                    currentImage = (currentImage - 1);
+////                    if (currentImage < 0) {
+////                        currentImage = maxImage + currentImage;
+////                    }
+//            }
 //            } else {
 //                if (backgroundScrollAcc >= maxScroll) {
 //                    backgroundScrollAcc = 0f;
