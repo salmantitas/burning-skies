@@ -70,7 +70,7 @@ public class Laser extends MobileEntity {
 
     public void start() {
         lifetime.start();
-        SoundHandler.playSound(SoundHandler.LASER);
+        SoundHandler.loopSound(SoundHandler.LASER);
     }
 
     @Override
