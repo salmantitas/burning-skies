@@ -15,21 +15,14 @@ public class BulletPlayer extends Bullet{
 
     public BulletPlayer(double x, double y, double angle) {
         super(x, y, angle);
-//        this.contactId = contactId;
         setImage(textureHandler.bulletPlayer[0]);
         width = image.getWidth(); //4
-        height = width; //10
+        height = width;
 //        impactColor = Color.GREEN;
         commonInit();
 
         impactAnimationAdjustmentX = (impact.getImageWidth() - width)/4;
         physics.acceleration = 0.1;
-
-//        impact = new Animation(10, GameController.getTexture().impactSmall[0],
-//                GameController.getTexture().impactSmall[1],
-//                GameController.getTexture().impactSmall[2],
-//                GameController.getTexture().impactSmall[3]
-//        );
     }
 
     public BulletPlayer(double x, double y, double forwardVelocity, double angle) {
@@ -105,22 +98,16 @@ public class BulletPlayer extends Bullet{
         }
     }
 
-//    public ContactID getContactId() {
-//        return contactId;
-//    }
-
     @Override
     public void resurrect(double x, double y) {
-//        this.x = x;
-//        this.y = y;
+        super.resurrect(x, y);
         this.calculated = false;
         entity = null;
-        super.resurrect(x, y);
         commonInit();
     }
 
     private void commonInit() {
-        state = STATE_ACTIVE;
+//        state = STATE_ACTIVE;
         SoundHandler.playSound(initSound);
     }
 

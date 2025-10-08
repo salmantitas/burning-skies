@@ -20,15 +20,16 @@ public class SoundHandler {
     public static final int EXPLOSION = 3;
     public static final int EXPLOSION_PLAYER = 4;
     public static final int BGMGAMEOVER = 5;
-    public static final int IMPACT = 6;
-    public static final int BULLET_ENEMY = 7;
-    public static final int UI1 = 8;
-    public static final int UI2 = 9;
-    public static final int SHIELD_1 = 10;
-    public static final int SHIELD_2 = 11;
-    public static final int SHIELD_3 = 12;
-    public static final int PULSE = 13;
-    public static final int LASER = 14;
+    public static final int IMPACT_ENEMY = 6;
+    public static final int IMPACT_PLAYER = 7;
+    public static final int BULLET_ENEMY = 8;
+    public static final int UI1 = 9;
+    public static final int UI2 = 10;
+    public static final int SHIELD_1 = 11;
+    public static final int SHIELD_2 = 12;
+    public static final int SHIELD_3 = 13;
+    public static final int PULSE = 14;
+    public static final int LASER = 15;
 
     static int MAX_CLIP = LASER + 1;
 
@@ -84,7 +85,8 @@ public class SoundHandler {
         soundURL[EXPLOSION] = getClass().getResource("/explosion.wav");
         soundURL[EXPLOSION_PLAYER] = getClass().getResource("/explosion_player.wav");
         soundURL[BGMGAMEOVER] = getClass().getResource("/bgmGameOver.wav");
-        soundURL[IMPACT] = getClass().getResource("/impact.wav");
+        soundURL[IMPACT_ENEMY] = getClass().getResource("/impactEnemy.wav");
+        soundURL[IMPACT_PLAYER] = getClass().getResource("/impactPlayer.wav");
         soundURL[UI1] = getClass().getResource("/clip_ui_1.wav");
         soundURL[UI2] = getClass().getResource("/clip_ui_2.wav");
         soundURL[SHIELD_1] = getClass().getResource("/shield_1.wav");

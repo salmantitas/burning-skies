@@ -17,7 +17,6 @@ public class EnemyDrone4 extends EnemyDrone1 {
         shootTimerFirst = 100;
         shootTimerDefault = 45;
         score = 150;
-        damage = 30;
 
 //        attackEffect = true;
 

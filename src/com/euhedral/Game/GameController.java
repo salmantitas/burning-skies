@@ -20,7 +20,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "BURNING SKIES";
-    public static String gameVersion = "0.7.47";
+    public static String gameVersion = "0.7.50";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -43,6 +43,9 @@ public class GameController {
     private SoundHandler soundHandler;
 
     boolean validCameraRenderState;
+
+    public static int screenShake = 0;
+    public static int screenShake_MULT = 1;
 
     // Mouse
     double mxD;
@@ -210,6 +213,15 @@ public class GameController {
         }
 
         currentState.update(this);
+
+        if (screenShake > 0) {
+            screenShake -= 1;
+            screenShake_MULT *= -1;
+        }
+
+//        if (screenShake < 0) {
+//            screenShake++;
+//        }
     }
 
     public void render(Graphics g) {
@@ -223,11 +235,13 @@ public class GameController {
 
         Graphics2D g2d = (Graphics2D) g; // consider writing the whole renderer in g2d
 
+//        screenShake = Utility.randomRangeInclusive(10, 20);
+
         // Camera start
         // Camera Translation Variables
         camX = camera.getX();
         camY = camera.getY();
-        g2d.translate(-camX, -camY);
+        g2d.translate(-camX - screenShake*screenShake_MULT, -camY - screenShake*screenShake_MULT);
 
         /*************
          * Game Code *
@@ -251,7 +265,7 @@ public class GameController {
          *****************/
 
         // Camera end
-        g2d.translate(camX, camY);
+        g2d.translate(camX + screenShake*screenShake_MULT, camY + screenShake*screenShake_MULT);
     }
 
     /************************
@@ -674,7 +688,7 @@ public class GameController {
     }
 
     public void renderBackground(Graphics g) {
-        background.render(g);
+        background.render(g, screenShake*screenShake_MULT);
     }
 
     public void renderUI(Graphics g) {

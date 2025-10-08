@@ -44,14 +44,14 @@ public class Pulse {
             g.drawOval((int) pos.x - radius, (int) pos.y - radius, width + radius * 2, height + radius * 2);
         }
         else if (VariableHandler.pulse) {
-            g.setColor(Color.YELLOW);
-            g.setStroke( new BasicStroke(2) );
-//            int x = pos.intX();
-//            int y = pos.intY();
-//            int centerX = x + width/2;
-//            int centerY = y + height/2;
-
-            g.drawArc(pos.intX(), pos.intY(), width, height, (int) angle, 30);
+//            g.setColor(Color.YELLOW);
+//            g.setStroke( new BasicStroke(2) );
+////            int x = pos.intX();
+////            int y = pos.intY();
+////            int centerX = x + width/2;
+////            int centerY = y + height/2;
+//
+//            g.drawArc(pos.intX(), pos.intY(), width, height, (int) angle, 30);
         }
     }
 }

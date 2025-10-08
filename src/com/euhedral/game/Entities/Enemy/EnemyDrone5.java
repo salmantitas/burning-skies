@@ -19,7 +19,6 @@ public class EnemyDrone5 extends EnemyDrone1 {
         shootTimerFirst = 75;
         shootTimerDefault = 300;
         score = 200;
-        damage = 40;
 
         bulletsPerShot_MAX = 18;
         bulletArcAngle = 180;

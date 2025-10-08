@@ -496,7 +496,7 @@ public class EntityHandler {
                     pickupValue = 1;
                 } else if (lastDestroyedType == VariableHandler.TYPE_SCATTER1 || lastDestroyedType == VariableHandler.TYPE_SCATTER2) {
                     pickupID = EntityID.PickupShield;
-                    pickupValue = 10;
+                    pickupValue = 100;
                 } else {
                     pickupID = EntityID.PickupHealth;
                     pickupValue = 5 * maxChanceCoefficient;

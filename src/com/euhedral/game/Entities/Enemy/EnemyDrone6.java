@@ -18,7 +18,6 @@ public class EnemyDrone6 extends EnemyDrone1 {
         shootTimerFirst = 150;
         shootTimerDefault = 320;
         score = 200;
-        damage = 40;
 
         bulletsPerShot_MAX = 36;
         int tempAngle = 360/bulletsPerShot_MAX;

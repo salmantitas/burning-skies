@@ -1,9 +1,6 @@
 package com.euhedral.Game;
 
-import com.euhedral.Engine.Entity;
-import com.euhedral.Engine.MobileEntity;
-import com.euhedral.Engine.Pool;
-import com.euhedral.Engine.Position;
+import com.euhedral.Engine.*;
 import com.euhedral.Game.Entities.Projectile.Bullet;
 import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.Entities.Projectile.BulletPlayer;
@@ -19,7 +16,6 @@ public class BulletPool extends Pool {
     BulletEnemy bulletEnemy;
     BulletPlayer bulletPlayer;
     Bullet bullet;
-    boolean intersectsEnemy;
 
     public BulletPool() {
         super();
@@ -98,10 +94,12 @@ public class BulletPool extends Pool {
         collidingBullet = null;
         for (Entity entity : entities) {
             bulletPlayer = (BulletPlayer) entity;
-            intersectsEnemy = enemy.checkCollision(bulletPlayer);
+            boolean intersectsEnemy = enemy.checkCollision(bulletPlayer);
+
             if (bulletPlayer.isActive() && intersectsEnemy)
             {
                 collidingBullet = bulletPlayer;
+                return collidingBullet;
             }
         }
         return collidingBullet;
@@ -126,7 +124,7 @@ public class BulletPool extends Pool {
 
     private void destroy(Bullet bullet, MobileEntity entity) {
         if (VariableHandler.shield.getValue() <= 0)
-            SoundHandler.playSound(SoundHandler.IMPACT);
+            SoundHandler.playSound(SoundHandler.IMPACT_PLAYER);
         bullet.destroy(entity);
     }
 

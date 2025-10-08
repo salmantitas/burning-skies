@@ -15,7 +15,6 @@ public class EnemyDrone2 extends EnemyDrone1 {
         bulletVelocity = 5;
         shootTimerDefault = 100;
         score = 40;
-        damage = 20;
 
         attackEffect = true;
 

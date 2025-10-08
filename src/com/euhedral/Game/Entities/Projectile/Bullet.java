@@ -43,8 +43,6 @@ public class Bullet extends MobileEntity {
     Bullet( double x, double y) {
         super(x ,y, EntityID.Bullet);
         setPos(x,y);
-//        this.x = x;
-//        this.y = y;
         collided = false;
         width = Utility.intAtWidth640(4);
         height = Utility.intAtWidth640(24)/2;

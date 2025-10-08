@@ -23,7 +23,7 @@ public class EnemyDrone1 extends Enemy{
         height = width;
 
         health_MAX = 1;
-        damage = 15;
+        damage = 20;
         commonInit();
     }
 

@@ -377,12 +377,10 @@ public class EnemyGenerator {
                 difficulty++;
                 difficultyIncreased = true;
                 wavesSinceDifficultyIncrease = 0;
+                spawnIntervalDeduction -= 20;
                 Utility.log("Diff: " + difficulty);
-            } else {
-                spawnIntervalDeduction += 5;
-                wavesSinceDifficultyIncrease = 0;
             }
-//            minWavesDifficultyIncrease += 5;
+
             if (wave / minWavesDifficultyIncrease + 1 > level) {
                 level++;
                 Utility.log("Level: " + (level));
@@ -396,6 +394,10 @@ public class EnemyGenerator {
     protected void incrementWave() {
 //        System.out.printf("Wave: %d, LastHeight: %d\n", wave, spawnHeight);
         wave++;
+        int deduction = 5;
+        if (Difficulty.difficultyMode == Difficulty.DIFFICULTY_CHALLENGE)
+            deduction = 1;
+        spawnIntervalDeduction += deduction;
     }
 
     protected void determineSpawnInterval() {

@@ -26,7 +26,7 @@ public class Background {
     BufferedImage imageSea; // = GameController.getTexture().sea[currentImage];
     int imageScrollinginterval; // = imageSea.getHeight() * 2;
 
-    int minX = 0;
+    int minX = -64;
     int minY = (int) -maxScroll;
 
     Pool backgroundObjects;
@@ -95,20 +95,26 @@ public class Background {
         }
     }
 
-    public void render(Graphics g) {
-        renderScrollingBackground(g);
+    public void render(Graphics g, int screenShake) {
+        renderScrollingBackground(g, screenShake);
         backgroundObjects.render(g);
     }
 
     // todo: speed up 'animation'
-    public void renderScrollingBackground(Graphics g) {
+    public void renderScrollingBackground(Graphics g, int screenShake) {
 
         if (!Engine.stateIs(GameState.Test)) {
 
             for (int i = minX; i < Engine.WIDTH; i += imageScrollinginterval) {
                 for (int j = minY; j < Engine.HEIGHT; j += imageScrollinginterval) {
 
-                    g.drawImage(imageSea, i, j + (int) (backgroundScroll), imageScrollinginterval + 1, imageScrollinginterval + 1, null);
+                    g.drawImage(
+                            imageSea,
+                            i + screenShake,
+                            j + (int) (backgroundScroll) + screenShake,
+                            imageScrollinginterval + 1,
+                            imageScrollinginterval + 1,
+                            null);
 
 //                    if (backgroundScrollAcc >= maxScroll/2) {
 //                        backgroundScrollAcc = 0f;

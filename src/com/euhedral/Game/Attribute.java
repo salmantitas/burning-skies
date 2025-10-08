@@ -29,6 +29,12 @@ public class Attribute {
     int width;
     int height;
 
+    boolean grid;
+
+    public void setGrid(boolean grid) {
+        this.grid = grid;
+    }
+
     public int activateSound, deactivateSound;
 
     public Attribute(String name, int defaultValue, boolean binary) {
@@ -153,6 +159,20 @@ public class Attribute {
         g.fillRect(x, y, MAX * width, height);
         g.setColor(foregroundColor);
         g.fillRect(x, y, (int) value * width, height);
+
+        if (grid) {
+            Graphics2D g2d = (Graphics2D) g;
+
+            g2d.setStroke( new BasicStroke(2));
+
+            g.setColor(Color.BLACK);
+
+            int gridWidth = 40;
+
+            for (int i = 0; i < 10; i ++) {
+                g.drawRect(x + gridWidth*i , y, gridWidth, height);
+            }
+        }
     }
 
 //    public void renderValue(Graphics g) {

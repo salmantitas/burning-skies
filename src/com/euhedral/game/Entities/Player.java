@@ -107,6 +107,10 @@ public class Player extends Airplane {
             shieldTimer--;
         }
 
+        if (VariableHandler.shield.getValue() > 0) {
+            VariableHandler.shield.decrease(0.5); // 1 too high
+        }
+
         pulse.update(bulletVelocity);
         homingAngle++;
     }
@@ -183,7 +187,7 @@ public class Player extends Airplane {
         }
 
         pulse.render(g2d, pos, width, height, bulletVelocity);
-        renderHoming(g2d);
+//        renderHoming(g2d);
 
 //        renderStats(g);
     }
@@ -192,7 +196,7 @@ public class Player extends Airplane {
         if (VariableHandler.homing) {
             g2d.setColor(Color.RED);
             g2d.setStroke(new BasicStroke(2));
-            g2d.drawArc(pos.intX(), pos.intY(), width, height, homingAngle, 10);
+            g2d.drawArc(pos.intX(), pos.intY(), width, height, homingAngle, 30);
         }
     }
 
@@ -288,8 +292,8 @@ public class Player extends Airplane {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
         calculateTurretPositions();
-        turretRightX = (int) (pos.x + width - 8);
-        turretLeftX = (int) (pos.x + 4);
+        turretRightX = (int) (pos.x + width - 16);
+        turretLeftX = (int) (pos.x + 6);
 
 //        VariableHandler.homing = true; // todo: Test Only
 
@@ -339,26 +343,6 @@ public class Player extends Airplane {
             bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
             bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
             bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
-        }
-
-//        if (power == 5) {
-//            spawnBullet(spawnRightX, turretY, shootAngleRight);
-//            spawnBullet(spawnRightX, turretY, NORTH);
-//            spawnBullet(spawnMidX, (int) y, NORTH);
-//            spawnBullet(spawnLeftX, turretY, NORTH);
-//            spawnBullet(spawnLeftX, turretY, shootAngleLeft);
-//        } else if (power == 4) {
-//            spawnBullet(spawnRightX, turretY, shootAngleRight);
-//            spawnBullet(spawnRightX, turretY, NORTH);
-//            spawnBullet(spawnLeftX, turretY, NORTH);
-//            spawnBullet(spawnLeftX, turretY, shootAngleLeft);
-//        } else if (power == 3) {
-
-//        } else
-        if (firepower.getValue() <= 2) {
-
-        } else {
-
         }
 
         // reset shoot timer to default
@@ -512,11 +496,11 @@ public class Player extends Airplane {
 
     public void damage(double damage) {
         if (shield.getValue() > 0) {
-            double temp = damage - shield.getValue();
-            shield.decrease(damage * 2);
-            if (temp > 0) {
-                damageHealth(temp);
-            }
+//            double temp = damage - shield.getValue();
+//            shield.decrease(damage * 2);
+//            if (temp > 0) {
+//                damageHealth(temp);
+//            }
             shieldTimer = shieldTimer_MAX;
             SoundHandler.playSound(SoundHandler.SHIELD_2);
         } else {
@@ -532,6 +516,9 @@ public class Player extends Airplane {
             }
         }
         jitter = jitter_MAX;
+
+        GameController.screenShake = 5;
+        StatePlay.resetKillstreak();
     }
 
     // Bullet Functions

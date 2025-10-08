@@ -8,7 +8,6 @@ import com.euhedral.Game.Entities.Projectile.Bullet;
 import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.Entities.Enemy.Enemy;
 import com.euhedral.Game.Entities.Player;
-import com.euhedral.Game.Entities.Projectile.Laser;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -205,6 +204,8 @@ public class EnemyPool extends Pool {
         if (enemy.canDisable()) {
             enemy.disable();
             increase(enemyType);
+
+            StatePlay.resetKillstreak();
         }
     }
 
@@ -334,6 +335,9 @@ public class EnemyPool extends Pool {
             enemy = (Enemy) entity;
             if (enemy.isInscreenY() && enemy.isActive()) {
                 Bullet bullet = player.checkCollisionBullet(enemy);
+                if (bullet != null && !enemy.collision) {
+                    Utility.log("Bullet exists but doesn't 'coolide'");
+                }
                 if (bullet != null) {
                     if (enemy.collision) {
                         destroy(bullet, enemy);
@@ -363,7 +367,7 @@ public class EnemyPool extends Pool {
     }
 
     private void destroy(Bullet bullet, MobileEntity entity) {
-        SoundHandler.playSound(SoundHandler.IMPACT);
+        SoundHandler.playSound(SoundHandler.IMPACT_ENEMY);
         bullet.destroy(entity);
     }
 

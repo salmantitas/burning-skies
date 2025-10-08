@@ -193,6 +193,7 @@ public class VariableHandler {
         health.setX(healthIconX + Utility.intAtWidth640(18));
         health.setY(healthIconY + Utility.intAtWidth640(2));
         health.setForegroundColor(healthHigh);
+        health.setGrid(true);
 
         levelY = Utility.percHeight(4);
         timerY = scoreY + Utility.intAtWidth640(25);
@@ -322,13 +323,13 @@ public class VariableHandler {
     private static void renderKillstreak(Graphics g) {
         g.setColor(Color.RED);
 
-        Graphics2D g2d = (Graphics2D) g;
+//        Graphics2D g2d = (Graphics2D) g;
 
-        g2d.setComposite(Utility.makeTransparent(StatePlay.killTimer.getProgress()));
+//        g2d.setComposite(Utility.makeTransparent(StatePlay.killTimer.getProgress()));
 
         g.drawString("" + StatePlay.getKillstreak(), 850, timerY);
 
-        g2d.setComposite(Utility.makeTransparent(1));
+//        g2d.setComposite(Utility.makeTransparent(1));
     }
 
     public static void renderScore(Graphics g) {

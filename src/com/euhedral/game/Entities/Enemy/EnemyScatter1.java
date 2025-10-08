@@ -48,7 +48,6 @@ public class EnemyScatter1 extends Enemy {
         velY_MAX = 1;
         velX_MAX = velY_MAX;
         commonInit();
-        damage = 90;
     }
 
     public EnemyScatter1(int x, int y, Color color, int levelHeight) {

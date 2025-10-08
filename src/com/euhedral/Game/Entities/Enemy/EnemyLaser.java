@@ -44,7 +44,6 @@ public class EnemyLaser extends Enemy {
         velY_MIN = 1.7f;
 
         health_MAX = 5;
-        damage = 30;
 
         int laserTime = 90;
         Utility.log("Laser Time: " + laserTime);

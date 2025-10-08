@@ -4,12 +4,12 @@ import com.euhedral.Engine.Engine;
 
 public class StatePlay extends State {
 
-    public static Timer killTimer;
+//    public static Timer killTimer;
     private static int killstreak;
 
     public StatePlay() {
         super();
-        killTimer = new Timer(5 * 60);
+//        killTimer = new Timer(5 * 60);
         killstreak = 0;
     }
 
@@ -62,10 +62,10 @@ public class StatePlay extends State {
             }
         }
 
-        killTimer.update();
-        if (killTimer.getProgress() <= 0) {
-            killstreak = 0;
-        }
+//        killTimer.update();
+//        if (killTimer.getProgress() <= 0) {
+//            killstreak = 0;
+//        }
     }
 
     private void runGame(GameController gameController) {
@@ -76,11 +76,11 @@ public class StatePlay extends State {
 
     public static void increaseKillstreak() {
         killstreak++;
-        killTimer.start();
+//        killTimer.start();
     }
 
     public static void resetKillstreak() {
-        killTimer.stop();
+//        killTimer.stop();
         killstreak = 0;
     }
 

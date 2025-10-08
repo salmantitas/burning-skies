@@ -29,7 +29,6 @@ public class EnemyStatic1 extends Enemy {
         velX = 0;
         velY_MIN = 1.75f;
         commonInit();
-        damage = 90;
     }
 
     public EnemyStatic1(int x, int y, Color color, int levelHeight) {

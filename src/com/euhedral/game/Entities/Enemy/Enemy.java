@@ -93,7 +93,7 @@ public abstract class Enemy extends Airplane {
 
         explosion = GameController.getTexture().initExplosion(6);
         reflection = new Reflection();
-        damage = 35;
+        damage = 30;
 //        resetShootTimer();
     }
 
@@ -471,7 +471,7 @@ public abstract class Enemy extends Airplane {
     }
 
     protected void renderScore(Graphics g) {
-        if (isExploding()) {
+        if (isExploding() && !GameController.godMode) {
             g.setFont(VariableHandler.customFont.deriveFont(1, 20));
             g.setColor(VariableHandler.scoreColor);
             int offsetX = width / 2 - Utility.intAtWidth640(10);

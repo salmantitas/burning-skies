@@ -37,6 +37,8 @@ public class Tutorial {
     int topYSpecial = topYShot + heightMoved + 28;
     int heightSpecial = 23;
 
+    float mult = 60 * 1.5f;
+
     public Tutorial() {
 
         panelMoved = new Panel(
@@ -103,30 +105,18 @@ public class Tutorial {
 
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        renderPanel(g);
+
         renderMovement(g2d);
         renderShot(g2d);
-        renderSpeial(g2d);
+        renderSpecial(g2d);
     }
 
-    private void renderPanel(Graphics g) {
 
-        float mult = 60 * 1.5f;
-
+    private void renderMovement(Graphics2D g) {
         if (movedTimer > 0)
             panelMoved.setTransparency( movedTimer / mult);
         panelMoved.render(g);
 
-        if (shotTimer > 0)
-            panelShot.setTransparency(shotTimer / mult);
-        panelShot.render(g);
-
-        if (specialTimer > 0)
-            panelSpecial.setTransparency(specialTimer / mult);
-        panelSpecial.render(g);
-    }
-
-    private void renderMovement(Graphics2D g) {
         renderTutorialPrompt(g, moved, movedTimer, "W", leftX + 50, topYMoved);
         renderTutorialPrompt(g, moved, movedTimer, "A", leftX, bottomYMoved);
         renderTutorialPrompt(g, moved, movedTimer, "S", leftX + 50, bottomYMoved);
@@ -134,10 +124,18 @@ public class Tutorial {
     }
 
     private void renderShot(Graphics2D g) {
+        if (shotTimer > 0)
+            panelShot.setTransparency(shotTimer / mult);
+        panelShot.render(g);
+
         renderTutorialPrompt(g, shot, shotTimer, "SPACE", leftX, bottomYMoved + 100);
     }
 
-    private void renderSpeial(Graphics2D g) {
+    private void renderSpecial(Graphics2D g) {
+        if (specialTimer > 0)
+            panelSpecial.setTransparency(specialTimer / mult);
+        panelSpecial.render(g);
+
         renderTutorialPrompt(g, special, specialTimer, "CTRL", leftX, bottomYMoved + 200);
     }
 

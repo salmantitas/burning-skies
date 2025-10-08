@@ -50,7 +50,6 @@ public class EnemyHeavy extends Enemy {
 
         health_MAX = 4;
         commonInit();
-        damage = 60;
     }
 
     public EnemyHeavy(int x, int y, Color color, int levelHeight) {
