@@ -30,6 +30,7 @@ public class Attribute {
     int height;
 
     boolean grid;
+    private boolean roundDownInRender;
 
     public void setGrid(boolean grid) {
         this.grid = grid;
@@ -43,6 +44,7 @@ public class Attribute {
         setMAX(defaultValue);
         setValue(defaultValue);
         this.binary = binary;
+        roundDownInRender = false;
     }
 
     Attribute(String name, int defaultValue, boolean binary, int cost) {
@@ -155,10 +157,19 @@ public class Attribute {
     public void renderBar(Graphics g) {
         width = Utility.intAtWidth640(2);
         height = width * 6;
+        int unit = width * 10;
+
         g.setColor(backgroundColor);
         g.fillRect(x, y, MAX * width, height);
+
         g.setColor(foregroundColor);
-        g.fillRect(x, y, (int) value * width, height);
+
+        if (roundDownInRender) {
+            g.fillRect(x, y, ( int) ((value * width) / 40) * 40, height);
+        } else {
+            g.fillRect(x, y, (int) value * width, height);
+        }
+
 
         if (grid) {
             Graphics2D g2d = (Graphics2D) g;
@@ -197,5 +208,9 @@ public class Attribute {
 
     public boolean isMax() {
         return this.value >= MAX;
+    }
+
+    public void roundDownInRender() {
+        roundDownInRender = true;
     }
 }
