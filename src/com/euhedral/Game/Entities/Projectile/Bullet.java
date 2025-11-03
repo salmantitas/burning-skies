@@ -10,6 +10,9 @@ import java.awt.*;
 
 public class Bullet extends MobileEntity {
 //    protected int vel;
+
+    protected int damage;
+
     protected boolean collided;
     protected Color color;
     protected Color impactColor;
@@ -193,5 +196,9 @@ public class Bullet extends MobileEntity {
 
     public void resetBounds() {
         updateBounds(2);
+    }
+
+    public int getDamage() {
+        return damage;
     }
 }
