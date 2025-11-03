@@ -46,13 +46,14 @@ public class Pickup extends MobileEntity {
         else if (id == EntityID.PickupShield) {
             VariableHandler.shield.increase(value);
         }
-        else if (id == EntityID.PickupHoming) {
-//            if (VariableHandler.power.isMax())
-                VariableHandler.homing = true; // Player.enableHoming();
-//            VariableHandler.power.increase(value);
-        }
+//        else if (id == EntityID.PickupHoming) {
+////            if (VariableHandler.power.isMax())
+//                VariableHandler.homing = true; // Player.enableHoming();
+////            VariableHandler.power.increase(value);
+//        }
         else if (id == EntityID.PickupFirepower) {
             VariableHandler.firepower.increase(value);
+            VariableHandler.homing = true; // Player.enableHoming();
         }
         else if (id == EntityID.PickupPulse)
             VariableHandler.pulse = true; // Player.enablePulse();
