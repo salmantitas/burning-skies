@@ -1,8 +1,8 @@
 package com.euhedral.Game;
 
 import com.euhedral.Engine.Engine;
-import com.euhedral.Engine.GameState;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.UI.HUD;
 
 import java.awt.*;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class VariableHandler {
      * Global Game Variables                *
      * Comment Out Whichever is Unnecessary *
      ****************************************/
-    private static boolean hud = true;
+    private static boolean hudActive = true;
     private static boolean console = false;
 
     /****************************************
@@ -29,12 +29,7 @@ public class VariableHandler {
 
     public static Attribute health, shield, firepower;
 
-    private static int healthIconX, healthIconY;
-    private static int firepowerIconY;
-    private static int shieldIconY;
-    private static int shootRateBoostIconX, pulseIconX;
-
-    private static int pulseVarialbleToBeNamed = 0;
+    public static int pulseVarialbleToBeNamed = 0;
 
 //    public static int shootRateBoostDuration;
     private static int shootRateBoostX;
@@ -42,11 +37,10 @@ public class VariableHandler {
     public static boolean homing;
 
     public static boolean pulse;
-    private static int pulseX, pulseY;
 
     private static Color healthLow = Color.RED;
     private static Color healthMed = Color.ORANGE;
-    private static Color healthHigh = Color.GREEN;
+    public static Color healthHigh = Color.GREEN;
 
     // Enemy Types
     public static final int TYPE_BASIC1 = 0;
@@ -80,11 +74,6 @@ public class VariableHandler {
 
     // Score
     private static int score = 0;
-    private static int scoreX = Utility.percWidth(74);;
-    private static int scoreY = Utility.intAtWidth640(20);
-    private static int scoreSize = Utility.percWidth(2);
-    private static Font scoreFont;
-    public static Color scoreColor = Color.YELLOW;
 
     // High Score
     public static final int HIGH_SCORE_NUMBERS_MAX = 10;
@@ -94,18 +83,6 @@ public class VariableHandler {
     private static Font highScoreFont;
 
     private static int lineHeightInPixel = Utility.intAtWidth640(18);
-
-    // Level
-    private static int levelX = Utility.percWidth(90);
-    private static int levelY;
-    private static int levelSize = scoreSize;
-    private static Font levelFont;
-
-    private static float renderWaveDuration = 1f;
-
-    // Timer
-    private static int timerX = scoreX;
-    private static int timerY;
 
     // Notifications
     public static String saveText = "Game Saved Successfully.";
@@ -117,11 +94,14 @@ public class VariableHandler {
      * User Variables *
      ******************/
 
+    private static HUD hud;
+
     private static int STARTLEVEL = 1;
     private static int level;
     private static final int MAXLEVEL = enemyTypes;
 
-    private static int healthBossDef, healthBoss;
+    public static int healthBossDef;
+    private static int healthBoss;
     private static int bossScore = 500;
     private static boolean bossLives = false;
 
@@ -147,9 +127,9 @@ public class VariableHandler {
             throw new RuntimeException(e);
         }
 
-        scoreFont = customFont.deriveFont(0, scoreSize);
+        hud = new HUD();
+
         highScoreFont = customFont.deriveFont(1, highScoreFontSize);
-        levelFont = customFont.deriveFont(0, levelSize);
 
         colorMap = new HashMap<>();
 //        initializeColorMap();
@@ -184,53 +164,31 @@ public class VariableHandler {
 //    }
 
     public static void initializeAttributes() {
-        firepowerIconY = scoreY - Utility.intAtWidth640(16);
-        healthIconY = firepowerIconY + Utility.intAtWidth640(18);
-        shieldIconY = healthIconY + Utility.intAtWidth640(18);
-
-        healthIconX = Utility.intAtWidth640(8);
         health = new Attribute("Health", 100, false);
-        health.setX(healthIconX + Utility.intAtWidth640(18));
-        health.setY(healthIconY + Utility.intAtWidth640(2));
-        health.setForegroundColor(healthHigh);
+        hud.setHealthProperties(health);
+        health.setForegroundColor(VariableHandler.healthHigh);
         health.setGrid(true);
-
-        levelY = Utility.percHeight(4);
-        timerY = scoreY + Utility.intAtWidth640(25);
+        health.roundDownInRender();
 
         firepower = new Attribute("Shoot Rate", 1, false);
-        firepower.setMIN(1);
-        firepower.setMAX(25);
-        firepower.textColor = Color.WHITE;
-        firepower.increaseTextColor = Color.RED;
-        firepower.setFontSize(scoreSize);
-        firepower.setX(healthIconX + Utility.intAtWidth640(18));
-        firepower.setY(firepowerIconY + Utility.intAtWidth640(13));
+        hud.setFirepowerProperties(firepower);
 
         shield = new Attribute("Shield", 0, false);
-        shield.setMIN(0);
-        shield.setMAX(100);
-        shield.setX(healthIconX + Utility.intAtWidth640(18));
-        shield.setY(shieldIconY + Utility.intAtWidth640(2));
-        shield.setForegroundColor(Color.blue);
-        shield.activateSound = SoundHandler.SHIELD_1;
-        shield.deactivateSound = SoundHandler.SHIELD_3;
+        hud.setShieldProperties(shield);
 
         int iconSpacingX = 148;
 
-        shootRateBoostIconX = healthIconX + iconSpacingX;
+//        shootRateBoostIconX = healthIconX + iconSpacingX;
 
 //        firepower.setX(power.getX());
 
 //        shootRateBoostDuration = 0;
-        shootRateBoostX = shootRateBoostIconX + Utility.intAtWidth640(20);
-        pulseY = firepower.getY();
+//        shootRateBoostX = shootRateBoostIconX + Utility.intAtWidth640(20);
 
         homing = false;
-
-        pulseIconX = shootRateBoostIconX + iconSpacingX;
-        pulseX = pulseIconX + Utility.intAtWidth640(20);
         pulse = false;
+
+        hud.setPulseProperties(firepower, iconSpacingX);
     }
 
     public static void console() {
@@ -242,8 +200,8 @@ public class VariableHandler {
         return console;
     }
 
-    public static boolean isHud() {
-        return hud;
+    public static boolean isHudActive() {
+        return hudActive;
     }
 
     public void resetScore() {
@@ -290,143 +248,7 @@ public class VariableHandler {
      * Render *
      **********/
 
-    public static void renderHUD(Graphics g) {
-//        g.setColor(Color.RED);
-//        g.drawLine(0, deadzoneTop + 8, Engine.WIDTH, deadzoneTop + 8);
-        g.drawImage(GameController.getTexture().pickup[2], healthIconX,
-                firepowerIconY, null);
-        firepower.renderValue(g);
-//        power.renderValue(g);
-        g.drawImage(GameController.getTexture().pickup[0], healthIconX,
-                healthIconY, null);
-        health.renderBar(g);
-        if (shield.getValue() > 0) {
-            g.drawImage(GameController.getTexture().pickup[1], healthIconX,
-                    shieldIconY, null);
-            shield.renderBar(g);
-        }
 
-        renderPulse(g);
-
-        renderScore(g);
-        renderScoreMult(g);
-        renderWave(g);
-        if (Engine.stateIs(GameState.Game)) {
-            renderTimer(g);
-        }
-
-        renderKillstreak(g);
-
-//            renderFPS(g);
-    }
-
-    private static void renderKillstreak(Graphics g) {
-        g.setColor(Color.RED);
-
-//        Graphics2D g2d = (Graphics2D) g;
-
-//        g2d.setComposite(Utility.makeTransparent(StatePlay.killTimer.getProgress()));
-
-        g.drawString("" + StatePlay.getKillstreak(), 850, timerY);
-
-//        g2d.setComposite(Utility.makeTransparent(1));
-    }
-
-    public static void renderScore(Graphics g) {
-        g.setFont(scoreFont);
-        g.setColor(scoreColor);
-        if (GameController.godMode)
-            g.setColor(Color.GRAY);
-        g.drawString("Score: " + score, scoreX, scoreY);
-        int offset = 120;
-
-        String scoreMult = "X" + Difficulty.getScoreMultiplier();
-        scoreMult = scoreMult.substring(0, 4);
-
-        g.drawString(scoreMult, scoreX - offset, scoreY);
-    }
-
-    public static void renderScoreMult(Graphics g) {
-        g.setFont(scoreFont);
-        g.setColor(scoreColor);
-        if (GameController.godMode)
-            g.setColor(Color.GRAY);
-
-        int offset = 120;
-
-        String scoreMult = "X" + Difficulty.getScoreMultiplier();
-        scoreMult = scoreMult.substring(0, 4);
-
-        g.drawString(scoreMult, scoreX - offset, scoreY);
-    }
-
-    public static void renderLevel(Graphics g) {
-        g.setFont(levelFont);
-        g.setColor(Color.YELLOW);
-        g.drawString("Level " + level, timerX, levelY);
-    }
-
-    public static void renderWave(Graphics g) {
-        if (renderWaveDuration > 0 && (Engine.stateIs(GameState.Game))) {
-            g.setFont(levelFont);
-            g.setColor(Color.YELLOW);
-//            int offsetX = Utility.intAtWidth640(30), offsetY = Utility.intAtWidth640(90);
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setComposite(Utility.makeTransparent(renderWaveDuration));
-            g.drawString("Wave " + level, Engine.WIDTH/2 - Utility.intAtWidth640(40), Utility.intAtWidth640(80));
-            g2d.setComposite(Utility.makeTransparent(1f));
-            renderWaveDuration -= 0.01f;
-        }
-    }
-
-    public static void renderTimer(Graphics g) {
-        g.setFont(levelFont);
-        g.setColor(Color.WHITE);
-        g.drawString("Timer: " + GameController.getCurrentTime(), timerX, timerY);
-    }
-
-    public static void renderPulse(Graphics g) {
-        g.setFont(levelFont);
-        Color color = null;
-        String text = "";
-        if (pulse) {
-            if (pulseVarialbleToBeNamed/10 % 2 == 0) {
-                g.setColor(Color.YELLOW);
-            } else
-                g.setColor(Color.WHITE);
-            text = "CTRL";
-            pulseVarialbleToBeNamed++;
-        } else {
-            pulseVarialbleToBeNamed = 0;
-            g.setColor(Color.WHITE);
-            text = "0";
-        }
-        g.setColor(color);
-        g.drawString(text, pulseX, pulseY);
-        g.drawImage(GameController.getTexture().pickup[4], pulseIconX, firepowerIconY, null);
-    }
-
-//    public static void renderFPS(Graphics g) {
-//        g.setFont(new Font("arial", 1, levelSize));
-//        g.setColor(Color.YELLOW);
-//        g.drawString("FPS: " + Engine.getFPS(), timerX, shield.getY());
-//    }
-
-    protected static void drawBossHealth(Graphics g) {
-        int startX = Utility.percWidth(35);
-        int endX = Utility.percWidth(65);
-        int diffX = endX - startX;
-
-        int y = Utility.percHeight(28);
-        int width = diffX / healthBossDef;
-        int height = width;
-        Color backColor = Color.lightGray;
-        Color healthColor = Color.RED;
-        g.setColor(backColor);
-        g.fillRect(startX, y, healthBossDef * width, height);
-        g.setColor(healthColor);
-        g.fillRect(startX, y, healthBoss * width, height);
-    }
 
     /**********************
      * Getters and setters *
@@ -440,29 +262,29 @@ public class VariableHandler {
         VariableHandler.score = score;
     }
 
-    public int getScoreX() {
-        return scoreX;
-    }
+//    public int getScoreX() {
+//        return scoreX;
+//    }
 
-    public void setScoreX(int scoreX) {
-        VariableHandler.scoreX = scoreX;
-    }
+//    public void setScoreX(int scoreX) {
+//        VariableHandler.scoreX = scoreX;
+//    }
 
-    public int getScoreY() {
-        return scoreY;
-    }
+//    public int getScoreY() {
+//        return scoreY;
+//    }
 
-    public void setScoreY(int scoreY) {
-        VariableHandler.scoreY = scoreY;
-    }
+//    public void setScoreY(int scoreY) {
+//        VariableHandler.scoreY = scoreY;
+//    }
 
-    public int getScoreSize() {
-        return scoreSize;
-    }
+//    public int getScoreSize() {
+//        return scoreSize;
+//    }
 
-    public void setScoreSize(int scoreSize) {
-        VariableHandler.scoreSize = scoreSize;
-    }
+//    public void setScoreSize(int scoreSize) {
+//        VariableHandler.scoreSize = scoreSize;
+//    }
 
     public static int getHealthBossDef() {
         return healthBossDef;
@@ -472,7 +294,7 @@ public class VariableHandler {
         healthBossDef = newHealthBossDef;
     }
 
-    public int getHealthBoss() {
+    public static int getHealthBoss() {
         return healthBoss;
     }
 
@@ -513,7 +335,7 @@ public class VariableHandler {
     }
 
     public static void setLevel(int i) {
-        renderWaveDuration = 1f;
+        hud.renderWaveDuration = 1f;
         level = i;
 //        if (finishedFinalLevel())
 //            level = MAXLEVEL;
