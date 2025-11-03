@@ -10,6 +10,7 @@ import com.euhedral.Engine.Utility;
 import com.euhedral.Game.Difficulty;
 import com.euhedral.Game.GameController;
 import com.euhedral.Game.SoundHandler;
+import com.euhedral.Game.UI.HUD;
 import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
@@ -105,8 +106,8 @@ public class MenuDifficulty extends Menu {
     public void render(Graphics g) {
         super.render(g);
 
-        VariableHandler.renderScore(g);
-        VariableHandler.renderScoreMult(g);
+        HUD.renderScore(g);
+        HUD.renderScoreMult(g);
 
         // Render Screen Text
 

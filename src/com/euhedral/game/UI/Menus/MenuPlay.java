@@ -7,6 +7,7 @@ import com.euhedral.Engine.UI.Panel;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.SoundHandler;
 import com.euhedral.Game.Tutorial;
+import com.euhedral.Game.UI.HUD;
 import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
@@ -54,7 +55,7 @@ public class MenuPlay extends Menu {
     @Override
     public void render(Graphics g) {
         super.render(g);
-        VariableHandler.renderHUD(g);
+        HUD.render(g);
         if (VariableHandler.isTutorial())
             tutorial.render(g);
         super.postRender(g);
