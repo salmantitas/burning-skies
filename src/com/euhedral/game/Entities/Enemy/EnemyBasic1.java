@@ -2,6 +2,7 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.ShieldEnemy;
 import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
@@ -15,7 +16,9 @@ public class EnemyBasic1 extends Enemy{
 //        attackEffect = true;
 
         health_MAX = 2;
+
         commonInit();
+
         score = 20;
         spawnInterval = 2 * UPDATES_PER_SECOND;
     }
@@ -25,6 +28,14 @@ public class EnemyBasic1 extends Enemy{
         this.color = color;
 
     }
+
+//    @Override
+//    public void update() {
+//        super.update();
+//        if (isActive()) {
+//            shield.update();
+//        }
+//    }
 
     @Override
     public int getTurretX() {
