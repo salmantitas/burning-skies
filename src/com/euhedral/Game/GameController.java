@@ -20,7 +20,7 @@ public class GameController {
      *******************************************/
 
     private String gameTitle = "BURNING SKIES";
-    public static String gameVersion = "0.7.50";
+    public static String gameVersion = "0.7.54";
     private int gameWidth = 1280;
     private double gameRatio = 4 / 3;
     private int gameHeight = Engine.HEIGHT;
@@ -102,7 +102,7 @@ public class GameController {
      * Graphics *
      ************/
 
-    Background background;
+    private static Background background;
 
     public GameController() {
 
@@ -687,9 +687,17 @@ public class GameController {
         entityHandler.updatePlayer();
     }
 
-    public void renderBackground(Graphics g) {
-        background.render(g, screenShake*screenShake_MULT);
+    public static void renderSea(Graphics g) {
+        background.renderSea(g, screenShake);
     }
+
+    public static void renderClouds(Graphics g) {
+//        background.renderClouds(g, screenShake);
+    }
+
+//    public void renderBackground(Graphics g) {
+//        background.render(g, screenShake*screenShake_MULT);
+//    }
 
     public void renderUI(Graphics g) {
         uiHandler.render(g);
