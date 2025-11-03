@@ -97,6 +97,7 @@ public class EntityHandler {
     public void render(Graphics g) {
 //        renderShadows(g);
         renderReflections(g);
+        GameController.renderClouds(g);
         player.render(g);
         bullets.render(g);
         pickups.render(g);
@@ -489,7 +490,7 @@ public class EntityHandler {
 //                } else if (lastDestroyedType == TYPE_DRONE3) {
 //                    // todo: Spawn Bomb Pickup
                 } else if (lastDestroyedType == VariableHandler.TYPE_DRONE1 || lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE3) {
-                    pickupID = EntityID.PickupHoming;
+                    pickupID = EntityID.PickupFirepower;
                     pickupValue = 1;
                 } else if (lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2 || lastDestroyedType == VariableHandler.TYPE_DRONE4 || lastDestroyedType == VariableHandler.TYPE_SIDE1 || lastDestroyedType == VariableHandler.TYPE_MINE2) {
                     pickupID = EntityID.PickupFirepower;
@@ -559,8 +560,8 @@ public class EntityHandler {
 
     public void renderBossHealth(Graphics g) {
         if (boss != null) {
-            if (boss.isInscreenY() && boss.isAlive())
-                VariableHandler.drawBossHealth(g);
+//            if (boss.isInscreenY() && boss.isAlive())
+//                VariableHandler.drawBossHealth(g);
         }
     }
 
