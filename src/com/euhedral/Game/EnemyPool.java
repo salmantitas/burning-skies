@@ -8,6 +8,8 @@ import com.euhedral.Game.Entities.Projectile.Bullet;
 import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.Entities.Enemy.Enemy;
 import com.euhedral.Game.Entities.Player;
+import com.euhedral.Game.Entities.Projectile.BulletPlayer;
+import com.euhedral.Game.Entities.Projectile.MissilePlayer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -334,16 +336,18 @@ public class EnemyPool extends Pool {
         for (Entity entity : entities) {
             enemy = (Enemy) entity;
             if (enemy.isInscreenY() && enemy.isActive()) {
-                Bullet bullet = player.checkCollisionBullet(enemy);
+                BulletPlayer bullet = (BulletPlayer) player.checkCollisionBullet(enemy);
                 if (bullet != null && !enemy.collision) {
                     Utility.log("Bullet exists but doesn't 'coolide'");
                 }
                 if (bullet != null) {
+
                     if (enemy.collision) {
                         destroy(bullet, enemy);
                     } else {
                         bullet.destroy();
                     }
+
                     boolean isBoss = false;
                     if (isBoss) {
 //                        boss.damage();
@@ -352,7 +356,9 @@ public class EnemyPool extends Pool {
 //                            destroyBoss();
 //                        }
                     } else {
-                        enemy.damage((int) (1 * Difficulty.getDamageDealtMult()));
+                        int damage = bullet.getDamage();
+                        boolean isMissile = bullet.isShieldKiller();
+                        enemy.damage((int) (damage * Difficulty.getDamageDealtMult()), isMissile);
                         if (enemy.getHealth() <= 0) {
                             destroy(enemy);
                         }
