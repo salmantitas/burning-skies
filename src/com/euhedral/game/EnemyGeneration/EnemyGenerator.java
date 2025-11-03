@@ -19,6 +19,9 @@ public class EnemyGenerator {
     int xStart = 1, xEnd = width/64;
     int xMid = (xEnd - xStart)/2 + xStart;
 
+    int[] spawnLocationFilledX;
+    int[] locationFilledY;
+
     // Player
     int playerX = xMid, playerY;
 
@@ -32,7 +35,6 @@ public class EnemyGenerator {
     long spawnInterval_MIN = 60 * 1;
     long spawnInterval_START = 60 * 3;
     long spawnInterval_MAX = spawnInterval_START * 5;
-    float spawnIntervalFloat;
     int spawnIntervalDeduction;
 
     int updatesSinceLastSpawn;
@@ -69,9 +71,13 @@ public class EnemyGenerator {
     int wave;
     final int firstWave = 1;
     int waveSinceHealth, waveSincePower, waveSinceShield;
+    int wavesSinceBoss = 0;
+
     int wavesSinceDifficultyIncrease = 0;
-//    int waveSinceHeavy = 0;
+    //    int waveSinceHeavy = 0;
     final int MINWaveSinceHeavy = 1;
+
+    final int bossSpawnWave = 5;
 
     // Zone
     boolean entersFromSide;
@@ -91,6 +97,9 @@ public class EnemyGenerator {
         level = VariableHandler.getLevel();
 
         System.out.printf("levelWidth: %d, levelHeight: %d\n", width, height);
+
+        spawnLocationFilledX = new int[xEnd];
+        locationFilledY = new int[xEnd];
 
         difficulty = Difficulty.getDifficultyLevel();
         minWavesDifficultyIncrease = 5;
@@ -129,15 +138,27 @@ public class EnemyGenerator {
     protected void spawnEnemies() {
         System.out.println("Wave: " + wave);
 //        increment();
-        determinePattern(); // move down later
         determineNum();
-        determineType();
-        determineZone();
-        determineMovement();
-        spawnEnemiesHelper();
+
+        determinePattern(); // move down later
+
+        resetLocations();
+        for (int i = 0; i < num; i ++) {
+            determineType();
+            determineZone();
+            determineMovement();
+            spawnEnemiesHelper();
+        }
         incrementWave();
         incrementDifficulty();
         determineSpawnInterval();
+    }
+
+    private void resetLocations() {
+        for (int i = 0; i < xEnd; i++) {
+            spawnLocationFilledX[i] = 0;
+            locationFilledY[i] = 0;
+        }
     }
 
     // Increment Wave Count for Non-Enemy Spawns
@@ -146,6 +167,22 @@ public class EnemyGenerator {
     }
 
     protected void determineNum() {
+        int num_MIN = 1;
+        int num_MAX = 3;
+        // Num always starts at 1
+        num = ((wave - 1) % 5) + 1;
+
+        int bulletNum = (int) ((VariableHandler.firepower.getValue() - 1 )/5) + 1;
+
+//        Utility.log("Bullet Num: #" + bulletNum);
+
+        num = Math.min(num, num_MAX) + bulletNum - 1;
+        if (difficultyIncreased)
+            num = num_MIN;
+
+//        Utility.log(""+num);
+//        num = (wave % 5);
+
         num = 1; // stub
     }
 
@@ -297,6 +334,7 @@ public class EnemyGenerator {
 //                spawnY = (int) (EntityHandler.playerY/SCALE);
 //            }
         }
+
         // Horizontal Zone
         else {
             movesHorizontally = enemytype == VariableHandler.TYPE_HEAVY || enemytype == VariableHandler.TYPE_BASIC2 || enemytype == VariableHandler.TYPE_SCATTER1 || enemytype == VariableHandler.TYPE_SCATTER2;
@@ -306,7 +344,7 @@ public class EnemyGenerator {
 //                // check if coordinate is in exclusion list
 //                ArrayList<Integer> exclusionZones = EntityHandler.getExclusionZones();
 
-                while (EntityHandler.exclusionZonesContains(spawnX)) {
+                while (EntityHandler.exclusionZonesContains(spawnX) || spawnLocationFilledX[spawnX - 1] == 1) {
                     spawnX = Utility.randomRangeInclusive(xStart + 3, xEnd - 3);
                 }
             } else if (enemytype == VariableHandler.TYPE_MINE1) {
@@ -328,12 +366,14 @@ public class EnemyGenerator {
 //                // check if coordinate is in exclusion list
 //                ArrayList<Integer> exclusionZones = EntityHandler.getExclusionZones();
 
-                while (EntityHandler.exclusionZonesContains(spawnX)) {
+                while (EntityHandler.exclusionZonesContains(spawnX) || spawnLocationFilledX[spawnX - 1] == 1) {
                     spawnX = Utility.randomRangeInclusive(xStart, xEnd);
                 }
             }
 
             spawnY = spawnY_DEFAULT;
+
+            spawnLocationFilledX[spawnX - 1] = 1;
 
 //            if (wave == firstWave) {
 //                spawnX = xStart;
@@ -377,7 +417,7 @@ public class EnemyGenerator {
                 difficulty++;
                 difficultyIncreased = true;
                 wavesSinceDifficultyIncrease = 0;
-                spawnIntervalDeduction -= 20;
+                spawnIntervalDeduction -= 20; // todo: reconsider after num balance
                 Utility.log("Diff: " + difficulty);
             }
 
@@ -397,37 +437,19 @@ public class EnemyGenerator {
         int deduction = 5;
         if (Difficulty.difficultyMode == Difficulty.DIFFICULTY_CHALLENGE)
             deduction = 1;
+
         spawnIntervalDeduction += deduction;
     }
 
     protected void determineSpawnInterval() {
-        spawnInterval = entityHandler.getSpawnInterval();
+        spawnInterval = spawnInterval_START; // entityHandler.getSpawnInterval();
         spawnInterval = Math.max(spawnInterval - spawnIntervalDeduction, spawnInterval_MIN );
 
         Utility.log("Spawn Interval: " + spawnInterval);
-//        spawnIntervalFloat = (float) spawnInterval;
-
-//        if (enemytype == VariableHandler.TYPE_HEAVY) {
-//            if (spawnIntervalFloat > spawnInterval_MIN)
-//                spawnInterval = (long) (spawnIntervalFloat*1.1);
-//        }
     }
 
     public int getLevelHeight() {
         return height;
-    }
-
-    // Helpers
-    protected void resetWaveSinceHealth() {
-        waveSinceHealth = 0;
-    }
-
-    protected void resetWaveSincePower() {
-        waveSincePower = 0;
-    }
-
-    protected void resetWaveSinceShield() {
-        waveSinceShield = 0;
     }
 
     protected void spawnOneEnemy() {
