@@ -1,6 +1,7 @@
 package com.euhedral.Game;
 
 import com.euhedral.Engine.Engine;
+import com.euhedral.Game.UI.HUD;
 
 public class StatePlay extends State {
 
@@ -16,6 +17,7 @@ public class StatePlay extends State {
     @Override
     public void update(GameController gameController) {
         super.update(gameController);
+        HUD.update();
 
         /*
          * Disable the level load permission, as the level is already running
