@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import com.euhedral.Game.Entities.Airplane;
+import com.euhedral.Game.Entities.ShieldEnemy;
 import com.euhedral.Game.GameController;
+import com.euhedral.Game.UI.HUD;
 
 /*
  *  Standard Enemies, flies downwards and shoots a missile at intervals
@@ -42,6 +44,10 @@ public abstract class Enemy extends Airplane {
     protected boolean attackEffect;
     double attackPathX;
     double attackPathY;
+
+    protected ShieldEnemy shield;
+    protected boolean shieldActive;
+    protected int shieldChance_MAX; // The higher the value, the lower the chance of shields showing up
 
     // State Machine
     protected final int STATE_EXPLODING = 2;
@@ -94,6 +100,10 @@ public abstract class Enemy extends Airplane {
         explosion = GameController.getTexture().initExplosion(6);
         reflection = new Reflection();
         damage = 30;
+
+        shield = new ShieldEnemy();
+        shieldChance_MAX = 3;
+        shieldActive = false;
 //        resetShootTimer();
     }
 
@@ -166,8 +176,11 @@ public abstract class Enemy extends Airplane {
     @Override
     public void render(Graphics g) {
         if (isActive()) {
+            g2d = (Graphics2D) g;
+
             renderAttackPath(g);
             super.render(g);
+            renderShield(g);
 //            renderBounds(g);
 //            if (inscreenX)
 //                g.setColor(Color.green);
@@ -178,6 +191,13 @@ public abstract class Enemy extends Airplane {
 //            g.fillRect(100, 100, width, height);
         } else {
             renderExplosion(g);
+        }
+    }
+
+    private void renderShield(Graphics g) {
+        if (isActive()) {
+            if (shieldActive)
+                shield.render(g2d, pos, width, height);
         }
     }
 
@@ -283,12 +303,19 @@ public abstract class Enemy extends Airplane {
         pos.x += velX;
     }
 
-    public void damage(int damageValue) {
+    public void damage(int damageValue, boolean isMissile) {
         if (damageValue < 1) {
             damageValue = 1;
         }
-        this.health -= damageValue;
-        jitter = jitter_MAX;
+
+        if (shieldActive) {
+            if (isMissile) {
+                shieldActive = false;
+            }
+        } else {
+            this.health -= damageValue;
+            jitter = jitter_MAX;
+        }
     }
 
     public int getHealth() {
@@ -376,7 +403,16 @@ public abstract class Enemy extends Airplane {
     public void resurrect(double x, double y) {
         super.resurrect(x, y);
 //        resetShootTimer();
+
         commonInit();
+
+        int rand = Utility.randomRangeInclusive(0, shieldChance_MAX );
+        if (rand == 0) {
+            shieldActive = true;
+        } else {
+            shieldActive = false;
+        }
+
         explosion.playedOnce = false;
         explosion.endAnimation();
         inscreenY = false;
@@ -473,7 +509,7 @@ public abstract class Enemy extends Airplane {
     protected void renderScore(Graphics g) {
         if (isExploding() && !GameController.godMode) {
             g.setFont(VariableHandler.customFont.deriveFont(1, 20));
-            g.setColor(VariableHandler.scoreColor);
+            g.setColor(HUD.scoreColor);
             int offsetX = width / 2 - Utility.intAtWidth640(10);
             double mult = Difficulty.getScoreMultiplier();
             g.drawString(Integer.toString((int) (score * mult)), (int) pos.x + offsetX, (int) pos.y);
