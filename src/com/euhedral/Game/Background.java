@@ -16,7 +16,8 @@ public class Background {
     int currentImage = 0;
     //    int imageAnimationSpeed = 1;
     static int maxImage = 7;
-    private double backgroundScroll = 0;
+    private double backgroundScrollSea = 0;
+    private double backgroundScrollCloud = 0;
     //    private float backgroundScrollAcc = 0;
     private static final double maxScroll = 64;
     public static final double scrollRateGame = maxScroll/32;  // MAX = 0.04
@@ -29,10 +30,11 @@ public class Background {
     int minX = -64;
     int minY = (int) -maxScroll;
 
+    BufferedImage imageCloud; // = GameController.getTexture().sea[currentImage];
     Pool backgroundObjects;
-    int cloudSpawnCount, cloudSpawnCount_MAX;
+//    int cloudSpawnCount, cloudSpawnCount_MAX;
 
-    int cloudScale = 3;
+//    int cloudScale = 3;
 
     /************
      * Test *
@@ -45,9 +47,11 @@ public class Background {
         imageSea = GameController.getTexture().sea[currentImage];
         imageScrollinginterval = imageSea.getHeight() * 2 - 2;
 
+        imageCloud = GameController.getTexture().cloud[0];
+
         backgroundObjects = new Pool();
-        cloudSpawnCount = 0;
-        cloudSpawnCount_MAX = 54*cloudScale;
+//        cloudSpawnCount = 0;
+//        cloudSpawnCount_MAX = 54*cloudScale;
     }
 
     public void update() {
@@ -58,12 +62,12 @@ public class Background {
 
     private void updateClouds() {
         backgroundObjects.update();
-        cloudSpawnCount++;
-        if (cloudSpawnCount > cloudSpawnCount_MAX) {
-            spawnNewCloud();
-            cloudSpawnCount = 0;
-            cloudSpawnCount_MAX = Utility.randomRangeInclusive(54*cloudScale, 54*(cloudScale + 1));
-        }
+//        cloudSpawnCount++;
+//        if (cloudSpawnCount > cloudSpawnCount_MAX) {
+//            spawnNewCloud();
+//            cloudSpawnCount = 0;
+//            cloudSpawnCount_MAX = Utility.randomRangeInclusive(54*cloudScale, 54*(cloudScale + 1));
+//        }
         backgroundObjects.disableIfOutsideBounds(1);
     }
 
@@ -77,10 +81,15 @@ public class Background {
             scrollRate = 0;
         }
 
-        backgroundScroll += scrollRate;
+        backgroundScrollSea += scrollRate;
+        backgroundScrollCloud += scrollRate*2;
 
-        if (backgroundScroll >= maxScroll) {
-            backgroundScroll = 0;
+        if (backgroundScrollSea >= maxScroll) {
+            backgroundScrollSea = 0;
+        }
+
+        if (backgroundScrollCloud >= 1024) {
+            backgroundScrollCloud = 0;
         }
 
         timesRenderedOut++;
@@ -95,94 +104,55 @@ public class Background {
         }
     }
 
-    public void render(Graphics g, int screenShake) {
-        renderScrollingBackground(g, screenShake);
-        backgroundObjects.render(g);
+//    public void render(Graphics g, int screenShake) {
+//        renderScrollingBackground(g, screenShake);
+////        backgroundObjects.render(g);
+//    }
+//
+//    // todo: speed up 'animation'
+//    public void renderScrollingBackground(Graphics g, int screenShake) {
+//
+//        if (!Engine.stateIs(GameState.Test)) {
+//            renderSea(g, screenShake);
+//            renderClouds(g, screenShake);
+//        }
+//    }
+
+    public void renderSea(Graphics g, int screenShake) {
+        for (int i = minX; i < Engine.WIDTH; i += imageScrollinginterval) {
+            for (int j = minY; j < Engine.HEIGHT; j += imageScrollinginterval) {
+
+                g.drawImage(
+                        imageSea,
+                        i + screenShake,
+                        j + (int) (backgroundScrollSea) + screenShake,
+                        imageScrollinginterval + 1,
+                        imageScrollinginterval + 1,
+                        null);
+
+                imageSea = GameController.getTexture().sea[currentImage];
+            }
+        }
     }
 
-    // todo: speed up 'animation'
-    public void renderScrollingBackground(Graphics g, int screenShake) {
+    public void renderClouds(Graphics g, int screenShake) {
+        int yMin = -128;
 
-        if (!Engine.stateIs(GameState.Test)) {
+        for (int i = 0; i < 2; i += 1) {
+            for (int j = yMin; j < 3; j += 1) {
 
-            for (int i = minX; i < Engine.WIDTH; i += imageScrollinginterval) {
-                for (int j = minY; j < Engine.HEIGHT; j += imageScrollinginterval) {
+                g.drawImage(
+                        imageCloud,
+                        i * 1024 + screenShake,
+                        j * 1024 + (int) (backgroundScrollCloud) + screenShake,
+                        1024,
+                        1024,
+                        null);
 
-                    g.drawImage(
-                            imageSea,
-                            i + screenShake,
-                            j + (int) (backgroundScroll) + screenShake,
-                            imageScrollinginterval + 1,
-                            imageScrollinginterval + 1,
-                            null);
-
-//                    if (backgroundScrollAcc >= maxScroll/2) {
-//                        backgroundScrollAcc = 0f;
-//                        currentImage = (currentImage - 1);
-//                        if (currentImage < 0) {
-//                            currentImage = maxImage + currentImage;
-//                        }
-//                    }
-
-//
-//
-//                        if ((timesRenderedIn % 16) == 0) {
-//                    currentImage = (currentImage + 1) % (maxImage + 1);
-//                        }
-
-//                    Utility.log("CurrentImage: " + currentImage);
-//
-                    imageSea = GameController.getTexture().sea[currentImage];
-//                    }
-
-                }
-
+                g.setColor(Color.BLACK);
+                g.drawRect(i * 1024, (int) (j * 1024 + backgroundScrollCloud), 1024, 1024);
             }
-
-
-//
-//                Utility.log("Scroll: " + backgroundScroll);
-//                        timesRenderedIn++;
-//
-//                        if ((timesRenderedIn % 16) == 0) {
-//                            currentImage = (currentImage - 1);
-//                            if (currentImage < 0) {
-//                                currentImage = maxImage + currentImage;
-//                            }
-//                        }
-//            }
-
-//            if (!Engine.stateIs(GameState.Game)) {
-//            timesRenderedOut++;
-//
-////            if (!Engine.stateIs(GameState.Game)) {
-//            if ((timesRenderedOut % 20) == 0) {
-//                currentImage = (currentImage + 1) % (maxImage + 1);
-////                    currentImage = (currentImage - 1);
-////                    if (currentImage < 0) {
-////                        currentImage = maxImage + currentImage;
-////                    }
-//            }
-//            } else {
-//                if (backgroundScrollAcc >= maxScroll) {
-//                    backgroundScrollAcc = 0f;
-//                    currentImage = (currentImage - 1);
-//                    if (currentImage < 0) {
-//                        currentImage = maxImage + currentImage;
-//                    }
-//                }
-//            }
-
-
-//            Utility.log("CurrentImage: " + currentImage);
         }
-//        }
-
-        // Test todo: delete
-
-//        if (Engine.stateIs(GameState.Menu)) {
-//            testFunction(g, 50);
-//        }
     }
 
     private void testFunction(Graphics g, int gap) {
@@ -214,11 +184,11 @@ public class Background {
     private void spawnNewCloud() {
         Clouds cloud = new Clouds(Utility.randomRangeInclusive(0, Engine.WIDTH), -100, EntityID.Background);
 
-        cloudScale = Utility.randomRangeInclusive(1, 10);
-
-        cloud.setWidth(48*cloudScale);
-        cloud.setHeight(54*cloudScale);
-        cloud.setY(-54*cloudScale);
+//        cloudScale = Utility.randomRangeInclusive(1, 10);
+//
+//        cloud.setWidth(48*cloudScale);
+//        cloud.setHeight(54*cloudScale);
+//        cloud.setY(-54*cloudScale);
         backgroundObjects.add(cloud);
     }
 
