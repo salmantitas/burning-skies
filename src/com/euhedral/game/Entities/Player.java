@@ -14,8 +14,13 @@ public class Player extends Airplane {
     // Shooting Entity
     private boolean canShoot;
     private BulletPool bullets;
+    private MissilePool missiles;
     int turretY;
     int turretMidX, turretLeftX, turretRightX;
+
+    private int shootTimerMissile = 0;
+    private int shootTimerDefaultMissile;
+    private double missileVelocity;
 
     // Personal
     private int levelHeight;
@@ -23,16 +28,15 @@ public class Player extends Airplane {
     private int clampOffsetY;
     private int shootAngle = Utility.intAtWidth640(5);
 
-    private Attribute health, shield, firepower;
-    int shieldTimer = 0;
-    int shieldTimer_MAX = 30;
+    private Attribute health, shield_A, firepower;
+
+    private ShieldPlayer shield;
     private Pulse pulse;
     private int homingAngle = 180;
 
     // Test
     private int mx, my;
     private boolean destinationGiven = false;
-
 
 
     private Reflection reflection;
@@ -47,17 +51,18 @@ public class Player extends Airplane {
         height = width;
         color = Color.WHITE;
 
-        bulletVelocity = Utility.intAtWidth640(6);
+        bulletVelocity = 12;
+        missileVelocity = 6;
 
         bullets = new BulletPool();
+        missiles = new MissilePool();
 //        for (int i = 0; i < 360; i ++)
 //            bullets.spawn(-1, -1, 90);
 
         velX = 0;
         velY = 0;
         physics.acceleration = 0.1;
-//        shootRateBoost = 0;
-//        VariableHandler.shootRateBoostDuration = 0;
+
         velY_MIN = 5;
         velX_MIN = 5;
         velY_MAX = 10;
@@ -65,7 +70,9 @@ public class Player extends Airplane {
 
         jitter_MAX = Utility.intAtWidth640(2);
 
+        shield = new ShieldPlayer(shield_A);
         pulse = new Pulse();
+
 
 //        physics.friction = 1; // instantenous is equal to (minVel - 2)
 
@@ -75,6 +82,7 @@ public class Player extends Airplane {
         clampOffsetY = height - 20;
 
         shootTimerDefault = 12;
+        shootTimerDefaultMissile = shootTimerDefault * 2;
 
         reflection = new Reflection();
 
@@ -91,21 +99,23 @@ public class Player extends Airplane {
         super.update();
         updateShootTimer();
 
-        if (canShoot && shootTimer <= 0)
-            shoot();
+        if (canShoot) {
+            calculateTurretPositions();
+            if (shootTimer <= 0) {
+                shoot();
+            }
+            if (shootTimerMissile <= 0) {
+                shootMissiles();
+            }
+        }
 
-        bullets.disableIfOutsideBounds(levelHeight);
-        bullets.update();
-        bullets.checkDeathAnimationEndPlayer();
-//        bullets.printPool("Bullets");
+        updateProjectiles();
 
         setImage();
 
         jitter();
 
-        if (shieldTimer > 0) {
-            shieldTimer--;
-        }
+        shield.update();
 
         if (VariableHandler.shield.getValue() > 0) {
             VariableHandler.shield.decrease(0.5); // 1 too high
@@ -113,6 +123,30 @@ public class Player extends Airplane {
 
         pulse.update(bulletVelocity);
         homingAngle++;
+    }
+
+    private void shootMissiles() {
+        missiles.spawn(turretMidX, turretY, missileVelocity);
+
+        // reset shoot timer to default
+        shootTimerMissile = shootTimerDefaultMissile - (int) (firepower.getValue() - 1) % 5;
+    }
+
+    @Override
+    protected void updateShootTimer() {
+        shootTimer--;
+        shootTimerMissile--;
+    }
+
+    private void updateProjectiles() {
+        missiles.disableIfOutsideBounds(levelHeight);
+        missiles.update();
+        missiles.checkDeathAnimationEndPlayer();
+
+        bullets.disableIfOutsideBounds(levelHeight);
+        bullets.update();
+        bullets.checkDeathAnimationEndPlayer();
+//        bullets.printPool("Bullets");
     }
 
     @Override
@@ -135,7 +169,7 @@ public class Player extends Airplane {
 
     private void setAttributes() {
         health = VariableHandler.health;
-        shield = VariableHandler.shield;
+        shield_A = VariableHandler.shield;
 //        shield.setValue(100);
 //        power = VariableHandler.firepower;
         firepower = VariableHandler.firepower;
@@ -159,9 +193,8 @@ public class Player extends Airplane {
 
     @Override
     public void render(Graphics g) {
-        bullets.render(g);
+        renderProjectiles(g);
 
-        // Render Speed Boost
         g2d = (Graphics2D) g;
 
         super.render(g);
@@ -171,25 +204,25 @@ public class Player extends Airplane {
         renderDamageImage();
         g2d.setComposite(Utility.makeTransparent(1f));
 
-        // Render Shield
-        int shieldOffset = 8;
-        if (shield.getValue() > 0) {
-            float shieldTransparency = 0.2f;
-            if (shieldTimer > 0) {
-                shieldTransparency *= (float) Math.pow(shieldTimer_MAX / 2 - shieldTimer, 2) / (shieldTimer_MAX * 15);
-            }
-            g2d.setColor(Color.blue);
-            g2d.setComposite(Utility.makeTransparent(shieldTransparency));
-            g2d.fillOval((int) pos.x - width / shieldOffset, (int) pos.y - height / shieldOffset + 5, width + 2 * width / shieldOffset, height + 2 * height / shieldOffset);
-            g2d.setComposite(Utility.makeTransparent(1f));
-            g2d.setStroke(new BasicStroke(3, 1, 1));
-            g2d.drawOval((int) pos.x - width / shieldOffset, (int) pos.y - height / shieldOffset + 5, width + 2 * width / shieldOffset, height + 2 * height / shieldOffset);
-        }
+//        g2d.setComposite(Utility.makeTransparent(0.2f));
+        g2d.setColor(Color.GRAY);
+        int maxLength = 32;
+        double shootTimerMissileProgressRatio = Math.min(1, ((shootTimerDefaultMissile - shootTimerMissile) / (double) shootTimerDefaultMissile));
+        System.out.println(shootTimerMissileProgressRatio);
+        int meterHeight = (int) (maxLength * shootTimerMissileProgressRatio);
+        g.fillRect(pos.intX() + width/2 - 3, pos.intY() + height/2 - 8, 8, meterHeight );
+//        g2d.setComposite(Utility.makeTransparent(1f));
 
+        shield.render(g2d, pos, width, height);
         pulse.render(g2d, pos, width, height, bulletVelocity);
 //        renderHoming(g2d);
 
 //        renderStats(g);
+    }
+
+    private void renderProjectiles(Graphics g) {
+        bullets.render(g);
+        missiles.render(g);
     }
 
     private void renderHoming(Graphics2D g2d) {
@@ -219,13 +252,14 @@ public class Player extends Airplane {
     }
 
     public void renderReflection(Graphics2D g2d, float transparency) {
-        renderBulletReflections(g2d, transparency);
+        renderProjectilesReflections(g2d, transparency);
 
         reflection.render(g2d, image, pos.x + (jitter_MULT * jitter), getCenterX(), pos.y + (jitter_MULT * jitter), getCenterY(), width, height, transparency);
     }
 
-    private void renderBulletReflections(Graphics2D g2d, float transparency) {
+    private void renderProjectilesReflections(Graphics2D g2d, float transparency) {
         bullets.renderReflections(g2d, transparency);
+        missiles.renderReflections(g2d, transparency);
 
     }
 
@@ -240,6 +274,10 @@ public class Player extends Airplane {
     }
 
     public Bullet checkCollisionBullet(Enemy enemy) {
+        Bullet colliding = missiles.checkCollision(enemy);
+        if (colliding != null) {
+            return colliding;
+        }
         return bullets.checkCollision(enemy);
     }
 
@@ -291,7 +329,6 @@ public class Player extends Airplane {
     protected void shoot() {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
-        calculateTurretPositions();
         turretRightX = (int) (pos.x + width - 16);
         turretLeftX = (int) (pos.x + 6);
 
@@ -324,13 +361,12 @@ public class Player extends Airplane {
         double shootAngleRight = NORTH + shootAngle;
 
         if (firepower.getValue() <= 5) {
-            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
+//            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
         } else if (firepower.getValue() <= 10) {
             bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH);
             bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
         } else if (firepower.getValue() <= 15) {
             bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
-            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
             bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
         } else if (firepower.getValue() <= 20) {
             bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
@@ -339,11 +375,14 @@ public class Player extends Airplane {
             bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
         } else {
             bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
+            bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH + shootAngle/2);
             bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH);
-            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
             bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH - shootAngle/2);
             bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
         }
+
+//        missiles.spawn(turretMidX, turretY, missileVelocity);
 
         // reset shoot timer to default
         shootTimer = shootTimerDefault - (int) (firepower.getValue() - 1) % 5;
@@ -368,7 +407,7 @@ public class Player extends Airplane {
 
     private void calculateTurretPositions() {
         turretMidX = (int) (pos.x + width / 2 - 2);
-        turretY = (int) (pos.y + height * 2 / 3 - velY);
+        turretY = (int) (pos.y + height * 2 / 3 - velY) ;
     }
 
     private void keyboardMove() {
@@ -495,13 +534,13 @@ public class Player extends Airplane {
 //    }
 
     public void damage(double damage) {
-        if (shield.getValue() > 0) {
+        if (shield_A.getValue() > 0) {
 //            double temp = damage - shield.getValue();
 //            shield.decrease(damage * 2);
 //            if (temp > 0) {
 //                damageHealth(temp);
 //            }
-            shieldTimer = shieldTimer_MAX;
+//            shieldTimer = shieldTimer_MAX;
             SoundHandler.playSound(SoundHandler.SHIELD_2);
         } else {
             damageHealth(damage);
