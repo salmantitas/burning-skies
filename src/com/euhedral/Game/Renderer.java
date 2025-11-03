@@ -8,7 +8,7 @@ import java.awt.*;
 public class Renderer {
 
     public void render(GameController gameController, Graphics g) {
-        gameController.renderBackground(g);
+        GameController.renderSea(g);
 
         if (Engine.currentState == GameState.Transition) {
             /*************
@@ -25,7 +25,7 @@ public class Renderer {
         if (validCameraRenderState) {
             gameController.renderInCamera(g);
 
-            if (VariableHandler.isHud()) {
+            if (VariableHandler.isHudActive()) {
 
 //                entityHandler.renderBossHealth(g);
 
