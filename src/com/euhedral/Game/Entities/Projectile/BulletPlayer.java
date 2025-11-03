@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 public class BulletPlayer extends Bullet{
 
     int impactAnimationAdjustmentX;
+    protected boolean shieldKiller;
 
 //    public Enemy target;
 
@@ -21,8 +22,12 @@ public class BulletPlayer extends Bullet{
 //        impactColor = Color.GREEN;
         commonInit();
 
+        damage = 1;
+
         impactAnimationAdjustmentX = (impact.getImageWidth() - width)/4;
         physics.acceleration = 0.1;
+
+        shieldKiller = false;
     }
 
     public BulletPlayer(double x, double y, double forwardVelocity, double angle) {
@@ -114,5 +119,11 @@ public class BulletPlayer extends Bullet{
     @Override
     public void disable() {
         state = STATE_INACTIVE;
+    }
+
+    public boolean isShieldKiller() {
+        if (entity != null)
+            return true;
+        return shieldKiller;
     }
 }
