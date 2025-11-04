@@ -529,6 +529,17 @@ public class EntityHandler {
 //        VariableHandler.increaseScore(VariableHandler.getBossScore());
 //    }
 
+    public void spawnBoss(int x, int y) {
+        // todo: Boss needs its own enemytype, otherwise Pool will crash
+        boss = new EnemyBoss1(x, y, levelHeight);
+        VariableHandler.setBossAlive(true);
+        enemies.add(boss);
+        VariableHandler.setHealthBossDef(boss.getHealth());
+        VariableHandler.setHealthBoss(VariableHandler.getHealthBossDef());
+
+        SoundHandler.playBGMBoss();
+    }
+
     public void spawnBoss(int level, int x, int y) {
         if (level == 2) {
             boss = new EnemyBoss1(x, y, levelHeight);
@@ -539,7 +550,7 @@ public class EntityHandler {
         }
 
         if (boss != null) {
-            VariableHandler.setBossLives(true);
+            VariableHandler.setBossAlive(true);
 //            bossLives = true;
             enemies.add(boss);
             VariableHandler.setHealthBossDef(boss.getHealth());
@@ -552,8 +563,8 @@ public class EntityHandler {
 
     public void checkBoss() {
         if (boss != null) {
-            if (VariableHandler.isBossLives() != boss.isAlive()) {
-                VariableHandler.setBossLives(boss.isAlive());
+            if (VariableHandler.isBossAlive() != boss.isAlive()) {
+                VariableHandler.setBossAlive(boss.isAlive());
             }
         }
     }

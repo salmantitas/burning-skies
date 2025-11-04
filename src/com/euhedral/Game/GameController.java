@@ -610,14 +610,14 @@ public class GameController {
     // if the flag crosses the screen, advance level and if no levels remain, end game
     public void checkLevelStatus() {
         // If the boss is killed, updates the boolean variable
-        entityHandler.checkBoss();
+//        entityHandler.checkBoss();
 
-        levelEndCondition = entityHandler.getFlagY() > levelHeight && !variableHandler.isBossLives();
+        levelEndCondition = entityHandler.getFlagY() > levelHeight && !variableHandler.isBossAlive();
 
         if (levelEndCondition) {
             variableHandler.incrementLevel();
             levelSpawned = false;
-            variableHandler.setBossLives(false);
+            variableHandler.setBossAlive(false);
             entityHandler.clearEnemies();
             entityHandler.clearPickups();
 

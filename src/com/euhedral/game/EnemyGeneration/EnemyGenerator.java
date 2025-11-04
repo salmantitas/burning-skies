@@ -4,6 +4,7 @@ import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.Difficulty;
 import com.euhedral.Game.EntityHandler;
+import com.euhedral.Game.EntityID;
 import com.euhedral.Game.VariableHandler;
 
 public class EnemyGenerator {
@@ -45,6 +46,7 @@ public class EnemyGenerator {
     long timeNowMillis;
     long timeSinceLastSpawnMillis;
     boolean canSpawn;
+    boolean canSpawnBoss;
 
     // Movement
     int minDifficultyForMovement;
@@ -79,6 +81,9 @@ public class EnemyGenerator {
 
     final int bossSpawnWave = 5;
 
+    int bossDelay = 0;
+    final int bossDelay_MAX = 60 * 6;
+
     // Zone
     boolean entersFromSide;
     boolean isDrone;
@@ -87,6 +92,8 @@ public class EnemyGenerator {
     int adjustment = 1;
     int zone;
     private int spawnY_DEFAULT;
+
+    private boolean canShowWave = false;
 
     public EnemyGenerator(EntityHandler entityHandler) {
         this.entityHandler = entityHandler;
@@ -127,12 +134,34 @@ public class EnemyGenerator {
 
     public void update() {
         updatesSinceLastSpawn++;
-        canSpawn = spawnInterval <= updatesSinceLastSpawn;
+        canSpawnBoss = wavesSinceBoss >= bossSpawnWave;
+        canSpawn = (spawnInterval <= updatesSinceLastSpawn) && !VariableHandler.isBossAlive();
 
-        if (canSpawn) {
+        Utility.log("Boss Alive: " + VariableHandler.isBossAlive());
+//        Utility.log("Can Spawn Boss: " + canSpawnBoss + " | Enemies: " + canSpawn);
+
+        if (canSpawnBoss) {
+            if (bossDelay >= bossDelay_MAX) {
+                VariableHandler.setLevel(level);
+                spawnBoss();
+                wavesSinceBoss = 0;
+                bossDelay = 0;
+            } else {
+                bossDelay++;
+            }
+        } else if (canSpawn) {
+            if (canShowWave) {
+                VariableHandler.setLevel(level);
+                canShowWave = false;
+            }
             spawnEnemies();
             updatesSinceLastSpawn = 0;
         }
+    }
+
+    protected void spawnBoss() {
+        Utility.log("Boss Spawned");
+        spawnBossHelper();
     }
 
     protected void spawnEnemies() {
@@ -424,7 +453,8 @@ public class EnemyGenerator {
             if (wave / minWavesDifficultyIncrease + 1 > level) {
                 level++;
                 Utility.log("Level: " + (level));
-                VariableHandler.setLevel(level);
+                canShowWave = true;
+                wavesSinceBoss++;
             }
         } else {
             wavesSinceDifficultyIncrease++;
@@ -454,5 +484,12 @@ public class EnemyGenerator {
 
     protected void spawnOneEnemy() {
         entityHandler.spawnEntity(spawnX * (64 + incrementMIN), spawnY * (64 + incrementMIN), enemytype, movementDistance * SCALE, movementDirection);
+    }
+
+    protected void spawnBossHelper() {
+        spawnX = 2 * 64;
+        spawnY = 0;
+        EntityID id = EntityID.Boss;
+        entityHandler.spawnBoss(spawnX, spawnY);
     }
 }

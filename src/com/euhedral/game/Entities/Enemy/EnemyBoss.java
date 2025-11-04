@@ -2,6 +2,8 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.SoundHandler;
+import com.euhedral.Game.VariableHandler;
 //import com.euhedral.game.ContactID;
 //import com.euhedral.game.EnemyID;
 
@@ -58,4 +60,11 @@ public abstract class EnemyBoss extends Enemy {
 
     @Override
     public abstract void shoot();
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        VariableHandler.setBossAlive(false);
+        SoundHandler.playBGMPlay();
+    }
 }

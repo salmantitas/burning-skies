@@ -137,7 +137,14 @@ public class HUD {
             g.setColor(Color.YELLOW);
             Graphics2D g2d = (Graphics2D) g;
             g2d.setComposite(Utility.makeTransparent(renderWaveDuration));
-            g.drawString("Wave " + VariableHandler.getLevel(), Engine.WIDTH/2 - Utility.intAtWidth640(40), Utility.intAtWidth640(80));
+
+            String text = "Wave " + VariableHandler.getLevel();
+
+            if (VariableHandler.isBossAlive()) {
+                text = "INCOMING!!!";
+            }
+
+            g.drawString(text, Engine.WIDTH/2 - Utility.intAtWidth640(40), Utility.intAtWidth640(80));
             g2d.setComposite(Utility.makeTransparent(1f));
         }
     }

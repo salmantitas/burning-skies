@@ -19,15 +19,16 @@ public class EnemyBoss1 extends EnemyBoss{
         pos.x = x - width/2;
         color = Color.orange;
         velX = Utility.intAtWidth640(2);
+        velY = offscreenVelY;
         health = 100;
         moveLeft = true;
     }
 
-//    @Override
-//    public void update() {
-//        super.update();
+    @Override
+    public void update() {
+        super.update();
 //        move();
-//    }
+    }
 
     @Override
     public void render(Graphics g) {

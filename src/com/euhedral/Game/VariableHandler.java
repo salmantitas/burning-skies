@@ -103,7 +103,7 @@ public class VariableHandler {
     public static int healthBossDef;
     private static int healthBoss;
     private static int bossScore = 500;
-    private static boolean bossLives = false;
+    private static boolean bossAlive = false;
 
     public static Difficulty difficulty;
 
@@ -310,12 +310,12 @@ public class VariableHandler {
         this.bossScore = bossScore;
     }
 
-    public static boolean isBossLives() {
-        return bossLives;
+    public static boolean isBossAlive() {
+        return bossAlive;
     }
 
-    public static void setBossLives(boolean newBossLives) {
-        bossLives = newBossLives;
+    public static void setBossAlive(boolean newBossAlive) {
+        bossAlive = newBossAlive;
     }
 
     public static int getLevel() {
