@@ -43,8 +43,6 @@ public class EnemyGenerator {
 //    int enemiesSpawned; // todo: Why do we need this?
     int spawnX, spawnY;
 
-    long timeNowMillis;
-    long timeSinceLastSpawnMillis;
     boolean canSpawn;
     boolean canSpawnBoss;
 
@@ -118,7 +116,6 @@ public class EnemyGenerator {
         entityHandler.spawnPlayer(playerX * SCALE, playerY * SCALE);
 
         // create distance between player and first wave
-//        enemiesSpawned = 0;
         wave = firstWave;
 
         // todo: use line for first wave here

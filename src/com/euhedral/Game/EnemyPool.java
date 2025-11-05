@@ -62,7 +62,6 @@ public class EnemyPool extends Pool {
 //        LinkedList<Entity> enemies = this.enemies.getEntities();
         for (Entity entity : entities) {
             enemy = (Enemy) entity;
-//            if(true) { // todo: Why tho?
                 enemy.update();
                 checkDeathAnimationEnd(enemy);
                 while (enemy.hasShot()) {
