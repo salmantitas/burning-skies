@@ -205,12 +205,12 @@ public class Player extends Airplane {
         g2d.setComposite(Utility.makeTransparent(1f));
 
 //        g2d.setComposite(Utility.makeTransparent(0.2f));
-        g2d.setColor(Color.GRAY);
-        int maxLength = 32;
-        double shootTimerMissileProgressRatio = Math.min(1, ((shootTimerDefaultMissile - shootTimerMissile) / (double) shootTimerDefaultMissile));
-        System.out.println(shootTimerMissileProgressRatio);
-        int meterHeight = (int) (maxLength * shootTimerMissileProgressRatio);
-        g.fillRect(pos.intX() + width/2 - 3, pos.intY() + height/2 - 8, 8, meterHeight );
+//        g2d.setColor(Color.GRAY);
+//        int maxLength = 32;
+//        double shootTimerMissileProgressRatio = Math.min(1, ((shootTimerDefaultMissile - shootTimerMissile) / (double) shootTimerDefaultMissile));
+//        System.out.println(shootTimerMissileProgressRatio);
+//        int meterHeight = (int) (maxLength * shootTimerMissileProgressRatio);
+//        g.fillRect(pos.intX() + width/2 - 3, pos.intY() + height/2 - 8, 8, meterHeight );
 //        g2d.setComposite(Utility.makeTransparent(1f));
 
         shield.render(g2d, pos, width, height);
@@ -360,26 +360,24 @@ public class Player extends Airplane {
         double shootAngleLeft = NORTH - shootAngle;
         double shootAngleRight = NORTH + shootAngle;
 
-        if (firepower.getValue() <= 5) {
-//            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
-        } else if (firepower.getValue() <= 10) {
-            bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH);
-            bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
-        } else if (firepower.getValue() <= 15) {
+        if (firepower.getValue() > 5) {
+            bullets.spawn(turretRightX - 10, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretLeftX + 10, turretY, bulletVelocity, NORTH);
+        }
+
+        if (firepower.getValue() > 10) {
             bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
             bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
-        } else if (firepower.getValue() <= 20) {
-            bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
-            bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH);
-            bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
-            bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
-        } else {
-            bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
-            bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH + shootAngle/2);
-            bullets.spawn(turretRightX, turretY, bulletVelocity, NORTH);
-            bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH);
-            bullets.spawn(turretLeftX, turretY, bulletVelocity, NORTH - shootAngle/2);
-            bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
+        }
+
+        if (firepower.getValue() > 15) {
+            bullets.spawn(turretRightX + 5, turretY, bulletVelocity, shootAngleRight);
+            bullets.spawn(turretLeftX - 5, turretY, bulletVelocity, shootAngleLeft);
+        }
+
+        if (firepower.getValue() > 20) {
+            bullets.spawn(turretRightX + 10, turretY, bulletVelocity, shootAngleRight);
+            bullets.spawn(turretLeftX - 10, turretY, bulletVelocity, shootAngleLeft);
         }
 
 //        missiles.spawn(turretMidX, turretY, missileVelocity);
