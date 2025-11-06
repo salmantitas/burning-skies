@@ -534,8 +534,9 @@ public class EntityHandler {
         boss = new EnemyBoss1(x, y, levelHeight);
         VariableHandler.setBossAlive(true);
         enemies.add(boss);
-        VariableHandler.setHealthBossDef(boss.getHealth());
-        VariableHandler.setHealthBoss(VariableHandler.getHealthBossDef());
+        VariableHandler.initHealthBoss(boss.getHealth());
+//        VariableHandler.setHealthBossDefault(boss.getHealth());
+//        VariableHandler.setHealthBoss(VariableHandler.getHealthBossDefault());
 
         SoundHandler.playBGMBoss();
     }
@@ -551,12 +552,8 @@ public class EntityHandler {
 
         if (boss != null) {
             VariableHandler.setBossAlive(true);
-//            bossLives = true;
             enemies.add(boss);
-            VariableHandler.setHealthBossDef(boss.getHealth());
-//            healthBossDef = boss.getHealth();
-            VariableHandler.setHealthBoss(VariableHandler.getHealthBossDef());
-//            healthBoss = healthBossDef;
+            VariableHandler.initHealthBoss(boss.getHealth());
         }
         this.boss = boss;
     }

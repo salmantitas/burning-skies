@@ -66,9 +66,6 @@ public class VariableHandler {
 
     public static final int enemyTypes = TYPE_DRONE6 + 1;
 
-    // todo: Boss Health
-//    public static Attribute bossHealth;
-
     // Custom Fond
     public static Font customFont;
 
@@ -100,7 +97,7 @@ public class VariableHandler {
     private static int level;
     private static final int MAXLEVEL = enemyTypes;
 
-    public static int healthBossDef;
+    public static int healthBossDefault;
     private static int healthBoss;
     private static int bossScore = 500;
     private static boolean bossAlive = false;
@@ -286,12 +283,17 @@ public class VariableHandler {
 //        VariableHandler.scoreSize = scoreSize;
 //    }
 
-    public static int getHealthBossDef() {
-        return healthBossDef;
+    public static void initHealthBoss(int newHealthBoss) {
+        setHealthBossDefault(newHealthBoss);
+        setHealthBoss(newHealthBoss);
     }
 
-    public static void setHealthBossDef(int newHealthBossDef) {
-        healthBossDef = newHealthBossDef;
+    public static int getHealthBossDefault() {
+        return healthBossDefault;
+    }
+
+    private static void setHealthBossDefault(int newHealthBossDefault) {
+        healthBossDefault = newHealthBossDefault;
     }
 
     public static int getHealthBoss() {

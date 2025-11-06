@@ -62,6 +62,12 @@ public abstract class EnemyBoss extends Enemy {
     public abstract void shoot();
 
     @Override
+    public void damage(int damageValue, boolean isMissile) {
+        super.damage(damageValue, isMissile);
+        VariableHandler.setHealthBoss(health);
+    }
+
+    @Override
     public void destroy() {
         super.destroy();
         VariableHandler.setBossAlive(false);

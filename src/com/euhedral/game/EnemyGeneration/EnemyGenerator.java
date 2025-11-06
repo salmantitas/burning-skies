@@ -134,9 +134,6 @@ public class EnemyGenerator {
         canSpawnBoss = wavesSinceBoss >= bossSpawnWave;
         canSpawn = (spawnInterval <= updatesSinceLastSpawn) && !VariableHandler.isBossAlive();
 
-        Utility.log("Boss Alive: " + VariableHandler.isBossAlive());
-//        Utility.log("Can Spawn Boss: " + canSpawnBoss + " | Enemies: " + canSpawn);
-
         if (canSpawnBoss) {
             if (bossDelay >= bossDelay_MAX) {
                 VariableHandler.setLevel(level);

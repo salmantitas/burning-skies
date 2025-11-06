@@ -29,11 +29,17 @@ public class HUD {
     private static int levelSize = scoreSize;
     private static Font levelFont;
 
+    // Wave
     public static float renderWaveDuration = 1f;
+    static int waveLabelY = 160;
 
     // Timer
     private static int timerX = scoreX;
     private static int timerY;
+
+    // Boss Health
+    static int bossBarHeight = 0;
+
 
     public HUD() {
         scoreFont = VariableHandler.customFont.deriveFont(0, scoreSize);
@@ -77,6 +83,11 @@ public class HUD {
         g.drawImage(GameController.getTexture().pickup[0], healthIconX,
                 healthIconY, null);
         VariableHandler.health.renderBar(g);
+
+        if (VariableHandler.isBossAlive() && !(renderWaveDuration > 0)) {
+            renderBossHealth(g);
+        }
+
         if (VariableHandler.shield.getValue() > 0) {
             g.drawImage(GameController.getTexture().pickup[1], healthIconX,
                     shieldIconY, null);
@@ -144,7 +155,11 @@ public class HUD {
                 text = "INCOMING!!!";
             }
 
-            g.drawString(text, Engine.WIDTH/2 - Utility.intAtWidth640(40), Utility.intAtWidth640(80));
+            g.drawString(text, Engine.WIDTH/2 - Utility.intAtWidth640(40), waveLabelY);
+
+            if (bossBarHeight == 0)
+                bossBarHeight = g2d.getFontMetrics().getHeight();
+
             g2d.setComposite(Utility.makeTransparent(1f));
         }
     }
@@ -169,20 +184,22 @@ public class HUD {
 //        g.drawString("FPS: " + Engine.getFPS(), timerX, shield.getY());
 //    }
 
-    protected static void drawBossHealth(Graphics g) {
-        int startX = Utility.percWidth(35);
-        int endX = Utility.percWidth(65);
-        int diffX = endX - startX;
+    protected static void renderBossHealth(Graphics g) {
+        int bossBarWidthBack = 400;
 
-        int y = Utility.percHeight(28);
-        int width = diffX / VariableHandler.healthBossDef;
-        int height = width;
+        int startX = (Engine.WIDTH - bossBarWidthBack) / 2;
+
+        int y = waveLabelY - bossBarHeight;
+
+        int unitWidth = bossBarWidthBack / VariableHandler.healthBossDefault;
+        int bossBarWidthFront = VariableHandler.getHealthBoss() * unitWidth;
+
         Color backColor = Color.lightGray;
         Color healthColor = Color.RED;
         g.setColor(backColor);
-        g.fillRect(startX, y, VariableHandler.healthBossDef * width, height);
+        g.fillRect(startX, y, bossBarWidthBack, bossBarHeight);
         g.setColor(healthColor);
-        g.fillRect(startX, y, VariableHandler.getHealthBoss() * width, height);
+        g.fillRect(startX, y, bossBarWidthFront, bossBarHeight);
     }
 
     public void setHealthProperties(Attribute health) {
