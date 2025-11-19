@@ -2,6 +2,7 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.TextureHandler;
 
 import java.awt.*;
 
@@ -14,14 +15,16 @@ public class EnemyBoss1 extends EnemyBoss{
 
     public EnemyBoss1(int x, int y, int levelHeight) {
         super(x,y, levelHeight);
-        height = Utility.intAtWidth640(48);
-        width = height*3;
+        height = 128;
+        width = height * 2;
         pos.x = x - width/2;
         color = Color.orange;
         velX = Utility.intAtWidth640(2);
         velY = offscreenVelY;
-        health = 100;
+        health_MAX = 25;
+        setHealth(health_MAX);
         moveLeft = true;
+        setImage(textureHandler.enemyBoss[0]);
     }
 
     @Override
@@ -33,8 +36,8 @@ public class EnemyBoss1 extends EnemyBoss{
     @Override
     public void render(Graphics g) {
         super.render(g);
-        g.setColor(color);
-        g.fillRect((int) pos.x, (int) pos.y, width, height);
+//        g.setColor(color);
+//        g.fillRect((int) pos.x, (int) pos.y, width, height);
     }
 
     @Override
