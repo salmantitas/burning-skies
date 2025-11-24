@@ -489,7 +489,7 @@ public class EntityHandler {
 //                    // todo: Spawn Homing Bullets
 //                } else if (lastDestroyedType == TYPE_DRONE3) {
 //                    // todo: Spawn Bomb Pickup
-                } else if (lastDestroyedType == VariableHandler.TYPE_DRONE1 || lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE3) {
+                } else if (lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE3) {
                     pickupID = EntityID.PickupFirepower;
                     pickupValue = 1;
                 } else if (lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2 || lastDestroyedType == VariableHandler.TYPE_DRONE4 || lastDestroyedType == VariableHandler.TYPE_SIDE1 || lastDestroyedType == VariableHandler.TYPE_MINE2) {
