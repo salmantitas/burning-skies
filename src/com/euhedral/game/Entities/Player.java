@@ -26,7 +26,9 @@ public class Player extends Airplane {
     private int levelHeight;
     private int clampOffsetX;
     private int clampOffsetY;
-    private int shootAngle = Utility.intAtWidth640(5);
+    private int shootAngle = 5;
+    private double shootAngleLeft = NORTH - shootAngle;
+    private double shootAngleRight = NORTH + shootAngle;
 
     private Attribute health, shield_A, firepower;
 
@@ -329,8 +331,9 @@ public class Player extends Airplane {
     protected void shoot() {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
-        turretRightX = (int) (pos.x + width - 16);
-        turretLeftX = (int) (pos.x + 6);
+        int offset = 12;
+        turretRightX = (int) (pos.x + width - (8 + offset));
+        turretLeftX = (int) (pos.x + offset);
 
 //        VariableHandler.homing = true; // todo: Test Only
 
@@ -353,31 +356,29 @@ public class Player extends Airplane {
 
 //        Utility.log("VelY:" + velY);
 
-//        power = VariableHandler.power.getValue();
-//
-//        // tempSolution
-//        double correctionFactor = .715;
-        double shootAngleLeft = NORTH - shootAngle;
-        double shootAngleRight = NORTH + shootAngle;
+        offset = 6;
 
         if (firepower.getValue() > 5) {
-            bullets.spawn(turretRightX - 10, turretY, bulletVelocity, NORTH);
-            bullets.spawn(turretLeftX + 10, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretRightX - offset, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretLeftX + offset, turretY, bulletVelocity, NORTH);
         }
+
 
         if (firepower.getValue() > 10) {
             bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
             bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
         }
 
+        offset = 6;
+
         if (firepower.getValue() > 15) {
-            bullets.spawn(turretRightX + 5, turretY, bulletVelocity, shootAngleRight);
-            bullets.spawn(turretLeftX - 5, turretY, bulletVelocity, shootAngleLeft);
+            bullets.spawn(turretRightX + offset * 1, turretY, bulletVelocity, shootAngleRight);
+            bullets.spawn(turretLeftX - offset * 1, turretY, bulletVelocity, shootAngleLeft);
         }
 
         if (firepower.getValue() > 20) {
-            bullets.spawn(turretRightX + 10, turretY, bulletVelocity, shootAngleRight);
-            bullets.spawn(turretLeftX - 10, turretY, bulletVelocity, shootAngleLeft);
+            bullets.spawn(turretRightX + offset * 2, turretY, bulletVelocity, shootAngleRight);
+            bullets.spawn(turretLeftX - offset * 2, turretY, bulletVelocity, shootAngleLeft);
         }
 
 //        missiles.spawn(turretMidX, turretY, missileVelocity);
@@ -404,7 +405,7 @@ public class Player extends Airplane {
     }
 
     private void calculateTurretPositions() {
-        turretMidX = (int) (pos.x + width / 2 - 2);
+        turretMidX = (int) (pos.x + width / 2 - 3);
         turretY = (int) (pos.y + height * 2 / 3 - velY) ;
     }
 
