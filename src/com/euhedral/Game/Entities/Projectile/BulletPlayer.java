@@ -17,7 +17,7 @@ public class BulletPlayer extends Bullet{
     public BulletPlayer(double x, double y, double angle) {
         super(x, y, angle);
         setImage(textureHandler.bulletPlayer[0]);
-        width = image.getWidth(); //4
+        width = image.getWidth();
         height = width;
 //        impactColor = Color.GREEN;
         commonInit();
