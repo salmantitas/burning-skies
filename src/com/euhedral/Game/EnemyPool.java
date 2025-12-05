@@ -22,6 +22,7 @@ public class EnemyPool extends Pool {
     int entityX;
     Entity entity;
     Enemy enemy;
+    Enemy enemyBoss;
     int enemyType, enemyType2;
     boolean done;
 
@@ -79,11 +80,37 @@ public class EnemyPool extends Pool {
 
 //            }
         }
+
+        updateBoss();
+
+
     }
 
-//    @Override
-//    public void render(Graphics g) {
-//        super.render(g);
+    private void updateBoss() {
+        if (enemyBoss != null) {
+
+            enemyBoss.update();
+            if (enemy.isExploding()) {
+                if (enemy.checkDeathAnimationEnd()) {
+                    enemyBoss = null;
+                }
+            }
+
+            while (enemyBoss.hasShot()) {
+                spawnEnemyBullet(enemyBoss);
+                enemyBoss.decrementShot();
+            }
+        }
+
+    }
+
+    @Override
+    public void render(Graphics g) {
+        super.render(g);
+
+        if (enemyBoss != null) {
+            enemyBoss.render(g);
+        }
 
 //        // render exclusion zone
 //        g.setColor(Color.RED);
@@ -93,7 +120,7 @@ public class EnemyPool extends Pool {
 //                g.drawRect((int) x*64, 400, 64, 64);
 //            }
 //        }
-//    }
+    }
 
     public int getPoolSize(int enemyType) {
         return reusable[enemyType];
@@ -136,6 +163,10 @@ public class EnemyPool extends Pool {
     public void add(Entity entity) {
         super.add(entity);
         increaseActive(entity);
+    }
+
+    public void addBoss(Enemy boss) {
+        this.enemyBoss = boss;
     }
 
     @Override
@@ -312,61 +343,77 @@ public class EnemyPool extends Pool {
     public void checkCollisions(Player player) {
         for (Entity entity : entities) {
             enemy = (Enemy) entity;
-            if (enemy.isActive())
-                if (enemy.isInscreenY() && enemy.isActive()) {
-                    boolean collision = enemy.checkCollision(player);
-                    if (collision) {
-                        double damage = enemy.getDamage();
-                        if (GameController.godMode) {
-
-                        } else
-                            player.damage( (damage * Difficulty.getDamageTakenMult()));
-                        if (enemy.collision)
-                            destroy(enemy);
-                    }
-                }
+            checkCollisionHelper(enemy, player);
 //            else if (enemy.getContactId() == ContactID.Boss) {
 //                damagePlayer(10);
 //            }
         }
+
+        if (enemyBoss != null) {
+            checkCollisionHelper(enemyBoss, player);
+        }
+    }
+
+    private void checkCollisionHelper(Enemy enemy, Player player) {
+        if (enemy.isActive())
+            if (enemy.isInscreenY() && enemy.isActive()) {
+                boolean collision = enemy.checkCollision(player);
+                if (collision) {
+                    double damage = enemy.getDamage();
+                    if (GameController.godMode) {
+
+                    } else
+                        player.damage( (damage * Difficulty.getDamageTakenMult()));
+                    if (enemy.collision)
+                        destroy(enemy);
+                }
+            }
     }
 
     public void checkCollisionBullet(Player player) {
         for (Entity entity : entities) {
             enemy = (Enemy) entity;
-            if (enemy.isInscreenY() && enemy.isActive()) {
-                BulletPlayer bullet = (BulletPlayer) player.checkCollisionBullet(enemy);
-                if (bullet != null && !enemy.collision) {
-                    Utility.log("Bullet exists but doesn't 'coolide'");
+            checkCollisionBulletHelper(enemy, player);
+        }
+
+        if (enemyBoss != null) {
+            checkCollisionBulletHelper(enemyBoss, player);
+        }
+    }
+
+    private void checkCollisionBulletHelper(Enemy enemy, Player player) {
+        if (enemy.isInscreenY() && enemy.isActive()) {
+            BulletPlayer bullet = (BulletPlayer) player.checkCollisionBullet(enemy);
+            if (bullet != null && !enemy.collision) {
+                Utility.log("Bullet exists but doesn't 'coolide'");
+            }
+            if (bullet != null) {
+
+                if (enemy.collision) {
+                    destroy(bullet, enemy);
+                } else {
+                    bullet.destroy();
                 }
-                if (bullet != null) {
 
-                    if (enemy.collision) {
-                        destroy(bullet, enemy);
-                    } else {
-                        bullet.destroy();
-                    }
-
-                    boolean isBoss = false;
-                    if (isBoss) {
+                boolean isBoss = false;
+                if (isBoss) {
 //                        boss.damage();
 //                        VariableHandler.setHealthBoss(boss.getHealth());
 //                        if (boss.getHealth() <= 0) {
 //                            destroyBoss();
 //                        }
-                    } else {
-                        int damage = bullet.getDamage();
-                        boolean isMissile = bullet.isShieldKiller();
-                        enemy.damage((int) (damage * Difficulty.getDamageDealtMult()), isMissile);
-                        if (enemy.getHealth() <= 0) {
-                            destroy(enemy);
-                        }
+                } else {
+                    int damage = bullet.getDamage();
+                    boolean isMissile = bullet.isShieldKiller();
+                    enemy.damage((int) (damage * Difficulty.getDamageDealtMult()), isMissile);
+                    if (enemy.getHealth() <= 0) {
+                        destroy(enemy);
+                    }
 
 //                        if (explodingDroneRadius > -1)
 //                            destroyIfWithinRadius(explodingDroneX, explodingDroneY, (int) explodingDroneRadius);
-                    }
-//                    player.increaseBullets();
                 }
+//                    player.increaseBullets();
             }
         }
     }

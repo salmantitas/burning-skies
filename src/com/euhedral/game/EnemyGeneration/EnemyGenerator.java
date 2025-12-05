@@ -79,6 +79,7 @@ public class EnemyGenerator {
 
     final int bossSpawnWave = 5;
 
+    // to create a delay between last spawned enemy and boss
     int bossDelay = 0;
     final int bossDelay_MAX = 60 * 6;
 
@@ -481,7 +482,7 @@ public class EnemyGenerator {
     }
 
     protected void spawnBossHelper() {
-        spawnX = 2 * 64;
+        spawnX = (xMid + 1) * 64;
         spawnY = 0;
         EntityID id = EntityID.Boss;
         entityHandler.spawnBoss(spawnX, spawnY);

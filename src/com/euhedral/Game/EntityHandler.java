@@ -533,7 +533,7 @@ public class EntityHandler {
         // todo: Boss needs its own enemytype, otherwise Pool will crash
         boss = new EnemyBoss1(x, y, levelHeight);
         VariableHandler.setBossAlive(true);
-        enemies.add(boss);
+        enemies.addBoss(boss);
         VariableHandler.initHealthBoss(boss.getHealth());
 //        VariableHandler.setHealthBossDefault(boss.getHealth());
 //        VariableHandler.setHealthBoss(VariableHandler.getHealthBossDefault());
