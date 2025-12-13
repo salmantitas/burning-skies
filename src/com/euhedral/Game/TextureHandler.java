@@ -18,7 +18,10 @@ public class TextureHandler {
             enemySideImage,
             explosionImage,
             impactSmallImage,
-            enemyBossImage,
+            enemyBoss1Image,
+            enemyBoss2Image,
+            enemyBoss3Image,
+            enemyBoss4Image,
             logo,
             seaImage,
             cloudImage,
@@ -35,7 +38,10 @@ public class TextureHandler {
             enemySideSS,
             explosionSS,
             impactSmallSS,
-            enemyBossSS,
+            enemyBoss1SS,
+            enemyBoss2SS,
+            enemyBoss3SS,
+            enemyBoss4SS,
             seaSS,
             cloudSS,
             pickupSS,
@@ -52,7 +58,7 @@ public class TextureHandler {
     public BufferedImage[] enemySide = new BufferedImage[8];
     public BufferedImage[] enemyDrone = new BufferedImage[6];
     public BufferedImage[] enemyDroneL = new BufferedImage[1];
-    public BufferedImage[] enemyBoss = new BufferedImage[1];
+    public BufferedImage[] enemyBoss = new BufferedImage[4];
     public BufferedImage[] explosion = new BufferedImage[4];
     public BufferedImage[] impactSmall = new BufferedImage[4];
     public BufferedImage[] sea = new BufferedImage[8];
@@ -71,7 +77,10 @@ public class TextureHandler {
             enemyDroneImage = loader.loadImage("/enemyDrone.png");
             enemyDroneLImage = loader.loadImage("/enemyDroneL.png");
             enemySideImage = loader.loadImage("/enemySide.png");
-            enemyBossImage = loader.loadImage("/enemyBoss1.png");
+            enemyBoss1Image = loader.loadImage("/enemyBoss1.png");
+            enemyBoss2Image = loader.loadImage("/enemyBoss2.png");
+            enemyBoss3Image = loader.loadImage("/enemyBoss3.png");
+            enemyBoss4Image = loader.loadImage("/enemyBoss4.png");
             explosionImage = loader.loadImage("/explosion.png");
             impactSmallImage = loader.loadImage("/impactsmall.png");
             logo = loader.loadImage("/logo.png");
@@ -90,7 +99,10 @@ public class TextureHandler {
         enemySideSS = new SpriteSheet(enemySideImage);
         enemyDroneSS = new SpriteSheet(enemyDroneImage);
         enemyDroneLSS = new SpriteSheet(enemyDroneLImage);
-        enemyBossSS = new SpriteSheet(enemyBossImage);
+        enemyBoss1SS = new SpriteSheet(enemyBoss1Image);
+        enemyBoss2SS = new SpriteSheet(enemyBoss2Image);
+        enemyBoss3SS = new SpriteSheet(enemyBoss3Image);
+        enemyBoss4SS = new SpriteSheet(enemyBoss4Image);
         explosionSS = new SpriteSheet(explosionImage);
         impactSmallSS = new SpriteSheet(impactSmallImage);
         seaSS = new SpriteSheet(seaImage);
@@ -197,7 +209,15 @@ public class TextureHandler {
 
         w = 16;
         h = 8;
-        enemyBoss[0] = enemyBossSS.grabImage(1,1,w,h);
+        enemyBoss[0] = enemyBoss1SS.grabImage(1,1,w,h);
+
+        w = 8;
+        h = 8;
+        enemyBoss[1] = enemyBoss2SS.grabImage(1,1,w,h);
+        enemyBoss[2] = enemyBoss3SS.grabImage(1,1,w,h);
+
+        h = 16;
+        enemyBoss[3] = enemyBoss4SS.grabImage(1,1,w,h);
     }
 
     public static Animation initExplosion(int speed) {

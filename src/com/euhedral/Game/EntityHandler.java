@@ -3,6 +3,7 @@ package com.euhedral.Game;
 import com.euhedral.Engine.*;
 import com.euhedral.Game.Entities.*;
 import com.euhedral.Game.Entities.Enemy.*;
+import com.euhedral.Game.Entities.Enemy.Boss.*;
 import com.euhedral.Game.Entities.Projectile.Bullet;
 
 import java.awt.*;
@@ -424,25 +425,10 @@ public class EntityHandler {
 
     private void renderEnemyReflections(Graphics2D g2d, float transparency) {
         enemies.renderReflections(g2d, transparency);
-//        LinkedList<Entity> list = enemies.getEntities();
-//        for (Entity entity: list) {
-//            Enemy enemy = (Enemy) entity;
-//            // todo: fix bad code
-//            if (enemy.getEnemyType() == TYPE_DRONE3) {
-//                transparency = 0.1f;
-//            }
-//            enemy.renderReflection(g2d, transparency);
-//        }
     }
 
     private void renderBulletReflections(Graphics2D g2d, float transparency) {
         bullets.renderReflections(g2d, transparency);
-
-//        LinkedList<Entity> list = bullets.getEntities();
-//        for (Entity entity : list) {
-//            Bullet bullet = (Bullet) entity;
-//            bullet.renderReflection(g2d, transparency);
-//        }
     }
 
     /*******************
@@ -529,9 +515,17 @@ public class EntityHandler {
 //        VariableHandler.increaseScore(VariableHandler.getBossScore());
 //    }
 
-    public void spawnBoss(int x, int y) {
+    public void spawnBoss(int x, int y, int bossType) {
         // todo: Boss needs its own enemytype, otherwise Pool will crash
-        boss = new EnemyBoss1(x, y, levelHeight);
+        if (bossType == 3)
+            boss = new EnemyBoss4(x, y, levelHeight);
+        else if (bossType == 2)
+            boss = new EnemyBoss3(x, y, levelHeight);
+        else if (bossType == 1)
+            boss = new EnemyBoss2(x, y, levelHeight);
+        else
+            boss = new EnemyBoss1(x, y, levelHeight);
+
         VariableHandler.setBossAlive(true);
         enemies.addBoss(boss);
         VariableHandler.initHealthBoss(boss.getHealth());
@@ -541,37 +535,37 @@ public class EntityHandler {
         SoundHandler.playBGMBoss();
     }
 
-    public void spawnBoss(int level, int x, int y) {
-        if (level == 2) {
-            boss = new EnemyBoss1(x, y, levelHeight);
-        } else if (level == 3) {
-            boss = new EnemyBoss2(x, y, player, levelHeight);
-        } else if (level == 4) {
-//        boss = new EnemyBoss3(x, y);
-        }
+//    public void spawnBoss(int level, int x, int y) {
+//        if (level == 2) {
+//            boss = new EnemyBoss1(x, y, levelHeight);
+//        } else if (level == 3) {
+//            boss = new EnemyBoss2(x, y, levelHeight);
+//        } else if (level == 4) {
+////        boss = new EnemyBoss3(x, y);
+//        }
+//
+//        if (boss != null) {
+//            VariableHandler.setBossAlive(true);
+//            enemies.add(boss);
+//            VariableHandler.initHealthBoss(boss.getHealth());
+//        }
+//        this.boss = boss;
+//    }
 
-        if (boss != null) {
-            VariableHandler.setBossAlive(true);
-            enemies.add(boss);
-            VariableHandler.initHealthBoss(boss.getHealth());
-        }
-        this.boss = boss;
-    }
-
-    public void checkBoss() {
-        if (boss != null) {
-            if (VariableHandler.isBossAlive() != boss.isAlive()) {
-                VariableHandler.setBossAlive(boss.isAlive());
-            }
-        }
-    }
-
-    public void renderBossHealth(Graphics g) {
-        if (boss != null) {
-//            if (boss.isInscreenY() && boss.isAlive())
-//                VariableHandler.drawBossHealth(g);
-        }
-    }
+//    public void checkBoss() {
+//        if (boss != null) {
+//            if (VariableHandler.isBossAlive() != boss.isAlive()) {
+//                VariableHandler.setBossAlive(boss.isAlive());
+//            }
+//        }
+//    }
+//
+//    public void renderBossHealth(Graphics g) {
+//        if (boss != null) {
+////            if (boss.isInscreenY() && boss.isAlive())
+////                VariableHandler.drawBossHealth(g);
+//        }
+//    }
 
     /***********************
      * Collision Functions *

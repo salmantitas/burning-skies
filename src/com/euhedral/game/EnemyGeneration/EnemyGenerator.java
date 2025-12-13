@@ -83,6 +83,9 @@ public class EnemyGenerator {
     int bossDelay = 0;
     final int bossDelay_MAX = 60 * 6;
 
+    int currentBoss = 0;
+    int boss_MAX = 4;
+
     // Zone
     boolean entersFromSide;
     boolean isDrone;
@@ -484,7 +487,9 @@ public class EnemyGenerator {
     protected void spawnBossHelper() {
         spawnX = (xMid + 1) * 64;
         spawnY = 0;
-        EntityID id = EntityID.Boss;
-        entityHandler.spawnBoss(spawnX, spawnY);
+//        EntityID id = EntityID.Boss;
+        entityHandler.spawnBoss(spawnX, spawnY, currentBoss % boss_MAX);
+
+        currentBoss++;
     }
 }

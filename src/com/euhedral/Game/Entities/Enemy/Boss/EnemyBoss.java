@@ -1,7 +1,8 @@
-package com.euhedral.Game.Entities.Enemy;
+package com.euhedral.Game.Entities.Enemy.Boss;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.Enemy.Enemy;
 import com.euhedral.Game.SoundHandler;
 import com.euhedral.Game.VariableHandler;
 //import com.euhedral.game.ContactID;
@@ -13,10 +14,9 @@ public abstract class EnemyBoss extends Enemy {
 
     boolean alive = true;
 
-    public EnemyBoss(int x, int y, int levelHeight) {
+    public EnemyBoss(double x, double y, int levelHeight) {
         super(x,y, levelHeight);
         shootTimerDefault = 150;
-//        enemyID = EnemyID.Boss;
     }
 
     public boolean isAlive() {
@@ -35,10 +35,10 @@ public abstract class EnemyBoss extends Enemy {
             alive = false;
     }
 
-    @Override
-    public void render(Graphics g) {
-        super.render(g);
-    }
+//    @Override
+//    public void render(Graphics g) {
+//        super.render(g);
+//    }
 
     // Private Methods
 
@@ -58,8 +58,8 @@ public abstract class EnemyBoss extends Enemy {
 
 
 
-    @Override
-    public abstract void shoot();
+//    @Override
+//    public abstract void shoot();
 
     @Override
     public void damage(int damageValue, boolean isMissile) {
