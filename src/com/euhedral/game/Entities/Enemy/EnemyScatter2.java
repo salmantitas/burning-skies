@@ -105,8 +105,8 @@ public class EnemyScatter2 extends Enemy {
     }
 
     @Override
-    public int getTurretX() {
-        return (int) pos.x + width / 2 - Utility.intAtWidth640(2);
+    public double getTurretX() {
+        return pos.x + width / 2 - Utility.intAtWidth640(2);
     }
 
     @Override

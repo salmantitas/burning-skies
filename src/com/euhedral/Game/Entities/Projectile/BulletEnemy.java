@@ -19,7 +19,7 @@ public class BulletEnemy extends Bullet{
         super(x, y);
     }
 
-    public BulletEnemy(int x, int y, double angle) {
+    public BulletEnemy(double x, double y, double angle) {
         super(x, y, angle);
         width = Utility.intAtWidth640(8);
         height = width;
@@ -36,7 +36,7 @@ public class BulletEnemy extends Bullet{
         canPlayImpactAnimation = true;
     }
 
-    public BulletEnemy(int x, int y, double angle, double vel, boolean tracking) {
+    public BulletEnemy(double x, double y, double angle, double vel, boolean tracking) {
         this(x, y, angle);
         this.tracking = tracking;
         forwardVelocity = vel;

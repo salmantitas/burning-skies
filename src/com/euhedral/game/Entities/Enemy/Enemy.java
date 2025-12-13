@@ -41,6 +41,9 @@ public abstract class Enemy extends Airplane {
     protected double bulletAngle;
     protected int bulletArcAngle;
 
+    protected double turretOffsetX;
+    protected double turretOffsetY = Utility.intAtWidth640(2);
+
     protected boolean attackEffect;
     double attackPathX;
     double attackPathY;
@@ -65,7 +68,7 @@ public abstract class Enemy extends Airplane {
     protected int UPDATES_PER_SECOND = 60;
     protected long spawnInterval = 3 * UPDATES_PER_SECOND;
 
-    public Enemy(int x, int y, int levelHeight) {
+    public Enemy(double x, double y, int levelHeight) {
         super(x, y, EntityID.Enemy);
         moveRight = false;
         moveLeft = false;
@@ -74,8 +77,11 @@ public abstract class Enemy extends Airplane {
         width = Utility.intAtWidth640(32);
         height = width;
         size = Math.max(width, height);
-        jitter_MAX = Utility.intAtWidth640(2);
         color = Color.red;
+
+        turretOffsetX = width / 2 - 1;
+
+        jitter_MAX = Utility.intAtWidth640(2);
 
         setLevelHeight(levelHeight);
         bottomBounds = levelHeight + disableOffset;
@@ -459,12 +465,12 @@ public abstract class Enemy extends Airplane {
         bulletsPerShot--;
     }
 
-    public int getTurretX() {
-        return ((int) pos.x + width / 2 - 1);
+    public double getTurretX() {
+        return pos.x + turretOffsetX;
     }
 
-    public int getTurretY() {
-        return (int) pos.y + Utility.intAtWidth640(2);
+    public double getTurretY() {
+        return pos.y + turretOffsetY;
     }
 
     public double getBulletVelocity() {

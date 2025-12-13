@@ -116,7 +116,7 @@ public class EnemyHeavy extends Enemy {
     }
 
     @Override
-    public int getTurretX() {
+    public double getTurretX() {
         if (turretLeft) {
             turretLeft = !turretLeft;
             return (int) pos.x + width / 3 - Utility.intAtWidth640(2);

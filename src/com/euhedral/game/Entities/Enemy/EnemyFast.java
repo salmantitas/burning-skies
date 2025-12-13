@@ -99,7 +99,8 @@ public class EnemyFast extends Enemy{
 //    }
 
     @Override
-    public int getTurretX() {
+    public double getTurretX() {
+        super.getTurretX();
         return (int) pos.x + width/2 - Utility.intAtWidth640(2);
     }
 

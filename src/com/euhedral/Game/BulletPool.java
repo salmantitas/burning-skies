@@ -61,7 +61,7 @@ public class BulletPool extends Pool {
 //        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
     }
 
-    public void spawnFromPool(int x, int y, double angle, double bulletVelocity, boolean tracking) {
+    public void spawnFromPool(double x, double y, double angle, double bulletVelocity, boolean tracking) {
         entity = findInList();
         entity.resurrect(x, y);
         bullet = (Bullet) entity;

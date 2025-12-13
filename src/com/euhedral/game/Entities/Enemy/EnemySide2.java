@@ -88,8 +88,8 @@ public class EnemySide2 extends Enemy{
     }
 
     @Override
-    public int getTurretY() {
-        return (int) pos.y + Utility.intAtWidth640(3);
+    public double getTurretY() {
+        return pos.y + Utility.intAtWidth640(3);
     }
 
     @Override

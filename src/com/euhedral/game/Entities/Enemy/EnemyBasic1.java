@@ -38,7 +38,7 @@ public class EnemyBasic1 extends Enemy{
 //    }
 
     @Override
-    public int getTurretX() {
+    public double getTurretX() {
         return (int) pos.x + width/2 - Utility.intAtWidth640(2);
     }
 

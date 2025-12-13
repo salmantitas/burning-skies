@@ -320,7 +320,7 @@ public class EnemyPool extends Pool {
     }
 
     private void spawnEnemyBullet(Enemy enemy) {
-        int x = enemy.getTurretX();
+        double x = enemy.getTurretX();
         double dir = enemy.getBulletAngle();
         double y = enemy.getTurretY();
         double bulletVelocity = enemy.getBulletVelocity();
@@ -331,10 +331,10 @@ public class EnemyPool extends Pool {
         }
 
         if (bullets.getPoolSize() > 0) {
-            bullets.spawnFromPool(x, (int) y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking);
+            bullets.spawnFromPool(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking);
         }
         else {
-            bullets.add(new BulletEnemy(x, (int) y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking));
+            bullets.add(new BulletEnemy(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking));
         }
 
 //        bullets.printPool("Enemy Bullet");
