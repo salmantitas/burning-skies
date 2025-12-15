@@ -34,7 +34,7 @@ public class EnemyGenerator {
 
     long spawnInterval;
     long spawnInterval_MIN = 60 * 1;
-    long spawnInterval_START = 60 * 3;
+    long spawnInterval_START = 60 * 3 - 30;
     long spawnInterval_MAX = spawnInterval_START * 5;
     int spawnIntervalDeduction;
 

@@ -465,7 +465,7 @@ public class EntityHandler {
             if (lastDestroyedType > VariableHandler.TYPE_BASIC2) {
                 EntityID pickupID = null;
                 int pickupValue = 0;
-                int maxChanceCoefficient = 2;
+                int minChanceCoefficient = 50;
                 if (lastDestroyedType == VariableHandler.TYPE_DRONE6 || lastDestroyedType == VariableHandler.TYPE_DRONE3) {
                     pickupID = EntityID.PickupPulse;
                     pickupValue = 1;
@@ -478,7 +478,9 @@ public class EntityHandler {
                 } else if (lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE3) {
                     pickupID = EntityID.PickupFirepower;
                     pickupValue = 1;
-                } else if (lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2 || lastDestroyedType == VariableHandler.TYPE_DRONE4 || lastDestroyedType == VariableHandler.TYPE_SIDE1 || lastDestroyedType == VariableHandler.TYPE_MINE2) {
+                } else if (lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2
+                        || lastDestroyedType == VariableHandler.TYPE_DRONE4 || lastDestroyedType == VariableHandler.TYPE_SIDE1
+                        || lastDestroyedType == VariableHandler.TYPE_MINE2) {
                     pickupID = EntityID.PickupFirepower;
                     pickupValue = 1;
                 } else if (lastDestroyedType == VariableHandler.TYPE_SCATTER1 || lastDestroyedType == VariableHandler.TYPE_SCATTER2) {
@@ -486,11 +488,19 @@ public class EntityHandler {
                     pickupValue = 100;
                 } else {
                     pickupID = EntityID.PickupHealth;
-                    pickupValue = 5 * maxChanceCoefficient;
+                    pickupValue = 10;
                 }
                 if (pickupID != null) {
-                    int rand = Utility.randomRangeInclusive(1, maxChanceCoefficient);
-                    if (rand == 1) {
+                    if (pickupID == EntityID.PickupFirepower) {
+                        if (VariableHandler.firepower.getValue() >= 25) {
+                            minChanceCoefficient -= VariableHandler.getLevel();
+                        }
+                    } else if (pickupID == EntityID.PickupHealth) {
+                        minChanceCoefficient -= VariableHandler.getLevel();
+                    }
+                    minChanceCoefficient = Math.max(minChanceCoefficient, 0);
+                    int rand = Utility.randomRangeInclusive(0, 100);
+                    if (rand <= minChanceCoefficient) {
                         spawnPickup(lastDestroyedX, lastDestroyedY, pickupID, pickupValue);
                     }
                 }
