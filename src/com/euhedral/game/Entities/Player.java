@@ -14,7 +14,7 @@ public class Player extends Airplane {
     // Shooting Entity
     private boolean canShoot;
     private BulletPool bullets;
-    private MissilePool missiles;
+//    private MissilePool missiles;
     int turretY;
     int turretMidX, turretLeftX, turretRightX;
 
@@ -57,7 +57,7 @@ public class Player extends Airplane {
         missileVelocity = 6;
 
         bullets = new BulletPool();
-        missiles = new MissilePool();
+//        missiles = new MissilePool();
 //        for (int i = 0; i < 360; i ++)
 //            bullets.spawn(-1, -1, 90);
 
@@ -106,9 +106,9 @@ public class Player extends Airplane {
             if (shootTimer <= 0) {
                 shoot();
             }
-            if (shootTimerMissile <= 0) {
-                shootMissiles();
-            }
+//            if (shootTimerMissile <= 0) {
+//                shootMissiles();
+//            }
         }
 
         updateProjectiles();
@@ -128,7 +128,7 @@ public class Player extends Airplane {
     }
 
     private void shootMissiles() {
-        missiles.spawn(turretMidX, turretY, missileVelocity);
+//        missiles.spawn(turretMidX, turretY, missileVelocity);
 
         // reset shoot timer to default
         shootTimerMissile = shootTimerDefaultMissile - (int) (firepower.getValue() - 1) % 5;
@@ -141,9 +141,9 @@ public class Player extends Airplane {
     }
 
     private void updateProjectiles() {
-        missiles.disableIfOutsideBounds(levelHeight);
-        missiles.update();
-        missiles.checkDeathAnimationEndPlayer();
+//        missiles.disableIfOutsideBounds(levelHeight);
+//        missiles.update();
+//        missiles.checkDeathAnimationEndPlayer();
 
         bullets.disableIfOutsideBounds(levelHeight);
         bullets.update();
@@ -224,7 +224,7 @@ public class Player extends Airplane {
 
     private void renderProjectiles(Graphics g) {
         bullets.render(g);
-        missiles.render(g);
+//        missiles.render(g);
     }
 
     private void renderHoming(Graphics2D g2d) {
@@ -261,7 +261,7 @@ public class Player extends Airplane {
 
     private void renderProjectilesReflections(Graphics2D g2d, float transparency) {
         bullets.renderReflections(g2d, transparency);
-        missiles.renderReflections(g2d, transparency);
+//        missiles.renderReflections(g2d, transparency);
 
     }
 
@@ -276,10 +276,10 @@ public class Player extends Airplane {
     }
 
     public Bullet checkCollisionBullet(Enemy enemy) {
-        Bullet colliding = missiles.checkCollision(enemy);
-        if (colliding != null) {
-            return colliding;
-        }
+//        Bullet colliding = missiles.checkCollision(enemy);
+//        if (colliding != null) {
+//            return colliding;
+//        }
         return bullets.checkCollision(enemy);
     }
 
@@ -358,6 +358,11 @@ public class Player extends Airplane {
 
         offset = 6;
 
+        if (firepower.getValue() < 5) {
+            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
+//            bullets.spawn(turretLeftX + offset, turretY, bulletVelocity, NORTH);
+        }
+
         if (firepower.getValue() > 5) {
             bullets.spawn(turretRightX - offset, turretY, bulletVelocity, NORTH);
             bullets.spawn(turretLeftX + offset, turretY, bulletVelocity, NORTH);
@@ -405,7 +410,7 @@ public class Player extends Airplane {
     }
 
     private void calculateTurretPositions() {
-        turretMidX = (int) (pos.x + width / 2 - 3);
+        turretMidX = (int) (pos.x + width / 2 - 6);
         turretY = (int) (pos.y + height * 2 / 3 - velY) ;
     }
 
