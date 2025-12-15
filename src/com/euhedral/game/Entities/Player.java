@@ -332,7 +332,7 @@ public class Player extends Airplane {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
         int offset = 12;
-        turretRightX = (int) (pos.x + width - (8 + offset));
+        turretRightX = (int) (pos.x + width - (9 + offset));
         turretLeftX = (int) (pos.x + offset);
 
 //        VariableHandler.homing = true; // todo: Test Only
@@ -358,7 +358,7 @@ public class Player extends Airplane {
 
         offset = 6;
 
-        if (firepower.getValue() < 5) {
+        if (firepower.getValue() <= 5) {
             bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
 //            bullets.spawn(turretLeftX + offset, turretY, bulletVelocity, NORTH);
         }
@@ -382,11 +382,10 @@ public class Player extends Airplane {
         }
 
         if (firepower.getValue() > 20) {
-            bullets.spawn(turretRightX + offset * 2, turretY, bulletVelocity, shootAngleRight);
-            bullets.spawn(turretLeftX - offset * 2, turretY, bulletVelocity, shootAngleLeft);
+            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
+//            bullets.spawn(turretRightX + offset * 2, turretY, bulletVelocity, shootAngleRight);
+//            bullets.spawn(turretLeftX - offset * 2, turretY, bulletVelocity, shootAngleLeft);
         }
-
-//        missiles.spawn(turretMidX, turretY, missileVelocity);
 
         // reset shoot timer to default
         shootTimer = shootTimerDefault - (int) (firepower.getValue() - 1) % 5;
