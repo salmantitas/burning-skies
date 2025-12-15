@@ -90,13 +90,6 @@ public class EnemyPool extends Pool {
     private void updateBoss() {
         if (enemyBoss != null) {
 
-            enemyBoss.update();
-            if (enemy.isExploding()) {
-                if (enemy.checkDeathAnimationEnd()) {
-                    enemyBoss = null;
-                }
-            }
-
             while (enemyBoss.hasShot()) {
                 spawnEnemyBullet(enemyBoss);
                 enemyBoss.decrementShot();
@@ -107,6 +100,13 @@ public class EnemyPool extends Pool {
                         spawnEntity(enemyBoss.getPos().intX(), enemyBoss.getPos().intY(), VariableHandler.TYPE_DRONE1, 0, 0);
                         ((EnemyBoss2) enemyBoss).spawnDrone = false;
                     }
+                }
+            }
+
+            enemyBoss.update();
+            if (enemyBoss.isExploding()) {
+                if (enemyBoss.checkDeathAnimationEnd()) {
+                    enemyBoss = null;
                 }
             }
         }
