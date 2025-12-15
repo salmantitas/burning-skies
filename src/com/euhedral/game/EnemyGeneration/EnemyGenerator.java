@@ -97,10 +97,14 @@ public class EnemyGenerator {
 
     private boolean canShowWave = false;
 
+    int testBossRan = 0;
+
     public EnemyGenerator(EntityHandler entityHandler) {
         this.entityHandler = entityHandler;
         maxTypes = VariableHandler.enemyTypes;
     }
+
+
 
     public void generateLevel() {
         level = VariableHandler.getLevel();
@@ -129,7 +133,6 @@ public class EnemyGenerator {
         spawnInterval = 0 ; //spawnInterval_START;
         spawnIntervalDeduction = 0;
         updatesSinceLastSpawn = 0;
-
 //        spawnFirstWave();
     }
 
@@ -137,6 +140,8 @@ public class EnemyGenerator {
         updatesSinceLastSpawn++;
         canSpawnBoss = wavesSinceBoss >= bossSpawnWave;
         canSpawn = (spawnInterval <= updatesSinceLastSpawn) && !VariableHandler.isBossAlive();
+
+//        testBoss(1);// todo: Remove, testing only
 
         if (canSpawnBoss) {
             if (bossDelay >= bossDelay_MAX) {
@@ -154,6 +159,15 @@ public class EnemyGenerator {
             }
             spawnEnemies();
             updatesSinceLastSpawn = 0;
+        }
+    }
+
+    private void testBoss(int bossNum) {
+        if (testBossRan == 0) {
+            canSpawnBoss = true;
+            bossDelay = bossDelay_MAX + 1;
+            currentBoss = bossNum;
+            testBossRan++;
         }
     }
 
