@@ -16,6 +16,7 @@ public abstract class EnemyBoss extends Enemy {
 
     public EnemyBoss(double x, double y, int levelHeight) {
         super(x,y, levelHeight);
+        damage = 100;
         shootTimerDefault = 150;
     }
 

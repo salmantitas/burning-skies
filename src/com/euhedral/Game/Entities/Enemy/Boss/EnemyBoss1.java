@@ -8,21 +8,23 @@ import java.awt.*;
 
 public class EnemyBoss1 extends EnemyBoss {
 
-    int
-            distToCover = Engine.HEIGHT / 10,
-            min = Utility.percWidth(25),
-            max = Utility.percWidth(75) - (int) 1.8 * width;
+    protected int distToCover = Engine.HEIGHT / 11,
+            minX,maxX;
 
     int currentGun = 0;
     int guns_MAX = 4;
     int shotMode = 0;
-    int shotMode_MAX = guns_MAX + 1;
+    int shotMode_MAX = guns_MAX;
 
     public EnemyBoss1(double x, double y, int levelHeight) {
         super(x,y, levelHeight);
         height = 128;
         width = height * 2;
         pos.x = x - width/2;
+
+        minX = Utility.percWidth(25);
+        maxX = Utility.percWidth(75) - (int) 1.8 * width;
+
         color = Color.orange;
 
         turretOffsetY = height/2 + 8;
@@ -79,6 +81,7 @@ public class EnemyBoss1 extends EnemyBoss {
         shootTimer = (int) (factor * shootTimerDefault / Difficulty.getEnemyFireRateMult());
     }
 
+    @Override
     public void moveInScreen() {
         if (distToCover > 0) {
             distToCover--;
@@ -91,9 +94,9 @@ public class EnemyBoss1 extends EnemyBoss {
                 pos.x -= velX;
         }
 
-        if (pos.x < min)
+        if (pos.x < minX)
             moveLeft = false;
-        if (pos.x > max)
+        if (pos.x > maxX)
             moveLeft = true;
     }
 

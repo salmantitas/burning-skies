@@ -21,7 +21,6 @@ public abstract class Enemy extends Airplane {
     protected int health_MAX;
 
     protected double offscreenVelY;
-    protected boolean moveLeft, moveRight;
     protected int shootTimerFirst;
     protected boolean inscreenY = false;
     protected float cam;
