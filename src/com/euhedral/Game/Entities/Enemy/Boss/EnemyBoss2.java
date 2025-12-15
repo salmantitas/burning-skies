@@ -13,6 +13,8 @@ public class EnemyBoss2 extends EnemyBoss1 {
     boolean firstMove = true;
     double destinationX, destinationY;
 
+    public boolean spawnDrone = true;
+
     int minY,
     maxY;
 
@@ -97,18 +99,18 @@ public class EnemyBoss2 extends EnemyBoss1 {
 //        super.shoot();
 //    }
 
-//    @Override
-//    protected void shootDefault() {
-//        if (shotMode < shotMode_MAX) {
-//            bulletsPerShot++;
-//            shotMode++;
-//        }
-//        else {
-//            bulletsPerShot += guns_MAX;
-//            shotMode = 0;
-//            currentGun = 0;
-//            }
-//    }
+    @Override
+    protected void shootDefault() {
+        if (shotMode < shotMode_MAX) {
+            bulletsPerShot++;
+            shotMode++;
+        }
+        else {
+            spawnDrone = true;
+            shotMode = 0;
+            currentGun = 0;
+            }
+    }
 //
 //    @Override
 //    protected void resetShootTimer() {

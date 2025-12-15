@@ -4,9 +4,10 @@ import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.MobileEntity;
 import com.euhedral.Engine.Pool;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.Enemy.*;
+import com.euhedral.Game.Entities.Enemy.Boss.EnemyBoss2;
 import com.euhedral.Game.Entities.Projectile.Bullet;
 import com.euhedral.Game.Entities.Projectile.BulletEnemy;
-import com.euhedral.Game.Entities.Enemy.Enemy;
 import com.euhedral.Game.Entities.Player;
 import com.euhedral.Game.Entities.Projectile.BulletPlayer;
 import com.euhedral.Game.Entities.Projectile.MissilePlayer;
@@ -99,6 +100,14 @@ public class EnemyPool extends Pool {
             while (enemyBoss.hasShot()) {
                 spawnEnemyBullet(enemyBoss);
                 enemyBoss.decrementShot();
+
+                if (enemyBoss instanceof EnemyBoss2) {
+                    if (((EnemyBoss2) enemyBoss).spawnDrone) {
+
+                        spawnEntity(enemyBoss.getPos().intX(), enemyBoss.getPos().intY(), VariableHandler.TYPE_DRONE1, 0, 0);
+                        ((EnemyBoss2) enemyBoss).spawnDrone = false;
+                    }
+                }
             }
         }
 
@@ -179,6 +188,69 @@ public class EnemyPool extends Pool {
         }
 
         super.clear();
+    }
+
+    public void spawnEntity(int x, int y, int enemyType, int distance, int direction) {
+        if (getPoolSize(enemyType) > 0) {
+            spawnFromPool(x, y, enemyType, direction, distance);
+        } else {
+            spawnNew(x, y, enemyType, direction, EntityHandler.getLevelHeight());
+        }
+    }
+
+    private void spawnNew(int x, int y, int enemyType, int direction, int levelHeight) {
+        enemy = null;
+
+        if (enemyType == VariableHandler.TYPE_BASIC1) {
+            enemy = new EnemyBasic1(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_HEAVY) {
+            enemy = new EnemyHeavy(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_BASIC2) {
+            enemy = new EnemyBasic2(x, y, levelHeight);
+            enemy.setHMove(direction);
+        } else if (enemyType == VariableHandler.TYPE_BASIC3) {
+            enemy = new EnemyBasic3(x, y, levelHeight);
+            enemy.setHMove(direction);
+        } else if (enemyType == VariableHandler.TYPE_FAST) {
+            enemy = new EnemyFast(x, y, levelHeight);
+            enemy.setHMove(direction);
+        } else if (enemyType == VariableHandler.TYPE_DRONE1) {
+            enemy = new EnemyDrone1(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_SIDE1) {
+            enemy = new EnemySide1(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_STATIC1) {
+            enemy = new EnemyStatic1(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_DRONE2) {
+            enemy = new EnemyDrone2(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_SIDE2) {
+            enemy = new EnemySide2(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_SIDE3) {
+            enemy = new EnemySide3(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_SCATTER1) {
+            enemy = new EnemyScatter1(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_MINE1) {
+            enemy = new EnemyMinefield1(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_MINE2) {
+            enemy = new EnemyMinefield2(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_DRONE3) {
+            enemy = new EnemyDrone3(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_SCATTER2) {
+            enemy = new EnemyScatter2(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_DRONE4) {
+            enemy = new EnemyDrone4(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_DRONE5) {
+            enemy = new EnemyDrone5(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_DRONE6) {
+            enemy = new EnemyDrone6(x, y, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_LASER) {
+            enemy = new EnemyLaser(x, y, levelHeight);
+        }
+
+        if (enemy != null) {
+            add(enemy);
+            spawnInterval = enemy.getSpawnInterval();
+        }
+
     }
 
     public Entity findInList(int enemyType) throws NullPointerException {
