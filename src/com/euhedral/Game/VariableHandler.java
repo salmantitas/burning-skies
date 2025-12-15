@@ -52,20 +52,20 @@ public class VariableHandler {
     public static final int TYPE_STATIC1 = TYPE_DRONE1 + 1;
     public static final int TYPE_SIDE1 = TYPE_STATIC1 + 1;
     public static final int TYPE_DRONE2 = TYPE_SIDE1 + 1;
-    public static final int TYPE_FAST = TYPE_DRONE2 + 1;
-    public static final int TYPE_SIDE2 = TYPE_FAST + 1;
+    public static final int TYPE_MINE1 = TYPE_DRONE2 + 1;
+    public static final int TYPE_SIDE2 = TYPE_MINE1 + 1;
 
-    public static final int TYPE_DRONE3 = TYPE_SIDE2 + 1;
-    public static final int TYPE_MINE1 = TYPE_DRONE3 + 1;
-    public static final int TYPE_SCATTER1 = TYPE_MINE1 + 1;
+    public static final int TYPE_FAST = TYPE_SIDE2 + 1;
+    public static final int TYPE_DRONE3 = TYPE_FAST + 1;
+    public static final int TYPE_SCATTER1 = TYPE_DRONE3 + 1;
     public static final int TYPE_DRONE4 = TYPE_SCATTER1 + 1;
-    public static final int TYPE_SIDE3 = TYPE_DRONE4 + 1;
+    public static final int TYPE_LASER = TYPE_DRONE4 + 1;
 
+    public static final int TYPE_SIDE3 = TYPE_LASER + 1;
     public static final int TYPE_MINE2 = TYPE_SIDE3 + 1;
     public static final int TYPE_DRONE5 = TYPE_MINE2 + 1;
     public static final int TYPE_SCATTER2 = TYPE_DRONE5 + 1;
-    public static final int TYPE_LASER = TYPE_SCATTER2 + 1;
-    public static final int TYPE_DRONE6 = TYPE_LASER + 1;
+    public static final int TYPE_DRONE6 = TYPE_SCATTER2 + 1;
 
     public static final int enemyTypes = TYPE_DRONE6 + 1;
 
