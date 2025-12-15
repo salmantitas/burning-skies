@@ -1,6 +1,7 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
 import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.VariableHandler;
 
@@ -8,7 +9,7 @@ import java.awt.*;
 
 public class EnemyScatter1 extends Enemy {
 
-    double destinationX, destinationY;
+    Tracker tracker;
     double deceleration;
 
     int movementState;
@@ -32,6 +33,8 @@ public class EnemyScatter1 extends Enemy {
         bulletsPerShot_MAX = 3;
         bulletArcAngle = 30;
         degreesPerBullet = bulletArcAngle / bulletsPerShot_MAX;
+
+        tracker = new Tracker();
 
         attackEffect = true;
 
@@ -62,7 +65,7 @@ public class EnemyScatter1 extends Enemy {
     public void update() {
         super.update();
         if (state == STATE_ACTIVE && shootTimer <= 50) {
-            updateDestination();
+            tracker.updateDestination();
         }
     }
 
@@ -136,7 +139,7 @@ public class EnemyScatter1 extends Enemy {
 
     @Override
     public double calculateShotTrajectory() {
-        return calculateAngle(getTurretX(), getTurretY(), destinationX, destinationY);
+        return calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY);
     }
 
     @Override
@@ -149,11 +152,6 @@ public class EnemyScatter1 extends Enemy {
         if (shotCount > bulletsPerShot_MAX)
             shotCount = 1;
         return tempAngle;// - (2 * degreesPerBullet) + (bulletsPerShot - 1) * degreesPerBullet; // * (bulletsPerShot % 2 == 0 ? 1 : -1); // stub
-    }
-
-    private void updateDestination() {
-        destinationX = EntityHandler.playerPositon.x;
-        destinationY = EntityHandler.playerPositon.y;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.euhedral.Game.Entities.Enemy;
 import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.Difficulty;
+import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
 import com.euhedral.Game.Entities.Projectile.Laser;
 import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.GameController;
@@ -14,7 +15,7 @@ public class EnemyLaser extends Enemy {
 
     double deceleration;
 
-    int destinationX;
+    Tracker tracker;
     int offsetLeft = 0, offsetRight = 0;
 
     boolean playerLeft, playerRight;
@@ -34,6 +35,8 @@ public class EnemyLaser extends Enemy {
         velX_MIN = 1;
         deceleration = 0.015;
         bulletVelocity = 75;
+
+        tracker = new Tracker();
 
         attackEffect = true;
 
@@ -58,8 +61,8 @@ public class EnemyLaser extends Enemy {
             updateDestination();
             laser.update();
 
-            playerRight = destinationX - offsetRight > pos.x + width/2 + velX_MIN;
-            playerLeft = destinationX - offsetLeft <= pos.x - velX_MIN ;
+            playerRight = tracker.destinationX - offsetRight > pos.x + width/2 + velX_MIN;
+            playerLeft = tracker.destinationX - offsetLeft <= pos.x - velX_MIN ;
         }
     }
 
@@ -84,7 +87,7 @@ public class EnemyLaser extends Enemy {
     }
 
     private void updateDestination() {
-        destinationX = EntityHandler.playerPositon.intX();
+        tracker.destinationX = EntityHandler.playerPositon.intX();
     }
 
     @Override

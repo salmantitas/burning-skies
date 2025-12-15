@@ -1,6 +1,7 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
 import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.GameController;
 import com.euhedral.Game.VariableHandler;
@@ -18,7 +19,7 @@ public class EnemyHeavy extends Enemy {
     int bulletAngleMAX = 90;
     int bulletAngleINC = 30;
 
-    double destinationX, destinationY;
+    Tracker tracker;
     int offsetLeft = 8, offsetRight = 2;
 
     boolean secondsTillShotFire;
@@ -39,6 +40,8 @@ public class EnemyHeavy extends Enemy {
         velX_MIN = 1;
         movementDistance = movementDistance_MAX;
         setHMove(1);
+
+        tracker = new Tracker();
 
 //        attackEffect = true;
 
@@ -61,7 +64,7 @@ public class EnemyHeavy extends Enemy {
     public void update() {
         super.update();
         if (state == STATE_ACTIVE && inscreenY) {
-            updateDestination();
+            tracker.updateDestination();
 
             if (movementDistance >= 0) {
                 movementDistance -= Math.abs(velX);
@@ -110,11 +113,6 @@ public class EnemyHeavy extends Enemy {
         bulletsPerShot += 2;
     }
 
-    private void updateDestination() {
-        destinationX = EntityHandler.playerPositon.x;
-        destinationY = EntityHandler.playerPositon.y;
-    }
-
     @Override
     public double getTurretX() {
         if (turretLeft) {
@@ -140,8 +138,8 @@ public class EnemyHeavy extends Enemy {
 //        if (bothShotsFired)
 //            incrementBulletAngle();
 
-        rangeCheck1 = (destinationX - offsetLeft > pos.x) && (destinationX - offsetLeft < pos.x + width);
-        rangeCheck2 = (destinationX + 32 + offsetRight < pos.x + width) && (destinationX + 32 + offsetRight > pos.x);
+        rangeCheck1 = (tracker.destinationX - offsetLeft > pos.x) && (tracker.destinationX - offsetLeft < pos.x + width);
+        rangeCheck2 = (tracker.destinationX + 32 + offsetRight < pos.x + width) && (tracker.destinationX + 32 + offsetRight > pos.x);
         playerInRange = rangeCheck1 || rangeCheck2;
 
         if (playerInRange)

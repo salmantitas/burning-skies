@@ -2,6 +2,7 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
 import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.GameController;
 import com.euhedral.Game.VariableHandler;
@@ -10,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 
 public class EnemySide3 extends Enemy{
 
-    double destinationX, destinationY;
+    Tracker tracker;
     boolean firstEntry;
 
     double xMin, xMax;
@@ -22,6 +23,8 @@ public class EnemySide3 extends Enemy{
         score = 100;
 
         shootTimerFirst = 40;
+
+        tracker = new Tracker();
 
         attackEffect = true;
 
@@ -56,11 +59,11 @@ public class EnemySide3 extends Enemy{
             if (pos.x <= xMin && velX < 0) {
                 velX = velX_MIN;
                 if (!firstEntry)
-                    pos.y = destinationY;
+                    pos.y = tracker.destinationY;
             } else if (pos.x >= xMax && velX > 0) {
                 velX = -velX_MIN;
                 if (!firstEntry)
-                    pos.y = destinationY;
+                    pos.y = tracker.destinationY;
             }
 
         } else if (isExploding()) {
@@ -81,7 +84,7 @@ public class EnemySide3 extends Enemy{
     @Override
     public void update() {
         super.update();
-        updateDestination();
+        tracker.updateDestination();
         setImage();
     }
 
@@ -95,16 +98,16 @@ public class EnemySide3 extends Enemy{
         }
     }
 
-    private void updateDestination() {
-        int offsetY = -32;
-        destinationX = EntityHandler.playerPositon.x;
-        destinationY = EntityHandler.playerPositon.y + offsetY;
-    }
+//    private void updateDestination() {
+//        int offsetY = -32;
+//        destinationX = EntityHandler.playerPositon.x;
+//        destinationY = EntityHandler.playerPositon.y + offsetY;
+//    }
 
     @Override
     public double getBulletAngle() {
         firstEntry = false; // todo: move somewhere else
-        return calculateAngle(destinationX, destinationY); // stub
+        return calculateAngle(tracker.destinationX, tracker.destinationY); // stub
     }
 
     @Override

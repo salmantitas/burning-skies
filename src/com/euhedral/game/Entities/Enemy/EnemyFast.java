@@ -2,6 +2,7 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
 import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.GameController;
 import com.euhedral.Game.VariableHandler;
@@ -10,7 +11,7 @@ import java.awt.*;
 
 public class EnemyFast extends Enemy{
 
-    double destinationX, destinationY;
+    Tracker tracker;
 
     double velXCoefficient = 2;
     double acceleration = 0.08;
@@ -25,7 +26,9 @@ public class EnemyFast extends Enemy{
         shootTimerDefault = 40; // too low: 10, too high: 100
 //        shootTimer = shootTimerDefault;
         score = 100;
+        tracker = new Tracker();
         determineMovement();
+
 
         health_MAX = 3;
         commonInit();
@@ -77,18 +80,13 @@ public class EnemyFast extends Enemy{
     }
 
     private void determineMovement() {
-        updateDestination();
+        tracker.updateDestination();
 //        if (destinationX > x) {
 //            setHMove(-1);
 //        } else {
 //            setHMove(1);
 //        }
         movementDistance = Engine.WIDTH; // Math.abs((int) (x - destinationX));
-    }
-
-    private void updateDestination() {
-        destinationX = EntityHandler.playerPositon.x;
-        destinationY = EntityHandler.playerPositon.y;
     }
 
 //    @Override

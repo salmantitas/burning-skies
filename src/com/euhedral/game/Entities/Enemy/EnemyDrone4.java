@@ -6,6 +6,8 @@ import com.euhedral.Game.VariableHandler;
 
 public class EnemyDrone4 extends EnemyDrone1 {
 
+    double destinationX, destinationY;
+
     int bulletAngle_MIN = 30;
     int bulletAngle_MAX = 180 - bulletAngle_MIN;
     int bulletAngleIncrements = 10;
@@ -28,7 +30,7 @@ public class EnemyDrone4 extends EnemyDrone1 {
     @Override
     protected void moveInScreen() {
         pos.y += velY;
-        if (pos.x < destinationX - width || pos.x > destinationX + width)
+        if (pos.x < tracker.destinationX - width || pos.x > destinationX + width)
             pos.x += velX;
     }
 
@@ -49,7 +51,6 @@ public class EnemyDrone4 extends EnemyDrone1 {
         }
     }
 
-    @Override
     protected void updateDestination() {
         destinationX = Engine.WIDTH/2;
         destinationY = Engine.HEIGHT/2;

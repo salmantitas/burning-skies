@@ -3,6 +3,7 @@ package com.euhedral.Game.Entities.Enemy.Boss;
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.Difficulty;
+import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
 import com.euhedral.Game.EntityHandler;
 
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.awt.geom.AffineTransform;
 public class EnemyBoss2 extends EnemyBoss1 {
 
     boolean firstMove = true;
-    double destinationX, destinationY;
+    Tracker tracker;
 
     public boolean spawnDrone = true;
 
@@ -35,6 +36,8 @@ public class EnemyBoss2 extends EnemyBoss1 {
         moveRight = false;
         moveUp = false;
         moveDown = true;
+
+        tracker = new Tracker();
 //        pos.x = x - width/2;
 //        color = Color.orange;
 //
@@ -54,7 +57,7 @@ public class EnemyBoss2 extends EnemyBoss1 {
     public void update() {
         super.update();
         if (state == STATE_ACTIVE && shootTimer <= 50) {
-            updateDestination();
+            tracker.updateDestination();
         }
     }
 
@@ -215,11 +218,6 @@ public class EnemyBoss2 extends EnemyBoss1 {
 
     @Override
     public double getBulletAngle() {
-        return calculateAngle(getTurretX(), getTurretY(), destinationX, destinationY); // stub
-    }
-
-    private void updateDestination() {
-        destinationX = EntityHandler.playerPositon.x;
-        destinationY = EntityHandler.playerPositon.y;
+        return calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY); // stub
     }
 }

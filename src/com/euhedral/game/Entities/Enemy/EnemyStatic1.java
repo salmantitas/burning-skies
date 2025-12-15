@@ -1,6 +1,7 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
 import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.VariableHandler;
 
@@ -8,7 +9,7 @@ import java.awt.*;
 
 public class EnemyStatic1 extends Enemy {
 
-    double destinationX, destinationY;
+    Tracker tracker;
     double deceleration;
 
     public EnemyStatic1(int x, int y, int levelHeight) {
@@ -19,6 +20,8 @@ public class EnemyStatic1 extends Enemy {
         score = 75;
 
         deceleration = 0.012;
+
+        tracker = new Tracker();
 
         attackEffect = true;
 
@@ -41,7 +44,7 @@ public class EnemyStatic1 extends Enemy {
     public void update() {
         super.update();
         if (state == STATE_ACTIVE && shootTimer <= 50) {
-            updateDestination();
+            tracker.updateDestination();
         }
     }
 
@@ -70,12 +73,7 @@ public class EnemyStatic1 extends Enemy {
 
     @Override
     public double getBulletAngle() {
-        return calculateAngle(getTurretX(), getTurretY(), destinationX, destinationY); // stub
-    }
-
-    private void updateDestination() {
-        destinationX = EntityHandler.playerPositon.x;
-        destinationY = EntityHandler.playerPositon.y;
+        return calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY); // stub
     }
 
 //    @Override

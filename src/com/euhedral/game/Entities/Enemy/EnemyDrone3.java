@@ -100,7 +100,7 @@ public class EnemyDrone3 extends EnemyDrone1 {
 
     @Override
     public double getBulletAngle() {
-        return calculateAngle(destinationX, destinationY); // stub
+        return calculateAngle(tracker.destinationX, tracker.destinationY); // stub
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
 import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.GameController;
 import com.euhedral.Game.VariableHandler;
@@ -9,7 +10,8 @@ import java.awt.*;
 
 public class EnemyDrone1 extends Enemy{
 
-    double destinationX, destinationY;
+    Tracker tracker;
+//    double destinationX, destinationY;
     int updateSkip = 0;
 
     public EnemyDrone1(int x, int y, int levelHeight) {
@@ -21,6 +23,8 @@ public class EnemyDrone1 extends Enemy{
 
         width = Utility.intAtWidth640(16);
         height = width;
+
+        tracker = new Tracker();
 
         health_MAX = 1;
         damage = 20;
@@ -41,8 +45,8 @@ public class EnemyDrone1 extends Enemy{
     public void update() {
         super.update();
             if (updateSkip == 10) {
-                updateDestination();
-                calculateVelocities(destinationX, destinationY);
+                tracker.updateDestination();
+                calculateVelocities(tracker.destinationX, tracker.destinationY);
                 updateSkip = 0;
             } else {
                 updateSkip++;
@@ -80,7 +84,7 @@ public class EnemyDrone1 extends Enemy{
         this.setHealth(health_MAX);
         forwardVelocity = 5;
         shootTimer = shootTimerFirst;
-        updateDestination();
+        tracker.updateDestination();
         calibrateShootTimerFirst();
     }
 
@@ -91,10 +95,6 @@ public class EnemyDrone1 extends Enemy{
 //        super.resurrect(x, y);
 //    }
 
-    protected void updateDestination() {
-        destinationX = EntityHandler.playerPositon.x;
-        destinationY = EntityHandler.playerPositon.y;
-    }
 
     @Override
     protected void renderDamageImage() {

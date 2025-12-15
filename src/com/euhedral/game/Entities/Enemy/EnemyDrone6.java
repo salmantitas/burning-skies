@@ -77,7 +77,7 @@ public class EnemyDrone6 extends EnemyDrone1 {
 
     @Override
     public double calculateShotTrajectory() {
-        return calculateAngle(getTurretX(), getTurretY(), destinationX, destinationY);
+        return calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY);
     }
 
     @Override
