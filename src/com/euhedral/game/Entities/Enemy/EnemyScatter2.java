@@ -50,6 +50,9 @@ public class EnemyScatter2 extends Enemy {
         velX = 0;
         velY_MIN = 1.75;
         velY_MAX = 1;
+
+        tracking = true;
+
         commonInit();
     }
 

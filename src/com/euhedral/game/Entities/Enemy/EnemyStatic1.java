@@ -28,6 +28,7 @@ public class EnemyStatic1 extends Enemy {
 
         velX = 0;
         velY_MIN = 1.75f;
+        tracking = true;
         commonInit();
     }
 

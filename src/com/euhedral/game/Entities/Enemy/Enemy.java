@@ -67,6 +67,8 @@ public abstract class Enemy extends Airplane {
     protected int UPDATES_PER_SECOND = 60;
     protected long spawnInterval = 3 * UPDATES_PER_SECOND;
 
+    public boolean tracking = false;
+
     public Enemy(double x, double y, int levelHeight) {
         super(x, y, EntityID.Enemy);
         moveRight = false;

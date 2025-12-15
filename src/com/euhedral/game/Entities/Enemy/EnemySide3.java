@@ -34,6 +34,8 @@ public class EnemySide3 extends Enemy{
         health_MAX = 2;
         velX_MIN = 3f;
 
+        tracking = true;
+
         commonInit();
     }
 

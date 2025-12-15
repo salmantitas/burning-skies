@@ -324,11 +324,7 @@ public class EnemyPool extends Pool {
         double dir = enemy.getBulletAngle();
         double y = enemy.getTurretY();
         double bulletVelocity = enemy.getBulletVelocity();
-        boolean tracking = false;
-        if (enemy.getEnemyType() == VariableHandler.TYPE_STATIC1 || enemy.getEnemyType() == VariableHandler.TYPE_SCATTER1 ||
-                enemy.getEnemyType() == VariableHandler.TYPE_SIDE3 || enemy.getEnemyType() == VariableHandler.TYPE_DRONE2) {
-            tracking = true;
-        }
+        boolean tracking = enemy.tracking;
 
         if (bullets.getPoolSize() > 0) {
             bullets.spawnFromPool(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking);

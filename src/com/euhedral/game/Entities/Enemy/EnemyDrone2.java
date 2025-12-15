@@ -20,6 +20,8 @@ public class EnemyDrone2 extends EnemyDrone1 {
 
         health_MAX = 2;
 
+        tracking = true;
+
         commonInit();
     }
 

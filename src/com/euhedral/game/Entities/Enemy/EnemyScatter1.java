@@ -47,6 +47,9 @@ public class EnemyScatter1 extends Enemy {
 //        velY_MIN = 1.75;
         velY_MAX = 1;
         velX_MAX = velY_MAX;
+
+        tracking = true;
+
         commonInit();
     }
 
