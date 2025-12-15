@@ -29,7 +29,7 @@ public class EnemyBoss1 extends EnemyBoss {
 
         turretOffsetY = height/2 + 8;
 
-        velX = Utility.intAtWidth640(2);
+        velX = 2;
         velY = offscreenVelY;
         health_MAX = 25;
         setHealth(health_MAX);
