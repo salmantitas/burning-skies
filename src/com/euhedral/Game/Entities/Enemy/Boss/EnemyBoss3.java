@@ -58,7 +58,7 @@ public class EnemyBoss3 extends EnemyBoss {
         currentGun = 0;
         guns_MAX = 4;
 
-        shotMode = 0;
+        shotMode = -1;
         shotMode_MAX = 4;
 
         int laserTime = 90;
@@ -68,7 +68,7 @@ public class EnemyBoss3 extends EnemyBoss {
 
         setImage(textureHandler.enemyBoss[2]);
 
-        debug = true;
+//        debug = true;
     }
 
     @Override
@@ -100,16 +100,14 @@ public class EnemyBoss3 extends EnemyBoss {
 
     @Override
     protected void shoot() {
-        if (shotMode == 0) {
+        if (shotMode == shotMode_MAX) {
             laser.start();
             resetShootTimer();
-            shotMode++;
+            shotMode = 0;
         } else {
             shootDefault();
             resetShootTimer();
             shotMode++;
-            if (shotMode == shotMode_MAX)
-                shotMode = 0;
         }
     }
 
@@ -122,9 +120,6 @@ public class EnemyBoss3 extends EnemyBoss {
     protected void resetShootTimer() {
         double factor = 1;
 
-        if (shotMode == shotMode_MAX - 1) {
-            factor = 4;
-        }
 
         if (shotMode == shotMode_MAX) {
             factor = 6;
@@ -200,13 +195,6 @@ public class EnemyBoss3 extends EnemyBoss {
         return calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY); // stub
     }
 
-    private void resetMovement() {
-        moveUp = false;
-        moveRight = false;
-        moveLeft = false;
-        moveDown = false;
-    }
-
     @Override
     public boolean checkCollision(Entity other) {
         collision = super.checkCollision(other);
@@ -231,7 +219,7 @@ public class EnemyBoss3 extends EnemyBoss {
 
             laser.render(g);
 
-            if (shotMode == 0) {
+            if (shotMode == shotMode_MAX) {
 
                 int showTime = 120; // todo: Needs better name
 

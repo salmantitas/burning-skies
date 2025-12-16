@@ -237,4 +237,11 @@ public abstract class MobileEntity extends Entity {
     protected double getCenterX() {
         return (pos.x + width / 2 - 2);
     }
+
+    protected void resetMovement() {
+        moveUp = false;
+        moveRight = false;
+        moveLeft = false;
+        moveDown = false;
+    }
 }

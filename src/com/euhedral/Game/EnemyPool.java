@@ -83,8 +83,6 @@ public class EnemyPool extends Pool {
         }
 
         updateBoss();
-
-
     }
 
     private void updateBoss() {

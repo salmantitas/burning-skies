@@ -63,7 +63,9 @@ public class Laser extends MobileEntity {
     public void update() {
         updateCount_Width++;
 
-        setPos(parent.getTurretX() - width / 2, parent.getTurretY());
+        int offsetX = 0;//width/2;
+
+        setPos(parent.getTurretX() - offsetX, parent.getTurretY());
         destination.setPosition(parent.getTurretX(), length);
 
 //        collisionBox.setBounds(pos.x + 1, pos.y + 1, width - 2*1,  height - 2*1 );

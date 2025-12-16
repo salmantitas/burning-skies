@@ -63,9 +63,9 @@ public class VariableHandler {
 
     public static final int TYPE_SIDE3 = TYPE_LASER + 1;
     public static final int TYPE_MINE2 = TYPE_SIDE3 + 1;
-    public static final int TYPE_DRONE5 = TYPE_MINE2 + 1;
-    public static final int TYPE_SCATTER2 = TYPE_DRONE5 + 1;
-    public static final int TYPE_DRONE6 = TYPE_SCATTER2 + 1;
+    public static final int TYPE_SCATTER2 = TYPE_MINE2 + 1;
+    public static final int TYPE_DRONE5 = TYPE_SCATTER2 + 1;
+    public static final int TYPE_DRONE6 = TYPE_DRONE5 + 1;
 
     public static final int enemyTypes = TYPE_DRONE6 + 1;
 

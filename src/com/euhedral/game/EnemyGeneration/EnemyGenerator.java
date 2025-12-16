@@ -141,7 +141,7 @@ public class EnemyGenerator {
         canSpawnBoss = wavesSinceBoss >= bossSpawnWave;
         canSpawn = (spawnInterval <= updatesSinceLastSpawn) && !VariableHandler.isBossAlive();
 
-        testBoss(3);// todo: Remove, testing only
+//        testBoss(3);// todo: Remove, testing only
 
         if (canSpawnBoss) {
             if (bossDelay >= bossDelay_MAX) {
@@ -169,6 +169,31 @@ public class EnemyGenerator {
             currentBoss = bossNum;
             testBossRan++;
         }
+    }
+
+    private void testEnemy() {
+        //        enemytype = VariableHandler.TYPE_BASIC1; // stub
+//        enemytype = VariableHandler.TYPE_BASIC2; // stub
+//        enemytype = VariableHandler.TYPE_HEAVY;
+//        enemytype = VariableHandler.TYPE_BASIC3; // stub
+//        enemytype = VariableHandler.TYPE_DRONE1; // stub
+//        enemytype = VariableHandler.TYPE_STATIC1; // stub
+//        enemytype = VariableHandler.TYPE_SIDE1; // stub
+//        enemytype = VariableHandler.TYPE_DRONE2; // stub
+//        enemytype = VariableHandler.TYPE_FAST; // stub
+//        enemytype = VariableHandler.TYPE_SIDE2; // stub
+//        enemytype = VariableHandler.TYPE_DRONE3; // stub
+//        enemytype = VariableHandler.TYPE_MINE1;
+//        enemytype = VariableHandler.TYPE_SCATTER1; // stub
+//        enemytype = VariableHandler.TYPE_DRONE4; // stub
+//        enemytype = VariableHandler.TYPE_SIDE3; // stub
+//        enemytype = VariableHandler.TYPE_MINE2; // stub
+//        enemytype = VariableHandler.TYPE_DRONE5; // stub
+//        enemytype = VariableHandler.TYPE_SCATTER2; //
+//        enemytype = VariableHandler.TYPE_LASER; // stub
+//        enemytype = VariableHandler.TYPE_DRONE6; // stub
+
+//        difficulty = maxTypes; // stub
     }
 
     protected void spawnBoss() {
@@ -209,22 +234,26 @@ public class EnemyGenerator {
 
     protected void determineNum() {
         int num_MIN = 1;
-        int num_MAX = 3;
-        // Num always starts at 1
-        num = ((wave - 1) % 5) + 1;
-
-        int bulletNum = (int) ((VariableHandler.firepower.getValue() - 1 )/5) + 1;
-
-//        Utility.log("Bullet Num: #" + bulletNum);
-
-        num = Math.min(num, num_MAX) + bulletNum - 1;
+        int num_MAX = 5;
+//        // Num always starts at 1
+//        num = ((wave - 1) % 5) + 1;
+//
+//        int bulletNum = (int) ((VariableHandler.firepower.getValue() - 1 )/5) + 1;
+//
+////        Utility.log("Bullet Num: #" + bulletNum);
+//
+//        num = Math.min(num, num_MAX) + bulletNum - 1;
+//
         if (difficultyIncreased)
             num = num_MIN;
-
+        else
+            num = Utility.randomRange(1, Math.min(num_MAX, currentBoss + 1));
 //        Utility.log(""+num);
 //        num = (wave % 5);
 
-        num = 1; // stub
+//        num = 1; // stub
+
+
     }
 
     protected void determineType() {
@@ -251,28 +280,7 @@ public class EnemyGenerator {
 //            enemytype = rand;
         }
 
-//        enemytype = VariableHandler.TYPE_BASIC1; // stub
-//        enemytype = VariableHandler.TYPE_BASIC2; // stub
-//        enemytype = VariableHandler.TYPE_HEAVY;
-//        enemytype = VariableHandler.TYPE_BASIC3; // stub
-//        enemytype = VariableHandler.TYPE_DRONE1; // stub
-//        enemytype = VariableHandler.TYPE_STATIC1; // stub
-//        enemytype = VariableHandler.TYPE_SIDE1; // stub
-//        enemytype = VariableHandler.TYPE_DRONE2; // stub
-//        enemytype = VariableHandler.TYPE_FAST; // stub
-//        enemytype = VariableHandler.TYPE_SIDE2; // stub
-//        enemytype = VariableHandler.TYPE_DRONE3; // stub
-//        enemytype = VariableHandler.TYPE_MINE1;
-//        enemytype = VariableHandler.TYPE_SCATTER1; // stub
-//        enemytype = VariableHandler.TYPE_DRONE4; // stub
-//        enemytype = VariableHandler.TYPE_SIDE3; // stub
-//        enemytype = VariableHandler.TYPE_MINE2; // stub
-//        enemytype = VariableHandler.TYPE_DRONE5; // stub
-//        enemytype = VariableHandler.TYPE_SCATTER2; //
-//        enemytype = VariableHandler.TYPE_LASER; // stub
-//        enemytype = VariableHandler.TYPE_DRONE6; // stub
-
-//        difficulty = maxTypes; // stub
+//        testEnemy();
 
 //        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
 

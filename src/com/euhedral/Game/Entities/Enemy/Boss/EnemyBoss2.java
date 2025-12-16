@@ -32,9 +32,7 @@ public class EnemyBoss2 extends EnemyBoss1 {
         debug = false;
         tracking = true;
 
-        moveLeft = false;
-        moveRight = false;
-        moveUp = false;
+        resetMovement();
         moveDown = true;
 
         tracker = new Tracker();
@@ -219,12 +217,5 @@ public class EnemyBoss2 extends EnemyBoss1 {
     @Override
     public double getBulletAngle() {
         return calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY); // stub
-    }
-
-    private void resetMovement() {
-        moveUp = false;
-        moveRight = false;
-        moveLeft = false;
-        moveDown = false;
     }
 }
