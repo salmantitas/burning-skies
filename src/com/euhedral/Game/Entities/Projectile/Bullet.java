@@ -18,7 +18,7 @@ public class Bullet extends MobileEntity {
     protected Color impactColor;
     protected boolean calculated = false;
     protected Animation impact;
-    protected int impactSize = 32;
+    protected int impactSize;
 
     protected int initSound = SoundHandler.BULLET_PLAYER;
 
@@ -41,14 +41,14 @@ public class Bullet extends MobileEntity {
 
     // Reflection
     protected Reflection reflection;
-    int reflectionX, reflectionY, newWidth, newHeight;
+    protected int reflectionX, reflectionY, reflectedWidth, reflectedHeight;
+    protected int reflectedImpactSize;
 
     Bullet( double x, double y) {
         super(x ,y, EntityID.Bullet);
         setPos(x,y);
         collided = false;
-        width = Utility.intAtWidth640(4);
-        height = Utility.intAtWidth640(24)/2;
+
         forwardVelocity = Utility.intAtWidth640(6);
 
         textureHandler = GameController.getTexture();
@@ -61,10 +61,8 @@ public class Bullet extends MobileEntity {
 
         reflection = new Reflection();
 
-        newWidth = (int) (width * reflection.sizeOffset);
-        newHeight = (int) (height * reflection.sizeOffset);
-
-        impactSize = Math.max(newWidth, newHeight);
+        impactSize = 32;
+        reflectedImpactSize = (int) (impactSize * reflection.sizeOffset);
 
         offset = 64*3;
         bottomBounds = EntityHandler.getLevelHeight() + offset;
@@ -106,6 +104,14 @@ public class Bullet extends MobileEntity {
         }
     }
 
+    protected void drawOutline(Graphics g, int targetWidth, int targetHeight) {
+        if (state == STATE_ACTIVE) {
+            g.setColor(Color.BLACK);
+            ((Graphics2D) g).setStroke(new BasicStroke(2));
+            g.drawOval(pos.intX(), pos.intY(), targetWidth, targetHeight);
+        }
+    }
+
     public void renderReflection(Graphics2D g2d, float transparency) {
         g2d.setComposite(Utility.makeTransparent(transparency));
 
@@ -113,9 +119,9 @@ public class Bullet extends MobileEntity {
         reflectionY = reflection.calculateReflectionY(pos.y, getCenterY());
 
         if (state == STATE_ACTIVE) {
-            g2d.drawImage(image, reflectionX, reflectionY, newWidth, newHeight, null);
+            g2d.drawImage(image, reflectionX, reflectionY, reflectedWidth, reflectedHeight, null);
         } else if (state == STATE_IMPACT) {
-            impact.drawAnimation(g2d, reflectionX, reflectionY, impactSize, impactSize);
+            impact.drawAnimation(g2d, reflectionX, reflectionY, reflectedImpactSize, reflectedImpactSize);
         }
         g2d.setComposite(Utility.makeTransparent(1f));
     }

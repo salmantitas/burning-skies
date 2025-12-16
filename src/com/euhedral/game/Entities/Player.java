@@ -332,7 +332,7 @@ public class Player extends Airplane {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
         int offset = 12;
-        turretRightX = (int) (pos.x + width - (9 + offset));
+        turretRightX = (int) (pos.x + width - (8 + offset));
         turretLeftX = (int) (pos.x + offset);
 
 //        VariableHandler.homing = true; // todo: Test Only
@@ -409,7 +409,7 @@ public class Player extends Airplane {
     }
 
     private void calculateTurretPositions() {
-        turretMidX = (int) (pos.x + width / 2 - 6);
+        turretMidX = (int) (pos.x + width / 2 - 4);
         turretY = (int) (pos.y + height * 2 / 3 - velY) ;
     }
 

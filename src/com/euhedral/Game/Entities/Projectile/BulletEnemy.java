@@ -1,6 +1,5 @@
 package com.euhedral.Game.Entities.Projectile;
 
-import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.MobileEntity;
 import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
@@ -28,10 +27,10 @@ public class BulletEnemy extends Bullet{
         image = textureHandler.bulletEnemy[0];
         SoundHandler.playSound(initSound);
 
-        newWidth = (int) (width * reflection.sizeOffset);
-        newHeight = (int) (height * reflection.sizeOffset);
+        reflectedWidth = (int) (width * reflection.sizeOffset);
+        reflectedHeight = (int) (height * reflection.sizeOffset);
 
-        impactSize = Math.max(newWidth, newHeight);
+        impactSize = Math.max(reflectedWidth, reflectedHeight);
 
         canPlayImpactAnimation = true;
     }
@@ -92,6 +91,12 @@ public class BulletEnemy extends Bullet{
     public void destroy(MobileEntity entity) {
         canPlayImpactAnimation = VariableHandler.shield.getValue() <= 0;
         super.destroy(entity);
+    }
+
+    @Override
+    protected void drawDefault(Graphics g) {
+        super.drawDefault(g);
+        drawOutline(g, width, height);
     }
 
     public void setTracking(boolean tracking) {

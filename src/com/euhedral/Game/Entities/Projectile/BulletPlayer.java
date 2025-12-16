@@ -17,8 +17,11 @@ public class BulletPlayer extends Bullet{
     public BulletPlayer(double x, double y, double angle) {
         super(x, y, angle);
         setImage(textureHandler.bulletPlayer[0]);
-        width = image.getWidth();
-        height = width;
+        width = 8;//image.getWidth() - 1;
+        height = 16;//width + 1;
+
+        reflectedWidth = (int) (width * reflection.sizeOffset);
+        reflectedHeight = (int) (height * reflection.sizeOffset);
 //        impactColor = Color.GREEN;
         commonInit();
 
@@ -88,20 +91,31 @@ public class BulletPlayer extends Bullet{
 
     @Override
     protected void drawImage(Graphics g, BufferedImage image, int targetWidth, int targetHeight) {
-        if (entity == null)
-            g.drawImage(image, (int) pos.x, (int) pos.y, targetWidth, targetHeight, null);
-        else {
+        Graphics2D g2d = (Graphics2D) g;
+        AffineTransform original = g2d.getTransform();
 
-            Graphics2D g2d = (Graphics2D) g;
-//            AffineTransform original = g2d.getTransform();
+        g2d.rotate(Math.toRadians(angle - 90), pos.x + width/2, pos.y + height/2 );
+
+        if (entity == null) {
+
+            g.drawImage(image, (int) pos.x, (int) pos.y, targetWidth, targetHeight, null);
+            drawOutline(g, targetWidth, targetHeight);
+        }
+        else {
+            int homingBulletSize = height;
             g2d.setColor(Color.RED);
 
 //            g2d.rotate(Math.toRadians(180 - angle), pos.x + 8, pos.y + 8);
-            g2d.fillOval((int) pos.x, (int) pos.y, 16, 16);
-
-//            g2d.setTransform(original);
+            g2d.fillOval((int) pos.x, (int) pos.y, homingBulletSize, homingBulletSize);
+            drawOutline(g, homingBulletSize, homingBulletSize);
         }
+
+
+
+        g2d.setTransform(original);
     }
+
+
 
     @Override
     public void resurrect(double x, double y) {

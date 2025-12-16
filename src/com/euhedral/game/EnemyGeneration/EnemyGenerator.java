@@ -141,7 +141,7 @@ public class EnemyGenerator {
         canSpawnBoss = wavesSinceBoss >= bossSpawnWave;
         canSpawn = (spawnInterval <= updatesSinceLastSpawn) && !VariableHandler.isBossAlive();
 
-        testBoss(0);// todo: Remove, testing only
+//        testBoss(0);// todo: Remove, testing only
 
         if (canSpawnBoss) {
             if (bossDelay >= bossDelay_MAX) {
