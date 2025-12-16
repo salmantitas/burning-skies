@@ -6,6 +6,7 @@ import com.euhedral.Engine.Pool;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.Entities.Enemy.*;
 import com.euhedral.Game.Entities.Enemy.Boss.EnemyBoss;
+import com.euhedral.Game.Entities.Enemy.Boss.EnemyBoss1;
 import com.euhedral.Game.Entities.Enemy.Boss.EnemyBoss2;
 import com.euhedral.Game.Entities.Projectile.Bullet;
 import com.euhedral.Game.Entities.Projectile.BulletEnemy;
@@ -91,6 +92,14 @@ public class EnemyPool extends Pool {
             while (enemyBoss.hasShot()) {
                 spawnEnemyBullet(enemyBoss);
                 enemyBoss.decrementShot();
+
+                if (enemyBoss instanceof EnemyBoss1) {
+                    if (((EnemyBoss1) enemyBoss).spawnDrone) {
+
+                        spawnEntity(enemyBoss.getPos().intX(), enemyBoss.getPos().intY(), VariableHandler.TYPE_DRONE1, 0, 0);
+                        ((EnemyBoss1) enemyBoss).spawnDrone = false;
+                    }
+                }
 
                 if (enemyBoss instanceof EnemyBoss2) {
                     if (((EnemyBoss2) enemyBoss).spawnDrone) {

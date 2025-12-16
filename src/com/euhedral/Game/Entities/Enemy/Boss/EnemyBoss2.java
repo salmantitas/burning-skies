@@ -14,7 +14,7 @@ public class EnemyBoss2 extends EnemyBoss1 {
     boolean firstMove = true;
     Tracker tracker;
 
-    public boolean spawnDrone = true;
+//    public boolean spawnDrone = true;
 
     int minY,
     maxY;
@@ -34,6 +34,7 @@ public class EnemyBoss2 extends EnemyBoss1 {
 
         resetMovement();
         moveDown = true;
+        spawnDrone = true;
 
         tracker = new Tracker();
 //        pos.x = x - width/2;

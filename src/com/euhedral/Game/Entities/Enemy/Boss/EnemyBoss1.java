@@ -9,6 +9,8 @@ import java.awt.*;
 
 public class EnemyBoss1 extends EnemyBoss {
 
+    public boolean spawnDrone = false;
+
     public EnemyBoss1(double x, double y, int levelHeight) {
         super(x,y, levelHeight);
         height = 128;
@@ -22,7 +24,7 @@ public class EnemyBoss1 extends EnemyBoss {
         currentGun = 0;
         guns_MAX = 4;
         shotMode = 0;
-        shotMode_MAX = guns_MAX;
+        shotMode_MAX = guns_MAX + 1;
 
         color = Color.orange;
 
@@ -59,12 +61,15 @@ public class EnemyBoss1 extends EnemyBoss {
 
     @Override
     protected void shootDefault() {
-        if (shotMode < shotMode_MAX) {
+        if (shotMode < guns_MAX) {
             bulletsPerShot++;
+            shotMode++;
+        } else if (shotMode < shotMode_MAX) {
+            bulletsPerShot += guns_MAX;
             shotMode++;
         }
         else {
-            bulletsPerShot += guns_MAX;
+            spawnDrone = true;
             shotMode = 0;
             currentGun = 0;
             }
@@ -74,7 +79,7 @@ public class EnemyBoss1 extends EnemyBoss {
     protected void resetShootTimer() {
         double factor = 1;
 
-        if (shotMode == shotMode_MAX) {
+        if (shotMode == guns_MAX) {
             factor = 2;
         }
         shootTimer = (int) (factor * shootTimerDefault / Difficulty.getEnemyFireRateMult());
