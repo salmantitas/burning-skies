@@ -141,7 +141,7 @@ public class EnemyGenerator {
         canSpawnBoss = wavesSinceBoss >= bossSpawnWave;
         canSpawn = (spawnInterval <= updatesSinceLastSpawn) && !VariableHandler.isBossAlive();
 
-//        testBoss(1);// todo: Remove, testing only
+        testBoss(3);// todo: Remove, testing only
 
         if (canSpawnBoss) {
             if (bossDelay >= bossDelay_MAX) {
@@ -499,10 +499,17 @@ public class EnemyGenerator {
     }
 
     protected void spawnBossHelper() {
-        spawnX = (xMid + 1) * 64;
+
+        currentBoss = currentBoss % boss_MAX;
+
+        if (currentBoss == 0) {
+            spawnX = (xMid + 1) * 64;
+        } else {
+            spawnX = (xMid + 2) * 64;
+        }
         spawnY = 0;
 //        EntityID id = EntityID.Boss;
-        entityHandler.spawnBoss(spawnX, spawnY, currentBoss % boss_MAX);
+        entityHandler.spawnBoss(spawnX, spawnY, currentBoss);
 
         currentBoss++;
     }

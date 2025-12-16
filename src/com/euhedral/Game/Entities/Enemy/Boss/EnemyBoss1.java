@@ -1,6 +1,7 @@
 package com.euhedral.Game.Entities.Enemy.Boss;
 
 import com.euhedral.Engine.Engine;
+import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.Difficulty;
 
@@ -8,22 +9,20 @@ import java.awt.*;
 
 public class EnemyBoss1 extends EnemyBoss {
 
-    protected int distToCover = Engine.HEIGHT / 11,
-            minX,maxX;
-
-    int currentGun = 0;
-    int guns_MAX = 4;
-    int shotMode = 0;
-    int shotMode_MAX = guns_MAX;
-
     public EnemyBoss1(double x, double y, int levelHeight) {
         super(x,y, levelHeight);
         height = 128;
         width = height * 2;
         pos.x = x - width/2;
 
+        destination = new Position(0, 490);
         minX = Utility.percWidth(25);
         maxX = Utility.percWidth(75) - (int) 1.8 * width;
+
+        currentGun = 0;
+        guns_MAX = 4;
+        shotMode = 0;
+        shotMode_MAX = guns_MAX;
 
         color = Color.orange;
 
@@ -83,8 +82,7 @@ public class EnemyBoss1 extends EnemyBoss {
 
     @Override
     public void moveInScreen() {
-        if (distToCover > 0) {
-            distToCover--;
+        if (destination.y >= pos.y + height) {
             pos.y += velY;
         }
         else {
@@ -120,7 +118,7 @@ public class EnemyBoss1 extends EnemyBoss {
         return ends + super.getTurretX();
     }
 
-    private void updateGun() {
+    protected void updateGun() {
         currentGun++;
         if (currentGun >= guns_MAX) {
             currentGun = 0;

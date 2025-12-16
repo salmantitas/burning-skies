@@ -1,6 +1,7 @@
 package com.euhedral.Game.Entities.Enemy.Boss;
 
 import com.euhedral.Engine.Engine;
+import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.Entities.Enemy.Enemy;
 import com.euhedral.Game.SoundHandler;
@@ -12,7 +13,15 @@ import java.awt.*;
 
 public abstract class EnemyBoss extends Enemy {
 
-    boolean alive = true;
+    protected boolean alive = true;
+
+    protected Position destination;
+    protected int minX,maxX, minY, maxY;
+
+    protected int currentGun = 0;
+    protected int guns_MAX = 4;
+    protected int shotMode = 0;
+    protected int shotMode_MAX = guns_MAX;
 
     public EnemyBoss(double x, double y, int levelHeight) {
         super(x,y, levelHeight);

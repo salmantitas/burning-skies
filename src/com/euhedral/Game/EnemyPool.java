@@ -452,9 +452,9 @@ public class EnemyPool extends Pool {
     private void checkCollisionBulletHelper(Enemy enemy, Player player) {
         if (enemy.isInscreenY() && enemy.isActive()) {
             BulletPlayer bullet = (BulletPlayer) player.checkCollisionBullet(enemy);
-            if (bullet != null && !enemy.collision) {
-                Utility.log("Bullet exists but doesn't 'coolide'");
-            }
+//            if (bullet != null && !enemy.collision) {
+//                Utility.log("Bullet exists but doesn't 'coolide'");
+//            }
             if (bullet != null) {
 
                 if (enemy.collision) {
@@ -473,7 +473,8 @@ public class EnemyPool extends Pool {
                 } else {
                     int damage = bullet.getDamage();
                     boolean isMissile = bullet.isShieldKiller();
-                    enemy.damage((int) (damage * Difficulty.getDamageDealtMult()), isMissile);
+                    if (enemy.collision)
+                        enemy.damage((int) (damage * Difficulty.getDamageDealtMult()), isMissile);
                     if (enemy.getHealth() <= 0) {
                         destroy(enemy);
                     }

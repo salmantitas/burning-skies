@@ -7,6 +7,7 @@ import com.euhedral.Game.SoundHandler;
 import com.euhedral.Game.Timer;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 public class Laser extends MobileEntity {
 
@@ -21,6 +22,10 @@ public class Laser extends MobileEntity {
 
     int updateCount_Width = 0;
 
+    public Position destination;
+
+    int length = 1200;
+
     public Laser(Enemy parent, int lifetime) {
         super(-100, -100, EntityID.Bullet);
         this.parent = parent;
@@ -29,7 +34,8 @@ public class Laser extends MobileEntity {
         width = width_MIN;
         height = Engine.HEIGHT * 2;
         this.lifetime = new Timer(lifetime);
-        collisionBox = new CollisionBox(this, 1);
+//        collisionBox = new CollisionBox(this, 1);
+        destination = new Position(-100,- 100);
         damage = 1;
 //        debug = true;
     }
@@ -41,11 +47,15 @@ public class Laser extends MobileEntity {
         }
 
         g.setColor(Color.RED);
-        g.fillRect(pos.intX(), pos.intY(), width, height);
+
+        ((Graphics2D) g).setStroke(new BasicStroke(width));
+        g.drawLine(pos.intX(), pos.intY(), destination.intX(), destination.intY());
+//        g.fillRect(pos.intX(), pos.intY(), width, height);
 
         if (debug) {
             g.setColor(Color.GREEN);
-            collisionBox.render(g);
+            // render line instead
+//            collisionBox.render(g);
         }
     }
 
@@ -54,7 +64,9 @@ public class Laser extends MobileEntity {
         updateCount_Width++;
 
         setPos(parent.getTurretX() - width / 2, parent.getTurretY());
-        collisionBox.setBounds(pos.x + 1, pos.y + 1, width - 2*1,  height - 2*1 );
+        destination.setPosition(parent.getTurretX(), length);
+
+//        collisionBox.setBounds(pos.x + 1, pos.y + 1, width - 2*1,  height - 2*1 );
 
         lifetime.update();
 
@@ -82,7 +94,10 @@ public class Laser extends MobileEntity {
         if (lifetime.getTimeLeft() <= 0) {
             return false;
         }
-        return super.checkCollision(other);
+
+        Line2D collisionLine = new Line2D.Double(pos.intX(), pos.intY(), destination.intX(), destination.intY());
+
+        return other.getCollisionBox().checkCollision(collisionLine);
     }
 
     public double getDamage() {
@@ -106,5 +121,13 @@ public class Laser extends MobileEntity {
 
     public int getTimeLeft() {
         return lifetime.getTimeLeft();
+    }
+
+    public void updateDestination(double angle) {
+        double newAngle = Math.toRadians(angle);
+        double x, y;
+        x = pos.x + length * Math.cos(newAngle);
+        y = pos.y + length * Math.sin(newAngle);
+        this.destination.setPosition(x, y);
     }
 }

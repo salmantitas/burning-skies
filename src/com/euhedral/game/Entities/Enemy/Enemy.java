@@ -201,7 +201,7 @@ public abstract class Enemy extends Airplane {
         }
     }
 
-    private void renderShield(Graphics g) {
+    protected void renderShield(Graphics g) {
         if (isActive()) {
             if (shieldActive)
                 shield.render(g2d, pos, width, height);

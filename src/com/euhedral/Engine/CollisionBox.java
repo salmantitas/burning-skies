@@ -1,6 +1,7 @@
 package com.euhedral.Engine;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
 public class CollisionBox {
@@ -51,6 +52,15 @@ public class CollisionBox {
             for (int j = 0; j < otherCollisionBox.bounds.length; j++) {
                 collides = collides || this.bounds[i].intersects(otherCollisionBox.bounds[j]);
             }
+        }
+        return collides;
+    }
+
+    public boolean checkCollision(Line2D collisionLine) {
+        boolean collides = false;
+
+        for (int i = 0; i < this.bounds.length; i++) {
+                collides = collides || collisionLine.intersects(this.bounds[i]);
         }
         return collides;
     }

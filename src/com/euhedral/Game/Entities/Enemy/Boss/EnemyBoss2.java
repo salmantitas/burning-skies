@@ -220,4 +220,11 @@ public class EnemyBoss2 extends EnemyBoss1 {
     public double getBulletAngle() {
         return calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY); // stub
     }
+
+    private void resetMovement() {
+        moveUp = false;
+        moveRight = false;
+        moveLeft = false;
+        moveDown = false;
+    }
 }
