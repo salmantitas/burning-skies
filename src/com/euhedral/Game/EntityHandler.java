@@ -403,16 +403,18 @@ public class EntityHandler {
                 EntityID pickupID = null;
                 int pickupValue = 0;
                 int minChanceCoefficient = 50;
-                if (lastDestroyedType == VariableHandler.TYPE_DRONE6 || lastDestroyedType == VariableHandler.TYPE_DRONE3) {
+                if (lastDestroyedType == VariableHandler.enemyTypes) {
                     pickupID = EntityID.PickupPulse;
                     pickupValue = 1;
+                    minChanceCoefficient = 100;
 //                } else if (lastDestroyedType == TYPE_DRONE2) {
 //                    pickupID = EntityID.PickupHoming;
 //                    pickupValue = 1;
 //                    // todo: Spawn Homing Bullets
 //                } else if (lastDestroyedType == TYPE_DRONE3) {
 //                    // todo: Spawn Bomb Pickup
-                } else if (lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE3) {
+                } else
+                    if (lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE3) {
                     pickupID = EntityID.PickupFirepower;
                     pickupValue = 1;
                 } else if (lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2
@@ -535,7 +537,7 @@ public class EntityHandler {
 
     private void enemyVsPlayerBulletCollision() {
         if (playerRadius > -1)
-            enemies.destroyIfWithinRadius(playerPositon.x, playerPositon.y, playerRadius);
+            enemies.damageIfWithinRadius(playerPositon.x, playerPositon.y, playerRadius);
         enemies.checkCollisionBullet(player);
     }
 

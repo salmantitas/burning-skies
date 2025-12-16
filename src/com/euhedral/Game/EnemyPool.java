@@ -5,12 +5,12 @@ import com.euhedral.Engine.MobileEntity;
 import com.euhedral.Engine.Pool;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.Entities.Enemy.*;
+import com.euhedral.Game.Entities.Enemy.Boss.EnemyBoss;
 import com.euhedral.Game.Entities.Enemy.Boss.EnemyBoss2;
 import com.euhedral.Game.Entities.Projectile.Bullet;
 import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.Entities.Player;
 import com.euhedral.Game.Entities.Projectile.BulletPlayer;
-import com.euhedral.Game.Entities.Projectile.MissilePlayer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -281,18 +281,25 @@ public class EnemyPool extends Pool {
         addExclusionZone(entity, enemyType);
     }
 
-    public void destroyIfWithinRadius(double x, double y, int radius) {
+    public void damageIfWithinRadius(double x, double y, int radius) {
         for (int i = 0; i < entities.size(); i ++) {
             entity = entities.get(i);
             if (entity.isActive())
-                destroyIfWithinRadiusHelper(x, y, radius);
+                damageIfWithinRadiusHelper(x, y, radius);
+        }
+
+        if (enemyBoss != null) {
+            if (enemyBoss.inRadius(x,y,radius)) {
+                enemyBoss.damage(2, false);
+            }
         }
     }
 
-    private void destroyIfWithinRadiusHelper(double x, double y, int radius) {
+    private void damageIfWithinRadiusHelper(double x, double y, int radius) {
         enemy = (Enemy) entity;
         if (enemy.inRadius(x,y,radius)) {
             if (enemy.isBelowDeadZoneTop()) {
+                enemy.damage(10, false);
                 destroy(enemy);
             }
         }
@@ -501,6 +508,10 @@ public class EnemyPool extends Pool {
         EntityHandler.lastDestroyedType = enemy.getEnemyType();
         EntityHandler.lastDestroyedX = enemy.getX();
         EntityHandler.lastDestroyedY = enemy.getY();
+
+        if (enemy instanceof EnemyBoss) {
+            EntityHandler.lastDestroyedType = VariableHandler.enemyTypes;
+        }
 //        EntityHandler.spawnProbablity = Utility.randomRange(0, EntityHandler.enemyTypes);
 //        spawnPickup((int) enemy.getX(), (int) enemy.getY(), EntityID.PickupHealth, 5);
     }

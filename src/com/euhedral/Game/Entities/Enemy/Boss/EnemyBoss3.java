@@ -34,9 +34,12 @@ public class EnemyBoss3 extends EnemyBoss {
 //        velY = offscreenVelY;
 
         turretOffsetY = height/2;
-        destination = new Position(0, 490);
+        destination = new Position(pos.x, 490);
 
         tracker = new Tracker();
+        attackEffect = true;
+        bulletArcAngle = 10;
+
         health_MAX = 75;
         setHealth(health_MAX);
 
@@ -44,8 +47,10 @@ public class EnemyBoss3 extends EnemyBoss {
         velY = offscreenVelY;
         angle = 90;
 
-        minX = Utility.percWidth(25);
-        maxX = Utility.percWidth(75) - (int) 1.8 * width;
+        minX = Utility.percWidth(10);
+        maxX = Utility.percWidth(90) - width;
+        minY = Utility.percHeight(40);
+        maxY = Utility.percHeight(105) - height;
 
         shootTimerDefault = 30;
         shootTimerFirst = shootTimerDefault * 4;
@@ -62,6 +67,8 @@ public class EnemyBoss3 extends EnemyBoss {
         laser.resetTime(laserTime);
 
         setImage(textureHandler.enemyBoss[2]);
+
+        debug = true;
     }
 
     @Override
@@ -111,20 +118,6 @@ public class EnemyBoss3 extends EnemyBoss {
         bulletsPerShot += 2;
     }
 
-    //    @Override
-//    protected void shootDefault() {
-//        if (shotMode < shotMode_MAX) {
-//            bulletsPerShot++;
-//            shotMode++;
-//        }
-//        else {
-//            laser.start();
-//            resetShootTimer();
-//            shotMode = 0;
-//            currentGun = 0;
-//            }
-//    }
-//
     @Override
     protected void resetShootTimer() {
         double factor = 1;
@@ -161,7 +154,7 @@ public class EnemyBoss3 extends EnemyBoss {
             moveUp = true;
         } else {
             resetMovement();
-            destination.y = Utility.randomRange(400, levelHeight-100);
+            destination.y = Utility.randomRange(minY, maxY);
         }
 
         if (pos.x + width <= destination.x) {
@@ -222,6 +215,15 @@ public class EnemyBoss3 extends EnemyBoss {
     }
 
     @Override
+    public void render(Graphics g) {
+        super.render(g);
+        if (isActive() && debug) {
+            g.setColor(Color.RED);
+            g.drawRect(minX, minY, maxX - minX, maxY - minY);
+        }
+    }
+
+    @Override
     protected void renderAttackPath(Graphics g) {
         g.setColor(Color.RED);
 
@@ -243,6 +245,24 @@ public class EnemyBoss3 extends EnemyBoss {
                     g.drawLine(drawX, (int) getTurretY(), laser.destination.intX(), laser.destination.intY());
 
                     g2d.setComposite(Utility.makeTransparent(1f));
+                }
+            } else {
+                if (attackEffect) {
+                    boolean secondsTillShotFire = (shootTimer < 20);
+                    if (isActive() && secondsTillShotFire) {
+                        g.setColor(Color.red); // todo: Redundancy?
+
+                        g2d = (Graphics2D) g;
+                        g.setColor(Color.RED);
+
+                        attackPathX = pos.x - (0.5) * (double) width;
+                        attackPathY = pos.y - (0.5) * (double) height;
+//                double drawY = y - (0.5) * (double) height;
+
+                        g2d.setComposite(Utility.makeTransparent(0.5f));
+                        g2d.fillArc((int) attackPathX, (int) attackPathY, 2 * width, 2 * height, (int) -(calculateShotTrajectory()) - bulletArcAngle / 2, bulletArcAngle);
+                        g2d.setComposite(Utility.makeTransparent(1f));
+                    }
                 }
             }
         }

@@ -44,8 +44,8 @@ public abstract class Enemy extends Airplane {
     protected double turretOffsetY = Utility.intAtWidth640(2);
 
     protected boolean attackEffect;
-    double attackPathX;
-    double attackPathY;
+    protected double attackPathX;
+    protected double attackPathY;
 
     protected ShieldEnemy shield;
     protected boolean shieldActive;
@@ -237,7 +237,6 @@ public abstract class Enemy extends Airplane {
                 g2d = (Graphics2D) g;
                 g.setColor(Color.RED);
 
-
                 attackPathX = pos.x - (0.5) * (double) width;
                 attackPathY = getTurretY() - (0.5) * (double) height;
 //                double drawY = y - (0.5) * (double) height;
@@ -321,6 +320,9 @@ public abstract class Enemy extends Airplane {
             }
         } else {
             this.health -= damageValue;
+            if (health <= 0) {
+                destroy();
+            }
             jitter = jitter_MAX;
         }
     }
