@@ -3,17 +3,21 @@ package com.euhedral.Game.Entities.Enemy.Boss;
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
+import com.euhedral.Game.Pool.EnemyPool;
 import com.euhedral.Game.Entities.Enemy.Enemy;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.SoundHandler;
 import com.euhedral.Game.VariableHandler;
 //import com.euhedral.game.ContactID;
 //import com.euhedral.game.EnemyID;
 
-import java.awt.*;
 
 public abstract class EnemyBoss extends Enemy {
 
 //    protected boolean alive = true;
+
+    protected EnemyPool enemies;
 
     protected Position destination;
     protected int minX,maxX, minY, maxY;
@@ -23,8 +27,9 @@ public abstract class EnemyBoss extends Enemy {
     protected int shotMode = 0;
     protected int shotMode_MAX = guns_MAX;
 
-    public EnemyBoss(double x, double y, int levelHeight) {
-        super(x,y, levelHeight);
+    public EnemyBoss(double x, double y, ProjectilePool projectiles, EnemyPool enemies, int levelHeight) {
+        super(x,y, projectiles, levelHeight);
+        this.enemies = enemies;
         damage = 100;
         shootTimerDefault = 150;
     }

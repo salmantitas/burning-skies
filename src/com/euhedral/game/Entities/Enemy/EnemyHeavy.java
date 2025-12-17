@@ -1,10 +1,11 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.*;
 import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
-import com.euhedral.Game.EntityHandler;
-import com.euhedral.Game.GameController;
-import com.euhedral.Game.VariableHandler;
+import com.euhedral.Game.Entities.Projectile.BulletEnemy;
+import com.euhedral.Game.Pool.BulletPool;
+import com.euhedral.Game.Pool.ProjectilePool;
 
 import java.awt.*;
 
@@ -27,11 +28,14 @@ public class EnemyHeavy extends Enemy {
     boolean playerInRange;
     boolean rangeCheck1, rangeCheck2;
 
-    public EnemyHeavy(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+    // Shoot State
+    protected int MISSILE = 1;
+
+    public EnemyHeavy(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
 
         bulletAngle = 60;
-        shootTimerDefault = 90;
+        shootTimerDefault = 60;
         score = 50;
         leftTurret = width / 3 - Utility.intAtWidth640(2);
         rightTurret = 2 * width / 3 - Utility.intAtWidth640(2);
@@ -55,11 +59,6 @@ public class EnemyHeavy extends Enemy {
         commonInit();
     }
 
-    public EnemyHeavy(int x, int y, Color color, int levelHeight) {
-        this(x,y, levelHeight);
-        this.color = color;
-    }
-
     @Override
     public void update() {
         super.update();
@@ -77,6 +76,15 @@ public class EnemyHeavy extends Enemy {
                 }
                 movementDistance = movementDistance_MAX;
             }
+
+            rangeCheck1 = (tracker.destinationX - offsetLeft > pos.x) && (tracker.destinationX - offsetLeft < pos.x + width);
+            rangeCheck2 = (tracker.destinationX + 32 + offsetRight < pos.x + width) && (tracker.destinationX + 32 + offsetRight > pos.x);
+            playerInRange = rangeCheck1 || rangeCheck2;
+
+            if (playerInRange)
+                shootState = MISSILE;
+            else
+                shootState = BULLET;
         }
     }
 
@@ -114,6 +122,14 @@ public class EnemyHeavy extends Enemy {
     }
 
     @Override
+    protected void resetShootTimer() {
+        if (shootState == BULLET)
+            shootTimer = (int) (shootTimerDefault / Difficulty.getEnemyFireRateMult());
+        else
+            shootTimer = (int) ((shootTimerDefault + 30) / Difficulty.getEnemyFireRateMult());
+    }
+
+    @Override
     public double getTurretX() {
         if (turretLeft) {
             turretLeft = !turretLeft;
@@ -145,6 +161,25 @@ public class EnemyHeavy extends Enemy {
         if (playerInRange)
             tempAngle = 90;
         return tempAngle;
+    }
+
+    @Override
+    protected void spawnProjectiles() {
+        if (shootState == BULLET)
+            super.spawnProjectiles();
+        else {
+            spawnMissiles();
+        }
+    }
+
+    private void spawnMissiles() {
+        double x = getTurretX();
+        double dir = getBulletAngle();
+        double y = getTurretY();
+        double bulletVelocity = getBulletVelocity();
+        boolean tracking = this.tracking;
+
+        projectiles.missiles.spawn(x, y);
     }
 
     @Override

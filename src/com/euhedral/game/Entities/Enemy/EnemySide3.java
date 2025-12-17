@@ -2,9 +2,10 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
-import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.GameController;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
 
 import java.awt.geom.Rectangle2D;
@@ -16,8 +17,8 @@ public class EnemySide3 extends Enemy{
 
     double xMin, xMax;
 
-    public EnemySide3(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+    public EnemySide3(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
 
         bulletVelocity = 5;
         score = 100;

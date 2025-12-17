@@ -2,6 +2,8 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
 
 public class EnemyDrone4 extends EnemyDrone1 {
@@ -12,8 +14,8 @@ public class EnemyDrone4 extends EnemyDrone1 {
     int bulletAngle_MAX = 180 - bulletAngle_MIN;
     int bulletAngleIncrements = 10;
 
-    public EnemyDrone4(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+    public EnemyDrone4(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
         setImage(textureHandler.enemyDrone[3]);
 
         shootTimerFirst = 100;

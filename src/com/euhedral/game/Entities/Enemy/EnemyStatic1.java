@@ -1,8 +1,9 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
-import com.euhedral.Game.EntityHandler;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
@@ -12,8 +13,8 @@ public class EnemyStatic1 extends Enemy {
     Tracker tracker;
     double deceleration;
 
-    public EnemyStatic1(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+    public EnemyStatic1(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
 
         bulletVelocity = 5;
         shootTimerDefault = 200;
@@ -35,10 +36,10 @@ public class EnemyStatic1 extends Enemy {
         commonInit();
     }
 
-    public EnemyStatic1(int x, int y, Color color, int levelHeight) {
-        this(x, y, levelHeight);
-        this.color = color;
-    }
+//    public EnemyStatic1(int x, int y, Color color, int levelHeight) {
+//        this(x, y, levelHeight);
+//        this.color = color;
+//    }
 
     @Override
     public void update() {

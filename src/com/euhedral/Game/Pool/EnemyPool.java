@@ -1,13 +1,12 @@
-package com.euhedral.Game;
+package com.euhedral.Game.Pool;
 
 import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.MobileEntity;
 import com.euhedral.Engine.Pool;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.*;
 import com.euhedral.Game.Entities.Enemy.*;
 import com.euhedral.Game.Entities.Enemy.Boss.EnemyBoss;
-import com.euhedral.Game.Entities.Enemy.Boss.EnemyBoss1;
-import com.euhedral.Game.Entities.Enemy.Boss.EnemyBoss2;
 import com.euhedral.Game.Entities.Projectile.Bullet;
 import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.Entities.Player;
@@ -28,16 +27,18 @@ public class EnemyPool extends Pool {
     int enemyType, enemyType2;
     boolean done;
 
-    private BulletPool bullets;
+//    private BulletPool bullets;
+//    private MissilePool missiles;
+    private ProjectilePool projectiles;
 
     double explodingDroneX, explodingDroneY;
     double explodingDroneRadius;
     private long spawnInterval;
 
-    public EnemyPool(BulletPool bullets) {
+    public EnemyPool(ProjectilePool projectiles) {
         super();
         int enemyTypes = VariableHandler.enemyTypes;
-        this.bullets = bullets;
+        this.projectiles = projectiles;
         reusable = new int[enemyTypes];
         active = new int[enemyTypes];
         exclusionZones = new ArrayList<>(enemyTypes);
@@ -61,16 +62,11 @@ public class EnemyPool extends Pool {
 
     @Override
     public void update() {
-//        enemies.disableIfOutsideBounds(levelHeight);
-//        LinkedList<Entity> enemies = this.enemies.getEntities();
+
         for (Entity entity : entities) {
             enemy = (Enemy) entity;
                 enemy.update();
                 checkDeathAnimationEnd(enemy);
-                while (enemy.hasShot()) {
-                    spawnEnemyBullet(enemy);
-                    enemy.decrementShot();
-                }
 
 //                if (enemy.getEnemyType() == EntityHandler.TYPE_DRONE3) {
 //                    if (enemy.isExploding()) {
@@ -88,28 +84,6 @@ public class EnemyPool extends Pool {
 
     private void updateBoss() {
         if (enemyBoss != null) {
-
-            while (enemyBoss.hasShot()) {
-                spawnEnemyBullet(enemyBoss);
-                enemyBoss.decrementShot();
-
-                if (enemyBoss instanceof EnemyBoss1) {
-                    if (((EnemyBoss1) enemyBoss).spawnDrone) {
-
-                        spawnEntity(enemyBoss.getPos().intX(), enemyBoss.getPos().intY(), VariableHandler.TYPE_DRONE1, 0, 0);
-                        ((EnemyBoss1) enemyBoss).spawnDrone = false;
-                    }
-                }
-
-                if (enemyBoss instanceof EnemyBoss2) {
-                    if (((EnemyBoss2) enemyBoss).spawnDrone) {
-
-                        spawnEntity(enemyBoss.getPos().intX(), enemyBoss.getPos().intY(), VariableHandler.TYPE_DRONE1, 0, 0);
-                        ((EnemyBoss2) enemyBoss).spawnDrone = false;
-                    }
-                }
-            }
-
             enemyBoss.update();
             if (enemyBoss.isExploding()) {
                 if (enemyBoss.checkDeathAnimationEnd()) {
@@ -209,48 +183,48 @@ public class EnemyPool extends Pool {
         enemy = null;
 
         if (enemyType == VariableHandler.TYPE_BASIC1) {
-            enemy = new EnemyBasic1(x, y, levelHeight);
+            enemy = new EnemyBasic1(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_HEAVY) {
-            enemy = new EnemyHeavy(x, y, levelHeight);
+            enemy = new EnemyHeavy(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_BASIC2) {
-            enemy = new EnemyBasic2(x, y, levelHeight);
+            enemy = new EnemyBasic2(x, y, projectiles, levelHeight);
             enemy.setHMove(direction);
         } else if (enemyType == VariableHandler.TYPE_BASIC3) {
-            enemy = new EnemyBasic3(x, y, levelHeight);
+            enemy = new EnemyBasic3(x, y, projectiles, levelHeight);
             enemy.setHMove(direction);
         } else if (enemyType == VariableHandler.TYPE_FAST) {
-            enemy = new EnemyFast(x, y, levelHeight);
+            enemy = new EnemyFast(x, y, projectiles, levelHeight);
             enemy.setHMove(direction);
         } else if (enemyType == VariableHandler.TYPE_DRONE1) {
-            enemy = new EnemyDrone1(x, y, levelHeight);
+            enemy = new EnemyDrone1(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_SIDE1) {
-            enemy = new EnemySide1(x, y, levelHeight);
+            enemy = new EnemySide1(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_STATIC1) {
-            enemy = new EnemyStatic1(x, y, levelHeight);
+            enemy = new EnemyStatic1(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_DRONE2) {
-            enemy = new EnemyDrone2(x, y, levelHeight);
+            enemy = new EnemyDrone2(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_SIDE2) {
-            enemy = new EnemySide2(x, y, levelHeight);
+            enemy = new EnemySide2(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_SIDE3) {
-            enemy = new EnemySide3(x, y, levelHeight);
+            enemy = new EnemySide3(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_SCATTER1) {
-            enemy = new EnemyScatter1(x, y, levelHeight);
+            enemy = new EnemyScatter1(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_MINE1) {
-            enemy = new EnemyMinefield1(x, y, levelHeight);
+            enemy = new EnemyMinefield1(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_MINE2) {
-            enemy = new EnemyMinefield2(x, y, levelHeight);
+            enemy = new EnemyMinefield2(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_DRONE3) {
-            enemy = new EnemyDrone3(x, y, levelHeight);
+            enemy = new EnemyDrone3(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_SCATTER2) {
-            enemy = new EnemyScatter2(x, y, levelHeight);
+            enemy = new EnemyScatter2(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_DRONE4) {
-            enemy = new EnemyDrone4(x, y, levelHeight);
+            enemy = new EnemyDrone4(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_DRONE5) {
-            enemy = new EnemyDrone5(x, y, levelHeight);
+            enemy = new EnemyDrone5(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_DRONE6) {
-            enemy = new EnemyDrone6(x, y, levelHeight);
+            enemy = new EnemyDrone6(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_LASER) {
-            enemy = new EnemyLaser(x, y, levelHeight);
+            enemy = new EnemyLaser(x, y, projectiles, levelHeight);
         }
 
         if (enemy != null) {
@@ -405,19 +379,20 @@ public class EnemyPool extends Pool {
         }
     }
 
-    private void spawnEnemyBullet(Enemy enemy) {
+    private void spawnEnemyMissile(Enemy enemy) {
         double x = enemy.getTurretX();
         double dir = enemy.getBulletAngle();
         double y = enemy.getTurretY();
-        double bulletVelocity = enemy.getBulletVelocity();
         boolean tracking = enemy.tracking;
 
-        if (bullets.getPoolSize() > 0) {
-            bullets.spawnFromPool(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking);
-        }
-        else {
-            bullets.add(new BulletEnemy(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking));
-        }
+        projectiles.missiles.spawn(x,y);
+
+//        if (missiles.getPoolSize() > 0) {
+//            missiles.spawnFromPool(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult());
+//        }
+//        else {
+//            missiles.add(new MissileEnemy(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult()));
+//        }
 
 //        bullets.printPool("Enemy Bullet");
     }

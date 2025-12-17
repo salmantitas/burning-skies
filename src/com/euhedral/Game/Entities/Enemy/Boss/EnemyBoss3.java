@@ -3,14 +3,15 @@ package com.euhedral.Game.Entities.Enemy.Boss;
 import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Difficulty;
+import com.euhedral.Game.Pool.EnemyPool;
 import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
 import com.euhedral.Game.Entities.Projectile.Laser;
+import com.euhedral.Game.Pool.ProjectilePool;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class EnemyBoss3 extends EnemyBoss {
 
@@ -21,8 +22,8 @@ public class EnemyBoss3 extends EnemyBoss {
     public boolean laserCollision;
     int bulletWidth = 16 / 2;
 
-    public EnemyBoss3(double x, double y, int levelHeight) {
-        super(x,y, levelHeight);
+    public EnemyBoss3(double x, double y, ProjectilePool projectiles, EnemyPool enemies, int levelHeight) {
+        super(x,y, projectiles, enemies, levelHeight);
         height = 128;
         width = height;
 //        pos.x = x - width/2;

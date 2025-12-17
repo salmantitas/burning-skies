@@ -1,7 +1,9 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Difficulty;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
@@ -20,8 +22,8 @@ public class EnemyDrone3 extends EnemyDrone1 {
 
     int score_MAX = 150;
 
-    public EnemyDrone3(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+    public EnemyDrone3(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
         setImage(textureHandler.enemyDrone[2]);
 
         score = 20;

@@ -2,15 +2,16 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
-import com.euhedral.Game.Entities.ShieldEnemy;
+import com.euhedral.Game.Pool.BulletPool;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
 
 public class EnemyBasic1 extends Enemy{
 
-    public EnemyBasic1(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+    public EnemyBasic1(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
         setImage(textureHandler.enemy[0]);
 
 //        attackEffect = true;
@@ -23,11 +24,10 @@ public class EnemyBasic1 extends Enemy{
         spawnInterval = 2 * UPDATES_PER_SECOND;
     }
 
-    public EnemyBasic1(int x, int y, Color color, int levelHeight) {
-        this(x, y, levelHeight);
-        this.color = color;
-
-    }
+//    public EnemyBasic1(int x, int y, Color color, int levelHeight) {
+//        this(x, y, levelHeight);
+//        this.color = color;
+//    }
 
 //    @Override
 //    public void update() {

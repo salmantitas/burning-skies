@@ -2,8 +2,11 @@ package com.euhedral.Game.Entities.Enemy.Boss;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Difficulty;
+import com.euhedral.Game.Pool.EnemyPool;
 import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
+import com.euhedral.Game.Pool.ProjectilePool;
 
 import java.awt.*;
 
@@ -21,8 +24,8 @@ public class EnemyBoss4 extends EnemyBoss1 {
 
     int shotCount = 1, shotSign = 1;
 
-    public EnemyBoss4(double x, double y, int levelHeight) {
-        super(x,y, levelHeight);
+    public EnemyBoss4(double x, double y, ProjectilePool projectiles, EnemyPool enemies, int levelHeight) {
+        super(x,y, projectiles, enemies, levelHeight);
         height = 128;
         width = 64;
 //        pos.x = x - width/2;

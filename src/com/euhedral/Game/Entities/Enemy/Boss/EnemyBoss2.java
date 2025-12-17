@@ -1,10 +1,11 @@
 package com.euhedral.Game.Entities.Enemy.Boss;
 
-import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
-import com.euhedral.Game.Difficulty;
+import com.euhedral.Game.*;
 import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
-import com.euhedral.Game.EntityHandler;
+import com.euhedral.Game.Pool.BulletPool;
+import com.euhedral.Game.Pool.EnemyPool;
+import com.euhedral.Game.Pool.ProjectilePool;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -14,13 +15,11 @@ public class EnemyBoss2 extends EnemyBoss1 {
     boolean firstMove = true;
     Tracker tracker;
 
-//    public boolean spawnDrone = true;
-
     int minY,
     maxY;
 
-    public EnemyBoss2(double x, double y, int levelHeight) {
-        super(x,y, levelHeight);
+    public EnemyBoss2(double x, double y, ProjectilePool projectiles, EnemyPool enemies, int levelHeight) {
+        super(x,y, projectiles, enemies, levelHeight);
         height = 128;
         width = height;
 
@@ -34,7 +33,6 @@ public class EnemyBoss2 extends EnemyBoss1 {
 
         resetMovement();
         moveDown = true;
-        spawnDrone = true;
 
         tracker = new Tracker();
 //        pos.x = x - width/2;
@@ -108,7 +106,7 @@ public class EnemyBoss2 extends EnemyBoss1 {
             shotMode++;
         }
         else {
-            spawnDrone = true;
+            enemies.spawnEntity(pos.intX(), pos.intY(), VariableHandler.TYPE_DRONE1, 0, 0);
             shotMode = 0;
             currentGun = 0;
             }

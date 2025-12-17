@@ -5,6 +5,7 @@ import com.euhedral.Game.Entities.*;
 import com.euhedral.Game.Entities.Enemy.*;
 import com.euhedral.Game.Entities.Enemy.Boss.*;
 import com.euhedral.Game.Entities.Projectile.Bullet;
+import com.euhedral.Game.Pool.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -28,6 +29,8 @@ public class EntityHandler {
     private Flag flag; // todo: Remove
     private static EnemyPool enemies;
     private BulletPool bullets;
+    private MissilePool missiles;
+    private ProjectilePool projectiles;
     private LinkedList<Bullet> bulletsPlayerImpacting;
     private PickupPool pickups;
 //    int pickupValue = 0;
@@ -50,8 +53,10 @@ public class EntityHandler {
 
     EntityHandler() {
         bullets = new BulletPool();
+        missiles = new MissilePool();
         pickups = new PickupPool();
-        enemies = new EnemyPool(bullets);
+        projectiles = new ProjectilePool(bullets, missiles);
+        enemies = new EnemyPool(projectiles);
         bulletsPlayerImpacting = new LinkedList<>();
 //        this.variableHandler = variableHandler;
 //        initializeAnimations();
@@ -77,7 +82,9 @@ public class EntityHandler {
 
     public void update() {
         updatePlayer();
-        updateBullets();
+        updateProjectiles();
+//        updateBullets();
+//        updateMissiles();
 
         updateEnemies();
 
@@ -101,6 +108,7 @@ public class EntityHandler {
         GameController.renderClouds(g);
         player.render(g);
         bullets.render(g);
+        missiles.render(g);
         pickups.render(g);
         enemies.render(g);
 
@@ -250,19 +258,21 @@ public class EntityHandler {
      * Bullet Functions *
      ********************/
 
+    private void updateProjectiles() {
+        updateBullets();
+        updateMissiles();
+    }
+
     private void updateBullets() {
         bullets.update();
         bullets.disableIfOutsideBounds(levelHeight);
-        checkDeathAnimationEnd();
+        checkDeathAnimationEnd(bullets);
+    }
 
-        if (boss != null) {
-//            addToBullets(boss);
-//            LinkedList<Bullet> bossBullets = boss.getBullets();
-//            this.bullets.addAll(bossBullets);
-//            boss.clearBullets();
-        }
-
-//        Utility.log("Bullet pool size" + bullets.getPoolSize());
+    private void updateMissiles() {
+        missiles.update();
+        missiles.disableIfOutsideBounds(levelHeight);
+        checkDeathAnimationEnd(missiles);
     }
 
 //    private void clearBullets() {
@@ -467,13 +477,13 @@ public class EntityHandler {
     public void spawnBoss(int x, int y, int bossType) {
         // todo: Boss needs its own enemytype, otherwise Pool will crash
         if (bossType == 3)
-            boss = new EnemyBoss4(x, y, levelHeight);
+            boss = new EnemyBoss4(x, y, projectiles, enemies, levelHeight);
         else if (bossType == 2)
-            boss = new EnemyBoss3(x, y, levelHeight);
+            boss = new EnemyBoss3(x, y, projectiles, enemies, levelHeight);
         else if (bossType == 1)
-            boss = new EnemyBoss2(x, y, levelHeight);
+            boss = new EnemyBoss2(x, y, projectiles, enemies, levelHeight);
         else
-            boss = new EnemyBoss1(x, y, levelHeight);
+            boss = new EnemyBoss1(x, y, projectiles, enemies, levelHeight);
 
         VariableHandler.setBossAlive(true);
         enemies.addBoss(boss);
@@ -522,13 +532,7 @@ public class EntityHandler {
 
     private void playerHostileCollision() {
         playerVsEnemyCollision();
-        playerVsEnemyBulletCollision();
-    }
-
-    private void playerVsEnemyBulletCollision() {
-        if (playerRadius > -1)
-            bullets.destroyIfWithinRadius(playerPositon, playerRadius);
-        bullets.checkCollision(player);
+        projectiles.playerVsEnemyProjectileCollision(playerRadius, playerPositon, player);
     }
 
     private void playerVsEnemyCollision() {
@@ -563,8 +567,8 @@ public class EntityHandler {
         this.levelHeight = levelHeight;
     }
 
-    private void checkDeathAnimationEnd() {
-        bullets.checkDeathAnimationEnd();
+    private void checkDeathAnimationEnd(BulletPool projectilePool) {
+        projectilePool.checkDeathAnimationEnd();
 
     }
 

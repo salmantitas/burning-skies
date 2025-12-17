@@ -1,9 +1,10 @@
-package com.euhedral.Game;
+package com.euhedral.Game.Pool;
 
 import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.Pool;
 import com.euhedral.Game.Entities.Pickup;
 import com.euhedral.Game.Entities.Player;
+import com.euhedral.Game.EntityID;
 
 public class PickupPool extends Pool {
     Entity entity;

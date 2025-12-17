@@ -30,7 +30,8 @@ public class BulletEnemy extends Bullet{
         reflectedWidth = (int) (width * reflection.sizeOffset);
         reflectedHeight = (int) (height * reflection.sizeOffset);
 
-        impactSize = Math.max(reflectedWidth, reflectedHeight);
+//        impactSize = Math.max(reflectedWidth, reflectedHeight);
+        damage = 10;
 
         canPlayImpactAnimation = true;
     }

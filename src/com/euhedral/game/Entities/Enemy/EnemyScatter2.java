@@ -1,11 +1,10 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
-import com.euhedral.Game.EntityHandler;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
-
-import java.awt.*;
 
 public class EnemyScatter2 extends Enemy {
 
@@ -20,8 +19,8 @@ public class EnemyScatter2 extends Enemy {
     int degreesPerBullet;
     int shotCount = 1, shotSign = 1;
 
-    public EnemyScatter2(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+    public EnemyScatter2(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
 
         score = 150;
 
@@ -59,10 +58,10 @@ public class EnemyScatter2 extends Enemy {
         commonInit();
     }
 
-    public EnemyScatter2(int x, int y, Color color, int levelHeight) {
-        this(x, y, levelHeight);
-        this.color = color;
-    }
+//    public EnemyScatter2(int x, int y, Color color, int levelHeight) {
+//        this(x, y, levelHeight);
+//        this.color = color;
+//    }
 
     @Override
     public void update() {

@@ -1,4 +1,4 @@
-package com.euhedral.Game.EnemyGeneration;
+package com.euhedral.g.EnemyGeneration;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
@@ -174,7 +174,7 @@ public class EnemyGenerator {
     private void testEnemy() {
         //        enemytype = VariableHandler.TYPE_BASIC1; // stub
 //        enemytype = VariableHandler.TYPE_BASIC2; // stub
-//        enemytype = VariableHandler.TYPE_HEAVY;
+        enemytype = VariableHandler.TYPE_HEAVY;
 //        enemytype = VariableHandler.TYPE_BASIC3; // stub
 //        enemytype = VariableHandler.TYPE_DRONE1; // stub
 //        enemytype = VariableHandler.TYPE_STATIC1; // stub

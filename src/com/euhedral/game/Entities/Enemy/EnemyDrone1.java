@@ -1,9 +1,9 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
-import com.euhedral.Game.EntityHandler;
-import com.euhedral.Game.GameController;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
@@ -14,8 +14,8 @@ public class EnemyDrone1 extends Enemy{
 //    double destinationX, destinationY;
     int updateSkip = 0;
 
-    public EnemyDrone1(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+    public EnemyDrone1(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
 //        textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyDrone[0]);
 
@@ -31,10 +31,10 @@ public class EnemyDrone1 extends Enemy{
         commonInit();
     }
 
-    public EnemyDrone1(int x, int y, Color color, int levelHeight) {
-        this(x, y, levelHeight);
-        this.color = color;
-    }
+//    public EnemyDrone1(int x, int y, Color color, int levelHeight) {
+//        this(x, y, levelHeight);
+//        this.color = color;
+//    }
 
     @Override
     protected void shoot() {

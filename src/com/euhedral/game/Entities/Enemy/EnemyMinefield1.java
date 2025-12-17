@@ -2,8 +2,10 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.GameController;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
@@ -14,8 +16,8 @@ public class EnemyMinefield1 extends Enemy{
 
     double yMin, yMax;
 
-    public EnemyMinefield1(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+    public EnemyMinefield1(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[3]);
 

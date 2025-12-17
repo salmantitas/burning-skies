@@ -1,18 +1,21 @@
 package com.euhedral.Game.Entities.Enemy.Boss;
 
-import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Difficulty;
+import com.euhedral.Game.Pool.EnemyPool;
+import com.euhedral.Game.Pool.ProjectilePool;
+import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
 
 public class EnemyBoss1 extends EnemyBoss {
 
-    public boolean spawnDrone = false;
+    int MISSILES = 1;
 
-    public EnemyBoss1(double x, double y, int levelHeight) {
-        super(x,y, levelHeight);
+    public EnemyBoss1(double x, double y, ProjectilePool projectiles, EnemyPool enemies, int levelHeight) {
+        super(x,y, projectiles, enemies, levelHeight);
         height = 128;
         width = height * 2;
         pos.x = x - width/2;
@@ -67,9 +70,11 @@ public class EnemyBoss1 extends EnemyBoss {
         } else if (shotMode < shotMode_MAX) {
             bulletsPerShot += guns_MAX;
             shotMode++;
+            shootState = MISSILES;
         }
         else {
-            spawnDrone = true;
+            shootState = BULLET;
+            enemies.spawnEntity(pos.intX(), pos.intY(), VariableHandler.TYPE_DRONE1, 0, 0);
             shotMode = 0;
             currentGun = 0;
             }
@@ -128,5 +133,21 @@ public class EnemyBoss1 extends EnemyBoss {
         if (currentGun >= guns_MAX) {
             currentGun = 0;
         }
+    }
+
+    @Override
+    protected void spawnProjectiles() {
+        if (shootState == BULLET)
+            super.spawnProjectiles();
+        else {
+            spawnMissiles();
+        }
+    }
+
+    private void spawnMissiles() {
+        double x = getTurretX();
+        double y = getTurretY();
+
+        projectiles.missiles.spawn(x, y);
     }
 }

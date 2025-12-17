@@ -2,12 +2,11 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.Utility;
-import com.euhedral.Game.Difficulty;
+import com.euhedral.Game.*;
 import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
 import com.euhedral.Game.Entities.Projectile.Laser;
-import com.euhedral.Game.EntityHandler;
-import com.euhedral.Game.GameController;
-import com.euhedral.Game.VariableHandler;
+import com.euhedral.Game.Pool.BulletPool;
+import com.euhedral.Game.Pool.ProjectilePool;
 
 import java.awt.*;
 
@@ -24,8 +23,8 @@ public class EnemyLaser extends Enemy {
     public boolean laserCollision;
     int bulletWidth = 16 / 2;
 
-    public EnemyLaser(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+    public EnemyLaser(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
 
         bulletAngle = 90;
         shootTimerFirst = 60;

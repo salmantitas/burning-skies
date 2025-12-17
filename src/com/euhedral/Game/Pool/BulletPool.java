@@ -1,11 +1,15 @@
-package com.euhedral.Game;
+package com.euhedral.Game.Pool;
 
 import com.euhedral.Engine.*;
+import com.euhedral.Game.Difficulty;
 import com.euhedral.Game.Entities.Projectile.Bullet;
 import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.Entities.Projectile.BulletPlayer;
 import com.euhedral.Game.Entities.Enemy.Enemy;
 import com.euhedral.Game.Entities.Player;
+import com.euhedral.Game.GameController;
+import com.euhedral.Game.SoundHandler;
+import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -116,7 +120,7 @@ public class BulletPool extends Pool {
                     return;
                 }
 
-                int bulletDamage = 10;
+                int bulletDamage = bullet.getDamage();
                 player.damage((int ) (bulletDamage * Difficulty.getDamageTakenMult()) );
             }
         }

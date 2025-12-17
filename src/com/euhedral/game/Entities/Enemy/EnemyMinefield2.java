@@ -2,18 +2,19 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.GameController;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
 
-import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class EnemyMinefield2 extends Enemy{
 
     double xMin, xMax;
 
-    public EnemyMinefield2(int x, int y, int levelHeight) {
-        super(x, y,  levelHeight);
+    public EnemyMinefield2(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
 
         shootTimerFirst = 190;
         shootTimerDefault = 30;
@@ -33,9 +34,9 @@ public class EnemyMinefield2 extends Enemy{
         commonInit();
     }
 
-    public EnemyMinefield2(int x, int y, Color color, int levelHeight) {
-        super(x, y, color, levelHeight);
-    }
+//    public EnemyMinefield2(int x, int y, Color color, int levelHeight) {
+//        super(x, y, color, levelHeight);
+//    }
 
     @Override
     public void move() {

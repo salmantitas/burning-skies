@@ -1,15 +1,17 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.GameController;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
 
 public class EnemyBasic2 extends Enemy{
 
     int movementDistance_MAX = 3*64;
 
-    public EnemyBasic2(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+    public EnemyBasic2(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemy[1]);
 

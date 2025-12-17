@@ -7,8 +7,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import com.euhedral.Game.Entities.Airplane;
+import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.Entities.ShieldEnemy;
 import com.euhedral.Game.GameController;
+import com.euhedral.Game.Pool.BulletPool;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.UI.HUD;
 
 /*
@@ -69,7 +72,13 @@ public abstract class Enemy extends Airplane {
 
     public boolean tracking = false;
 
-    public Enemy(double x, double y, int levelHeight) {
+    // Shoot State
+    public int BULLET = 0;
+    public int shootState = BULLET;
+
+    protected ProjectilePool projectiles;
+
+    public Enemy(double x, double y, ProjectilePool projectiles, int levelHeight) {
         super(x, y, EntityID.Enemy);
         moveRight = false;
         moveLeft = false;
@@ -102,6 +111,7 @@ public abstract class Enemy extends Airplane {
         forwardVelocity = EntityHandler.backgroundScrollingSpeed;
         offscreenVelY = forwardVelocity;
 
+        this.projectiles = projectiles;
         bulletAngle = 90;
 
         explosion = GameController.getTexture().initExplosion(6);
@@ -114,10 +124,10 @@ public abstract class Enemy extends Airplane {
 //        resetShootTimer();
     }
 
-    public Enemy(int x, int y, Color color, int levelHeight) {
-        this(x, y, levelHeight);
-        this.color = color;
-    }
+//    public Enemy(int x, int y, Color color, int levelHeight) {
+//        this(x, y, levelHeight);
+//        this.color = color;
+//    }
 
     @Override
     public void update() {
@@ -128,12 +138,14 @@ public abstract class Enemy extends Airplane {
                 inscreenY = pos.y > cam + Utility.percHeight(30);
             }
             if (inscreenY && isActive()) { // todo: potential redundant check for active
-//                if (inscreenX) {
-                updateShootTimer(); // todo: maybe move to when in screen
+                updateShootTimer();
                 if (shootTimer <= 0) {
-                        shoot();
+                    shoot();
+                    while (hasShot()) {
+                        spawnProjectiles();
+                        decrementShot();
                     }
-//                }
+                }
 
                 jitter();
             }
@@ -527,5 +539,26 @@ public abstract class Enemy extends Airplane {
 
     public long getSpawnInterval() {
         return spawnInterval;
+    }
+
+    protected void spawnProjectiles() {
+        spawnBullet();
+    }
+
+    private void spawnBullet() {
+        double x = getTurretX();
+        double dir = getBulletAngle();
+        double y = getTurretY();
+        double bulletVelocity = getBulletVelocity();
+        boolean tracking = this.tracking;
+
+        if (projectiles.bullets.getPoolSize() > 0) {
+            projectiles.bullets.spawnFromPool(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking);
+        }
+        else {
+            projectiles.bullets.add(new BulletEnemy(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking));
+        }
+
+//        bullets.printPool("Enemy Bullet");
     }
 }

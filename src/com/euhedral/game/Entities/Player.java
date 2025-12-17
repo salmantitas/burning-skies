@@ -4,6 +4,7 @@ import com.euhedral.Engine.*;
 import com.euhedral.Game.*;
 import com.euhedral.Game.Entities.Enemy.Enemy;
 import com.euhedral.Game.Entities.Projectile.Bullet;
+import com.euhedral.Game.Pool.BulletPool;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

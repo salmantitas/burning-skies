@@ -2,12 +2,11 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
-import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.GameController;
+import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
-
-import java.awt.*;
 
 public class EnemyFast extends Enemy{
 
@@ -16,8 +15,8 @@ public class EnemyFast extends Enemy{
     double velXCoefficient = 2;
     double acceleration = 0.08;
 
-    public EnemyFast(int x, int y, int levelHeight) {
-        super(x, y, levelHeight);
+    public EnemyFast(int x, int y, ProjectilePool projectiles, int levelHeight) {
+        super(x, y, projectiles, levelHeight);
         textureHandler = GameController.getTexture();
         setImage(textureHandler.enemyFast[0]);
 //        attackEffect = true;
@@ -36,11 +35,11 @@ public class EnemyFast extends Enemy{
         velX_MAX = 4.75;
     }
 
-    public EnemyFast(int x, int y, Color color, int levelHeight) {
-        this(x, y, levelHeight);
-        this.color = color;
-
-    }
+//    public EnemyFast(int x, int y, Color color, int levelHeight) {
+//        this(x, y, levelHeight);
+//        this.color = color;
+//
+//    }
 
 //    @Override
 //    public void initialize() {
