@@ -36,7 +36,7 @@ public class SoundHandler {
 //    public static final int BGMPLAY1 = 0;
 //    public static final int BGMPLAY2 = 1;
 
-    private static final int BGM_MAX = 2;
+    private static final int BGM_MAX = 8;
 
     static Clip clip;
     public static Clip effect;
@@ -46,8 +46,8 @@ public class SoundHandler {
     static Clip clips[] = new Clip[MAX_CLIP];
     static URL BGM_URL[] = new URL[BGM_MAX];
     static Clip BGMs[] = new Clip[BGM_MAX];
-    static URL bossBGM_URL[] = new URL[BGM_MAX];
-    static Clip bossBGMs[] = new Clip[BGM_MAX];
+//    static URL bossBGM_URL[] = new URL[BGM_MAX];
+//    static Clip bossBGMs[] = new Clip[BGM_MAX];
 
     private static int currentBGM = -1;
 
@@ -102,18 +102,16 @@ public class SoundHandler {
             clips[i] = setClip(i);
         }
 
-        songInfo[0] = "Mountain Trails - Joshua McLean";
-        songInfo[1] = "Pixel Wars 1 - Abstraction";
-//        songInfo[2] = "Battle Commences - Not Jam";
+        songInfo[0] = "Pixel Wars 1 - Abstraction";
+        songInfo[1] = "Battle Commences - Not Jam";
+        songInfo[2] = "Mountain Trails - Joshua McLean";
 
         for (int i = 0; i < BGM_MAX; i ++) {
-            BGM_URL[i] = getClass().getResource("/bgm" + (i + 1 + ".wav"));
-            bossBGM_URL[i] = getClass().getResource("/bossbgm" + (i + 1 + ".wav"));
+            BGM_URL[i] = getClass().getResource("/bgm" + (i + ".wav"));
         }
 
         for (int i = 0; i < BGM_MAX; i ++) {
             BGMs[i] = setClipBGM(i);
-            bossBGMs[i] = setClipbossBGM(i);
         }
 
         volumeEffects = VOLUME_MAX;
@@ -150,11 +148,11 @@ public class SoundHandler {
         clip.setFramePosition(0);
     }
 
-    // Assumes all clips have already been loaded
-    public static void setFileBossBGM(int i) {
-        clip = bossBGMs[i];
-        clip.setFramePosition(0);
-    }
+//    // Assumes all clips have already been loaded
+//    public static void setFileBossBGM(int i) {
+//        clip = bossBGMs[i];
+//        clip.setFramePosition(0);
+//    }
 
     public static Clip setClip(int i) {
         newClip = null;
@@ -182,18 +180,18 @@ public class SoundHandler {
         return newClip;
     }
 
-    public static Clip setClipbossBGM(int i) {
-        newClip = null;
-        try {
-            ais = AudioSystem.getAudioInputStream(bossBGM_URL[i]);
-            newClip = AudioSystem.getClip();
-            newClip.open(ais);
-        } catch (Exception e) {
-
-        }
-//        Utility.log("Set Clip");
-        return newClip;
-    }
+//    public static Clip setClipbossBGM(int i) {
+//        newClip = null;
+//        try {
+//            ais = AudioSystem.getAudioInputStream(bossBGM_URL[i]);
+//            newClip = AudioSystem.getClip();
+//            newClip.open(ais);
+//        } catch (Exception e) {
+//
+//        }
+////        Utility.log("Set Clip");
+//        return newClip;
+//    }
 
 //    public void playMusic(int i) {
 //        setFile(i);
@@ -296,10 +294,11 @@ public class SoundHandler {
         }
 
         if (currentBGM == -1) {
-            currentBGM = Utility.randomRangeInclusive(0, BGM_MAX-1);
-        } else {
-            currentBGM = (currentBGM + 1) % (BGM_MAX);
+            currentBGM = 0;
         }
+//        else {
+//            currentBGM = (currentBGM + 1) % (BGM_MAX);
+//        }
 
         sameBgmPlaying = bgmGameID == currentBGM;
 
@@ -312,11 +311,11 @@ public class SoundHandler {
         }
     }
 
-    public static void playBGMBoss() {
-        currentBGM = 0;
-        bgm.stop();
-        bgmBossHelper(currentBGM);
-    }
+//    public static void playBGMBoss() {
+//        currentBGM = 0;
+//        bgm.stop();
+//        bgmBossHelper(currentBGM);
+//    }
 
     public static void playBGMMenu() {
         playBGM(BGMMAINMENU);
@@ -365,17 +364,17 @@ public class SoundHandler {
 //        Utility.log("BGM Helper");
     }
 
-    private static void bgmBossHelper(int soundID) {
-        bgm.stop();
-        setFileBossBGM(soundID);
-        bgm = clip;
-        gainControlVolumeMaster();
-        bgm.start();
-        bgm.loop(Clip.LOOP_CONTINUOUSLY);
-        bgmGameID = -1;
-        bgmID = -1;
-//        Utility.log("BGM Helper");
-    }
+//    private static void bgmBossHelper(int soundID) {
+//        bgm.stop();
+//        setFileBossBGM(soundID);
+//        bgm = clip;
+//        gainControlVolumeMaster();
+//        bgm.start();
+//        bgm.loop(Clip.LOOP_CONTINUOUSLY);
+//        bgmGameID = -1;
+//        bgmID = -1;
+////        Utility.log("BGM Helper");
+//    }
 
     /******************
      * Volume Control *

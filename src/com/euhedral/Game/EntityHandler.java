@@ -481,7 +481,7 @@ public class EntityHandler {
 //        VariableHandler.setHealthBossDefault(boss.getHealth());
 //        VariableHandler.setHealthBoss(VariableHandler.getHealthBossDefault());
 
-        SoundHandler.playBGMBoss();
+        SoundHandler.BGMUp();
     }
 
 //    public void spawnBoss(int level, int x, int y) {

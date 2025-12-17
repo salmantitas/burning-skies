@@ -13,7 +13,7 @@ import java.awt.*;
 
 public abstract class EnemyBoss extends Enemy {
 
-    protected boolean alive = true;
+//    protected boolean alive = true;
 
     protected Position destination;
     protected int minX,maxX, minY, maxY;
@@ -29,20 +29,20 @@ public abstract class EnemyBoss extends Enemy {
         shootTimerDefault = 150;
     }
 
-    public boolean isAlive() {
-        return alive;
-    }
+//    public boolean isAlive() {
+//        return alive;
+//    }
 
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
+//    public void setAlive(boolean alive) {
+//        this.alive = alive;
+//    }
 
     @Override
     public void update() {
         super.update();
 //        move();
-        if (health <= 0)
-            alive = false;
+//        if (health <= 0)
+//            alive = false;
     }
 
 //    @Override
@@ -79,8 +79,11 @@ public abstract class EnemyBoss extends Enemy {
 
     @Override
     public void destroy() {
+        if (isActive()) {
+            SoundHandler.BGMUp();
+        }
         super.destroy();
         VariableHandler.setBossAlive(false);
-        SoundHandler.playBGMPlay();
+
     }
 }

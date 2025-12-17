@@ -28,7 +28,7 @@ public class MenuSettings extends Menu {
     Button volumeMasterUp = new Button(x70, y48 + volOffset, optionSize,"+");
 //    ButtonAction volumeMusicDown = new ButtonAction(x36, y56, optionSize, optionSize, "-", ActionTag.volumeMusicDown);
     Button volumeMusic;
-    ButtonOption changeBGM = new ButtonOption(x36, y62, optionSize, "Change BGM");
+//    ButtonOption changeBGM = new ButtonOption(x36, y62, optionSize, "Change BGM");
 //    ButtonAction volumeMusicUp = new ButtonAction(x62, y56, optionSize, optionSize,"+", ActionTag.volumeMusicUp);
 //    ButtonAction volumeEffectsDown = new ButtonAction(x36, y62, optionSize, optionSize, "-", ActionTag.volumeEffectsDown);
 //    ButtonAction volumeEffects = new ButtonAction(x40, y62, optionSize, "Effects Volume", ActionTag.volumeEffects);
@@ -37,7 +37,7 @@ public class MenuSettings extends Menu {
 
     public MenuSettings() {
         super(GameState.Settings);
-        MAXBUTTON = 5; //11;
+        MAXBUTTON = 4; //11;
         options = new Button[MAXBUTTON];
 
 //        tutorial = new ButtonAction(x36, y40, optionSize, "Tutorial", ActionTag.tutorial);
@@ -75,8 +75,8 @@ public class MenuSettings extends Menu {
 //        changeBGM.setIncreaseAction(ActionTag.BGMUp);
 //        changeBGM.setDecreaseAction(ActionTag.BGMDown);
 
-        changeBGM.setIncreaseActivate(SoundHandler::BGMUp);
-        changeBGM.setDecreaseActivate(SoundHandler::BGMDown);
+//        changeBGM.setIncreaseActivate(SoundHandler::BGMUp);
+//        changeBGM.setDecreaseActivate(SoundHandler::BGMDown);
 
         options[0] = tutorial;
 //        options[1] = volumeMasterDown;
@@ -84,7 +84,7 @@ public class MenuSettings extends Menu {
 //        options[3] = volumeMasterUp;
 //        options[4] = volumeMusicDown;
         options[2] = volumeMusic;
-        options[3] = changeBGM;
+//        options[3] = changeBGM;
 //        options[6] = volumeMusicUp;
 //        options[7] = volumeEffectsDown;
 //        options[8] = volumeEffects;
@@ -105,10 +105,11 @@ public class MenuSettings extends Menu {
         menuItems.add(backPane);
     }
 
-    @Override
-    public void update() {
-        checkConditionAndDisable(changeBGM, SoundHandler.gameBGMRunning());
-    }
+//    @Override
+//    public void update() {
+//
+//        checkConditionAndDisable(changeBGM, SoundHandler.gameBGMRunning());
+//    }
 
     // Disables button when the conditions are not true
     private void checkConditionAndDisable(Button button, boolean condition) {
