@@ -16,6 +16,12 @@ public class Animation {
     private BufferedImage curr;
     public boolean playedOnce = false;
 
+    int BASIC = 0;
+    int INBETWEEN = 1;
+
+    private int mode = BASIC;
+    int sign = 1;
+
     public Animation(int speed, BufferedImage... args) {
         this.speed = speed;
         frames = args.length;
@@ -37,10 +43,27 @@ public class Animation {
 
     private void nextFrame() {
         curr = images[count];
-        count++;
-        if (count >= frames) {
-            count = 0;
-            playedOnce = true;
+        if (mode == 0 ) {
+            count++;
+            if (count >= frames) {
+                count = 0;
+                playedOnce = true;
+            }
+        } else {
+            if (count == -1) {
+                int a = 1;
+            }
+            count += sign;
+
+            if (count >= frames) {
+                count = frames - 1;
+                sign *= -1;
+                playedOnce = true;
+            } else if (count < 0) {
+                count = 0;
+                sign += -1;
+                playedOnce = true;
+            }
         }
     }
 
@@ -71,5 +94,17 @@ public class Animation {
 
     public int getImageWidth() {
         return images[0].getWidth();
+    }
+
+    public int getMaxFrames() {
+        return frames;
+    }
+
+    public void setCurrentFrame(int i) {
+        count = i;
+    }
+
+    public void setMode(int i) {
+        mode = i;
     }
 }

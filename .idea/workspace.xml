@@ -28,12 +28,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02e7eacf-3be8-4de2-a142-942ab6a9da4a" name="Default Changelist" comment="Difficulty Balancing">
+      <change afterPath="$PROJECT_DIR$/src/com/euhedral/Game/Tile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/Entities/Projectile/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/Entities/Projectile/Bullet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/Entities/Projectile/BulletEnemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/Entities/Projectile/BulletEnemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/Entities/Projectile/BulletPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/Entities/Projectile/BulletPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/TextureHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/TextureHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Engine/Animation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Engine/Animation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/euhedral/Game/Background.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/euhedral/Game/Background.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -319,6 +317,11 @@
           <url>file://$PROJECT_DIR$/src/com/euhedral/Game/Entities/Projectile/BulletPlayer.java</url>
           <line>22</line>
           <option name="timeStamp" value="845" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/euhedral/Engine/Animation.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="852" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />
