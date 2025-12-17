@@ -27,9 +27,6 @@ public class Background {
     public static final double scrollRateTransition = scrollRateGame/4;
     private static double scrollRate;
 
-    BufferedImage imageSea; // = GameController.getTexture().sea[currentImage];
-    int imageScrollinginterval; // = imageSea.getHeight() * 2;
-
     int minX = -64;
     int minY = (int) -maxScroll;
 
@@ -72,9 +69,6 @@ public class Background {
             }
         }
 
-//        imageSea = GameController.getTexture().sea[currentImage];
-//        imageScrollinginterval = imageSea.getHeight() * 2 - 2;
-//
 //        imageCloud = GameController.getTexture().cloud[0];
 //
 //        backgroundObjects = new Pool();
@@ -155,7 +149,7 @@ public class Background {
 //        g.setColor(RED);
 //        g.fillRect(100, 200, 32, 32);
         for (Tile tile : tiles) {
-            tile.render(g);
+            tile.render(g, screenShake);
         }
 
 //        for (int i = minX; i < Engine.WIDTH; i += imageScrollinginterval) {
