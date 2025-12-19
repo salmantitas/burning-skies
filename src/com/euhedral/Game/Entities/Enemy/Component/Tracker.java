@@ -1,4 +1,4 @@
-package com.euhedral.Game.Entities.Enemy.Behavior;
+package com.euhedral.Game.Entities.Enemy.Component;
 
 import com.euhedral.Game.EntityHandler;
 

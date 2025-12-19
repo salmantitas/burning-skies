@@ -1,8 +1,7 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
-import com.euhedral.Game.Pool.BulletPool;
-import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
+import com.euhedral.Game.Entities.Enemy.Component.Tracker;
 import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
 

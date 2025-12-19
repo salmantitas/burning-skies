@@ -2,7 +2,6 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
-import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.GameController;
 import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
@@ -58,11 +57,11 @@ public class EnemyBasic3 extends Enemy{
     }
 
     @Override
-    protected void shoot() {
+    protected void shoot2() {
         if (pos.x < -width || pos.x > Engine.WIDTH - 0*width) {
 
         } else
-            super.shoot();
+            super.shoot2();
     }
 
     @Override

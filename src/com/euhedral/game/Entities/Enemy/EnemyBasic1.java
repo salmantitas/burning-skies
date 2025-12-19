@@ -2,6 +2,9 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Difficulty;
+import com.euhedral.Game.Entities.Enemy.Component.Turret;
+import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
@@ -9,6 +12,8 @@ import com.euhedral.Game.VariableHandler;
 import java.awt.*;
 
 public class EnemyBasic1 extends Enemy{
+
+    private Turret turret;
 
     public EnemyBasic1(int x, int y, ProjectilePool projectiles, int levelHeight) {
         super(x, y, projectiles, levelHeight);
@@ -18,28 +23,46 @@ public class EnemyBasic1 extends Enemy{
 
         health_MAX = 2;
 
+        turret = new Turret(turretOffsetX, turretOffsetY, this);
+
         commonInit();
 
         score = 20;
         spawnInterval = 2 * UPDATES_PER_SECOND;
     }
 
-//    public EnemyBasic1(int x, int y, Color color, int levelHeight) {
-//        this(x, y, levelHeight);
-//        this.color = color;
-//    }
+    @Override
+    protected void shoot1() {
+        updateShootTimer();
+        if (shootTimer <= 0) {
+            resetShootTimer();
+            loadShots();
+            while (hasShot()) {
+                spawnProjectiles();
+                decrementShot();
+            }
+        }
+    }
 
-//    @Override
-//    public void update() {
-//        super.update();
-//        if (isActive()) {
-//            shield.update();
-//        }
-//    }
+    protected void loadShots() {
+        bulletsPerShot++;
+    }
 
     @Override
-    public double getTurretX() {
-        return (int) pos.x + width/2 - Utility.intAtWidth640(2);
+    protected void spawnBullet() {
+        double x = turret.getX();
+        double y = turret.getY();
+        double angle = turret.getAngle();
+        double velocity = getBulletVelocity();
+        boolean tracking = this.tracking;
+
+        createBullet(x, y, angle, velocity, tracking);
+
+//        bullets.printPool("Enemy Bullet");
+    }
+
+    public void createBullet(double x, double y, double angle, double velocity, boolean tracking) {
+        projectiles.bullets.spawn(x, y, angle, velocity, tracking);
     }
 
     private void renderPath(Graphics g) {

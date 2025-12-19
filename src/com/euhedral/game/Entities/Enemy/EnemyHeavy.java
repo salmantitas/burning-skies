@@ -2,9 +2,7 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.*;
-import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
-import com.euhedral.Game.Entities.Projectile.BulletEnemy;
-import com.euhedral.Game.Pool.BulletPool;
+import com.euhedral.Game.Entities.Enemy.Component.Tracker;
 import com.euhedral.Game.Pool.ProjectilePool;
 
 import java.awt.*;

@@ -3,10 +3,9 @@ package com.euhedral.Game.Entities.Enemy.Boss;
 import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
-import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Difficulty;
 import com.euhedral.Game.Pool.EnemyPool;
-import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
+import com.euhedral.Game.Entities.Enemy.Component.Tracker;
 import com.euhedral.Game.Entities.Projectile.Laser;
 import com.euhedral.Game.Pool.ProjectilePool;
 
@@ -100,7 +99,7 @@ public class EnemyBoss3 extends EnemyBoss {
     }
 
     @Override
-    protected void shoot() {
+    protected void shoot2() {
         if (shotMode == shotMode_MAX) {
             laser.start();
             resetShootTimer();

@@ -7,10 +7,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import com.euhedral.Game.Entities.Airplane;
+import com.euhedral.Game.Entities.Enemy.Component.Turret;
 import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.Entities.ShieldEnemy;
 import com.euhedral.Game.GameController;
-import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.UI.HUD;
 
@@ -43,6 +43,7 @@ public abstract class Enemy extends Airplane {
     protected double bulletAngle;
     protected int bulletArcAngle;
 
+    protected Turret turret;
     protected double turretOffsetX;
     protected double turretOffsetY = Utility.intAtWidth640(2);
 
@@ -89,7 +90,7 @@ public abstract class Enemy extends Airplane {
         size = Math.max(width, height);
         color = Color.red;
 
-        turretOffsetX = width / 2 - 1;
+        turretOffsetX = width / 2 - 8;
 
         jitter_MAX = Utility.intAtWidth640(2);
 
@@ -138,15 +139,7 @@ public abstract class Enemy extends Airplane {
                 inscreenY = pos.y > cam + Utility.percHeight(30);
             }
             if (inscreenY && isActive()) { // todo: potential redundant check for active
-                updateShootTimer();
-                if (shootTimer <= 0) {
-                    shoot();
-                    while (hasShot()) {
-                        spawnProjectiles();
-                        decrementShot();
-                    }
-                }
-
+                shoot1();
                 jitter();
             }
         } else if (state == STATE_EXPLODING) {
@@ -154,6 +147,17 @@ public abstract class Enemy extends Airplane {
 //            super.update();
             move();
 //            Utility.log("Exploding");
+        }
+    }
+
+    protected void shoot1() {
+        updateShootTimer();
+        if (shootTimer <= 0) {
+            shoot2();
+            while (hasShot()) {
+                spawnProjectiles();
+                decrementShot();
+            }
         }
     }
 
@@ -307,7 +311,7 @@ public abstract class Enemy extends Airplane {
     }
 
     @Override
-    protected void shoot() {
+    protected void shoot2() {
         resetShootTimer();
         shootDefault();
     }
@@ -545,7 +549,7 @@ public abstract class Enemy extends Airplane {
         spawnBullet();
     }
 
-    private void spawnBullet() {
+    protected void spawnBullet() {
         double x = getTurretX();
         double dir = getBulletAngle();
         double y = getTurretY();

@@ -28,7 +28,7 @@ public class EnemyDrone2 extends EnemyDrone1 {
     }
 
     @Override
-    protected void shoot() {
+    protected void shoot2() {
         resetShootTimer();
         shootDefault();
     }

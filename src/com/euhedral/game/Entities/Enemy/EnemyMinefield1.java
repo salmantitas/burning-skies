@@ -2,7 +2,6 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
-import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.GameController;
 import com.euhedral.Game.Pool.ProjectilePool;
@@ -46,9 +45,9 @@ public class EnemyMinefield1 extends Enemy{
 //    }
 
     @Override
-    protected void shoot() {
+    protected void shoot2() {
         updateBulletAngle();
-        super.shoot();
+        super.shoot2();
     }
 
     @Override

@@ -3,9 +3,8 @@ package com.euhedral.Game.Entities.Enemy;
 import com.euhedral.Engine.Entity;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.*;
-import com.euhedral.Game.Entities.Enemy.Behavior.Tracker;
+import com.euhedral.Game.Entities.Enemy.Component.Tracker;
 import com.euhedral.Game.Entities.Projectile.Laser;
-import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Pool.ProjectilePool;
 
 import java.awt.*;
@@ -80,7 +79,7 @@ public class EnemyLaser extends Enemy {
     }
 
     @Override
-    protected void shoot() {
+    protected void shoot2() {
         laser.start();
         resetShootTimer();
     }

@@ -53,7 +53,7 @@ public abstract class Airplane extends MobileEntity {
         }
     }
 
-    protected abstract void shoot();
+    protected abstract void shoot2();
 
     public Rectangle2D getBoundsHorizontal() {
         return collisionBox.getBounds(0);
