@@ -379,24 +379,6 @@ public class EnemyPool extends Pool {
         }
     }
 
-    private void spawnEnemyMissile(Enemy enemy) {
-        double x = enemy.getTurretX();
-        double dir = enemy.getBulletAngle();
-        double y = enemy.getTurretY();
-        boolean tracking = enemy.tracking;
-
-        projectiles.missiles.spawn(x,y);
-
-//        if (missiles.getPoolSize() > 0) {
-//            missiles.spawnFromPool(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult());
-//        }
-//        else {
-//            missiles.add(new MissileEnemy(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult()));
-//        }
-
-//        bullets.printPool("Enemy Bullet");
-    }
-
     public void checkCollisions(Player player) {
         for (Entity entity : entities) {
             enemy = (Enemy) entity;
