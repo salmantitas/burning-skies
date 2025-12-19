@@ -426,7 +426,7 @@ public class EntityHandler {
                 } else if (lastDestroyedType == VariableHandler.TYPE_DRONE1) {
 
                 } else if(lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE3
-                        || lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2
+                        || lastDestroyedType == VariableHandler.TYPE_DRONE2
                         || lastDestroyedType == VariableHandler.TYPE_DRONE4 || lastDestroyedType == VariableHandler.TYPE_SIDE1
                         || lastDestroyedType == VariableHandler.TYPE_MINE2 || lastDestroyedType == VariableHandler.TYPE_HEAVY) {
 //                    minChanceCoefficient = 25;

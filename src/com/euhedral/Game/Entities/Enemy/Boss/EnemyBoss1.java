@@ -2,7 +2,9 @@ package com.euhedral.Game.Entities.Enemy.Boss;
 
 import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.EntityHandler;
+import com.euhedral.Game.EntityID;
 import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Difficulty;
 import com.euhedral.Game.Pool.EnemyPool;
@@ -36,7 +38,7 @@ public class EnemyBoss1 extends EnemyBoss {
 
         velX = 2;
         velY = offscreenVelY;
-        health_MAX = 25;
+        health_MAX = 50;
         setHealth(health_MAX);
         shootTimerDefault = 30;
 
@@ -85,8 +87,16 @@ public class EnemyBoss1 extends EnemyBoss {
     protected void resetShootTimer() {
         double factor = 1;
 
+        if (health < health_MAX/2) {
+            factor *= 0.5;
+        }
+
+        if (health < health_MAX/4) {
+            factor *= 0.5;
+        }
+
         if (shotMode == guns_MAX) {
-            factor = 2;
+            factor *= 2;
         }
         shootTimer = (int) (factor * shootTimerDefault / Difficulty.getEnemyFireRateMult());
     }
@@ -97,10 +107,14 @@ public class EnemyBoss1 extends EnemyBoss {
             pos.y += velY;
         }
         else {
-            if (!moveLeft)
-                pos.x += velX;
-            else
-                pos.x -= velX;
+            if (health > 3 * health_MAX / 4) {
+
+            } else {
+                if (!moveLeft)
+                    pos.x += velX;
+                else
+                    pos.x -= velX;
+            }
         }
 
         if (pos.x < minX)
@@ -145,10 +159,37 @@ public class EnemyBoss1 extends EnemyBoss {
         }
     }
 
+    protected void spawnBullet() {
+        double x = getTurretX();
+        double dir = getBulletAngle();
+        double y = getTurretY();
+        double bulletVelocity = getBulletVelocity();
+        boolean tracking = this.tracking;
+
+        if (health < health_MAX/2) {
+            dir = calculateAngle(EntityHandler.playerPositon.x, EntityHandler.playerPositon.y);
+        }
+
+        if (projectiles.bullets.getPoolSize() > 0) {
+            projectiles.bullets.spawnFromPool(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking);
+        }
+        else {
+            projectiles.bullets.add(new BulletEnemy(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking));
+        }
+
+//        bullets.printPool("Enemy Bullet");
+    }
+
     private void spawnMissiles() {
         double x = getTurretX();
         double y = getTurretY();
 
-        projectiles.missiles.spawn(x, y, 90);
+        double angle = 90;
+
+        if (health < health_MAX/2) {
+            angle = calculateAngle(EntityHandler.playerPositon.x, EntityHandler.playerPositon.y);
+        }
+
+        projectiles.missiles.spawn(x, y, angle);
     }
 }
