@@ -412,7 +412,7 @@ public class EntityHandler {
             if (lastDestroyedType > VariableHandler.TYPE_BASIC2) {
                 EntityID pickupID = null;
                 int pickupValue = 0;
-                int minChanceCoefficient = 50;
+                int minChanceCoefficient = 25;
                 if (lastDestroyedType == VariableHandler.enemyTypes) {
                     pickupID = EntityID.PickupPulse;
                     pickupValue = 1;
@@ -423,17 +423,18 @@ public class EntityHandler {
 //                    // todo: Spawn Homing Bullets
 //                } else if (lastDestroyedType == TYPE_DRONE3) {
 //                    // todo: Spawn Bomb Pickup
-                } else
-                    if (lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE3) {
-                    pickupID = EntityID.PickupFirepower;
-                    pickupValue = 1;
-                } else if (lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2
+                } else if (lastDestroyedType == VariableHandler.TYPE_DRONE1) {
+
+                } else if(lastDestroyedType == VariableHandler.TYPE_FAST || lastDestroyedType == VariableHandler.TYPE_SIDE3
+                        || lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2
                         || lastDestroyedType == VariableHandler.TYPE_DRONE4 || lastDestroyedType == VariableHandler.TYPE_SIDE1
-                        || lastDestroyedType == VariableHandler.TYPE_MINE2) {
+                        || lastDestroyedType == VariableHandler.TYPE_MINE2 || lastDestroyedType == VariableHandler.TYPE_HEAVY) {
+                    minChanceCoefficient = 50;
                     pickupID = EntityID.PickupFirepower;
                     pickupValue = 1;
                 } else if (lastDestroyedType == VariableHandler.TYPE_SCATTER1 || lastDestroyedType == VariableHandler.TYPE_SCATTER2) {
                     pickupID = EntityID.PickupShield;
+                    minChanceCoefficient = 10;
                     pickupValue = 100;
                 } else {
                     pickupID = EntityID.PickupHealth;
@@ -443,6 +444,8 @@ public class EntityHandler {
                     if (pickupID == EntityID.PickupFirepower) {
                         if (VariableHandler.firepower.getValue() >= 25) {
                             minChanceCoefficient -= VariableHandler.getLevel();
+                        } else if (VariableHandler.firepower.getValue() <= 5 ) {
+                            minChanceCoefficient = 100;
                         }
                     } else if (pickupID == EntityID.PickupHealth) {
                         minChanceCoefficient -= VariableHandler.getLevel();

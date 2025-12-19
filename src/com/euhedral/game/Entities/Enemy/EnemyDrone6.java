@@ -21,7 +21,7 @@ public class EnemyDrone6 extends EnemyDrone1 {
         shootTimerDefault = 320;
         score = 200;
 
-        bulletsPerShot_MAX = 36;
+        bulletsPerShot_MAX = 18;
         int tempAngle = 360/bulletsPerShot_MAX;
         bulletArcAngle = tempAngle * bulletsPerShot_MAX;
 

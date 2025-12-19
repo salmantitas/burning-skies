@@ -156,17 +156,17 @@ public class Player extends Airplane {
     protected void updateBounds() {
         collisionBox.setBounds(
                 0,
-                pos.x,
+                pos.x + 16,
                 pos.y + 2* height / 3 - 2 ,
-                width,
+                width - 32,
                 height / 3 - 6
         );
         collisionBox.setBounds(
                 1,
                 pos.x + (width / 4) + 7,
-                pos.y,
+                pos.y + 16,
                 (2 * width) / 4 - 14,
-                height
+                height - 24
         );
     }
 

@@ -1,4 +1,4 @@
-package com.euhedral.g.EnemyGeneration;
+package com.euhedral.Game.EnemyGeneration;
 
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
@@ -31,6 +31,9 @@ public class EnemyGenerator {
     int difficulty;
     int minWavesDifficultyIncrease;
     int num;
+
+    int num_MIN = 1;
+    int num_MAX = 6;
 
     long spawnInterval;
     long spawnInterval_MIN = 60 * 1;
@@ -119,6 +122,9 @@ public class EnemyGenerator {
         minDifficultyForMovement = 2;
         entityHandler.setLevelHeight(getLevelHeight());
 
+        num_MIN = 1;
+        num_MAX = 6;
+
         playerY = getLevelHeight() / SCALE;
 
         entityHandler.spawnPlayer(playerX * SCALE, playerY * SCALE);
@@ -174,7 +180,7 @@ public class EnemyGenerator {
     private void testEnemy() {
         //        enemytype = VariableHandler.TYPE_BASIC1; // stub
 //        enemytype = VariableHandler.TYPE_BASIC2; // stub
-        enemytype = VariableHandler.TYPE_HEAVY;
+//        enemytype = VariableHandler.TYPE_HEAVY;
 //        enemytype = VariableHandler.TYPE_BASIC3; // stub
 //        enemytype = VariableHandler.TYPE_DRONE1; // stub
 //        enemytype = VariableHandler.TYPE_STATIC1; // stub
@@ -233,8 +239,6 @@ public class EnemyGenerator {
     }
 
     protected void determineNum() {
-        int num_MIN = 1;
-        int num_MAX = 5;
 //        // Num always starts at 1
 //        num = ((wave - 1) % 5) + 1;
 //
@@ -247,7 +251,7 @@ public class EnemyGenerator {
         if (difficultyIncreased)
             num = num_MIN;
         else
-            num = Utility.randomRange(1, Math.min(num_MAX, currentBoss + 1));
+            num = Utility.randomRange(num_MIN, Math.min(num_MAX, currentBoss + 1));
 //        Utility.log(""+num);
 //        num = (wave % 5);
 
@@ -280,7 +284,7 @@ public class EnemyGenerator {
 //            enemytype = rand;
         }
 
-//        testEnemy();
+        testEnemy();
 
 //        Utility.log("Active: " + EntityHandler.getActiveEnemies(enemytype));
 
