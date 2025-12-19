@@ -89,6 +89,9 @@ public class Bullet extends MobileEntity {
     @Override
     public void render(Graphics g) {
         drawDefault(g);
+
+        if (debug)
+            renderBounds(g);
     }
 
     @Override

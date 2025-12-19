@@ -179,7 +179,7 @@ public class EnemyHeavy extends Enemy {
         double bulletVelocity = getBulletVelocity();
         boolean tracking = this.tracking;
 
-        projectiles.missiles.spawn(x, y);
+        projectiles.missiles.spawn(x, y, 90);
     }
 
     @Override

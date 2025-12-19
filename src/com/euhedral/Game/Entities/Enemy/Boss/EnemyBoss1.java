@@ -2,6 +2,7 @@ package com.euhedral.Game.Entities.Enemy.Boss;
 
 import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.Difficulty;
 import com.euhedral.Game.Pool.EnemyPool;
@@ -148,6 +149,6 @@ public class EnemyBoss1 extends EnemyBoss {
         double x = getTurretX();
         double y = getTurretY();
 
-        projectiles.missiles.spawn(x, y);
+        projectiles.missiles.spawn(x, y, 90);
     }
 }

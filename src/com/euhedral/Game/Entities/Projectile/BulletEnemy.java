@@ -46,7 +46,7 @@ public class BulletEnemy extends Bullet{
     public void update() {
         if (state == STATE_ACTIVE) {
             super.update();
-            updateBounds(2);
+            updateBounds(3);
         } else if (state == STATE_IMPACT) {
             if (!canPlayImpactAnimation) {
                 impact.playedOnce = true;
@@ -78,7 +78,6 @@ public class BulletEnemy extends Bullet{
         } else if (state == STATE_IMPACT) {
             pos.y += velY;
         }
-
     }
 
     @Override
