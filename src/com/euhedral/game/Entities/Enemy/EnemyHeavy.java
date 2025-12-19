@@ -62,7 +62,7 @@ public class EnemyHeavy extends Enemy {
         health_MAX = 4;
         commonInit();
 
-        debug = true;
+//        debug = true;
     }
 
     @Override
