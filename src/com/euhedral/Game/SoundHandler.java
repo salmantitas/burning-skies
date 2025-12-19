@@ -293,9 +293,9 @@ public class SoundHandler {
             return;
         }
 
-        if (currentBGM == -1) {
+//        if (currentBGM == -1) {
             currentBGM = 0;
-        }
+//        }
 //        else {
 //            currentBGM = (currentBGM + 1) % (BGM_MAX);
 //        }
