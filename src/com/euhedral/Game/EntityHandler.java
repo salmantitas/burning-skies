@@ -429,7 +429,7 @@ public class EntityHandler {
                         || lastDestroyedType == VariableHandler.TYPE_STATIC1 || lastDestroyedType == VariableHandler.TYPE_DRONE2
                         || lastDestroyedType == VariableHandler.TYPE_DRONE4 || lastDestroyedType == VariableHandler.TYPE_SIDE1
                         || lastDestroyedType == VariableHandler.TYPE_MINE2 || lastDestroyedType == VariableHandler.TYPE_HEAVY) {
-                    minChanceCoefficient = 50;
+//                    minChanceCoefficient = 25;
                     pickupID = EntityID.PickupFirepower;
                     pickupValue = 1;
                 } else if (lastDestroyedType == VariableHandler.TYPE_SCATTER1 || lastDestroyedType == VariableHandler.TYPE_SCATTER2) {
