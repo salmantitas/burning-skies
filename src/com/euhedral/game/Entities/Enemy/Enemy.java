@@ -118,6 +118,7 @@ public abstract class Enemy extends Airplane {
         explosion = GameController.getTexture().initExplosion(6);
         reflection = new Reflection();
         damage = 30;
+        damage = 40;
 
         shield = new ShieldEnemy();
         shieldChance_MAX = 3;
