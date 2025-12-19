@@ -22,8 +22,8 @@ public class Background {
     private double backgroundScrollSea = 0;
     private double backgroundScrollCloud = 0;
     //    private float backgroundScrollAcc = 0;
-    private static final double maxScroll = 64;
-    public static final double scrollRateGame = maxScroll/32;  // MAX = 0.04
+    private static final double maxScroll = 48;
+    public static final double scrollRateGame = 2;  // MAX = 0.04
     public static final double scrollRateTransition = scrollRateGame/4;
     private static double scrollRate;
 
@@ -57,17 +57,17 @@ public class Background {
             }
         }
 
-        int maxFrame = tile.anim.getMaxFrames();
-        int index = 0;
-
-        for (int i = 0; i < tiles.size(); i++) {
-            tiles.get(i).anim.setCurrentFrame(index);
-
-            index += 1;
-            if (index >= maxFrame) {
-                index = 0;
-            }
-        }
+//        int maxFrame = tile.anim.getMaxFrames();
+//        int index = 0;
+//
+//        for (int i = 0; i < tiles.size(); i++) {
+//            tiles.get(i).anim.setCurrentFrame(index);
+//
+//            index += 1;
+//            if (index >= maxFrame) {
+//                index = 0;
+//            }
+//        }
 
 //        imageCloud = GameController.getTexture().cloud[0];
 //
@@ -146,26 +146,9 @@ public class Background {
 //    }
 
     public void renderSea(Graphics g, int screenShake) {
-//        g.setColor(RED);
-//        g.fillRect(100, 200, 32, 32);
         for (Tile tile : tiles) {
             tile.render(g, screenShake);
         }
-
-//        for (int i = minX; i < Engine.WIDTH; i += imageScrollinginterval) {
-//            for (int j = minY; j < Engine.HEIGHT; j += imageScrollinginterval) {
-//
-//                g.drawImage(
-//                        imageSea,
-//                        i + screenShake,
-//                        j + (int) (backgroundScrollSea) + screenShake,
-//                        imageScrollinginterval + 1,
-//                        imageScrollinginterval + 1,
-//                        null);
-//
-//                imageSea = GameController.getTexture().sea[currentImage];
-//            }
-//        }
     }
 
     public void renderClouds(Graphics g, int screenShake) {

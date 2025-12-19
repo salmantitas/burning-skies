@@ -32,7 +32,7 @@ public class Tile {
         int factor = Engine.HEIGHT / height;
 
         if (pos.y > height * factor) {
-            pos.y = -height + 2;
+            pos.y = -height + 3;
         }
     }
 
