@@ -20,7 +20,7 @@ public class BulletEnemy extends Bullet{
 
     public BulletEnemy(double x, double y, double angle) {
         super(x, y, angle);
-        width = Utility.intAtWidth640(8);
+        width = 16;
         height = width;
         forwardVelocity = Utility.intAtWidth640(5);
         initSound = SoundHandler.BULLET_ENEMY;

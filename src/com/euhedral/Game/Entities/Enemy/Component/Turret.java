@@ -3,6 +3,8 @@ package com.euhedral.Game.Entities.Enemy.Component;
 import com.euhedral.Engine.Position;
 import com.euhedral.Game.Entities.Enemy.Enemy;
 
+import java.awt.*;
+
 public class Turret {
     private Enemy parent;
     private Position relativePosition;
@@ -32,5 +34,10 @@ public class Turret {
 
     public double getAngle() {
         return angle;
+    }
+
+    public void render(Graphics g) {
+        g.setColor(Color.RED);
+        g.fillRect((int) getX(), (int) getY(), 4, 4);
     }
 }

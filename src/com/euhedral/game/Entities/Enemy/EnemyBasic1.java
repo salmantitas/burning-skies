@@ -61,10 +61,6 @@ public class EnemyBasic1 extends Enemy{
 //        bullets.printPool("Enemy Bullet");
     }
 
-    public void createBullet(double x, double y, double angle, double velocity, boolean tracking) {
-        projectiles.bullets.spawn(x, y, angle, velocity, tracking);
-    }
-
     private void renderPath(Graphics g) {
         g.setColor(Color.RED);
         int pathLength = Engine.HEIGHT;

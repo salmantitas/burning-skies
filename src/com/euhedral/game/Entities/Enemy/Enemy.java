@@ -45,7 +45,7 @@ public abstract class Enemy extends Airplane {
 
     protected Turret turret;
     protected double turretOffsetX;
-    protected double turretOffsetY = Utility.intAtWidth640(2);
+    protected double turretOffsetY = 8;
 
     protected boolean attackEffect;
     protected double attackPathX;
@@ -117,7 +117,6 @@ public abstract class Enemy extends Airplane {
 
         explosion = GameController.getTexture().initExplosion(6);
         reflection = new Reflection();
-        damage = 30;
         damage = 40;
 
         shield = new ShieldEnemy();
@@ -565,5 +564,9 @@ public abstract class Enemy extends Airplane {
         }
 
 //        bullets.printPool("Enemy Bullet");
+    }
+
+    public void createBullet(double x, double y, double angle, double velocity, boolean tracking) {
+        projectiles.bullets.spawn(x, y, angle, velocity, tracking);
     }
 }
