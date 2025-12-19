@@ -37,6 +37,8 @@ public class Player extends Airplane {
     private Pulse pulse;
     private int homingAngle = 180;
 
+    int fireRateBoost;
+
     // Test
     private int mx, my;
     private boolean destinationGiven = false;
@@ -105,7 +107,7 @@ public class Player extends Airplane {
         if (canShoot) {
             calculateTurretPositions();
             if (shootTimer <= 0) {
-                shoot();
+                shoot2();
             }
 //            if (shootTimerMissile <= 0) {
 //                shootMissiles();
@@ -329,7 +331,7 @@ public class Player extends Airplane {
     }
 
     @Override
-    protected void shoot() {
+    protected void shoot2() {
         // Bullet Spawn Points
         // todo: positioning adjustment of bullet spawn point
         int offset = 12;
@@ -360,36 +362,34 @@ public class Player extends Airplane {
         offset = 6;
 
         if (firepower.getValue() <= 5) {
-            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
-//            bullets.spawn(turretLeftX + offset, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH, fireRateBoost);
         }
 
         if (firepower.getValue() > 5) {
-            bullets.spawn(turretRightX - offset, turretY, bulletVelocity, NORTH);
-            bullets.spawn(turretLeftX + offset, turretY, bulletVelocity, NORTH);
+            bullets.spawn(turretRightX - offset, turretY, bulletVelocity, NORTH, fireRateBoost);
+            bullets.spawn(turretLeftX + offset, turretY, bulletVelocity, NORTH, fireRateBoost);
         }
 
 
         if (firepower.getValue() > 10) {
-            bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight);
-            bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft);
+            bullets.spawn(turretRightX, turretY, bulletVelocity, shootAngleRight, fireRateBoost);
+            bullets.spawn(turretLeftX, turretY, bulletVelocity, shootAngleLeft, fireRateBoost);
         }
 
         offset = 6;
 
         if (firepower.getValue() > 15) {
-            bullets.spawn(turretRightX + offset * 1, turretY, bulletVelocity, shootAngleRight);
-            bullets.spawn(turretLeftX - offset * 1, turretY, bulletVelocity, shootAngleLeft);
+            bullets.spawn(turretRightX + offset * 1, turretY, bulletVelocity, shootAngleRight, fireRateBoost);
+            bullets.spawn(turretLeftX - offset * 1, turretY, bulletVelocity, shootAngleLeft, fireRateBoost);
         }
 
         if (firepower.getValue() > 20) {
-            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH);
-//            bullets.spawn(turretRightX + offset * 2, turretY, bulletVelocity, shootAngleRight);
-//            bullets.spawn(turretLeftX - offset * 2, turretY, bulletVelocity, shootAngleLeft);
+            bullets.spawn(turretMidX, turretY, bulletVelocity, NORTH, fireRateBoost);
         }
 
-        // reset shoot timer to default
-        shootTimer = shootTimerDefault - (int) (firepower.getValue() - 1) % 5;
+        // reset shoot timer to defaul
+        fireRateBoost = (int) (firepower.getValue() - 1) % 5;
+        shootTimer = shootTimerDefault - fireRateBoost;
     }
 
     public void special() {

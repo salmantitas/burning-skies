@@ -16,6 +16,7 @@ public class Bullet extends MobileEntity {
     protected boolean collided;
     protected Color color;
     protected Color impactColor;
+    protected Color outlineColor = Color.BLACK;
     protected boolean calculated = false;
     protected Animation impact;
     protected int impactSize;
@@ -109,7 +110,7 @@ public class Bullet extends MobileEntity {
 
     protected void drawOutline(Graphics g, int targetWidth, int targetHeight) {
         if (state == STATE_ACTIVE) {
-            g.setColor(Color.BLACK);
+            g.setColor(outlineColor);
             ((Graphics2D) g).setStroke(new BasicStroke(2));
             g.drawOval(pos.intX(), pos.intY(), targetWidth, targetHeight);
         }

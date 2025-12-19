@@ -25,11 +25,28 @@ public class BulletPool extends Pool {
         super();
     }
 
-    public void spawn(int x, int y, double forwardVelocity, double angle) {
+    public void spawn(double x, double y, double forwardVelocity, double angle, boolean tracking) {
+        if (getPoolSize() > 0) {
+            spawnFromPool(x, y, forwardVelocity, angle, tracking);
+        } else
+            add(new BulletEnemy(x, y, forwardVelocity, angle, tracking));
+    }
+
+    public void spawn(double x, double y, double forwardVelocity, double angle) {
         if (getPoolSize() > 0) {
             spawnFromPool(x, y, forwardVelocity, angle);
         } else
             add(new BulletPlayer(x, y, forwardVelocity, angle));
+    }
+
+    public void spawn(double x, double y, double forwardVelocity, double angle, int boost) {
+        if (getPoolSize() > 0) {
+            spawnFromPool(x, y, forwardVelocity, angle, boost);
+        } else {
+            BulletPlayer bulletPlayer = new BulletPlayer(x, y, forwardVelocity, angle);
+            bulletPlayer.setBoost(boost);
+            add(bulletPlayer);
+        }
     }
 
     public void spawn(int x, int y, double forwardVelocity, Enemy target) {
@@ -49,6 +66,21 @@ public class BulletPool extends Pool {
         if (bullet.getForwardVelocity() != forwardVelocity) {
             bullet.setForwardVelocity(forwardVelocity);
         }
+        decrease();
+//        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
+    }
+
+    public void spawnFromPool(double x, double y, double forwardVelocity, double angle, int boost) {
+        entity = findInList();
+        entity.resurrect(x, y);
+        BulletPlayer bullet = (BulletPlayer) entity;
+        if (bullet.getAngle() != angle) {
+            bullet.setAngle(angle);
+        }
+        if (bullet.getForwardVelocity() != forwardVelocity) {
+            bullet.setForwardVelocity(forwardVelocity);
+        }
+        bullet.setBoost(boost);
         decrease();
 //        System.out.println("Pool: " + getPoolSize() + " | Total: " + getEntities().size());
     }

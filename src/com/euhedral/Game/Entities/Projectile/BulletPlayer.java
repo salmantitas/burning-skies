@@ -1,5 +1,6 @@
 package com.euhedral.Game.Entities.Projectile;
 
+import com.euhedral.Engine.Utility;
 import com.euhedral.Game.*;
 import com.euhedral.Game.Entities.Enemy.Enemy;
 
@@ -11,6 +12,7 @@ public class BulletPlayer extends Bullet{
 
     int impactAnimationAdjustmentX;
     protected boolean shieldKiller;
+    int boost = 0;
 
 //    public Enemy target;
 
@@ -29,6 +31,8 @@ public class BulletPlayer extends Bullet{
 
         impactAnimationAdjustmentX = (impact.getImageWidth() - width)/4;
         physics.acceleration = 0.1;
+
+        outlineColor = new Color(102, 0, 0);
 
         shieldKiller = false;
     }
@@ -94,9 +98,18 @@ public class BulletPlayer extends Bullet{
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform original = g2d.getTransform();
 
-        g2d.rotate(Math.toRadians(angle - 90), pos.x + width/2, pos.y + height/2 );
+        double rotationAngle = angle - 90;
+
+        g2d.rotate(Math.toRadians(rotationAngle), pos.x + width/2, pos.y + height/2 );
 
         if (entity == null) {
+
+
+            int factor = 4;
+            g2d.setComposite(Utility.makeTransparent(0.5f));
+            g.setColor(Color.RED);
+            g.fillOval(pos.intX(), pos.intY() - factor* boost, targetWidth, targetHeight + factor* boost);
+            g2d.setComposite(Utility.makeTransparent(1f));
 
             g.drawImage(image, (int) pos.x, (int) pos.y, targetWidth, targetHeight, null);
             drawOutline(g, targetWidth, targetHeight);
@@ -139,5 +152,9 @@ public class BulletPlayer extends Bullet{
         if (entity != null)
             return true;
         return shieldKiller;
+    }
+
+    public void setBoost(int boost) {
+        this.boost = boost;
     }
 }
