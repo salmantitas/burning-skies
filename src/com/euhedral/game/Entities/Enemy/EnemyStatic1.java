@@ -2,15 +2,18 @@ package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.Entities.Enemy.Component.Tracker;
+import com.euhedral.Game.Entities.Enemy.Component.Turret;
 import com.euhedral.Game.Pool.ProjectilePool;
 import com.euhedral.Game.VariableHandler;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class EnemyStatic1 extends Enemy {
 
     Tracker tracker;
     double deceleration;
+    double playerDirection;
 
     public EnemyStatic1(int x, int y, ProjectilePool projectiles, int levelHeight) {
         super(x, y, projectiles, levelHeight);
@@ -32,6 +35,9 @@ public class EnemyStatic1 extends Enemy {
         velX = 0;
         velY_MIN = 1.75f;
         tracking = true;
+
+        turret = new Turret(turretOffsetX, turretOffsetY, bulletVelocity, 0, false, this);
+
         commonInit();
     }
 
@@ -43,16 +49,44 @@ public class EnemyStatic1 extends Enemy {
     @Override
     public void update() {
         super.update();
-        if (state == STATE_ACTIVE && shootTimer <= 50) {
-            tracker.updateDestination();
+        if (state == STATE_ACTIVE) {
+                tracker.updateDestination();
+            playerDirection = getBulletAngle();
+            if (angle < playerDirection) {
+                angle++;
+            } else {
+                angle--;
+            }
         }
     }
 
     @Override
-    protected void shootDefault() {
-        bulletsPerShot += 1;
+    protected void shoot() {
+        updateShootTimer();
+        if (shootTimer <= 0) {
+            resetShootTimer();
+            loadShots();
+            while (hasShot()) {
+                spawnProjectiles();
+                decrementShot();
+            }
+        }
     }
 
+    protected void loadShots() {
+        bulletsPerShot++;
+    }
+
+    @Override
+    protected void spawnBullet() {
+        double x = turret.getX();
+        double y = turret.getY();
+        double angle = getBulletAngle();
+        double velocity = getBulletVelocity();
+        boolean tracking = this.tracking;
+
+        createBullet(x, y, angle, velocity, tracking);
+    }
 
     @Override
     protected void moveInScreen() {
@@ -66,14 +100,14 @@ public class EnemyStatic1 extends Enemy {
         velY = 2.5f;
     }
 
-    @Override
-    public double getTurretX() {
-        return pos.x + width / 2 - Utility.intAtWidth640(2);
-    }
+//    @Override
+//    public double getTurretX() {
+//        return pos.x + width / 2 - Utility.intAtWidth640(2);
+//    }
 
     @Override
     public double getBulletAngle() {
-        return calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY); // stub
+        return tracker.calculateAngle(turret.getX(), turret.getY()); // stub
     }
 
 //    @Override
@@ -82,6 +116,15 @@ public class EnemyStatic1 extends Enemy {
 //        explosion.playedOnce = false;
 //        super.resurrect(x, y);
 //    }
+
+    @Override
+    protected void drawDefault(Graphics g) {
+        g2d = (Graphics2D) g;
+        AffineTransform currentTransform = g2d.getTransform();
+        g2d.rotate(Math.toRadians(angle - 90), pos.intX() + width/2, pos.intY() + height/2);
+        super.drawDefault(g);
+        g2d.setTransform(currentTransform);
+    }
 
     @Override
     protected void renderAttackPath(Graphics g) {
