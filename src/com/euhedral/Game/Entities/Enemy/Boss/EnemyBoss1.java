@@ -2,6 +2,8 @@ package com.euhedral.Game.Entities.Enemy.Boss;
 
 import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.Enemy.Component.Tracker;
+import com.euhedral.Game.Entities.Enemy.Component.Turret;
 import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.EntityHandler;
 import com.euhedral.Game.EntityID;
@@ -15,7 +17,12 @@ import java.awt.*;
 
 public class EnemyBoss1 extends EnemyBoss {
 
+    private Tracker tracker;
+    protected Turret[] turrets;
+
     int MISSILES = 1;
+
+    int bossStage = 0;
 
     public EnemyBoss1(double x, double y, ProjectilePool projectiles, EnemyPool enemies, int levelHeight) {
         super(x,y, projectiles, enemies, levelHeight);
@@ -27,14 +34,26 @@ public class EnemyBoss1 extends EnemyBoss {
         minX = Utility.percWidth(25);
         maxX = Utility.percWidth(75) - (int) 1.8 * width;
 
+        tracker = new Tracker();
+
         currentGun = 0;
         guns_MAX = 4;
         shotMode = 0;
-        shotMode_MAX = guns_MAX + 1;
-
-        color = Color.orange;
+        shotMode_MAX = guns_MAX;
 
         turretOffsetY = height/2 + 8;
+
+        turrets = new Turret[guns_MAX];
+        for (int i = 0; i < 4; i++) {
+            int ends = 16 + 4;
+            turretOffsetX = i * (width)/guns_MAX;
+            turrets[i] = new Turret(ends + turretOffsetX,turretOffsetY,this);
+        }
+
+        turrets[0].setAngle(70);
+        turrets[3].setAngle(110);
+
+        color = Color.orange;
 
         velX = 2;
         velY = offscreenVelY;
@@ -46,11 +65,46 @@ public class EnemyBoss1 extends EnemyBoss {
         setImage(textureHandler.enemyBoss[0]);
     }
 
-//    @Override
-//    public void update() {
-//        super.update();
-//        move();
-//    }
+    @Override
+    public void update() {
+        if (bossStage == 0) {
+            if (health < 3* health_MAX / 4) {
+                bossStage = 1;
+            }
+        }
+
+        if (bossStage == 1) {
+            if (health < health_MAX / 2) {
+                bossStage = 2;
+
+                for (int i = 0; i < 4; i++) {
+                    turrets[i].setVelocity(bulletVelocity + 1);
+//                    turrets[i].setTracking(true);
+                }
+            }
+        }
+
+        if (bossStage == 2 ) {
+            if (health < health_MAX / 4) {
+                bossStage = 3;
+
+                for (int i = 0; i < 4; i++) {
+                    turrets[i].setVelocity(bulletVelocity + 1);
+                    turrets[i].setTracking(true);
+                }
+            }
+        }
+
+        if (bossStage == 3) {
+
+        }
+
+        tracker.updateDestination();
+
+        Utility.log("Boss Stage: " + bossStage);
+
+        super.update();
+    }
 
 //    @Override
 //    public void render(Graphics g) {
@@ -70,28 +124,29 @@ public class EnemyBoss1 extends EnemyBoss {
         if (shotMode < guns_MAX) {
             bulletsPerShot++;
             shotMode++;
-        } else if (shotMode < shotMode_MAX) {
-            bulletsPerShot += guns_MAX;
-            shotMode++;
-            shootState = MISSILES;
-        }
-        else {
-            shootState = BULLET;
-            enemies.spawnEntity(pos.intX(), pos.intY(), VariableHandler.TYPE_DRONE1, 0, 0);
+        } else {
+//            if (bossStage == 0)
+                bulletsPerShot += guns_MAX;
+//            shotMode++;
+//            shootState = MISSILES;
             shotMode = 0;
             currentGun = 0;
-            }
+        }
+//        else {
+//            shootState = BULLET;
+//            enemies.spawnEntity(pos.intX(), pos.intY(), VariableHandler.TYPE_DRONE1, 0, 0);
+//            shotMode = 0;
+//            currentGun = 0;
+//            }
     }
 
     @Override
     protected void resetShootTimer() {
         double factor = 1;
 
-        if (health < health_MAX/2) {
-            factor *= 0.5;
-        }
-
-        if (health < health_MAX/4) {
+        if (bossStage == 3) {
+            factor *= 0.25;
+        } else if (bossStage > 1) {
             factor *= 0.5;
         }
 
@@ -134,14 +189,14 @@ public class EnemyBoss1 extends EnemyBoss {
 //    }
 
 
-    @Override
-    public double getTurretX() {
-        int ends = 16 + 4;
-        turretOffsetX = currentGun * (width)/guns_MAX;
-        updateGun();
-
-        return ends + super.getTurretX();
-    }
+//    @Override
+//    public double getTurretX() {
+//        int ends = 16 + 4;
+//        turretOffsetX = currentGun * (width)/guns_MAX;
+//        updateGun();
+//
+//        return ends + super.getTurretX();
+//    }
 
     protected void updateGun() {
         currentGun++;
@@ -157,25 +212,29 @@ public class EnemyBoss1 extends EnemyBoss {
         else {
             spawnMissiles();
         }
+        updateGun();
     }
 
     protected void spawnBullet() {
-        double x = getTurretX();
-        double dir = getBulletAngle();
-        double y = getTurretY();
+        double x = turrets[currentGun].getX();
+        double y = turrets[currentGun].getY();
+        double angle = turrets[currentGun].getAngle();
         double bulletVelocity = getBulletVelocity();
         boolean tracking = this.tracking;
 
-        if (health < health_MAX/2) {
-            dir = calculateAngle(EntityHandler.playerPositon.x, EntityHandler.playerPositon.y);
+        if (bossStage > 2) {
+            angle = tracker.calculateAngle(x,y);
+//            tracking = true;
         }
 
-        if (projectiles.bullets.getPoolSize() > 0) {
-            projectiles.bullets.spawnFromPool(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking);
-        }
-        else {
-            projectiles.bullets.add(new BulletEnemy(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking));
-        }
+        createBullet(x, y, angle, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking);
+
+//        if (projectiles.bullets.getPoolSize() > 0) {
+//            projectiles.bullets.spawnFromPool(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking);
+//        }
+//        else {
+//            projectiles.bullets.add(new BulletEnemy(x, y, dir, bulletVelocity * Difficulty.getEnemyBulletSpeedMult(), tracking));
+//        }
 
 //        bullets.printPool("Enemy Bullet");
     }
