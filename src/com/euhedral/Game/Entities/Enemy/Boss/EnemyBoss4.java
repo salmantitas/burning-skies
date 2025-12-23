@@ -3,6 +3,7 @@ package com.euhedral.Game.Entities.Enemy.Boss;
 import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.Difficulty;
+import com.euhedral.Game.Entities.Enemy.Component.Turret;
 import com.euhedral.Game.Pool.EnemyPool;
 import com.euhedral.Game.Entities.Enemy.Component.Tracker;
 import com.euhedral.Game.Pool.ProjectilePool;
@@ -50,6 +51,13 @@ public class EnemyBoss4 extends EnemyBoss1 {
         shotMode = 0;
         shotMode_MAX = 48;
 
+        turrets = new Turret[4];
+        for (int i = 0; i < 4; i++) {
+            int ends = 16 + 4;
+            turretOffsetX = i * (width)/guns_MAX;
+            turrets[i] = new Turret(ends + turretOffsetX,turretOffsetY,this);
+        }
+
         velX = 2;
         velY = velX;
         resetMovement();
@@ -59,7 +67,7 @@ public class EnemyBoss4 extends EnemyBoss1 {
         bulletArcAngle = 180;
         degreesPerBullet = bulletArcAngle / bulletsPerShot_MAX;
 
-        currentGun = guns_MAX;
+        currentGun = guns_MAX - 1;
 
         tracker = new Tracker();
         tracking = true;
