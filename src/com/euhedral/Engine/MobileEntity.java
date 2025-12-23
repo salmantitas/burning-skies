@@ -116,51 +116,9 @@ public abstract class MobileEntity extends Entity {
         pos.y += velY;
     }
 
-    protected double calculateMagnitude(double aX, double aY, double bX, double bY) {
-        double vectorABx = aX - bX;
-        double vectorABy = (aY - bY);
-
-        double magnitudeAB = Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
-
-        return magnitudeAB;
-    }
-
-    // Triangle with vertices A, B, C
-    protected double calculateAngle(double aX, double aY, double bX, double bY) {
-
-        // Coordinates
-        double cX = aX + 1, cY = aY;
-
-        // todo: Refactor using calculateMagnitude function
-        // Vectors
-        double vectorABx = aX - bX;
-        double vectorABy = (aY - bY);
-        double magnitudeAB = calculateMagnitude(aX, aY, bX, bY);
-
-//                Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
-
-        // Magnitudes
-        double vectorACx = aX - cX;
-        double vectorACy = (aY - cY);
-        double magnitudeAC = Math.sqrt(Math.pow(vectorACx,2) + Math.pow(vectorACy, 2));
-
-        // Dot Product
-        double dotProduct = vectorABx * vectorACx + vectorABy * vectorACy;
-
-        // Final
-        double fraction = dotProduct/(magnitudeAB*magnitudeAC);
-        double returnAngle = Math.toDegrees(Math.acos(fraction));
-
-        if (bY < aY) {
-            returnAngle = - returnAngle;
-        }
-
-        return returnAngle;
-    }
-
     // Triangle with vertices A, B, C
     protected double calculateAngle(double bX, double bY) {
-        return calculateAngle(pos.x, pos.y, bX, bY);
+        return Utility.calculateAngle(pos.x, pos.y, bX, bY);
     }
 
     // Calculate the velX and velY using angle (of direction) and forward velocity

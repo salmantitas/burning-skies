@@ -136,4 +136,50 @@ public class Utility {
         return(AlphaComposite.getInstance(alphaCompositeType, alpha));
     }
 
+    public static double calculateMagnitude(double aX, double aY, double bX, double bY) {
+        double vectorABx = aX - bX;
+        double vectorABy = (aY - bY);
+
+        double magnitudeAB = Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
+
+        return magnitudeAB;
+    }
+
+    // Triangle with vertices A, B, C
+    public static double calculateAngle(double aX, double aY, double bX, double bY) {
+
+        // Coordinates
+        double cX = aX + 1, cY = aY;
+
+        // todo: Refactor using calculateMagnitude function
+        // Vectors
+        double vectorABx = aX - bX;
+        double vectorABy = (aY - bY);
+        double magnitudeAB = calculateMagnitude(aX, aY, bX, bY);
+
+//                Math.sqrt(Math.pow(vectorABx,2) + Math.pow(vectorABy, 2));
+
+        // Magnitudes
+        double vectorACx = aX - cX;
+        double vectorACy = (aY - cY);
+        double magnitudeAC = Math.sqrt(Math.pow(vectorACx,2) + Math.pow(vectorACy, 2));
+
+        // Dot Product
+        double dotProduct = vectorABx * vectorACx + vectorABy * vectorACy;
+
+        // Final
+        double fraction = dotProduct/(magnitudeAB*magnitudeAC);
+        double returnAngle = Math.toDegrees(Math.acos(fraction));
+
+        if (bY < aY) {
+            returnAngle = - returnAngle;
+        }
+
+        if (returnAngle < - 180 || returnAngle > 180) {
+            int a = 0;
+        }
+
+        return returnAngle;
+    }
+
 }
