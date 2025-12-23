@@ -8,13 +8,11 @@ import com.euhedral.Game.Pool.ProjectilePool;
 
 import java.awt.*;
 
-public class EnemyHeavy extends Enemy {
+public class EnemyHeavy1 extends Enemy {
 
     int movementDistance_MAX = 4*64;
 
-    private Turret[] turrets;
-
-    int leftTurret, rightTurret;
+    protected Turret[] turrets;
 
     int bulletAngleMIN = 60;
 
@@ -29,14 +27,14 @@ public class EnemyHeavy extends Enemy {
     // Shoot State
 //    protected int MISSILE = 1;
 
-    public EnemyHeavy(int x, int y, ProjectilePool projectiles, int levelHeight) {
+    public EnemyHeavy1(int x, int y, ProjectilePool projectiles, int levelHeight) {
         super(x, y, projectiles, levelHeight);
 
         bulletAngle = 60;
         shootTimerDefault = 60;
         score = 50;
-        leftTurret = width / 3  - 4;
-        rightTurret = 2 * width / 3 + 6;
+        int leftTurret = width / 3  - 4;
+        int rightTurret = 2 * width / 3 + 6;
 
         turrets = new Turret[2];
         Turret turret1 = new Turret(leftTurret, turretOffsetY, 3, 120, false, this);
@@ -54,7 +52,7 @@ public class EnemyHeavy extends Enemy {
 //        attackEffect = true;
 
         textureHandler = GameController.getTexture();
-        setImage(textureHandler.enemy[4]);
+        setImage(textureHandler.enemyHeavy[0]);
 
         velX = 0;
         velY_MIN = 1.7f;
@@ -87,10 +85,6 @@ public class EnemyHeavy extends Enemy {
             rangeCheck2 = (tracker.destinationX + 32 + offsetRight < pos.x + width) && (tracker.destinationX + 32 + offsetRight > pos.x);
             playerInRange = rangeCheck1 || rangeCheck2;
 
-//            if (playerInRange)
-//                shootState = MISSILE;
-//            else
-//                shootState = BULLET;
         }
     }
 
@@ -137,13 +131,7 @@ public class EnemyHeavy extends Enemy {
         bulletsPerShot += 2;
     }
 
-//    @Override
-//    protected void resetShootTimer() {
-//        if (shootState == BULLET)
-//            shootTimer = (int) (shootTimerDefault / Difficulty.getEnemyFireRateMult());
-//        else
-//            shootTimer = (int) ((shootTimerDefault + 30) / Difficulty.getEnemyFireRateMult());
-//    }
+
 
 //    @Override
 //    public double getBulletAngle() {
@@ -222,6 +210,6 @@ public class EnemyHeavy extends Enemy {
 
     @Override
     protected void setEnemyType() {
-        enemyType = VariableHandler.TYPE_HEAVY;
+        enemyType = VariableHandler.TYPE_HEAVY1;
     }
 }

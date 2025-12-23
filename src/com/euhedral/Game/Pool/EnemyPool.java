@@ -8,7 +8,6 @@ import com.euhedral.Game.*;
 import com.euhedral.Game.Entities.Enemy.*;
 import com.euhedral.Game.Entities.Enemy.Boss.EnemyBoss;
 import com.euhedral.Game.Entities.Projectile.Bullet;
-import com.euhedral.Game.Entities.Projectile.BulletEnemy;
 import com.euhedral.Game.Entities.Player;
 import com.euhedral.Game.Entities.Projectile.BulletPlayer;
 
@@ -184,8 +183,10 @@ public class EnemyPool extends Pool {
 
         if (enemyType == VariableHandler.TYPE_BASIC1) {
             enemy = new EnemyBasic1(x, y, projectiles, levelHeight);
-        } else if (enemyType == VariableHandler.TYPE_HEAVY) {
-            enemy = new EnemyHeavy(x, y, projectiles, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_HEAVY1) {
+            enemy = new EnemyHeavy1(x, y, projectiles, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_HEAVY2) {
+            enemy = new EnemyHeavy2(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_BASIC2) {
             enemy = new EnemyBasic2(x, y, projectiles, levelHeight);
             enemy.setHMove(direction);

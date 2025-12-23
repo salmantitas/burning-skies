@@ -4,7 +4,6 @@ import com.euhedral.Engine.Engine;
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.Difficulty;
 import com.euhedral.Game.EntityHandler;
-import com.euhedral.Game.EntityID;
 import com.euhedral.Game.VariableHandler;
 
 public class EnemyGenerator {
@@ -180,11 +179,12 @@ public class EnemyGenerator {
     private void testEnemy() {
         //        enemytype = VariableHandler.TYPE_BASIC1; // stub
 //        enemytype = VariableHandler.TYPE_BASIC2; // stub
-//        enemytype = VariableHandler.TYPE_HEAVY;
-//        enemytype = VariableHandler.TYPE_BASIC3; // stub
+//        enemytype = VariableHandler.TYPE_HEAVY1;
 //        enemytype = VariableHandler.TYPE_DRONE1; // stub
 //        enemytype = VariableHandler.TYPE_STATIC1; // stub
 //        enemytype = VariableHandler.TYPE_SIDE1; // stub
+//        enemytype = VariableHandler.TYPE_HEAVY2;
+//        enemytype = VariableHandler.TYPE_BASIC3; // stub
 //        enemytype = VariableHandler.TYPE_DRONE2; // stub
 //        enemytype = VariableHandler.TYPE_FAST; // stub
 //        enemytype = VariableHandler.TYPE_SIDE2; // stub
@@ -390,7 +390,7 @@ public class EnemyGenerator {
 
         // Horizontal Zone
         else {
-            movesHorizontally = enemytype == VariableHandler.TYPE_HEAVY || enemytype == VariableHandler.TYPE_BASIC2 || enemytype == VariableHandler.TYPE_SCATTER1 || enemytype == VariableHandler.TYPE_SCATTER2;
+            movesHorizontally = enemytype == VariableHandler.TYPE_HEAVY1 || enemytype == VariableHandler.TYPE_BASIC2 || enemytype == VariableHandler.TYPE_SCATTER1 || enemytype == VariableHandler.TYPE_SCATTER2;
             if (movesHorizontally) {
                 spawnX = Utility.randomRangeInclusive(xStart + 3, xEnd - 3);
 

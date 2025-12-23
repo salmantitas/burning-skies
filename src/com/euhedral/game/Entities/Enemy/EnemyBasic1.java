@@ -13,8 +13,6 @@ import java.awt.*;
 
 public class EnemyBasic1 extends Enemy{
 
-    private Turret turret;
-
     public EnemyBasic1(int x, int y, ProjectilePool projectiles, int levelHeight) {
         super(x, y, projectiles, levelHeight);
         setImage(textureHandler.enemy[0]);

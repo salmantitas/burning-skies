@@ -13,6 +13,7 @@ public class TextureHandler {
             playerImage,
             enemyDownImage,
             enemyDownDamageImage,
+            enemyHeavyImage,
             enemyDroneImage,
             enemyDroneLImage,
             enemySideImage,
@@ -33,6 +34,7 @@ public class TextureHandler {
             playerSS,
             enemyDownSS,
             enemyDownDamageSS,
+            enemyHeavySS,
             enemyDroneSS,
             enemyDroneLSS,
             enemySideSS,
@@ -53,6 +55,7 @@ public class TextureHandler {
     public BufferedImage[] playerDamage = new BufferedImage[3];
     public BufferedImage[] enemy = new BufferedImage[12];
     public BufferedImage[] enemyDamage = new BufferedImage[3];
+    public BufferedImage[] enemyHeavy = new BufferedImage[2];
     public BufferedImage[] enemyFast = new BufferedImage[1];
     public BufferedImage[] enemyStatic = new BufferedImage[3];
     public BufferedImage[] enemySide = new BufferedImage[8];
@@ -74,6 +77,7 @@ public class TextureHandler {
             playerImage = loader.loadImage("/player.png");
             enemyDownImage = loader.loadImage("/enemyDown.png");
             enemyDownDamageImage = loader.loadImage("/enemyDamage.png");
+            enemyHeavyImage = loader.loadImage("/enemyHeavy.png");
             enemyDroneImage = loader.loadImage("/enemyDrone.png");
             enemyDroneLImage = loader.loadImage("/enemyDroneL.png");
             enemySideImage = loader.loadImage("/enemySide.png");
@@ -96,6 +100,7 @@ public class TextureHandler {
         playerSS = new SpriteSheet(playerImage);
         enemyDownSS = new SpriteSheet(enemyDownImage);
         enemyDownDamageSS = new SpriteSheet(enemyDownDamageImage);
+        enemyHeavySS = new SpriteSheet(enemyHeavyImage);
         enemySideSS = new SpriteSheet(enemySideImage);
         enemyDroneSS = new SpriteSheet(enemyDroneImage);
         enemyDroneLSS = new SpriteSheet(enemyDroneLImage);
@@ -165,6 +170,13 @@ public class TextureHandler {
         enemySide[7] = enemySideSS.grabImage(2,4,w,h);
 
         enemyDroneL[0] = enemyDroneLSS.grabImage(1,1,w,h);
+
+        w = 8;
+        h = 8;
+
+        for (int i = 0; i < 2; i ++) {
+            enemyHeavy[i] = enemyHeavySS.grabImage(i + 1, 1, w, h);
+        }
 
         w = 32;
         h = 32;
