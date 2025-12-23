@@ -139,7 +139,7 @@ public abstract class Enemy extends Airplane {
                 inscreenY = pos.y > cam + Utility.percHeight(30);
             }
             if (inscreenY && isActive()) { // todo: potential redundant check for active
-                shoot1();
+                shoot();
                 jitter();
             }
         } else if (state == STATE_EXPLODING) {
@@ -150,7 +150,7 @@ public abstract class Enemy extends Airplane {
         }
     }
 
-    protected void shoot1() {
+    protected void shoot() {
         updateShootTimer();
         if (shootTimer <= 0) {
             shoot2();

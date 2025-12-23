@@ -49,7 +49,7 @@ public class EnemyBasic2 extends Enemy{
     }
 
     @Override
-    protected void shoot1() {
+    protected void shoot() {
         updateShootTimer();
         if (shootTimer <= 0) {
             resetShootTimer();
