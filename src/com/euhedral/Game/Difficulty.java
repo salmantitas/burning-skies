@@ -37,7 +37,7 @@ public class Difficulty {
     private static int mult_MAX = 2;
     private static double damageDealtMult = 1;
     private static double damageTakenMult = 1;
-    private static boolean firePowerLoss = false;
+    private static boolean firePowerLoss = true;
 
     private static double enemyFireRateMult = 1;
     private static double enemyBulletSpeedMult = 1;
@@ -192,7 +192,7 @@ public class Difficulty {
     }
 
     private static double getFirePowerLossMult() {
-        return firePowerLoss ? 2 : 1;
+        return firePowerLoss ? 1 : 0.5;
     }
 
     public static void setCurrentButton(int index) {
