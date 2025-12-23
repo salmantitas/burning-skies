@@ -219,7 +219,7 @@ public class EnemyBoss4 extends EnemyBoss1 {
     @Override
     public double calculateShotTrajectory() {
         if (shotMode == 0)
-            return calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY);
+            return tracker.calculateAngle(getTurretX(), getTurretY());
         else return super.calculateShotTrajectory();
     }
 

@@ -421,7 +421,7 @@ public abstract class Enemy extends Airplane {
             aX = pos.x + width;
         if (pos.y < y)
             aY = pos.y + height;
-        return Math.abs(calculateMagnitude(aX, aY, x,y)) < radius;
+        return Math.abs(Utility.calculateMagnitude(aX, aY, x,y)) < radius;
     }
 
     @Override

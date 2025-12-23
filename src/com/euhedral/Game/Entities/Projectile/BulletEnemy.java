@@ -114,7 +114,7 @@ public class BulletEnemy extends Bullet{
             aX = pos.x + width;
         if (pos.y < otherPos.y)
             aY = pos.y + height;
-        return Math.abs(calculateMagnitude(aX, aY, otherPos.x, otherPos.y)) < radius;
+        return Math.abs(Utility.calculateMagnitude(aX, aY, otherPos.x, otherPos.y)) < radius;
     }
 
     public boolean isBelowDeadZoneTop() {

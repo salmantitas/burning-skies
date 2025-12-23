@@ -9,4 +9,8 @@ public class Tracker {
         destinationX = EntityHandler.playerPositon.x;
         destinationY = EntityHandler.playerPositon.y;
     }
+
+    public double calculateAngle(double x, double y) {
+        return Utility.calculateAngle(x, y, destinationX, destinationY); // stub
+    }
 }

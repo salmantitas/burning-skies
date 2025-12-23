@@ -214,6 +214,6 @@ public class EnemyBoss2 extends EnemyBoss1 {
 
     @Override
     public double getBulletAngle() {
-        return calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY); // stub
+        return tracker.calculateAngle(getTurretX(), getTurretY()); // stub
     }
 }

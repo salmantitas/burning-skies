@@ -137,7 +137,7 @@ public class EnemyScatter1 extends Enemy {
 
     @Override
     public double calculateShotTrajectory() {
-        return calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY);
+        return tracker.calculateAngle(getTurretX(), getTurretY());
     }
 
     @Override
