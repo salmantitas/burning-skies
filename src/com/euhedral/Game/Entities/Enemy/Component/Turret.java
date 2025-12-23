@@ -40,4 +40,16 @@ public class Turret {
         g.setColor(Color.RED);
         g.fillRect((int) getX(), (int) getY(), 4, 4);
     }
+
+    public void setVelocity(double velocity) {
+        this.velocity = velocity;
+    }
+
+    public void setTracking(boolean tracking) {
+        this.tracking = tracking;
+    }
+
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
 }
