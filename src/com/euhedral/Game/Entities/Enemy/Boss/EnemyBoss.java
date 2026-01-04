@@ -27,11 +27,15 @@ public abstract class EnemyBoss extends Enemy {
     protected int shotMode = 0;
     protected int shotMode_MAX = guns_MAX;
 
+    protected int bossStage = 0;
+
     public EnemyBoss(double x, double y, ProjectilePool projectiles, EnemyPool enemies, int levelHeight) {
         super(x,y, projectiles, levelHeight);
         this.enemies = enemies;
         damage = 100;
         shootTimerDefault = 150;
+
+        destination = new Position(0, 490);
     }
 
 //    public boolean isAlive() {
@@ -71,9 +75,14 @@ public abstract class EnemyBoss extends Enemy {
 //        System.out.println("Boss at (" + x + ", " + y + ")");
     }
 
+    @Override
+    protected void moveInScreen() {
+        if (destination.y >= pos.y + height) {
+            pos.y += velY;
+        }
+    }
 
-
-//    @Override
+    //    @Override
 //    public abstract void shoot();
 
     @Override

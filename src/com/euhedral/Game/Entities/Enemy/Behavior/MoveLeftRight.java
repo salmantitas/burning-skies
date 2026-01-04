@@ -27,4 +27,13 @@ public class MoveLeftRight {
             movementDistance = movementDistance_MAX;
         }
     }
+
+    public void setDistance(int movementDistance_MAX, boolean center) {
+        this.movementDistance_MAX = movementDistance_MAX;
+        movementDistance = movementDistance_MAX;
+
+        if (center) {
+            movementDistance /= 2;
+        }
+    }
 }

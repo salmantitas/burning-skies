@@ -1,7 +1,9 @@
 package com.euhedral.Game.Entities.Enemy.Boss;
 
+import com.euhedral.Engine.CollisionBox;
 import com.euhedral.Engine.Position;
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.Enemy.Behavior.MoveLeftRight;
 import com.euhedral.Game.Entities.Enemy.Component.Tracker;
 import com.euhedral.Game.Entities.Enemy.Component.Turret;
 import com.euhedral.Game.Entities.Projectile.BulletEnemy;
@@ -19,10 +21,7 @@ public class EnemyBoss1 extends EnemyBoss {
 
     private Tracker tracker;
     protected Turret[] turrets;
-
-    int MISSILES = 1;
-
-    int bossStage = 0;
+    private MoveLeftRight movement;
 
     public EnemyBoss1(double x, double y, ProjectilePool projectiles, EnemyPool enemies, int levelHeight) {
         super(x,y, projectiles, enemies, levelHeight);
@@ -30,11 +29,9 @@ public class EnemyBoss1 extends EnemyBoss {
         width = height * 2;
         pos.x = x - width/2;
 
-        destination = new Position(0, 490);
-        minX = Utility.percWidth(25);
-        maxX = Utility.percWidth(75) - (int) 1.8 * width;
-
         tracker = new Tracker();
+        movement = new MoveLeftRight(this);
+        movement.setDistance(Utility.percWidth(50), true);
 
         currentGun = 0;
         guns_MAX = 4;
@@ -55,14 +52,16 @@ public class EnemyBoss1 extends EnemyBoss {
 
         color = Color.orange;
 
-        velX = 2;
+        velX_MIN = 2;
+        velX = 0;
         velY = offscreenVelY;
         health_MAX = 50;
         setHealth(health_MAX);
         shootTimerDefault = 30;
 
-        moveLeft = true;
         setImage(textureHandler.enemyBoss[0]);
+
+//        debug = true;
     }
 
     @Override
@@ -70,6 +69,7 @@ public class EnemyBoss1 extends EnemyBoss {
         if (bossStage == 0) {
             if (health < 3* health_MAX / 4) {
                 bossStage = 1;
+                velX = velX_MIN;
             }
         }
 
@@ -104,6 +104,12 @@ public class EnemyBoss1 extends EnemyBoss {
         Utility.log("Boss Stage: " + bossStage);
 
         super.update();
+    }
+
+    @Override
+    protected void updateBounds() {
+        collisionBox.setBounds(0, pos.x, pos.y, width, 1 * height / 3 + 10);
+        collisionBox.setBounds(1, pos.x, pos.y, width, 1 * height / 3 + 2);
     }
 
 //    @Override
@@ -145,9 +151,9 @@ public class EnemyBoss1 extends EnemyBoss {
         double factor = 1;
 
         if (bossStage == 3) {
-            factor *= 0.25;
+            factor *= 0.30;
         } else if (bossStage > 1) {
-            factor *= 0.5;
+            factor *= 0.6;
         }
 
         if (shotMode == guns_MAX) {
@@ -162,20 +168,13 @@ public class EnemyBoss1 extends EnemyBoss {
             pos.y += velY;
         }
         else {
-            if (health > 3 * health_MAX / 4) {
-
-            } else {
-                if (!moveLeft)
-                    pos.x += velX;
-                else
-                    pos.x -= velX;
+            velY = 0;
+            if (health <= 3 * health_MAX / 4) {
+                pos.x += velX;
+                movement.update();
             }
         }
 
-        if (pos.x < minX)
-            moveLeft = false;
-        if (pos.x > maxX)
-            moveLeft = true;
     }
 
     // Private Methods
@@ -207,11 +206,7 @@ public class EnemyBoss1 extends EnemyBoss {
 
     @Override
     protected void spawnProjectiles() {
-        if (shootState == BULLET)
-            super.spawnProjectiles();
-        else {
-            spawnMissiles();
-        }
+        super.spawnProjectiles();
         updateGun();
     }
 
@@ -237,18 +232,5 @@ public class EnemyBoss1 extends EnemyBoss {
 //        }
 
 //        bullets.printPool("Enemy Bullet");
-    }
-
-    private void spawnMissiles() {
-        double x = getTurretX();
-        double y = getTurretY();
-
-        double angle = 90;
-
-        if (health < health_MAX/2) {
-            angle = calculateAngle(EntityHandler.playerPositon.x, EntityHandler.playerPositon.y);
-        }
-
-        projectiles.missiles.spawn(x, y, angle);
     }
 }
