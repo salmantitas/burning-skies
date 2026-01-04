@@ -14,6 +14,8 @@ public class TextureHandler {
             enemyDownImage,
             enemyDownDamageImage,
             enemyHeavyImage,
+            enemyStaticImage,
+            enemyScatterImage,
             enemyDroneImage,
             enemyDroneLImage,
             enemySideImage,
@@ -35,6 +37,8 @@ public class TextureHandler {
             enemyDownSS,
             enemyDownDamageSS,
             enemyHeavySS,
+            enemyStaticSS,
+            enemyScatterSS,
             enemyDroneSS,
             enemyDroneLSS,
             enemySideSS,
@@ -58,6 +62,7 @@ public class TextureHandler {
     public BufferedImage[] enemyHeavy = new BufferedImage[2];
     public BufferedImage[] enemyFast = new BufferedImage[1];
     public BufferedImage[] enemyStatic = new BufferedImage[3];
+    public BufferedImage[] enemyScatter = new BufferedImage[3];
     public BufferedImage[] enemySide = new BufferedImage[8];
     public BufferedImage[] enemyDrone = new BufferedImage[6];
     public BufferedImage[] enemyDroneL = new BufferedImage[1];
@@ -78,6 +83,8 @@ public class TextureHandler {
             enemyDownImage = loader.loadImage("/enemyDown.png");
             enemyDownDamageImage = loader.loadImage("/enemyDamage.png");
             enemyHeavyImage = loader.loadImage("/enemyHeavy.png");
+            enemyStaticImage = loader.loadImage("/enemyScatter.png");
+            enemyScatterImage = loader.loadImage("/enemyScatter2.png");
             enemyDroneImage = loader.loadImage("/enemyDrone.png");
             enemyDroneLImage = loader.loadImage("/enemyDroneL.png");
             enemySideImage = loader.loadImage("/enemySide.png");
@@ -101,6 +108,8 @@ public class TextureHandler {
         enemyDownSS = new SpriteSheet(enemyDownImage);
         enemyDownDamageSS = new SpriteSheet(enemyDownDamageImage);
         enemyHeavySS = new SpriteSheet(enemyHeavyImage);
+        enemyStaticSS = new SpriteSheet(enemyStaticImage);
+        enemyScatterSS = new SpriteSheet(enemyScatterImage);
         enemySideSS = new SpriteSheet(enemySideImage);
         enemyDroneSS = new SpriteSheet(enemyDroneImage);
         enemyDroneLSS = new SpriteSheet(enemyDroneLImage);
@@ -156,9 +165,6 @@ public class TextureHandler {
 
 //        enemyHeavy[0] = enemyDownSS.grabImage(1,2,w,h);
         enemyFast[0] = enemyDownSS.grabImage(2,2,w,h);
-        enemyStatic[0] = enemyDownSS.grabImage(1,3,w,h);
-        enemyStatic[1] = enemyDownSS.grabImage(2,3,w,h);
-        enemyStatic[2] = enemyDownSS.grabImage(3,3,w,h);
 
         enemySide[0] = enemySideSS.grabImage(1,1,w,h);
         enemySide[1] = enemySideSS.grabImage(2,1,w,h);
@@ -176,6 +182,14 @@ public class TextureHandler {
 
         for (int i = 0; i < 2; i ++) {
             enemyHeavy[i] = enemyHeavySS.grabImage(i + 1, 1, w, h);
+        }
+
+        for (int i = 0; i < 3; i ++) {
+            enemyStatic[i] = enemyStaticSS.grabImage(i + 1, 1, w, h);
+        }
+
+        for (int i = 0; i < 2; i ++) {
+            enemyScatter[i] = enemyScatterSS.grabImage(i + 1, 1, w, h);
         }
 
         w = 32;

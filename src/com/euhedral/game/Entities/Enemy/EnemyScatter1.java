@@ -41,6 +41,7 @@ public class EnemyScatter1 extends Enemy {
         forwardVelocity = 1;
 
         setImage(textureHandler.enemyStatic[1]);
+        setImage(textureHandler.enemyScatter[0]);
 
         health_MAX = 4;
 
