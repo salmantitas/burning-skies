@@ -36,6 +36,8 @@ public class EnemyHeavy1 extends Enemy {
         int leftTurret = width / 3  - 4;
         int rightTurret = 2 * width / 3 + 6;
 
+        turretOffsetY += 1;
+
         turrets = new Turret[2];
         Turret turret1 = new Turret(leftTurret, turretOffsetY, 3, 120, false, this);
         Turret turret2 = new Turret(rightTurret, turretOffsetY, 3, 60, false, this);
@@ -73,11 +75,11 @@ public class EnemyHeavy1 extends Enemy {
                 movementDistance -= Math.abs(velX);
             } else {
 //                velX = 0;
-                if (hMove.equals(HorizontalMovement.LEFT)) {
-                    setHMove(-1);
-                } else {
-                    setHMove(1);
-                }
+//                if (hMove.equals(HorizontalMovement.LEFT)) {
+//                    setHMove(-1);
+//                } else {
+//                    setHMove(1);
+//                }
                 movementDistance = movementDistance_MAX;
             }
 

@@ -202,6 +202,9 @@ public class EnemyPool extends Pool {
             enemy = new EnemySide1(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_STATIC1) {
             enemy = new EnemyStatic1(x, y, projectiles, levelHeight);
+        } else if (enemyType == VariableHandler.TYPE_STATIC2) {
+            enemy = new EnemyStatic2(x, y, projectiles, levelHeight);
+            enemy.setHMove(direction);
         } else if (enemyType == VariableHandler.TYPE_DRONE2) {
             enemy = new EnemyDrone2(x, y, projectiles, levelHeight);
         } else if (enemyType == VariableHandler.TYPE_SIDE2) {

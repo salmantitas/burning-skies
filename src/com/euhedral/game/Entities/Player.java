@@ -436,14 +436,7 @@ public class Player extends Airplane {
         }
 
         // Not Moving Left or Right
-        else if ((!moveLeft && !moveRight) || (moveLeft && moveRight)) {
-//            if (velX > 0) {
-//                velX -= physics.friction;
-//                velX = Utility.clamp(velX, 0, velX_MAX);
-//            } else if (velX < 0) {
-//                velX += physics.friction;
-//                velX = Utility.clamp(velX, -velX_MAX, 0);
-//            }
+        else if (isStillHorizontally()) {
             velX = 0;
         }
 
@@ -468,14 +461,7 @@ public class Player extends Airplane {
         }
 
         // Not Moving Up or Down
-        else if (!moveUp && !moveDown || (moveUp && moveDown)) {
-//            if (velY > 0) {
-//                velY -= physics.friction;
-//                velY = Utility.clamp(velY, 0, velY_MAX);
-//            } else if (velY < 0) {
-//                velY += physics.friction;
-//                velY = Utility.clamp(velY, -velY_MAX, 0);
-//            }
+        else if (isStillVertically()) {
             velY = 0;
         }
     }
@@ -597,21 +583,5 @@ public class Player extends Airplane {
 
     public int getRadius() {
         return pulse.radius;
-    }
-
-    private boolean isMovingLeft() {
-        return (moveLeft && !moveRight);
-    }
-
-    private boolean isMovingRight() {
-        return (!moveLeft && moveRight);
-    }
-
-    private boolean isMovingUp() {
-        return (moveUp && !moveDown);
-    }
-
-    private boolean isMovingDown() {
-        return (moveDown && !moveUp);
     }
 }

@@ -1,6 +1,7 @@
 package com.euhedral.Game.Entities.Enemy;
 
 import com.euhedral.Engine.Utility;
+import com.euhedral.Game.Entities.Enemy.Behavior.MoveLeftRight;
 import com.euhedral.Game.Entities.Enemy.Component.Turret;
 import com.euhedral.Game.Pool.BulletPool;
 import com.euhedral.Game.GameController;
@@ -9,7 +10,7 @@ import com.euhedral.Game.VariableHandler;
 
 public class EnemyBasic2 extends Enemy{
 
-    int movementDistance_MAX = 3*64;
+    MoveLeftRight movement;
 
     public EnemyBasic2(int x, int y, ProjectilePool projectiles, int levelHeight) {
         super(x, y, projectiles, levelHeight);
@@ -18,7 +19,8 @@ public class EnemyBasic2 extends Enemy{
 
         shootTimerDefault = 125;
         score = 30;
-        movementDistance = movementDistance_MAX;
+        movement = new MoveLeftRight(this);
+//        movementDistance = movementDistance_MAX;
 //        attackEffect = true;
 
         turret = new Turret(turretOffsetX, turretOffsetY, this);
@@ -33,18 +35,7 @@ public class EnemyBasic2 extends Enemy{
     public void update() {
         super.update();
         if (state == STATE_ACTIVE && inscreenY) {
-
-            if (movementDistance >= 0) {
-                movementDistance -= Math.abs(velX);
-            } else {
-//                velX = 0;
-                if (hMove.equals(HorizontalMovement.LEFT)) {
-                    setHMove(-1);
-                } else {
-                    setHMove(1);
-                }
-                movementDistance = movementDistance_MAX;
-            }
+            movement.update();
         }
     }
 

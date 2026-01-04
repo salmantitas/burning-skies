@@ -47,7 +47,8 @@ public class VariableHandler {
     public static final int TYPE_BASIC2 = TYPE_BASIC1 + 1;
     public static final int TYPE_HEAVY1 = TYPE_BASIC2 + 1;
     public static final int TYPE_STATIC1 = TYPE_HEAVY1 + 1;
-    public static final int TYPE_DRONE1 = TYPE_STATIC1 + 1;
+    public static final int TYPE_STATIC2 = TYPE_STATIC1 + 1;
+    public static final int TYPE_DRONE1 = TYPE_STATIC2 + 1;
 
     public static final int TYPE_SIDE1 = TYPE_DRONE1 + 1;
     public static final int TYPE_HEAVY2 = TYPE_SIDE1 + 1;
