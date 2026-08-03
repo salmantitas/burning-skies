@@ -81,8 +81,7 @@ public abstract class Enemy extends Airplane {
 
     public Enemy(double x, double y, ProjectilePool projectiles, int levelHeight) {
         super(x, y, EntityID.Enemy);
-        moveRight = false;
-        moveLeft = false;
+        setHMove(0);
         cam = GameController.getCamera().getMarker();
 
         width = Utility.intAtWidth640(32);
@@ -381,24 +380,30 @@ public abstract class Enemy extends Airplane {
     }
 
     public void setHMove(int direction) {
+//        this.hMove = hMove;
         if (direction == 1) {
             hMove = HorizontalMovement.LEFT;
+//            moveLeft = true;
+//            moveRight = false;
             velX = -velX_MIN;
         } else if (direction == -1) {
             hMove = HorizontalMovement.RIGHT;
+//            moveLeft = false;
+//            moveRight = true;
             velX = velX_MIN;
         } else {
+            hMove = HorizontalMovement.NONE;
 //            velX = 0;
         }
     }
 
-    protected void setHMove(HorizontalMovement hMove) {
-        if (hMove == HorizontalMovement.LEFT)
-            velX = -velX_MIN;
-        else if (hMove == HorizontalMovement.RIGHT)
-            velX = velX_MIN;
-
-    }
+//    protected void setHMove(HorizontalMovement hMove) {
+//        if (hMove == HorizontalMovement.LEFT)
+//            velX = -velX_MIN;
+//        else if (hMove == HorizontalMovement.RIGHT)
+//            velX = velX_MIN;
+//
+//    }
 
     public void setLevelHeight(int levelHeight) {
         this.levelHeight = levelHeight;

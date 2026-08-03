@@ -61,7 +61,7 @@ public class EnemyBoss4 extends EnemyBoss1 {
         velX = 2;
         velY = velX;
         resetMovement();
-        moveDown = true;
+        vMove = VerticalMovement.DOWN;
 
         bulletsPerShot_MAX = 18;
         bulletArcAngle = 180;
@@ -155,17 +155,17 @@ public class EnemyBoss4 extends EnemyBoss1 {
 
         velY = velX;
 
-        if (moveDown) {
+        if (vMove == VerticalMovement.DOWN) {
             pos.y += velY;
         }
 
-        if (moveUp)
+        if (vMove == VerticalMovement.UP)
             pos.y -= velY;
 
-        if (moveLeft)
+        if (hMove == HorizontalMovement.LEFT)
             pos.x -= velX;
 
-        if (moveRight)
+        if (hMove == HorizontalMovement.RIGHT)
             pos.x += velX;
 //        }
 
@@ -177,27 +177,27 @@ public class EnemyBoss4 extends EnemyBoss1 {
 
         if (firstMove && topCentre) {
             resetMovement();
-            moveLeft = true;
+            hMove = HorizontalMovement.LEFT;
         }
 
         if (topLeft) {
             resetMovement();
-            moveDown = true;
+            vMove = VerticalMovement.DOWN;
         }
 
         if (bottomLeft) {
             resetMovement();
-            moveRight = true;
+            hMove = HorizontalMovement.RIGHT;
         }
 
         if (bottomRight) {
             resetMovement();
-            moveUp = true;
+            vMove = VerticalMovement.UP;
         }
 
         if (topRight) {
             resetMovement();
-            moveLeft = true;
+            hMove = HorizontalMovement.LEFT;
         }
     }
 
@@ -241,7 +241,7 @@ public class EnemyBoss4 extends EnemyBoss1 {
             shotSign *= -1;
             if (shotCount > bulletsPerShot_MAX) {
                 shotCount = 1;
-                if (moveLeft) {
+                if (hMove == HorizontalMovement.LEFT) {
                     shotMode = 1;
                 } else {
                     shotMode = 2;

@@ -78,7 +78,7 @@ public class EnemyBoss3 extends EnemyBoss {
         super.update();
         if (state == STATE_ACTIVE && inscreenY) {
             tracker.updateDestination();
-            double playerAngle = calculateAngle(getTurretX(), getTurretY(), tracker.destinationX + 8, tracker.destinationY - 48);
+            double playerAngle = Utility.calculateAngle(getTurretX(), getTurretY(), tracker.destinationX + 8, tracker.destinationY - 48);
             laser.update();
             laser.updateDestination(angle);
             if (playerAngle - angle > offset) {
@@ -131,31 +131,31 @@ public class EnemyBoss3 extends EnemyBoss {
 
     @Override
     public void moveInScreen() {
-        if (moveDown)
+        if (vMove == VerticalMovement.DOWN)
             pos.y += velY;
 
-        if (moveUp)
+        if (vMove == VerticalMovement.UP)
             pos.y -= velY;
 
-        if (moveLeft)
+        if (hMove == HorizontalMovement.LEFT)
             pos.x -= velX;
 
-        if (moveRight)
+        if (hMove == HorizontalMovement.RIGHT)
             pos.x += velX;
 
         if (destination.y >= pos.y + height) {
-            moveDown = true;
+            vMove = VerticalMovement.DOWN;
         } else if (destination.y < pos.y) {
-            moveUp = true;
+            vMove = VerticalMovement.UP;
         } else {
             resetMovement();
             destination.y = Utility.randomRange(minY, maxY);
         }
 
         if (pos.x + width <= destination.x) {
-            moveRight = true;
+            hMove = HorizontalMovement.RIGHT;
         } else if (pos.x > destination.x) {
-            moveLeft = true;
+            hMove = HorizontalMovement.LEFT;
         } else {
             resetMovement();
             destination.x = Utility.randomRange(minX, maxX);
@@ -192,7 +192,7 @@ public class EnemyBoss3 extends EnemyBoss {
 
     @Override
     public double getBulletAngle() {
-        return calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY); // stub
+        return Utility.calculateAngle(getTurretX(), getTurretY(), tracker.destinationX, tracker.destinationY); // stub
     }
 
     @Override

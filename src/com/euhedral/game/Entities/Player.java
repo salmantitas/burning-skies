@@ -24,6 +24,7 @@ public class Player extends Airplane {
     private double missileVelocity;
 
     // Personal
+    protected boolean moveLeft, moveRight, moveUp, moveDown;
     private int levelHeight;
     private int clampOffsetX;
     private int clampOffsetY;
@@ -583,5 +584,35 @@ public class Player extends Airplane {
 
     public int getRadius() {
         return pulse.radius;
+    }
+
+    @Override
+    public boolean isMovingLeft() {
+        return moveLeft && !moveRight;
+    }
+
+    @Override
+    public boolean isMovingRight() {
+        return moveRight && !moveLeft;
+    }
+
+    @Override
+    public boolean isMovingUp() {
+        return moveUp && !moveDown;
+    }
+
+    @Override
+    public boolean isMovingDown() {
+        return moveDown && !moveUp;
+    }
+
+    @Override
+    public boolean isStillHorizontally() {
+        return (!moveLeft && !moveRight) || (moveLeft && moveRight);
+    }
+
+    @Override
+    public boolean isStillVertically() {
+        return !moveUp && !moveDown || (moveUp && moveDown);
     }
 }

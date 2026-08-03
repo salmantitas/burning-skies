@@ -49,7 +49,17 @@ public abstract class MobileEntity extends Entity {
     protected double velX, velY;
     protected double velX_MIN, velY_MIN;
     protected double velX_MAX, velY_MAX;
-    protected boolean moveLeft, moveRight, moveUp, moveDown;
+
+    protected enum HorizontalMovement{
+        NONE, LEFT, RIGHT;
+    }
+
+    protected enum VerticalMovement{
+        NONE, UP, DOWN;
+    }
+
+    protected HorizontalMovement hMove = HorizontalMovement.NONE;
+    protected VerticalMovement vMove = VerticalMovement.NONE;
 
     // Angle
     protected double forwardVelocity;
@@ -192,36 +202,34 @@ public abstract class MobileEntity extends Entity {
     }
 
     protected void resetMovementHorizontal() {
-        moveRight = false;
-        moveLeft = false;
+        hMove = HorizontalMovement.NONE;
     }
 
     protected void resetMovementVertical() {
-        moveUp = false;
-        moveDown = false;
+        vMove = VerticalMovement.NONE;
     }
 
     public boolean isMovingLeft() {
-        return moveLeft && !moveRight;
+        return hMove == HorizontalMovement.LEFT;
     }
 
     public boolean isMovingRight() {
-        return moveRight && !moveLeft;
+        return hMove == HorizontalMovement.RIGHT;
     }
 
     public boolean isMovingUp() {
-        return moveUp && !moveDown;
+        return vMove == VerticalMovement.UP;
     }
 
     public boolean isMovingDown() {
-        return moveDown && !moveUp;
+        return vMove == VerticalMovement.UP;
     }
 
     public boolean isStillHorizontally() {
-        return (!moveLeft && !moveRight) || (moveLeft && moveRight);
+        return hMove == HorizontalMovement.NONE;
     }
 
     public boolean isStillVertically() {
-        return !moveUp && !moveDown || (moveUp && moveDown);
+        return vMove == VerticalMovement.NONE;
     }
 }

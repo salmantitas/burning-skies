@@ -64,7 +64,9 @@ public class EnemyFast extends Enemy{
             velY += acceleration;
             velX_MIN = velXCoefficient * Math.pow(velY, 0.5);
 
-            setHMove(hMove);
+            int direction = 1;
+
+            setHMove(1);
         }
     }
 

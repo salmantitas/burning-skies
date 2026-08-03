@@ -2,6 +2,7 @@ package com.euhedral.Game.Entities.Enemy.Boss;
 
 import com.euhedral.Engine.Utility;
 import com.euhedral.Game.*;
+import com.euhedral.Game.Entities.Enemy.Behavior.MoveLeftRight;
 import com.euhedral.Game.Entities.Enemy.Component.Tracker;
 import com.euhedral.Game.Pool.EnemyPool;
 import com.euhedral.Game.Pool.ProjectilePool;
@@ -31,7 +32,8 @@ public class EnemyBoss2 extends EnemyBoss1 {
         tracking = true;
 
         resetMovement();
-        moveDown = true;
+        vMove = VerticalMovement.DOWN;
+//        moveDown = true;
 
         tracker = new Tracker();
 //        pos.x = x - width/2;
@@ -68,15 +70,15 @@ public class EnemyBoss2 extends EnemyBoss1 {
         g2d = (Graphics2D) g;
         AffineTransform currentTransform = g2d.getTransform();
 
-        if (moveLeft) {
+        if (hMove == HorizontalMovement.LEFT) {
             g2d.rotate(Math.toRadians(90), pos.intX() + width/2, pos.intY() + height/2);
         }
 
-        if (moveRight) {
+        if (hMove == HorizontalMovement.RIGHT) {
             g2d.rotate(Math.toRadians(-90), pos.intX() + width/2, pos.intY() + height/2);
         }
 
-        if (moveUp) {
+        if (vMove == VerticalMovement.UP) {
             g2d.rotate(Math.toRadians(180), pos.intX() + width/2, pos.intY() + height/2);
         }
 
@@ -130,17 +132,17 @@ public class EnemyBoss2 extends EnemyBoss1 {
 
             velY = velX;
 
-            if (moveDown) {
+            if (vMove == VerticalMovement.DOWN) {
                 pos.y += velY;
             }
 
-            if (moveUp)
+            if (vMove == VerticalMovement.UP)
                 pos.y -= velY;
 
-            if (moveLeft)
+            if (hMove == HorizontalMovement.LEFT)
                 pos.x -= velX;
 
-            if (moveRight)
+            if (hMove == HorizontalMovement.RIGHT)
                 pos.x += velX;
 //        }
 
@@ -151,37 +153,29 @@ public class EnemyBoss2 extends EnemyBoss1 {
         boolean topRight = pos.x  > maxX && pos.y < minY;
 
         if (firstMove && bottomCentre) {
-            moveRight = true;
-            moveDown = false;
+            hMove = HorizontalMovement.RIGHT;
+            vMove = VerticalMovement.NONE;
             firstMove = false;
         }
 
         if (bottomLeft) {
-            moveLeft = false;
-            moveRight = true;
-            moveDown = false;
-            moveUp = false;
+            hMove = HorizontalMovement.RIGHT;
+            vMove = VerticalMovement.NONE;
         }
 
         if (bottomRight) {
-            moveLeft = false;
-            moveRight = false;
-            moveDown = false;
-            moveUp = true;
+            hMove = HorizontalMovement.NONE;
+            vMove = VerticalMovement.UP;
         }
 
         if (topLeft) {
-            moveUp = false;
-            moveDown = true;
-            moveLeft = false;
-            moveRight = false;
+            vMove = VerticalMovement.DOWN;
+            hMove = HorizontalMovement.NONE;
         }
 
         if (topRight) {
-            moveUp = false;
-            moveDown = false;
-            moveLeft = true;
-            moveRight = false;
+            hMove = HorizontalMovement.LEFT;
+            vMove = VerticalMovement.NONE;
         }
     }
 
