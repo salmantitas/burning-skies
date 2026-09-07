@@ -34,6 +34,8 @@ public class Engine extends Canvas implements Runnable {
     public static int timeInSeconds = 0;
     public static int timer = 0;
 
+    private static boolean frameLock = true;
+
     private static double targetUpdatesPerSecond_DEFAULT = 60.0;
     private final double updateRate = 1d/targetUpdatesPerSecond_DEFAULT;
     private static double gameSpeedScaleMult = 1;
@@ -106,11 +108,15 @@ public class Engine extends Canvas implements Runnable {
             if (accumulator >= updateRate) {
                 while (accumulator > updateRate) {
                     update();
+                    if (frameLock)
+                        render();
                     accumulator -= updateRate;
                 }
             }
 
-            render();
+            if (!frameLock)
+                render();
+
             printStats();
         }
 
@@ -353,6 +359,10 @@ public class Engine extends Canvas implements Runnable {
             ups = 0;
             nextStatTime = System.currentTimeMillis() + 1000;
         }
+    }
+
+    public static void toggle_frame_lock() {
+        frameLock = !frameLock;
     }
 
     }
